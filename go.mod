@@ -1,4 +1,4 @@
-module aa
+module github.com/architecture-it/integracion-schemas-event-go
 
 go 1.15
 
