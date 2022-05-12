@@ -23,11 +23,9 @@ type PedidoTres struct {
 	Id string `json:"id"`
 
 	NumeroDePedido int32 `json:"numeroDePedido"`
-
-	Planta string `json:"planta"`
 }
 
-const PedidoTresAvroCRC64Fingerprint = "\xec\xc4\xe4\x1f\xb0\xe0\n\xb4"
+const PedidoTresAvroCRC64Fingerprint = "\xfc\x8d\u007f\x01\x8f\x87\x1e\xc0"
 
 func NewPedidoTres() PedidoTres {
 	r := PedidoTres{}
@@ -67,10 +65,6 @@ func writePedidoTres(r PedidoTres, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Planta, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -79,7 +73,7 @@ func (r PedidoTres) Serialize(w io.Writer) error {
 }
 
 func (r PedidoTres) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"numeroDePedido\",\"type\":\"int\"},{\"name\":\"planta\",\"type\":\"string\"}],\"name\":\"Andreani.pipeline.Event.PedidoTres\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"numeroDePedido\",\"type\":\"int\"}],\"name\":\"Andreani.pipeline.Event.PedidoTres\",\"type\":\"record\"}"
 }
 
 func (r PedidoTres) SchemaName() string {
@@ -104,11 +98,6 @@ func (r *PedidoTres) Get(i int) types.Field {
 
 	case 1:
 		w := types.Int{Target: &r.NumeroDePedido}
-
-		return w
-
-	case 2:
-		w := types.String{Target: &r.Planta}
 
 		return w
 
@@ -145,10 +134,6 @@ func (r PedidoTres) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroDePedido"], err = json.Marshal(r.NumeroDePedido)
-	if err != nil {
-		return nil, err
-	}
-	output["planta"], err = json.Marshal(r.Planta)
 	if err != nil {
 		return nil, err
 	}
@@ -189,20 +174,6 @@ func (r *PedidoTres) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for numeroDePedido")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["planta"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Planta); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for planta")
 	}
 	return nil
 }
