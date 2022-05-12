@@ -1,4 +1,4 @@
-module github.com/architecture-it/integracion-schemas-event-go
+module github.com/architecture-it/integracion-schemas-event-go/notificaciones/Envios
 
 go 1.17
 
