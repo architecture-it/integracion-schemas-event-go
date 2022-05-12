@@ -18,7 +18,7 @@ import (
 
 var _ = fmt.Printf
 
-type Pedido struct {
+type PedidoDos struct {
 	Id string `json:"id"`
 
 	NumeroDePedido int32 `json:"numeroDePedido"`
@@ -31,19 +31,18 @@ type Pedido struct {
 
 	CuentaCorriente int64 `json:"cuentaCorriente"`
 
-	Cuando *UnionNullString `json:"cuando"`
+	Cuando string `json:"cuando"`
 }
 
-const PedidoAvroCRC64Fingerprint = "\x06r\x8d\xdc\xe8\xc5I*"
+const PedidoDosAvroCRC64Fingerprint = "\x0f\xbcm\n\x1a;JZ"
 
-func NewPedido() Pedido {
-	r := Pedido{}
-	r.Cuando = nil
+func NewPedidoDos() PedidoDos {
+	r := PedidoDos{}
 	return r
 }
 
-func DeserializePedido(r io.Reader) (Pedido, error) {
-	t := NewPedido()
+func DeserializePedidoDos(r io.Reader) (PedidoDos, error) {
+	t := NewPedidoDos()
 	deser, err := compiler.CompileSchemaBytes([]byte(t.Schema()), []byte(t.Schema()))
 	if err != nil {
 		return t, err
@@ -53,8 +52,8 @@ func DeserializePedido(r io.Reader) (Pedido, error) {
 	return t, err
 }
 
-func DeserializePedidoFromSchema(r io.Reader, schema string) (Pedido, error) {
-	t := NewPedido()
+func DeserializePedidoDosFromSchema(r io.Reader, schema string) (PedidoDos, error) {
+	t := NewPedidoDos()
 
 	deser, err := compiler.CompileSchemaBytes([]byte(schema), []byte(t.Schema()))
 	if err != nil {
@@ -65,7 +64,7 @@ func DeserializePedidoFromSchema(r io.Reader, schema string) (Pedido, error) {
 	return t, err
 }
 
-func writePedido(r Pedido, w io.Writer) error {
+func writePedidoDos(r PedidoDos, w io.Writer) error {
 	var err error
 	err = vm.WriteString(r.Id, w)
 	if err != nil {
@@ -91,35 +90,35 @@ func writePedido(r Pedido, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Cuando, w)
+	err = vm.WriteString(r.Cuando, w)
 	if err != nil {
 		return err
 	}
 	return err
 }
 
-func (r Pedido) Serialize(w io.Writer) error {
-	return writePedido(r, w)
+func (r PedidoDos) Serialize(w io.Writer) error {
+	return writePedidoDos(r, w)
 }
 
-func (r Pedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"numeroDePedido\",\"type\":\"int\"},{\"name\":\"cicloDelPedido\",\"type\":\"string\"},{\"name\":\"codigoDeContratoInterno\",\"type\":\"long\"},{\"name\":\"estadoDelPedido\",\"type\":\"string\"},{\"name\":\"cuentaCorriente\",\"type\":\"long\"},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.pipeline.Event.Pedido\",\"type\":\"record\"}"
+func (r PedidoDos) Schema() string {
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"numeroDePedido\",\"type\":\"int\"},{\"name\":\"cicloDelPedido\",\"type\":\"string\"},{\"name\":\"codigoDeContratoInterno\",\"type\":\"long\"},{\"name\":\"estadoDelPedido\",\"type\":\"string\"},{\"name\":\"cuentaCorriente\",\"type\":\"long\"},{\"name\":\"cuando\",\"type\":\"string\"}],\"name\":\"Andreani.pipeline.Event.PedidoDos\",\"type\":\"record\"}"
 }
 
-func (r Pedido) SchemaName() string {
-	return "Andreani.pipeline.Event.Pedido"
+func (r PedidoDos) SchemaName() string {
+	return "Andreani.pipeline.Event.PedidoDos"
 }
 
-func (_ Pedido) SetBoolean(v bool)    { panic("Unsupported operation") }
-func (_ Pedido) SetInt(v int32)       { panic("Unsupported operation") }
-func (_ Pedido) SetLong(v int64)      { panic("Unsupported operation") }
-func (_ Pedido) SetFloat(v float32)   { panic("Unsupported operation") }
-func (_ Pedido) SetDouble(v float64)  { panic("Unsupported operation") }
-func (_ Pedido) SetBytes(v []byte)    { panic("Unsupported operation") }
-func (_ Pedido) SetString(v string)   { panic("Unsupported operation") }
-func (_ Pedido) SetUnionElem(v int64) { panic("Unsupported operation") }
+func (_ PedidoDos) SetBoolean(v bool)    { panic("Unsupported operation") }
+func (_ PedidoDos) SetInt(v int32)       { panic("Unsupported operation") }
+func (_ PedidoDos) SetLong(v int64)      { panic("Unsupported operation") }
+func (_ PedidoDos) SetFloat(v float32)   { panic("Unsupported operation") }
+func (_ PedidoDos) SetDouble(v float64)  { panic("Unsupported operation") }
+func (_ PedidoDos) SetBytes(v []byte)    { panic("Unsupported operation") }
+func (_ PedidoDos) SetString(v string)   { panic("Unsupported operation") }
+func (_ PedidoDos) SetUnionElem(v int64) { panic("Unsupported operation") }
 
-func (r *Pedido) Get(i int) types.Field {
+func (r *PedidoDos) Get(i int) types.Field {
 	switch i {
 	case 0:
 		w := types.String{Target: &r.Id}
@@ -152,41 +151,36 @@ func (r *Pedido) Get(i int) types.Field {
 		return w
 
 	case 6:
-		r.Cuando = NewUnionNullString()
+		w := types.String{Target: &r.Cuando}
 
-		return r.Cuando
+		return w
+
 	}
 	panic("Unknown field index")
 }
 
-func (r *Pedido) SetDefault(i int) {
+func (r *PedidoDos) SetDefault(i int) {
 	switch i {
-	case 6:
-		r.Cuando = nil
-		return
 	}
 	panic("Unknown field index")
 }
 
-func (r *Pedido) NullField(i int) {
+func (r *PedidoDos) NullField(i int) {
 	switch i {
-	case 6:
-		r.Cuando = nil
-		return
 	}
 	panic("Not a nullable field index")
 }
 
-func (_ Pedido) AppendMap(key string) types.Field { panic("Unsupported operation") }
-func (_ Pedido) AppendArray() types.Field         { panic("Unsupported operation") }
-func (_ Pedido) HintSize(int)                     { panic("Unsupported operation") }
-func (_ Pedido) Finalize()                        {}
+func (_ PedidoDos) AppendMap(key string) types.Field { panic("Unsupported operation") }
+func (_ PedidoDos) AppendArray() types.Field         { panic("Unsupported operation") }
+func (_ PedidoDos) HintSize(int)                     { panic("Unsupported operation") }
+func (_ PedidoDos) Finalize()                        {}
 
-func (_ Pedido) AvroCRC64Fingerprint() []byte {
-	return []byte(PedidoAvroCRC64Fingerprint)
+func (_ PedidoDos) AvroCRC64Fingerprint() []byte {
+	return []byte(PedidoDosAvroCRC64Fingerprint)
 }
 
-func (r Pedido) MarshalJSON() ([]byte, error) {
+func (r PedidoDos) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["id"], err = json.Marshal(r.Id)
@@ -220,7 +214,7 @@ func (r Pedido) MarshalJSON() ([]byte, error) {
 	return json.Marshal(output)
 }
 
-func (r *Pedido) UnmarshalJSON(data []byte) error {
+func (r *PedidoDos) UnmarshalJSON(data []byte) error {
 	var fields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &fields); err != nil {
 		return err
@@ -323,9 +317,7 @@ func (r *Pedido) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Cuando = NewUnionNullString()
-
-		r.Cuando = nil
+		return fmt.Errorf("no value specified for cuando")
 	}
 	return nil
 }
