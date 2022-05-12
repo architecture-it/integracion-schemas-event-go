@@ -25,13 +25,9 @@ type PedidoTres struct {
 	NumeroDePedido int32 `json:"numeroDePedido"`
 
 	Planta string `json:"planta"`
-
-	Almacen string `json:"almacen"`
-
-	Contrato string `json:"contrato"`
 }
 
-const PedidoTresAvroCRC64Fingerprint = "l\xaf\"c\xabg\x10\u007f"
+const PedidoTresAvroCRC64Fingerprint = "\xec\xc4\xe4\x1f\xb0\xe0\n\xb4"
 
 func NewPedidoTres() PedidoTres {
 	r := PedidoTres{}
@@ -75,14 +71,6 @@ func writePedidoTres(r PedidoTres, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Almacen, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Contrato, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -91,7 +79,7 @@ func (r PedidoTres) Serialize(w io.Writer) error {
 }
 
 func (r PedidoTres) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"numeroDePedido\",\"type\":\"int\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"}],\"name\":\"Andreani.pipeline.Event.PedidoTres\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"numeroDePedido\",\"type\":\"int\"},{\"name\":\"planta\",\"type\":\"string\"}],\"name\":\"Andreani.pipeline.Event.PedidoTres\",\"type\":\"record\"}"
 }
 
 func (r PedidoTres) SchemaName() string {
@@ -121,16 +109,6 @@ func (r *PedidoTres) Get(i int) types.Field {
 
 	case 2:
 		w := types.String{Target: &r.Planta}
-
-		return w
-
-	case 3:
-		w := types.String{Target: &r.Almacen}
-
-		return w
-
-	case 4:
-		w := types.String{Target: &r.Contrato}
 
 		return w
 
@@ -171,14 +149,6 @@ func (r PedidoTres) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["planta"], err = json.Marshal(r.Planta)
-	if err != nil {
-		return nil, err
-	}
-	output["almacen"], err = json.Marshal(r.Almacen)
-	if err != nil {
-		return nil, err
-	}
-	output["contrato"], err = json.Marshal(r.Contrato)
 	if err != nil {
 		return nil, err
 	}
@@ -233,34 +203,6 @@ func (r *PedidoTres) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for planta")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["almacen"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Almacen); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for almacen")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["contrato"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for contrato")
 	}
 	return nil
 }
