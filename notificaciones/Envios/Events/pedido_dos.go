@@ -3,6 +3,7 @@
  * SOURCES:
  *     Pedido.avsc
  *     PedidoDos.avsc
+ *     PedidoTres.avsc
  */
 package Events
 
@@ -34,7 +35,7 @@ type PedidoDos struct {
 	Cuando string `json:"cuando"`
 }
 
-const PedidoDosAvroCRC64Fingerprint = "dM\xde9\x03\xfd\u05fd"
+const PedidoDosAvroCRC64Fingerprint = "\x0f\xbcm\n\x1a;JZ"
 
 func NewPedidoDos() PedidoDos {
 	r := PedidoDos{}
@@ -102,11 +103,11 @@ func (r PedidoDos) Serialize(w io.Writer) error {
 }
 
 func (r PedidoDos) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"numeroDePedido\",\"type\":\"int\"},{\"name\":\"cicloDelPedido\",\"type\":\"string\"},{\"name\":\"codigoDeContratoInterno\",\"type\":\"long\"},{\"name\":\"estadoDelPedido\",\"type\":\"string\"},{\"name\":\"cuentaCorriente\",\"type\":\"long\"},{\"name\":\"cuando\",\"type\":\"string\"}],\"name\":\"Andreani.Scheme.Onboarding.PedidoDos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"numeroDePedido\",\"type\":\"int\"},{\"name\":\"cicloDelPedido\",\"type\":\"string\"},{\"name\":\"codigoDeContratoInterno\",\"type\":\"long\"},{\"name\":\"estadoDelPedido\",\"type\":\"string\"},{\"name\":\"cuentaCorriente\",\"type\":\"long\"},{\"name\":\"cuando\",\"type\":\"string\"}],\"name\":\"Andreani.pipeline.Event.PedidoDos\",\"type\":\"record\"}"
 }
 
 func (r PedidoDos) SchemaName() string {
-	return "Andreani.Scheme.Onboarding.PedidoDos"
+	return "Andreani.pipeline.Event.PedidoDos"
 }
 
 func (_ PedidoDos) SetBoolean(v bool)    { panic("Unsupported operation") }

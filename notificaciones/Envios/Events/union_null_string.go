@@ -3,6 +3,7 @@
  * SOURCES:
  *     Pedido.avsc
  *     PedidoDos.avsc
+ *     PedidoTres.avsc
  */
 package Events
 
