@@ -18,15 +18,70 @@ import (
 var _ = fmt.Printf
 
 type PedidoTres struct {
-	Id string `json:"id"`
-
-	NumeroDePedido int32 `json:"numeroDePedido"`
-
-	Planta string `json:"planta"`
-
-	Almacen string `json:"almacen"`
-
-	Contrato string `json:"contrato"`
+Propietario                 string     `json:"propietario" validate:"required,max=15"`
+		ClientePadre                string     `json:"clientePadre"` //datos request Farma
+		IdPedido                    string     `json:"idPedido" validate:"max=32"`
+		Numero                      string     `json:"numero" validate:"max=32"` //datos request anterior
+		Tipo                        string     `json:"tipo" validate:"required,max=10"`
+		PrioridadDePreparacion      string     `json:"prioridadDePreparacion" validate:"required,max=10"`
+		FechaPedido                 string     `json:"fechaPedido" validate:"required"`
+		FechaEntrega                string     `json:"fechaEntrega"`
+		Remito                      string     `json:"remito" validate:"max=32"`
+		IdCliente                   string     `json:"idCliente" validate:"max=30"`
+		ReferenciaCliente           string     `json:"referenciaCliente" validate:"max=30"` //datos request anterior
+		CodigoTransportista         string     `json:"codigoTransportista" validate:"max=15"`
+		AcondicionamientoSecundario string     `json:"acondicionamientoSecundario"` //datos request Farma UDF
+		Motivo                      string     `json:"motivo"`                      //datos request Farma UDF
+		RamoDelDestinatario         string     `json:"ramoDelDestinatario"`         //datos request Farma UDF
+		IDEjecucion                 string     `json:"idEjecucion"`                 //datos request Farma UDF
+		Embalaje                    string     `json:"descripcionEmbalaje"`
+		ZonaConsumo                 string     `json:"zonaConsumo"` //datos request Farma
+		FacturaLegal                string     `json:"facturaLegal"`
+		FacturaInterna              string     `json:"facturaInterna"`
+		TieneGestionCobranza        string     `json:"tieneGestionCobranza"`
+		ValorSeguro                 string     `json:"valorSeguro"`
+		OrdenDeCompra               string     `json:"ordenDeCompra"`
+		Notas                       []Metadato `json:"notas"`
+		AdmiteCambioLoteDirigido    string     `json:"admiteCambioLoteDirigido"` //datos request Farma UDF
+		AdmitePickingParcial        string     `json:"admitePickingParcial"`     //datos request Farma UDF
+		ImprimeDocumentacion        bool       `json:"imprimeDocumentacion"`     //datos request Farma
+		NROVale                     string     `json:"nroVale"`                  //datos request Farma UDF
+		CamposLibres                []Metadato `json:"camposLibres"`
+		SocioComercial              string     `json:"socioComercial" validate:"max=30"`
+		ModoDeTransporte            string     `json:"modoDeTransporte" validate:"max=30"`
+		Destinatario                struct {
+			NumeroDeDocumento string            `json:"numeroDeDocumento"`
+			IdDestinatario    string            `json:"idDestinatario"`
+			IdInternoCliente  string            `json:"idInternoCliente"` //datos request anterior
+			NombreCompleto    string            `json:"nombreCompleto" validate:"max=45"`
+			Email             string            `json:"email" validate:"max=110"`
+			Telefonos         []TelefonoRequest `json:"telefonos"`
+			TipoDeDocumento   string            `json:"tipoDeDocumento" validate:"max=30"`
+			Contacto          string            `json:"contacto" validate:"max=30"`
+		} `json:"destinatario" validate:"required,dive"`
+		Direccion struct {
+			Calle                  string     `json:"calle" validate:"max=45"`
+			Numero                 string     `json:"numero" validate:"max=45"`
+			CodigoPostal           string     `json:"codigoPostal" validate:"max=18"`
+			Localidad              string     `json:"localidad" validate:"max=45"`
+			Provincia              string     `json:"provincia" validate:"max=25"`
+			Pais                   string     `json:"pais" validate:"max=30"`
+			Piso                   string     `json:"piso"`
+			Departamento           string     `json:"Departamento"`
+			ReferenciaDeDomicilio  string     `json:"referenciaDeDomicilio"`
+			ComponentesDeDireccion []Metadato `json:"componentesDeDireccion"`
+		} `json:"direccion" validate:"required,dive"`
+		DetalleOrdenDeCompra struct {
+			GS1NumeroDeLineaDeCliente string `json:"numeroDeLineaDeCliente"` //datos request Farma
+			GS1OrdenDeCompra          string `json:"ordenDeCompraDeCliente"` //datos request Farma
+			GS1FechaOrdenDeCompra     string `json:"fechaOrdenDeCompra"`     //datos request Farma
+			GS1NumeroLinea            string `json:"numeroDeLinea"`          //datos request Farma
+			GS1TipoMaterial           string `json:"tipoMaterial"`           //datos request Farma
+			GS1CantidadPedida         string `json:"cantidadPedida"`         //datos request Farma
+		} `json:"detalleordenDeCompra"`
+		Detalles         []DetallePedidoRequest `json:"detalles" validate:"required,dive"`
+		DatosAdicionales []Metadato             `json:"datosAdicionales"`
+	} `json:"pedido" validate:"required,dive"`
 }
 
 const PedidoTresAvroCRC64Fingerprint = "\"\x898\x96\xcc\xe2\x10\xc0"
