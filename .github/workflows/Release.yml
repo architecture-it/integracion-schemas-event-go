@@ -1,14 +1,21 @@
 on:
   push:
-    # Publish semver tags as releases.
-    tags:
-    - 'v*.*.*'
+    branches: [main]
 
 name: Create Release
 
 jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: rickstaa/action-create-tag@v1
+        with:
+          tag: v1.1.${{ github.run_number }}
+          message: "Latest release"
   build:
     name: Create Release
+    needs: [create-tag]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
