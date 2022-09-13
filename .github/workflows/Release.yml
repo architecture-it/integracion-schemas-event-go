@@ -5,32 +5,20 @@ on:
 name: Create Release
 
 jobs:
-  create-tag:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: rickstaa/action-create-tag@v1
-        with:
-          tag: v1.1.${{ github.run_number }}
-          message: "Latest release"
   build:
     name: Create Release
-    needs: [create-tag]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      - name: Set output
-        id: vars
-        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
       - name: Create Release
         id: create_release
         uses: actions/create-release@latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ steps.vars.outputs.tag }}
-          release_name: Release ${{ steps.vars.outputs.tag }}
+          tag_name: v1.1.${{ github.run_number }}
+          release_name: Release v1.1.${{ github.run_number }}
           body: |
             ${{ github.event.head_commit.message }}
           draft: false
