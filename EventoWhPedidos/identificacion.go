@@ -29,15 +29,9 @@ type Identificacion struct {
 	FechaGeneracion int64 `json:"FechaGeneracion"`
 
 	SistemaOrigen string `json:"SistemaOrigen"`
-
-	Almacen string `json:"Almacen"`
-
-	Propietario string `json:"Propietario"`
-
-	Instancia string `json:"Instancia"`
 }
 
-const IdentificacionAvroCRC64Fingerprint = "k^.f\xb5\xb9k\x98"
+const IdentificacionAvroCRC64Fingerprint = "\x8e\x86=\a\xe0*\xbf\xc7"
 
 func NewIdentificacion() Identificacion {
 	r := Identificacion{}
@@ -93,18 +87,6 @@ func writeIdentificacion(r Identificacion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Almacen, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Propietario, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Instancia, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -113,7 +95,7 @@ func (r Identificacion) Serialize(w io.Writer) error {
 }
 
 func (r Identificacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.Common.Identificacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.Common.Identificacion\",\"type\":\"record\"}"
 }
 
 func (r Identificacion) SchemaName() string {
@@ -158,21 +140,6 @@ func (r *Identificacion) Get(i int) types.Field {
 
 	case 5:
 		w := types.String{Target: &r.SistemaOrigen}
-
-		return w
-
-	case 6:
-		w := types.String{Target: &r.Almacen}
-
-		return w
-
-	case 7:
-		w := types.String{Target: &r.Propietario}
-
-		return w
-
-	case 8:
-		w := types.String{Target: &r.Instancia}
 
 		return w
 
@@ -225,18 +192,6 @@ func (r Identificacion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["SistemaOrigen"], err = json.Marshal(r.SistemaOrigen)
-	if err != nil {
-		return nil, err
-	}
-	output["Almacen"], err = json.Marshal(r.Almacen)
-	if err != nil {
-		return nil, err
-	}
-	output["Propietario"], err = json.Marshal(r.Propietario)
-	if err != nil {
-		return nil, err
-	}
-	output["Instancia"], err = json.Marshal(r.Instancia)
 	if err != nil {
 		return nil, err
 	}
@@ -333,48 +288,6 @@ func (r *Identificacion) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for SistemaOrigen")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Almacen"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Almacen); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Almacen")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Propietario"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Propietario); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Propietario")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Instancia"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Instancia); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Instancia")
 	}
 	return nil
 }
