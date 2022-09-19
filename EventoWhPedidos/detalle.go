@@ -58,12 +58,14 @@ type Detalle struct {
 
 	CantidadExpedida Bytes `json:"CantidadExpedida"`
 
-	EstadoLinea string `json:"EstadoLinea"`
+	EstadoLineaCodigo string `json:"EstadoLineaCodigo"`
+
+	EstadoLineaDescripcion string `json:"EstadoLineaDescripcion"`
 
 	CantidadBultos string `json:"CantidadBultos"`
 }
 
-const DetalleAvroCRC64Fingerprint = "\xf2\xc5Eugpy\x8e"
+const DetalleAvroCRC64Fingerprint = "\xa4\r\xb6\x96\b\xe9\x1a\xc2"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -175,7 +177,11 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.EstadoLinea, w)
+	err = vm.WriteString(r.EstadoLineaCodigo, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.EstadoLineaDescripcion, w)
 	if err != nil {
 		return err
 	}
@@ -191,7 +197,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"LineaExterna\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VitaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"EsfuerzoLineaApiPlani\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":{\"logicalType\":\"decimal\",\"precision\":22,\"scale\":5,\"type\":\"bytes\"}},{\"name\":\"CantidadPickeada\",\"type\":{\"logicalType\":\"decimal\",\"precision\":22,\"scale\":5,\"type\":\"bytes\"}},{\"name\":\"CantidadExpedida\",\"type\":{\"logicalType\":\"decimal\",\"precision\":22,\"scale\":5,\"type\":\"bytes\"}},{\"name\":\"EstadoLinea\",\"type\":\"string\"},{\"name\":\"CantidadBultos\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.Common.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"LineaExterna\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VitaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"EsfuerzoLineaApiPlani\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":{\"logicalType\":\"decimal\",\"precision\":22,\"scale\":5,\"type\":\"bytes\"}},{\"name\":\"CantidadPickeada\",\"type\":{\"logicalType\":\"decimal\",\"precision\":22,\"scale\":5,\"type\":\"bytes\"}},{\"name\":\"CantidadExpedida\",\"type\":{\"logicalType\":\"decimal\",\"precision\":22,\"scale\":5,\"type\":\"bytes\"}},{\"name\":\"EstadoLineaCodigo\",\"type\":\"string\"},{\"name\":\"EstadoLineaDescripcion\",\"type\":\"string\"},{\"name\":\"CantidadBultos\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.Common.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -304,11 +310,16 @@ func (r *Detalle) Get(i int) types.Field {
 		return w
 
 	case 20:
-		w := types.String{Target: &r.EstadoLinea}
+		w := types.String{Target: &r.EstadoLineaCodigo}
 
 		return w
 
 	case 21:
+		w := types.String{Target: &r.EstadoLineaDescripcion}
+
+		return w
+
+	case 22:
 		w := types.String{Target: &r.CantidadBultos}
 
 		return w
@@ -439,7 +450,11 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["EstadoLinea"], err = json.Marshal(r.EstadoLinea)
+	output["EstadoLineaCodigo"], err = json.Marshal(r.EstadoLineaCodigo)
+	if err != nil {
+		return nil, err
+	}
+	output["EstadoLineaDescripcion"], err = json.Marshal(r.EstadoLineaDescripcion)
 	if err != nil {
 		return nil, err
 	}
@@ -738,18 +753,32 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for CantidadExpedida")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["EstadoLinea"]; ok {
+		if v, ok := fields["EstadoLineaCodigo"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.EstadoLinea); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.EstadoLineaCodigo); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EstadoLinea")
+		return fmt.Errorf("no value specified for EstadoLineaCodigo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EstadoLineaDescripcion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EstadoLineaDescripcion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EstadoLineaDescripcion")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CantidadBultos"]; ok {

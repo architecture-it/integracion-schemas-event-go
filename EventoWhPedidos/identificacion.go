@@ -26,12 +26,12 @@ type Identificacion struct {
 
 	Proceso string `json:"Proceso"`
 
-	FechaGeneracion int64 `json:"FechaGeneracion"`
+	FechaHoraGeneracion int64 `json:"FechaHoraGeneracion"`
 
 	SistemaOrigen string `json:"SistemaOrigen"`
 }
 
-const IdentificacionAvroCRC64Fingerprint = "\x8e\x86=\a\xe0*\xbf\xc7"
+const IdentificacionAvroCRC64Fingerprint = "\"@n\xe0\xa84\f\x9c"
 
 func NewIdentificacion() Identificacion {
 	r := Identificacion{}
@@ -79,7 +79,7 @@ func writeIdentificacion(r Identificacion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.FechaGeneracion, w)
+	err = vm.WriteLong(r.FechaHoraGeneracion, w)
 	if err != nil {
 		return err
 	}
@@ -95,7 +95,7 @@ func (r Identificacion) Serialize(w io.Writer) error {
 }
 
 func (r Identificacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.Common.Identificacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.Common.Identificacion\",\"type\":\"record\"}"
 }
 
 func (r Identificacion) SchemaName() string {
@@ -134,7 +134,7 @@ func (r *Identificacion) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.Long{Target: &r.FechaGeneracion}
+		w := types.Long{Target: &r.FechaHoraGeneracion}
 
 		return w
 
@@ -187,7 +187,7 @@ func (r Identificacion) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["FechaGeneracion"], err = json.Marshal(r.FechaGeneracion)
+	output["FechaHoraGeneracion"], err = json.Marshal(r.FechaHoraGeneracion)
 	if err != nil {
 		return nil, err
 	}
@@ -262,18 +262,18 @@ func (r *Identificacion) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Proceso")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["FechaGeneracion"]; ok {
+		if v, ok := fields["FechaHoraGeneracion"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.FechaGeneracion); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaHoraGeneracion); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FechaGeneracion")
+		return fmt.Errorf("no value specified for FechaHoraGeneracion")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SistemaOrigen"]; ok {
