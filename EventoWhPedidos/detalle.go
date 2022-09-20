@@ -52,11 +52,11 @@ type Detalle struct {
 
 	VidaUtil *UnionNullString `json:"VidaUtil"`
 
-	Cantidad Bytes `json:"Cantidad"`
+	Cantidad float32 `json:"Cantidad"`
 
-	CantidadPickeada Bytes `json:"CantidadPickeada"`
+	CantidadPickeada float32 `json:"CantidadPickeada"`
 
-	CantidadExpedida Bytes `json:"CantidadExpedida"`
+	CantidadExpedida float32 `json:"CantidadExpedida"`
 
 	EstadoLineaCodigo string `json:"EstadoLineaCodigo"`
 
@@ -65,7 +65,7 @@ type Detalle struct {
 	CantidadBultos string `json:"CantidadBultos"`
 }
 
-const DetalleAvroCRC64Fingerprint = "\xa4\r\xb6\x96\b\xe9\x1a\xc2"
+const DetalleAvroCRC64Fingerprint = "\xe5SJKyQ͉"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -165,15 +165,15 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteBytes(r.Cantidad, w)
+	err = vm.WriteFloat(r.Cantidad, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteBytes(r.CantidadPickeada, w)
+	err = vm.WriteFloat(r.CantidadPickeada, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteBytes(r.CantidadExpedida, w)
+	err = vm.WriteFloat(r.CantidadExpedida, w)
 	if err != nil {
 		return err
 	}
@@ -197,7 +197,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"LineaExterna\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VitaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"EsfuerzoLineaApiPlani\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":{\"logicalType\":\"decimal\",\"precision\":22,\"scale\":5,\"type\":\"bytes\"}},{\"name\":\"CantidadPickeada\",\"type\":{\"logicalType\":\"decimal\",\"precision\":22,\"scale\":5,\"type\":\"bytes\"}},{\"name\":\"CantidadExpedida\",\"type\":{\"logicalType\":\"decimal\",\"precision\":22,\"scale\":5,\"type\":\"bytes\"}},{\"name\":\"EstadoLineaCodigo\",\"type\":\"string\"},{\"name\":\"EstadoLineaDescripcion\",\"type\":\"string\"},{\"name\":\"CantidadBultos\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.Common.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"LineaExterna\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VitaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"EsfuerzoLineaApiPlani\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":\"float\"},{\"name\":\"CantidadPickeada\",\"type\":\"float\"},{\"name\":\"CantidadExpedida\",\"type\":\"float\"},{\"name\":\"EstadoLineaCodigo\",\"type\":\"string\"},{\"name\":\"EstadoLineaDescripcion\",\"type\":\"string\"},{\"name\":\"CantidadBultos\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.Common.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -295,17 +295,17 @@ func (r *Detalle) Get(i int) types.Field {
 
 		return r.VidaUtil
 	case 17:
-		w := BytesWrapper{Target: &r.Cantidad}
+		w := types.Float{Target: &r.Cantidad}
 
 		return w
 
 	case 18:
-		w := BytesWrapper{Target: &r.CantidadPickeada}
+		w := types.Float{Target: &r.CantidadPickeada}
 
 		return w
 
 	case 19:
-		w := BytesWrapper{Target: &r.CantidadExpedida}
+		w := types.Float{Target: &r.CantidadExpedida}
 
 		return w
 
