@@ -24,8 +24,6 @@ type Cabecera struct {
 
 	Propietario string `json:"Propietario"`
 
-	Stock string `json:"Stock"`
-
 	TipoOrigen string `json:"TipoOrigen"`
 
 	CodigoOrigenWH string `json:"CodigoOrigenWH"`
@@ -33,7 +31,7 @@ type Cabecera struct {
 	CodigoOrigenExterno string `json:"CodigoOrigenExterno"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "ٞ\xc8dܸ\x9a\xab"
+const CabeceraAvroCRC64Fingerprint = "\xc1 ,\xa0<%\xdd|"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -77,10 +75,6 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Stock, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.TipoOrigen, w)
 	if err != nil {
 		return err
@@ -101,7 +95,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Stock\",\"type\":\"string\"},{\"name\":\"TipoOrigen\",\"type\":\"string\"},{\"name\":\"CodigoOrigenWH\",\"type\":\"string\"},{\"name\":\"CodigoOrigenExterno\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhArticulos.Events.AsnConfirmadaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"TipoOrigen\",\"type\":\"string\"},{\"name\":\"CodigoOrigenWH\",\"type\":\"string\"},{\"name\":\"CodigoOrigenExterno\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhArticulos.Events.AsnConfirmadaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -135,21 +129,16 @@ func (r *Cabecera) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.Stock}
-
-		return w
-
-	case 4:
 		w := types.String{Target: &r.TipoOrigen}
 
 		return w
 
-	case 5:
+	case 4:
 		w := types.String{Target: &r.CodigoOrigenWH}
 
 		return w
 
-	case 6:
+	case 5:
 		w := types.String{Target: &r.CodigoOrigenExterno}
 
 		return w
@@ -191,10 +180,6 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Propietario"], err = json.Marshal(r.Propietario)
-	if err != nil {
-		return nil, err
-	}
-	output["Stock"], err = json.Marshal(r.Stock)
 	if err != nil {
 		return nil, err
 	}
@@ -261,20 +246,6 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Propietario")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Stock"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Stock); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Stock")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TipoOrigen"]; ok {

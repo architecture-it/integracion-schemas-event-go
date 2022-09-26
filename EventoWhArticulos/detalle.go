@@ -24,9 +24,9 @@ type Detalle struct {
 
 	LoteSecundario string `json:"LoteSecundario"`
 
-	FechaFabricacion string `json:"FechaFabricacion"`
+	FechaFabricacion *UnionNullLong `json:"FechaFabricacion"`
 
-	FechaVencimiento string `json:"FechaVencimiento"`
+	FechaVencimiento *UnionNullLong `json:"FechaVencimiento"`
 
 	ProductoTrazable string `json:"ProductoTrazable"`
 
@@ -38,16 +38,16 @@ type Detalle struct {
 
 	VidaUtilLote string `json:"VidaUtilLote"`
 
-	EntregaAntesDe string `json:"EntregaAntesDe"`
+	EntregaAntesDe *UnionNullLong `json:"EntregaAntesDe"`
 
-	ConsumoAntesDe string `json:"ConsumoAntesDe"`
+	ConsumoAntesDe *UnionNullLong `json:"ConsumoAntesDe"`
 
-	StockDisponible string `json:"StockDisponible"`
+	StockDisponible float32 `json:"StockDisponible"`
 
-	StockEnTransito string `json:"StockEnTransito"`
+	StockEnTransito float32 `json:"StockEnTransito"`
 }
 
-const DetalleAvroCRC64Fingerprint = "ؓmfg\vЈ"
+const DetalleAvroCRC64Fingerprint = "\x06\xf1\xab\x02\t\xa4\xad\xf4"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -91,11 +91,11 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FechaFabricacion, w)
+	err = writeUnionNullLong(r.FechaFabricacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FechaVencimiento, w)
+	err = writeUnionNullLong(r.FechaVencimiento, w)
 	if err != nil {
 		return err
 	}
@@ -119,19 +119,19 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.EntregaAntesDe, w)
+	err = writeUnionNullLong(r.EntregaAntesDe, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ConsumoAntesDe, w)
+	err = writeUnionNullLong(r.ConsumoAntesDe, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.StockDisponible, w)
+	err = vm.WriteFloat(r.StockDisponible, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.StockEnTransito, w)
+	err = vm.WriteFloat(r.StockEnTransito, w)
 	if err != nil {
 		return err
 	}
@@ -143,7 +143,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":\"string\"},{\"name\":\"FechaVencimiento\",\"type\":\"string\"},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":\"string\"},{\"name\":\"ConsumoAntesDe\",\"type\":\"string\"},{\"name\":\"StockDisponible\",\"type\":\"string\"},{\"name\":\"StockEnTransito\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhArticulos.Events.AsnConfirmadaCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"StockDisponible\",\"type\":\"float\"},{\"name\":\"StockEnTransito\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhArticulos.Events.AsnConfirmadaCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -177,15 +177,13 @@ func (r *Detalle) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.FechaFabricacion}
+		r.FechaFabricacion = NewUnionNullLong()
 
-		return w
-
+		return r.FechaFabricacion
 	case 4:
-		w := types.String{Target: &r.FechaVencimiento}
+		r.FechaVencimiento = NewUnionNullLong()
 
-		return w
-
+		return r.FechaVencimiento
 	case 5:
 		w := types.String{Target: &r.ProductoTrazable}
 
@@ -212,22 +210,20 @@ func (r *Detalle) Get(i int) types.Field {
 		return w
 
 	case 10:
-		w := types.String{Target: &r.EntregaAntesDe}
+		r.EntregaAntesDe = NewUnionNullLong()
 
-		return w
-
+		return r.EntregaAntesDe
 	case 11:
-		w := types.String{Target: &r.ConsumoAntesDe}
+		r.ConsumoAntesDe = NewUnionNullLong()
 
-		return w
-
+		return r.ConsumoAntesDe
 	case 12:
-		w := types.String{Target: &r.StockDisponible}
+		w := types.Float{Target: &r.StockDisponible}
 
 		return w
 
 	case 13:
-		w := types.String{Target: &r.StockEnTransito}
+		w := types.Float{Target: &r.StockEnTransito}
 
 		return w
 
@@ -243,6 +239,18 @@ func (r *Detalle) SetDefault(i int) {
 
 func (r *Detalle) NullField(i int) {
 	switch i {
+	case 3:
+		r.FechaFabricacion = nil
+		return
+	case 4:
+		r.FechaVencimiento = nil
+		return
+	case 10:
+		r.EntregaAntesDe = nil
+		return
+	case 11:
+		r.ConsumoAntesDe = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
