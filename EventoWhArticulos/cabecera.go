@@ -29,9 +29,15 @@ type Cabecera struct {
 	CodigoOrigenWH string `json:"CodigoOrigenWH"`
 
 	CodigoOrigenExterno string `json:"CodigoOrigenExterno"`
+
+	ContratoServicioIngreso *UnionNullString `json:"ContratoServicioIngreso"`
+
+	NomenclaturaServicioIngreso *UnionNullString `json:"NomenclaturaServicioIngreso"`
+
+	DescripcionServicioIngreso *UnionNullString `json:"DescripcionServicioIngreso"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\xc1 ,\xa0<%\xdd|"
+const CabeceraAvroCRC64Fingerprint = "\xebվ\xcb\xd2*\x9c\xfb"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -87,6 +93,18 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ContratoServicioIngreso, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NomenclaturaServicioIngreso, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.DescripcionServicioIngreso, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -95,7 +113,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"TipoOrigen\",\"type\":\"string\"},{\"name\":\"CodigoOrigenWH\",\"type\":\"string\"},{\"name\":\"CodigoOrigenExterno\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhArticulos.Events.AsnConfirmadaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"TipoOrigen\",\"type\":\"string\"},{\"name\":\"CodigoOrigenWH\",\"type\":\"string\"},{\"name\":\"CodigoOrigenExterno\",\"type\":\"string\"},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DescripcionServicioIngreso\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhArticulos.Events.AsnConfirmadaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -143,6 +161,18 @@ func (r *Cabecera) Get(i int) types.Field {
 
 		return w
 
+	case 6:
+		r.ContratoServicioIngreso = NewUnionNullString()
+
+		return r.ContratoServicioIngreso
+	case 7:
+		r.NomenclaturaServicioIngreso = NewUnionNullString()
+
+		return r.NomenclaturaServicioIngreso
+	case 8:
+		r.DescripcionServicioIngreso = NewUnionNullString()
+
+		return r.DescripcionServicioIngreso
 	}
 	panic("Unknown field index")
 }
@@ -155,6 +185,15 @@ func (r *Cabecera) SetDefault(i int) {
 
 func (r *Cabecera) NullField(i int) {
 	switch i {
+	case 6:
+		r.ContratoServicioIngreso = nil
+		return
+	case 7:
+		r.NomenclaturaServicioIngreso = nil
+		return
+	case 8:
+		r.DescripcionServicioIngreso = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -192,6 +231,18 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CodigoOrigenExterno"], err = json.Marshal(r.CodigoOrigenExterno)
+	if err != nil {
+		return nil, err
+	}
+	output["ContratoServicioIngreso"], err = json.Marshal(r.ContratoServicioIngreso)
+	if err != nil {
+		return nil, err
+	}
+	output["NomenclaturaServicioIngreso"], err = json.Marshal(r.NomenclaturaServicioIngreso)
+	if err != nil {
+		return nil, err
+	}
+	output["DescripcionServicioIngreso"], err = json.Marshal(r.DescripcionServicioIngreso)
 	if err != nil {
 		return nil, err
 	}
@@ -288,6 +339,48 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CodigoOrigenExterno")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ContratoServicioIngreso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContratoServicioIngreso); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for ContratoServicioIngreso")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NomenclaturaServicioIngreso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NomenclaturaServicioIngreso); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for NomenclaturaServicioIngreso")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DescripcionServicioIngreso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionServicioIngreso); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for DescripcionServicioIngreso")
 	}
 	return nil
 }
