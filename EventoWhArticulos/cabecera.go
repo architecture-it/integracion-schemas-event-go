@@ -35,9 +35,17 @@ type Cabecera struct {
 	NomenclaturaServicioIngreso *UnionNullString `json:"NomenclaturaServicioIngreso"`
 
 	DescripcionServicioIngreso *UnionNullString `json:"DescripcionServicioIngreso"`
+
+	StockAnteriorSKU float32 `json:"StockAnteriorSKU"`
+
+	StockTotalSKU float32 `json:"StockTotalSKU"`
+
+	StockDisponibleSKU float32 `json:"StockDisponibleSKU"`
+
+	StockEnTransitoSKU float32 `json:"StockEnTransitoSKU"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\xebվ\xcb\xd2*\x9c\xfb"
+const CabeceraAvroCRC64Fingerprint = "\xa0\x80^\xa9\xb1\xae!S"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -105,6 +113,22 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteFloat(r.StockAnteriorSKU, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.StockTotalSKU, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.StockDisponibleSKU, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.StockEnTransitoSKU, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -113,7 +137,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"TipoOrigen\",\"type\":\"string\"},{\"name\":\"CodigoOrigenWH\",\"type\":\"string\"},{\"name\":\"CodigoOrigenExterno\",\"type\":\"string\"},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DescripcionServicioIngreso\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhArticulos.Events.AsnConfirmadaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"TipoOrigen\",\"type\":\"string\"},{\"name\":\"CodigoOrigenWH\",\"type\":\"string\"},{\"name\":\"CodigoOrigenExterno\",\"type\":\"string\"},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DescripcionServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"StockAnteriorSKU\",\"type\":\"float\"},{\"name\":\"StockTotalSKU\",\"type\":\"float\"},{\"name\":\"StockDisponibleSKU\",\"type\":\"float\"},{\"name\":\"StockEnTransitoSKU\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhArticulos.Events.AsnConfirmadaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -173,6 +197,26 @@ func (r *Cabecera) Get(i int) types.Field {
 		r.DescripcionServicioIngreso = NewUnionNullString()
 
 		return r.DescripcionServicioIngreso
+	case 9:
+		w := types.Float{Target: &r.StockAnteriorSKU}
+
+		return w
+
+	case 10:
+		w := types.Float{Target: &r.StockTotalSKU}
+
+		return w
+
+	case 11:
+		w := types.Float{Target: &r.StockDisponibleSKU}
+
+		return w
+
+	case 12:
+		w := types.Float{Target: &r.StockEnTransitoSKU}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -243,6 +287,22 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["DescripcionServicioIngreso"], err = json.Marshal(r.DescripcionServicioIngreso)
+	if err != nil {
+		return nil, err
+	}
+	output["StockAnteriorSKU"], err = json.Marshal(r.StockAnteriorSKU)
+	if err != nil {
+		return nil, err
+	}
+	output["StockTotalSKU"], err = json.Marshal(r.StockTotalSKU)
+	if err != nil {
+		return nil, err
+	}
+	output["StockDisponibleSKU"], err = json.Marshal(r.StockDisponibleSKU)
+	if err != nil {
+		return nil, err
+	}
+	output["StockEnTransitoSKU"], err = json.Marshal(r.StockEnTransitoSKU)
 	if err != nil {
 		return nil, err
 	}
@@ -381,6 +441,62 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for DescripcionServicioIngreso")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["StockAnteriorSKU"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockAnteriorSKU); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for StockAnteriorSKU")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["StockTotalSKU"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockTotalSKU); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for StockTotalSKU")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["StockDisponibleSKU"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockDisponibleSKU); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for StockDisponibleSKU")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["StockEnTransitoSKU"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockEnTransitoSKU); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for StockEnTransitoSKU")
 	}
 	return nil
 }
