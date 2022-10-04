@@ -24,18 +24,17 @@ type KafkaDemo struct {
 
 	Attendance int32 `json:"attendance"`
 
-	DoYouUnderstood *UnionNullString `json:"doYouUnderstood"`
+	DidYouUnderstand bool `json:"didYouUnderstand"`
 
 	Me Person `json:"me"`
 
 	Time int64 `json:"time"`
 }
 
-const KafkaDemoAvroCRC64Fingerprint = "[\xa6\x1b\xf0\xb3&9\x05"
+const KafkaDemoAvroCRC64Fingerprint = "p͝d\x999\x9c?"
 
 func NewKafkaDemo() KafkaDemo {
 	r := KafkaDemo{}
-	r.DoYouUnderstood = nil
 	r.Me = NewPerson()
 
 	return r
@@ -78,7 +77,7 @@ func writeKafkaDemo(r KafkaDemo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.DoYouUnderstood, w)
+	err = vm.WriteBool(r.DidYouUnderstand, w)
 	if err != nil {
 		return err
 	}
@@ -98,7 +97,7 @@ func (r KafkaDemo) Serialize(w io.Writer) error {
 }
 
 func (r KafkaDemo) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"attendance\",\"type\":\"int\"},{\"default\":null,\"name\":\"doYouUnderstood\",\"type\":[\"null\",\"string\"]},{\"name\":\"me\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]},{\"name\":\"members\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Team\",\"type\":\"record\"}]}],\"name\":\"Person\",\"namespace\":\"Andreani.Test.Events.Record.Common\",\"type\":\"record\"}},{\"name\":\"time\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Test.Events.Record.KafkaDemo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"attendance\",\"type\":\"int\"},{\"name\":\"didYouUnderstand\",\"type\":\"boolean\"},{\"name\":\"me\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]},{\"name\":\"members\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Team\",\"type\":\"record\"}]}],\"name\":\"Person\",\"namespace\":\"Andreani.Test.Events.Record.Common\",\"type\":\"record\"}},{\"name\":\"time\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Test.Events.Record.KafkaDemo\",\"type\":\"record\"}"
 }
 
 func (r KafkaDemo) SchemaName() string {
@@ -132,9 +131,10 @@ func (r *KafkaDemo) Get(i int) types.Field {
 		return w
 
 	case 3:
-		r.DoYouUnderstood = NewUnionNullString()
+		w := types.Boolean{Target: &r.DidYouUnderstand}
 
-		return r.DoYouUnderstood
+		return w
+
 	case 4:
 		r.Me = NewPerson()
 
@@ -153,18 +153,12 @@ func (r *KafkaDemo) Get(i int) types.Field {
 
 func (r *KafkaDemo) SetDefault(i int) {
 	switch i {
-	case 3:
-		r.DoYouUnderstood = nil
-		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *KafkaDemo) NullField(i int) {
 	switch i {
-	case 3:
-		r.DoYouUnderstood = nil
-		return
 	}
 	panic("Not a nullable field index")
 }
@@ -193,7 +187,7 @@ func (r KafkaDemo) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["doYouUnderstood"], err = json.Marshal(r.DoYouUnderstood)
+	output["didYouUnderstand"], err = json.Marshal(r.DidYouUnderstand)
 	if err != nil {
 		return nil, err
 	}
@@ -258,20 +252,18 @@ func (r *KafkaDemo) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for attendance")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["doYouUnderstood"]; ok {
+		if v, ok := fields["didYouUnderstand"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.DoYouUnderstood); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DidYouUnderstand); err != nil {
 			return err
 		}
 	} else {
-		r.DoYouUnderstood = NewUnionNullString()
-
-		r.DoYouUnderstood = nil
+		return fmt.Errorf("no value specified for didYouUnderstand")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["me"]; ok {
