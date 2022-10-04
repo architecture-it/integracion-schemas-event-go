@@ -18,9 +18,9 @@ import (
 var _ = fmt.Printf
 
 type Person struct {
-	Id int32 `json:"id"`
-
 	Name string `json:"name"`
+
+	Surname string `json:"surname"`
 
 	Seniority string `json:"seniority"`
 
@@ -29,7 +29,7 @@ type Person struct {
 	Team *UnionNullTeam `json:"team"`
 }
 
-const PersonAvroCRC64Fingerprint = "E\\ޓ&D\xf2\xd6"
+const PersonAvroCRC64Fingerprint = "\xab\xe3\xf3B\x03\xf9\xb5I"
 
 func NewPerson() Person {
 	r := Person{}
@@ -62,11 +62,11 @@ func DeserializePersonFromSchema(r io.Reader, schema string) (Person, error) {
 
 func writePerson(r Person, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.Id, w)
+	err = vm.WriteString(r.Name, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Name, w)
+	err = vm.WriteString(r.Surname, w)
 	if err != nil {
 		return err
 	}
@@ -90,7 +90,7 @@ func (r Person) Serialize(w io.Writer) error {
 }
 
 func (r Person) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]},{\"name\":\"members\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Team\",\"type\":\"record\"}]}],\"name\":\"Andreani.Test.Events.Record.Common.Person\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]},{\"name\":\"members\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Team\",\"type\":\"record\"}]}],\"name\":\"Andreani.Test.Events.Record.Common.Person\",\"type\":\"record\"}"
 }
 
 func (r Person) SchemaName() string {
@@ -109,12 +109,12 @@ func (_ Person) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Person) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.Id}
+		w := types.String{Target: &r.Name}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Name}
+		w := types.String{Target: &r.Surname}
 
 		return w
 
@@ -166,11 +166,11 @@ func (_ Person) AvroCRC64Fingerprint() []byte {
 func (r Person) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["id"], err = json.Marshal(r.Id)
+	output["name"], err = json.Marshal(r.Name)
 	if err != nil {
 		return nil, err
 	}
-	output["name"], err = json.Marshal(r.Name)
+	output["surname"], err = json.Marshal(r.Surname)
 	if err != nil {
 		return nil, err
 	}
@@ -197,20 +197,6 @@ func (r *Person) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["id"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Id); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for id")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["name"]; ok {
 			return v
 		}
@@ -223,6 +209,20 @@ func (r *Person) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for name")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["surname"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Surname); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for surname")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["seniority"]; ok {
