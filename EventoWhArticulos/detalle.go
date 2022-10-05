@@ -38,6 +38,8 @@ type Detalle struct {
 
 	VidaUtilLote string `json:"VidaUtilLote"`
 
+	Lpn *UnionNullString `json:"Lpn"`
+
 	EntregaAntesDe *UnionNullLong `json:"EntregaAntesDe"`
 
 	ConsumoAntesDe *UnionNullLong `json:"ConsumoAntesDe"`
@@ -51,7 +53,7 @@ type Detalle struct {
 	StockTotal float32 `json:"StockTotal"`
 }
 
-const DetalleAvroCRC64Fingerprint = "\xb3\xa69\xc9V\u05fb\r"
+const DetalleAvroCRC64Fingerprint = "\u007fF\x16\xabD\xbf\x16i"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -123,6 +125,10 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Lpn, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullLong(r.EntregaAntesDe, w)
 	if err != nil {
 		return err
@@ -155,7 +161,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"StockDisponible\",\"type\":\"float\"},{\"name\":\"StockEnTransito\",\"type\":\"float\"},{\"name\":\"StockAnterior\",\"type\":\"float\"},{\"name\":\"StockTotal\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhArticulos.Events.ArticuloExpedicionCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"Lpn\",\"type\":[\"null\",\"string\"]},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"StockDisponible\",\"type\":\"float\"},{\"name\":\"StockEnTransito\",\"type\":\"float\"},{\"name\":\"StockAnterior\",\"type\":\"float\"},{\"name\":\"StockTotal\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhArticulos.Events.ArticuloExpedicionCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -222,29 +228,33 @@ func (r *Detalle) Get(i int) types.Field {
 		return w
 
 	case 10:
+		r.Lpn = NewUnionNullString()
+
+		return r.Lpn
+	case 11:
 		r.EntregaAntesDe = NewUnionNullLong()
 
 		return r.EntregaAntesDe
-	case 11:
+	case 12:
 		r.ConsumoAntesDe = NewUnionNullLong()
 
 		return r.ConsumoAntesDe
-	case 12:
+	case 13:
 		w := types.Float{Target: &r.StockDisponible}
 
 		return w
 
-	case 13:
+	case 14:
 		w := types.Float{Target: &r.StockEnTransito}
 
 		return w
 
-	case 14:
+	case 15:
 		w := types.Float{Target: &r.StockAnterior}
 
 		return w
 
-	case 15:
+	case 16:
 		w := types.Float{Target: &r.StockTotal}
 
 		return w
@@ -268,9 +278,12 @@ func (r *Detalle) NullField(i int) {
 		r.FechaVencimiento = nil
 		return
 	case 10:
-		r.EntregaAntesDe = nil
+		r.Lpn = nil
 		return
 	case 11:
+		r.EntregaAntesDe = nil
+		return
+	case 12:
 		r.ConsumoAntesDe = nil
 		return
 	}
@@ -326,6 +339,10 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["VidaUtilLote"], err = json.Marshal(r.VidaUtilLote)
+	if err != nil {
+		return nil, err
+	}
+	output["Lpn"], err = json.Marshal(r.Lpn)
 	if err != nil {
 		return nil, err
 	}
@@ -502,6 +519,20 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for VidaUtilLote")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Lpn"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Lpn); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Lpn")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EntregaAntesDe"]; ok {
