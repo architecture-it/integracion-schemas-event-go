@@ -28,12 +28,12 @@ type Person struct {
 
 	Team *UnionNullTeam `json:"team"`
 
-	Age string `json:"age"`
+	Age int32 `json:"age"`
 
 	Direccion *UnionNullString `json:"direccion"`
 }
 
-const PersonAvroCRC64Fingerprint = "*\x05gS\x0f<G|"
+const PersonAvroCRC64Fingerprint = "\xe0\xb9J\x15\x98>#<"
 
 func NewPerson() Person {
 	r := Person{}
@@ -87,7 +87,7 @@ func writePerson(r Person, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Age, w)
+	err = vm.WriteInt(r.Age, w)
 	if err != nil {
 		return err
 	}
@@ -103,7 +103,7 @@ func (r Person) Serialize(w io.Writer) error {
 }
 
 func (r Person) Schema() string {
-	return "{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"name\":\"boss\",\"type\":\"string\"}],\"name\":\"Team\",\"type\":\"record\"}]},{\"name\":\"age\",\"type\":\"string\"},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Test.Events.Record.Common.Person\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"name\":\"boss\",\"type\":\"string\"}],\"name\":\"Team\",\"type\":\"record\"}]},{\"name\":\"age\",\"type\":\"int\"},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Test.Events.Record.Common.Person\",\"type\":\"record\"}"
 }
 
 func (r Person) SchemaName() string {
@@ -146,7 +146,7 @@ func (r *Person) Get(i int) types.Field {
 
 		return r.Team
 	case 5:
-		w := types.String{Target: &r.Age}
+		w := types.Int{Target: &r.Age}
 
 		return w
 
