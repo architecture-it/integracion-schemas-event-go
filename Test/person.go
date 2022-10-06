@@ -31,7 +31,7 @@ type Person struct {
 	Age int32 `json:"age"`
 }
 
-const PersonAvroCRC64Fingerprint = "\xe8\xe6Jm\x06ڝ\x11"
+const PersonAvroCRC64Fingerprint = "\x8c\xa7i\x11:j\xa7\f"
 
 func NewPerson() Person {
 	r := Person{}
@@ -96,11 +96,11 @@ func (r Person) Serialize(w io.Writer) error {
 }
 
 func (r Person) Schema() string {
-	return "{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]}],\"name\":\"Team\",\"type\":\"record\"}]},{\"name\":\"age\",\"type\":\"int\"}],\"name\":\"Andreani.TestRetro.Events.Record.Common.Person\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]}],\"name\":\"Team\",\"type\":\"record\"}]},{\"name\":\"age\",\"type\":\"int\"}],\"name\":\"Andreani.Test.Events.Record.Common.Person\",\"type\":\"record\"}"
 }
 
 func (r Person) SchemaName() string {
-	return "Andreani.TestRetro.Events.Record.Common.Person"
+	return "Andreani.Test.Events.Record.Common.Person"
 }
 
 func (_ Person) SetBoolean(v bool)    { panic("Unsupported operation") }

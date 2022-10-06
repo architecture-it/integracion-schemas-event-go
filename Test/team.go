@@ -23,7 +23,7 @@ type Team struct {
 	Boss *UnionNullString `json:"boss"`
 }
 
-const TeamAvroCRC64Fingerprint = "]\x1al\xf6\x130\xab\x86"
+const TeamAvroCRC64Fingerprint = "\xe5\xfe\xd6\x18\xd8\xcaR\x10"
 
 func NewTeam() Team {
 	r := Team{}
@@ -73,11 +73,11 @@ func (r Team) Serialize(w io.Writer) error {
 }
 
 func (r Team) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.TestRetro.Events.Record.Common.Team\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Test.Events.Record.Common.Team\",\"type\":\"record\"}"
 }
 
 func (r Team) SchemaName() string {
-	return "Andreani.TestRetro.Events.Record.Common.Team"
+	return "Andreani.Test.Events.Record.Common.Team"
 }
 
 func (_ Team) SetBoolean(v bool)    { panic("Unsupported operation") }
