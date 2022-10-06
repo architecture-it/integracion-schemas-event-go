@@ -31,7 +31,7 @@ type KafkaDemoRetro struct {
 	Time int64 `json:"time"`
 }
 
-const KafkaDemoRetroAvroCRC64Fingerprint = "Fv\xb2Qs~\xb5\x03"
+const KafkaDemoRetroAvroCRC64Fingerprint = "B\rߞ6\xa3\x1b}"
 
 func NewKafkaDemoRetro() KafkaDemoRetro {
 	r := KafkaDemoRetro{}
@@ -97,7 +97,7 @@ func (r KafkaDemoRetro) Serialize(w io.Writer) error {
 }
 
 func (r KafkaDemoRetro) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"attendance\",\"type\":\"int\"},{\"name\":\"didYouUnderstand\",\"type\":\"boolean\"},{\"name\":\"me\",\"type\":{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"name\":\"boss\",\"type\":\"string\"}],\"name\":\"Team\",\"type\":\"record\"}]},{\"name\":\"age\",\"type\":\"string\"}],\"name\":\"Person\",\"namespace\":\"Andreani.Test.Events.Record.Common\",\"type\":\"record\"}},{\"name\":\"time\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Test.Events.Record.KafkaDemoRetro\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"attendance\",\"type\":\"int\"},{\"name\":\"didYouUnderstand\",\"type\":\"boolean\"},{\"name\":\"me\",\"type\":{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"name\":\"boss\",\"type\":\"string\"}],\"name\":\"Team\",\"type\":\"record\"}]},{\"name\":\"age\",\"type\":\"string\"},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Person\",\"namespace\":\"Andreani.Test.Events.Record.Common\",\"type\":\"record\"}},{\"name\":\"time\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Test.Events.Record.KafkaDemoRetro\",\"type\":\"record\"}"
 }
 
 func (r KafkaDemoRetro) SchemaName() string {

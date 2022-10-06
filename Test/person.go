@@ -29,13 +29,16 @@ type Person struct {
 	Team *UnionNullTeam `json:"team"`
 
 	Age string `json:"age"`
+
+	Direccion *UnionNullString `json:"direccion"`
 }
 
-const PersonAvroCRC64Fingerprint = "w\"N\xef\xb4\xd9Y\xd6"
+const PersonAvroCRC64Fingerprint = "*\x05gS\x0f<G|"
 
 func NewPerson() Person {
 	r := Person{}
 	r.Team = nil
+	r.Direccion = nil
 	return r
 }
 
@@ -88,6 +91,10 @@ func writePerson(r Person, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Direccion, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -96,7 +103,7 @@ func (r Person) Serialize(w io.Writer) error {
 }
 
 func (r Person) Schema() string {
-	return "{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"name\":\"boss\",\"type\":\"string\"}],\"name\":\"Team\",\"type\":\"record\"}]},{\"name\":\"age\",\"type\":\"string\"}],\"name\":\"Andreani.Test.Events.Record.Common.Person\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"name\":\"boss\",\"type\":\"string\"}],\"name\":\"Team\",\"type\":\"record\"}]},{\"name\":\"age\",\"type\":\"string\"},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Test.Events.Record.Common.Person\",\"type\":\"record\"}"
 }
 
 func (r Person) SchemaName() string {
@@ -143,6 +150,10 @@ func (r *Person) Get(i int) types.Field {
 
 		return w
 
+	case 6:
+		r.Direccion = NewUnionNullString()
+
+		return r.Direccion
 	}
 	panic("Unknown field index")
 }
@@ -152,6 +163,9 @@ func (r *Person) SetDefault(i int) {
 	case 4:
 		r.Team = nil
 		return
+	case 6:
+		r.Direccion = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -160,6 +174,9 @@ func (r *Person) NullField(i int) {
 	switch i {
 	case 4:
 		r.Team = nil
+		return
+	case 6:
+		r.Direccion = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -198,6 +215,10 @@ func (r Person) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["age"], err = json.Marshal(r.Age)
+	if err != nil {
+		return nil, err
+	}
+	output["direccion"], err = json.Marshal(r.Direccion)
 	if err != nil {
 		return nil, err
 	}
@@ -296,6 +317,22 @@ func (r *Person) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for age")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["direccion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Direccion); err != nil {
+			return err
+		}
+	} else {
+		r.Direccion = NewUnionNullString()
+
+		r.Direccion = nil
 	}
 	return nil
 }
