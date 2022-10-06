@@ -21,14 +21,18 @@ type Team struct {
 	Tl *UnionNullString `json:"tl"`
 
 	Boss *UnionNullString `json:"boss"`
+
+	Members []string `json:"members"`
 }
 
-const TeamAvroCRC64Fingerprint = "\xe5\xfe\xd6\x18\xd8\xcaR\x10"
+const TeamAvroCRC64Fingerprint = "\xcb߃\xed,q\xb9\xa5"
 
 func NewTeam() Team {
 	r := Team{}
 	r.Tl = nil
 	r.Boss = nil
+	r.Members = make([]string, 0)
+
 	return r
 }
 
@@ -65,6 +69,10 @@ func writeTeam(r Team, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeArrayString(r.Members, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -73,7 +81,7 @@ func (r Team) Serialize(w io.Writer) error {
 }
 
 func (r Team) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Test.Events.Record.Common.Team\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]},{\"name\":\"members\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Andreani.Test.Events.Record.Common.Team\",\"type\":\"record\"}"
 }
 
 func (r Team) SchemaName() string {
@@ -99,6 +107,13 @@ func (r *Team) Get(i int) types.Field {
 		r.Boss = NewUnionNullString()
 
 		return r.Boss
+	case 2:
+		r.Members = make([]string, 0)
+
+		w := ArrayStringWrapper{Target: &r.Members}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -147,6 +162,10 @@ func (r Team) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["members"], err = json.Marshal(r.Members)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -188,6 +207,20 @@ func (r *Team) UnmarshalJSON(data []byte) error {
 		r.Boss = NewUnionNullString()
 
 		r.Boss = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["members"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Members); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for members")
 	}
 	return nil
 }

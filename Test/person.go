@@ -27,11 +27,9 @@ type Person struct {
 	OnSite bool `json:"onSite"`
 
 	Team *UnionNullTeam `json:"team"`
-
-	Age int32 `json:"age"`
 }
 
-const PersonAvroCRC64Fingerprint = "\x8c\xa7i\x11:j\xa7\f"
+const PersonAvroCRC64Fingerprint = "\xab\xe3\xf3B\x03\xf9\xb5I"
 
 func NewPerson() Person {
 	r := Person{}
@@ -84,10 +82,6 @@ func writePerson(r Person, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.Age, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -96,7 +90,7 @@ func (r Person) Serialize(w io.Writer) error {
 }
 
 func (r Person) Schema() string {
-	return "{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]}],\"name\":\"Team\",\"type\":\"record\"}]},{\"name\":\"age\",\"type\":\"int\"}],\"name\":\"Andreani.Test.Events.Record.Common.Person\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]},{\"name\":\"members\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Team\",\"type\":\"record\"}]}],\"name\":\"Andreani.Test.Events.Record.Common.Person\",\"type\":\"record\"}"
 }
 
 func (r Person) SchemaName() string {
@@ -138,11 +132,6 @@ func (r *Person) Get(i int) types.Field {
 		r.Team = NewUnionNullTeam()
 
 		return r.Team
-	case 5:
-		w := types.Int{Target: &r.Age}
-
-		return w
-
 	}
 	panic("Unknown field index")
 }
@@ -194,10 +183,6 @@ func (r Person) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["team"], err = json.Marshal(r.Team)
-	if err != nil {
-		return nil, err
-	}
-	output["age"], err = json.Marshal(r.Age)
 	if err != nil {
 		return nil, err
 	}
@@ -282,20 +267,6 @@ func (r *Person) UnmarshalJSON(data []byte) error {
 		r.Team = NewUnionNullTeam()
 
 		r.Team = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["age"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Age); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for age")
 	}
 	return nil
 }
