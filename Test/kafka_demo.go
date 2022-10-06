@@ -27,9 +27,11 @@ type KafkaDemo struct {
 	DidYouUnderstand bool `json:"didYouUnderstand"`
 
 	Me Person `json:"me"`
+
+	Time int64 `json:"time"`
 }
 
-const KafkaDemoAvroCRC64Fingerprint = "N\xda\x00?kgo\xf7"
+const KafkaDemoAvroCRC64Fingerprint = "\x85\xa6\xad\xa3\x82B\xf3\x04"
 
 func NewKafkaDemo() KafkaDemo {
 	r := KafkaDemo{}
@@ -83,6 +85,10 @@ func writeKafkaDemo(r KafkaDemo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteLong(r.Time, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -91,11 +97,11 @@ func (r KafkaDemo) Serialize(w io.Writer) error {
 }
 
 func (r KafkaDemo) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"attendance\",\"type\":\"int\"},{\"name\":\"didYouUnderstand\",\"type\":\"boolean\"},{\"name\":\"me\",\"type\":{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"name\":\"team\",\"type\":{\"fields\":[{\"name\":\"tl\",\"type\":\"string\"},{\"name\":\"boss\",\"type\":\"string\"},{\"name\":\"members\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Team\",\"type\":\"record\"}}],\"name\":\"Person\",\"namespace\":\"Andreani.Test.Events.Record.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.Test.Events.Record.KafkaDemo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"attendance\",\"type\":\"int\"},{\"name\":\"didYouUnderstand\",\"type\":\"boolean\"},{\"name\":\"me\",\"type\":{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"team\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]}],\"name\":\"Team\",\"type\":\"record\"}]},{\"name\":\"age\",\"type\":\"int\"}],\"name\":\"Person\",\"namespace\":\"Andreani.TestRetro.Events.Record.Common\",\"type\":\"record\"}},{\"name\":\"time\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.TestRetro.Events.Record.KafkaDemo\",\"type\":\"record\"}"
 }
 
 func (r KafkaDemo) SchemaName() string {
-	return "Andreani.Test.Events.Record.KafkaDemo"
+	return "Andreani.TestRetro.Events.Record.KafkaDemo"
 }
 
 func (_ KafkaDemo) SetBoolean(v bool)    { panic("Unsupported operation") }
@@ -133,6 +139,11 @@ func (r *KafkaDemo) Get(i int) types.Field {
 		r.Me = NewPerson()
 
 		w := types.Record{Target: &r.Me}
+
+		return w
+
+	case 5:
+		w := types.Long{Target: &r.Time}
 
 		return w
 
@@ -181,6 +192,10 @@ func (r KafkaDemo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["me"], err = json.Marshal(r.Me)
+	if err != nil {
+		return nil, err
+	}
+	output["time"], err = json.Marshal(r.Time)
 	if err != nil {
 		return nil, err
 	}
@@ -263,6 +278,20 @@ func (r *KafkaDemo) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for me")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["time"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Time); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for time")
 	}
 	return nil
 }

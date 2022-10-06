@@ -18,19 +18,17 @@ import (
 var _ = fmt.Printf
 
 type Team struct {
-	Tl string `json:"tl"`
+	Tl *UnionNullString `json:"tl"`
 
-	Boss string `json:"boss"`
-
-	Members []string `json:"members"`
+	Boss *UnionNullString `json:"boss"`
 }
 
-const TeamAvroCRC64Fingerprint = "\xe3\xd3h\xadг\"\x1b"
+const TeamAvroCRC64Fingerprint = "]\x1al\xf6\x130\xab\x86"
 
 func NewTeam() Team {
 	r := Team{}
-	r.Members = make([]string, 0)
-
+	r.Tl = nil
+	r.Boss = nil
 	return r
 }
 
@@ -59,15 +57,11 @@ func DeserializeTeamFromSchema(r io.Reader, schema string) (Team, error) {
 
 func writeTeam(r Team, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Tl, w)
+	err = writeUnionNullString(r.Tl, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Boss, w)
-	if err != nil {
-		return err
-	}
-	err = writeArrayString(r.Members, w)
+	err = writeUnionNullString(r.Boss, w)
 	if err != nil {
 		return err
 	}
@@ -79,11 +73,11 @@ func (r Team) Serialize(w io.Writer) error {
 }
 
 func (r Team) Schema() string {
-	return "{\"fields\":[{\"name\":\"tl\",\"type\":\"string\"},{\"name\":\"boss\",\"type\":\"string\"},{\"name\":\"members\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Andreani.Test.Events.Record.Common.Team\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.TestRetro.Events.Record.Common.Team\",\"type\":\"record\"}"
 }
 
 func (r Team) SchemaName() string {
-	return "Andreani.Test.Events.Record.Common.Team"
+	return "Andreani.TestRetro.Events.Record.Common.Team"
 }
 
 func (_ Team) SetBoolean(v bool)    { panic("Unsupported operation") }
@@ -98,34 +92,37 @@ func (_ Team) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Team) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Tl}
+		r.Tl = NewUnionNullString()
 
-		return w
-
+		return r.Tl
 	case 1:
-		w := types.String{Target: &r.Boss}
+		r.Boss = NewUnionNullString()
 
-		return w
-
-	case 2:
-		r.Members = make([]string, 0)
-
-		w := ArrayStringWrapper{Target: &r.Members}
-
-		return w
-
+		return r.Boss
 	}
 	panic("Unknown field index")
 }
 
 func (r *Team) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Tl = nil
+		return
+	case 1:
+		r.Boss = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Team) NullField(i int) {
 	switch i {
+	case 0:
+		r.Tl = nil
+		return
+	case 1:
+		r.Boss = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -147,10 +144,6 @@ func (r Team) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["boss"], err = json.Marshal(r.Boss)
-	if err != nil {
-		return nil, err
-	}
-	output["members"], err = json.Marshal(r.Members)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +169,9 @@ func (r *Team) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tl")
+		r.Tl = NewUnionNullString()
+
+		r.Tl = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["boss"]; ok {
@@ -190,21 +185,9 @@ func (r *Team) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for boss")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["members"]; ok {
-			return v
-		}
-		return nil
-	}()
+		r.Boss = NewUnionNullString()
 
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Members); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for members")
+		r.Boss = nil
 	}
 	return nil
 }
