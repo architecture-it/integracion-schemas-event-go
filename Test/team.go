@@ -20,15 +20,14 @@ var _ = fmt.Printf
 type Team struct {
 	Tl *UnionNullString `json:"tl"`
 
-	Boss *UnionNullString `json:"boss"`
+	Boss string `json:"boss"`
 }
 
-const TeamAvroCRC64Fingerprint = "\xe5\xfe\xd6\x18\xd8\xcaR\x10"
+const TeamAvroCRC64Fingerprint = "^\xd1\xfc\v2G,L"
 
 func NewTeam() Team {
 	r := Team{}
 	r.Tl = nil
-	r.Boss = nil
 	return r
 }
 
@@ -61,7 +60,7 @@ func writeTeam(r Team, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Boss, w)
+	err = vm.WriteString(r.Boss, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +72,7 @@ func (r Team) Serialize(w io.Writer) error {
 }
 
 func (r Team) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"boss\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Test.Events.Record.Common.Team\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"tl\",\"type\":[\"null\",\"string\"]},{\"name\":\"boss\",\"type\":\"string\"}],\"name\":\"Andreani.Test.Events.Record.Common.Team\",\"type\":\"record\"}"
 }
 
 func (r Team) SchemaName() string {
@@ -96,9 +95,10 @@ func (r *Team) Get(i int) types.Field {
 
 		return r.Tl
 	case 1:
-		r.Boss = NewUnionNullString()
+		w := types.String{Target: &r.Boss}
 
-		return r.Boss
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -108,9 +108,6 @@ func (r *Team) SetDefault(i int) {
 	case 0:
 		r.Tl = nil
 		return
-	case 1:
-		r.Boss = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -119,9 +116,6 @@ func (r *Team) NullField(i int) {
 	switch i {
 	case 0:
 		r.Tl = nil
-		return
-	case 1:
-		r.Boss = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -185,9 +179,7 @@ func (r *Team) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Boss = NewUnionNullString()
-
-		r.Boss = nil
+		return fmt.Errorf("no value specified for boss")
 	}
 	return nil
 }
