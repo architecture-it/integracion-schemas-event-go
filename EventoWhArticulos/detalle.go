@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type Detalle struct {
+	LineaExterna string `json:"LineaExterna"`
+
 	PaqueteLote string `json:"PaqueteLote"`
 
 	LoteCajitaFabricante string `json:"LoteCajitaFabricante"`
@@ -53,7 +55,7 @@ type Detalle struct {
 	StockTotal float32 `json:"StockTotal"`
 }
 
-const DetalleAvroCRC64Fingerprint = "\u007fF\x16\xabD\xbf\x16i"
+const DetalleAvroCRC64Fingerprint = "τ\x11K'\x99Y\x1d"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -85,6 +87,10 @@ func DeserializeDetalleFromSchema(r io.Reader, schema string) (Detalle, error) {
 
 func writeDetalle(r Detalle, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.LineaExterna, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.PaqueteLote, w)
 	if err != nil {
 		return err
@@ -161,7 +167,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"Lpn\",\"type\":[\"null\",\"string\"]},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"StockDisponible\",\"type\":\"float\"},{\"name\":\"StockEnTransito\",\"type\":\"float\"},{\"name\":\"StockAnterior\",\"type\":\"float\"},{\"name\":\"StockTotal\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhArticulos.Events.ArticuloExpedicionCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"LineaExterna\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"Lpn\",\"type\":[\"null\",\"string\"]},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"StockDisponible\",\"type\":\"float\"},{\"name\":\"StockEnTransito\",\"type\":\"float\"},{\"name\":\"StockAnterior\",\"type\":\"float\"},{\"name\":\"StockTotal\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhArticulos.Events.ArticuloExpedicionCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -180,81 +186,86 @@ func (_ Detalle) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Detalle) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.PaqueteLote}
+		w := types.String{Target: &r.LineaExterna}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.LoteCajitaFabricante}
+		w := types.String{Target: &r.PaqueteLote}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.LoteSecundario}
+		w := types.String{Target: &r.LoteCajitaFabricante}
 
 		return w
 
 	case 3:
+		w := types.String{Target: &r.LoteSecundario}
+
+		return w
+
+	case 4:
 		r.FechaFabricacion = NewUnionNullLong()
 
 		return r.FechaFabricacion
-	case 4:
+	case 5:
 		r.FechaVencimiento = NewUnionNullLong()
 
 		return r.FechaVencimiento
-	case 5:
+	case 6:
 		w := types.String{Target: &r.ProductoTrazable}
 
 		return w
 
-	case 6:
+	case 7:
 		w := types.String{Target: &r.AlmacenConsumo}
 
 		return w
 
-	case 7:
+	case 8:
 		w := types.String{Target: &r.EstadoLote}
 
 		return w
 
-	case 8:
+	case 9:
 		w := types.String{Target: &r.BloqueoUbicacion}
 
 		return w
 
-	case 9:
+	case 10:
 		w := types.String{Target: &r.VidaUtilLote}
 
 		return w
 
-	case 10:
+	case 11:
 		r.Lpn = NewUnionNullString()
 
 		return r.Lpn
-	case 11:
+	case 12:
 		r.EntregaAntesDe = NewUnionNullLong()
 
 		return r.EntregaAntesDe
-	case 12:
+	case 13:
 		r.ConsumoAntesDe = NewUnionNullLong()
 
 		return r.ConsumoAntesDe
-	case 13:
+	case 14:
 		w := types.Float{Target: &r.StockDisponible}
 
 		return w
 
-	case 14:
+	case 15:
 		w := types.Float{Target: &r.StockEnTransito}
 
 		return w
 
-	case 15:
+	case 16:
 		w := types.Float{Target: &r.StockAnterior}
 
 		return w
 
-	case 16:
+	case 17:
 		w := types.Float{Target: &r.StockTotal}
 
 		return w
@@ -271,19 +282,19 @@ func (r *Detalle) SetDefault(i int) {
 
 func (r *Detalle) NullField(i int) {
 	switch i {
-	case 3:
+	case 4:
 		r.FechaFabricacion = nil
 		return
-	case 4:
+	case 5:
 		r.FechaVencimiento = nil
 		return
-	case 10:
+	case 11:
 		r.Lpn = nil
 		return
-	case 11:
+	case 12:
 		r.EntregaAntesDe = nil
 		return
-	case 12:
+	case 13:
 		r.ConsumoAntesDe = nil
 		return
 	}
@@ -302,6 +313,10 @@ func (_ Detalle) AvroCRC64Fingerprint() []byte {
 func (r Detalle) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["LineaExterna"], err = json.Marshal(r.LineaExterna)
+	if err != nil {
+		return nil, err
+	}
 	output["PaqueteLote"], err = json.Marshal(r.PaqueteLote)
 	if err != nil {
 		return nil, err
@@ -380,6 +395,20 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["LineaExterna"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LineaExterna); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for LineaExterna")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PaqueteLote"]; ok {
 			return v
