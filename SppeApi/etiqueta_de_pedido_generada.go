@@ -18,19 +18,16 @@ import (
 var _ = fmt.Printf
 
 type EtiquetaDePedidoGenerada struct {
-	EtiquetaDeRemtioURL *UnionNullString `json:"EtiquetaDeRemtioURL"`
-
-	AgrupadorDeBultos *UnionNullString `json:"AgrupadorDeBultos"`
+	EtiquetasPorAgrupador *UnionNullString `json:"EtiquetasPorAgrupador"`
 
 	EtiquetaRemito *UnionNullString `json:"EtiquetaRemito"`
 }
 
-const EtiquetaDePedidoGeneradaAvroCRC64Fingerprint = ";\xb0\x12\x1bw\xb09\xf5"
+const EtiquetaDePedidoGeneradaAvroCRC64Fingerprint = "\xb3\xb4\x87w<Wy\x94"
 
 func NewEtiquetaDePedidoGenerada() EtiquetaDePedidoGenerada {
 	r := EtiquetaDePedidoGenerada{}
-	r.EtiquetaDeRemtioURL = nil
-	r.AgrupadorDeBultos = nil
+	r.EtiquetasPorAgrupador = nil
 	r.EtiquetaRemito = nil
 	return r
 }
@@ -60,11 +57,7 @@ func DeserializeEtiquetaDePedidoGeneradaFromSchema(r io.Reader, schema string) (
 
 func writeEtiquetaDePedidoGenerada(r EtiquetaDePedidoGenerada, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.EtiquetaDeRemtioURL, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.AgrupadorDeBultos, w)
+	err = writeUnionNullString(r.EtiquetasPorAgrupador, w)
 	if err != nil {
 		return err
 	}
@@ -80,7 +73,7 @@ func (r EtiquetaDePedidoGenerada) Serialize(w io.Writer) error {
 }
 
 func (r EtiquetaDePedidoGenerada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"EtiquetaDeRemtioURL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AgrupadorDeBultos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EtiquetaRemito\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeApi.Events.Record.EtiquetaDePedidoGenerada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"EtiquetasPorAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EtiquetaRemito\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeApi.Events.Record.EtiquetaDePedidoGenerada\",\"type\":\"record\"}"
 }
 
 func (r EtiquetaDePedidoGenerada) SchemaName() string {
@@ -99,14 +92,10 @@ func (_ EtiquetaDePedidoGenerada) SetUnionElem(v int64) { panic("Unsupported ope
 func (r *EtiquetaDePedidoGenerada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.EtiquetaDeRemtioURL = NewUnionNullString()
+		r.EtiquetasPorAgrupador = NewUnionNullString()
 
-		return r.EtiquetaDeRemtioURL
+		return r.EtiquetasPorAgrupador
 	case 1:
-		r.AgrupadorDeBultos = NewUnionNullString()
-
-		return r.AgrupadorDeBultos
-	case 2:
 		r.EtiquetaRemito = NewUnionNullString()
 
 		return r.EtiquetaRemito
@@ -117,12 +106,9 @@ func (r *EtiquetaDePedidoGenerada) Get(i int) types.Field {
 func (r *EtiquetaDePedidoGenerada) SetDefault(i int) {
 	switch i {
 	case 0:
-		r.EtiquetaDeRemtioURL = nil
+		r.EtiquetasPorAgrupador = nil
 		return
 	case 1:
-		r.AgrupadorDeBultos = nil
-		return
-	case 2:
 		r.EtiquetaRemito = nil
 		return
 	}
@@ -132,12 +118,9 @@ func (r *EtiquetaDePedidoGenerada) SetDefault(i int) {
 func (r *EtiquetaDePedidoGenerada) NullField(i int) {
 	switch i {
 	case 0:
-		r.EtiquetaDeRemtioURL = nil
+		r.EtiquetasPorAgrupador = nil
 		return
 	case 1:
-		r.AgrupadorDeBultos = nil
-		return
-	case 2:
 		r.EtiquetaRemito = nil
 		return
 	}
@@ -156,11 +139,7 @@ func (_ EtiquetaDePedidoGenerada) AvroCRC64Fingerprint() []byte {
 func (r EtiquetaDePedidoGenerada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["EtiquetaDeRemtioURL"], err = json.Marshal(r.EtiquetaDeRemtioURL)
-	if err != nil {
-		return nil, err
-	}
-	output["AgrupadorDeBultos"], err = json.Marshal(r.AgrupadorDeBultos)
+	output["EtiquetasPorAgrupador"], err = json.Marshal(r.EtiquetasPorAgrupador)
 	if err != nil {
 		return nil, err
 	}
@@ -179,36 +158,20 @@ func (r *EtiquetaDePedidoGenerada) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["EtiquetaDeRemtioURL"]; ok {
+		if v, ok := fields["EtiquetasPorAgrupador"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.EtiquetaDeRemtioURL); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.EtiquetasPorAgrupador); err != nil {
 			return err
 		}
 	} else {
-		r.EtiquetaDeRemtioURL = NewUnionNullString()
+		r.EtiquetasPorAgrupador = NewUnionNullString()
 
-		r.EtiquetaDeRemtioURL = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["AgrupadorDeBultos"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AgrupadorDeBultos); err != nil {
-			return err
-		}
-	} else {
-		r.AgrupadorDeBultos = NewUnionNullString()
-
-		r.AgrupadorDeBultos = nil
+		r.EtiquetasPorAgrupador = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EtiquetaRemito"]; ok {
