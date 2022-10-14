@@ -18,47 +18,38 @@ import (
 var _ = fmt.Printf
 
 type Direccion struct {
-	AbreviaturaProvincia *UnionNullString `json:"abreviaturaProvincia"`
-
 	Calle *UnionNullString `json:"calle"`
-
-	CodigoDeDireccion *UnionNullString `json:"codigoDeDireccion"`
-
-	CodigoCiudad *UnionNullString `json:"codigoCiudad"`
-
-	CodigoPostal *UnionNullString `json:"codigoPostal"`
-
-	NombreProvincia *UnionNullString `json:"nombreProvincia"`
 
 	Numero *UnionNullString `json:"numero"`
 
-	Telefono *UnionNullString `json:"telefono"`
+	Piso *UnionNullString `json:"piso"`
 
-	CodigoISOProvincia *UnionNullString `json:"codigoISOProvincia"`
+	Departamento *UnionNullString `json:"departamento"`
 
-	CodigoISOPais *UnionNullString `json:"codigoISOPais"`
+	Referenciadedomicilio *UnionNullString `json:"referenciadedomicilio"`
+
+	CodigoPostal *UnionNullString `json:"codigoPostal"`
 
 	Localidad *UnionNullString `json:"localidad"`
 
-	ComponentesDeDireccion *UnionNullListaDePropiedades `json:"componentesDeDireccion"`
+	Provincia *UnionNullString `json:"provincia"`
+
+	Pais *UnionNullString `json:"pais"`
 }
 
-const DireccionAvroCRC64Fingerprint = "V<\xe1\xe5\x12\xe0\xd5\xe8"
+const DireccionAvroCRC64Fingerprint = ":FLr\xa2q\xfdC"
 
 func NewDireccion() Direccion {
 	r := Direccion{}
-	r.AbreviaturaProvincia = nil
 	r.Calle = nil
-	r.CodigoDeDireccion = nil
-	r.CodigoCiudad = nil
-	r.CodigoPostal = nil
-	r.NombreProvincia = nil
 	r.Numero = nil
-	r.Telefono = nil
-	r.CodigoISOProvincia = nil
-	r.CodigoISOPais = nil
+	r.Piso = nil
+	r.Departamento = nil
+	r.Referenciadedomicilio = nil
+	r.CodigoPostal = nil
 	r.Localidad = nil
-	r.ComponentesDeDireccion = nil
+	r.Provincia = nil
+	r.Pais = nil
 	return r
 }
 
@@ -87,27 +78,7 @@ func DeserializeDireccionFromSchema(r io.Reader, schema string) (Direccion, erro
 
 func writeDireccion(r Direccion, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.AbreviaturaProvincia, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.Calle, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.CodigoDeDireccion, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.CodigoCiudad, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.CodigoPostal, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.NombreProvincia, w)
 	if err != nil {
 		return err
 	}
@@ -115,15 +86,19 @@ func writeDireccion(r Direccion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Telefono, w)
+	err = writeUnionNullString(r.Piso, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.CodigoISOProvincia, w)
+	err = writeUnionNullString(r.Departamento, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.CodigoISOPais, w)
+	err = writeUnionNullString(r.Referenciadedomicilio, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoPostal, w)
 	if err != nil {
 		return err
 	}
@@ -131,7 +106,11 @@ func writeDireccion(r Direccion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullListaDePropiedades(r.ComponentesDeDireccion, w)
+	err = writeUnionNullString(r.Provincia, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Pais, w)
 	if err != nil {
 		return err
 	}
@@ -143,7 +122,7 @@ func (r Direccion) Serialize(w io.Writer) error {
 }
 
 func (r Direccion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"abreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoISOPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Wap.Events.Record.Direccion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Wap.Events.Record.Direccion\",\"type\":\"record\"}"
 }
 
 func (r Direccion) SchemaName() string {
@@ -162,53 +141,41 @@ func (_ Direccion) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Direccion) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.AbreviaturaProvincia = NewUnionNullString()
-
-		return r.AbreviaturaProvincia
-	case 1:
 		r.Calle = NewUnionNullString()
 
 		return r.Calle
-	case 2:
-		r.CodigoDeDireccion = NewUnionNullString()
-
-		return r.CodigoDeDireccion
-	case 3:
-		r.CodigoCiudad = NewUnionNullString()
-
-		return r.CodigoCiudad
-	case 4:
-		r.CodigoPostal = NewUnionNullString()
-
-		return r.CodigoPostal
-	case 5:
-		r.NombreProvincia = NewUnionNullString()
-
-		return r.NombreProvincia
-	case 6:
+	case 1:
 		r.Numero = NewUnionNullString()
 
 		return r.Numero
-	case 7:
-		r.Telefono = NewUnionNullString()
+	case 2:
+		r.Piso = NewUnionNullString()
 
-		return r.Telefono
-	case 8:
-		r.CodigoISOProvincia = NewUnionNullString()
+		return r.Piso
+	case 3:
+		r.Departamento = NewUnionNullString()
 
-		return r.CodigoISOProvincia
-	case 9:
-		r.CodigoISOPais = NewUnionNullString()
+		return r.Departamento
+	case 4:
+		r.Referenciadedomicilio = NewUnionNullString()
 
-		return r.CodigoISOPais
-	case 10:
+		return r.Referenciadedomicilio
+	case 5:
+		r.CodigoPostal = NewUnionNullString()
+
+		return r.CodigoPostal
+	case 6:
 		r.Localidad = NewUnionNullString()
 
 		return r.Localidad
-	case 11:
-		r.ComponentesDeDireccion = NewUnionNullListaDePropiedades()
+	case 7:
+		r.Provincia = NewUnionNullString()
 
-		return r.ComponentesDeDireccion
+		return r.Provincia
+	case 8:
+		r.Pais = NewUnionNullString()
+
+		return r.Pais
 	}
 	panic("Unknown field index")
 }
@@ -216,40 +183,31 @@ func (r *Direccion) Get(i int) types.Field {
 func (r *Direccion) SetDefault(i int) {
 	switch i {
 	case 0:
-		r.AbreviaturaProvincia = nil
-		return
-	case 1:
 		r.Calle = nil
 		return
-	case 2:
-		r.CodigoDeDireccion = nil
-		return
-	case 3:
-		r.CodigoCiudad = nil
-		return
-	case 4:
-		r.CodigoPostal = nil
-		return
-	case 5:
-		r.NombreProvincia = nil
-		return
-	case 6:
+	case 1:
 		r.Numero = nil
 		return
-	case 7:
-		r.Telefono = nil
+	case 2:
+		r.Piso = nil
 		return
-	case 8:
-		r.CodigoISOProvincia = nil
+	case 3:
+		r.Departamento = nil
 		return
-	case 9:
-		r.CodigoISOPais = nil
+	case 4:
+		r.Referenciadedomicilio = nil
 		return
-	case 10:
+	case 5:
+		r.CodigoPostal = nil
+		return
+	case 6:
 		r.Localidad = nil
 		return
-	case 11:
-		r.ComponentesDeDireccion = nil
+	case 7:
+		r.Provincia = nil
+		return
+	case 8:
+		r.Pais = nil
 		return
 	}
 	panic("Unknown field index")
@@ -258,40 +216,31 @@ func (r *Direccion) SetDefault(i int) {
 func (r *Direccion) NullField(i int) {
 	switch i {
 	case 0:
-		r.AbreviaturaProvincia = nil
-		return
-	case 1:
 		r.Calle = nil
 		return
-	case 2:
-		r.CodigoDeDireccion = nil
-		return
-	case 3:
-		r.CodigoCiudad = nil
-		return
-	case 4:
-		r.CodigoPostal = nil
-		return
-	case 5:
-		r.NombreProvincia = nil
-		return
-	case 6:
+	case 1:
 		r.Numero = nil
 		return
-	case 7:
-		r.Telefono = nil
+	case 2:
+		r.Piso = nil
 		return
-	case 8:
-		r.CodigoISOProvincia = nil
+	case 3:
+		r.Departamento = nil
 		return
-	case 9:
-		r.CodigoISOPais = nil
+	case 4:
+		r.Referenciadedomicilio = nil
 		return
-	case 10:
+	case 5:
+		r.CodigoPostal = nil
+		return
+	case 6:
 		r.Localidad = nil
 		return
-	case 11:
-		r.ComponentesDeDireccion = nil
+	case 7:
+		r.Provincia = nil
+		return
+	case 8:
+		r.Pais = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -309,27 +258,7 @@ func (_ Direccion) AvroCRC64Fingerprint() []byte {
 func (r Direccion) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["abreviaturaProvincia"], err = json.Marshal(r.AbreviaturaProvincia)
-	if err != nil {
-		return nil, err
-	}
 	output["calle"], err = json.Marshal(r.Calle)
-	if err != nil {
-		return nil, err
-	}
-	output["codigoDeDireccion"], err = json.Marshal(r.CodigoDeDireccion)
-	if err != nil {
-		return nil, err
-	}
-	output["codigoCiudad"], err = json.Marshal(r.CodigoCiudad)
-	if err != nil {
-		return nil, err
-	}
-	output["codigoPostal"], err = json.Marshal(r.CodigoPostal)
-	if err != nil {
-		return nil, err
-	}
-	output["nombreProvincia"], err = json.Marshal(r.NombreProvincia)
 	if err != nil {
 		return nil, err
 	}
@@ -337,15 +266,19 @@ func (r Direccion) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["telefono"], err = json.Marshal(r.Telefono)
+	output["piso"], err = json.Marshal(r.Piso)
 	if err != nil {
 		return nil, err
 	}
-	output["codigoISOProvincia"], err = json.Marshal(r.CodigoISOProvincia)
+	output["departamento"], err = json.Marshal(r.Departamento)
 	if err != nil {
 		return nil, err
 	}
-	output["codigoISOPais"], err = json.Marshal(r.CodigoISOPais)
+	output["referenciadedomicilio"], err = json.Marshal(r.Referenciadedomicilio)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoPostal"], err = json.Marshal(r.CodigoPostal)
 	if err != nil {
 		return nil, err
 	}
@@ -353,7 +286,11 @@ func (r Direccion) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["componentesDeDireccion"], err = json.Marshal(r.ComponentesDeDireccion)
+	output["provincia"], err = json.Marshal(r.Provincia)
+	if err != nil {
+		return nil, err
+	}
+	output["pais"], err = json.Marshal(r.Pais)
 	if err != nil {
 		return nil, err
 	}
@@ -367,22 +304,6 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["abreviaturaProvincia"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AbreviaturaProvincia); err != nil {
-			return err
-		}
-	} else {
-		r.AbreviaturaProvincia = NewUnionNullString()
-
-		r.AbreviaturaProvincia = nil
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["calle"]; ok {
 			return v
@@ -398,70 +319,6 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 		r.Calle = NewUnionNullString()
 
 		r.Calle = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["codigoDeDireccion"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoDeDireccion); err != nil {
-			return err
-		}
-	} else {
-		r.CodigoDeDireccion = NewUnionNullString()
-
-		r.CodigoDeDireccion = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["codigoCiudad"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoCiudad); err != nil {
-			return err
-		}
-	} else {
-		r.CodigoCiudad = NewUnionNullString()
-
-		r.CodigoCiudad = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["codigoPostal"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoPostal); err != nil {
-			return err
-		}
-	} else {
-		r.CodigoPostal = NewUnionNullString()
-
-		r.CodigoPostal = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["nombreProvincia"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NombreProvincia); err != nil {
-			return err
-		}
-	} else {
-		r.NombreProvincia = NewUnionNullString()
-
-		r.NombreProvincia = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numero"]; ok {
@@ -480,52 +337,68 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 		r.Numero = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["telefono"]; ok {
+		if v, ok := fields["piso"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Telefono); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Piso); err != nil {
 			return err
 		}
 	} else {
-		r.Telefono = NewUnionNullString()
+		r.Piso = NewUnionNullString()
 
-		r.Telefono = nil
+		r.Piso = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigoISOProvincia"]; ok {
+		if v, ok := fields["departamento"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoISOProvincia); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Departamento); err != nil {
 			return err
 		}
 	} else {
-		r.CodigoISOProvincia = NewUnionNullString()
+		r.Departamento = NewUnionNullString()
 
-		r.CodigoISOProvincia = nil
+		r.Departamento = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigoISOPais"]; ok {
+		if v, ok := fields["referenciadedomicilio"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoISOPais); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Referenciadedomicilio); err != nil {
 			return err
 		}
 	} else {
-		r.CodigoISOPais = NewUnionNullString()
+		r.Referenciadedomicilio = NewUnionNullString()
 
-		r.CodigoISOPais = nil
+		r.Referenciadedomicilio = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoPostal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoPostal); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoPostal = NewUnionNullString()
+
+		r.CodigoPostal = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["localidad"]; ok {
@@ -544,20 +417,36 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 		r.Localidad = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["componentesDeDireccion"]; ok {
+		if v, ok := fields["provincia"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ComponentesDeDireccion); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Provincia); err != nil {
 			return err
 		}
 	} else {
-		r.ComponentesDeDireccion = NewUnionNullListaDePropiedades()
+		r.Provincia = NewUnionNullString()
 
-		r.ComponentesDeDireccion = nil
+		r.Provincia = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["pais"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Pais); err != nil {
+			return err
+		}
+	} else {
+		r.Pais = NewUnionNullString()
+
+		r.Pais = nil
 	}
 	return nil
 }

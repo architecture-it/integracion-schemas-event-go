@@ -22,88 +22,82 @@ type PedidoDeAlmacenSCE struct {
 
 	Propietario string `json:"propietario"`
 
-	NumeroPedido string `json:"numeroPedido"`
+	NumeroOrdenExterna string `json:"numeroOrdenExterna"`
 
-	TipoPedido string `json:"tipoPedido"`
+	Contratowarehouse string `json:"contratowarehouse"`
+
+	Almacencliente string `json:"almacencliente"`
 
 	PrioridadPreparacion *UnionNullString `json:"prioridadPreparacion"`
 
-	FechaPedido *UnionNullLong `json:"fechaPedido"`
+	FechaPedido int64 `json:"fechaPedido"`
 
 	FechaEntrega *UnionNullLong `json:"fechaEntrega"`
 
+	Franjahoraria *UnionNullLong `json:"franjahoraria"`
+
+	FechadeexpedicionSolicitada *UnionNullLong `json:"fechadeexpedicionSolicitada"`
+
+	CambioLoteDirigido *UnionNullString `json:"cambioLoteDirigido"`
+
+	Tipo string `json:"tipo"`
+
+	ValorDeclarado *UnionNullString `json:"valorDeclarado"`
+
+	IdAndreani *UnionNullString `json:"idAndreani"`
+
 	Remito *UnionNullString `json:"remito"`
-
-	ReferenciaCliente *UnionNullString `json:"referenciaCliente"`
-
-	CodigoTransportista *UnionNullString `json:"codigoTransportista"`
-
-	Notas *UnionNullListaDePropiedades `json:"notas"`
-
-	CamposLibres *UnionNullListaDePropiedades `json:"camposLibres"`
-
-	SocioComercial *UnionNullString `json:"socioComercial"`
-
-	ModoTransporte *UnionNullString `json:"modoTransporte"`
-
-	Direccion Direccion `json:"direccion"`
-
-	ListaDetalles ListaDeDetalleDePedido `json:"listaDetalles"`
-
-	OtrosDatos *UnionNullListaDePropiedades `json:"otrosDatos"`
-
-	ZonaConsumo *UnionNullString `json:"zonaConsumo"`
 
 	FacturaLegal *UnionNullString `json:"facturaLegal"`
 
-	FacturaInterna *UnionNullString `json:"facturaInterna"`
+	FechadeFacturacion *UnionNullLong `json:"fechadeFacturacion"`
 
-	TieneGestionCobranza *UnionNullString `json:"tieneGestionCobranza"`
-
-	ValorSeguro *UnionNullString `json:"valorSeguro"`
+	PreciovalorFC *UnionNullString `json:"preciovalorFC"`
 
 	OrdenDeCompra *UnionNullString `json:"ordenDeCompra"`
 
-	ClientePadre *UnionNullString `json:"clientePadre"`
+	TieneGestionCobranza *UnionNullString `json:"tieneGestionCobranza"`
 
-	AcondicionamientoSecundario *UnionNullString `json:"acondicionamientoSecundario"`
+	SocioComercial *UnionNullString `json:"socioComercial"`
 
-	ImprimeDocumentacion *UnionNullBool `json:"imprimeDocumentacion"`
+	Cot *UnionNullString `json:"cot"`
 
-	DetalleDeOrdenDeCompra *UnionNullDetalleDeOrdenDeCompra `json:"detalleDeOrdenDeCompra"`
+	Notas *UnionNullString `json:"notas"`
+
+	Datosadicionales *UnionNullListaDePropiedades `json:"datosadicionales"`
+
+	ListaDetalles ListaDeDetalleDePedido `json:"listaDetalles"`
+
+	Distribuidor Distribuidor `json:"distribuidor"`
 }
 
-const PedidoDeAlmacenSCEAvroCRC64Fingerprint = "\xf1\xbf\a\x1bڎ\xfbU"
+const PedidoDeAlmacenSCEAvroCRC64Fingerprint = "\xd3\x16\x90\b\x11U\x98\x86"
 
 func NewPedidoDeAlmacenSCE() PedidoDeAlmacenSCE {
 	r := PedidoDeAlmacenSCE{}
 	r.Destinatario = NewDestinatario()
 
 	r.PrioridadPreparacion = nil
-	r.FechaPedido = nil
 	r.FechaEntrega = nil
+	r.Franjahoraria = nil
+	r.FechadeexpedicionSolicitada = nil
+	r.CambioLoteDirigido = nil
+	r.ValorDeclarado = nil
+	r.IdAndreani = nil
 	r.Remito = nil
-	r.ReferenciaCliente = nil
-	r.CodigoTransportista = nil
-	r.Notas = nil
-	r.CamposLibres = nil
+	r.FacturaLegal = nil
+	r.FechadeFacturacion = nil
+	r.PreciovalorFC = nil
+	r.OrdenDeCompra = nil
+	r.TieneGestionCobranza = nil
 	r.SocioComercial = nil
-	r.ModoTransporte = nil
-	r.Direccion = NewDireccion()
-
+	r.Cot = nil
+	r.Notas = nil
+	r.Datosadicionales = nil
 	r.ListaDetalles = NewListaDeDetalleDePedido()
 
-	r.OtrosDatos = nil
-	r.ZonaConsumo = nil
-	r.FacturaLegal = nil
-	r.FacturaInterna = nil
-	r.TieneGestionCobranza = nil
-	r.ValorSeguro = nil
-	r.OrdenDeCompra = nil
-	r.ClientePadre = nil
-	r.AcondicionamientoSecundario = nil
-	r.ImprimeDocumentacion = nil
-	r.DetalleDeOrdenDeCompra = nil
+	r.Distribuidor = NewDistribuidor()
+
 	return r
 }
 
@@ -140,11 +134,15 @@ func writePedidoDeAlmacenSCE(r PedidoDeAlmacenSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroPedido, w)
+	err = vm.WriteString(r.NumeroOrdenExterna, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TipoPedido, w)
+	err = vm.WriteString(r.Contratowarehouse, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Almacencliente, w)
 	if err != nil {
 		return err
 	}
@@ -152,7 +150,7 @@ func writePedidoDeAlmacenSCE(r PedidoDeAlmacenSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullLong(r.FechaPedido, w)
+	err = vm.WriteLong(r.FechaPedido, w)
 	if err != nil {
 		return err
 	}
@@ -160,47 +158,31 @@ func writePedidoDeAlmacenSCE(r PedidoDeAlmacenSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullLong(r.Franjahoraria, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.FechadeexpedicionSolicitada, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CambioLoteDirigido, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Tipo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ValorDeclarado, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.IdAndreani, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Remito, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.ReferenciaCliente, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.CodigoTransportista, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullListaDePropiedades(r.Notas, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullListaDePropiedades(r.CamposLibres, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.SocioComercial, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.ModoTransporte, w)
-	if err != nil {
-		return err
-	}
-	err = writeDireccion(r.Direccion, w)
-	if err != nil {
-		return err
-	}
-	err = writeListaDeDetalleDePedido(r.ListaDetalles, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullListaDePropiedades(r.OtrosDatos, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.ZonaConsumo, w)
 	if err != nil {
 		return err
 	}
@@ -208,15 +190,11 @@ func writePedidoDeAlmacenSCE(r PedidoDeAlmacenSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.FacturaInterna, w)
+	err = writeUnionNullLong(r.FechadeFacturacion, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.TieneGestionCobranza, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.ValorSeguro, w)
+	err = writeUnionNullString(r.PreciovalorFC, w)
 	if err != nil {
 		return err
 	}
@@ -224,19 +202,31 @@ func writePedidoDeAlmacenSCE(r PedidoDeAlmacenSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.ClientePadre, w)
+	err = writeUnionNullString(r.TieneGestionCobranza, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.AcondicionamientoSecundario, w)
+	err = writeUnionNullString(r.SocioComercial, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullBool(r.ImprimeDocumentacion, w)
+	err = writeUnionNullString(r.Cot, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullDetalleDeOrdenDeCompra(r.DetalleDeOrdenDeCompra, w)
+	err = writeUnionNullString(r.Notas, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullListaDePropiedades(r.Datosadicionales, w)
+	if err != nil {
+		return err
+	}
+	err = writeListaDeDetalleDePedido(r.ListaDetalles, w)
+	if err != nil {
+		return err
+	}
+	err = writeDistribuidor(r.Distribuidor, w)
 	if err != nil {
 		return err
 	}
@@ -248,7 +238,7 @@ func (r PedidoDeAlmacenSCE) Serialize(w io.Writer) error {
 }
 
 func (r PedidoDeAlmacenSCE) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroPedido\",\"type\":\"string\"},{\"name\":\"tipoPedido\",\"type\":\"string\"},{\"default\":null,\"name\":\"prioridadPreparacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciaCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoTransportista\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notas\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"socioComercial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"modoTransporte\",\"type\":[\"null\",\"string\"]},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"abreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoISOPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"listaDetalles\",\"type\":{\"fields\":[{\"name\":\"detallePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"numeroPedido\",\"type\":\"string\"},{\"name\":\"unidadMedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"lineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidades\",\"type\":\"double\"},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"DetallePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDetalleDePedido\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ordenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clientePadre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"acondicionamientoSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"imprimeDocumentacion\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"detalleDeOrdenDeCompra\",\"type\":[\"null\",{\"fields\":[{\"name\":\"numeroDeLineaDeCliente\",\"type\":\"string\"},{\"name\":\"ordenDeCompraDeCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"notasDeLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeLinea\",\"type\":\"string\"},{\"name\":\"cantidadPedida\",\"type\":\"double\"},{\"name\":\"articulo\",\"type\":\"Wap.Events.Record.Articulo\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UOM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"fechaOrdenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoMaterial\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetalleDeOrdenDeCompra\",\"type\":\"record\"}]}],\"name\":\"Wap.Events.Record.PedidoDeAlmacenSCE\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"idDestinatario\",\"type\":\"string\"},{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"contratowarehouse\",\"type\":\"string\"},{\"name\":\"almacencliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"prioridadPreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaPedido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"franjahoraria\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechadeexpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipo\",\"type\":\"string\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechadeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"preciovalorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ordenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"socioComercial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]},{\"name\":\"listaDetalles\",\"type\":{\"fields\":[{\"name\":\"detallePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"name\":\"lineaexterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDetalleDePedido\",\"type\":\"record\"}},{\"name\":\"distribuidor\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"etiqueta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Distribuidor\",\"type\":\"record\"}}],\"name\":\"Wap.Events.Record.PedidoDeAlmacenSCE\",\"type\":\"record\"}"
 }
 
 func (r PedidoDeAlmacenSCE) SchemaName() string {
@@ -279,181 +269,168 @@ func (r *PedidoDeAlmacenSCE) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.NumeroPedido}
+		w := types.String{Target: &r.NumeroOrdenExterna}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.TipoPedido}
+		w := types.String{Target: &r.Contratowarehouse}
 
 		return w
 
 	case 4:
-		r.PrioridadPreparacion = NewUnionNullString()
-
-		return r.PrioridadPreparacion
-	case 5:
-		r.FechaPedido = NewUnionNullLong()
-
-		return r.FechaPedido
-	case 6:
-		r.FechaEntrega = NewUnionNullLong()
-
-		return r.FechaEntrega
-	case 7:
-		r.Remito = NewUnionNullString()
-
-		return r.Remito
-	case 8:
-		r.ReferenciaCliente = NewUnionNullString()
-
-		return r.ReferenciaCliente
-	case 9:
-		r.CodigoTransportista = NewUnionNullString()
-
-		return r.CodigoTransportista
-	case 10:
-		r.Notas = NewUnionNullListaDePropiedades()
-
-		return r.Notas
-	case 11:
-		r.CamposLibres = NewUnionNullListaDePropiedades()
-
-		return r.CamposLibres
-	case 12:
-		r.SocioComercial = NewUnionNullString()
-
-		return r.SocioComercial
-	case 13:
-		r.ModoTransporte = NewUnionNullString()
-
-		return r.ModoTransporte
-	case 14:
-		r.Direccion = NewDireccion()
-
-		w := types.Record{Target: &r.Direccion}
+		w := types.String{Target: &r.Almacencliente}
 
 		return w
 
+	case 5:
+		r.PrioridadPreparacion = NewUnionNullString()
+
+		return r.PrioridadPreparacion
+	case 6:
+		w := types.Long{Target: &r.FechaPedido}
+
+		return w
+
+	case 7:
+		r.FechaEntrega = NewUnionNullLong()
+
+		return r.FechaEntrega
+	case 8:
+		r.Franjahoraria = NewUnionNullLong()
+
+		return r.Franjahoraria
+	case 9:
+		r.FechadeexpedicionSolicitada = NewUnionNullLong()
+
+		return r.FechadeexpedicionSolicitada
+	case 10:
+		r.CambioLoteDirigido = NewUnionNullString()
+
+		return r.CambioLoteDirigido
+	case 11:
+		w := types.String{Target: &r.Tipo}
+
+		return w
+
+	case 12:
+		r.ValorDeclarado = NewUnionNullString()
+
+		return r.ValorDeclarado
+	case 13:
+		r.IdAndreani = NewUnionNullString()
+
+		return r.IdAndreani
+	case 14:
+		r.Remito = NewUnionNullString()
+
+		return r.Remito
 	case 15:
+		r.FacturaLegal = NewUnionNullString()
+
+		return r.FacturaLegal
+	case 16:
+		r.FechadeFacturacion = NewUnionNullLong()
+
+		return r.FechadeFacturacion
+	case 17:
+		r.PreciovalorFC = NewUnionNullString()
+
+		return r.PreciovalorFC
+	case 18:
+		r.OrdenDeCompra = NewUnionNullString()
+
+		return r.OrdenDeCompra
+	case 19:
+		r.TieneGestionCobranza = NewUnionNullString()
+
+		return r.TieneGestionCobranza
+	case 20:
+		r.SocioComercial = NewUnionNullString()
+
+		return r.SocioComercial
+	case 21:
+		r.Cot = NewUnionNullString()
+
+		return r.Cot
+	case 22:
+		r.Notas = NewUnionNullString()
+
+		return r.Notas
+	case 23:
+		r.Datosadicionales = NewUnionNullListaDePropiedades()
+
+		return r.Datosadicionales
+	case 24:
 		r.ListaDetalles = NewListaDeDetalleDePedido()
 
 		w := types.Record{Target: &r.ListaDetalles}
 
 		return w
 
-	case 16:
-		r.OtrosDatos = NewUnionNullListaDePropiedades()
-
-		return r.OtrosDatos
-	case 17:
-		r.ZonaConsumo = NewUnionNullString()
-
-		return r.ZonaConsumo
-	case 18:
-		r.FacturaLegal = NewUnionNullString()
-
-		return r.FacturaLegal
-	case 19:
-		r.FacturaInterna = NewUnionNullString()
-
-		return r.FacturaInterna
-	case 20:
-		r.TieneGestionCobranza = NewUnionNullString()
-
-		return r.TieneGestionCobranza
-	case 21:
-		r.ValorSeguro = NewUnionNullString()
-
-		return r.ValorSeguro
-	case 22:
-		r.OrdenDeCompra = NewUnionNullString()
-
-		return r.OrdenDeCompra
-	case 23:
-		r.ClientePadre = NewUnionNullString()
-
-		return r.ClientePadre
-	case 24:
-		r.AcondicionamientoSecundario = NewUnionNullString()
-
-		return r.AcondicionamientoSecundario
 	case 25:
-		r.ImprimeDocumentacion = NewUnionNullBool()
+		r.Distribuidor = NewDistribuidor()
 
-		return r.ImprimeDocumentacion
-	case 26:
-		r.DetalleDeOrdenDeCompra = NewUnionNullDetalleDeOrdenDeCompra()
+		w := types.Record{Target: &r.Distribuidor}
 
-		return r.DetalleDeOrdenDeCompra
+		return w
+
 	}
 	panic("Unknown field index")
 }
 
 func (r *PedidoDeAlmacenSCE) SetDefault(i int) {
 	switch i {
-	case 4:
+	case 5:
 		r.PrioridadPreparacion = nil
 		return
-	case 5:
-		r.FechaPedido = nil
-		return
-	case 6:
+	case 7:
 		r.FechaEntrega = nil
 		return
-	case 7:
-		r.Remito = nil
-		return
 	case 8:
-		r.ReferenciaCliente = nil
+		r.Franjahoraria = nil
 		return
 	case 9:
-		r.CodigoTransportista = nil
+		r.FechadeexpedicionSolicitada = nil
 		return
 	case 10:
-		r.Notas = nil
-		return
-	case 11:
-		r.CamposLibres = nil
+		r.CambioLoteDirigido = nil
 		return
 	case 12:
-		r.SocioComercial = nil
+		r.ValorDeclarado = nil
 		return
 	case 13:
-		r.ModoTransporte = nil
+		r.IdAndreani = nil
 		return
-	case 16:
-		r.OtrosDatos = nil
+	case 14:
+		r.Remito = nil
 		return
-	case 17:
-		r.ZonaConsumo = nil
-		return
-	case 18:
+	case 15:
 		r.FacturaLegal = nil
 		return
-	case 19:
-		r.FacturaInterna = nil
+	case 16:
+		r.FechadeFacturacion = nil
 		return
-	case 20:
-		r.TieneGestionCobranza = nil
+	case 17:
+		r.PreciovalorFC = nil
 		return
-	case 21:
-		r.ValorSeguro = nil
-		return
-	case 22:
+	case 18:
 		r.OrdenDeCompra = nil
 		return
+	case 19:
+		r.TieneGestionCobranza = nil
+		return
+	case 20:
+		r.SocioComercial = nil
+		return
+	case 21:
+		r.Cot = nil
+		return
+	case 22:
+		r.Notas = nil
+		return
 	case 23:
-		r.ClientePadre = nil
-		return
-	case 24:
-		r.AcondicionamientoSecundario = nil
-		return
-	case 25:
-		r.ImprimeDocumentacion = nil
-		return
-	case 26:
-		r.DetalleDeOrdenDeCompra = nil
+		r.Datosadicionales = nil
 		return
 	}
 	panic("Unknown field index")
@@ -461,68 +438,56 @@ func (r *PedidoDeAlmacenSCE) SetDefault(i int) {
 
 func (r *PedidoDeAlmacenSCE) NullField(i int) {
 	switch i {
-	case 4:
+	case 5:
 		r.PrioridadPreparacion = nil
 		return
-	case 5:
-		r.FechaPedido = nil
-		return
-	case 6:
+	case 7:
 		r.FechaEntrega = nil
 		return
-	case 7:
-		r.Remito = nil
-		return
 	case 8:
-		r.ReferenciaCliente = nil
+		r.Franjahoraria = nil
 		return
 	case 9:
-		r.CodigoTransportista = nil
+		r.FechadeexpedicionSolicitada = nil
 		return
 	case 10:
-		r.Notas = nil
-		return
-	case 11:
-		r.CamposLibres = nil
+		r.CambioLoteDirigido = nil
 		return
 	case 12:
-		r.SocioComercial = nil
+		r.ValorDeclarado = nil
 		return
 	case 13:
-		r.ModoTransporte = nil
+		r.IdAndreani = nil
 		return
-	case 16:
-		r.OtrosDatos = nil
+	case 14:
+		r.Remito = nil
 		return
-	case 17:
-		r.ZonaConsumo = nil
-		return
-	case 18:
+	case 15:
 		r.FacturaLegal = nil
 		return
-	case 19:
-		r.FacturaInterna = nil
+	case 16:
+		r.FechadeFacturacion = nil
 		return
-	case 20:
-		r.TieneGestionCobranza = nil
+	case 17:
+		r.PreciovalorFC = nil
 		return
-	case 21:
-		r.ValorSeguro = nil
-		return
-	case 22:
+	case 18:
 		r.OrdenDeCompra = nil
 		return
+	case 19:
+		r.TieneGestionCobranza = nil
+		return
+	case 20:
+		r.SocioComercial = nil
+		return
+	case 21:
+		r.Cot = nil
+		return
+	case 22:
+		r.Notas = nil
+		return
 	case 23:
-		r.ClientePadre = nil
-		return
-	case 24:
-		r.AcondicionamientoSecundario = nil
-		return
-	case 25:
-		r.ImprimeDocumentacion = nil
-		return
-	case 26:
-		r.DetalleDeOrdenDeCompra = nil
+		r.Datosadicionales = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -548,11 +513,15 @@ func (r PedidoDeAlmacenSCE) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["numeroPedido"], err = json.Marshal(r.NumeroPedido)
+	output["numeroOrdenExterna"], err = json.Marshal(r.NumeroOrdenExterna)
 	if err != nil {
 		return nil, err
 	}
-	output["tipoPedido"], err = json.Marshal(r.TipoPedido)
+	output["contratowarehouse"], err = json.Marshal(r.Contratowarehouse)
+	if err != nil {
+		return nil, err
+	}
+	output["almacencliente"], err = json.Marshal(r.Almacencliente)
 	if err != nil {
 		return nil, err
 	}
@@ -568,47 +537,31 @@ func (r PedidoDeAlmacenSCE) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["franjahoraria"], err = json.Marshal(r.Franjahoraria)
+	if err != nil {
+		return nil, err
+	}
+	output["fechadeexpedicionSolicitada"], err = json.Marshal(r.FechadeexpedicionSolicitada)
+	if err != nil {
+		return nil, err
+	}
+	output["cambioLoteDirigido"], err = json.Marshal(r.CambioLoteDirigido)
+	if err != nil {
+		return nil, err
+	}
+	output["tipo"], err = json.Marshal(r.Tipo)
+	if err != nil {
+		return nil, err
+	}
+	output["valorDeclarado"], err = json.Marshal(r.ValorDeclarado)
+	if err != nil {
+		return nil, err
+	}
+	output["idAndreani"], err = json.Marshal(r.IdAndreani)
+	if err != nil {
+		return nil, err
+	}
 	output["remito"], err = json.Marshal(r.Remito)
-	if err != nil {
-		return nil, err
-	}
-	output["referenciaCliente"], err = json.Marshal(r.ReferenciaCliente)
-	if err != nil {
-		return nil, err
-	}
-	output["codigoTransportista"], err = json.Marshal(r.CodigoTransportista)
-	if err != nil {
-		return nil, err
-	}
-	output["notas"], err = json.Marshal(r.Notas)
-	if err != nil {
-		return nil, err
-	}
-	output["camposLibres"], err = json.Marshal(r.CamposLibres)
-	if err != nil {
-		return nil, err
-	}
-	output["socioComercial"], err = json.Marshal(r.SocioComercial)
-	if err != nil {
-		return nil, err
-	}
-	output["modoTransporte"], err = json.Marshal(r.ModoTransporte)
-	if err != nil {
-		return nil, err
-	}
-	output["direccion"], err = json.Marshal(r.Direccion)
-	if err != nil {
-		return nil, err
-	}
-	output["listaDetalles"], err = json.Marshal(r.ListaDetalles)
-	if err != nil {
-		return nil, err
-	}
-	output["otrosDatos"], err = json.Marshal(r.OtrosDatos)
-	if err != nil {
-		return nil, err
-	}
-	output["zonaConsumo"], err = json.Marshal(r.ZonaConsumo)
 	if err != nil {
 		return nil, err
 	}
@@ -616,15 +569,11 @@ func (r PedidoDeAlmacenSCE) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["facturaInterna"], err = json.Marshal(r.FacturaInterna)
+	output["fechadeFacturacion"], err = json.Marshal(r.FechadeFacturacion)
 	if err != nil {
 		return nil, err
 	}
-	output["tieneGestionCobranza"], err = json.Marshal(r.TieneGestionCobranza)
-	if err != nil {
-		return nil, err
-	}
-	output["valorSeguro"], err = json.Marshal(r.ValorSeguro)
+	output["preciovalorFC"], err = json.Marshal(r.PreciovalorFC)
 	if err != nil {
 		return nil, err
 	}
@@ -632,19 +581,31 @@ func (r PedidoDeAlmacenSCE) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["clientePadre"], err = json.Marshal(r.ClientePadre)
+	output["tieneGestionCobranza"], err = json.Marshal(r.TieneGestionCobranza)
 	if err != nil {
 		return nil, err
 	}
-	output["acondicionamientoSecundario"], err = json.Marshal(r.AcondicionamientoSecundario)
+	output["socioComercial"], err = json.Marshal(r.SocioComercial)
 	if err != nil {
 		return nil, err
 	}
-	output["imprimeDocumentacion"], err = json.Marshal(r.ImprimeDocumentacion)
+	output["cot"], err = json.Marshal(r.Cot)
 	if err != nil {
 		return nil, err
 	}
-	output["detalleDeOrdenDeCompra"], err = json.Marshal(r.DetalleDeOrdenDeCompra)
+	output["notas"], err = json.Marshal(r.Notas)
+	if err != nil {
+		return nil, err
+	}
+	output["datosadicionales"], err = json.Marshal(r.Datosadicionales)
+	if err != nil {
+		return nil, err
+	}
+	output["listaDetalles"], err = json.Marshal(r.ListaDetalles)
+	if err != nil {
+		return nil, err
+	}
+	output["distribuidor"], err = json.Marshal(r.Distribuidor)
 	if err != nil {
 		return nil, err
 	}
@@ -687,32 +648,46 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for propietario")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numeroPedido"]; ok {
+		if v, ok := fields["numeroOrdenExterna"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroPedido); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroOrdenExterna); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroPedido")
+		return fmt.Errorf("no value specified for numeroOrdenExterna")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tipoPedido"]; ok {
+		if v, ok := fields["contratowarehouse"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TipoPedido); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Contratowarehouse); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipoPedido")
+		return fmt.Errorf("no value specified for contratowarehouse")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["almacencliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Almacencliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for almacencliente")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["prioridadPreparacion"]; ok {
@@ -742,9 +717,7 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.FechaPedido = NewUnionNullLong()
-
-		r.FechaPedido = nil
+		return fmt.Errorf("no value specified for fechaPedido")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["fechaEntrega"]; ok {
@@ -763,6 +736,100 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		r.FechaEntrega = nil
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["franjahoraria"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Franjahoraria); err != nil {
+			return err
+		}
+	} else {
+		r.Franjahoraria = NewUnionNullLong()
+
+		r.Franjahoraria = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["fechadeexpedicionSolicitada"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechadeexpedicionSolicitada); err != nil {
+			return err
+		}
+	} else {
+		r.FechadeexpedicionSolicitada = NewUnionNullLong()
+
+		r.FechadeexpedicionSolicitada = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cambioLoteDirigido"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CambioLoteDirigido); err != nil {
+			return err
+		}
+	} else {
+		r.CambioLoteDirigido = NewUnionNullString()
+
+		r.CambioLoteDirigido = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["tipo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Tipo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for tipo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["valorDeclarado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ValorDeclarado); err != nil {
+			return err
+		}
+	} else {
+		r.ValorDeclarado = NewUnionNullString()
+
+		r.ValorDeclarado = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idAndreani"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdAndreani); err != nil {
+			return err
+		}
+	} else {
+		r.IdAndreani = NewUnionNullString()
+
+		r.IdAndreani = nil
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["remito"]; ok {
 			return v
 		}
@@ -777,162 +844,6 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		r.Remito = NewUnionNullString()
 
 		r.Remito = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["referenciaCliente"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ReferenciaCliente); err != nil {
-			return err
-		}
-	} else {
-		r.ReferenciaCliente = NewUnionNullString()
-
-		r.ReferenciaCliente = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["codigoTransportista"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoTransportista); err != nil {
-			return err
-		}
-	} else {
-		r.CodigoTransportista = NewUnionNullString()
-
-		r.CodigoTransportista = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["notas"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Notas); err != nil {
-			return err
-		}
-	} else {
-		r.Notas = NewUnionNullListaDePropiedades()
-
-		r.Notas = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["camposLibres"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CamposLibres); err != nil {
-			return err
-		}
-	} else {
-		r.CamposLibres = NewUnionNullListaDePropiedades()
-
-		r.CamposLibres = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["socioComercial"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.SocioComercial); err != nil {
-			return err
-		}
-	} else {
-		r.SocioComercial = NewUnionNullString()
-
-		r.SocioComercial = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["modoTransporte"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ModoTransporte); err != nil {
-			return err
-		}
-	} else {
-		r.ModoTransporte = NewUnionNullString()
-
-		r.ModoTransporte = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["direccion"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Direccion); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for direccion")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["listaDetalles"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ListaDetalles); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for listaDetalles")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["otrosDatos"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.OtrosDatos); err != nil {
-			return err
-		}
-	} else {
-		r.OtrosDatos = NewUnionNullListaDePropiedades()
-
-		r.OtrosDatos = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["zonaConsumo"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ZonaConsumo); err != nil {
-			return err
-		}
-	} else {
-		r.ZonaConsumo = NewUnionNullString()
-
-		r.ZonaConsumo = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["facturaLegal"]; ok {
@@ -951,52 +862,36 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		r.FacturaLegal = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["facturaInterna"]; ok {
+		if v, ok := fields["fechadeFacturacion"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.FacturaInterna); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechadeFacturacion); err != nil {
 			return err
 		}
 	} else {
-		r.FacturaInterna = NewUnionNullString()
+		r.FechadeFacturacion = NewUnionNullLong()
 
-		r.FacturaInterna = nil
+		r.FechadeFacturacion = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tieneGestionCobranza"]; ok {
+		if v, ok := fields["preciovalorFC"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TieneGestionCobranza); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PreciovalorFC); err != nil {
 			return err
 		}
 	} else {
-		r.TieneGestionCobranza = NewUnionNullString()
+		r.PreciovalorFC = NewUnionNullString()
 
-		r.TieneGestionCobranza = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["valorSeguro"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ValorSeguro); err != nil {
-			return err
-		}
-	} else {
-		r.ValorSeguro = NewUnionNullString()
-
-		r.ValorSeguro = nil
+		r.PreciovalorFC = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ordenDeCompra"]; ok {
@@ -1015,68 +910,112 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		r.OrdenDeCompra = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["clientePadre"]; ok {
+		if v, ok := fields["tieneGestionCobranza"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ClientePadre); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.TieneGestionCobranza); err != nil {
 			return err
 		}
 	} else {
-		r.ClientePadre = NewUnionNullString()
+		r.TieneGestionCobranza = NewUnionNullString()
 
-		r.ClientePadre = nil
+		r.TieneGestionCobranza = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["acondicionamientoSecundario"]; ok {
+		if v, ok := fields["socioComercial"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AcondicionamientoSecundario); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.SocioComercial); err != nil {
 			return err
 		}
 	} else {
-		r.AcondicionamientoSecundario = NewUnionNullString()
+		r.SocioComercial = NewUnionNullString()
 
-		r.AcondicionamientoSecundario = nil
+		r.SocioComercial = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["imprimeDocumentacion"]; ok {
+		if v, ok := fields["cot"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ImprimeDocumentacion); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cot); err != nil {
 			return err
 		}
 	} else {
-		r.ImprimeDocumentacion = NewUnionNullBool()
+		r.Cot = NewUnionNullString()
 
-		r.ImprimeDocumentacion = nil
+		r.Cot = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["detalleDeOrdenDeCompra"]; ok {
+		if v, ok := fields["notas"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.DetalleDeOrdenDeCompra); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Notas); err != nil {
 			return err
 		}
 	} else {
-		r.DetalleDeOrdenDeCompra = NewUnionNullDetalleDeOrdenDeCompra()
+		r.Notas = NewUnionNullString()
 
-		r.DetalleDeOrdenDeCompra = nil
+		r.Notas = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["datosadicionales"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Datosadicionales); err != nil {
+			return err
+		}
+	} else {
+		r.Datosadicionales = NewUnionNullListaDePropiedades()
+
+		r.Datosadicionales = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["listaDetalles"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ListaDetalles); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for listaDetalles")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["distribuidor"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Distribuidor); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for distribuidor")
 	}
 	return nil
 }

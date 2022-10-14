@@ -18,18 +18,24 @@ import (
 var _ = fmt.Printf
 
 type Destinatario struct {
+	IdDestinatario string `json:"idDestinatario"`
+
 	DatosPersonales DatosPersonales `json:"datosPersonales"`
+
+	Direccion Direccion `json:"direccion"`
 
 	OtrosDatos *UnionNullListaDePropiedades `json:"otrosDatos"`
 
 	Contacto *UnionNullString `json:"contacto"`
 }
 
-const DestinatarioAvroCRC64Fingerprint = "Rz\xc4{\x96\x81\xc8\x13"
+const DestinatarioAvroCRC64Fingerprint = "\x1d\xe6\xf5\xe7x\x8b\xe9\x9c"
 
 func NewDestinatario() Destinatario {
 	r := Destinatario{}
 	r.DatosPersonales = NewDatosPersonales()
+
+	r.Direccion = NewDireccion()
 
 	r.OtrosDatos = nil
 	r.Contacto = nil
@@ -61,7 +67,15 @@ func DeserializeDestinatarioFromSchema(r io.Reader, schema string) (Destinatario
 
 func writeDestinatario(r Destinatario, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.IdDestinatario, w)
+	if err != nil {
+		return err
+	}
 	err = writeDatosPersonales(r.DatosPersonales, w)
+	if err != nil {
+		return err
+	}
+	err = writeDireccion(r.Direccion, w)
 	if err != nil {
 		return err
 	}
@@ -81,7 +95,7 @@ func (r Destinatario) Serialize(w io.Writer) error {
 }
 
 func (r Destinatario) Schema() string {
-	return "{\"fields\":[{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Wap.Events.Record.Destinatario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idDestinatario\",\"type\":\"string\"},{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Wap.Events.Record.Destinatario\",\"type\":\"record\"}"
 }
 
 func (r Destinatario) SchemaName() string {
@@ -100,17 +114,29 @@ func (_ Destinatario) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Destinatario) Get(i int) types.Field {
 	switch i {
 	case 0:
+		w := types.String{Target: &r.IdDestinatario}
+
+		return w
+
+	case 1:
 		r.DatosPersonales = NewDatosPersonales()
 
 		w := types.Record{Target: &r.DatosPersonales}
 
 		return w
 
-	case 1:
+	case 2:
+		r.Direccion = NewDireccion()
+
+		w := types.Record{Target: &r.Direccion}
+
+		return w
+
+	case 3:
 		r.OtrosDatos = NewUnionNullListaDePropiedades()
 
 		return r.OtrosDatos
-	case 2:
+	case 4:
 		r.Contacto = NewUnionNullString()
 
 		return r.Contacto
@@ -120,10 +146,10 @@ func (r *Destinatario) Get(i int) types.Field {
 
 func (r *Destinatario) SetDefault(i int) {
 	switch i {
-	case 1:
+	case 3:
 		r.OtrosDatos = nil
 		return
-	case 2:
+	case 4:
 		r.Contacto = nil
 		return
 	}
@@ -132,10 +158,10 @@ func (r *Destinatario) SetDefault(i int) {
 
 func (r *Destinatario) NullField(i int) {
 	switch i {
-	case 1:
+	case 3:
 		r.OtrosDatos = nil
 		return
-	case 2:
+	case 4:
 		r.Contacto = nil
 		return
 	}
@@ -154,7 +180,15 @@ func (_ Destinatario) AvroCRC64Fingerprint() []byte {
 func (r Destinatario) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["idDestinatario"], err = json.Marshal(r.IdDestinatario)
+	if err != nil {
+		return nil, err
+	}
 	output["datosPersonales"], err = json.Marshal(r.DatosPersonales)
+	if err != nil {
+		return nil, err
+	}
+	output["direccion"], err = json.Marshal(r.Direccion)
 	if err != nil {
 		return nil, err
 	}
@@ -177,6 +211,20 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
+		if v, ok := fields["idDestinatario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdDestinatario); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idDestinatario")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["datosPersonales"]; ok {
 			return v
 		}
@@ -189,6 +237,20 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for datosPersonales")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["direccion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Direccion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for direccion")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["otrosDatos"]; ok {

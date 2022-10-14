@@ -22,27 +22,28 @@ type DatosPersonales struct {
 
 	NombreCompleto *UnionNullString `json:"nombreCompleto"`
 
-	IdInternoDelCliente *UnionNullString `json:"idInternoDelCliente"`
+	Idinternocliente *UnionNullString `json:"idinternocliente"`
 
 	EMail *UnionNullString `json:"eMail"`
 
 	Telefonos *UnionNullListaDeTelefonos `json:"telefonos"`
 
-	Agrupador *UnionNullString `json:"agrupador"`
+	Contacto *UnionNullString `json:"contacto"`
 
-	TipoDeDocumento TipoDeDocumento `json:"tipoDeDocumento"`
+	TipoDeDocumento *UnionNullTipoDeDocumento `json:"tipoDeDocumento"`
 }
 
-const DatosPersonalesAvroCRC64Fingerprint = ")\x94E8i\xe9\xbd'"
+const DatosPersonalesAvroCRC64Fingerprint = ";\x97|\xef=PSO"
 
 func NewDatosPersonales() DatosPersonales {
 	r := DatosPersonales{}
 	r.NumeroDeDocumento = nil
 	r.NombreCompleto = nil
-	r.IdInternoDelCliente = nil
+	r.Idinternocliente = nil
 	r.EMail = nil
 	r.Telefonos = nil
-	r.Agrupador = nil
+	r.Contacto = nil
+	r.TipoDeDocumento = nil
 	return r
 }
 
@@ -79,7 +80,7 @@ func writeDatosPersonales(r DatosPersonales, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.IdInternoDelCliente, w)
+	err = writeUnionNullString(r.Idinternocliente, w)
 	if err != nil {
 		return err
 	}
@@ -91,11 +92,11 @@ func writeDatosPersonales(r DatosPersonales, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Agrupador, w)
+	err = writeUnionNullString(r.Contacto, w)
 	if err != nil {
 		return err
 	}
-	err = writeTipoDeDocumento(r.TipoDeDocumento, w)
+	err = writeUnionNullTipoDeDocumento(r.TipoDeDocumento, w)
 	if err != nil {
 		return err
 	}
@@ -107,7 +108,7 @@ func (r DatosPersonales) Serialize(w io.Writer) error {
 }
 
 func (r DatosPersonales) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"Wap.Events.Record.DatosPersonales\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"Wap.Events.Record.DatosPersonales\",\"type\":\"record\"}"
 }
 
 func (r DatosPersonales) SchemaName() string {
@@ -134,9 +135,9 @@ func (r *DatosPersonales) Get(i int) types.Field {
 
 		return r.NombreCompleto
 	case 2:
-		r.IdInternoDelCliente = NewUnionNullString()
+		r.Idinternocliente = NewUnionNullString()
 
-		return r.IdInternoDelCliente
+		return r.Idinternocliente
 	case 3:
 		r.EMail = NewUnionNullString()
 
@@ -146,14 +147,13 @@ func (r *DatosPersonales) Get(i int) types.Field {
 
 		return r.Telefonos
 	case 5:
-		r.Agrupador = NewUnionNullString()
+		r.Contacto = NewUnionNullString()
 
-		return r.Agrupador
+		return r.Contacto
 	case 6:
-		w := TipoDeDocumentoWrapper{Target: &r.TipoDeDocumento}
+		r.TipoDeDocumento = NewUnionNullTipoDeDocumento()
 
-		return w
-
+		return r.TipoDeDocumento
 	}
 	panic("Unknown field index")
 }
@@ -167,7 +167,7 @@ func (r *DatosPersonales) SetDefault(i int) {
 		r.NombreCompleto = nil
 		return
 	case 2:
-		r.IdInternoDelCliente = nil
+		r.Idinternocliente = nil
 		return
 	case 3:
 		r.EMail = nil
@@ -176,7 +176,10 @@ func (r *DatosPersonales) SetDefault(i int) {
 		r.Telefonos = nil
 		return
 	case 5:
-		r.Agrupador = nil
+		r.Contacto = nil
+		return
+	case 6:
+		r.TipoDeDocumento = nil
 		return
 	}
 	panic("Unknown field index")
@@ -191,7 +194,7 @@ func (r *DatosPersonales) NullField(i int) {
 		r.NombreCompleto = nil
 		return
 	case 2:
-		r.IdInternoDelCliente = nil
+		r.Idinternocliente = nil
 		return
 	case 3:
 		r.EMail = nil
@@ -200,7 +203,10 @@ func (r *DatosPersonales) NullField(i int) {
 		r.Telefonos = nil
 		return
 	case 5:
-		r.Agrupador = nil
+		r.Contacto = nil
+		return
+	case 6:
+		r.TipoDeDocumento = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -226,7 +232,7 @@ func (r DatosPersonales) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["idInternoDelCliente"], err = json.Marshal(r.IdInternoDelCliente)
+	output["idinternocliente"], err = json.Marshal(r.Idinternocliente)
 	if err != nil {
 		return nil, err
 	}
@@ -238,7 +244,7 @@ func (r DatosPersonales) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["agrupador"], err = json.Marshal(r.Agrupador)
+	output["contacto"], err = json.Marshal(r.Contacto)
 	if err != nil {
 		return nil, err
 	}
@@ -289,20 +295,20 @@ func (r *DatosPersonales) UnmarshalJSON(data []byte) error {
 		r.NombreCompleto = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["idInternoDelCliente"]; ok {
+		if v, ok := fields["idinternocliente"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IdInternoDelCliente); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Idinternocliente); err != nil {
 			return err
 		}
 	} else {
-		r.IdInternoDelCliente = NewUnionNullString()
+		r.Idinternocliente = NewUnionNullString()
 
-		r.IdInternoDelCliente = nil
+		r.Idinternocliente = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["eMail"]; ok {
@@ -337,20 +343,20 @@ func (r *DatosPersonales) UnmarshalJSON(data []byte) error {
 		r.Telefonos = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["agrupador"]; ok {
+		if v, ok := fields["contacto"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Agrupador); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Contacto); err != nil {
 			return err
 		}
 	} else {
-		r.Agrupador = NewUnionNullString()
+		r.Contacto = NewUnionNullString()
 
-		r.Agrupador = nil
+		r.Contacto = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoDeDocumento"]; ok {
@@ -364,7 +370,9 @@ func (r *DatosPersonales) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipoDeDocumento")
+		r.TipoDeDocumento = NewUnionNullTipoDeDocumento()
+
+		r.TipoDeDocumento = nil
 	}
 	return nil
 }

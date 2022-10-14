@@ -20,19 +20,28 @@ var _ = fmt.Printf
 type Articulo struct {
 	Codigo string `json:"codigo"`
 
+	Cantidad float64 `json:"cantidad"`
+
 	Propietario string `json:"propietario"`
 
-	Lote *UnionNullLoteArticulo `json:"lote"`
+	Numeropedido *UnionNullString `json:"numeropedido"`
 
-	OtrosDatos *UnionNullListaDePropiedades `json:"otrosDatos"`
+	Unidadmedida string `json:"unidadmedida"`
+
+	Lineaexterna *UnionNullString `json:"lineaexterna"`
+
+	Datosadicionales *UnionNullListaDePropiedades `json:"datosadicionales"`
+
+	Lote LoteArticulo `json:"lote"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "\xe30\t\x87\xa7\xd3\x12\xb6"
+const ArticuloAvroCRC64Fingerprint = "\xb2\x80\xa4\x9a\xed\xd3N\x1b"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
-	r.Lote = nil
-	r.OtrosDatos = nil
+	r.Datosadicionales = nil
+	r.Lote = NewLoteArticulo()
+
 	return r
 }
 
@@ -65,15 +74,31 @@ func writeArticulo(r Articulo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteDouble(r.Cantidad, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Propietario, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullLoteArticulo(r.Lote, w)
+	err = writeUnionNullString(r.Numeropedido, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullListaDePropiedades(r.OtrosDatos, w)
+	err = vm.WriteString(r.Unidadmedida, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Lineaexterna, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullListaDePropiedades(r.Datosadicionales, w)
+	if err != nil {
+		return err
+	}
+	err = writeLoteArticulo(r.Lote, w)
 	if err != nil {
 		return err
 	}
@@ -85,7 +110,7 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"Wap.Events.Record.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"name\":\"lineaexterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Wap.Events.Record.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
@@ -109,29 +134,47 @@ func (r *Articulo) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Propietario}
+		w := types.Double{Target: &r.Cantidad}
 
 		return w
 
 	case 2:
-		r.Lote = NewUnionNullLoteArticulo()
+		w := types.String{Target: &r.Propietario}
 
-		return r.Lote
+		return w
+
 	case 3:
-		r.OtrosDatos = NewUnionNullListaDePropiedades()
+		r.Numeropedido = NewUnionNullString()
 
-		return r.OtrosDatos
+		return r.Numeropedido
+	case 4:
+		w := types.String{Target: &r.Unidadmedida}
+
+		return w
+
+	case 5:
+		r.Lineaexterna = NewUnionNullString()
+
+		return r.Lineaexterna
+	case 6:
+		r.Datosadicionales = NewUnionNullListaDePropiedades()
+
+		return r.Datosadicionales
+	case 7:
+		r.Lote = NewLoteArticulo()
+
+		w := types.Record{Target: &r.Lote}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
 
 func (r *Articulo) SetDefault(i int) {
 	switch i {
-	case 2:
-		r.Lote = nil
-		return
-	case 3:
-		r.OtrosDatos = nil
+	case 6:
+		r.Datosadicionales = nil
 		return
 	}
 	panic("Unknown field index")
@@ -139,11 +182,14 @@ func (r *Articulo) SetDefault(i int) {
 
 func (r *Articulo) NullField(i int) {
 	switch i {
-	case 2:
-		r.Lote = nil
-		return
 	case 3:
-		r.OtrosDatos = nil
+		r.Numeropedido = nil
+		return
+	case 5:
+		r.Lineaexterna = nil
+		return
+	case 6:
+		r.Datosadicionales = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -165,15 +211,31 @@ func (r Articulo) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["cantidad"], err = json.Marshal(r.Cantidad)
+	if err != nil {
+		return nil, err
+	}
 	output["propietario"], err = json.Marshal(r.Propietario)
 	if err != nil {
 		return nil, err
 	}
-	output["lote"], err = json.Marshal(r.Lote)
+	output["numeropedido"], err = json.Marshal(r.Numeropedido)
 	if err != nil {
 		return nil, err
 	}
-	output["otrosDatos"], err = json.Marshal(r.OtrosDatos)
+	output["unidadmedida"], err = json.Marshal(r.Unidadmedida)
+	if err != nil {
+		return nil, err
+	}
+	output["lineaexterna"], err = json.Marshal(r.Lineaexterna)
+	if err != nil {
+		return nil, err
+	}
+	output["datosadicionales"], err = json.Marshal(r.Datosadicionales)
+	if err != nil {
+		return nil, err
+	}
+	output["lote"], err = json.Marshal(r.Lote)
 	if err != nil {
 		return nil, err
 	}
@@ -202,6 +264,20 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for codigo")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["cantidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cantidad); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for cantidad")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["propietario"]; ok {
 			return v
 		}
@@ -216,6 +292,64 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for propietario")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["numeropedido"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Numeropedido); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for numeropedido")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["unidadmedida"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Unidadmedida); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for unidadmedida")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["lineaexterna"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Lineaexterna); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for lineaexterna")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["datosadicionales"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Datosadicionales); err != nil {
+			return err
+		}
+	} else {
+		r.Datosadicionales = NewUnionNullListaDePropiedades()
+
+		r.Datosadicionales = nil
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["lote"]; ok {
 			return v
 		}
@@ -227,25 +361,7 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Lote = NewUnionNullLoteArticulo()
-
-		r.Lote = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["otrosDatos"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.OtrosDatos); err != nil {
-			return err
-		}
-	} else {
-		r.OtrosDatos = NewUnionNullListaDePropiedades()
-
-		r.OtrosDatos = nil
+		return fmt.Errorf("no value specified for lote")
 	}
 	return nil
 }

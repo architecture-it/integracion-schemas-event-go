@@ -18,18 +18,16 @@ import (
 var _ = fmt.Printf
 
 type LoteArticulo struct {
-	Codigo string `json:"codigo"`
-
 	LoteDeFabricante *UnionNullString `json:"loteDeFabricante"`
 
 	LoteSecundario *UnionNullString `json:"loteSecundario"`
 
-	FechaDeVencimiento int64 `json:"fechaDeVencimiento"`
+	FechaDeVencimiento *UnionNullLong `json:"fechaDeVencimiento"`
 
-	OtrosDatos *UnionNullListaDePropiedades `json:"otrosDatos"`
+	OtrosDatos *UnionNullString `json:"otrosDatos"`
 }
 
-const LoteArticuloAvroCRC64Fingerprint = "\x1e\xcc\xff_'R\xe0F"
+const LoteArticuloAvroCRC64Fingerprint = "\x01\x19\xfd\xf8\xfc[]\xec"
 
 func NewLoteArticulo() LoteArticulo {
 	r := LoteArticulo{}
@@ -64,10 +62,6 @@ func DeserializeLoteArticuloFromSchema(r io.Reader, schema string) (LoteArticulo
 
 func writeLoteArticulo(r LoteArticulo, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Codigo, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.LoteDeFabricante, w)
 	if err != nil {
 		return err
@@ -76,11 +70,11 @@ func writeLoteArticulo(r LoteArticulo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.FechaDeVencimiento, w)
+	err = writeUnionNullLong(r.FechaDeVencimiento, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullListaDePropiedades(r.OtrosDatos, w)
+	err = writeUnionNullString(r.OtrosDatos, w)
 	if err != nil {
 		return err
 	}
@@ -92,7 +86,7 @@ func (r LoteArticulo) Serialize(w io.Writer) error {
 }
 
 func (r LoteArticulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Wap.Events.Record.LoteArticulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"Wap.Events.Record.LoteArticulo\",\"type\":\"record\"}"
 }
 
 func (r LoteArticulo) SchemaName() string {
@@ -111,25 +105,19 @@ func (_ LoteArticulo) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *LoteArticulo) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Codigo}
-
-		return w
-
-	case 1:
 		r.LoteDeFabricante = NewUnionNullString()
 
 		return r.LoteDeFabricante
-	case 2:
+	case 1:
 		r.LoteSecundario = NewUnionNullString()
 
 		return r.LoteSecundario
+	case 2:
+		r.FechaDeVencimiento = NewUnionNullLong()
+
+		return r.FechaDeVencimiento
 	case 3:
-		w := types.Long{Target: &r.FechaDeVencimiento}
-
-		return w
-
-	case 4:
-		r.OtrosDatos = NewUnionNullListaDePropiedades()
+		r.OtrosDatos = NewUnionNullString()
 
 		return r.OtrosDatos
 	}
@@ -138,13 +126,13 @@ func (r *LoteArticulo) Get(i int) types.Field {
 
 func (r *LoteArticulo) SetDefault(i int) {
 	switch i {
-	case 1:
+	case 0:
 		r.LoteDeFabricante = nil
 		return
-	case 2:
+	case 1:
 		r.LoteSecundario = nil
 		return
-	case 4:
+	case 3:
 		r.OtrosDatos = nil
 		return
 	}
@@ -153,13 +141,16 @@ func (r *LoteArticulo) SetDefault(i int) {
 
 func (r *LoteArticulo) NullField(i int) {
 	switch i {
-	case 1:
+	case 0:
 		r.LoteDeFabricante = nil
 		return
-	case 2:
+	case 1:
 		r.LoteSecundario = nil
 		return
-	case 4:
+	case 2:
+		r.FechaDeVencimiento = nil
+		return
+	case 3:
 		r.OtrosDatos = nil
 		return
 	}
@@ -178,10 +169,6 @@ func (_ LoteArticulo) AvroCRC64Fingerprint() []byte {
 func (r LoteArticulo) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["codigo"], err = json.Marshal(r.Codigo)
-	if err != nil {
-		return nil, err
-	}
 	output["loteDeFabricante"], err = json.Marshal(r.LoteDeFabricante)
 	if err != nil {
 		return nil, err
@@ -208,20 +195,6 @@ func (r *LoteArticulo) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["codigo"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Codigo); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for codigo")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["loteDeFabricante"]; ok {
 			return v
@@ -280,7 +253,7 @@ func (r *LoteArticulo) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.OtrosDatos = NewUnionNullListaDePropiedades()
+		r.OtrosDatos = NewUnionNullString()
 
 		r.OtrosDatos = nil
 	}

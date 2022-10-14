@@ -21,7 +21,7 @@ type ListaDeDatosPersonales struct {
 	DatosPersonales *UnionNullArrayDatosPersonales `json:"datosPersonales"`
 }
 
-const ListaDeDatosPersonalesAvroCRC64Fingerprint = "\xae\xa7C\xe2`\x00\xdf\x05"
+const ListaDeDatosPersonalesAvroCRC64Fingerprint = "\x1e\x10\x01\xea\xedӾ\x1a"
 
 func NewListaDeDatosPersonales() ListaDeDatosPersonales {
 	r := ListaDeDatosPersonales{}
@@ -65,7 +65,7 @@ func (r ListaDeDatosPersonales) Serialize(w io.Writer) error {
 }
 
 func (r ListaDeDatosPersonales) Schema() string {
-	return "{\"fields\":[{\"name\":\"datosPersonales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Wap.Events.Record.ListaDeDatosPersonales\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"datosPersonales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Wap.Events.Record.ListaDeDatosPersonales\",\"type\":\"record\"}"
 }
 
 func (r ListaDeDatosPersonales) SchemaName() string {

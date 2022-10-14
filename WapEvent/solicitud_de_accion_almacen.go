@@ -27,11 +27,9 @@ type SolicitudDeAccionAlmacen struct {
 	Almacen string `json:"almacen"`
 
 	Planta string `json:"planta"`
-
-	Contratowarehouse string `json:"contratowarehouse"`
 }
 
-const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "2:\x14I\x00ɞ\xf7"
+const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "ku\x15\xd0\xd5ͱs"
 
 func NewSolicitudDeAccionAlmacen() SolicitudDeAccionAlmacen {
 	r := SolicitudDeAccionAlmacen{}
@@ -85,10 +83,6 @@ func writeSolicitudDeAccionAlmacen(r SolicitudDeAccionAlmacen, w io.Writer) erro
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Contratowarehouse, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -97,7 +91,7 @@ func (r SolicitudDeAccionAlmacen) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudDeAccionAlmacen) Schema() string {
-	return "{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"contratowarehouse\",\"type\":\"string\"}],\"name\":\"Wap.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"}],\"name\":\"Wap.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
 }
 
 func (r SolicitudDeAccionAlmacen) SchemaName() string {
@@ -139,11 +133,6 @@ func (r *SolicitudDeAccionAlmacen) Get(i int) types.Field {
 
 	case 4:
 		w := types.String{Target: &r.Planta}
-
-		return w
-
-	case 5:
-		w := types.String{Target: &r.Contratowarehouse}
 
 		return w
 
@@ -192,10 +181,6 @@ func (r SolicitudDeAccionAlmacen) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["planta"], err = json.Marshal(r.Planta)
-	if err != nil {
-		return nil, err
-	}
-	output["contratowarehouse"], err = json.Marshal(r.Contratowarehouse)
 	if err != nil {
 		return nil, err
 	}
@@ -278,20 +263,6 @@ func (r *SolicitudDeAccionAlmacen) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for planta")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["contratowarehouse"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contratowarehouse); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for contratowarehouse")
 	}
 	return nil
 }

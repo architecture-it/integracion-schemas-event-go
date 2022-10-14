@@ -20,25 +20,20 @@ var _ = fmt.Printf
 type DetallePedido struct {
 	Articulo Articulo `json:"articulo"`
 
-	NumeroPedido string `json:"numeroPedido"`
+	Numerodelinea *UnionNullString `json:"numerodelinea"`
 
-	UnidadMedida string `json:"unidadMedida"`
+	Tipoacondicionamientoescundario *UnionNullString `json:"tipoacondicionamientoescundario"`
 
-	LineaExterna *UnionNullString `json:"lineaExterna"`
-
-	Unidades float64 `json:"unidades"`
-
-	OtrosDatos *UnionNullListaDePropiedades `json:"otrosDatos"`
+	Admitepickingparcial *UnionNullString `json:"admitepickingparcial"`
 }
 
-const DetallePedidoAvroCRC64Fingerprint = "\x8a\xd3\xc2/\xe3+\xf1\xb1"
+const DetallePedidoAvroCRC64Fingerprint = "\x8e[)\xd8\x121\x0e\xb1"
 
 func NewDetallePedido() DetallePedido {
 	r := DetallePedido{}
 	r.Articulo = NewArticulo()
 
-	r.LineaExterna = nil
-	r.OtrosDatos = nil
+	r.Admitepickingparcial = nil
 	return r
 }
 
@@ -71,23 +66,15 @@ func writeDetallePedido(r DetallePedido, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroPedido, w)
+	err = writeUnionNullString(r.Numerodelinea, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.UnidadMedida, w)
+	err = writeUnionNullString(r.Tipoacondicionamientoescundario, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.LineaExterna, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteDouble(r.Unidades, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullListaDePropiedades(r.OtrosDatos, w)
+	err = writeUnionNullString(r.Admitepickingparcial, w)
 	if err != nil {
 		return err
 	}
@@ -99,7 +86,7 @@ func (r DetallePedido) Serialize(w io.Writer) error {
 }
 
 func (r DetallePedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"numeroPedido\",\"type\":\"string\"},{\"name\":\"unidadMedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"lineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidades\",\"type\":\"double\"},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"Wap.Events.Record.DetallePedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"name\":\"lineaexterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]}],\"name\":\"Wap.Events.Record.DetallePedido\",\"type\":\"record\"}"
 }
 
 func (r DetallePedido) SchemaName() string {
@@ -125,28 +112,17 @@ func (r *DetallePedido) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.NumeroPedido}
+		r.Numerodelinea = NewUnionNullString()
 
-		return w
-
+		return r.Numerodelinea
 	case 2:
-		w := types.String{Target: &r.UnidadMedida}
+		r.Tipoacondicionamientoescundario = NewUnionNullString()
 
-		return w
-
+		return r.Tipoacondicionamientoescundario
 	case 3:
-		r.LineaExterna = NewUnionNullString()
+		r.Admitepickingparcial = NewUnionNullString()
 
-		return r.LineaExterna
-	case 4:
-		w := types.Double{Target: &r.Unidades}
-
-		return w
-
-	case 5:
-		r.OtrosDatos = NewUnionNullListaDePropiedades()
-
-		return r.OtrosDatos
+		return r.Admitepickingparcial
 	}
 	panic("Unknown field index")
 }
@@ -154,10 +130,7 @@ func (r *DetallePedido) Get(i int) types.Field {
 func (r *DetallePedido) SetDefault(i int) {
 	switch i {
 	case 3:
-		r.LineaExterna = nil
-		return
-	case 5:
-		r.OtrosDatos = nil
+		r.Admitepickingparcial = nil
 		return
 	}
 	panic("Unknown field index")
@@ -165,11 +138,14 @@ func (r *DetallePedido) SetDefault(i int) {
 
 func (r *DetallePedido) NullField(i int) {
 	switch i {
-	case 3:
-		r.LineaExterna = nil
+	case 1:
+		r.Numerodelinea = nil
 		return
-	case 5:
-		r.OtrosDatos = nil
+	case 2:
+		r.Tipoacondicionamientoescundario = nil
+		return
+	case 3:
+		r.Admitepickingparcial = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -191,23 +167,15 @@ func (r DetallePedido) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["numeroPedido"], err = json.Marshal(r.NumeroPedido)
+	output["numerodelinea"], err = json.Marshal(r.Numerodelinea)
 	if err != nil {
 		return nil, err
 	}
-	output["unidadMedida"], err = json.Marshal(r.UnidadMedida)
+	output["tipoacondicionamientoescundario"], err = json.Marshal(r.Tipoacondicionamientoescundario)
 	if err != nil {
 		return nil, err
 	}
-	output["lineaExterna"], err = json.Marshal(r.LineaExterna)
-	if err != nil {
-		return nil, err
-	}
-	output["unidades"], err = json.Marshal(r.Unidades)
-	if err != nil {
-		return nil, err
-	}
-	output["otrosDatos"], err = json.Marshal(r.OtrosDatos)
+	output["admitepickingparcial"], err = json.Marshal(r.Admitepickingparcial)
 	if err != nil {
 		return nil, err
 	}
@@ -236,78 +204,48 @@ func (r *DetallePedido) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for articulo")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numeroPedido"]; ok {
+		if v, ok := fields["numerodelinea"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroPedido); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Numerodelinea); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroPedido")
+		return fmt.Errorf("no value specified for numerodelinea")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["unidadMedida"]; ok {
+		if v, ok := fields["tipoacondicionamientoescundario"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.UnidadMedida); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Tipoacondicionamientoescundario); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for unidadMedida")
+		return fmt.Errorf("no value specified for tipoacondicionamientoescundario")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["lineaExterna"]; ok {
+		if v, ok := fields["admitepickingparcial"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.LineaExterna); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Admitepickingparcial); err != nil {
 			return err
 		}
 	} else {
-		r.LineaExterna = NewUnionNullString()
+		r.Admitepickingparcial = NewUnionNullString()
 
-		r.LineaExterna = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["unidades"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Unidades); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for unidades")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["otrosDatos"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.OtrosDatos); err != nil {
-			return err
-		}
-	} else {
-		r.OtrosDatos = NewUnionNullListaDePropiedades()
-
-		r.OtrosDatos = nil
+		r.Admitepickingparcial = nil
 	}
 	return nil
 }
