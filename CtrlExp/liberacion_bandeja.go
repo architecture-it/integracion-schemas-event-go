@@ -20,14 +20,14 @@ var _ = fmt.Printf
 type LiberacionBandeja struct {
 	Bandeja string `json:"Bandeja"`
 
-	Field_Schema *UnionNullString `json:"Schema"`
+	SchemaDb *UnionNullString `json:"SchemaDb"`
 }
 
-const LiberacionBandejaAvroCRC64Fingerprint = "\xaa\x8dY\xe16nDA"
+const LiberacionBandejaAvroCRC64Fingerprint = "\x88d3\xdf\xc8rI\n"
 
 func NewLiberacionBandeja() LiberacionBandeja {
 	r := LiberacionBandeja{}
-	r.Field_Schema = nil
+	r.SchemaDb = nil
 	return r
 }
 
@@ -60,7 +60,7 @@ func writeLiberacionBandeja(r LiberacionBandeja, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Field_Schema, w)
+	err = writeUnionNullString(r.SchemaDb, w)
 	if err != nil {
 		return err
 	}
@@ -72,7 +72,7 @@ func (r LiberacionBandeja) Serialize(w io.Writer) error {
 }
 
 func (r LiberacionBandeja) Schema() string {
-	return "{\"fields\":[{\"name\":\"Bandeja\",\"type\":\"string\"},{\"default\":null,\"name\":\"Schema\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.LiberacionBandeja\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Bandeja\",\"type\":\"string\"},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.LiberacionBandeja\",\"type\":\"record\"}"
 }
 
 func (r LiberacionBandeja) SchemaName() string {
@@ -96,9 +96,9 @@ func (r *LiberacionBandeja) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.Field_Schema = NewUnionNullString()
+		r.SchemaDb = NewUnionNullString()
 
-		return r.Field_Schema
+		return r.SchemaDb
 	}
 	panic("Unknown field index")
 }
@@ -106,7 +106,7 @@ func (r *LiberacionBandeja) Get(i int) types.Field {
 func (r *LiberacionBandeja) SetDefault(i int) {
 	switch i {
 	case 1:
-		r.Field_Schema = nil
+		r.SchemaDb = nil
 		return
 	}
 	panic("Unknown field index")
@@ -115,7 +115,7 @@ func (r *LiberacionBandeja) SetDefault(i int) {
 func (r *LiberacionBandeja) NullField(i int) {
 	switch i {
 	case 1:
-		r.Field_Schema = nil
+		r.SchemaDb = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -137,7 +137,7 @@ func (r LiberacionBandeja) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Schema"], err = json.Marshal(r.Field_Schema)
+	output["SchemaDb"], err = json.Marshal(r.SchemaDb)
 	if err != nil {
 		return nil, err
 	}
@@ -166,20 +166,20 @@ func (r *LiberacionBandeja) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Bandeja")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Schema"]; ok {
+		if v, ok := fields["SchemaDb"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Field_Schema); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.SchemaDb); err != nil {
 			return err
 		}
 	} else {
-		r.Field_Schema = NewUnionNullString()
+		r.SchemaDb = NewUnionNullString()
 
-		r.Field_Schema = nil
+		r.SchemaDb = nil
 	}
 	return nil
 }
