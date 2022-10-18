@@ -37,7 +37,7 @@ type Identificacion struct {
 	Instancia string `json:"Instancia"`
 }
 
-const IdentificacionAvroCRC64Fingerprint = "vA\x80\x93\x18b0\xb0"
+const IdentificacionAvroCRC64Fingerprint = "\x1f\xae\x95\xd8\xeb\xd9#\xc3"
 
 func NewIdentificacion() Identificacion {
 	r := Identificacion{}
@@ -113,11 +113,11 @@ func (r Identificacion) Serialize(w io.Writer) error {
 }
 
 func (r Identificacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.PreparacionCommon.Identificacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.EmpaquetadoCommon.Identificacion\",\"type\":\"record\"}"
 }
 
 func (r Identificacion) SchemaName() string {
-	return "Andreani.EventoWhPedidos.Events.PreparacionCommon.Identificacion"
+	return "Andreani.EventoWhPedidos.Events.EmpaquetadoCommon.Identificacion"
 }
 
 func (_ Identificacion) SetBoolean(v bool)    { panic("Unsupported operation") }
