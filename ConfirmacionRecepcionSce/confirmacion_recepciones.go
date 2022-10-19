@@ -23,12 +23,16 @@ type ConfirmacionRecepciones struct {
 	Contrato string `json:"contrato"`
 
 	Planta string `json:"planta"`
+
+	ConfirmacionDeRecepcion ConfirmacionDeRecepcion `json:"confirmacionDeRecepcion"`
 }
 
-const ConfirmacionRecepcionesAvroCRC64Fingerprint = "X\xdc\xd4h\xfb\xbe\xb3/"
+const ConfirmacionRecepcionesAvroCRC64Fingerprint = "~\r\x00\xf6\xeb\xf1Vj"
 
 func NewConfirmacionRecepciones() ConfirmacionRecepciones {
 	r := ConfirmacionRecepciones{}
+	r.ConfirmacionDeRecepcion = NewConfirmacionDeRecepcion()
+
 	return r
 }
 
@@ -69,6 +73,10 @@ func writeConfirmacionRecepciones(r ConfirmacionRecepciones, w io.Writer) error 
 	if err != nil {
 		return err
 	}
+	err = writeConfirmacionDeRecepcion(r.ConfirmacionDeRecepcion, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -77,7 +85,7 @@ func (r ConfirmacionRecepciones) Serialize(w io.Writer) error {
 }
 
 func (r ConfirmacionRecepciones) Schema() string {
-	return "{\"fields\":[{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"}],\"name\":\"Andreani.ConfirmacionRecepcionSce.Events.Record.ConfirmacionRecepciones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"confirmacionDeRecepcion\",\"type\":{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroDeRecepcion\",\"type\":\"string\"},{\"name\":\"remito\",\"type\":\"string\"},{\"name\":\"tipoDeRecepcion\",\"type\":\"string\"}],\"name\":\"ConfirmacionDeRecepcion\",\"type\":\"record\"}}],\"name\":\"Andreani.ConfirmacionRecepcionSce.Events.Record.ConfirmacionRecepciones\",\"type\":\"record\"}"
 }
 
 func (r ConfirmacionRecepciones) SchemaName() string {
@@ -107,6 +115,13 @@ func (r *ConfirmacionRecepciones) Get(i int) types.Field {
 
 	case 2:
 		w := types.String{Target: &r.Planta}
+
+		return w
+
+	case 3:
+		r.ConfirmacionDeRecepcion = NewConfirmacionDeRecepcion()
+
+		w := types.Record{Target: &r.ConfirmacionDeRecepcion}
 
 		return w
 
@@ -147,6 +162,10 @@ func (r ConfirmacionRecepciones) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["planta"], err = json.Marshal(r.Planta)
+	if err != nil {
+		return nil, err
+	}
+	output["confirmacionDeRecepcion"], err = json.Marshal(r.ConfirmacionDeRecepcion)
 	if err != nil {
 		return nil, err
 	}
@@ -201,6 +220,20 @@ func (r *ConfirmacionRecepciones) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for planta")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["confirmacionDeRecepcion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ConfirmacionDeRecepcion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for confirmacionDeRecepcion")
 	}
 	return nil
 }
