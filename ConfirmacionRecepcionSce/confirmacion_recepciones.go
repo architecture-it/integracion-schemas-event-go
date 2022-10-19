@@ -24,10 +24,16 @@ type ConfirmacionRecepciones struct {
 
 	Planta string `json:"planta"`
 
+	Remitente string `json:"remitente"`
+
+	IdTransaccion string `json:"idTransaccion"`
+
+	UriConsulta string `json:"uriConsulta"`
+
 	ConfirmacionDeRecepcion ConfirmacionDeRecepcion `json:"confirmacionDeRecepcion"`
 }
 
-const ConfirmacionRecepcionesAvroCRC64Fingerprint = "~\r\x00\xf6\xeb\xf1Vj"
+const ConfirmacionRecepcionesAvroCRC64Fingerprint = "\x1dh\xd2炐:("
 
 func NewConfirmacionRecepciones() ConfirmacionRecepciones {
 	r := ConfirmacionRecepciones{}
@@ -73,6 +79,18 @@ func writeConfirmacionRecepciones(r ConfirmacionRecepciones, w io.Writer) error 
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Remitente, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.IdTransaccion, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.UriConsulta, w)
+	if err != nil {
+		return err
+	}
 	err = writeConfirmacionDeRecepcion(r.ConfirmacionDeRecepcion, w)
 	if err != nil {
 		return err
@@ -85,7 +103,7 @@ func (r ConfirmacionRecepciones) Serialize(w io.Writer) error {
 }
 
 func (r ConfirmacionRecepciones) Schema() string {
-	return "{\"fields\":[{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"confirmacionDeRecepcion\",\"type\":{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroDeRecepcion\",\"type\":\"string\"},{\"name\":\"remito\",\"type\":\"string\"},{\"name\":\"tipoDeRecepcion\",\"type\":\"string\"}],\"name\":\"ConfirmacionDeRecepcion\",\"type\":\"record\"}}],\"name\":\"Andreani.ConfirmacionRecepcionSce.Events.Record.ConfirmacionRecepciones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"uriConsulta\",\"type\":\"string\"},{\"name\":\"confirmacionDeRecepcion\",\"type\":{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroDeRecepcion\",\"type\":\"string\"},{\"name\":\"remito\",\"type\":\"string\"},{\"name\":\"tipoDeRecepcion\",\"type\":\"string\"}],\"name\":\"ConfirmacionDeRecepcion\",\"type\":\"record\"}}],\"name\":\"Andreani.ConfirmacionRecepcionSce.Events.Record.ConfirmacionRecepciones\",\"type\":\"record\"}"
 }
 
 func (r ConfirmacionRecepciones) SchemaName() string {
@@ -119,6 +137,21 @@ func (r *ConfirmacionRecepciones) Get(i int) types.Field {
 		return w
 
 	case 3:
+		w := types.String{Target: &r.Remitente}
+
+		return w
+
+	case 4:
+		w := types.String{Target: &r.IdTransaccion}
+
+		return w
+
+	case 5:
+		w := types.String{Target: &r.UriConsulta}
+
+		return w
+
+	case 6:
 		r.ConfirmacionDeRecepcion = NewConfirmacionDeRecepcion()
 
 		w := types.Record{Target: &r.ConfirmacionDeRecepcion}
@@ -162,6 +195,18 @@ func (r ConfirmacionRecepciones) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["planta"], err = json.Marshal(r.Planta)
+	if err != nil {
+		return nil, err
+	}
+	output["remitente"], err = json.Marshal(r.Remitente)
+	if err != nil {
+		return nil, err
+	}
+	output["idTransaccion"], err = json.Marshal(r.IdTransaccion)
+	if err != nil {
+		return nil, err
+	}
+	output["uriConsulta"], err = json.Marshal(r.UriConsulta)
 	if err != nil {
 		return nil, err
 	}
@@ -220,6 +265,48 @@ func (r *ConfirmacionRecepciones) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for planta")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["remitente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Remitente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for remitente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idTransaccion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdTransaccion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idTransaccion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["uriConsulta"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UriConsulta); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for uriConsulta")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["confirmacionDeRecepcion"]; ok {
