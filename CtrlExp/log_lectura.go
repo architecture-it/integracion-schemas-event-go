@@ -22,7 +22,7 @@ type LogLectura struct {
 
 	Codigo string `json:"Codigo"`
 
-	FechaLectura int64 `json:"FechaLectura"`
+	FechaLectura *UnionNullLong `json:"FechaLectura"`
 
 	Bandeja *UnionNullString `json:"Bandeja"`
 
@@ -33,10 +33,15 @@ type LogLectura struct {
 	Cantidad *UnionNullInt `json:"Cantidad"`
 }
 
-const LogLecturaAvroCRC64Fingerprint = "\xe0\xd7:\xa6\xa9V\xa6\x9c"
+const LogLecturaAvroCRC64Fingerprint = "Y~:\x10\xb8\xf5.\x15"
 
 func NewLogLectura() LogLectura {
 	r := LogLectura{}
+	r.FechaLectura = nil
+	r.Bandeja = nil
+	r.NroPedido = nil
+	r.Lpn = nil
+	r.Cantidad = nil
 	return r
 }
 
@@ -73,7 +78,7 @@ func writeLogLectura(r LogLectura, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.FechaLectura, w)
+	err = writeUnionNullLong(r.FechaLectura, w)
 	if err != nil {
 		return err
 	}
@@ -101,7 +106,7 @@ func (r LogLectura) Serialize(w io.Writer) error {
 }
 
 func (r LogLectura) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTipoLectura\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"FechaLectura\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Bandeja\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroPedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Lpn\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.LogLectura\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTipoLectura\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaLectura\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Bandeja\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Lpn\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cantidad\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.LogLectura\",\"type\":\"record\"}"
 }
 
 func (r LogLectura) SchemaName() string {
@@ -130,10 +135,9 @@ func (r *LogLectura) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.Long{Target: &r.FechaLectura}
+		r.FechaLectura = NewUnionNullLong()
 
-		return w
-
+		return r.FechaLectura
 	case 3:
 		r.Bandeja = NewUnionNullString()
 
@@ -156,12 +160,30 @@ func (r *LogLectura) Get(i int) types.Field {
 
 func (r *LogLectura) SetDefault(i int) {
 	switch i {
+	case 2:
+		r.FechaLectura = nil
+		return
+	case 3:
+		r.Bandeja = nil
+		return
+	case 4:
+		r.NroPedido = nil
+		return
+	case 5:
+		r.Lpn = nil
+		return
+	case 6:
+		r.Cantidad = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *LogLectura) NullField(i int) {
 	switch i {
+	case 2:
+		r.FechaLectura = nil
+		return
 	case 3:
 		r.Bandeja = nil
 		return
@@ -268,7 +290,9 @@ func (r *LogLectura) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FechaLectura")
+		r.FechaLectura = NewUnionNullLong()
+
+		r.FechaLectura = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Bandeja"]; ok {
@@ -282,7 +306,9 @@ func (r *LogLectura) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Bandeja")
+		r.Bandeja = NewUnionNullString()
+
+		r.Bandeja = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NroPedido"]; ok {
@@ -296,7 +322,9 @@ func (r *LogLectura) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NroPedido")
+		r.NroPedido = NewUnionNullString()
+
+		r.NroPedido = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Lpn"]; ok {
@@ -310,7 +338,9 @@ func (r *LogLectura) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Lpn")
+		r.Lpn = NewUnionNullString()
+
+		r.Lpn = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Cantidad"]; ok {
@@ -324,7 +354,9 @@ func (r *LogLectura) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Cantidad")
+		r.Cantidad = NewUnionNullInt()
+
+		r.Cantidad = nil
 	}
 	return nil
 }
