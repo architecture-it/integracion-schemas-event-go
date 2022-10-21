@@ -77,7 +77,7 @@ type Cabecera struct {
 	FormatoNuevo bool `json:"FormatoNuevo"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "~\xa7\x10\x80\xc6r\x82\xa8"
+const CabeceraAvroCRC64Fingerprint = "\x16;sM\xbc\xa9\x04+"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -233,11 +233,11 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdCliente\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"FechaRemito\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GlnOrigen\",\"type\":\"string\"},{\"name\":\"ReferenciaExterna\",\"type\":\"string\"},{\"name\":\"IdUsuarioModif\",\"type\":\"string\"},{\"name\":\"FechaModificacionRegistro\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GlnDestino\",\"type\":\"string\"},{\"name\":\"IdTipoOT\",\"type\":\"int\"},{\"name\":\"Factura\",\"type\":\"string\"},{\"name\":\"IdEstadoLote\",\"type\":\"string\"},{\"name\":\"IdEvento\",\"type\":\"int\"},{\"name\":\"IdEstado\",\"type\":\"int\"},{\"name\":\"Contenedor\",\"type\":\"string\"},{\"name\":\"Pedido\",\"type\":\"string\"},{\"name\":\"IdTipoDocumento\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"NroDocumento\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":\"string\"},{\"name\":\"NroEntrega\",\"type\":\"string\"},{\"name\":\"ClienteDestinatario\",\"type\":\"string\"},{\"name\":\"ClienteFacturacion\",\"type\":\"string\"},{\"name\":\"FechaEnvioBoss\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"IdEstadoTransferenciaBoss\",\"type\":\"int\"},{\"name\":\"CorrecionFix\",\"type\":\"boolean\"},{\"name\":\"FechaCreacionRegistro\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"IdUsuarioCreacionRegistro\",\"type\":\"string\"},{\"name\":\"FormatoNuevo\",\"type\":\"boolean\"}],\"name\":\"Andreani.EventoWhOT.Events.AltaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdCliente\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"FechaRemito\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GlnOrigen\",\"type\":\"string\"},{\"name\":\"ReferenciaExterna\",\"type\":\"string\"},{\"name\":\"IdUsuarioModif\",\"type\":\"string\"},{\"name\":\"FechaModificacionRegistro\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GlnDestino\",\"type\":\"string\"},{\"name\":\"IdTipoOT\",\"type\":\"int\"},{\"name\":\"Factura\",\"type\":\"string\"},{\"name\":\"IdEstadoLote\",\"type\":\"string\"},{\"name\":\"IdEvento\",\"type\":\"int\"},{\"name\":\"IdEstado\",\"type\":\"int\"},{\"name\":\"Contenedor\",\"type\":\"string\"},{\"name\":\"Pedido\",\"type\":\"string\"},{\"name\":\"IdTipoDocumento\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"NroDocumento\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":\"string\"},{\"name\":\"NroEntrega\",\"type\":\"string\"},{\"name\":\"ClienteDestinatario\",\"type\":\"string\"},{\"name\":\"ClienteFacturacion\",\"type\":\"string\"},{\"name\":\"FechaEnvioBoss\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"IdEstadoTransferenciaBoss\",\"type\":\"int\"},{\"name\":\"CorrecionFix\",\"type\":\"boolean\"},{\"name\":\"FechaCreacionRegistro\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"IdUsuarioCreacionRegistro\",\"type\":\"string\"},{\"name\":\"FormatoNuevo\",\"type\":\"boolean\"}],\"name\":\"Andreani.EventoWhAltaOt.Events.AltaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
-	return "Andreani.EventoWhOT.Events.AltaCommon.Cabecera"
+	return "Andreani.EventoWhAltaOt.Events.AltaCommon.Cabecera"
 }
 
 func (_ Cabecera) SetBoolean(v bool)    { panic("Unsupported operation") }

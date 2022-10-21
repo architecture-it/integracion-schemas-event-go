@@ -31,7 +31,7 @@ type Detalle struct {
 	Cantidad float32 `json:"Cantidad"`
 }
 
-const DetalleAvroCRC64Fingerprint = "T\x8d\x12!]N\xe8{"
+const DetalleAvroCRC64Fingerprint = "\x05\xca\n !\xec\xe9<"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -95,11 +95,11 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"Gtin\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"IdUsuarioModificacion\",\"type\":\"string\"},{\"name\":\"FechaModificacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Cantidad\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhOT.Events.AltaCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Gtin\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"IdUsuarioModificacion\",\"type\":\"string\"},{\"name\":\"FechaModificacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Cantidad\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhAltaOt.Events.AltaCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
-	return "Andreani.EventoWhOT.Events.AltaCommon.Detalle"
+	return "Andreani.EventoWhAltaOt.Events.AltaCommon.Detalle"
 }
 
 func (_ Detalle) SetBoolean(v bool)    { panic("Unsupported operation") }
