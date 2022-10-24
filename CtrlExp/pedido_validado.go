@@ -24,6 +24,8 @@ type PedidoValidado struct {
 
 	Bandeja string `json:"Bandeja"`
 
+	Estado string `json:"Estado"`
+
 	IpImpresora string `json:"IpImpresora"`
 
 	Cliente string `json:"Cliente"`
@@ -31,7 +33,7 @@ type PedidoValidado struct {
 	SchemaDb *UnionNullString `json:"SchemaDb"`
 }
 
-const PedidoValidadoAvroCRC64Fingerprint = "\xd1\xc1\x1a\x8cDٿN"
+const PedidoValidadoAvroCRC64Fingerprint = "b\xe0\x02\xd4'\xcb\x1f\xb2"
 
 func NewPedidoValidado() PedidoValidado {
 	r := PedidoValidado{}
@@ -76,6 +78,10 @@ func writePedidoValidado(r PedidoValidado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Estado, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.IpImpresora, w)
 	if err != nil {
 		return err
@@ -96,7 +102,7 @@ func (r PedidoValidado) Serialize(w io.Writer) error {
 }
 
 func (r PedidoValidado) Schema() string {
-	return "{\"fields\":[{\"name\":\"NroPedido\",\"type\":\"string\"},{\"name\":\"SubPedido\",\"type\":\"string\"},{\"name\":\"Bandeja\",\"type\":\"string\"},{\"name\":\"IpImpresora\",\"type\":\"string\"},{\"name\":\"Cliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.PedidoValidado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NroPedido\",\"type\":\"string\"},{\"name\":\"SubPedido\",\"type\":\"string\"},{\"name\":\"Bandeja\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"IpImpresora\",\"type\":\"string\"},{\"name\":\"Cliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.PedidoValidado\",\"type\":\"record\"}"
 }
 
 func (r PedidoValidado) SchemaName() string {
@@ -130,16 +136,21 @@ func (r *PedidoValidado) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.IpImpresora}
+		w := types.String{Target: &r.Estado}
 
 		return w
 
 	case 4:
-		w := types.String{Target: &r.Cliente}
+		w := types.String{Target: &r.IpImpresora}
 
 		return w
 
 	case 5:
+		w := types.String{Target: &r.Cliente}
+
+		return w
+
+	case 6:
 		r.SchemaDb = NewUnionNullString()
 
 		return r.SchemaDb
@@ -149,7 +160,7 @@ func (r *PedidoValidado) Get(i int) types.Field {
 
 func (r *PedidoValidado) SetDefault(i int) {
 	switch i {
-	case 5:
+	case 6:
 		r.SchemaDb = nil
 		return
 	}
@@ -158,7 +169,7 @@ func (r *PedidoValidado) SetDefault(i int) {
 
 func (r *PedidoValidado) NullField(i int) {
 	switch i {
-	case 5:
+	case 6:
 		r.SchemaDb = nil
 		return
 	}
@@ -186,6 +197,10 @@ func (r PedidoValidado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Bandeja"], err = json.Marshal(r.Bandeja)
+	if err != nil {
+		return nil, err
+	}
+	output["Estado"], err = json.Marshal(r.Estado)
 	if err != nil {
 		return nil, err
 	}
@@ -252,6 +267,20 @@ func (r *PedidoValidado) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Bandeja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Estado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Estado); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Estado")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IpImpresora"]; ok {
