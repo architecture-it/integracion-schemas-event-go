@@ -26,16 +26,24 @@ type MonitorEstado struct {
 
 	Ts int64 `json:"Ts"`
 
-	Otros map[string]string `json:"Otros"`
+	OtrosContadores []MonitorEstadoOtrosContadores `json:"OtrosContadores"`
+
+	OtrosSemaforos []MonitorEstadoOtrosSemaforos `json:"OtrosSemaforos"`
+
+	Otros []MonitorEstadoOtrosContadores `json:"Otros"`
 
 	SchemaDb *UnionNullString `json:"SchemaDb"`
 }
 
-const MonitorEstadoAvroCRC64Fingerprint = "E\x104\x87^\x80{\x9c"
+const MonitorEstadoAvroCRC64Fingerprint = "D\xc4\xe3K\xe8Ŕ\xa2"
 
 func NewMonitorEstado() MonitorEstado {
 	r := MonitorEstado{}
-	r.Otros = make(map[string]string)
+	r.OtrosContadores = make([]MonitorEstadoOtrosContadores, 0)
+
+	r.OtrosSemaforos = make([]MonitorEstadoOtrosSemaforos, 0)
+
+	r.Otros = make([]MonitorEstadoOtrosContadores, 0)
 
 	r.SchemaDb = nil
 	return r
@@ -82,7 +90,15 @@ func writeMonitorEstado(r MonitorEstado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeMapString(r.Otros, w)
+	err = writeArrayMonitorEstadoOtrosContadores(r.OtrosContadores, w)
+	if err != nil {
+		return err
+	}
+	err = writeArrayMonitorEstadoOtrosSemaforos(r.OtrosSemaforos, w)
+	if err != nil {
+		return err
+	}
+	err = writeArrayMonitorEstadoOtrosContadores(r.Otros, w)
 	if err != nil {
 		return err
 	}
@@ -98,7 +114,7 @@ func (r MonitorEstado) Serialize(w io.Writer) error {
 }
 
 func (r MonitorEstado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"boolean\"},{\"name\":\"Ts\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Otros\",\"type\":{\"type\":\"map\",\"values\":\"string\"}},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.MonitorEstado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"boolean\"},{\"name\":\"Ts\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"OtrosContadores\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Contador\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"int\"}],\"name\":\"MonitorEstadoOtrosContadores\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"OtrosSemaforos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Semaforo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"boolean\"}],\"name\":\"MonitorEstadoOtrosSemaforos\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Otros\",\"type\":{\"items\":\"Andreani.CtrlExp.Events.Record.MonitorEstadoOtrosContadores\",\"type\":\"array\"}},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.MonitorEstado\",\"type\":\"record\"}"
 }
 
 func (r MonitorEstado) SchemaName() string {
@@ -137,13 +153,27 @@ func (r *MonitorEstado) Get(i int) types.Field {
 		return w
 
 	case 4:
-		r.Otros = make(map[string]string)
+		r.OtrosContadores = make([]MonitorEstadoOtrosContadores, 0)
 
-		w := MapStringWrapper{Target: &r.Otros}
+		w := ArrayMonitorEstadoOtrosContadoresWrapper{Target: &r.OtrosContadores}
 
-		return &w
+		return w
 
 	case 5:
+		r.OtrosSemaforos = make([]MonitorEstadoOtrosSemaforos, 0)
+
+		w := ArrayMonitorEstadoOtrosSemaforosWrapper{Target: &r.OtrosSemaforos}
+
+		return w
+
+	case 6:
+		r.Otros = make([]MonitorEstadoOtrosContadores, 0)
+
+		w := ArrayMonitorEstadoOtrosContadoresWrapper{Target: &r.Otros}
+
+		return w
+
+	case 7:
 		r.SchemaDb = NewUnionNullString()
 
 		return r.SchemaDb
@@ -153,7 +183,7 @@ func (r *MonitorEstado) Get(i int) types.Field {
 
 func (r *MonitorEstado) SetDefault(i int) {
 	switch i {
-	case 5:
+	case 7:
 		r.SchemaDb = nil
 		return
 	}
@@ -162,7 +192,7 @@ func (r *MonitorEstado) SetDefault(i int) {
 
 func (r *MonitorEstado) NullField(i int) {
 	switch i {
-	case 5:
+	case 7:
 		r.SchemaDb = nil
 		return
 	}
@@ -194,6 +224,14 @@ func (r MonitorEstado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Ts"], err = json.Marshal(r.Ts)
+	if err != nil {
+		return nil, err
+	}
+	output["OtrosContadores"], err = json.Marshal(r.OtrosContadores)
+	if err != nil {
+		return nil, err
+	}
+	output["OtrosSemaforos"], err = json.Marshal(r.OtrosSemaforos)
 	if err != nil {
 		return nil, err
 	}
@@ -270,6 +308,34 @@ func (r *MonitorEstado) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Ts")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["OtrosContadores"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OtrosContadores); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for OtrosContadores")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["OtrosSemaforos"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OtrosSemaforos); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for OtrosSemaforos")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Otros"]; ok {
