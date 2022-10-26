@@ -26,23 +26,19 @@ type MonitorEstado struct {
 
 	Ts int64 `json:"Ts"`
 
-	OtrosContadores UnionArrayMonitorEstadoOtrosContadores `json:"OtrosContadores"`
+	OtrosContadores *UnionNullArrayMonitorEstadoOtrosContadores `json:"OtrosContadores"`
 
-	OtrosSemaforos UnionArrayMonitorEstadoOtrosSemaforos `json:"OtrosSemaforos"`
+	OtrosSemaforos *UnionNullArrayMonitorEstadoOtrosSemaforos `json:"OtrosSemaforos"`
 
 	Otros *UnionNullArrayMonitorEstadoOtros `json:"Otros"`
 
 	SchemaDb *UnionNullString `json:"SchemaDb"`
 }
 
-const MonitorEstadoAvroCRC64Fingerprint = "\x03\"\xfe:w\x82ZD"
+const MonitorEstadoAvroCRC64Fingerprint = "\t/\xa9^7\xb9\xcf\x1b"
 
 func NewMonitorEstado() MonitorEstado {
 	r := MonitorEstado{}
-	r.OtrosContadores = NewUnionArrayMonitorEstadoOtrosContadores()
-
-	r.OtrosSemaforos = NewUnionArrayMonitorEstadoOtrosSemaforos()
-
 	r.SchemaDb = nil
 	return r
 }
@@ -88,11 +84,11 @@ func writeMonitorEstado(r MonitorEstado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionArrayMonitorEstadoOtrosContadores(r.OtrosContadores, w)
+	err = writeUnionNullArrayMonitorEstadoOtrosContadores(r.OtrosContadores, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionArrayMonitorEstadoOtrosSemaforos(r.OtrosSemaforos, w)
+	err = writeUnionNullArrayMonitorEstadoOtrosSemaforos(r.OtrosSemaforos, w)
 	if err != nil {
 		return err
 	}
@@ -112,7 +108,7 @@ func (r MonitorEstado) Serialize(w io.Writer) error {
 }
 
 func (r MonitorEstado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"boolean\"},{\"name\":\"Ts\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"OtrosContadores\",\"type\":[{\"items\":{\"fields\":[{\"name\":\"Contador\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"int\"}],\"name\":\"MonitorEstadoOtrosContadores\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"OtrosSemaforos\",\"type\":[{\"items\":{\"fields\":[{\"name\":\"Semaforo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"boolean\"}],\"name\":\"MonitorEstadoOtrosSemaforos\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"Otros\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Referencia\",\"type\":\"string\"}],\"name\":\"MonitorEstadoOtros\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.MonitorEstado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"boolean\"},{\"name\":\"Ts\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"OtrosContadores\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Contador\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"int\"}],\"name\":\"MonitorEstadoOtrosContadores\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"OtrosSemaforos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Semaforo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"boolean\"}],\"name\":\"MonitorEstadoOtrosSemaforos\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"Otros\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Referencia\",\"type\":\"string\"}],\"name\":\"MonitorEstadoOtros\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.MonitorEstado\",\"type\":\"record\"}"
 }
 
 func (r MonitorEstado) SchemaName() string {
@@ -151,19 +147,13 @@ func (r *MonitorEstado) Get(i int) types.Field {
 		return w
 
 	case 4:
-		r.OtrosContadores = NewUnionArrayMonitorEstadoOtrosContadores()
+		r.OtrosContadores = NewUnionNullArrayMonitorEstadoOtrosContadores()
 
-		w := types.Record{Target: &r.OtrosContadores}
-
-		return w
-
+		return r.OtrosContadores
 	case 5:
-		r.OtrosSemaforos = NewUnionArrayMonitorEstadoOtrosSemaforos()
+		r.OtrosSemaforos = NewUnionNullArrayMonitorEstadoOtrosSemaforos()
 
-		w := types.Record{Target: &r.OtrosSemaforos}
-
-		return w
-
+		return r.OtrosSemaforos
 	case 6:
 		r.Otros = NewUnionNullArrayMonitorEstadoOtros()
 
@@ -187,6 +177,12 @@ func (r *MonitorEstado) SetDefault(i int) {
 
 func (r *MonitorEstado) NullField(i int) {
 	switch i {
+	case 4:
+		r.OtrosContadores = nil
+		return
+	case 5:
+		r.OtrosSemaforos = nil
+		return
 	case 6:
 		r.Otros = nil
 		return
