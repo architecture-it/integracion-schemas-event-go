@@ -26,24 +26,22 @@ type MonitorEstado struct {
 
 	Ts int64 `json:"Ts"`
 
-	OtrosContadores []MonitorEstadoOtrosContadores `json:"OtrosContadores"`
+	OtrosContadores UnionArrayMonitorEstadoOtrosContadores `json:"OtrosContadores"`
 
-	OtrosSemaforos []MonitorEstadoOtrosSemaforos `json:"OtrosSemaforos"`
+	OtrosSemaforos UnionArrayMonitorEstadoOtrosSemaforos `json:"OtrosSemaforos"`
 
-	Otros []MonitorEstadoOtros `json:"Otros"`
+	Otros *UnionNullArrayMonitorEstadoOtros `json:"Otros"`
 
 	SchemaDb *UnionNullString `json:"SchemaDb"`
 }
 
-const MonitorEstadoAvroCRC64Fingerprint = "\x925\x18Gci\x14\xf6"
+const MonitorEstadoAvroCRC64Fingerprint = "\x03\"\xfe:w\x82ZD"
 
 func NewMonitorEstado() MonitorEstado {
 	r := MonitorEstado{}
-	r.OtrosContadores = make([]MonitorEstadoOtrosContadores, 0)
+	r.OtrosContadores = NewUnionArrayMonitorEstadoOtrosContadores()
 
-	r.OtrosSemaforos = make([]MonitorEstadoOtrosSemaforos, 0)
-
-	r.Otros = make([]MonitorEstadoOtros, 0)
+	r.OtrosSemaforos = NewUnionArrayMonitorEstadoOtrosSemaforos()
 
 	r.SchemaDb = nil
 	return r
@@ -90,15 +88,15 @@ func writeMonitorEstado(r MonitorEstado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayMonitorEstadoOtrosContadores(r.OtrosContadores, w)
+	err = writeUnionArrayMonitorEstadoOtrosContadores(r.OtrosContadores, w)
 	if err != nil {
 		return err
 	}
-	err = writeArrayMonitorEstadoOtrosSemaforos(r.OtrosSemaforos, w)
+	err = writeUnionArrayMonitorEstadoOtrosSemaforos(r.OtrosSemaforos, w)
 	if err != nil {
 		return err
 	}
-	err = writeArrayMonitorEstadoOtros(r.Otros, w)
+	err = writeUnionNullArrayMonitorEstadoOtros(r.Otros, w)
 	if err != nil {
 		return err
 	}
@@ -114,7 +112,7 @@ func (r MonitorEstado) Serialize(w io.Writer) error {
 }
 
 func (r MonitorEstado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"boolean\"},{\"name\":\"Ts\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"OtrosContadores\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Contador\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"int\"}],\"name\":\"MonitorEstadoOtrosContadores\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"OtrosSemaforos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Semaforo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"boolean\"}],\"name\":\"MonitorEstadoOtrosSemaforos\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Otros\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Referencia\",\"type\":\"string\"}],\"name\":\"MonitorEstadoOtros\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.MonitorEstado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"boolean\"},{\"name\":\"Ts\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"OtrosContadores\",\"type\":[{\"items\":{\"fields\":[{\"name\":\"Contador\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"int\"}],\"name\":\"MonitorEstadoOtrosContadores\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"OtrosSemaforos\",\"type\":[{\"items\":{\"fields\":[{\"name\":\"Semaforo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"boolean\"}],\"name\":\"MonitorEstadoOtrosSemaforos\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"Otros\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Referencia\",\"type\":\"string\"}],\"name\":\"MonitorEstadoOtros\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.MonitorEstado\",\"type\":\"record\"}"
 }
 
 func (r MonitorEstado) SchemaName() string {
@@ -153,26 +151,23 @@ func (r *MonitorEstado) Get(i int) types.Field {
 		return w
 
 	case 4:
-		r.OtrosContadores = make([]MonitorEstadoOtrosContadores, 0)
+		r.OtrosContadores = NewUnionArrayMonitorEstadoOtrosContadores()
 
-		w := ArrayMonitorEstadoOtrosContadoresWrapper{Target: &r.OtrosContadores}
+		w := types.Record{Target: &r.OtrosContadores}
 
 		return w
 
 	case 5:
-		r.OtrosSemaforos = make([]MonitorEstadoOtrosSemaforos, 0)
+		r.OtrosSemaforos = NewUnionArrayMonitorEstadoOtrosSemaforos()
 
-		w := ArrayMonitorEstadoOtrosSemaforosWrapper{Target: &r.OtrosSemaforos}
+		w := types.Record{Target: &r.OtrosSemaforos}
 
 		return w
 
 	case 6:
-		r.Otros = make([]MonitorEstadoOtros, 0)
+		r.Otros = NewUnionNullArrayMonitorEstadoOtros()
 
-		w := ArrayMonitorEstadoOtrosWrapper{Target: &r.Otros}
-
-		return w
-
+		return r.Otros
 	case 7:
 		r.SchemaDb = NewUnionNullString()
 
@@ -192,6 +187,9 @@ func (r *MonitorEstado) SetDefault(i int) {
 
 func (r *MonitorEstado) NullField(i int) {
 	switch i {
+	case 6:
+		r.Otros = nil
+		return
 	case 7:
 		r.SchemaDb = nil
 		return
