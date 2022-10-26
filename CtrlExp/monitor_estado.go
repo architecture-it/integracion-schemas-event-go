@@ -25,12 +25,19 @@ type MonitorEstado struct {
 	Estado bool `json:"Estado"`
 
 	Ts int64 `json:"Ts"`
+
+	Otros map[string]string `json:"Otros"`
+
+	SchemaDb *UnionNullString `json:"SchemaDb"`
 }
 
-const MonitorEstadoAvroCRC64Fingerprint = ";\x96\xf4\x13S\x1a\xd1\xc5"
+const MonitorEstadoAvroCRC64Fingerprint = "E\x104\x87^\x80{\x9c"
 
 func NewMonitorEstado() MonitorEstado {
 	r := MonitorEstado{}
+	r.Otros = make(map[string]string)
+
+	r.SchemaDb = nil
 	return r
 }
 
@@ -75,6 +82,14 @@ func writeMonitorEstado(r MonitorEstado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeMapString(r.Otros, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.SchemaDb, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -83,7 +98,7 @@ func (r MonitorEstado) Serialize(w io.Writer) error {
 }
 
 func (r MonitorEstado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"boolean\"},{\"name\":\"Ts\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.CtrlExp.Events.Record.MonitorEstado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"boolean\"},{\"name\":\"Ts\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Otros\",\"type\":{\"type\":\"map\",\"values\":\"string\"}},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.MonitorEstado\",\"type\":\"record\"}"
 }
 
 func (r MonitorEstado) SchemaName() string {
@@ -121,18 +136,35 @@ func (r *MonitorEstado) Get(i int) types.Field {
 
 		return w
 
+	case 4:
+		r.Otros = make(map[string]string)
+
+		w := MapStringWrapper{Target: &r.Otros}
+
+		return &w
+
+	case 5:
+		r.SchemaDb = NewUnionNullString()
+
+		return r.SchemaDb
 	}
 	panic("Unknown field index")
 }
 
 func (r *MonitorEstado) SetDefault(i int) {
 	switch i {
+	case 5:
+		r.SchemaDb = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *MonitorEstado) NullField(i int) {
 	switch i {
+	case 5:
+		r.SchemaDb = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -162,6 +194,14 @@ func (r MonitorEstado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Ts"], err = json.Marshal(r.Ts)
+	if err != nil {
+		return nil, err
+	}
+	output["Otros"], err = json.Marshal(r.Otros)
+	if err != nil {
+		return nil, err
+	}
+	output["SchemaDb"], err = json.Marshal(r.SchemaDb)
 	if err != nil {
 		return nil, err
 	}
@@ -230,6 +270,36 @@ func (r *MonitorEstado) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Ts")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Otros"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Otros); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Otros")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["SchemaDb"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SchemaDb); err != nil {
+			return err
+		}
+	} else {
+		r.SchemaDb = NewUnionNullString()
+
+		r.SchemaDb = nil
 	}
 	return nil
 }

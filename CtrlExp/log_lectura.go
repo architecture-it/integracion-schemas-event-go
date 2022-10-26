@@ -31,9 +31,11 @@ type LogLectura struct {
 	Lpn *UnionNullString `json:"Lpn"`
 
 	Cantidad *UnionNullInt `json:"Cantidad"`
+
+	SchemaDb *UnionNullString `json:"SchemaDb"`
 }
 
-const LogLecturaAvroCRC64Fingerprint = "Y~:\x10\xb8\xf5.\x15"
+const LogLecturaAvroCRC64Fingerprint = "K\ue33d_ɼ\x12"
 
 func NewLogLectura() LogLectura {
 	r := LogLectura{}
@@ -42,6 +44,7 @@ func NewLogLectura() LogLectura {
 	r.NroPedido = nil
 	r.Lpn = nil
 	r.Cantidad = nil
+	r.SchemaDb = nil
 	return r
 }
 
@@ -98,6 +101,10 @@ func writeLogLectura(r LogLectura, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.SchemaDb, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -106,7 +113,7 @@ func (r LogLectura) Serialize(w io.Writer) error {
 }
 
 func (r LogLectura) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTipoLectura\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaLectura\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Bandeja\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Lpn\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cantidad\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.LogLectura\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTipoLectura\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaLectura\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Bandeja\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Lpn\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.LogLectura\",\"type\":\"record\"}"
 }
 
 func (r LogLectura) SchemaName() string {
@@ -154,6 +161,10 @@ func (r *LogLectura) Get(i int) types.Field {
 		r.Cantidad = NewUnionNullInt()
 
 		return r.Cantidad
+	case 7:
+		r.SchemaDb = NewUnionNullString()
+
+		return r.SchemaDb
 	}
 	panic("Unknown field index")
 }
@@ -175,6 +186,9 @@ func (r *LogLectura) SetDefault(i int) {
 	case 6:
 		r.Cantidad = nil
 		return
+	case 7:
+		r.SchemaDb = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -195,6 +209,9 @@ func (r *LogLectura) NullField(i int) {
 		return
 	case 6:
 		r.Cantidad = nil
+		return
+	case 7:
+		r.SchemaDb = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -237,6 +254,10 @@ func (r LogLectura) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Cantidad"], err = json.Marshal(r.Cantidad)
+	if err != nil {
+		return nil, err
+	}
+	output["SchemaDb"], err = json.Marshal(r.SchemaDb)
 	if err != nil {
 		return nil, err
 	}
@@ -357,6 +378,22 @@ func (r *LogLectura) UnmarshalJSON(data []byte) error {
 		r.Cantidad = NewUnionNullInt()
 
 		r.Cantidad = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["SchemaDb"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SchemaDb); err != nil {
+			return err
+		}
+	} else {
+		r.SchemaDb = NewUnionNullString()
+
+		r.SchemaDb = nil
 	}
 	return nil
 }
