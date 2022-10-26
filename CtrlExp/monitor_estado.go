@@ -30,12 +30,12 @@ type MonitorEstado struct {
 
 	OtrosSemaforos []MonitorEstadoOtrosSemaforos `json:"OtrosSemaforos"`
 
-	Otros []MonitorEstadoOtrosContadores `json:"Otros"`
+	Otros []MonitorEstadoOtros `json:"Otros"`
 
 	SchemaDb *UnionNullString `json:"SchemaDb"`
 }
 
-const MonitorEstadoAvroCRC64Fingerprint = "D\xc4\xe3K\xe8Ŕ\xa2"
+const MonitorEstadoAvroCRC64Fingerprint = "\x925\x18Gci\x14\xf6"
 
 func NewMonitorEstado() MonitorEstado {
 	r := MonitorEstado{}
@@ -43,7 +43,7 @@ func NewMonitorEstado() MonitorEstado {
 
 	r.OtrosSemaforos = make([]MonitorEstadoOtrosSemaforos, 0)
 
-	r.Otros = make([]MonitorEstadoOtrosContadores, 0)
+	r.Otros = make([]MonitorEstadoOtros, 0)
 
 	r.SchemaDb = nil
 	return r
@@ -98,7 +98,7 @@ func writeMonitorEstado(r MonitorEstado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayMonitorEstadoOtrosContadores(r.Otros, w)
+	err = writeArrayMonitorEstadoOtros(r.Otros, w)
 	if err != nil {
 		return err
 	}
@@ -114,7 +114,7 @@ func (r MonitorEstado) Serialize(w io.Writer) error {
 }
 
 func (r MonitorEstado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"boolean\"},{\"name\":\"Ts\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"OtrosContadores\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Contador\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"int\"}],\"name\":\"MonitorEstadoOtrosContadores\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"OtrosSemaforos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Semaforo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"boolean\"}],\"name\":\"MonitorEstadoOtrosSemaforos\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Otros\",\"type\":{\"items\":\"Andreani.CtrlExp.Events.Record.MonitorEstadoOtrosContadores\",\"type\":\"array\"}},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.MonitorEstado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"boolean\"},{\"name\":\"Ts\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"OtrosContadores\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Contador\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"int\"}],\"name\":\"MonitorEstadoOtrosContadores\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"OtrosSemaforos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Semaforo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"boolean\"}],\"name\":\"MonitorEstadoOtrosSemaforos\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Otros\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Referencia\",\"type\":\"string\"}],\"name\":\"MonitorEstadoOtros\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"SchemaDb\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CtrlExp.Events.Record.MonitorEstado\",\"type\":\"record\"}"
 }
 
 func (r MonitorEstado) SchemaName() string {
@@ -167,9 +167,9 @@ func (r *MonitorEstado) Get(i int) types.Field {
 		return w
 
 	case 6:
-		r.Otros = make([]MonitorEstadoOtrosContadores, 0)
+		r.Otros = make([]MonitorEstadoOtros, 0)
 
-		w := ArrayMonitorEstadoOtrosContadoresWrapper{Target: &r.Otros}
+		w := ArrayMonitorEstadoOtrosWrapper{Target: &r.Otros}
 
 		return w
 
