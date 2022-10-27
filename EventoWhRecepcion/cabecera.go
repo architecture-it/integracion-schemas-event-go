@@ -67,9 +67,13 @@ type Cabecera struct {
 	FechaLlegada *UnionNullLong `json:"FechaLlegada"`
 
 	FechaRecepcion *UnionNullLong `json:"FechaRecepcion"`
+
+	CantEsperadaTotal float32 `json:"CantEsperadaTotal"`
+
+	CantRecibidaTotal float32 `json:"CantRecibidaTotal"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\x9e\x8d\xb1b\xfd5\x8a0"
+const CabeceraAvroCRC64Fingerprint = "\x13\x11|\x89\x1a\x19\xaf\xee"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -201,6 +205,14 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteFloat(r.CantEsperadaTotal, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.CantRecibidaTotal, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -209,7 +221,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"RecepcionWH\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoRecepcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaTransportista\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaContenedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"Muelle\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroCita\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaProveedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroGuia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Dpto\",\"type\":[\"null\",\"string\"]},{\"name\":\"GLN\",\"type\":[\"null\",\"string\"]},{\"name\":\"CiudadExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodISOPais\",\"type\":[\"null\",\"string\"]},{\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodPostalExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaLlegada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaRecepcion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionConfirmacionCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"RecepcionWH\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoRecepcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaTransportista\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaContenedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"Muelle\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroCita\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaProveedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroGuia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Dpto\",\"type\":[\"null\",\"string\"]},{\"name\":\"GLN\",\"type\":[\"null\",\"string\"]},{\"name\":\"CiudadExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodISOPais\",\"type\":[\"null\",\"string\"]},{\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodPostalExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaLlegada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaRecepcion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"CantEsperadaTotal\",\"type\":\"float\"},{\"name\":\"CantRecibidaTotal\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionConfirmacionCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -329,6 +341,16 @@ func (r *Cabecera) Get(i int) types.Field {
 		r.FechaRecepcion = NewUnionNullLong()
 
 		return r.FechaRecepcion
+	case 25:
+		w := types.Float{Target: &r.CantEsperadaTotal}
+
+		return w
+
+	case 26:
+		w := types.Float{Target: &r.CantRecibidaTotal}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -523,6 +545,14 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["FechaRecepcion"], err = json.Marshal(r.FechaRecepcion)
+	if err != nil {
+		return nil, err
+	}
+	output["CantEsperadaTotal"], err = json.Marshal(r.CantEsperadaTotal)
+	if err != nil {
+		return nil, err
+	}
+	output["CantRecibidaTotal"], err = json.Marshal(r.CantRecibidaTotal)
 	if err != nil {
 		return nil, err
 	}
@@ -885,6 +915,34 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for FechaRecepcion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CantEsperadaTotal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantEsperadaTotal); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CantEsperadaTotal")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CantRecibidaTotal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantRecibidaTotal); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CantRecibidaTotal")
 	}
 	return nil
 }

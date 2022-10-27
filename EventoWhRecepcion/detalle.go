@@ -44,11 +44,11 @@ type Detalle struct {
 
 	BloqueoUbicacion string `json:"BloqueoUbicacion"`
 
-	VidaUtilLote *UnionNullLong `json:"VidaUtilLote"`
+	VidaUtilLote string `json:"VidaUtilLote"`
 
 	EntregaAntesDe *UnionNullLong `json:"EntregaAntesDe"`
 
-	ConsumoAntesDe *UnionNullString `json:"ConsumoAntesDe"`
+	ConsumoAntesDe *UnionNullLong `json:"ConsumoAntesDe"`
 
 	Contramuestras *UnionNullString `json:"Contramuestras"`
 
@@ -64,7 +64,7 @@ type Detalle struct {
 
 	NomenclaturaContratoServicioIngreso *UnionNullString `json:"NomenclaturaContratoServicioIngreso"`
 
-	Contacto *UnionNullString `json:"Contacto"`
+	DescripcionServicioIngreso *UnionNullString `json:"DescripcionServicioIngreso"`
 
 	TipoLineaMatriz *UnionNullString `json:"TipoLineaMatriz"`
 
@@ -76,6 +76,8 @@ type Detalle struct {
 
 	LineaExterna *UnionNullString `json:"LineaExterna"`
 
+	CantEsperada float32 `json:"CantEsperada"`
+
 	CantRecibida float32 `json:"CantRecibida"`
 
 	ValorDeclaradoLinea *UnionNullString `json:"ValorDeclaradoLinea"`
@@ -85,7 +87,7 @@ type Detalle struct {
 	LineaRecepcionWH *UnionNullString `json:"LineaRecepcionWH"`
 }
 
-const DetalleAvroCRC64Fingerprint = "\xa9'R\x00#j\x83\xcf"
+const DetalleAvroCRC64Fingerprint = "C\x80>R{\x8a\x8f\b"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -169,7 +171,7 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullLong(r.VidaUtilLote, w)
+	err = vm.WriteString(r.VidaUtilLote, w)
 	if err != nil {
 		return err
 	}
@@ -177,7 +179,7 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.ConsumoAntesDe, w)
+	err = writeUnionNullLong(r.ConsumoAntesDe, w)
 	if err != nil {
 		return err
 	}
@@ -209,7 +211,7 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Contacto, w)
+	err = writeUnionNullString(r.DescripcionServicioIngreso, w)
 	if err != nil {
 		return err
 	}
@@ -230,6 +232,10 @@ func writeDetalle(r Detalle, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullString(r.LineaExterna, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.CantEsperada, w)
 	if err != nil {
 		return err
 	}
@@ -257,7 +263,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"UbicacionDestino\",\"type\":\"string\"},{\"name\":\"LPNDestino\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contramuestras\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoLineaMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"AccionConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"ResultadoConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantRecibida\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaRecepcionWH\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionConfirmacionCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"UbicacionDestino\",\"type\":\"string\"},{\"name\":\"LPNDestino\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Contramuestras\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DescripcionServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoLineaMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"AccionConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"ResultadoConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantEsperada\",\"type\":\"float\"},{\"name\":\"CantRecibida\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaRecepcionWH\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionConfirmacionCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -339,15 +345,16 @@ func (r *Detalle) Get(i int) types.Field {
 		return w
 
 	case 13:
-		r.VidaUtilLote = NewUnionNullLong()
+		w := types.String{Target: &r.VidaUtilLote}
 
-		return r.VidaUtilLote
+		return w
+
 	case 14:
 		r.EntregaAntesDe = NewUnionNullLong()
 
 		return r.EntregaAntesDe
 	case 15:
-		r.ConsumoAntesDe = NewUnionNullString()
+		r.ConsumoAntesDe = NewUnionNullLong()
 
 		return r.ConsumoAntesDe
 	case 16:
@@ -379,9 +386,9 @@ func (r *Detalle) Get(i int) types.Field {
 
 		return r.NomenclaturaContratoServicioIngreso
 	case 23:
-		r.Contacto = NewUnionNullString()
+		r.DescripcionServicioIngreso = NewUnionNullString()
 
-		return r.Contacto
+		return r.DescripcionServicioIngreso
 	case 24:
 		r.TipoLineaMatriz = NewUnionNullString()
 
@@ -403,19 +410,24 @@ func (r *Detalle) Get(i int) types.Field {
 
 		return r.LineaExterna
 	case 29:
-		w := types.Float{Target: &r.CantRecibida}
+		w := types.Float{Target: &r.CantEsperada}
 
 		return w
 
 	case 30:
+		w := types.Float{Target: &r.CantRecibida}
+
+		return w
+
+	case 31:
 		r.ValorDeclaradoLinea = NewUnionNullString()
 
 		return r.ValorDeclaradoLinea
-	case 31:
+	case 32:
 		r.UnidadMedida = NewUnionNullString()
 
 		return r.UnidadMedida
-	case 32:
+	case 33:
 		r.LineaRecepcionWH = NewUnionNullString()
 
 		return r.LineaRecepcionWH
@@ -436,9 +448,6 @@ func (r *Detalle) NullField(i int) {
 		return
 	case 8:
 		r.FechaVencimiento = nil
-		return
-	case 13:
-		r.VidaUtilLote = nil
 		return
 	case 14:
 		r.EntregaAntesDe = nil
@@ -468,7 +477,7 @@ func (r *Detalle) NullField(i int) {
 		r.NomenclaturaContratoServicioIngreso = nil
 		return
 	case 23:
-		r.Contacto = nil
+		r.DescripcionServicioIngreso = nil
 		return
 	case 24:
 		r.TipoLineaMatriz = nil
@@ -485,13 +494,13 @@ func (r *Detalle) NullField(i int) {
 	case 28:
 		r.LineaExterna = nil
 		return
-	case 30:
+	case 31:
 		r.ValorDeclaradoLinea = nil
 		return
-	case 31:
+	case 32:
 		r.UnidadMedida = nil
 		return
-	case 32:
+	case 33:
 		r.LineaRecepcionWH = nil
 		return
 	}
@@ -602,7 +611,7 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Contacto"], err = json.Marshal(r.Contacto)
+	output["DescripcionServicioIngreso"], err = json.Marshal(r.DescripcionServicioIngreso)
 	if err != nil {
 		return nil, err
 	}
@@ -623,6 +632,10 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["LineaExterna"], err = json.Marshal(r.LineaExterna)
+	if err != nil {
+		return nil, err
+	}
+	output["CantEsperada"], err = json.Marshal(r.CantEsperada)
 	if err != nil {
 		return nil, err
 	}
@@ -975,18 +988,18 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for NomenclaturaContratoServicioIngreso")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Contacto"]; ok {
+		if v, ok := fields["DescripcionServicioIngreso"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contacto); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionServicioIngreso); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Contacto")
+		return fmt.Errorf("no value specified for DescripcionServicioIngreso")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TipoLineaMatriz"]; ok {
@@ -1057,6 +1070,20 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for LineaExterna")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CantEsperada"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantEsperada); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CantEsperada")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CantRecibida"]; ok {
