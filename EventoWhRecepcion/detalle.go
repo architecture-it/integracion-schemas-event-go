@@ -22,29 +22,29 @@ type Detalle struct {
 
 	SKU string `json:"SKU"`
 
-	UbicacionDestino string `json:"UbicacionDestino"`
+	UbicacionDestino *UnionNullString `json:"UbicacionDestino"`
 
-	LPNDestino string `json:"LPNDestino"`
+	LPNDestino *UnionNullString `json:"LPNDestino"`
 
-	PaqueteLote string `json:"PaqueteLote"`
+	PaqueteLote *UnionNullString `json:"PaqueteLote"`
 
-	LoteCajitaFabricante string `json:"LoteCajitaFabricante"`
+	LoteCajitaFabricante *UnionNullString `json:"LoteCajitaFabricante"`
 
-	LoteSecundario string `json:"LoteSecundario"`
+	LoteSecundario *UnionNullString `json:"LoteSecundario"`
 
 	FechaFabricacion *UnionNullLong `json:"FechaFabricacion"`
 
 	FechaVencimiento *UnionNullLong `json:"FechaVencimiento"`
 
-	ProductoTrazable string `json:"ProductoTrazable"`
+	ProductoTrazable *UnionNullString `json:"ProductoTrazable"`
 
-	AlmacenConsumo string `json:"AlmacenConsumo"`
+	AlmacenConsumo *UnionNullString `json:"AlmacenConsumo"`
 
-	EstadoLote string `json:"EstadoLote"`
+	EstadoLote *UnionNullString `json:"EstadoLote"`
 
-	BloqueoUbicacion string `json:"BloqueoUbicacion"`
+	BloqueoUbicacion *UnionNullString `json:"BloqueoUbicacion"`
 
-	VidaUtilLote string `json:"VidaUtilLote"`
+	VidaUtilLote *UnionNullString `json:"VidaUtilLote"`
 
 	EntregaAntesDe *UnionNullLong `json:"EntregaAntesDe"`
 
@@ -87,7 +87,7 @@ type Detalle struct {
 	LineaRecepcionWH *UnionNullString `json:"LineaRecepcionWH"`
 }
 
-const DetalleAvroCRC64Fingerprint = "C\x80>R{\x8a\x8f\b"
+const DetalleAvroCRC64Fingerprint = "Z\xf6yΦ:\vC"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -127,23 +127,23 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.UbicacionDestino, w)
+	err = writeUnionNullString(r.UbicacionDestino, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LPNDestino, w)
+	err = writeUnionNullString(r.LPNDestino, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PaqueteLote, w)
+	err = writeUnionNullString(r.PaqueteLote, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LoteCajitaFabricante, w)
+	err = writeUnionNullString(r.LoteCajitaFabricante, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LoteSecundario, w)
+	err = writeUnionNullString(r.LoteSecundario, w)
 	if err != nil {
 		return err
 	}
@@ -155,23 +155,23 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ProductoTrazable, w)
+	err = writeUnionNullString(r.ProductoTrazable, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.AlmacenConsumo, w)
+	err = writeUnionNullString(r.AlmacenConsumo, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.EstadoLote, w)
+	err = writeUnionNullString(r.EstadoLote, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.BloqueoUbicacion, w)
+	err = writeUnionNullString(r.BloqueoUbicacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.VidaUtilLote, w)
+	err = writeUnionNullString(r.VidaUtilLote, w)
 	if err != nil {
 		return err
 	}
@@ -263,7 +263,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"UbicacionDestino\",\"type\":\"string\"},{\"name\":\"LPNDestino\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Contramuestras\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DescripcionServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoLineaMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"AccionConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"ResultadoConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantEsperada\",\"type\":\"float\"},{\"name\":\"CantRecibida\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaRecepcionWH\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionConfirmacionCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"UbicacionDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"LPNDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"PaqueteLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteCajitaFabricante\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"name\":\"AlmacenConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"BloqueoUbicacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Contramuestras\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DescripcionServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoLineaMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"AccionConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"ResultadoConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantEsperada\",\"type\":\"float\"},{\"name\":\"CantRecibida\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaRecepcionWH\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionConfirmacionCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -292,30 +292,25 @@ func (r *Detalle) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.UbicacionDestino}
+		r.UbicacionDestino = NewUnionNullString()
 
-		return w
-
+		return r.UbicacionDestino
 	case 3:
-		w := types.String{Target: &r.LPNDestino}
+		r.LPNDestino = NewUnionNullString()
 
-		return w
-
+		return r.LPNDestino
 	case 4:
-		w := types.String{Target: &r.PaqueteLote}
+		r.PaqueteLote = NewUnionNullString()
 
-		return w
-
+		return r.PaqueteLote
 	case 5:
-		w := types.String{Target: &r.LoteCajitaFabricante}
+		r.LoteCajitaFabricante = NewUnionNullString()
 
-		return w
-
+		return r.LoteCajitaFabricante
 	case 6:
-		w := types.String{Target: &r.LoteSecundario}
+		r.LoteSecundario = NewUnionNullString()
 
-		return w
-
+		return r.LoteSecundario
 	case 7:
 		r.FechaFabricacion = NewUnionNullLong()
 
@@ -325,30 +320,25 @@ func (r *Detalle) Get(i int) types.Field {
 
 		return r.FechaVencimiento
 	case 9:
-		w := types.String{Target: &r.ProductoTrazable}
+		r.ProductoTrazable = NewUnionNullString()
 
-		return w
-
+		return r.ProductoTrazable
 	case 10:
-		w := types.String{Target: &r.AlmacenConsumo}
+		r.AlmacenConsumo = NewUnionNullString()
 
-		return w
-
+		return r.AlmacenConsumo
 	case 11:
-		w := types.String{Target: &r.EstadoLote}
+		r.EstadoLote = NewUnionNullString()
 
-		return w
-
+		return r.EstadoLote
 	case 12:
-		w := types.String{Target: &r.BloqueoUbicacion}
+		r.BloqueoUbicacion = NewUnionNullString()
 
-		return w
-
+		return r.BloqueoUbicacion
 	case 13:
-		w := types.String{Target: &r.VidaUtilLote}
+		r.VidaUtilLote = NewUnionNullString()
 
-		return w
-
+		return r.VidaUtilLote
 	case 14:
 		r.EntregaAntesDe = NewUnionNullLong()
 
@@ -443,11 +433,41 @@ func (r *Detalle) SetDefault(i int) {
 
 func (r *Detalle) NullField(i int) {
 	switch i {
+	case 2:
+		r.UbicacionDestino = nil
+		return
+	case 3:
+		r.LPNDestino = nil
+		return
+	case 4:
+		r.PaqueteLote = nil
+		return
+	case 5:
+		r.LoteCajitaFabricante = nil
+		return
+	case 6:
+		r.LoteSecundario = nil
+		return
 	case 7:
 		r.FechaFabricacion = nil
 		return
 	case 8:
 		r.FechaVencimiento = nil
+		return
+	case 9:
+		r.ProductoTrazable = nil
+		return
+	case 10:
+		r.AlmacenConsumo = nil
+		return
+	case 11:
+		r.EstadoLote = nil
+		return
+	case 12:
+		r.BloqueoUbicacion = nil
+		return
+	case 13:
+		r.VidaUtilLote = nil
 		return
 	case 14:
 		r.EntregaAntesDe = nil
