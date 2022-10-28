@@ -54,7 +54,7 @@ type DetalleDeArticulo struct {
 
 	VidaUtilEnDias int64 `json:"vidaUtilEnDias"`
 
-	DodigoDeVidaUtil string `json:"dodigoDeVidaUtil"`
+	CodigoDeVidaUtil string `json:"codigoDeVidaUtil"`
 
 	IndicadorDeVidaUtil string `json:"indicadorDeVidaUtil"`
 
@@ -81,7 +81,7 @@ type DetalleDeArticulo struct {
 	CamposLibres []Metadato `json:"camposLibres"`
 }
 
-const DetalleDeArticuloAvroCRC64Fingerprint = "\x86R\nȽ\xf0\xc4\x1b"
+const DetalleDeArticuloAvroCRC64Fingerprint = "\xc1\xdf\x1a}\xe2s$\xdb"
 
 func NewDetalleDeArticulo() DetalleDeArticulo {
 	r := DetalleDeArticulo{}
@@ -195,7 +195,7 @@ func writeDetalleDeArticulo(r DetalleDeArticulo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DodigoDeVidaUtil, w)
+	err = vm.WriteString(r.CodigoDeVidaUtil, w)
 	if err != nil {
 		return err
 	}
@@ -255,7 +255,7 @@ func (r DetalleDeArticulo) Serialize(w io.Writer) error {
 }
 
 func (r DetalleDeArticulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"ean13\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"lote\",\"type\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"LoteDeFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaDeVencimiento\",\"type\":\"string\"},{\"name\":\"OtrosDatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Lote\",\"type\":\"record\"}},{\"name\":\"otrosDatos\",\"type\":{\"items\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Metadato\",\"type\":\"array\"}},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"claseDeExpedicion\",\"type\":\"string\"},{\"name\":\"claseDeArticulo\",\"type\":\"string\"},{\"name\":\"paisDeOrigen\",\"type\":\"string\"},{\"name\":\"esNumeroDeSerieDeEntradaUnico\",\"type\":\"boolean\"},{\"name\":\"requiereCapturaDatosEntrada\",\"type\":\"boolean\"},{\"name\":\"esNumeroDeSerieSalidaUnico\",\"type\":\"boolean\"},{\"name\":\"requiereCapturaDatosSalida\",\"type\":\"boolean\"},{\"name\":\"requierecapturaTotalNumSeries\",\"type\":\"boolean\"},{\"name\":\"caracteristicas\",\"type\":{\"items\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Metadato\",\"type\":\"array\"}},{\"name\":\"notas\",\"type\":\"string\"},{\"name\":\"instruccionesDePreparacion\",\"type\":\"string\"},{\"name\":\"vidaUtilEnDias\",\"type\":\"long\"},{\"name\":\"dodigoDeVidaUtil\",\"type\":\"string\"},{\"name\":\"indicadorDeVidaUtil\",\"type\":\"string\"},{\"name\":\"consumoEnDias\",\"type\":\"long\"},{\"name\":\"vencimientoEnDias\",\"type\":\"long\"},{\"name\":\"vidaUtilEntradaEnDias\",\"type\":\"long\"},{\"name\":\"acondicionamientoSecundario\",\"type\":\"string\"},{\"name\":\"zonaRepo\",\"type\":\"string\"},{\"name\":\"grupos\",\"type\":{\"items\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Metadato\",\"type\":\"array\"}},{\"name\":\"volumen\",\"type\":\"double\"},{\"name\":\"pesoBruto\",\"type\":\"double\"},{\"name\":\"pesoTara\",\"type\":\"double\"},{\"name\":\"pesoNeto\",\"type\":\"double\"},{\"name\":\"camposLibres\",\"type\":{\"items\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Metadato\",\"type\":\"array\"}}],\"name\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.DetalleDeArticulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"ean13\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"lote\",\"type\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"LoteDeFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaDeVencimiento\",\"type\":\"string\"},{\"name\":\"OtrosDatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Lote\",\"type\":\"record\"}},{\"name\":\"otrosDatos\",\"type\":{\"items\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Metadato\",\"type\":\"array\"}},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"claseDeExpedicion\",\"type\":\"string\"},{\"name\":\"claseDeArticulo\",\"type\":\"string\"},{\"name\":\"paisDeOrigen\",\"type\":\"string\"},{\"name\":\"esNumeroDeSerieDeEntradaUnico\",\"type\":\"boolean\"},{\"name\":\"requiereCapturaDatosEntrada\",\"type\":\"boolean\"},{\"name\":\"esNumeroDeSerieSalidaUnico\",\"type\":\"boolean\"},{\"name\":\"requiereCapturaDatosSalida\",\"type\":\"boolean\"},{\"name\":\"requierecapturaTotalNumSeries\",\"type\":\"boolean\"},{\"name\":\"caracteristicas\",\"type\":{\"items\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Metadato\",\"type\":\"array\"}},{\"name\":\"notas\",\"type\":\"string\"},{\"name\":\"instruccionesDePreparacion\",\"type\":\"string\"},{\"name\":\"vidaUtilEnDias\",\"type\":\"long\"},{\"name\":\"codigoDeVidaUtil\",\"type\":\"string\"},{\"name\":\"indicadorDeVidaUtil\",\"type\":\"string\"},{\"name\":\"consumoEnDias\",\"type\":\"long\"},{\"name\":\"vencimientoEnDias\",\"type\":\"long\"},{\"name\":\"vidaUtilEntradaEnDias\",\"type\":\"long\"},{\"name\":\"acondicionamientoSecundario\",\"type\":\"string\"},{\"name\":\"zonaRepo\",\"type\":\"string\"},{\"name\":\"grupos\",\"type\":{\"items\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Metadato\",\"type\":\"array\"}},{\"name\":\"volumen\",\"type\":\"double\"},{\"name\":\"pesoBruto\",\"type\":\"double\"},{\"name\":\"pesoTara\",\"type\":\"double\"},{\"name\":\"pesoNeto\",\"type\":\"double\"},{\"name\":\"camposLibres\",\"type\":{\"items\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Metadato\",\"type\":\"array\"}}],\"name\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.DetalleDeArticulo\",\"type\":\"record\"}"
 }
 
 func (r DetalleDeArticulo) SchemaName() string {
@@ -370,7 +370,7 @@ func (r *DetalleDeArticulo) Get(i int) types.Field {
 		return w
 
 	case 18:
-		w := types.String{Target: &r.DodigoDeVidaUtil}
+		w := types.String{Target: &r.CodigoDeVidaUtil}
 
 		return w
 
@@ -538,7 +538,7 @@ func (r DetalleDeArticulo) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["dodigoDeVidaUtil"], err = json.Marshal(r.DodigoDeVidaUtil)
+	output["codigoDeVidaUtil"], err = json.Marshal(r.CodigoDeVidaUtil)
 	if err != nil {
 		return nil, err
 	}
@@ -853,18 +853,18 @@ func (r *DetalleDeArticulo) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for vidaUtilEnDias")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["dodigoDeVidaUtil"]; ok {
+		if v, ok := fields["codigoDeVidaUtil"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.DodigoDeVidaUtil); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeVidaUtil); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for dodigoDeVidaUtil")
+		return fmt.Errorf("no value specified for codigoDeVidaUtil")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["indicadorDeVidaUtil"]; ok {
