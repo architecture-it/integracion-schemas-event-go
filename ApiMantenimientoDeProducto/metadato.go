@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type Metadato struct {
-	Meta string `json:"Meta"`
+	Meta string `json:"meta"`
 
-	Contenido string `json:"Contenido"`
+	Contenido string `json:"contenido"`
 }
 
-const MetadatoAvroCRC64Fingerprint = "\xc7_J\v\x9boo\xa1"
+const MetadatoAvroCRC64Fingerprint = "\xb4\x8b\xfc\x92{\xfc\xf9\x90"
 
 func NewMetadato() Metadato {
 	r := Metadato{}
@@ -71,7 +71,7 @@ func (r Metadato) Serialize(w io.Writer) error {
 }
 
 func (r Metadato) Schema() string {
-	return "{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Metadato\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Metadato\",\"type\":\"record\"}"
 }
 
 func (r Metadato) SchemaName() string {
@@ -127,11 +127,11 @@ func (_ Metadato) AvroCRC64Fingerprint() []byte {
 func (r Metadato) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Meta"], err = json.Marshal(r.Meta)
+	output["meta"], err = json.Marshal(r.Meta)
 	if err != nil {
 		return nil, err
 	}
-	output["Contenido"], err = json.Marshal(r.Contenido)
+	output["contenido"], err = json.Marshal(r.Contenido)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func (r *Metadato) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["Meta"]; ok {
+		if v, ok := fields["meta"]; ok {
 			return v
 		}
 		return nil
@@ -157,10 +157,10 @@ func (r *Metadato) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Meta")
+		return fmt.Errorf("no value specified for meta")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Contenido"]; ok {
+		if v, ok := fields["contenido"]; ok {
 			return v
 		}
 		return nil
@@ -171,7 +171,7 @@ func (r *Metadato) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Contenido")
+		return fmt.Errorf("no value specified for contenido")
 	}
 	return nil
 }

@@ -18,18 +18,18 @@ import (
 var _ = fmt.Printf
 
 type Lote struct {
-	Codigo string `json:"Codigo"`
+	Codigo string `json:"codigo"`
 
-	LoteDeFabricante string `json:"LoteDeFabricante"`
+	LoteDeFabricante string `json:"loteDeFabricante"`
 
-	LoteSecundario string `json:"LoteSecundario"`
+	LoteSecundario string `json:"loteSecundario"`
 
-	FechaDeVencimiento string `json:"FechaDeVencimiento"`
+	FechaDeVencimiento string `json:"fechaDeVencimiento"`
 
-	OtrosDatos []Metadato `json:"OtrosDatos"`
+	OtrosDatos []Metadato `json:"otrosDatos"`
 }
 
-const LoteAvroCRC64Fingerprint = "\x8cu\xb4-J\xfd\xea5"
+const LoteAvroCRC64Fingerprint = "\xaf\xbbC\x809\x0e=\x80"
 
 func NewLote() Lote {
 	r := Lote{}
@@ -91,7 +91,7 @@ func (r Lote) Serialize(w io.Writer) error {
 }
 
 func (r Lote) Schema() string {
-	return "{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"LoteDeFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaDeVencimiento\",\"type\":\"string\"},{\"name\":\"OtrosDatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Lote\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteDeFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"fechaDeVencimiento\",\"type\":\"string\"},{\"name\":\"otrosDatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.ApiMantenimientoDeProducto.Events.Record.Lote\",\"type\":\"record\"}"
 }
 
 func (r Lote) SchemaName() string {
@@ -164,23 +164,23 @@ func (_ Lote) AvroCRC64Fingerprint() []byte {
 func (r Lote) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Codigo"], err = json.Marshal(r.Codigo)
+	output["codigo"], err = json.Marshal(r.Codigo)
 	if err != nil {
 		return nil, err
 	}
-	output["LoteDeFabricante"], err = json.Marshal(r.LoteDeFabricante)
+	output["loteDeFabricante"], err = json.Marshal(r.LoteDeFabricante)
 	if err != nil {
 		return nil, err
 	}
-	output["LoteSecundario"], err = json.Marshal(r.LoteSecundario)
+	output["loteSecundario"], err = json.Marshal(r.LoteSecundario)
 	if err != nil {
 		return nil, err
 	}
-	output["FechaDeVencimiento"], err = json.Marshal(r.FechaDeVencimiento)
+	output["fechaDeVencimiento"], err = json.Marshal(r.FechaDeVencimiento)
 	if err != nil {
 		return nil, err
 	}
-	output["OtrosDatos"], err = json.Marshal(r.OtrosDatos)
+	output["otrosDatos"], err = json.Marshal(r.OtrosDatos)
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func (r *Lote) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["Codigo"]; ok {
+		if v, ok := fields["codigo"]; ok {
 			return v
 		}
 		return nil
@@ -206,10 +206,10 @@ func (r *Lote) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Codigo")
+		return fmt.Errorf("no value specified for codigo")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["LoteDeFabricante"]; ok {
+		if v, ok := fields["loteDeFabricante"]; ok {
 			return v
 		}
 		return nil
@@ -220,10 +220,10 @@ func (r *Lote) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LoteDeFabricante")
+		return fmt.Errorf("no value specified for loteDeFabricante")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["LoteSecundario"]; ok {
+		if v, ok := fields["loteSecundario"]; ok {
 			return v
 		}
 		return nil
@@ -234,10 +234,10 @@ func (r *Lote) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LoteSecundario")
+		return fmt.Errorf("no value specified for loteSecundario")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["FechaDeVencimiento"]; ok {
+		if v, ok := fields["fechaDeVencimiento"]; ok {
 			return v
 		}
 		return nil
@@ -248,10 +248,10 @@ func (r *Lote) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FechaDeVencimiento")
+		return fmt.Errorf("no value specified for fechaDeVencimiento")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["OtrosDatos"]; ok {
+		if v, ok := fields["otrosDatos"]; ok {
 			return v
 		}
 		return nil
@@ -262,7 +262,7 @@ func (r *Lote) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for OtrosDatos")
+		return fmt.Errorf("no value specified for otrosDatos")
 	}
 	return nil
 }
