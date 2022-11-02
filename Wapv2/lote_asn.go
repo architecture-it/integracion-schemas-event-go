@@ -27,7 +27,7 @@ type LoteAsn struct {
 	OtrosDatos *UnionNullListaDePropiedades `json:"otrosDatos"`
 }
 
-const LoteAsnAvroCRC64Fingerprint = ">\xb3\xfb\xfcAY\xd1\xe4"
+const LoteAsnAvroCRC64Fingerprint = "V^\x1a\x03\xfd'FA"
 
 func NewLoteAsn() LoteAsn {
 	r := LoteAsn{}
@@ -87,7 +87,7 @@ func (r LoteAsn) Serialize(w io.Writer) error {
 }
 
 func (r LoteAsn) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteAsn\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteAsn\",\"type\":\"record\"}"
 }
 
 func (r LoteAsn) SchemaName() string {

@@ -84,7 +84,7 @@ func DeserializeUnionNullListaDePropiedadesFromSchema(r io.Reader, schema string
 }
 
 func (r *UnionNullListaDePropiedades) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullListaDePropiedades) SetBoolean(v bool)   { panic("Unsupported operation") }

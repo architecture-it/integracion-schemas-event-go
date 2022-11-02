@@ -18,13 +18,15 @@ import (
 var _ = fmt.Printf
 
 type ListaDePropiedades struct {
-	Metadatos *UnionNullArrayMetadato `json:"metadatos"`
+	Metadatos []Metadato `json:"metadatos"`
 }
 
-const ListaDePropiedadesAvroCRC64Fingerprint = "\xfc^\xb8\xbb\xc9\u0096\x01"
+const ListaDePropiedadesAvroCRC64Fingerprint = "\xdfP\xefy(mg\xe8"
 
 func NewListaDePropiedades() ListaDePropiedades {
 	r := ListaDePropiedades{}
+	r.Metadatos = make([]Metadato, 0)
+
 	return r
 }
 
@@ -53,7 +55,7 @@ func DeserializeListaDePropiedadesFromSchema(r io.Reader, schema string) (ListaD
 
 func writeListaDePropiedades(r ListaDePropiedades, w io.Writer) error {
 	var err error
-	err = writeUnionNullArrayMetadato(r.Metadatos, w)
+	err = writeArrayMetadato(r.Metadatos, w)
 	if err != nil {
 		return err
 	}
@@ -65,7 +67,7 @@ func (r ListaDePropiedades) Serialize(w io.Writer) error {
 }
 
 func (r ListaDePropiedades) Schema() string {
-	return "{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.ListaDePropiedades\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Wapv2.Events.Record.ListaDePropiedades\",\"type\":\"record\"}"
 }
 
 func (r ListaDePropiedades) SchemaName() string {
@@ -84,9 +86,12 @@ func (_ ListaDePropiedades) SetUnionElem(v int64) { panic("Unsupported operation
 func (r *ListaDePropiedades) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Metadatos = NewUnionNullArrayMetadato()
+		r.Metadatos = make([]Metadato, 0)
 
-		return r.Metadatos
+		w := ArrayMetadatoWrapper{Target: &r.Metadatos}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -99,9 +104,6 @@ func (r *ListaDePropiedades) SetDefault(i int) {
 
 func (r *ListaDePropiedades) NullField(i int) {
 	switch i {
-	case 0:
-		r.Metadatos = nil
-		return
 	}
 	panic("Not a nullable field index")
 }
