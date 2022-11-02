@@ -28,7 +28,7 @@ type Direccion struct {
 
 	CodigoPostal *UnionNullString `json:"CodigoPostal"`
 
-	CombreProvincia *UnionNullString `json:"CombreProvincia"`
+	NombreProvincia *UnionNullString `json:"NombreProvincia"`
 
 	Numero *UnionNullString `json:"Numero"`
 
@@ -43,7 +43,7 @@ type Direccion struct {
 	ComponentesDeDireccion *UnionNullListaDePropiedades `json:"ComponentesDeDireccion"`
 }
 
-const DireccionAvroCRC64Fingerprint = "\xe0\x98P\xd7%Y\xcc\x15"
+const DireccionAvroCRC64Fingerprint = "\x97\x18\xbc狩\xc0."
 
 func NewDireccion() Direccion {
 	r := Direccion{}
@@ -95,7 +95,7 @@ func writeDireccion(r Direccion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.CombreProvincia, w)
+	err = writeUnionNullString(r.NombreProvincia, w)
 	if err != nil {
 		return err
 	}
@@ -131,7 +131,7 @@ func (r Direccion) Serialize(w io.Writer) error {
 }
 
 func (r Direccion) Schema() string {
-	return "{\"fields\":[{\"name\":\"AbreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"CombreProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoISOPais\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"ComponentesDeDireccion\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.WapAltaDePedidoSolicitada.Events.Record.Direccion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"AbreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"NombreProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoISOPais\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"ComponentesDeDireccion\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.WapAltaDePedidoSolicitada.Events.Record.Direccion\",\"type\":\"record\"}"
 }
 
 func (r Direccion) SchemaName() string {
@@ -170,9 +170,9 @@ func (r *Direccion) Get(i int) types.Field {
 
 		return r.CodigoPostal
 	case 5:
-		r.CombreProvincia = NewUnionNullString()
+		r.NombreProvincia = NewUnionNullString()
 
-		return r.CombreProvincia
+		return r.NombreProvincia
 	case 6:
 		r.Numero = NewUnionNullString()
 
@@ -225,7 +225,7 @@ func (r *Direccion) NullField(i int) {
 		r.CodigoPostal = nil
 		return
 	case 5:
-		r.CombreProvincia = nil
+		r.NombreProvincia = nil
 		return
 	case 6:
 		r.Numero = nil
@@ -281,7 +281,7 @@ func (r Direccion) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["CombreProvincia"], err = json.Marshal(r.CombreProvincia)
+	output["NombreProvincia"], err = json.Marshal(r.NombreProvincia)
 	if err != nil {
 		return nil, err
 	}
@@ -390,18 +390,18 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for CodigoPostal")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["CombreProvincia"]; ok {
+		if v, ok := fields["NombreProvincia"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CombreProvincia); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.NombreProvincia); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CombreProvincia")
+		return fmt.Errorf("no value specified for NombreProvincia")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Numero"]; ok {
