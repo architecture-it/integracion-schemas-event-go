@@ -18,12 +18,14 @@ import (
 var _ = fmt.Printf
 
 type FechaPactadaDeEntrega struct {
-	HoraDesde *UnionNullArrayString `json:"horaDesde"`
+	Fecha *UnionNullString `json:"fecha"`
 
-	HoraHasta *UnionNullArrayString `json:"horaHasta"`
+	HoraDesde *UnionNullString `json:"horaDesde"`
+
+	HoraHasta *UnionNullString `json:"horaHasta"`
 }
 
-const FechaPactadaDeEntregaAvroCRC64Fingerprint = "x\xe7\xea\xec\xddA\xd9o"
+const FechaPactadaDeEntregaAvroCRC64Fingerprint = "{U\x00\xc0\x98\x11\xff#"
 
 func NewFechaPactadaDeEntrega() FechaPactadaDeEntrega {
 	r := FechaPactadaDeEntrega{}
@@ -55,11 +57,15 @@ func DeserializeFechaPactadaDeEntregaFromSchema(r io.Reader, schema string) (Fec
 
 func writeFechaPactadaDeEntrega(r FechaPactadaDeEntrega, w io.Writer) error {
 	var err error
-	err = writeUnionNullArrayString(r.HoraDesde, w)
+	err = writeUnionNullString(r.Fecha, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullArrayString(r.HoraHasta, w)
+	err = writeUnionNullString(r.HoraDesde, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.HoraHasta, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +77,7 @@ func (r FechaPactadaDeEntrega) Serialize(w io.Writer) error {
 }
 
 func (r FechaPactadaDeEntrega) Schema() string {
-	return "{\"fields\":[{\"name\":\"horaDesde\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"horaHasta\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.FechaPactadaDeEntrega\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"fecha\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaDesde\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.FechaPactadaDeEntrega\",\"type\":\"record\"}"
 }
 
 func (r FechaPactadaDeEntrega) SchemaName() string {
@@ -90,11 +96,15 @@ func (_ FechaPactadaDeEntrega) SetUnionElem(v int64) { panic("Unsupported operat
 func (r *FechaPactadaDeEntrega) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.HoraDesde = NewUnionNullArrayString()
+		r.Fecha = NewUnionNullString()
+
+		return r.Fecha
+	case 1:
+		r.HoraDesde = NewUnionNullString()
 
 		return r.HoraDesde
-	case 1:
-		r.HoraHasta = NewUnionNullArrayString()
+	case 2:
+		r.HoraHasta = NewUnionNullString()
 
 		return r.HoraHasta
 	}
@@ -110,9 +120,12 @@ func (r *FechaPactadaDeEntrega) SetDefault(i int) {
 func (r *FechaPactadaDeEntrega) NullField(i int) {
 	switch i {
 	case 0:
-		r.HoraDesde = nil
+		r.Fecha = nil
 		return
 	case 1:
+		r.HoraDesde = nil
+		return
+	case 2:
 		r.HoraHasta = nil
 		return
 	}
@@ -131,6 +144,10 @@ func (_ FechaPactadaDeEntrega) AvroCRC64Fingerprint() []byte {
 func (r FechaPactadaDeEntrega) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["fecha"], err = json.Marshal(r.Fecha)
+	if err != nil {
+		return nil, err
+	}
 	output["horaDesde"], err = json.Marshal(r.HoraDesde)
 	if err != nil {
 		return nil, err
@@ -149,6 +166,20 @@ func (r *FechaPactadaDeEntrega) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["fecha"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Fecha); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for fecha")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["horaDesde"]; ok {
 			return v

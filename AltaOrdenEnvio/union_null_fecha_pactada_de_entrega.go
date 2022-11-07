@@ -84,7 +84,7 @@ func DeserializeUnionNullFechaPactadaDeEntregaFromSchema(r io.Reader, schema str
 }
 
 func (r *UnionNullFechaPactadaDeEntrega) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"horaDesde\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"horaHasta\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"FechaPactadaDeEntrega\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"fecha\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaDesde\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"FechaPactadaDeEntrega\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullFechaPactadaDeEntrega) SetBoolean(v bool)   { panic("Unsupported operation") }
