@@ -39,18 +39,15 @@ type BultoRequest struct {
 	Referencias *UnionNullArrayMetadato `json:"Referencias"`
 
 	NumeroDeEnvio *UnionNullString `json:"NumeroDeEnvio"`
-
-	PagoEnMostrador *UnionNullPagoEnMostrador `json:"PagoEnMostrador"`
 }
 
-const BultoRequestAvroCRC64Fingerprint = "M\x9fʗ`\x19\x84n"
+const BultoRequestAvroCRC64Fingerprint = "Jl\xc0P\x8d\xe8\x10\x88"
 
 func NewBultoRequest() BultoRequest {
 	r := BultoRequest{}
 	r.Descripcion = nil
 	r.Referencias = nil
 	r.NumeroDeEnvio = nil
-	r.PagoEnMostrador = nil
 	return r
 }
 
@@ -123,10 +120,6 @@ func writeBultoRequest(r BultoRequest, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullPagoEnMostrador(r.PagoEnMostrador, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -135,7 +128,7 @@ func (r BultoRequest) Serialize(w io.Writer) error {
 }
 
 func (r BultoRequest) Schema() string {
-	return "{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PagoEnMostrador\",\"type\":[\"null\",{\"fields\":[{\"name\":\"MontoACobrar\",\"type\":\"float\"},{\"default\":null,\"name\":\"documentoTipo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"documentoNumero\",\"type\":[\"null\",\"string\"]}],\"name\":\"PagoEnMostrador\",\"type\":\"record\"}]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.BultoRequest\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.BultoRequest\",\"type\":\"record\"}"
 }
 
 func (r BultoRequest) SchemaName() string {
@@ -205,10 +198,6 @@ func (r *BultoRequest) Get(i int) types.Field {
 		r.NumeroDeEnvio = NewUnionNullString()
 
 		return r.NumeroDeEnvio
-	case 11:
-		r.PagoEnMostrador = NewUnionNullPagoEnMostrador()
-
-		return r.PagoEnMostrador
 	}
 	panic("Unknown field index")
 }
@@ -224,9 +213,6 @@ func (r *BultoRequest) SetDefault(i int) {
 	case 10:
 		r.NumeroDeEnvio = nil
 		return
-	case 11:
-		r.PagoEnMostrador = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -241,9 +227,6 @@ func (r *BultoRequest) NullField(i int) {
 		return
 	case 10:
 		r.NumeroDeEnvio = nil
-		return
-	case 11:
-		r.PagoEnMostrador = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -302,10 +285,6 @@ func (r BultoRequest) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["NumeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
-	if err != nil {
-		return nil, err
-	}
-	output["PagoEnMostrador"], err = json.Marshal(r.PagoEnMostrador)
 	if err != nil {
 		return nil, err
 	}
@@ -478,22 +457,6 @@ func (r *BultoRequest) UnmarshalJSON(data []byte) error {
 		r.NumeroDeEnvio = NewUnionNullString()
 
 		r.NumeroDeEnvio = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["PagoEnMostrador"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PagoEnMostrador); err != nil {
-			return err
-		}
-	} else {
-		r.PagoEnMostrador = NewUnionNullPagoEnMostrador()
-
-		r.PagoEnMostrador = nil
 	}
 	return nil
 }
