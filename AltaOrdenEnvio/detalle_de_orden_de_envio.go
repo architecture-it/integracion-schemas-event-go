@@ -24,9 +24,9 @@ type DetalleDeOrdenDeEnvio struct {
 
 	Destinatario DatosPersonales `json:"destinatario"`
 
-	DestinatarioAlternativo *UnionNullDatosPersonales `json:"destinatarioAlternativo"`
+	DestinatarioAlternativo *UnionNullArrayDatosPersonales `json:"destinatarioAlternativo"`
 
-	Destino *UnionNullLugarDeRetiroOEntrega `json:"destino"`
+	DestinoInformado LugarDeRetiroOEntrega `json:"destinoInformado"`
 
 	Origen *UnionNullLugarDeRetiroOEntrega `json:"origen"`
 
@@ -52,7 +52,7 @@ type DetalleDeOrdenDeEnvio struct {
 
 	ProductoARetirar *UnionNullString `json:"productoARetirar"`
 
-	PagoDestino TipoPagoDestino `json:"pagoDestino"`
+	PagoDestino *UnionNullTipoPagoDestino `json:"pagoDestino"`
 
 	SucursalDeDistribucion *UnionNullDatosSucursal `json:"sucursalDeDistribucion"`
 
@@ -71,7 +71,7 @@ type DetalleDeOrdenDeEnvio struct {
 	PagoEnMostrador *UnionNullDatosPagoEnMostrador `json:"pagoEnMostrador"`
 }
 
-const DetalleDeOrdenDeEnvioAvroCRC64Fingerprint = "\xe6{\xfb\xe4\x16\x8c\xa0a"
+const DetalleDeOrdenDeEnvioAvroCRC64Fingerprint = "9XK\xfa\x00\xb6\xa7V"
 
 func NewDetalleDeOrdenDeEnvio() DetalleDeOrdenDeEnvio {
 	r := DetalleDeOrdenDeEnvio{}
@@ -79,6 +79,8 @@ func NewDetalleDeOrdenDeEnvio() DetalleDeOrdenDeEnvio {
 	r.Destinatario = NewDatosPersonales()
 
 	r.DestinatarioAlternativo = nil
+	r.DestinoInformado = NewLugarDeRetiroOEntrega()
+
 	r.Origen = nil
 	r.TipoDeServicio = nil
 	r.NumeroDeRemito = nil
@@ -90,6 +92,7 @@ func NewDetalleDeOrdenDeEnvio() DetalleDeOrdenDeEnvio {
 	r.FechaPactadaDeEntrega = nil
 	r.ProductoAEntregar = nil
 	r.ProductoARetirar = nil
+	r.PagoDestino = nil
 	r.SucursalDeDistribucion = nil
 	r.SucursalCliente = nil
 	r.ListaPaquetes = nil
@@ -138,11 +141,11 @@ func writeDetalleDeOrdenDeEnvio(r DetalleDeOrdenDeEnvio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullDatosPersonales(r.DestinatarioAlternativo, w)
+	err = writeUnionNullArrayDatosPersonales(r.DestinatarioAlternativo, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullLugarDeRetiroOEntrega(r.Destino, w)
+	err = writeLugarDeRetiroOEntrega(r.DestinoInformado, w)
 	if err != nil {
 		return err
 	}
@@ -194,7 +197,7 @@ func writeDetalleDeOrdenDeEnvio(r DetalleDeOrdenDeEnvio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeTipoPagoDestino(r.PagoDestino, w)
+	err = writeUnionNullTipoPagoDestino(r.PagoDestino, w)
 	if err != nil {
 		return err
 	}
@@ -238,7 +241,7 @@ func (r DetalleDeOrdenDeEnvio) Serialize(w io.Writer) error {
 }
 
 func (r DetalleDeOrdenDeEnvio) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"remitente\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"}]},{\"name\":\"destinatario\",\"type\":\"Andreani.AltaOrdenEnvio.Events.Common.DatosPersonales\"},{\"default\":null,\"name\":\"destinatarioAlternativo\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.DatosPersonales\"]},{\"name\":\"destino\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"postal\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"abreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO -3166-2 (https://es.wikipedia.org/wiki/ISO_3166-2:AR)\",\"name\":\"codigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO 3166-1 alpha-2 (https://es.wikipedia.org/wiki/ISO_3166-1#Tabla_de_c.C3.B3digos_alfa-2_asignados_o_reservados)\",\"name\":\"codigoISOPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"casillaDeCorreo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"region\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosSucursal\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nomenclatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"casillaDeCorreo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"region\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionPostal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"listaDeTelefonos\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDeTelefonos\"]}],\"name\":\"Sucursal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"GeoCoordenada\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"elevacion\",\"type\":[\"null\",\"double\"]}],\"name\":\"GeoCoordenada\",\"type\":\"record\"}]}],\"name\":\"LugarDeRetiroOEntrega\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"origen\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.LugarDeRetiroOEntrega\"]},{\"name\":\"contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitosComplementarios\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"centroDeCostosDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoriaDeProducto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoriaDeFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorACobrar\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"fechaPactadaDeEntrega\",\"type\":[\"null\",{\"fields\":[{\"name\":\"fecha\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaDesde\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"FechaPactadaDeEntrega\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"productoAEntregar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"productoARetirar\",\"type\":[\"null\",\"string\"]},{\"name\":\"pagoDestino\",\"type\":{\"name\":\"TipoPagoDestino\",\"symbols\":[\"undefined\",\"P\",\"D\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"sucursalDeDistribucion\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"sucursalCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"listaPaquetes\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaPaquetes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"double\"]}],\"name\":\"DetalleDePaquete\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaPaquetes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"codigoVerificadorDeEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeBultos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"agrupadorDeBulto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pagoEnMostrador\",\"type\":[\"null\",{\"fields\":[{\"name\":\"montoACobrar\",\"type\":[\"null\",\"int\"]},{\"name\":\"documentoTipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"documentoNumero\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosPagoEnMostrador\",\"type\":\"record\"}]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.DetalleDeOrdenDeEnvio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"remitente\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"}]},{\"name\":\"destinatario\",\"type\":\"Andreani.AltaOrdenEnvio.Events.Common.DatosPersonales\"},{\"default\":null,\"name\":\"destinatarioAlternativo\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.DatosPersonales\",\"type\":\"array\"}]},{\"name\":\"destinoInformado\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"postal\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"abreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO -3166-2 (https://es.wikipedia.org/wiki/ISO_3166-2:AR)\",\"name\":\"codigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO 3166-1 alpha-2 (https://es.wikipedia.org/wiki/ISO_3166-1#Tabla_de_c.C3.B3digos_alfa-2_asignados_o_reservados)\",\"name\":\"codigoISOPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"casillaDeCorreo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"region\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosSucursal\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nomenclatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"casillaDeCorreo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"region\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionPostal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"listaDeTelefonos\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDeTelefonos\"]}],\"name\":\"Sucursal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"GeoCoordenada\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"elevacion\",\"type\":[\"null\",\"double\"]}],\"name\":\"GeoCoordenada\",\"type\":\"record\"}]}],\"name\":\"LugarDeRetiroOEntrega\",\"type\":\"record\"}},{\"default\":null,\"name\":\"origen\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.LugarDeRetiroOEntrega\"]},{\"name\":\"contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitosComplementarios\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"centroDeCostosDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoriaDeProducto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoriaDeFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorACobrar\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"fechaPactadaDeEntrega\",\"type\":[\"null\",{\"fields\":[{\"name\":\"fecha\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaDesde\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"FechaPactadaDeEntrega\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"productoAEntregar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"productoARetirar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pagoDestino\",\"type\":[\"null\",{\"name\":\"TipoPagoDestino\",\"symbols\":[\"undefined\",\"P\",\"D\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"sucursalDeDistribucion\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"sucursalCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"listaPaquetes\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaPaquetes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"double\"]}],\"name\":\"DetalleDePaquete\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaPaquetes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"codigoVerificadorDeEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeBultos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"agrupadorDeBulto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pagoEnMostrador\",\"type\":[\"null\",{\"fields\":[{\"name\":\"montoACobrar\",\"type\":[\"null\",\"int\"]},{\"name\":\"documentoTipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"documentoNumero\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosPagoEnMostrador\",\"type\":\"record\"}]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.DetalleDeOrdenDeEnvio\",\"type\":\"record\"}"
 }
 
 func (r DetalleDeOrdenDeEnvio) SchemaName() string {
@@ -273,13 +276,16 @@ func (r *DetalleDeOrdenDeEnvio) Get(i int) types.Field {
 		return w
 
 	case 3:
-		r.DestinatarioAlternativo = NewUnionNullDatosPersonales()
+		r.DestinatarioAlternativo = NewUnionNullArrayDatosPersonales()
 
 		return r.DestinatarioAlternativo
 	case 4:
-		r.Destino = NewUnionNullLugarDeRetiroOEntrega()
+		r.DestinoInformado = NewLugarDeRetiroOEntrega()
 
-		return r.Destino
+		w := types.Record{Target: &r.DestinoInformado}
+
+		return w
+
 	case 5:
 		r.Origen = NewUnionNullLugarDeRetiroOEntrega()
 
@@ -330,10 +336,9 @@ func (r *DetalleDeOrdenDeEnvio) Get(i int) types.Field {
 
 		return r.ProductoARetirar
 	case 17:
-		w := TipoPagoDestinoWrapper{Target: &r.PagoDestino}
+		r.PagoDestino = NewUnionNullTipoPagoDestino()
 
-		return w
-
+		return r.PagoDestino
 	case 18:
 		r.SucursalDeDistribucion = NewUnionNullDatosSucursal()
 
@@ -411,6 +416,9 @@ func (r *DetalleDeOrdenDeEnvio) SetDefault(i int) {
 	case 16:
 		r.ProductoARetirar = nil
 		return
+	case 17:
+		r.PagoDestino = nil
+		return
 	case 18:
 		r.SucursalDeDistribucion = nil
 		return
@@ -447,9 +455,6 @@ func (r *DetalleDeOrdenDeEnvio) NullField(i int) {
 	case 3:
 		r.DestinatarioAlternativo = nil
 		return
-	case 4:
-		r.Destino = nil
-		return
 	case 5:
 		r.Origen = nil
 		return
@@ -482,6 +487,9 @@ func (r *DetalleDeOrdenDeEnvio) NullField(i int) {
 		return
 	case 16:
 		r.ProductoARetirar = nil
+		return
+	case 17:
+		r.PagoDestino = nil
 		return
 	case 18:
 		r.SucursalDeDistribucion = nil
@@ -539,7 +547,7 @@ func (r DetalleDeOrdenDeEnvio) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["destino"], err = json.Marshal(r.Destino)
+	output["destinoInformado"], err = json.Marshal(r.DestinoInformado)
 	if err != nil {
 		return nil, err
 	}
@@ -693,23 +701,23 @@ func (r *DetalleDeOrdenDeEnvio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.DestinatarioAlternativo = NewUnionNullDatosPersonales()
+		r.DestinatarioAlternativo = NewUnionNullArrayDatosPersonales()
 
 		r.DestinatarioAlternativo = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["destino"]; ok {
+		if v, ok := fields["destinoInformado"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Destino); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DestinoInformado); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for destino")
+		return fmt.Errorf("no value specified for destinoInformado")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["origen"]; ok {
@@ -913,7 +921,9 @@ func (r *DetalleDeOrdenDeEnvio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for pagoDestino")
+		r.PagoDestino = NewUnionNullTipoPagoDestino()
+
+		r.PagoDestino = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["sucursalDeDistribucion"]; ok {

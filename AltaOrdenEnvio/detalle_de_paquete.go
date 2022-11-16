@@ -28,7 +28,7 @@ type DetalleDePaquete struct {
 
 	Descripcion *UnionNullString `json:"descripcion"`
 
-	ReferenciasDelCliente *UnionNullMapString `json:"referenciasDelCliente"`
+	ReferenciasDelCliente *UnionNullListaDePropiedades `json:"referenciasDelCliente"`
 
 	VolumenEnCm3 *UnionNullDouble `json:"volumenEnCm3"`
 
@@ -41,7 +41,7 @@ type DetalleDePaquete struct {
 	ValorDeclarado *UnionNullDouble `json:"valorDeclarado"`
 }
 
-const DetalleDePaqueteAvroCRC64Fingerprint = "\xc0\xf99\x96\vv\xa2\xf0"
+const DetalleDePaqueteAvroCRC64Fingerprint = "\xbbkޛ\x96\xec\x81\xf3"
 
 func NewDetalleDePaquete() DetalleDePaquete {
 	r := DetalleDePaquete{}
@@ -104,7 +104,7 @@ func writeDetalleDePaquete(r DetalleDePaquete, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullMapString(r.ReferenciasDelCliente, w)
+	err = writeUnionNullListaDePropiedades(r.ReferenciasDelCliente, w)
 	if err != nil {
 		return err
 	}
@@ -136,7 +136,7 @@ func (r DetalleDePaquete) Serialize(w io.Writer) error {
 }
 
 func (r DetalleDePaquete) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.DetalleDePaquete\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.DetalleDePaquete\",\"type\":\"record\"}"
 }
 
 func (r DetalleDePaquete) SchemaName() string {
@@ -175,7 +175,7 @@ func (r *DetalleDePaquete) Get(i int) types.Field {
 
 		return r.Descripcion
 	case 5:
-		r.ReferenciasDelCliente = NewUnionNullMapString()
+		r.ReferenciasDelCliente = NewUnionNullListaDePropiedades()
 
 		return r.ReferenciasDelCliente
 	case 6:
@@ -438,7 +438,7 @@ func (r *DetalleDePaquete) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.ReferenciasDelCliente = NewUnionNullMapString()
+		r.ReferenciasDelCliente = NewUnionNullListaDePropiedades()
 
 		r.ReferenciasDelCliente = nil
 	}
