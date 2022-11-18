@@ -71,9 +71,11 @@ type PedidoDeAlmacenSCE struct {
 	ImprimeDocumentacion *UnionNullBool `json:"imprimeDocumentacion"`
 
 	DetalleDeOrdenDeCompra *UnionNullDetalleDeOrdenDeCompra `json:"detalleDeOrdenDeCompra"`
+
+	LinkImpresionRemito *UnionNullString `json:"linkImpresionRemito"`
 }
 
-const PedidoDeAlmacenSCEAvroCRC64Fingerprint = "\xd6\xf0\xa2\x8e\xea`Ke"
+const PedidoDeAlmacenSCEAvroCRC64Fingerprint = "\xc8\x16/\x11nU<\xc9"
 
 func NewPedidoDeAlmacenSCE() PedidoDeAlmacenSCE {
 	r := PedidoDeAlmacenSCE{}
@@ -104,6 +106,7 @@ func NewPedidoDeAlmacenSCE() PedidoDeAlmacenSCE {
 	r.AcondicionamientoSecundario = nil
 	r.ImprimeDocumentacion = nil
 	r.DetalleDeOrdenDeCompra = nil
+	r.LinkImpresionRemito = nil
 	return r
 }
 
@@ -240,6 +243,10 @@ func writePedidoDeAlmacenSCE(r PedidoDeAlmacenSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.LinkImpresionRemito, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -248,7 +255,7 @@ func (r PedidoDeAlmacenSCE) Serialize(w io.Writer) error {
 }
 
 func (r PedidoDeAlmacenSCE) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroPedido\",\"type\":\"string\"},{\"name\":\"tipoPedido\",\"type\":\"string\"},{\"default\":null,\"name\":\"prioridadPreparacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciaCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoTransportista\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notas\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"socioComercial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"modoTransporte\",\"type\":[\"null\",\"string\"]},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"abreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoISOPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"listaDetalles\",\"type\":{\"fields\":[{\"name\":\"detallePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"numeroPedido\",\"type\":\"string\"},{\"name\":\"unidadMedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"lineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidades\",\"type\":\"double\"},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"DetallePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDetalleDePedido\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ordenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clientePadre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"acondicionamientoSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"imprimeDocumentacion\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"detalleDeOrdenDeCompra\",\"type\":[\"null\",{\"fields\":[{\"name\":\"numeroDeLineaDeCliente\",\"type\":\"string\"},{\"name\":\"ordenDeCompraDeCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"notasDeLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeLinea\",\"type\":\"string\"},{\"name\":\"cantidadPedida\",\"type\":\"double\"},{\"name\":\"articulo\",\"type\":\"Andreani.Wap.Events.Record.Articulo\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UOM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"fechaOrdenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoMaterial\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetalleDeOrdenDeCompra\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wap.Events.Record.PedidoDeAlmacenSCE\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroPedido\",\"type\":\"string\"},{\"name\":\"tipoPedido\",\"type\":\"string\"},{\"default\":null,\"name\":\"prioridadPreparacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciaCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoTransportista\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notas\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"socioComercial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"modoTransporte\",\"type\":[\"null\",\"string\"]},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"abreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoISOPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"listaDetalles\",\"type\":{\"fields\":[{\"name\":\"detallePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"numeroPedido\",\"type\":\"string\"},{\"name\":\"unidadMedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"lineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidades\",\"type\":\"double\"},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]}],\"name\":\"DetallePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDetalleDePedido\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ordenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clientePadre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"acondicionamientoSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"imprimeDocumentacion\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"detalleDeOrdenDeCompra\",\"type\":[\"null\",{\"fields\":[{\"name\":\"numeroDeLineaDeCliente\",\"type\":\"string\"},{\"name\":\"ordenDeCompraDeCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"notasDeLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeLinea\",\"type\":\"string\"},{\"name\":\"cantidadPedida\",\"type\":\"double\"},{\"name\":\"articulo\",\"type\":\"Andreani.Wap.Events.Record.Articulo\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UOM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",\"Andreani.Wap.Events.Record.ListaDePropiedades\"]},{\"default\":null,\"name\":\"fechaOrdenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoMaterial\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetalleDeOrdenDeCompra\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"linkImpresionRemito\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wap.Events.Record.PedidoDeAlmacenSCE\",\"type\":\"record\"}"
 }
 
 func (r PedidoDeAlmacenSCE) SchemaName() string {
@@ -386,6 +393,10 @@ func (r *PedidoDeAlmacenSCE) Get(i int) types.Field {
 		r.DetalleDeOrdenDeCompra = NewUnionNullDetalleDeOrdenDeCompra()
 
 		return r.DetalleDeOrdenDeCompra
+	case 27:
+		r.LinkImpresionRemito = NewUnionNullString()
+
+		return r.LinkImpresionRemito
 	}
 	panic("Unknown field index")
 }
@@ -455,6 +466,9 @@ func (r *PedidoDeAlmacenSCE) SetDefault(i int) {
 	case 26:
 		r.DetalleDeOrdenDeCompra = nil
 		return
+	case 27:
+		r.LinkImpresionRemito = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -523,6 +537,9 @@ func (r *PedidoDeAlmacenSCE) NullField(i int) {
 		return
 	case 26:
 		r.DetalleDeOrdenDeCompra = nil
+		return
+	case 27:
+		r.LinkImpresionRemito = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -645,6 +662,10 @@ func (r PedidoDeAlmacenSCE) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["detalleDeOrdenDeCompra"], err = json.Marshal(r.DetalleDeOrdenDeCompra)
+	if err != nil {
+		return nil, err
+	}
+	output["linkImpresionRemito"], err = json.Marshal(r.LinkImpresionRemito)
 	if err != nil {
 		return nil, err
 	}
@@ -1077,6 +1098,22 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		r.DetalleDeOrdenDeCompra = NewUnionNullDetalleDeOrdenDeCompra()
 
 		r.DetalleDeOrdenDeCompra = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["linkImpresionRemito"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LinkImpresionRemito); err != nil {
+			return err
+		}
+	} else {
+		r.LinkImpresionRemito = NewUnionNullString()
+
+		r.LinkImpresionRemito = nil
 	}
 	return nil
 }
