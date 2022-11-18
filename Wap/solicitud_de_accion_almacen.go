@@ -28,20 +28,20 @@ type SolicitudDeAccionAlmacen struct {
 
 	Planta string `json:"planta"`
 
-	Planta_instancia *UnionNullString `json:"planta_instancia"`
+	Instancia *UnionNullString `json:"instancia"`
 
 	ContratoDistribucion *UnionNullString `json:"contratoDistribucion"`
 
 	ContratoWarehouse *UnionNullString `json:"contratoWarehouse"`
 }
 
-const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "*\x96oT\x94B\xf0\xb9"
+const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "ec\xc8e\x8d\xb7\xb5\x89"
 
 func NewSolicitudDeAccionAlmacen() SolicitudDeAccionAlmacen {
 	r := SolicitudDeAccionAlmacen{}
 	r.EventoDeNegocio = NewEventoDeNegocio()
 
-	r.Planta_instancia = nil
+	r.Instancia = nil
 	r.ContratoDistribucion = nil
 	r.ContratoWarehouse = nil
 	return r
@@ -92,7 +92,7 @@ func writeSolicitudDeAccionAlmacen(r SolicitudDeAccionAlmacen, w io.Writer) erro
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Planta_instancia, w)
+	err = writeUnionNullString(r.Instancia, w)
 	if err != nil {
 		return err
 	}
@@ -112,7 +112,7 @@ func (r SolicitudDeAccionAlmacen) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudDeAccionAlmacen) Schema() string {
-	return "{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"default\":null,\"name\":\"planta_instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wap.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wap.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
 }
 
 func (r SolicitudDeAccionAlmacen) SchemaName() string {
@@ -158,9 +158,9 @@ func (r *SolicitudDeAccionAlmacen) Get(i int) types.Field {
 		return w
 
 	case 5:
-		r.Planta_instancia = NewUnionNullString()
+		r.Instancia = NewUnionNullString()
 
-		return r.Planta_instancia
+		return r.Instancia
 	case 6:
 		r.ContratoDistribucion = NewUnionNullString()
 
@@ -176,7 +176,7 @@ func (r *SolicitudDeAccionAlmacen) Get(i int) types.Field {
 func (r *SolicitudDeAccionAlmacen) SetDefault(i int) {
 	switch i {
 	case 5:
-		r.Planta_instancia = nil
+		r.Instancia = nil
 		return
 	case 6:
 		r.ContratoDistribucion = nil
@@ -191,7 +191,7 @@ func (r *SolicitudDeAccionAlmacen) SetDefault(i int) {
 func (r *SolicitudDeAccionAlmacen) NullField(i int) {
 	switch i {
 	case 5:
-		r.Planta_instancia = nil
+		r.Instancia = nil
 		return
 	case 6:
 		r.ContratoDistribucion = nil
@@ -235,7 +235,7 @@ func (r SolicitudDeAccionAlmacen) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["planta_instancia"], err = json.Marshal(r.Planta_instancia)
+	output["instancia"], err = json.Marshal(r.Instancia)
 	if err != nil {
 		return nil, err
 	}
@@ -328,20 +328,20 @@ func (r *SolicitudDeAccionAlmacen) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for planta")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["planta_instancia"]; ok {
+		if v, ok := fields["instancia"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Planta_instancia); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Instancia); err != nil {
 			return err
 		}
 	} else {
-		r.Planta_instancia = NewUnionNullString()
+		r.Instancia = NewUnionNullString()
 
-		r.Planta_instancia = nil
+		r.Instancia = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["contratoDistribucion"]; ok {
