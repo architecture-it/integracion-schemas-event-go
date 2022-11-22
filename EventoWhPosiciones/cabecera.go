@@ -18,62 +18,62 @@ import (
 var _ = fmt.Printf
 
 type Cabecera struct {
-	Ubicacion string `json:"Ubicacion"`
+	Ubicacion *UnionNullString `json:"Ubicacion"`
 
-	TipoUbicacion string `json:"TipoUbicacion"`
+	TipoUbicacion *UnionNullString `json:"TipoUbicacion"`
 
-	CategoriaUbicacion string `json:"CategoriaUbicacion"`
+	CategoriaUbicacion *UnionNullString `json:"CategoriaUbicacion"`
 
-	ABC string `json:"ABC"`
+	ABC *UnionNullString `json:"ABC"`
 
-	Zona string `json:"Zona"`
+	Zona *UnionNullString `json:"Zona"`
 
-	MezclaSKU string `json:"MezclaSKU"`
+	MezclaSKU *UnionNullString `json:"MezclaSKU"`
 
-	MezclaLote string `json:"MezclaLote"`
+	MezclaLote *UnionNullString `json:"MezclaLote"`
 
-	PierdaLpn string `json:"PierdaLpn"`
+	PierdaLpn *UnionNullString `json:"PierdaLpn"`
 
-	CapacidadCubica string `json:"CapacidadCubica"`
+	CapacidadCubica *UnionNullString `json:"CapacidadCubica"`
 
-	CapacidadPeso string `json:"CapacidadPeso"`
+	CapacidadPeso *UnionNullString `json:"CapacidadPeso"`
 
-	Altura string `json:"Altura"`
+	Altura *UnionNullString `json:"Altura"`
 
-	Longitud string `json:"Longitud"`
+	Longitud *UnionNullString `json:"Longitud"`
 
-	Anchura string `json:"Anchura"`
+	Anchura *UnionNullString `json:"Anchura"`
 
-	Nivel string `json:"Nivel"`
+	Nivel *UnionNullString `json:"Nivel"`
 
-	Estado string `json:"Estado"`
+	Estado *UnionNullString `json:"Estado"`
 
-	Temperatura string `json:"Temperatura"`
+	Temperatura *UnionNullString `json:"Temperatura"`
 
-	FormatoUbicacion string `json:"FormatoUbicacion"`
+	FormatoUbicacion *UnionNullString `json:"FormatoUbicacion"`
 
-	FamiliaProducto string `json:"FamiliaProducto"`
+	FamiliaProducto *UnionNullString `json:"FamiliaProducto"`
 
-	Cliente string `json:"Cliente"`
+	Cliente *UnionNullString `json:"Cliente"`
 
-	Situacion string `json:"Situacion"`
+	Situacion *UnionNullString `json:"Situacion"`
 
-	TipoUbicacion2 string `json:"TipoUbicacion2"`
+	TipoUbicacion2 *UnionNullString `json:"TipoUbicacion2"`
 
-	EuroEquivalente string `json:"EuroEquivalente"`
+	EuroEquivalente *UnionNullString `json:"EuroEquivalente"`
 
-	Llena string `json:"Llena"`
+	Llena *UnionNullString `json:"Llena"`
 
-	Vacia string `json:"Vacia"`
+	Vacia *UnionNullString `json:"Vacia"`
 
-	PorcentajeLleno string `json:"PorcentajeLleno"`
+	PorcentajeLleno *UnionNullString `json:"PorcentajeLleno"`
 
 	CantidadEvento float32 `json:"CantidadEvento"`
 
 	CantidadStock float32 `json:"CantidadStock"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "o\xf1\x05\xab\xeb\xe0\xda\xdb"
+const CabeceraAvroCRC64Fingerprint = "5\xc2JNE\x18\xe6("
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -105,103 +105,103 @@ func DeserializeCabeceraFromSchema(r io.Reader, schema string) (Cabecera, error)
 
 func writeCabecera(r Cabecera, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Ubicacion, w)
+	err = writeUnionNullString(r.Ubicacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TipoUbicacion, w)
+	err = writeUnionNullString(r.TipoUbicacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CategoriaUbicacion, w)
+	err = writeUnionNullString(r.CategoriaUbicacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ABC, w)
+	err = writeUnionNullString(r.ABC, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Zona, w)
+	err = writeUnionNullString(r.Zona, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.MezclaSKU, w)
+	err = writeUnionNullString(r.MezclaSKU, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.MezclaLote, w)
+	err = writeUnionNullString(r.MezclaLote, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PierdaLpn, w)
+	err = writeUnionNullString(r.PierdaLpn, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CapacidadCubica, w)
+	err = writeUnionNullString(r.CapacidadCubica, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CapacidadPeso, w)
+	err = writeUnionNullString(r.CapacidadPeso, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Altura, w)
+	err = writeUnionNullString(r.Altura, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Longitud, w)
+	err = writeUnionNullString(r.Longitud, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Anchura, w)
+	err = writeUnionNullString(r.Anchura, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Nivel, w)
+	err = writeUnionNullString(r.Nivel, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Estado, w)
+	err = writeUnionNullString(r.Estado, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Temperatura, w)
+	err = writeUnionNullString(r.Temperatura, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FormatoUbicacion, w)
+	err = writeUnionNullString(r.FormatoUbicacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FamiliaProducto, w)
+	err = writeUnionNullString(r.FamiliaProducto, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Cliente, w)
+	err = writeUnionNullString(r.Cliente, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Situacion, w)
+	err = writeUnionNullString(r.Situacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TipoUbicacion2, w)
+	err = writeUnionNullString(r.TipoUbicacion2, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.EuroEquivalente, w)
+	err = writeUnionNullString(r.EuroEquivalente, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Llena, w)
+	err = writeUnionNullString(r.Llena, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Vacia, w)
+	err = writeUnionNullString(r.Vacia, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PorcentajeLleno, w)
+	err = writeUnionNullString(r.PorcentajeLleno, w)
 	if err != nil {
 		return err
 	}
@@ -221,7 +221,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ubicacion\",\"type\":\"string\"},{\"name\":\"TipoUbicacion\",\"type\":\"string\"},{\"name\":\"CategoriaUbicacion\",\"type\":\"string\"},{\"name\":\"ABC\",\"type\":\"string\"},{\"name\":\"Zona\",\"type\":\"string\"},{\"name\":\"MezclaSKU\",\"type\":\"string\"},{\"name\":\"MezclaLote\",\"type\":\"string\"},{\"name\":\"PierdaLpn\",\"type\":\"string\"},{\"name\":\"CapacidadCubica\",\"type\":\"string\"},{\"name\":\"CapacidadPeso\",\"type\":\"string\"},{\"name\":\"Altura\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"Anchura\",\"type\":\"string\"},{\"name\":\"Nivel\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"Temperatura\",\"type\":\"string\"},{\"name\":\"FormatoUbicacion\",\"type\":\"string\"},{\"name\":\"FamiliaProducto\",\"type\":\"string\"},{\"name\":\"Cliente\",\"type\":\"string\"},{\"name\":\"Situacion\",\"type\":\"string\"},{\"name\":\"TipoUbicacion2\",\"type\":\"string\"},{\"name\":\"EuroEquivalente\",\"type\":\"string\"},{\"name\":\"Llena\",\"type\":\"string\"},{\"name\":\"Vacia\",\"type\":\"string\"},{\"name\":\"PorcentajeLleno\",\"type\":\"string\"},{\"name\":\"CantidadEvento\",\"type\":\"float\"},{\"name\":\"CantidadStock\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhPosiciones.Events.AltaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ubicacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoUbicacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CategoriaUbicacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ABC\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"name\":\"MezclaSKU\",\"type\":[\"null\",\"string\"]},{\"name\":\"MezclaLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"PierdaLpn\",\"type\":[\"null\",\"string\"]},{\"name\":\"CapacidadCubica\",\"type\":[\"null\",\"string\"]},{\"name\":\"CapacidadPeso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Altura\",\"type\":[\"null\",\"string\"]},{\"name\":\"Longitud\",\"type\":[\"null\",\"string\"]},{\"name\":\"Anchura\",\"type\":[\"null\",\"string\"]},{\"name\":\"Nivel\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estado\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temperatura\",\"type\":[\"null\",\"string\"]},{\"name\":\"FormatoUbicacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"FamiliaProducto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Situacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoUbicacion2\",\"type\":[\"null\",\"string\"]},{\"name\":\"EuroEquivalente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Llena\",\"type\":[\"null\",\"string\"]},{\"name\":\"Vacia\",\"type\":[\"null\",\"string\"]},{\"name\":\"PorcentajeLleno\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantidadEvento\",\"type\":\"float\"},{\"name\":\"CantidadStock\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhPosiciones.Events.AltaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -240,130 +240,105 @@ func (_ Cabecera) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Cabecera) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Ubicacion}
+		r.Ubicacion = NewUnionNullString()
 
-		return w
-
+		return r.Ubicacion
 	case 1:
-		w := types.String{Target: &r.TipoUbicacion}
+		r.TipoUbicacion = NewUnionNullString()
 
-		return w
-
+		return r.TipoUbicacion
 	case 2:
-		w := types.String{Target: &r.CategoriaUbicacion}
+		r.CategoriaUbicacion = NewUnionNullString()
 
-		return w
-
+		return r.CategoriaUbicacion
 	case 3:
-		w := types.String{Target: &r.ABC}
+		r.ABC = NewUnionNullString()
 
-		return w
-
+		return r.ABC
 	case 4:
-		w := types.String{Target: &r.Zona}
+		r.Zona = NewUnionNullString()
 
-		return w
-
+		return r.Zona
 	case 5:
-		w := types.String{Target: &r.MezclaSKU}
+		r.MezclaSKU = NewUnionNullString()
 
-		return w
-
+		return r.MezclaSKU
 	case 6:
-		w := types.String{Target: &r.MezclaLote}
+		r.MezclaLote = NewUnionNullString()
 
-		return w
-
+		return r.MezclaLote
 	case 7:
-		w := types.String{Target: &r.PierdaLpn}
+		r.PierdaLpn = NewUnionNullString()
 
-		return w
-
+		return r.PierdaLpn
 	case 8:
-		w := types.String{Target: &r.CapacidadCubica}
+		r.CapacidadCubica = NewUnionNullString()
 
-		return w
-
+		return r.CapacidadCubica
 	case 9:
-		w := types.String{Target: &r.CapacidadPeso}
+		r.CapacidadPeso = NewUnionNullString()
 
-		return w
-
+		return r.CapacidadPeso
 	case 10:
-		w := types.String{Target: &r.Altura}
+		r.Altura = NewUnionNullString()
 
-		return w
-
+		return r.Altura
 	case 11:
-		w := types.String{Target: &r.Longitud}
+		r.Longitud = NewUnionNullString()
 
-		return w
-
+		return r.Longitud
 	case 12:
-		w := types.String{Target: &r.Anchura}
+		r.Anchura = NewUnionNullString()
 
-		return w
-
+		return r.Anchura
 	case 13:
-		w := types.String{Target: &r.Nivel}
+		r.Nivel = NewUnionNullString()
 
-		return w
-
+		return r.Nivel
 	case 14:
-		w := types.String{Target: &r.Estado}
+		r.Estado = NewUnionNullString()
 
-		return w
-
+		return r.Estado
 	case 15:
-		w := types.String{Target: &r.Temperatura}
+		r.Temperatura = NewUnionNullString()
 
-		return w
-
+		return r.Temperatura
 	case 16:
-		w := types.String{Target: &r.FormatoUbicacion}
+		r.FormatoUbicacion = NewUnionNullString()
 
-		return w
-
+		return r.FormatoUbicacion
 	case 17:
-		w := types.String{Target: &r.FamiliaProducto}
+		r.FamiliaProducto = NewUnionNullString()
 
-		return w
-
+		return r.FamiliaProducto
 	case 18:
-		w := types.String{Target: &r.Cliente}
+		r.Cliente = NewUnionNullString()
 
-		return w
-
+		return r.Cliente
 	case 19:
-		w := types.String{Target: &r.Situacion}
+		r.Situacion = NewUnionNullString()
 
-		return w
-
+		return r.Situacion
 	case 20:
-		w := types.String{Target: &r.TipoUbicacion2}
+		r.TipoUbicacion2 = NewUnionNullString()
 
-		return w
-
+		return r.TipoUbicacion2
 	case 21:
-		w := types.String{Target: &r.EuroEquivalente}
+		r.EuroEquivalente = NewUnionNullString()
 
-		return w
-
+		return r.EuroEquivalente
 	case 22:
-		w := types.String{Target: &r.Llena}
+		r.Llena = NewUnionNullString()
 
-		return w
-
+		return r.Llena
 	case 23:
-		w := types.String{Target: &r.Vacia}
+		r.Vacia = NewUnionNullString()
 
-		return w
-
+		return r.Vacia
 	case 24:
-		w := types.String{Target: &r.PorcentajeLleno}
+		r.PorcentajeLleno = NewUnionNullString()
 
-		return w
-
+		return r.PorcentajeLleno
 	case 25:
 		w := types.Float{Target: &r.CantidadEvento}
 
@@ -386,6 +361,81 @@ func (r *Cabecera) SetDefault(i int) {
 
 func (r *Cabecera) NullField(i int) {
 	switch i {
+	case 0:
+		r.Ubicacion = nil
+		return
+	case 1:
+		r.TipoUbicacion = nil
+		return
+	case 2:
+		r.CategoriaUbicacion = nil
+		return
+	case 3:
+		r.ABC = nil
+		return
+	case 4:
+		r.Zona = nil
+		return
+	case 5:
+		r.MezclaSKU = nil
+		return
+	case 6:
+		r.MezclaLote = nil
+		return
+	case 7:
+		r.PierdaLpn = nil
+		return
+	case 8:
+		r.CapacidadCubica = nil
+		return
+	case 9:
+		r.CapacidadPeso = nil
+		return
+	case 10:
+		r.Altura = nil
+		return
+	case 11:
+		r.Longitud = nil
+		return
+	case 12:
+		r.Anchura = nil
+		return
+	case 13:
+		r.Nivel = nil
+		return
+	case 14:
+		r.Estado = nil
+		return
+	case 15:
+		r.Temperatura = nil
+		return
+	case 16:
+		r.FormatoUbicacion = nil
+		return
+	case 17:
+		r.FamiliaProducto = nil
+		return
+	case 18:
+		r.Cliente = nil
+		return
+	case 19:
+		r.Situacion = nil
+		return
+	case 20:
+		r.TipoUbicacion2 = nil
+		return
+	case 21:
+		r.EuroEquivalente = nil
+		return
+	case 22:
+		r.Llena = nil
+		return
+	case 23:
+		r.Vacia = nil
+		return
+	case 24:
+		r.PorcentajeLleno = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
