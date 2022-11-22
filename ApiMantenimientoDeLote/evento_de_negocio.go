@@ -24,17 +24,16 @@ type EventoDeNegocio struct {
 
 	Destinatario *UnionNullString `json:"destinatario"`
 
-	NumeroDeOrden *UnionNullString `json:"numeroDeOrden"`
+	NumeroDeOrden string `json:"numeroDeOrden"`
 
 	Vencimiento *UnionNullLong `json:"vencimiento"`
 }
 
-const EventoDeNegocioAvroCRC64Fingerprint = "2p\xfc\xb0EY\xfa+"
+const EventoDeNegocioAvroCRC64Fingerprint = "\xc0\xd5\x16xG\x93'\xf8"
 
 func NewEventoDeNegocio() EventoDeNegocio {
 	r := EventoDeNegocio{}
 	r.Destinatario = nil
-	r.NumeroDeOrden = nil
 	r.Vencimiento = nil
 	return r
 }
@@ -76,7 +75,7 @@ func writeEventoDeNegocio(r EventoDeNegocio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.NumeroDeOrden, w)
+	err = vm.WriteString(r.NumeroDeOrden, w)
 	if err != nil {
 		return err
 	}
@@ -92,7 +91,7 @@ func (r EventoDeNegocio) Serialize(w io.Writer) error {
 }
 
 func (r EventoDeNegocio) Schema() string {
-	return "{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.ApiMantenimientoDeLote.Events.Record.EventoDeNegocio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeOrden\",\"type\":\"string\"},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.ApiMantenimientoDeLote.Events.Record.EventoDeNegocio\",\"type\":\"record\"}"
 }
 
 func (r EventoDeNegocio) SchemaName() string {
@@ -125,9 +124,10 @@ func (r *EventoDeNegocio) Get(i int) types.Field {
 
 		return r.Destinatario
 	case 3:
-		r.NumeroDeOrden = NewUnionNullString()
+		w := types.String{Target: &r.NumeroDeOrden}
 
-		return r.NumeroDeOrden
+		return w
+
 	case 4:
 		r.Vencimiento = NewUnionNullLong()
 
@@ -141,9 +141,6 @@ func (r *EventoDeNegocio) SetDefault(i int) {
 	case 2:
 		r.Destinatario = nil
 		return
-	case 3:
-		r.NumeroDeOrden = nil
-		return
 	case 4:
 		r.Vencimiento = nil
 		return
@@ -155,9 +152,6 @@ func (r *EventoDeNegocio) NullField(i int) {
 	switch i {
 	case 2:
 		r.Destinatario = nil
-		return
-	case 3:
-		r.NumeroDeOrden = nil
 		return
 	case 4:
 		r.Vencimiento = nil
@@ -264,9 +258,7 @@ func (r *EventoDeNegocio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.NumeroDeOrden = NewUnionNullString()
-
-		r.NumeroDeOrden = nil
+		return fmt.Errorf("no value specified for numeroDeOrden")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["vencimiento"]; ok {

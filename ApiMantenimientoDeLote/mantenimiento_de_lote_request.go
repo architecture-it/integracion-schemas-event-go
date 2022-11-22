@@ -18,12 +18,6 @@ import (
 var _ = fmt.Printf
 
 type MantenimientoDeLoteRequest struct {
-	Destinatario *UnionNullString `json:"destinatario"`
-
-	NumeroDeOrden string `json:"numeroDeOrden"`
-
-	Vencimiento string `json:"vencimiento"`
-
 	Contrato string `json:"contrato"`
 
 	Almacen *UnionNullString `json:"almacen"`
@@ -37,7 +31,7 @@ type MantenimientoDeLoteRequest struct {
 	MantenimientoDeLote MantenimientoDeLote `json:"mantenimientoDeLote"`
 }
 
-const MantenimientoDeLoteRequestAvroCRC64Fingerprint = ":\x9d\xea\xc6m-Af"
+const MantenimientoDeLoteRequestAvroCRC64Fingerprint = "\xe4=u/;\xf8\xfa\x06"
 
 func NewMantenimientoDeLoteRequest() MantenimientoDeLoteRequest {
 	r := MantenimientoDeLoteRequest{}
@@ -71,18 +65,6 @@ func DeserializeMantenimientoDeLoteRequestFromSchema(r io.Reader, schema string)
 
 func writeMantenimientoDeLoteRequest(r MantenimientoDeLoteRequest, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.Destinatario, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.NumeroDeOrden, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Vencimiento, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.Contrato, w)
 	if err != nil {
 		return err
@@ -115,7 +97,7 @@ func (r MantenimientoDeLoteRequest) Serialize(w io.Writer) error {
 }
 
 func (r MantenimientoDeLoteRequest) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeOrden\",\"type\":\"string\"},{\"name\":\"vencimiento\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":[\"null\",\"string\"]},{\"name\":\"almacenSap\",\"type\":[\"null\",\"string\"]},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"uriConsulta\",\"type\":[\"null\",\"string\"]},{\"name\":\"mantenimientoDeLote\",\"type\":{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"articulo\",\"type\":\"string\"},{\"name\":\"paquete\",\"type\":[\"null\",\"string\"]},{\"name\":\"loteCaja\",\"type\":[\"null\",\"string\"]},{\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"loteSap\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaFabricacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaVencimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"trazable\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":[\"null\",\"string\"]},{\"name\":\"procedencia\",\"type\":[\"null\",\"string\"]},{\"name\":\"campoLibre1\",\"type\":[\"null\",\"string\"]},{\"name\":\"campoLibre2\",\"type\":[\"null\",\"string\"]},{\"name\":\"campoLibre3\",\"type\":[\"null\",\"string\"]},{\"name\":\"campoLibre4\",\"type\":[\"null\",\"string\"]},{\"name\":\"campoLibre5\",\"type\":[\"null\",\"string\"]},{\"name\":\"loteExternoCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"deliverByDate\",\"type\":[\"null\",\"string\"]},{\"name\":\"bestByDate\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaCreacion\",\"type\":\"string\"},{\"name\":\"usuarioCreacion\",\"type\":\"string\"},{\"name\":\"fechaEdicion\",\"type\":\"string\"},{\"name\":\"usuarioEdicion\",\"type\":\"string\"}],\"name\":\"MantenimientoDeLote\",\"type\":\"record\"}}],\"name\":\"Andreani.ApiMantenimientoDeLote.Events.Record.MantenimientoDeLoteRequest\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":[\"null\",\"string\"]},{\"name\":\"almacenSap\",\"type\":[\"null\",\"string\"]},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"uriConsulta\",\"type\":[\"null\",\"string\"]},{\"name\":\"mantenimientoDeLote\",\"type\":{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"articulo\",\"type\":\"string\"},{\"name\":\"paquete\",\"type\":[\"null\",\"string\"]},{\"name\":\"loteCaja\",\"type\":[\"null\",\"string\"]},{\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"loteSap\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaFabricacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaVencimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"trazable\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":[\"null\",\"string\"]},{\"name\":\"procedencia\",\"type\":[\"null\",\"string\"]},{\"name\":\"campoLibre1\",\"type\":[\"null\",\"string\"]},{\"name\":\"campoLibre2\",\"type\":[\"null\",\"string\"]},{\"name\":\"campoLibre3\",\"type\":[\"null\",\"string\"]},{\"name\":\"campoLibre4\",\"type\":[\"null\",\"string\"]},{\"name\":\"campoLibre5\",\"type\":[\"null\",\"string\"]},{\"name\":\"loteExternoCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"deliverByDate\",\"type\":[\"null\",\"string\"]},{\"name\":\"bestByDate\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaCreacion\",\"type\":\"string\"},{\"name\":\"usuarioCreacion\",\"type\":\"string\"},{\"name\":\"fechaEdicion\",\"type\":\"string\"},{\"name\":\"usuarioEdicion\",\"type\":\"string\"}],\"name\":\"MantenimientoDeLote\",\"type\":\"record\"}}],\"name\":\"Andreani.ApiMantenimientoDeLote.Events.Record.MantenimientoDeLoteRequest\",\"type\":\"record\"}"
 }
 
 func (r MantenimientoDeLoteRequest) SchemaName() string {
@@ -134,42 +116,28 @@ func (_ MantenimientoDeLoteRequest) SetUnionElem(v int64) { panic("Unsupported o
 func (r *MantenimientoDeLoteRequest) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Destinatario = NewUnionNullString()
-
-		return r.Destinatario
-	case 1:
-		w := types.String{Target: &r.NumeroDeOrden}
-
-		return w
-
-	case 2:
-		w := types.String{Target: &r.Vencimiento}
-
-		return w
-
-	case 3:
 		w := types.String{Target: &r.Contrato}
 
 		return w
 
-	case 4:
+	case 1:
 		r.Almacen = NewUnionNullString()
 
 		return r.Almacen
-	case 5:
+	case 2:
 		r.AlmacenSap = NewUnionNullString()
 
 		return r.AlmacenSap
-	case 6:
+	case 3:
 		w := types.String{Target: &r.Planta}
 
 		return w
 
-	case 7:
+	case 4:
 		r.UriConsulta = NewUnionNullString()
 
 		return r.UriConsulta
-	case 8:
+	case 5:
 		r.MantenimientoDeLote = NewMantenimientoDeLote()
 
 		w := types.Record{Target: &r.MantenimientoDeLote}
@@ -188,16 +156,13 @@ func (r *MantenimientoDeLoteRequest) SetDefault(i int) {
 
 func (r *MantenimientoDeLoteRequest) NullField(i int) {
 	switch i {
-	case 0:
-		r.Destinatario = nil
-		return
-	case 4:
+	case 1:
 		r.Almacen = nil
 		return
-	case 5:
+	case 2:
 		r.AlmacenSap = nil
 		return
-	case 7:
+	case 4:
 		r.UriConsulta = nil
 		return
 	}
@@ -216,18 +181,6 @@ func (_ MantenimientoDeLoteRequest) AvroCRC64Fingerprint() []byte {
 func (r MantenimientoDeLoteRequest) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["destinatario"], err = json.Marshal(r.Destinatario)
-	if err != nil {
-		return nil, err
-	}
-	output["numeroDeOrden"], err = json.Marshal(r.NumeroDeOrden)
-	if err != nil {
-		return nil, err
-	}
-	output["vencimiento"], err = json.Marshal(r.Vencimiento)
-	if err != nil {
-		return nil, err
-	}
 	output["contrato"], err = json.Marshal(r.Contrato)
 	if err != nil {
 		return nil, err
@@ -262,48 +215,6 @@ func (r *MantenimientoDeLoteRequest) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["destinatario"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Destinatario); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for destinatario")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["numeroDeOrden"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroDeOrden); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for numeroDeOrden")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["vencimiento"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Vencimiento); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for vencimiento")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["contrato"]; ok {
 			return v

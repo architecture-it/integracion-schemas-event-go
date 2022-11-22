@@ -29,7 +29,7 @@ type SolicitudDeAccionAlmacen struct {
 	Planta string `json:"planta"`
 }
 
-const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "\x82\x9a(j-j\xed\xd7"
+const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "\x196\xd4\x12\xc8z\xbc8"
 
 func NewSolicitudDeAccionAlmacen() SolicitudDeAccionAlmacen {
 	r := SolicitudDeAccionAlmacen{}
@@ -91,7 +91,7 @@ func (r SolicitudDeAccionAlmacen) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudDeAccionAlmacen) Schema() string {
-	return "{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"}],\"name\":\"Andreani.ApiMantenimientoDeLote.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeOrden\",\"type\":\"string\"},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"}],\"name\":\"Andreani.ApiMantenimientoDeLote.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
 }
 
 func (r SolicitudDeAccionAlmacen) SchemaName() string {
