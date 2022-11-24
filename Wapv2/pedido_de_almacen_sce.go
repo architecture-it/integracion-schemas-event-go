@@ -24,11 +24,7 @@ type PedidoDeAlmacenSCE struct {
 
 	NumeroOrdenExterna string `json:"numeroOrdenExterna"`
 
-	Contratowarehouse string `json:"contratowarehouse"`
-
 	Almacencliente string `json:"almacencliente"`
-
-	PrioridadPreparacion *UnionNullString `json:"prioridadPreparacion"`
 
 	FechaPedido int64 `json:"fechaPedido"`
 
@@ -39,8 +35,6 @@ type PedidoDeAlmacenSCE struct {
 	FechadeexpedicionSolicitada *UnionNullLong `json:"fechadeexpedicionSolicitada"`
 
 	CambioLoteDirigido *UnionNullString `json:"cambioLoteDirigido"`
-
-	Tipo string `json:"tipo"`
 
 	ValorDeclarado *UnionNullString `json:"valorDeclarado"`
 
@@ -69,15 +63,16 @@ type PedidoDeAlmacenSCE struct {
 	ListaDetalles ListaDeDetalleDePedido `json:"listaDetalles"`
 
 	Distribuidor Distribuidor `json:"distribuidor"`
+
+	LinkImpresionRemito *UnionNullString `json:"linkImpresionRemito"`
 }
 
-const PedidoDeAlmacenSCEAvroCRC64Fingerprint = "V:5\xef\x840\xf6|"
+const PedidoDeAlmacenSCEAvroCRC64Fingerprint = "\x98\x1bD\x8f1\xe8\xe6\x05"
 
 func NewPedidoDeAlmacenSCE() PedidoDeAlmacenSCE {
 	r := PedidoDeAlmacenSCE{}
 	r.Destinatario = NewDestinatario()
 
-	r.PrioridadPreparacion = nil
 	r.FechaEntrega = nil
 	r.Franjahoraria = nil
 	r.FechadeexpedicionSolicitada = nil
@@ -98,6 +93,7 @@ func NewPedidoDeAlmacenSCE() PedidoDeAlmacenSCE {
 
 	r.Distribuidor = NewDistribuidor()
 
+	r.LinkImpresionRemito = nil
 	return r
 }
 
@@ -138,15 +134,7 @@ func writePedidoDeAlmacenSCE(r PedidoDeAlmacenSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Contratowarehouse, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.Almacencliente, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.PrioridadPreparacion, w)
 	if err != nil {
 		return err
 	}
@@ -167,10 +155,6 @@ func writePedidoDeAlmacenSCE(r PedidoDeAlmacenSCE, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullString(r.CambioLoteDirigido, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Tipo, w)
 	if err != nil {
 		return err
 	}
@@ -230,6 +214,10 @@ func writePedidoDeAlmacenSCE(r PedidoDeAlmacenSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.LinkImpresionRemito, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -238,7 +226,7 @@ func (r PedidoDeAlmacenSCE) Serialize(w io.Writer) error {
 }
 
 func (r PedidoDeAlmacenSCE) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"idDestinatario\",\"type\":\"string\"},{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"contratowarehouse\",\"type\":\"string\"},{\"name\":\"almacencliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"prioridadPreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaPedido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"franjahoraria\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechadeexpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipo\",\"type\":\"string\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechadeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"preciovalorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ordenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"socioComercial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.ListaDePropiedades\"]},{\"name\":\"listaDetalles\",\"type\":{\"fields\":[{\"name\":\"detallePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"name\":\"lineaexterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.ListaDePropiedades\"]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDetalleDePedido\",\"type\":\"record\"}},{\"name\":\"distribuidor\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"etiqueta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Distribuidor\",\"type\":\"record\"}}],\"name\":\"Andreani.Wapv2.Events.Record.PedidoDeAlmacenSCE\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"idDestinatario\",\"type\":\"string\"},{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"almacencliente\",\"type\":\"string\"},{\"name\":\"fechaPedido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"franjahoraria\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechadeexpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechadeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"preciovalorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ordenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"socioComercial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.ListaDePropiedades\"]},{\"name\":\"listaDetalles\",\"type\":{\"fields\":[{\"name\":\"detallePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"name\":\"lineaexterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.ListaDePropiedades\"]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDetalleDePedido\",\"type\":\"record\"}},{\"name\":\"distribuidor\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"etiqueta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Distribuidor\",\"type\":\"record\"}},{\"default\":null,\"name\":\"linkImpresionRemito\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.PedidoDeAlmacenSCE\",\"type\":\"record\"}"
 }
 
 func (r PedidoDeAlmacenSCE) SchemaName() string {
@@ -274,107 +262,97 @@ func (r *PedidoDeAlmacenSCE) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.Contratowarehouse}
-
-		return w
-
-	case 4:
 		w := types.String{Target: &r.Almacencliente}
 
 		return w
 
-	case 5:
-		r.PrioridadPreparacion = NewUnionNullString()
-
-		return r.PrioridadPreparacion
-	case 6:
+	case 4:
 		w := types.Long{Target: &r.FechaPedido}
 
 		return w
 
-	case 7:
+	case 5:
 		r.FechaEntrega = NewUnionNullLong()
 
 		return r.FechaEntrega
-	case 8:
+	case 6:
 		r.Franjahoraria = NewUnionNullLong()
 
 		return r.Franjahoraria
-	case 9:
+	case 7:
 		r.FechadeexpedicionSolicitada = NewUnionNullLong()
 
 		return r.FechadeexpedicionSolicitada
-	case 10:
+	case 8:
 		r.CambioLoteDirigido = NewUnionNullString()
 
 		return r.CambioLoteDirigido
-	case 11:
-		w := types.String{Target: &r.Tipo}
-
-		return w
-
-	case 12:
+	case 9:
 		r.ValorDeclarado = NewUnionNullString()
 
 		return r.ValorDeclarado
-	case 13:
+	case 10:
 		r.IdAndreani = NewUnionNullString()
 
 		return r.IdAndreani
-	case 14:
+	case 11:
 		r.Remito = NewUnionNullString()
 
 		return r.Remito
-	case 15:
+	case 12:
 		r.FacturaLegal = NewUnionNullString()
 
 		return r.FacturaLegal
-	case 16:
+	case 13:
 		r.FechadeFacturacion = NewUnionNullLong()
 
 		return r.FechadeFacturacion
-	case 17:
+	case 14:
 		r.PreciovalorFC = NewUnionNullString()
 
 		return r.PreciovalorFC
-	case 18:
+	case 15:
 		r.OrdenDeCompra = NewUnionNullString()
 
 		return r.OrdenDeCompra
-	case 19:
+	case 16:
 		r.TieneGestionCobranza = NewUnionNullString()
 
 		return r.TieneGestionCobranza
-	case 20:
+	case 17:
 		r.SocioComercial = NewUnionNullString()
 
 		return r.SocioComercial
-	case 21:
+	case 18:
 		r.Cot = NewUnionNullString()
 
 		return r.Cot
-	case 22:
+	case 19:
 		r.Notas = NewUnionNullString()
 
 		return r.Notas
-	case 23:
+	case 20:
 		r.Datosadicionales = NewUnionNullListaDePropiedades()
 
 		return r.Datosadicionales
-	case 24:
+	case 21:
 		r.ListaDetalles = NewListaDeDetalleDePedido()
 
 		w := types.Record{Target: &r.ListaDetalles}
 
 		return w
 
-	case 25:
+	case 22:
 		r.Distribuidor = NewDistribuidor()
 
 		w := types.Record{Target: &r.Distribuidor}
 
 		return w
 
+	case 23:
+		r.LinkImpresionRemito = NewUnionNullString()
+
+		return r.LinkImpresionRemito
 	}
 	panic("Unknown field index")
 }
@@ -382,55 +360,55 @@ func (r *PedidoDeAlmacenSCE) Get(i int) types.Field {
 func (r *PedidoDeAlmacenSCE) SetDefault(i int) {
 	switch i {
 	case 5:
-		r.PrioridadPreparacion = nil
-		return
-	case 7:
 		r.FechaEntrega = nil
 		return
-	case 8:
+	case 6:
 		r.Franjahoraria = nil
 		return
-	case 9:
+	case 7:
 		r.FechadeexpedicionSolicitada = nil
 		return
-	case 10:
+	case 8:
 		r.CambioLoteDirigido = nil
 		return
-	case 12:
+	case 9:
 		r.ValorDeclarado = nil
 		return
-	case 13:
+	case 10:
 		r.IdAndreani = nil
 		return
-	case 14:
+	case 11:
 		r.Remito = nil
 		return
-	case 15:
+	case 12:
 		r.FacturaLegal = nil
 		return
-	case 16:
+	case 13:
 		r.FechadeFacturacion = nil
 		return
-	case 17:
+	case 14:
 		r.PreciovalorFC = nil
 		return
-	case 18:
+	case 15:
 		r.OrdenDeCompra = nil
 		return
-	case 19:
+	case 16:
 		r.TieneGestionCobranza = nil
 		return
-	case 20:
+	case 17:
 		r.SocioComercial = nil
 		return
-	case 21:
+	case 18:
 		r.Cot = nil
 		return
-	case 22:
+	case 19:
 		r.Notas = nil
 		return
-	case 23:
+	case 20:
 		r.Datosadicionales = nil
+		return
+	case 23:
+		r.LinkImpresionRemito = nil
 		return
 	}
 	panic("Unknown field index")
@@ -439,55 +417,55 @@ func (r *PedidoDeAlmacenSCE) SetDefault(i int) {
 func (r *PedidoDeAlmacenSCE) NullField(i int) {
 	switch i {
 	case 5:
-		r.PrioridadPreparacion = nil
-		return
-	case 7:
 		r.FechaEntrega = nil
 		return
-	case 8:
+	case 6:
 		r.Franjahoraria = nil
 		return
-	case 9:
+	case 7:
 		r.FechadeexpedicionSolicitada = nil
 		return
-	case 10:
+	case 8:
 		r.CambioLoteDirigido = nil
 		return
-	case 12:
+	case 9:
 		r.ValorDeclarado = nil
 		return
-	case 13:
+	case 10:
 		r.IdAndreani = nil
 		return
-	case 14:
+	case 11:
 		r.Remito = nil
 		return
-	case 15:
+	case 12:
 		r.FacturaLegal = nil
 		return
-	case 16:
+	case 13:
 		r.FechadeFacturacion = nil
 		return
-	case 17:
+	case 14:
 		r.PreciovalorFC = nil
 		return
-	case 18:
+	case 15:
 		r.OrdenDeCompra = nil
 		return
-	case 19:
+	case 16:
 		r.TieneGestionCobranza = nil
 		return
-	case 20:
+	case 17:
 		r.SocioComercial = nil
 		return
-	case 21:
+	case 18:
 		r.Cot = nil
 		return
-	case 22:
+	case 19:
 		r.Notas = nil
 		return
-	case 23:
+	case 20:
 		r.Datosadicionales = nil
+		return
+	case 23:
+		r.LinkImpresionRemito = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -517,15 +495,7 @@ func (r PedidoDeAlmacenSCE) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["contratowarehouse"], err = json.Marshal(r.Contratowarehouse)
-	if err != nil {
-		return nil, err
-	}
 	output["almacencliente"], err = json.Marshal(r.Almacencliente)
-	if err != nil {
-		return nil, err
-	}
-	output["prioridadPreparacion"], err = json.Marshal(r.PrioridadPreparacion)
 	if err != nil {
 		return nil, err
 	}
@@ -546,10 +516,6 @@ func (r PedidoDeAlmacenSCE) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["cambioLoteDirigido"], err = json.Marshal(r.CambioLoteDirigido)
-	if err != nil {
-		return nil, err
-	}
-	output["tipo"], err = json.Marshal(r.Tipo)
 	if err != nil {
 		return nil, err
 	}
@@ -609,6 +575,10 @@ func (r PedidoDeAlmacenSCE) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["linkImpresionRemito"], err = json.Marshal(r.LinkImpresionRemito)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -662,20 +632,6 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for numeroOrdenExterna")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["contratowarehouse"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contratowarehouse); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for contratowarehouse")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["almacencliente"]; ok {
 			return v
 		}
@@ -688,22 +644,6 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for almacencliente")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["prioridadPreparacion"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PrioridadPreparacion); err != nil {
-			return err
-		}
-	} else {
-		r.PrioridadPreparacion = NewUnionNullString()
-
-		r.PrioridadPreparacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["fechaPedido"]; ok {
@@ -782,20 +722,6 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		r.CambioLoteDirigido = NewUnionNullString()
 
 		r.CambioLoteDirigido = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["tipo"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Tipo); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for tipo")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["valorDeclarado"]; ok {
@@ -1016,6 +942,22 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for distribuidor")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["linkImpresionRemito"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LinkImpresionRemito); err != nil {
+			return err
+		}
+	} else {
+		r.LinkImpresionRemito = NewUnionNullString()
+
+		r.LinkImpresionRemito = nil
 	}
 	return nil
 }

@@ -22,19 +22,24 @@ type SolicitudDeAccionAlmacen struct {
 
 	IdTransaccion string `json:"idTransaccion"`
 
-	Contrato string `json:"contrato"`
-
 	Almacen string `json:"almacen"`
 
-	Planta string `json:"planta"`
+	Instancia *UnionNullString `json:"instancia"`
+
+	ContratoDistribucion *UnionNullString `json:"contratoDistribucion"`
+
+	ContratoWarehouse *UnionNullString `json:"contratoWarehouse"`
 }
 
-const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "\x03U\xa4\xecX\x155o"
+const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "l1~\xed\x00\x15\x8cC"
 
 func NewSolicitudDeAccionAlmacen() SolicitudDeAccionAlmacen {
 	r := SolicitudDeAccionAlmacen{}
 	r.EventoDeNegocio = NewEventoDeNegocio()
 
+	r.Instancia = nil
+	r.ContratoDistribucion = nil
+	r.ContratoWarehouse = nil
 	return r
 }
 
@@ -71,15 +76,19 @@ func writeSolicitudDeAccionAlmacen(r SolicitudDeAccionAlmacen, w io.Writer) erro
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Contrato, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.Almacen, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Planta, w)
+	err = writeUnionNullString(r.Instancia, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ContratoDistribucion, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ContratoWarehouse, w)
 	if err != nil {
 		return err
 	}
@@ -91,7 +100,7 @@ func (r SolicitudDeAccionAlmacen) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudDeAccionAlmacen) Schema() string {
-	return "{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
 }
 
 func (r SolicitudDeAccionAlmacen) SchemaName() string {
@@ -122,32 +131,52 @@ func (r *SolicitudDeAccionAlmacen) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Contrato}
-
-		return w
-
-	case 3:
 		w := types.String{Target: &r.Almacen}
 
 		return w
 
+	case 3:
+		r.Instancia = NewUnionNullString()
+
+		return r.Instancia
 	case 4:
-		w := types.String{Target: &r.Planta}
+		r.ContratoDistribucion = NewUnionNullString()
 
-		return w
+		return r.ContratoDistribucion
+	case 5:
+		r.ContratoWarehouse = NewUnionNullString()
 
+		return r.ContratoWarehouse
 	}
 	panic("Unknown field index")
 }
 
 func (r *SolicitudDeAccionAlmacen) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.Instancia = nil
+		return
+	case 4:
+		r.ContratoDistribucion = nil
+		return
+	case 5:
+		r.ContratoWarehouse = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *SolicitudDeAccionAlmacen) NullField(i int) {
 	switch i {
+	case 3:
+		r.Instancia = nil
+		return
+	case 4:
+		r.ContratoDistribucion = nil
+		return
+	case 5:
+		r.ContratoWarehouse = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -172,15 +201,19 @@ func (r SolicitudDeAccionAlmacen) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["contrato"], err = json.Marshal(r.Contrato)
-	if err != nil {
-		return nil, err
-	}
 	output["almacen"], err = json.Marshal(r.Almacen)
 	if err != nil {
 		return nil, err
 	}
-	output["planta"], err = json.Marshal(r.Planta)
+	output["instancia"], err = json.Marshal(r.Instancia)
+	if err != nil {
+		return nil, err
+	}
+	output["contratoDistribucion"], err = json.Marshal(r.ContratoDistribucion)
+	if err != nil {
+		return nil, err
+	}
+	output["contratoWarehouse"], err = json.Marshal(r.ContratoWarehouse)
 	if err != nil {
 		return nil, err
 	}
@@ -223,20 +256,6 @@ func (r *SolicitudDeAccionAlmacen) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for idTransaccion")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["contrato"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for contrato")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["almacen"]; ok {
 			return v
 		}
@@ -251,18 +270,52 @@ func (r *SolicitudDeAccionAlmacen) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for almacen")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["planta"]; ok {
+		if v, ok := fields["instancia"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Planta); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Instancia); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for planta")
+		r.Instancia = NewUnionNullString()
+
+		r.Instancia = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["contratoDistribucion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContratoDistribucion); err != nil {
+			return err
+		}
+	} else {
+		r.ContratoDistribucion = NewUnionNullString()
+
+		r.ContratoDistribucion = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["contratoWarehouse"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContratoWarehouse); err != nil {
+			return err
+		}
+	} else {
+		r.ContratoWarehouse = NewUnionNullString()
+
+		r.ContratoWarehouse = nil
 	}
 	return nil
 }
