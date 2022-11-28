@@ -102,6 +102,8 @@ type Cabecera struct {
 
 	OrigenTelefono *UnionNullString `json:"OrigenTelefono"`
 
+	OrigenRegion *UnionNullString `json:"OrigenRegion"`
+
 	RemitenteCiudad *UnionNullString `json:"RemitenteCiudad"`
 
 	RemitenteCodigoPostal *UnionNullString `json:"RemitenteCodigoPostal"`
@@ -179,7 +181,7 @@ type Cabecera struct {
 	ExtUdfStr20 string `json:"ExtUdfStr20"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "sL\x01\xc1\x91\x1b?\x18"
+const CabeceraAvroCRC64Fingerprint = "<5\xa8\xc8*\xa3;\x1c"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -379,6 +381,10 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.OrigenRegion, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.RemitenteCiudad, w)
 	if err != nil {
 		return err
@@ -539,7 +545,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDestinatario\",\"type\":\"string\"},{\"name\":\"Acondicionamiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"AlmacenCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"PrioridadApiPlani\",\"type\":[\"null\",\"string\"]},{\"name\":\"CuentaTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"FacturaLegal\",\"type\":[\"null\",\"string\"]},{\"name\":\"FacturaInterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"AdmiteCambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"name\":\"AdmitePickingParcial\",\"type\":[\"null\",\"string\"]},{\"name\":\"ImprimeDocumentacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroCale\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cot\",\"type\":[\"null\",\"string\"]},{\"name\":\"ComprobanteIngresosBrutos\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioAlmacenes\",\"type\":[\"null\",\"string\"]},{\"name\":\"Marketplace\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Destinario\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitentePiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteDni\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteTipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClientePadre\",\"type\":\"string\"},{\"name\":\"CodigoEstado\",\"type\":\"string\"},{\"name\":\"CodigoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoCodigo\",\"type\":\"string\"},{\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoGrilla\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaEnvioFacturar\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"PrecioValorFC\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"NotasPedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaCita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionPrometida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntregaPlanificada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntregaProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GrupoOrdenes\",\"type\":\"string\"},{\"name\":\"FranjaHorario\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraz\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaEvento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"CantidadTotal\",\"type\":\"float\"},{\"name\":\"CantidadExpedidaTotal\",\"type\":\"float\"},{\"name\":\"CantidadPickeadaTotal\",\"type\":\"float\"},{\"name\":\"ExtUdfStr20\",\"type\":\"string\"}],\"name\":\"Andreani.SppeApi.Events.Common.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDestinatario\",\"type\":\"string\"},{\"name\":\"Acondicionamiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"AlmacenCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"PrioridadApiPlani\",\"type\":[\"null\",\"string\"]},{\"name\":\"CuentaTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"FacturaLegal\",\"type\":[\"null\",\"string\"]},{\"name\":\"FacturaInterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"AdmiteCambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"name\":\"AdmitePickingParcial\",\"type\":[\"null\",\"string\"]},{\"name\":\"ImprimeDocumentacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroCale\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cot\",\"type\":[\"null\",\"string\"]},{\"name\":\"ComprobanteIngresosBrutos\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioAlmacenes\",\"type\":[\"null\",\"string\"]},{\"name\":\"Marketplace\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Destinario\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenRegion\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitentePiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteDni\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteTipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClientePadre\",\"type\":\"string\"},{\"name\":\"CodigoEstado\",\"type\":\"string\"},{\"name\":\"CodigoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoCodigo\",\"type\":\"string\"},{\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoGrilla\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaEnvioFacturar\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"PrecioValorFC\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"NotasPedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaCita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionPrometida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntregaPlanificada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntregaProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GrupoOrdenes\",\"type\":\"string\"},{\"name\":\"FranjaHorario\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraz\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaEvento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"CantidadTotal\",\"type\":\"float\"},{\"name\":\"CantidadExpedidaTotal\",\"type\":\"float\"},{\"name\":\"CantidadPickeadaTotal\",\"type\":\"float\"},{\"name\":\"ExtUdfStr20\",\"type\":\"string\"}],\"name\":\"Andreani.SppeApi.Events.Common.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -729,161 +735,165 @@ func (r *Cabecera) Get(i int) types.Field {
 
 		return r.OrigenTelefono
 	case 42:
+		r.OrigenRegion = NewUnionNullString()
+
+		return r.OrigenRegion
+	case 43:
 		r.RemitenteCiudad = NewUnionNullString()
 
 		return r.RemitenteCiudad
-	case 43:
+	case 44:
 		r.RemitenteCodigoPostal = NewUnionNullString()
 
 		return r.RemitenteCodigoPostal
-	case 44:
+	case 45:
 		r.RemitenteCalle = NewUnionNullString()
 
 		return r.RemitenteCalle
-	case 45:
+	case 46:
 		r.RemitenteNumero = NewUnionNullString()
 
 		return r.RemitenteNumero
-	case 46:
+	case 47:
 		r.RemitentePiso = NewUnionNullString()
 
 		return r.RemitentePiso
-	case 47:
+	case 48:
 		r.RemitenteDepartamento = NewUnionNullString()
 
 		return r.RemitenteDepartamento
-	case 48:
+	case 49:
 		r.RemitenteEmail = NewUnionNullString()
 
 		return r.RemitenteEmail
-	case 49:
+	case 50:
 		r.RemitenteTelefono = NewUnionNullString()
 
 		return r.RemitenteTelefono
-	case 50:
+	case 51:
 		r.RemitenteDni = NewUnionNullString()
 
 		return r.RemitenteDni
-	case 51:
+	case 52:
 		r.RemitenteTipo = NewUnionNullString()
 
 		return r.RemitenteTipo
-	case 52:
+	case 53:
 		r.OrdenCompra = NewUnionNullString()
 
 		return r.OrdenCompra
-	case 53:
+	case 54:
 		w := types.String{Target: &r.ClientePadre}
 
 		return w
 
-	case 54:
+	case 55:
 		w := types.String{Target: &r.CodigoEstado}
 
 		return w
 
-	case 55:
+	case 56:
 		r.CodigoDescripcion = NewUnionNullString()
 
 		return r.CodigoDescripcion
-	case 56:
+	case 57:
 		w := types.String{Target: &r.TipoPedidoCodigo}
 
 		return w
 
-	case 57:
+	case 58:
 		r.TipoPedidoDescripcion = NewUnionNullString()
 
 		return r.TipoPedidoDescripcion
-	case 58:
+	case 59:
 		r.TipoGrilla = NewUnionNullString()
 
 		return r.TipoGrilla
-	case 59:
+	case 60:
 		r.FechaEnvioFacturar = NewUnionNullLong()
 
 		return r.FechaEnvioFacturar
-	case 60:
+	case 61:
 		r.FechaFacturacion = NewUnionNullLong()
 
 		return r.FechaFacturacion
-	case 61:
+	case 62:
 		r.PrecioValorFC = NewUnionNullString()
 
 		return r.PrecioValorFC
-	case 62:
+	case 63:
 		r.NumeroEnvio = NewUnionNullString()
 
 		return r.NumeroEnvio
-	case 63:
+	case 64:
 		r.NotasPedido = NewUnionNullString()
 
 		return r.NotasPedido
-	case 64:
+	case 65:
 		r.FechaCita = NewUnionNullLong()
 
 		return r.FechaCita
-	case 65:
+	case 66:
 		r.FechaEntrega = NewUnionNullLong()
 
 		return r.FechaEntrega
-	case 66:
+	case 67:
 		r.FechaExpedicionSolicitada = NewUnionNullLong()
 
 		return r.FechaExpedicionSolicitada
-	case 67:
+	case 68:
 		r.FechaExpedicionProgramada = NewUnionNullLong()
 
 		return r.FechaExpedicionProgramada
-	case 68:
+	case 69:
 		r.FechaExpedicionPrometida = NewUnionNullLong()
 
 		return r.FechaExpedicionPrometida
-	case 69:
+	case 70:
 		r.FechaEntregaPlanificada = NewUnionNullLong()
 
 		return r.FechaEntregaPlanificada
-	case 70:
+	case 71:
 		r.FechaEntregaProgramada = NewUnionNullLong()
 
 		return r.FechaEntregaProgramada
-	case 71:
+	case 72:
 		w := types.String{Target: &r.GrupoOrdenes}
 
 		return w
 
-	case 72:
+	case 73:
 		r.FranjaHorario = NewUnionNullString()
 
 		return r.FranjaHorario
-	case 73:
+	case 74:
 		r.EstadoOTAcondi = NewUnionNullString()
 
 		return r.EstadoOTAcondi
-	case 74:
+	case 75:
 		r.EstadoOTTraz = NewUnionNullString()
 
 		return r.EstadoOTTraz
-	case 75:
+	case 76:
 		r.FechaEvento = NewUnionNullLong()
 
 		return r.FechaEvento
-	case 76:
+	case 77:
 		w := types.Float{Target: &r.CantidadTotal}
 
 		return w
 
-	case 77:
+	case 78:
 		w := types.Float{Target: &r.CantidadExpedidaTotal}
 
 		return w
 
-	case 78:
+	case 79:
 		w := types.Float{Target: &r.CantidadPickeadaTotal}
 
 		return w
 
-	case 79:
+	case 80:
 		w := types.String{Target: &r.ExtUdfStr20}
 
 		return w
@@ -1018,93 +1028,96 @@ func (r *Cabecera) NullField(i int) {
 		r.OrigenTelefono = nil
 		return
 	case 42:
-		r.RemitenteCiudad = nil
+		r.OrigenRegion = nil
 		return
 	case 43:
-		r.RemitenteCodigoPostal = nil
+		r.RemitenteCiudad = nil
 		return
 	case 44:
-		r.RemitenteCalle = nil
+		r.RemitenteCodigoPostal = nil
 		return
 	case 45:
-		r.RemitenteNumero = nil
+		r.RemitenteCalle = nil
 		return
 	case 46:
-		r.RemitentePiso = nil
+		r.RemitenteNumero = nil
 		return
 	case 47:
-		r.RemitenteDepartamento = nil
+		r.RemitentePiso = nil
 		return
 	case 48:
-		r.RemitenteEmail = nil
+		r.RemitenteDepartamento = nil
 		return
 	case 49:
-		r.RemitenteTelefono = nil
+		r.RemitenteEmail = nil
 		return
 	case 50:
-		r.RemitenteDni = nil
+		r.RemitenteTelefono = nil
 		return
 	case 51:
-		r.RemitenteTipo = nil
+		r.RemitenteDni = nil
 		return
 	case 52:
+		r.RemitenteTipo = nil
+		return
+	case 53:
 		r.OrdenCompra = nil
 		return
-	case 55:
+	case 56:
 		r.CodigoDescripcion = nil
 		return
-	case 57:
+	case 58:
 		r.TipoPedidoDescripcion = nil
 		return
-	case 58:
+	case 59:
 		r.TipoGrilla = nil
 		return
-	case 59:
+	case 60:
 		r.FechaEnvioFacturar = nil
 		return
-	case 60:
+	case 61:
 		r.FechaFacturacion = nil
 		return
-	case 61:
+	case 62:
 		r.PrecioValorFC = nil
 		return
-	case 62:
+	case 63:
 		r.NumeroEnvio = nil
 		return
-	case 63:
+	case 64:
 		r.NotasPedido = nil
 		return
-	case 64:
+	case 65:
 		r.FechaCita = nil
 		return
-	case 65:
+	case 66:
 		r.FechaEntrega = nil
 		return
-	case 66:
+	case 67:
 		r.FechaExpedicionSolicitada = nil
 		return
-	case 67:
+	case 68:
 		r.FechaExpedicionProgramada = nil
 		return
-	case 68:
+	case 69:
 		r.FechaExpedicionPrometida = nil
 		return
-	case 69:
+	case 70:
 		r.FechaEntregaPlanificada = nil
 		return
-	case 70:
+	case 71:
 		r.FechaEntregaProgramada = nil
 		return
-	case 72:
+	case 73:
 		r.FranjaHorario = nil
 		return
-	case 73:
+	case 74:
 		r.EstadoOTAcondi = nil
 		return
-	case 74:
+	case 75:
 		r.EstadoOTTraz = nil
 		return
-	case 75:
+	case 76:
 		r.FechaEvento = nil
 		return
 	}
@@ -1288,6 +1301,10 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["OrigenTelefono"], err = json.Marshal(r.OrigenTelefono)
+	if err != nil {
+		return nil, err
+	}
+	output["OrigenRegion"], err = json.Marshal(r.OrigenRegion)
 	if err != nil {
 		return nil, err
 	}
@@ -2040,6 +2057,20 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for OrigenTelefono")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["OrigenRegion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OrigenRegion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for OrigenRegion")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["RemitenteCiudad"]; ok {
