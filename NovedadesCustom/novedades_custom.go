@@ -18,17 +18,20 @@ import (
 var _ = fmt.Printf
 
 type NovedadesCustom struct {
-	NumeroEnvio string `json:"NumeroEnvio"`
+	NumeroEnvio *UnionNullString `json:"NumeroEnvio"`
 
-	NumeroInterno string `json:"NumeroInterno"`
+	NumeroInterno *UnionNullString `json:"NumeroInterno"`
 
-	Mensaje string `json:"Mensaje"`
+	Mensaje *UnionNullString `json:"Mensaje"`
 }
 
-const NovedadesCustomAvroCRC64Fingerprint = "\xea\x81\x1a_\xc7W\xcd7"
+const NovedadesCustomAvroCRC64Fingerprint = "Ev=r\xf4\xab\xefa"
 
 func NewNovedadesCustom() NovedadesCustom {
 	r := NovedadesCustom{}
+	r.NumeroEnvio = nil
+	r.NumeroInterno = nil
+	r.Mensaje = nil
 	return r
 }
 
@@ -57,15 +60,15 @@ func DeserializeNovedadesCustomFromSchema(r io.Reader, schema string) (Novedades
 
 func writeNovedadesCustom(r NovedadesCustom, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.NumeroEnvio, w)
+	err = writeUnionNullString(r.NumeroEnvio, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroInterno, w)
+	err = writeUnionNullString(r.NumeroInterno, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Mensaje, w)
+	err = writeUnionNullString(r.Mensaje, w)
 	if err != nil {
 		return err
 	}
@@ -77,7 +80,7 @@ func (r NovedadesCustom) Serialize(w io.Writer) error {
 }
 
 func (r NovedadesCustom) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"NumeroInterno\",\"type\":\"string\"},{\"name\":\"Mensaje\",\"type\":\"string\"}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadesCustom\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mensaje\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadesCustom\",\"type\":\"record\"}"
 }
 
 func (r NovedadesCustom) SchemaName() string {
@@ -96,32 +99,47 @@ func (_ NovedadesCustom) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *NovedadesCustom) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.NumeroEnvio}
+		r.NumeroEnvio = NewUnionNullString()
 
-		return w
-
+		return r.NumeroEnvio
 	case 1:
-		w := types.String{Target: &r.NumeroInterno}
+		r.NumeroInterno = NewUnionNullString()
 
-		return w
-
+		return r.NumeroInterno
 	case 2:
-		w := types.String{Target: &r.Mensaje}
+		r.Mensaje = NewUnionNullString()
 
-		return w
-
+		return r.Mensaje
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadesCustom) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.NumeroEnvio = nil
+		return
+	case 1:
+		r.NumeroInterno = nil
+		return
+	case 2:
+		r.Mensaje = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadesCustom) NullField(i int) {
 	switch i {
+	case 0:
+		r.NumeroEnvio = nil
+		return
+	case 1:
+		r.NumeroInterno = nil
+		return
+	case 2:
+		r.Mensaje = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -172,7 +190,9 @@ func (r *NovedadesCustom) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NumeroEnvio")
+		r.NumeroEnvio = NewUnionNullString()
+
+		r.NumeroEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NumeroInterno"]; ok {
@@ -186,7 +206,9 @@ func (r *NovedadesCustom) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NumeroInterno")
+		r.NumeroInterno = NewUnionNullString()
+
+		r.NumeroInterno = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Mensaje"]; ok {
@@ -200,7 +222,9 @@ func (r *NovedadesCustom) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Mensaje")
+		r.Mensaje = NewUnionNullString()
+
+		r.Mensaje = nil
 	}
 	return nil
 }
