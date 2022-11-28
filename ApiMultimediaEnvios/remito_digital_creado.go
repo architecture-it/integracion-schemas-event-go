@@ -38,14 +38,14 @@ type RemitoDigitalCreado struct {
 
 	ImagenURL string `json:"ImagenURL"`
 
-	Anexo Anexo `json:"Anexo"`
+	Remito Anexo `json:"Remito"`
 }
 
-const RemitoDigitalCreadoAvroCRC64Fingerprint = "\xbd\xe6\xbe˕\x87\xf4Q"
+const RemitoDigitalCreadoAvroCRC64Fingerprint = "\xdex\x06q- \x03\n"
 
 func NewRemitoDigitalCreado() RemitoDigitalCreado {
 	r := RemitoDigitalCreado{}
-	r.Anexo = NewAnexo()
+	r.Remito = NewAnexo()
 
 	return r
 }
@@ -115,7 +115,7 @@ func writeRemitoDigitalCreado(r RemitoDigitalCreado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeAnexo(r.Anexo, w)
+	err = writeAnexo(r.Remito, w)
 	if err != nil {
 		return err
 	}
@@ -127,7 +127,7 @@ func (r RemitoDigitalCreado) Serialize(w io.Writer) error {
 }
 
 func (r RemitoDigitalCreado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Destinatario\",\"type\":\"string\"},{\"name\":\"NumeroDeOrden\",\"type\":\"int\"},{\"name\":\"Vencimiento\",\"type\":{\"logicalType\":\"date\",\"type\":\"int\"}},{\"name\":\"IDTransaccion\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"ImagenURL\",\"type\":\"string\"},{\"name\":\"Anexo\",\"type\":{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"NumeroDePedido\",\"type\":\"string\"},{\"name\":\"NumeroFacturaLegal\",\"type\":\"string\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"RemitoURL\",\"type\":\"string\"}],\"name\":\"Anexo\",\"namespace\":\"Andreani.ApiMultimediaEnvios.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.ApiMultimediaEnvios.Events.Record.RemitoDigitalCreado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Destinatario\",\"type\":\"string\"},{\"name\":\"NumeroDeOrden\",\"type\":\"int\"},{\"name\":\"Vencimiento\",\"type\":{\"logicalType\":\"date\",\"type\":\"int\"}},{\"name\":\"IDTransaccion\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"ImagenURL\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"NumeroDePedido\",\"type\":\"string\"},{\"name\":\"NumeroFacturaLegal\",\"type\":\"string\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"RemitoURL\",\"type\":\"string\"}],\"name\":\"Anexo\",\"namespace\":\"Andreani.ApiMultimediaEnvios.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.ApiMultimediaEnvios.Events.Record.RemitoDigitalCreado\",\"type\":\"record\"}"
 }
 
 func (r RemitoDigitalCreado) SchemaName() string {
@@ -196,9 +196,9 @@ func (r *RemitoDigitalCreado) Get(i int) types.Field {
 		return w
 
 	case 10:
-		r.Anexo = NewAnexo()
+		r.Remito = NewAnexo()
 
-		w := types.Record{Target: &r.Anexo}
+		w := types.Record{Target: &r.Remito}
 
 		return w
 
@@ -270,7 +270,7 @@ func (r RemitoDigitalCreado) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Anexo"], err = json.Marshal(r.Anexo)
+	output["Remito"], err = json.Marshal(r.Remito)
 	if err != nil {
 		return nil, err
 	}
@@ -425,18 +425,18 @@ func (r *RemitoDigitalCreado) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for ImagenURL")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Anexo"]; ok {
+		if v, ok := fields["Remito"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Anexo); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Remito); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Anexo")
+		return fmt.Errorf("no value specified for Remito")
 	}
 	return nil
 }
