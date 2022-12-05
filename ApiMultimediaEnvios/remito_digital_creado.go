@@ -20,7 +20,7 @@ var _ = fmt.Printf
 type RemitoDigitalCreado struct {
 	Timestamp int64 `json:"Timestamp"`
 
-	Destinatario string `json:"Destinatario"`
+	Remitente string `json:"Remitente"`
 
 	NumeroDeOrden int32 `json:"NumeroDeOrden"`
 
@@ -41,7 +41,7 @@ type RemitoDigitalCreado struct {
 	Remito Anexo `json:"Remito"`
 }
 
-const RemitoDigitalCreadoAvroCRC64Fingerprint = "\xdex\x06q- \x03\n"
+const RemitoDigitalCreadoAvroCRC64Fingerprint = "\x92* \u007fA \x10\xa0"
 
 func NewRemitoDigitalCreado() RemitoDigitalCreado {
 	r := RemitoDigitalCreado{}
@@ -79,7 +79,7 @@ func writeRemitoDigitalCreado(r RemitoDigitalCreado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Destinatario, w)
+	err = vm.WriteString(r.Remitente, w)
 	if err != nil {
 		return err
 	}
@@ -127,7 +127,7 @@ func (r RemitoDigitalCreado) Serialize(w io.Writer) error {
 }
 
 func (r RemitoDigitalCreado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Destinatario\",\"type\":\"string\"},{\"name\":\"NumeroDeOrden\",\"type\":\"int\"},{\"name\":\"Vencimiento\",\"type\":{\"logicalType\":\"date\",\"type\":\"int\"}},{\"name\":\"IDTransaccion\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"ImagenURL\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"NumeroDePedido\",\"type\":\"string\"},{\"name\":\"NumeroFacturaLegal\",\"type\":\"string\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"RemitoURL\",\"type\":\"string\"}],\"name\":\"Anexo\",\"namespace\":\"Andreani.ApiMultimediaEnvios.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.ApiMultimediaEnvios.Events.Record.RemitoDigitalCreado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Remitente\",\"type\":\"string\"},{\"name\":\"NumeroDeOrden\",\"type\":\"int\"},{\"name\":\"Vencimiento\",\"type\":{\"logicalType\":\"date\",\"type\":\"int\"}},{\"name\":\"IDTransaccion\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"ImagenURL\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"NumeroDePedido\",\"type\":\"string\"},{\"name\":\"NumeroFacturaLegal\",\"type\":\"string\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"RemitoURL\",\"type\":\"string\"}],\"name\":\"Anexo\",\"namespace\":\"Andreani.ApiMultimediaEnvios.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.ApiMultimediaEnvios.Events.Record.RemitoDigitalCreado\",\"type\":\"record\"}"
 }
 
 func (r RemitoDigitalCreado) SchemaName() string {
@@ -151,7 +151,7 @@ func (r *RemitoDigitalCreado) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Destinatario}
+		w := types.String{Target: &r.Remitente}
 
 		return w
 
@@ -234,7 +234,7 @@ func (r RemitoDigitalCreado) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Destinatario"], err = json.Marshal(r.Destinatario)
+	output["Remitente"], err = json.Marshal(r.Remitente)
 	if err != nil {
 		return nil, err
 	}
@@ -299,18 +299,18 @@ func (r *RemitoDigitalCreado) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Timestamp")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Destinatario"]; ok {
+		if v, ok := fields["Remitente"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Destinatario); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Remitente); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Destinatario")
+		return fmt.Errorf("no value specified for Remitente")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NumeroDeOrden"]; ok {
