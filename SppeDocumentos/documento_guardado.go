@@ -22,10 +22,10 @@ type DocumentoGuardado struct {
 
 	OrdenCliente string `json:"OrdenCliente"`
 
-	NombreDocumento *UnionNullString `json:"NombreDocumento"`
+	NombreDocumento string `json:"NombreDocumento"`
 }
 
-const DocumentoGuardadoAvroCRC64Fingerprint = "\xba\x03:\xa78\xd8\xdc4"
+const DocumentoGuardadoAvroCRC64Fingerprint = "\xee\x10S\xa0\v\x95%\xdd"
 
 func NewDocumentoGuardado() DocumentoGuardado {
 	r := DocumentoGuardado{}
@@ -65,7 +65,7 @@ func writeDocumentoGuardado(r DocumentoGuardado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.NombreDocumento, w)
+	err = vm.WriteString(r.NombreDocumento, w)
 	if err != nil {
 		return err
 	}
@@ -77,7 +77,7 @@ func (r DocumentoGuardado) Serialize(w io.Writer) error {
 }
 
 func (r DocumentoGuardado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NombreDocumento\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeDocumentos.Events.Record.DocumentoGuardado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NombreDocumento\",\"type\":\"string\"}],\"name\":\"Andreani.SppeDocumentos.Events.Record.DocumentoGuardado\",\"type\":\"record\"}"
 }
 
 func (r DocumentoGuardado) SchemaName() string {
@@ -106,9 +106,10 @@ func (r *DocumentoGuardado) Get(i int) types.Field {
 		return w
 
 	case 2:
-		r.NombreDocumento = NewUnionNullString()
+		w := types.String{Target: &r.NombreDocumento}
 
-		return r.NombreDocumento
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -121,9 +122,6 @@ func (r *DocumentoGuardado) SetDefault(i int) {
 
 func (r *DocumentoGuardado) NullField(i int) {
 	switch i {
-	case 2:
-		r.NombreDocumento = nil
-		return
 	}
 	panic("Not a nullable field index")
 }
