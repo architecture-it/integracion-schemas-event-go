@@ -22,6 +22,8 @@ type ArticuloSCE struct {
 
 	Ean string `json:"ean"`
 
+	TipoEan string `json:"tipoEan"`
+
 	Propietario string `json:"propietario"`
 
 	Descripcion string `json:"descripcion"`
@@ -31,14 +33,6 @@ type ArticuloSCE struct {
 	OtrosDatos *UnionNullMetadato `json:"otrosDatos"`
 
 	Notas *UnionNullString `json:"notas"`
-
-	Volumen *UnionNullDouble `json:"volumen"`
-
-	PesoBruto *UnionNullDouble `json:"pesoBruto"`
-
-	PesoTara *UnionNullDouble `json:"pesoTara"`
-
-	PesoNeto *UnionNullDouble `json:"pesoNeto"`
 
 	ClaseDeArticulo *UnionNullString `json:"claseDeArticulo"`
 
@@ -61,12 +55,6 @@ type ArticuloSCE struct {
 	VencimientoEnDias *UnionNullInt `json:"vencimientoEnDias"`
 
 	VidaUtilEntradaEnDias *UnionNullInt `json:"vidaUtilEntradaEnDias"`
-
-	Pavu *UnionNullString `json:"pavu"`
-
-	CPsicotropico *UnionNullString `json:"cPsicotropico"`
-
-	Temperatura *UnionNullString `json:"temperatura"`
 
 	Serealizado *UnionNullString `json:"serealizado"`
 
@@ -93,7 +81,7 @@ type ArticuloSCE struct {
 	Rubro *UnionNullString `json:"rubro"`
 }
 
-const ArticuloSCEAvroCRC64Fingerprint = "r҃9݉,\x92"
+const ArticuloSCEAvroCRC64Fingerprint = "\x12 \b\x8b}XF\xf1"
 
 func NewArticuloSCE() ArticuloSCE {
 	r := ArticuloSCE{}
@@ -138,6 +126,10 @@ func writeArticuloSCE(r ArticuloSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.TipoEan, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Propietario, w)
 	if err != nil {
 		return err
@@ -155,22 +147,6 @@ func writeArticuloSCE(r ArticuloSCE, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullString(r.Notas, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullDouble(r.Volumen, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullDouble(r.PesoBruto, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullDouble(r.PesoTara, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullDouble(r.PesoNeto, w)
 	if err != nil {
 		return err
 	}
@@ -215,18 +191,6 @@ func writeArticuloSCE(r ArticuloSCE, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullInt(r.VidaUtilEntradaEnDias, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Pavu, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.CPsicotropico, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Temperatura, w)
 	if err != nil {
 		return err
 	}
@@ -286,7 +250,7 @@ func (r ArticuloSCE) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloSCE) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"ean\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"datosLogisticos\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"volumen\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoBruto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoTara\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoNeto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"cantidadporPaquete\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoUnidad\",\"type\":[\"null\",\"float\"]}],\"name\":\"DatosLogisticos\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"}]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]},{\"name\":\"volumen\",\"type\":[\"null\",\"double\"]},{\"name\":\"pesoBruto\",\"type\":[\"null\",\"double\"]},{\"name\":\"pesoTara\",\"type\":[\"null\",\"double\"]},{\"name\":\"pesoNeto\",\"type\":[\"null\",\"double\"]},{\"name\":\"claseDeArticulo\",\"type\":[\"null\",\"string\"]},{\"name\":\"paisDeOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"esNumeroDeSerieDeEntradaUnico\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"esNumeroDeSerieSalidaUnico\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"instruccionesDePreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"vidaUtilSalidaEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigoDeVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"indicadorDeVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"consumoEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"vencimientoEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"vidaUtilEntradaEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"pavu\",\"type\":[\"null\",\"string\"]},{\"name\":\"cPsicotropico\",\"type\":[\"null\",\"string\"]},{\"name\":\"temperatura\",\"type\":[\"null\",\"string\"]},{\"name\":\"serealizado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"grupos\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.Metadato\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.Metadato\"]},{\"name\":\"coleccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"tema\",\"type\":[\"null\",\"string\"]},{\"name\":\"temporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"estilo\",\"type\":[\"null\",\"string\"]},{\"name\":\"color\",\"type\":[\"null\",\"string\"]},{\"name\":\"iniciodeTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"findeTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"talle\",\"type\":[\"null\",\"string\"]},{\"name\":\"rubro\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloSCE\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"ean\",\"type\":\"string\"},{\"name\":\"tipoEan\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"datosLogisticos\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"volumen\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoBruto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoTara\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoNeto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"cantidadporPaquete\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"nivelesporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cajasporNivel\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"volumencubico\",\"type\":[\"null\",\"float\"]}],\"name\":\"DatosLogisticos\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"}]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]},{\"name\":\"claseDeArticulo\",\"type\":[\"null\",\"string\"]},{\"name\":\"paisDeOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"esNumeroDeSerieDeEntradaUnico\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"esNumeroDeSerieSalidaUnico\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"instruccionesDePreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"vidaUtilSalidaEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigoDeVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"indicadorDeVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"consumoEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"vencimientoEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"vidaUtilEntradaEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"serealizado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"grupos\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.Metadato\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.Metadato\"]},{\"name\":\"coleccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"tema\",\"type\":[\"null\",\"string\"]},{\"name\":\"temporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"estilo\",\"type\":[\"null\",\"string\"]},{\"name\":\"color\",\"type\":[\"null\",\"string\"]},{\"name\":\"iniciodeTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"findeTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"talle\",\"type\":[\"null\",\"string\"]},{\"name\":\"rubro\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloSCE\",\"type\":\"record\"}"
 }
 
 func (r ArticuloSCE) SchemaName() string {
@@ -315,147 +279,124 @@ func (r *ArticuloSCE) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Propietario}
+		w := types.String{Target: &r.TipoEan}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.Descripcion}
+		w := types.String{Target: &r.Propietario}
 
 		return w
 
 	case 4:
+		w := types.String{Target: &r.Descripcion}
+
+		return w
+
+	case 5:
 		r.DatosLogisticos = NewDatosLogisticos()
 
 		w := types.Record{Target: &r.DatosLogisticos}
 
 		return w
 
-	case 5:
+	case 6:
 		r.OtrosDatos = NewUnionNullMetadato()
 
 		return r.OtrosDatos
-	case 6:
+	case 7:
 		r.Notas = NewUnionNullString()
 
 		return r.Notas
-	case 7:
-		r.Volumen = NewUnionNullDouble()
-
-		return r.Volumen
 	case 8:
-		r.PesoBruto = NewUnionNullDouble()
-
-		return r.PesoBruto
-	case 9:
-		r.PesoTara = NewUnionNullDouble()
-
-		return r.PesoTara
-	case 10:
-		r.PesoNeto = NewUnionNullDouble()
-
-		return r.PesoNeto
-	case 11:
 		r.ClaseDeArticulo = NewUnionNullString()
 
 		return r.ClaseDeArticulo
-	case 12:
+	case 9:
 		r.PaisDeOrigen = NewUnionNullString()
 
 		return r.PaisDeOrigen
-	case 13:
+	case 10:
 		r.EsNumeroDeSerieDeEntradaUnico = NewUnionNullBool()
 
 		return r.EsNumeroDeSerieDeEntradaUnico
-	case 14:
+	case 11:
 		r.EsNumeroDeSerieSalidaUnico = NewUnionNullBool()
 
 		return r.EsNumeroDeSerieSalidaUnico
-	case 15:
+	case 12:
 		r.InstruccionesDePreparacion = NewUnionNullString()
 
 		return r.InstruccionesDePreparacion
-	case 16:
+	case 13:
 		r.VidaUtilSalidaEnDias = NewUnionNullInt()
 
 		return r.VidaUtilSalidaEnDias
-	case 17:
+	case 14:
 		r.CodigoDeVidaUtil = NewUnionNullString()
 
 		return r.CodigoDeVidaUtil
-	case 18:
+	case 15:
 		r.IndicadorDeVidaUtil = NewUnionNullString()
 
 		return r.IndicadorDeVidaUtil
-	case 19:
+	case 16:
 		r.ConsumoEnDias = NewUnionNullInt()
 
 		return r.ConsumoEnDias
-	case 20:
+	case 17:
 		r.VencimientoEnDias = NewUnionNullInt()
 
 		return r.VencimientoEnDias
-	case 21:
+	case 18:
 		r.VidaUtilEntradaEnDias = NewUnionNullInt()
 
 		return r.VidaUtilEntradaEnDias
-	case 22:
-		r.Pavu = NewUnionNullString()
-
-		return r.Pavu
-	case 23:
-		r.CPsicotropico = NewUnionNullString()
-
-		return r.CPsicotropico
-	case 24:
-		r.Temperatura = NewUnionNullString()
-
-		return r.Temperatura
-	case 25:
+	case 19:
 		r.Serealizado = NewUnionNullString()
 
 		return r.Serealizado
-	case 26:
+	case 20:
 		r.Grupos = NewUnionNullMetadato()
 
 		return r.Grupos
-	case 27:
+	case 21:
 		r.CamposLibres = NewUnionNullMetadato()
 
 		return r.CamposLibres
-	case 28:
+	case 22:
 		r.Coleccion = NewUnionNullString()
 
 		return r.Coleccion
-	case 29:
+	case 23:
 		r.Tema = NewUnionNullString()
 
 		return r.Tema
-	case 30:
+	case 24:
 		r.Temporada = NewUnionNullString()
 
 		return r.Temporada
-	case 31:
+	case 25:
 		r.Estilo = NewUnionNullString()
 
 		return r.Estilo
-	case 32:
+	case 26:
 		r.Color = NewUnionNullString()
 
 		return r.Color
-	case 33:
+	case 27:
 		r.IniciodeTemporada = NewUnionNullString()
 
 		return r.IniciodeTemporada
-	case 34:
+	case 28:
 		r.FindeTemporada = NewUnionNullString()
 
 		return r.FindeTemporada
-	case 35:
+	case 29:
 		r.Talle = NewUnionNullString()
 
 		return r.Talle
-	case 36:
+	case 30:
 		r.Rubro = NewUnionNullString()
 
 		return r.Rubro
@@ -465,13 +406,13 @@ func (r *ArticuloSCE) Get(i int) types.Field {
 
 func (r *ArticuloSCE) SetDefault(i int) {
 	switch i {
-	case 5:
+	case 6:
 		r.OtrosDatos = nil
 		return
-	case 26:
+	case 20:
 		r.Grupos = nil
 		return
-	case 27:
+	case 21:
 		r.CamposLibres = nil
 		return
 	}
@@ -480,100 +421,79 @@ func (r *ArticuloSCE) SetDefault(i int) {
 
 func (r *ArticuloSCE) NullField(i int) {
 	switch i {
-	case 5:
+	case 6:
 		r.OtrosDatos = nil
 		return
-	case 6:
+	case 7:
 		r.Notas = nil
 		return
-	case 7:
-		r.Volumen = nil
-		return
 	case 8:
-		r.PesoBruto = nil
-		return
-	case 9:
-		r.PesoTara = nil
-		return
-	case 10:
-		r.PesoNeto = nil
-		return
-	case 11:
 		r.ClaseDeArticulo = nil
 		return
-	case 12:
+	case 9:
 		r.PaisDeOrigen = nil
 		return
-	case 13:
+	case 10:
 		r.EsNumeroDeSerieDeEntradaUnico = nil
 		return
-	case 14:
+	case 11:
 		r.EsNumeroDeSerieSalidaUnico = nil
 		return
-	case 15:
+	case 12:
 		r.InstruccionesDePreparacion = nil
 		return
-	case 16:
+	case 13:
 		r.VidaUtilSalidaEnDias = nil
 		return
-	case 17:
+	case 14:
 		r.CodigoDeVidaUtil = nil
 		return
-	case 18:
+	case 15:
 		r.IndicadorDeVidaUtil = nil
 		return
-	case 19:
+	case 16:
 		r.ConsumoEnDias = nil
 		return
-	case 20:
+	case 17:
 		r.VencimientoEnDias = nil
 		return
-	case 21:
+	case 18:
 		r.VidaUtilEntradaEnDias = nil
 		return
-	case 22:
-		r.Pavu = nil
-		return
-	case 23:
-		r.CPsicotropico = nil
-		return
-	case 24:
-		r.Temperatura = nil
-		return
-	case 25:
+	case 19:
 		r.Serealizado = nil
 		return
-	case 26:
+	case 20:
 		r.Grupos = nil
 		return
-	case 27:
+	case 21:
 		r.CamposLibres = nil
 		return
-	case 28:
+	case 22:
 		r.Coleccion = nil
 		return
-	case 29:
+	case 23:
 		r.Tema = nil
 		return
-	case 30:
+	case 24:
 		r.Temporada = nil
 		return
-	case 31:
+	case 25:
 		r.Estilo = nil
 		return
-	case 32:
+	case 26:
 		r.Color = nil
 		return
-	case 33:
+	case 27:
 		r.IniciodeTemporada = nil
 		return
-	case 34:
+	case 28:
 		r.FindeTemporada = nil
 		return
-	case 35:
+	case 29:
 		r.Talle = nil
 		return
-	case 36:
+	case 30:
 		r.Rubro = nil
 		return
 	}
@@ -600,6 +520,10 @@ func (r ArticuloSCE) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["tipoEan"], err = json.Marshal(r.TipoEan)
+	if err != nil {
+		return nil, err
+	}
 	output["propietario"], err = json.Marshal(r.Propietario)
 	if err != nil {
 		return nil, err
@@ -617,22 +541,6 @@ func (r ArticuloSCE) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["notas"], err = json.Marshal(r.Notas)
-	if err != nil {
-		return nil, err
-	}
-	output["volumen"], err = json.Marshal(r.Volumen)
-	if err != nil {
-		return nil, err
-	}
-	output["pesoBruto"], err = json.Marshal(r.PesoBruto)
-	if err != nil {
-		return nil, err
-	}
-	output["pesoTara"], err = json.Marshal(r.PesoTara)
-	if err != nil {
-		return nil, err
-	}
-	output["pesoNeto"], err = json.Marshal(r.PesoNeto)
 	if err != nil {
 		return nil, err
 	}
@@ -677,18 +585,6 @@ func (r ArticuloSCE) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["vidaUtilEntradaEnDias"], err = json.Marshal(r.VidaUtilEntradaEnDias)
-	if err != nil {
-		return nil, err
-	}
-	output["pavu"], err = json.Marshal(r.Pavu)
-	if err != nil {
-		return nil, err
-	}
-	output["cPsicotropico"], err = json.Marshal(r.CPsicotropico)
-	if err != nil {
-		return nil, err
-	}
-	output["temperatura"], err = json.Marshal(r.Temperatura)
 	if err != nil {
 		return nil, err
 	}
@@ -779,6 +675,20 @@ func (r *ArticuloSCE) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for ean")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["tipoEan"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoEan); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for tipoEan")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["propietario"]; ok {
 			return v
 		}
@@ -849,62 +759,6 @@ func (r *ArticuloSCE) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for notas")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["volumen"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Volumen); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for volumen")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["pesoBruto"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PesoBruto); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for pesoBruto")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["pesoTara"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PesoTara); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for pesoTara")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["pesoNeto"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PesoNeto); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for pesoNeto")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["claseDeArticulo"]; ok {
@@ -1059,48 +913,6 @@ func (r *ArticuloSCE) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for vidaUtilEntradaEnDias")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["pavu"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Pavu); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for pavu")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["cPsicotropico"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CPsicotropico); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for cPsicotropico")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["temperatura"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Temperatura); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for temperatura")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["serealizado"]; ok {

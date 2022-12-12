@@ -35,9 +35,47 @@ type DatosLogisticos struct {
 	AlturaUnidad *UnionNullFloat `json:"alturaUnidad"`
 
 	LargoUnidad *UnionNullFloat `json:"largoUnidad"`
+
+	AnchoUnidad *UnionNullFloat `json:"anchoUnidad"`
+
+	PesoPack *UnionNullFloat `json:"pesoPack"`
+
+	AlturaPack *UnionNullFloat `json:"alturaPack"`
+
+	LargoPack *UnionNullFloat `json:"largoPack"`
+
+	AnchoPack *UnionNullFloat `json:"anchoPack"`
+
+	PesoCaja *UnionNullFloat `json:"pesoCaja"`
+
+	AltoCaja *UnionNullFloat `json:"altoCaja"`
+
+	LargoCaja *UnionNullFloat `json:"largoCaja"`
+
+	AnchoCaja *UnionNullFloat `json:"anchoCaja"`
+
+	PesoPallet *UnionNullFloat `json:"pesoPallet"`
+
+	AltoPallet *UnionNullFloat `json:"altoPallet"`
+
+	LargoPallet *UnionNullFloat `json:"largoPallet"`
+
+	AnchoPallet *UnionNullFloat `json:"anchoPallet"`
+
+	NivelesporPallet *UnionNullFloat `json:"nivelesporPallet"`
+
+	CajasporNivel *UnionNullFloat `json:"cajasporNivel"`
+
+	Altura *UnionNullFloat `json:"altura"`
+
+	Longitud *UnionNullFloat `json:"longitud"`
+
+	Anchura *UnionNullFloat `json:"anchura"`
+
+	Volumencubico *UnionNullFloat `json:"volumencubico"`
 }
 
-const DatosLogisticosAvroCRC64Fingerprint = "e\r\x15\xd9+\x9c\xceI"
+const DatosLogisticosAvroCRC64Fingerprint = "\x11V\xac\x93)\x0f\x03\x9a"
 
 func NewDatosLogisticos() DatosLogisticos {
 	r := DatosLogisticos{}
@@ -50,6 +88,25 @@ func NewDatosLogisticos() DatosLogisticos {
 	r.CantidadporPallet = nil
 	r.AlturaUnidad = nil
 	r.LargoUnidad = nil
+	r.AnchoUnidad = nil
+	r.PesoPack = nil
+	r.AlturaPack = nil
+	r.LargoPack = nil
+	r.AnchoPack = nil
+	r.PesoCaja = nil
+	r.AltoCaja = nil
+	r.LargoCaja = nil
+	r.AnchoCaja = nil
+	r.PesoPallet = nil
+	r.AltoPallet = nil
+	r.LargoPallet = nil
+	r.AnchoPallet = nil
+	r.NivelesporPallet = nil
+	r.CajasporNivel = nil
+	r.Altura = nil
+	r.Longitud = nil
+	r.Anchura = nil
+	r.Volumencubico = nil
 	return r
 }
 
@@ -114,6 +171,82 @@ func writeDatosLogisticos(r DatosLogisticos, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullFloat(r.AnchoUnidad, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.PesoPack, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.AlturaPack, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.LargoPack, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.AnchoPack, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.PesoCaja, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.AltoCaja, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.LargoCaja, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.AnchoCaja, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.PesoPallet, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.AltoPallet, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.LargoPallet, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.AnchoPallet, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.NivelesporPallet, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.CajasporNivel, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.Altura, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.Longitud, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.Anchura, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.Volumencubico, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -122,7 +255,7 @@ func (r DatosLogisticos) Serialize(w io.Writer) error {
 }
 
 func (r DatosLogisticos) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"volumen\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoBruto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoTara\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoNeto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"cantidadporPaquete\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoUnidad\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.Wapv2.Events.Record.DatosLogisticos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"volumen\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoBruto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoTara\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoNeto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"cantidadporPaquete\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"nivelesporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cajasporNivel\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"volumencubico\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.Wapv2.Events.Record.DatosLogisticos\",\"type\":\"record\"}"
 }
 
 func (r DatosLogisticos) SchemaName() string {
@@ -176,6 +309,82 @@ func (r *DatosLogisticos) Get(i int) types.Field {
 		r.LargoUnidad = NewUnionNullFloat()
 
 		return r.LargoUnidad
+	case 9:
+		r.AnchoUnidad = NewUnionNullFloat()
+
+		return r.AnchoUnidad
+	case 10:
+		r.PesoPack = NewUnionNullFloat()
+
+		return r.PesoPack
+	case 11:
+		r.AlturaPack = NewUnionNullFloat()
+
+		return r.AlturaPack
+	case 12:
+		r.LargoPack = NewUnionNullFloat()
+
+		return r.LargoPack
+	case 13:
+		r.AnchoPack = NewUnionNullFloat()
+
+		return r.AnchoPack
+	case 14:
+		r.PesoCaja = NewUnionNullFloat()
+
+		return r.PesoCaja
+	case 15:
+		r.AltoCaja = NewUnionNullFloat()
+
+		return r.AltoCaja
+	case 16:
+		r.LargoCaja = NewUnionNullFloat()
+
+		return r.LargoCaja
+	case 17:
+		r.AnchoCaja = NewUnionNullFloat()
+
+		return r.AnchoCaja
+	case 18:
+		r.PesoPallet = NewUnionNullFloat()
+
+		return r.PesoPallet
+	case 19:
+		r.AltoPallet = NewUnionNullFloat()
+
+		return r.AltoPallet
+	case 20:
+		r.LargoPallet = NewUnionNullFloat()
+
+		return r.LargoPallet
+	case 21:
+		r.AnchoPallet = NewUnionNullFloat()
+
+		return r.AnchoPallet
+	case 22:
+		r.NivelesporPallet = NewUnionNullFloat()
+
+		return r.NivelesporPallet
+	case 23:
+		r.CajasporNivel = NewUnionNullFloat()
+
+		return r.CajasporNivel
+	case 24:
+		r.Altura = NewUnionNullFloat()
+
+		return r.Altura
+	case 25:
+		r.Longitud = NewUnionNullFloat()
+
+		return r.Longitud
+	case 26:
+		r.Anchura = NewUnionNullFloat()
+
+		return r.Anchura
+	case 27:
+		r.Volumencubico = NewUnionNullFloat()
+
+		return r.Volumencubico
 	}
 	panic("Unknown field index")
 }
@@ -209,6 +418,63 @@ func (r *DatosLogisticos) SetDefault(i int) {
 	case 8:
 		r.LargoUnidad = nil
 		return
+	case 9:
+		r.AnchoUnidad = nil
+		return
+	case 10:
+		r.PesoPack = nil
+		return
+	case 11:
+		r.AlturaPack = nil
+		return
+	case 12:
+		r.LargoPack = nil
+		return
+	case 13:
+		r.AnchoPack = nil
+		return
+	case 14:
+		r.PesoCaja = nil
+		return
+	case 15:
+		r.AltoCaja = nil
+		return
+	case 16:
+		r.LargoCaja = nil
+		return
+	case 17:
+		r.AnchoCaja = nil
+		return
+	case 18:
+		r.PesoPallet = nil
+		return
+	case 19:
+		r.AltoPallet = nil
+		return
+	case 20:
+		r.LargoPallet = nil
+		return
+	case 21:
+		r.AnchoPallet = nil
+		return
+	case 22:
+		r.NivelesporPallet = nil
+		return
+	case 23:
+		r.CajasporNivel = nil
+		return
+	case 24:
+		r.Altura = nil
+		return
+	case 25:
+		r.Longitud = nil
+		return
+	case 26:
+		r.Anchura = nil
+		return
+	case 27:
+		r.Volumencubico = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -241,6 +507,63 @@ func (r *DatosLogisticos) NullField(i int) {
 		return
 	case 8:
 		r.LargoUnidad = nil
+		return
+	case 9:
+		r.AnchoUnidad = nil
+		return
+	case 10:
+		r.PesoPack = nil
+		return
+	case 11:
+		r.AlturaPack = nil
+		return
+	case 12:
+		r.LargoPack = nil
+		return
+	case 13:
+		r.AnchoPack = nil
+		return
+	case 14:
+		r.PesoCaja = nil
+		return
+	case 15:
+		r.AltoCaja = nil
+		return
+	case 16:
+		r.LargoCaja = nil
+		return
+	case 17:
+		r.AnchoCaja = nil
+		return
+	case 18:
+		r.PesoPallet = nil
+		return
+	case 19:
+		r.AltoPallet = nil
+		return
+	case 20:
+		r.LargoPallet = nil
+		return
+	case 21:
+		r.AnchoPallet = nil
+		return
+	case 22:
+		r.NivelesporPallet = nil
+		return
+	case 23:
+		r.CajasporNivel = nil
+		return
+	case 24:
+		r.Altura = nil
+		return
+	case 25:
+		r.Longitud = nil
+		return
+	case 26:
+		r.Anchura = nil
+		return
+	case 27:
+		r.Volumencubico = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -291,6 +614,82 @@ func (r DatosLogisticos) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["largoUnidad"], err = json.Marshal(r.LargoUnidad)
+	if err != nil {
+		return nil, err
+	}
+	output["anchoUnidad"], err = json.Marshal(r.AnchoUnidad)
+	if err != nil {
+		return nil, err
+	}
+	output["pesoPack"], err = json.Marshal(r.PesoPack)
+	if err != nil {
+		return nil, err
+	}
+	output["alturaPack"], err = json.Marshal(r.AlturaPack)
+	if err != nil {
+		return nil, err
+	}
+	output["largoPack"], err = json.Marshal(r.LargoPack)
+	if err != nil {
+		return nil, err
+	}
+	output["anchoPack"], err = json.Marshal(r.AnchoPack)
+	if err != nil {
+		return nil, err
+	}
+	output["pesoCaja"], err = json.Marshal(r.PesoCaja)
+	if err != nil {
+		return nil, err
+	}
+	output["altoCaja"], err = json.Marshal(r.AltoCaja)
+	if err != nil {
+		return nil, err
+	}
+	output["largoCaja"], err = json.Marshal(r.LargoCaja)
+	if err != nil {
+		return nil, err
+	}
+	output["anchoCaja"], err = json.Marshal(r.AnchoCaja)
+	if err != nil {
+		return nil, err
+	}
+	output["pesoPallet"], err = json.Marshal(r.PesoPallet)
+	if err != nil {
+		return nil, err
+	}
+	output["altoPallet"], err = json.Marshal(r.AltoPallet)
+	if err != nil {
+		return nil, err
+	}
+	output["largoPallet"], err = json.Marshal(r.LargoPallet)
+	if err != nil {
+		return nil, err
+	}
+	output["anchoPallet"], err = json.Marshal(r.AnchoPallet)
+	if err != nil {
+		return nil, err
+	}
+	output["nivelesporPallet"], err = json.Marshal(r.NivelesporPallet)
+	if err != nil {
+		return nil, err
+	}
+	output["cajasporNivel"], err = json.Marshal(r.CajasporNivel)
+	if err != nil {
+		return nil, err
+	}
+	output["altura"], err = json.Marshal(r.Altura)
+	if err != nil {
+		return nil, err
+	}
+	output["longitud"], err = json.Marshal(r.Longitud)
+	if err != nil {
+		return nil, err
+	}
+	output["anchura"], err = json.Marshal(r.Anchura)
+	if err != nil {
+		return nil, err
+	}
+	output["volumencubico"], err = json.Marshal(r.Volumencubico)
 	if err != nil {
 		return nil, err
 	}
@@ -447,6 +846,310 @@ func (r *DatosLogisticos) UnmarshalJSON(data []byte) error {
 		r.LargoUnidad = NewUnionNullFloat()
 
 		r.LargoUnidad = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["anchoUnidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AnchoUnidad); err != nil {
+			return err
+		}
+	} else {
+		r.AnchoUnidad = NewUnionNullFloat()
+
+		r.AnchoUnidad = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["pesoPack"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PesoPack); err != nil {
+			return err
+		}
+	} else {
+		r.PesoPack = NewUnionNullFloat()
+
+		r.PesoPack = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["alturaPack"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AlturaPack); err != nil {
+			return err
+		}
+	} else {
+		r.AlturaPack = NewUnionNullFloat()
+
+		r.AlturaPack = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["largoPack"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LargoPack); err != nil {
+			return err
+		}
+	} else {
+		r.LargoPack = NewUnionNullFloat()
+
+		r.LargoPack = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["anchoPack"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AnchoPack); err != nil {
+			return err
+		}
+	} else {
+		r.AnchoPack = NewUnionNullFloat()
+
+		r.AnchoPack = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["pesoCaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PesoCaja); err != nil {
+			return err
+		}
+	} else {
+		r.PesoCaja = NewUnionNullFloat()
+
+		r.PesoCaja = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["altoCaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AltoCaja); err != nil {
+			return err
+		}
+	} else {
+		r.AltoCaja = NewUnionNullFloat()
+
+		r.AltoCaja = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["largoCaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LargoCaja); err != nil {
+			return err
+		}
+	} else {
+		r.LargoCaja = NewUnionNullFloat()
+
+		r.LargoCaja = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["anchoCaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AnchoCaja); err != nil {
+			return err
+		}
+	} else {
+		r.AnchoCaja = NewUnionNullFloat()
+
+		r.AnchoCaja = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["pesoPallet"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PesoPallet); err != nil {
+			return err
+		}
+	} else {
+		r.PesoPallet = NewUnionNullFloat()
+
+		r.PesoPallet = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["altoPallet"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AltoPallet); err != nil {
+			return err
+		}
+	} else {
+		r.AltoPallet = NewUnionNullFloat()
+
+		r.AltoPallet = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["largoPallet"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LargoPallet); err != nil {
+			return err
+		}
+	} else {
+		r.LargoPallet = NewUnionNullFloat()
+
+		r.LargoPallet = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["anchoPallet"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AnchoPallet); err != nil {
+			return err
+		}
+	} else {
+		r.AnchoPallet = NewUnionNullFloat()
+
+		r.AnchoPallet = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["nivelesporPallet"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NivelesporPallet); err != nil {
+			return err
+		}
+	} else {
+		r.NivelesporPallet = NewUnionNullFloat()
+
+		r.NivelesporPallet = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cajasporNivel"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CajasporNivel); err != nil {
+			return err
+		}
+	} else {
+		r.CajasporNivel = NewUnionNullFloat()
+
+		r.CajasporNivel = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["altura"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Altura); err != nil {
+			return err
+		}
+	} else {
+		r.Altura = NewUnionNullFloat()
+
+		r.Altura = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["longitud"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Longitud); err != nil {
+			return err
+		}
+	} else {
+		r.Longitud = NewUnionNullFloat()
+
+		r.Longitud = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["anchura"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Anchura); err != nil {
+			return err
+		}
+	} else {
+		r.Anchura = NewUnionNullFloat()
+
+		r.Anchura = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["volumencubico"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Volumencubico); err != nil {
+			return err
+		}
+	} else {
+		r.Volumencubico = NewUnionNullFloat()
+
+		r.Volumencubico = nil
 	}
 	return nil
 }
