@@ -25,7 +25,7 @@ type Persona struct {
 	Number int32 `json:"number"`
 }
 
-const PersonaAvroCRC64Fingerprint = "\x9c\xe0\x96\xc9\x0f\xfa q"
+const PersonaAvroCRC64Fingerprint = "\xa9OPL`\x9b\x8e\xa9"
 
 func NewPersona() Persona {
 	r := Persona{}
@@ -77,11 +77,11 @@ func (r Persona) Serialize(w io.Writer) error {
 }
 
 func (r Persona) Schema() string {
-	return "{\"fields\":[{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Lastname\",\"type\":\"string\"},{\"name\":\"number\",\"type\":\"int\"}],\"name\":\"Andreani.Persona.Events.Record.Persona\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Lastname\",\"type\":\"string\"},{\"name\":\"number\",\"type\":\"int\"}],\"name\":\"Andreani.PersonSchemaEvent.Record.Persona\",\"type\":\"record\"}"
 }
 
 func (r Persona) SchemaName() string {
-	return "Andreani.Persona.Events.Record.Persona"
+	return "Andreani.PersonSchemaEvent.Record.Persona"
 }
 
 func (_ Persona) SetBoolean(v bool)    { panic("Unsupported operation") }
