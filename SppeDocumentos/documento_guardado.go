@@ -23,12 +23,15 @@ type DocumentoGuardado struct {
 	OrdenCliente string `json:"OrdenCliente"`
 
 	NombreDocumento string `json:"NombreDocumento"`
+
+	Contrato *UnionNullString `json:"Contrato"`
 }
 
-const DocumentoGuardadoAvroCRC64Fingerprint = "\xee\x10S\xa0\v\x95%\xdd"
+const DocumentoGuardadoAvroCRC64Fingerprint = "\xfbJ\x1f\x91\x10\x81\xf4_"
 
 func NewDocumentoGuardado() DocumentoGuardado {
 	r := DocumentoGuardado{}
+	r.Contrato = nil
 	return r
 }
 
@@ -69,6 +72,10 @@ func writeDocumentoGuardado(r DocumentoGuardado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Contrato, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -77,7 +84,7 @@ func (r DocumentoGuardado) Serialize(w io.Writer) error {
 }
 
 func (r DocumentoGuardado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NombreDocumento\",\"type\":\"string\"}],\"name\":\"Andreani.SppeDocumentos.Events.Record.DocumentoGuardado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NombreDocumento\",\"type\":\"string\"},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeDocumentos.Events.Record.DocumentoGuardado\",\"type\":\"record\"}"
 }
 
 func (r DocumentoGuardado) SchemaName() string {
@@ -110,18 +117,28 @@ func (r *DocumentoGuardado) Get(i int) types.Field {
 
 		return w
 
+	case 3:
+		r.Contrato = NewUnionNullString()
+
+		return r.Contrato
 	}
 	panic("Unknown field index")
 }
 
 func (r *DocumentoGuardado) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.Contrato = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *DocumentoGuardado) NullField(i int) {
 	switch i {
+	case 3:
+		r.Contrato = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -147,6 +164,10 @@ func (r DocumentoGuardado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["NombreDocumento"], err = json.Marshal(r.NombreDocumento)
+	if err != nil {
+		return nil, err
+	}
+	output["Contrato"], err = json.Marshal(r.Contrato)
 	if err != nil {
 		return nil, err
 	}
@@ -201,6 +222,22 @@ func (r *DocumentoGuardado) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for NombreDocumento")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Contrato"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
+			return err
+		}
+	} else {
+		r.Contrato = NewUnionNullString()
+
+		r.Contrato = nil
 	}
 	return nil
 }
