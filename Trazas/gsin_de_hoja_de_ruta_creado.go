@@ -18,10 +18,12 @@ import (
 var _ = fmt.Printf
 
 type GsinDeHojaDeRutaCreado struct {
+	NumeroDeOrden *UnionNullString `json:"numeroDeOrden"`
+
 	Numero string `json:"numero"`
 }
 
-const GsinDeHojaDeRutaCreadoAvroCRC64Fingerprint = "\x84\x9e#xT\xa9\xcfK"
+const GsinDeHojaDeRutaCreadoAvroCRC64Fingerprint = "Zcd\xac\xf6\xb9\x81\xfe"
 
 func NewGsinDeHojaDeRutaCreado() GsinDeHojaDeRutaCreado {
 	r := GsinDeHojaDeRutaCreado{}
@@ -53,6 +55,10 @@ func DeserializeGsinDeHojaDeRutaCreadoFromSchema(r io.Reader, schema string) (Gs
 
 func writeGsinDeHojaDeRutaCreado(r GsinDeHojaDeRutaCreado, w io.Writer) error {
 	var err error
+	err = writeUnionNullString(r.NumeroDeOrden, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Numero, w)
 	if err != nil {
 		return err
@@ -65,7 +71,7 @@ func (r GsinDeHojaDeRutaCreado) Serialize(w io.Writer) error {
 }
 
 func (r GsinDeHojaDeRutaCreado) Schema() string {
-	return "{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Integracion.Esquemas.Trazas.GsinDeHojaDeRutaCreado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Integracion.Esquemas.Trazas.GsinDeHojaDeRutaCreado\",\"type\":\"record\"}"
 }
 
 func (r GsinDeHojaDeRutaCreado) SchemaName() string {
@@ -84,6 +90,10 @@ func (_ GsinDeHojaDeRutaCreado) SetUnionElem(v int64) { panic("Unsupported opera
 func (r *GsinDeHojaDeRutaCreado) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.NumeroDeOrden = NewUnionNullString()
+
+		return r.NumeroDeOrden
+	case 1:
 		w := types.String{Target: &r.Numero}
 
 		return w
@@ -100,6 +110,9 @@ func (r *GsinDeHojaDeRutaCreado) SetDefault(i int) {
 
 func (r *GsinDeHojaDeRutaCreado) NullField(i int) {
 	switch i {
+	case 0:
+		r.NumeroDeOrden = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -116,6 +129,10 @@ func (_ GsinDeHojaDeRutaCreado) AvroCRC64Fingerprint() []byte {
 func (r GsinDeHojaDeRutaCreado) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["numeroDeOrden"], err = json.Marshal(r.NumeroDeOrden)
+	if err != nil {
+		return nil, err
+	}
 	output["numero"], err = json.Marshal(r.Numero)
 	if err != nil {
 		return nil, err
@@ -130,6 +147,20 @@ func (r *GsinDeHojaDeRutaCreado) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroDeOrden"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeOrden); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for numeroDeOrden")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numero"]; ok {
 			return v

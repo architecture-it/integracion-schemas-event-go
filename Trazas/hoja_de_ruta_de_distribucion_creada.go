@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type HojaDeRutaDeDistribucionCreada struct {
+	NumeroDeOrden *UnionNullString `json:"numeroDeOrden"`
+
 	NumeroDeHojaDeRuta *UnionNullString `json:"numeroDeHojaDeRuta"`
 
 	Envios *UnionNullListaDeObjetos `json:"envios"`
@@ -29,7 +31,7 @@ type HojaDeRutaDeDistribucionCreada struct {
 	Donde *UnionNullDatosSucursal `json:"donde"`
 }
 
-const HojaDeRutaDeDistribucionCreadaAvroCRC64Fingerprint = "\x9b\xaf\xd5r\x84/t\\"
+const HojaDeRutaDeDistribucionCreadaAvroCRC64Fingerprint = "\x1c\x18\xc1\x16\xedA\xef\xc2"
 
 func NewHojaDeRutaDeDistribucionCreada() HojaDeRutaDeDistribucionCreada {
 	r := HojaDeRutaDeDistribucionCreada{}
@@ -61,6 +63,10 @@ func DeserializeHojaDeRutaDeDistribucionCreadaFromSchema(r io.Reader, schema str
 
 func writeHojaDeRutaDeDistribucionCreada(r HojaDeRutaDeDistribucionCreada, w io.Writer) error {
 	var err error
+	err = writeUnionNullString(r.NumeroDeOrden, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.NumeroDeHojaDeRuta, w)
 	if err != nil {
 		return err
@@ -89,7 +95,7 @@ func (r HojaDeRutaDeDistribucionCreada) Serialize(w io.Writer) error {
 }
 
 func (r HojaDeRutaDeDistribucionCreada) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroDeHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"name\":\"envios\",\"type\":[\"null\",{\"fields\":[{\"name\":\"objetos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ListaDeObjetos\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"name\":\"distribuidor\",\"type\":[\"null\",{\"fields\":[{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"tipo\",\"type\":{\"name\":\"TipoDeTelefono\",\"symbols\":[\"trabajo\",\"celular\",\"casa\",\"otro\"],\"type\":\"enum\"}},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"default\":null,\"name\":\"medioDeLocomocion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDistribuidor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"legajo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalDondeTrabaja\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"esEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"login\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idgla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosDistribuidor\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"name\":\"linking\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"name\":\"donde\",\"type\":[\"null\",\"Integracion.Esquemas.Referencias.DatosSucursal\"]}],\"name\":\"Integracion.Esquemas.Trazas.HojaDeRutaDeDistribucionCreada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"name\":\"envios\",\"type\":[\"null\",{\"fields\":[{\"name\":\"objetos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ListaDeObjetos\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"name\":\"distribuidor\",\"type\":[\"null\",{\"fields\":[{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"tipo\",\"type\":{\"name\":\"TipoDeTelefono\",\"symbols\":[\"trabajo\",\"celular\",\"casa\",\"otro\"],\"type\":\"enum\"}},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"default\":null,\"name\":\"medioDeLocomocion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDistribuidor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"legajo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalDondeTrabaja\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"esEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"login\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idgla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosDistribuidor\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"name\":\"linking\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"name\":\"donde\",\"type\":[\"null\",\"Integracion.Esquemas.Referencias.DatosSucursal\"]}],\"name\":\"Integracion.Esquemas.Trazas.HojaDeRutaDeDistribucionCreada\",\"type\":\"record\"}"
 }
 
 func (r HojaDeRutaDeDistribucionCreada) SchemaName() string {
@@ -108,22 +114,26 @@ func (_ HojaDeRutaDeDistribucionCreada) SetUnionElem(v int64) { panic("Unsupport
 func (r *HojaDeRutaDeDistribucionCreada) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.NumeroDeOrden = NewUnionNullString()
+
+		return r.NumeroDeOrden
+	case 1:
 		r.NumeroDeHojaDeRuta = NewUnionNullString()
 
 		return r.NumeroDeHojaDeRuta
-	case 1:
+	case 2:
 		r.Envios = NewUnionNullListaDeObjetos()
 
 		return r.Envios
-	case 2:
+	case 3:
 		r.Distribuidor = NewUnionNullDatosDistribuidor()
 
 		return r.Distribuidor
-	case 3:
+	case 4:
 		r.Linking = NewUnionNullListaDePropiedades()
 
 		return r.Linking
-	case 4:
+	case 5:
 		r.Donde = NewUnionNullDatosSucursal()
 
 		return r.Donde
@@ -140,18 +150,21 @@ func (r *HojaDeRutaDeDistribucionCreada) SetDefault(i int) {
 func (r *HojaDeRutaDeDistribucionCreada) NullField(i int) {
 	switch i {
 	case 0:
-		r.NumeroDeHojaDeRuta = nil
+		r.NumeroDeOrden = nil
 		return
 	case 1:
-		r.Envios = nil
+		r.NumeroDeHojaDeRuta = nil
 		return
 	case 2:
-		r.Distribuidor = nil
+		r.Envios = nil
 		return
 	case 3:
-		r.Linking = nil
+		r.Distribuidor = nil
 		return
 	case 4:
+		r.Linking = nil
+		return
+	case 5:
 		r.Donde = nil
 		return
 	}
@@ -172,6 +185,10 @@ func (_ HojaDeRutaDeDistribucionCreada) AvroCRC64Fingerprint() []byte {
 func (r HojaDeRutaDeDistribucionCreada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["numeroDeOrden"], err = json.Marshal(r.NumeroDeOrden)
+	if err != nil {
+		return nil, err
+	}
 	output["numeroDeHojaDeRuta"], err = json.Marshal(r.NumeroDeHojaDeRuta)
 	if err != nil {
 		return nil, err
@@ -202,6 +219,20 @@ func (r *HojaDeRutaDeDistribucionCreada) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroDeOrden"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeOrden); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for numeroDeOrden")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeHojaDeRuta"]; ok {
 			return v
