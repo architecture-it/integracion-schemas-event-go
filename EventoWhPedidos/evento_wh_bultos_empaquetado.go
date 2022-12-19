@@ -23,7 +23,7 @@ type EventoWhBultosEmpaquetado struct {
 	Cabecera Cabecera `json:"Cabecera"`
 }
 
-const EventoWhBultosEmpaquetadoAvroCRC64Fingerprint = "q\x9b\xfb\xb4\x12\x8d+O"
+const EventoWhBultosEmpaquetadoAvroCRC64Fingerprint = "\x9a\xf0i-\x02\xf8ۥ"
 
 func NewEventoWhBultosEmpaquetado() EventoWhBultosEmpaquetado {
 	r := EventoWhBultosEmpaquetado{}
@@ -75,7 +75,7 @@ func (r EventoWhBultosEmpaquetado) Serialize(w io.Writer) error {
 }
 
 func (r EventoWhBultosEmpaquetado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhPedidos.Events.BultosEmpaquetadoCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"Lpn\",\"type\":\"string\"},{\"name\":\"BultosTotal\",\"type\":\"int\"},{\"name\":\"EXT_UDF_STR1\",\"type\":[\"null\",\"string\"]}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.EventoWhPedidos.Events.BultosEmpaquetadoCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.EventoWhPedidos.Events.Record.EventoWhBultosEmpaquetado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhPedidos.Events.BultosEmpaquetadoCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"Lpn\",\"type\":\"string\"},{\"name\":\"BultosTotal\",\"type\":\"int\"},{\"name\":\"EXT_UDF_STR1\",\"type\":[\"null\",\"string\"]}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.EventoWhPedidos.Events.BultosEmpaquetadoCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.EventoWhPedidos.Events.Record.EventoWhBultosEmpaquetado\",\"type\":\"record\"}"
 }
 
 func (r EventoWhBultosEmpaquetado) SchemaName() string {
