@@ -25,7 +25,7 @@ type DatosFacturacionSolicitadaV2 struct {
 	Topic string `json:"Topic"`
 }
 
-const DatosFacturacionSolicitadaV2AvroCRC64Fingerprint = "\xb9uO\x06\x01\xddP\xb4"
+const DatosFacturacionSolicitadaV2AvroCRC64Fingerprint = "\xf8\n!\x80\x01=2 "
 
 func NewDatosFacturacionSolicitadaV2() DatosFacturacionSolicitadaV2 {
 	r := DatosFacturacionSolicitadaV2{}
@@ -81,7 +81,7 @@ func (r DatosFacturacionSolicitadaV2) Serialize(w io.Writer) error {
 }
 
 func (r DatosFacturacionSolicitadaV2) Schema() string {
-	return "{\"fields\":[{\"name\":\"ActualizacionDatosFacturacion\",\"type\":{\"fields\":[{\"name\":\"OrdenExterna\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Factura\",\"type\":\"string\"},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaFactura\",\"type\":[\"null\",\"long\"]}],\"name\":\"ActualizacionDatosFacturacion\",\"type\":\"record\"}},{\"name\":\"SolicitudDeAccionAlmacen\",\"type\":{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"EventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"Timestamp\",\"type\":\"int\"},{\"name\":\"Remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Vencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}}],\"name\":\"SolicitudDeAccionAlmacen\",\"type\":\"record\"}},{\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WapDatosFacturacionv2.Events.Record.DatosFacturacionSolicitadaV2\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ActualizacionDatosFacturacion\",\"type\":{\"fields\":[{\"name\":\"OrdenExterna\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Factura\",\"type\":\"string\"},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaFactura\",\"type\":[\"null\",\"string\"]}],\"name\":\"ActualizacionDatosFacturacion\",\"type\":\"record\"}},{\"name\":\"SolicitudDeAccionAlmacen\",\"type\":{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"EventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"Timestamp\",\"type\":\"int\"},{\"name\":\"Remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Vencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}}],\"name\":\"SolicitudDeAccionAlmacen\",\"type\":\"record\"}},{\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WapDatosFacturacionv2.Events.Record.DatosFacturacionSolicitadaV2\",\"type\":\"record\"}"
 }
 
 func (r DatosFacturacionSolicitadaV2) SchemaName() string {

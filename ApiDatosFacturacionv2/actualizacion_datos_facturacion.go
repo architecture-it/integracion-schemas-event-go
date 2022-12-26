@@ -28,10 +28,10 @@ type ActualizacionDatosFacturacion struct {
 
 	ValorSeguro *UnionNullString `json:"ValorSeguro"`
 
-	FechaFactura *UnionNullLong `json:"FechaFactura"`
+	FechaFactura *UnionNullString `json:"FechaFactura"`
 }
 
-const ActualizacionDatosFacturacionAvroCRC64Fingerprint = "z%[\x0f\"\x9e\x8b\xcf"
+const ActualizacionDatosFacturacionAvroCRC64Fingerprint = "lK`FD\xc4\xd1;"
 
 func NewActualizacionDatosFacturacion() ActualizacionDatosFacturacion {
 	r := ActualizacionDatosFacturacion{}
@@ -86,7 +86,7 @@ func writeActualizacionDatosFacturacion(r ActualizacionDatosFacturacion, w io.Wr
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullLong(r.FechaFactura, w)
+	err = writeUnionNullString(r.FechaFactura, w)
 	if err != nil {
 		return err
 	}
@@ -98,7 +98,7 @@ func (r ActualizacionDatosFacturacion) Serialize(w io.Writer) error {
 }
 
 func (r ActualizacionDatosFacturacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenExterna\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Factura\",\"type\":\"string\"},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaFactura\",\"type\":[\"null\",\"long\"]}],\"name\":\"Andreani.WapDatosFacturacionv2.Events.Record.ActualizacionDatosFacturacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenExterna\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Factura\",\"type\":\"string\"},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaFactura\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WapDatosFacturacionv2.Events.Record.ActualizacionDatosFacturacion\",\"type\":\"record\"}"
 }
 
 func (r ActualizacionDatosFacturacion) SchemaName() string {
@@ -140,7 +140,7 @@ func (r *ActualizacionDatosFacturacion) Get(i int) types.Field {
 
 		return r.ValorSeguro
 	case 5:
-		r.FechaFactura = NewUnionNullLong()
+		r.FechaFactura = NewUnionNullString()
 
 		return r.FechaFactura
 	}
@@ -311,7 +311,7 @@ func (r *ActualizacionDatosFacturacion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.FechaFactura = NewUnionNullLong()
+		r.FechaFactura = NewUnionNullString()
 
 		r.FechaFactura = nil
 	}

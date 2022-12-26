@@ -25,7 +25,7 @@ type DatosFacturacionRechazadoV2 struct {
 	Topic string `json:"Topic"`
 }
 
-const DatosFacturacionRechazadoV2AvroCRC64Fingerprint = "\xf7\xe1a\xbe\x84\vod"
+const DatosFacturacionRechazadoV2AvroCRC64Fingerprint = "\x99C\xbd\x9c\x87\xc7ؖ"
 
 func NewDatosFacturacionRechazadoV2() DatosFacturacionRechazadoV2 {
 	r := DatosFacturacionRechazadoV2{}
@@ -82,7 +82,7 @@ func (r DatosFacturacionRechazadoV2) Serialize(w io.Writer) error {
 }
 
 func (r DatosFacturacionRechazadoV2) Schema() string {
-	return "{\"fields\":[{\"name\":\"solicitudDeAccionAlmacen\",\"type\":{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"EventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"Timestamp\",\"type\":\"int\"},{\"name\":\"Remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Vencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}}],\"name\":\"SolicitudDeAccionAlmacen\",\"type\":\"record\"}},{\"name\":\"ActualizacionDatosFacturacion\",\"type\":{\"fields\":[{\"name\":\"OrdenExterna\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Factura\",\"type\":\"string\"},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaFactura\",\"type\":[\"null\",\"long\"]}],\"name\":\"ActualizacionDatosFacturacion\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/DatosFacturacionRechazadoV2\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WapDatosFacturacionv2.Events.Record.DatosFacturacionRechazadoV2\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"solicitudDeAccionAlmacen\",\"type\":{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"EventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"Timestamp\",\"type\":\"int\"},{\"name\":\"Remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Vencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}}],\"name\":\"SolicitudDeAccionAlmacen\",\"type\":\"record\"}},{\"name\":\"ActualizacionDatosFacturacion\",\"type\":{\"fields\":[{\"name\":\"OrdenExterna\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Factura\",\"type\":\"string\"},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaFactura\",\"type\":[\"null\",\"string\"]}],\"name\":\"ActualizacionDatosFacturacion\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/DatosFacturacionRechazadoV2\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WapDatosFacturacionv2.Events.Record.DatosFacturacionRechazadoV2\",\"type\":\"record\"}"
 }
 
 func (r DatosFacturacionRechazadoV2) SchemaName() string {
