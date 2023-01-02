@@ -18,17 +18,18 @@ import (
 var _ = fmt.Printf
 
 type Transporte struct {
-	IdTransportista string `json:"idTransportista"`
+	IdTransportista *UnionNullString `json:"idTransportista"`
 
 	DatosPersonales *UnionNullDatosPersonales `json:"datosPersonales"`
 
 	Referencia *UnionNullReferencia `json:"referencia"`
 }
 
-const TransporteAvroCRC64Fingerprint = "q\xcaֲ\xec\x89\x1b\xbb"
+const TransporteAvroCRC64Fingerprint = "\xec\xbeL\xba\x0eRb\xaa"
 
 func NewTransporte() Transporte {
 	r := Transporte{}
+	r.IdTransportista = nil
 	r.DatosPersonales = nil
 	r.Referencia = nil
 	return r
@@ -59,7 +60,7 @@ func DeserializeTransporteFromSchema(r io.Reader, schema string) (Transporte, er
 
 func writeTransporte(r Transporte, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.IdTransportista, w)
+	err = writeUnionNullString(r.IdTransportista, w)
 	if err != nil {
 		return err
 	}
@@ -79,7 +80,7 @@ func (r Transporte) Serialize(w io.Writer) error {
 }
 
 func (r Transporte) Schema() string {
-	return "{\"fields\":[{\"name\":\"idTransportista\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosPersonales\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"referencia\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"transportista\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"muelleRecepcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroCita\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroGuia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"gln\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"correoElectronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoISOpais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Referencia\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.Transporte\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"idTransportista\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosPersonales\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"referencia\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"transportista\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"muelleRecepcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroCita\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroGuia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"gln\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"correoElectronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoISOpais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Referencia\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.Transporte\",\"type\":\"record\"}"
 }
 
 func (r Transporte) SchemaName() string {
@@ -98,10 +99,9 @@ func (_ Transporte) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Transporte) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.IdTransportista}
+		r.IdTransportista = NewUnionNullString()
 
-		return w
-
+		return r.IdTransportista
 	case 1:
 		r.DatosPersonales = NewUnionNullDatosPersonales()
 
@@ -116,6 +116,9 @@ func (r *Transporte) Get(i int) types.Field {
 
 func (r *Transporte) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.IdTransportista = nil
+		return
 	case 1:
 		r.DatosPersonales = nil
 		return
@@ -128,6 +131,9 @@ func (r *Transporte) SetDefault(i int) {
 
 func (r *Transporte) NullField(i int) {
 	switch i {
+	case 0:
+		r.IdTransportista = nil
+		return
 	case 1:
 		r.DatosPersonales = nil
 		return
@@ -184,7 +190,9 @@ func (r *Transporte) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for idTransportista")
+		r.IdTransportista = NewUnionNullString()
+
+		r.IdTransportista = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["datosPersonales"]; ok {
