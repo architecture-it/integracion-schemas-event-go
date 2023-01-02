@@ -34,7 +34,7 @@ type ArticuloAsn struct {
 
 	FechaFabricacion *UnionNullLong `json:"fechaFabricacion"`
 
-	ProdTrazable *UnionNullBool `json:"prodTrazable"`
+	ProdTrazable *UnionNullString `json:"prodTrazable"`
 
 	ConsumirAntesDe *UnionNullLong `json:"consumirAntesDe"`
 
@@ -47,7 +47,7 @@ type ArticuloAsn struct {
 	VidaUtilLote *UnionNullString `json:"vidaUtilLote"`
 }
 
-const ArticuloAsnAvroCRC64Fingerprint = "\xa9^w\x15\x89J[]"
+const ArticuloAsnAvroCRC64Fingerprint = "\xc94\xa5ӥC;f"
 
 func NewArticuloAsn() ArticuloAsn {
 	r := ArticuloAsn{}
@@ -125,7 +125,7 @@ func writeArticuloAsn(r ArticuloAsn, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullBool(r.ProdTrazable, w)
+	err = writeUnionNullString(r.ProdTrazable, w)
 	if err != nil {
 		return err
 	}
@@ -157,7 +157,7 @@ func (r ArticuloAsn) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloAsn) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":\"Andreani.Wapv2.Events.Record.Metadato\",\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"LoteAsn\",\"type\":\"record\"}},{\"default\":null,\"name\":\"ubicacionDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"avisoContramuestra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"paqueteLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"prodTrazable\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"consumirAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"entrarAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"nomenclaturaServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vidaUtilLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloAsn\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":\"Andreani.Wapv2.Events.Record.Metadato\",\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"LoteAsn\",\"type\":\"record\"}},{\"default\":null,\"name\":\"ubicacionDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"avisoContramuestra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"paqueteLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"prodTrazable\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"consumirAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"entrarAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"nomenclaturaServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vidaUtilLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloAsn\",\"type\":\"record\"}"
 }
 
 func (r ArticuloAsn) SchemaName() string {
@@ -212,7 +212,7 @@ func (r *ArticuloAsn) Get(i int) types.Field {
 
 		return r.FechaFabricacion
 	case 8:
-		r.ProdTrazable = NewUnionNullBool()
+		r.ProdTrazable = NewUnionNullString()
 
 		return r.ProdTrazable
 	case 9:
@@ -537,7 +537,7 @@ func (r *ArticuloAsn) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.ProdTrazable = NewUnionNullBool()
+		r.ProdTrazable = NewUnionNullString()
 
 		r.ProdTrazable = nil
 	}
