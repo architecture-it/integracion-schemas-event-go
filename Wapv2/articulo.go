@@ -30,14 +30,12 @@ type Articulo struct {
 
 	Unidadmedida string `json:"unidadmedida"`
 
-	Lineaexterna *UnionNullString `json:"lineaexterna"`
-
 	Datosadicionales *UnionNullListaDePropiedades `json:"datosadicionales"`
 
 	Lote LoteArticulo `json:"lote"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "t\xf7#\x00\xce\tE\xa9"
+const ArticuloAvroCRC64Fingerprint = "@$7\xc1\xb7,*\xd6"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
@@ -96,10 +94,6 @@ func writeArticulo(r Articulo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Lineaexterna, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullListaDePropiedades(r.Datosadicionales, w)
 	if err != nil {
 		return err
@@ -116,7 +110,7 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"contratoWarehouse\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"name\":\"lineaexterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.Wapv2.Events.Record.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contratoWarehouse\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.Wapv2.Events.Record.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
@@ -164,14 +158,10 @@ func (r *Articulo) Get(i int) types.Field {
 		return w
 
 	case 6:
-		r.Lineaexterna = NewUnionNullString()
-
-		return r.Lineaexterna
-	case 7:
 		r.Datosadicionales = NewUnionNullListaDePropiedades()
 
 		return r.Datosadicionales
-	case 8:
+	case 7:
 		r.Lote = NewLoteArticulo()
 
 		w := types.Record{Target: &r.Lote}
@@ -184,7 +174,7 @@ func (r *Articulo) Get(i int) types.Field {
 
 func (r *Articulo) SetDefault(i int) {
 	switch i {
-	case 7:
+	case 6:
 		r.Datosadicionales = nil
 		return
 	}
@@ -197,9 +187,6 @@ func (r *Articulo) NullField(i int) {
 		r.Numeropedido = nil
 		return
 	case 6:
-		r.Lineaexterna = nil
-		return
-	case 7:
 		r.Datosadicionales = nil
 		return
 	}
@@ -239,10 +226,6 @@ func (r Articulo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["unidadmedida"], err = json.Marshal(r.Unidadmedida)
-	if err != nil {
-		return nil, err
-	}
-	output["lineaexterna"], err = json.Marshal(r.Lineaexterna)
 	if err != nil {
 		return nil, err
 	}
@@ -347,20 +330,6 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for unidadmedida")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["lineaexterna"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Lineaexterna); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for lineaexterna")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["datosadicionales"]; ok {
