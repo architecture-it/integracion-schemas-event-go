@@ -18,20 +18,14 @@ import (
 var _ = fmt.Printf
 
 type NovedadesCustom struct {
-	NumeroEnvio *UnionNullString `json:"NumeroEnvio"`
-
-	NumeroInterno *UnionNullString `json:"NumeroInterno"`
-
-	Mensaje *UnionNullString `json:"Mensaje"`
+	Traza *UnionNullTraza `json:"traza"`
 }
 
-const NovedadesCustomAvroCRC64Fingerprint = "Ev=r\xf4\xab\xefa"
+const NovedadesCustomAvroCRC64Fingerprint = "5Zb\x9cS\xa2\xb1\xcb"
 
 func NewNovedadesCustom() NovedadesCustom {
 	r := NovedadesCustom{}
-	r.NumeroEnvio = nil
-	r.NumeroInterno = nil
-	r.Mensaje = nil
+	r.Traza = nil
 	return r
 }
 
@@ -60,15 +54,7 @@ func DeserializeNovedadesCustomFromSchema(r io.Reader, schema string) (Novedades
 
 func writeNovedadesCustom(r NovedadesCustom, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.NumeroEnvio, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.NumeroInterno, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Mensaje, w)
+	err = writeUnionNullTraza(r.Traza, w)
 	if err != nil {
 		return err
 	}
@@ -80,11 +66,11 @@ func (r NovedadesCustom) Serialize(w io.Writer) error {
 }
 
 func (r NovedadesCustom) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mensaje\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadesCustom\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.NovedadesCustom.Events.NovedadesCustom\",\"type\":\"record\"}"
 }
 
 func (r NovedadesCustom) SchemaName() string {
-	return "Andreani.NovedadesCustom.Events.Record.NovedadesCustom"
+	return "Andreani.NovedadesCustom.Events.NovedadesCustom"
 }
 
 func (_ NovedadesCustom) SetBoolean(v bool)    { panic("Unsupported operation") }
@@ -99,17 +85,9 @@ func (_ NovedadesCustom) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *NovedadesCustom) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.NumeroEnvio = NewUnionNullString()
+		r.Traza = NewUnionNullTraza()
 
-		return r.NumeroEnvio
-	case 1:
-		r.NumeroInterno = NewUnionNullString()
-
-		return r.NumeroInterno
-	case 2:
-		r.Mensaje = NewUnionNullString()
-
-		return r.Mensaje
+		return r.Traza
 	}
 	panic("Unknown field index")
 }
@@ -117,13 +95,7 @@ func (r *NovedadesCustom) Get(i int) types.Field {
 func (r *NovedadesCustom) SetDefault(i int) {
 	switch i {
 	case 0:
-		r.NumeroEnvio = nil
-		return
-	case 1:
-		r.NumeroInterno = nil
-		return
-	case 2:
-		r.Mensaje = nil
+		r.Traza = nil
 		return
 	}
 	panic("Unknown field index")
@@ -132,13 +104,7 @@ func (r *NovedadesCustom) SetDefault(i int) {
 func (r *NovedadesCustom) NullField(i int) {
 	switch i {
 	case 0:
-		r.NumeroEnvio = nil
-		return
-	case 1:
-		r.NumeroInterno = nil
-		return
-	case 2:
-		r.Mensaje = nil
+		r.Traza = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -156,15 +122,7 @@ func (_ NovedadesCustom) AvroCRC64Fingerprint() []byte {
 func (r NovedadesCustom) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["NumeroEnvio"], err = json.Marshal(r.NumeroEnvio)
-	if err != nil {
-		return nil, err
-	}
-	output["NumeroInterno"], err = json.Marshal(r.NumeroInterno)
-	if err != nil {
-		return nil, err
-	}
-	output["Mensaje"], err = json.Marshal(r.Mensaje)
+	output["traza"], err = json.Marshal(r.Traza)
 	if err != nil {
 		return nil, err
 	}
@@ -179,52 +137,20 @@ func (r *NovedadesCustom) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["NumeroEnvio"]; ok {
+		if v, ok := fields["traza"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroEnvio); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Traza); err != nil {
 			return err
 		}
 	} else {
-		r.NumeroEnvio = NewUnionNullString()
+		r.Traza = NewUnionNullTraza()
 
-		r.NumeroEnvio = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["NumeroInterno"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroInterno); err != nil {
-			return err
-		}
-	} else {
-		r.NumeroInterno = NewUnionNullString()
-
-		r.NumeroInterno = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Mensaje"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Mensaje); err != nil {
-			return err
-		}
-	} else {
-		r.Mensaje = NewUnionNullString()
-
-		r.Mensaje = nil
+		r.Traza = nil
 	}
 	return nil
 }
