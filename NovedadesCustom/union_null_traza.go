@@ -84,7 +84,7 @@ func DeserializeUnionNullTrazaFromSchema(r io.Reader, schema string) (*UnionNull
 }
 
 func (r *UnionNullTraza) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Common\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullTraza) SetBoolean(v bool)   { panic("Unsupported operation") }
@@ -125,7 +125,7 @@ func (r *UnionNullTraza) MarshalJSON() ([]byte, error) {
 
 	switch r.UnionType {
 	case UnionNullTrazaTypeEnumTraza:
-		return json.Marshal(map[string]interface{}{"Andreani.NovedadesCustom.Common.Traza": r.Traza})
+		return json.Marshal(map[string]interface{}{"Andreani.NovedadesCustom.Events.Common.Traza": r.Traza})
 	}
 	return nil, fmt.Errorf("invalid value for *UnionNullTraza")
 }
@@ -139,7 +139,7 @@ func (r *UnionNullTraza) UnmarshalJSON(data []byte) error {
 	if len(fields) > 1 {
 		return fmt.Errorf("more than one type supplied for union")
 	}
-	if value, ok := fields["Andreani.NovedadesCustom.Common.Traza"]; ok {
+	if value, ok := fields["Andreani.NovedadesCustom.Events.Common.Traza"]; ok {
 		r.UnionType = 1
 		return json.Unmarshal([]byte(value), &r.Traza)
 	}
