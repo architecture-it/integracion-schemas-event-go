@@ -21,7 +21,7 @@ type NovedadesCustom struct {
 	Traza *UnionNullTraza `json:"traza"`
 }
 
-const NovedadesCustomAvroCRC64Fingerprint = "5Zb\x9cS\xa2\xb1\xcb"
+const NovedadesCustomAvroCRC64Fingerprint = "Cm\xd7\xfb\xde\xe1\x9c3"
 
 func NewNovedadesCustom() NovedadesCustom {
 	r := NovedadesCustom{}
@@ -66,11 +66,11 @@ func (r NovedadesCustom) Serialize(w io.Writer) error {
 }
 
 func (r NovedadesCustom) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.NovedadesCustom.Events.NovedadesCustom\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadesCustom\",\"type\":\"record\"}"
 }
 
 func (r NovedadesCustom) SchemaName() string {
-	return "Andreani.NovedadesCustom.Events.NovedadesCustom"
+	return "Andreani.NovedadesCustom.Events.Record.NovedadesCustom"
 }
 
 func (_ NovedadesCustom) SetBoolean(v bool)    { panic("Unsupported operation") }
