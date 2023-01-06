@@ -26,7 +26,7 @@ type Traza struct {
 
 	NumeroDeContratoInterno *UnionNullString `json:"NumeroDeContratoInterno"`
 
-	Cuando int64 `json:"cuando"`
+	Cuando int64 `json:"Cuando"`
 
 	CicloDelEnvio *UnionNullString `json:"CicloDelEnvio"`
 
@@ -37,7 +37,7 @@ type Traza struct {
 	DatosAdicionales *UnionNullArrayMetadata `json:"DatosAdicionales"`
 }
 
-const TrazaAvroCRC64Fingerprint = "Tg\x14\xc5\x03t1\v"
+const TrazaAvroCRC64Fingerprint = "j&B~\xe0*\xf3I"
 
 func NewTraza() Traza {
 	r := Traza{}
@@ -121,7 +121,7 @@ func (r Traza) Serialize(w io.Writer) error {
 }
 
 func (r Traza) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Value\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadata\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.NovedadesCustom.Events.Common.Traza\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Value\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadata\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.NovedadesCustom.Events.Common.Traza\",\"type\":\"record\"}"
 }
 
 func (r Traza) SchemaName() string {
@@ -268,7 +268,7 @@ func (r Traza) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["cuando"], err = json.Marshal(r.Cuando)
+	output["Cuando"], err = json.Marshal(r.Cuando)
 	if err != nil {
 		return nil, err
 	}
@@ -363,7 +363,7 @@ func (r *Traza) UnmarshalJSON(data []byte) error {
 		r.NumeroDeContratoInterno = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cuando"]; ok {
+		if v, ok := fields["Cuando"]; ok {
 			return v
 		}
 		return nil
@@ -374,7 +374,7 @@ func (r *Traza) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cuando")
+		return fmt.Errorf("no value specified for Cuando")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CicloDelEnvio"]; ok {
