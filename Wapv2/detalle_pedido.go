@@ -20,6 +20,10 @@ var _ = fmt.Printf
 type DetallePedido struct {
 	Articulo Articulo `json:"articulo"`
 
+	Almacen string `json:"almacen"`
+
+	ContratoWarehouse *UnionNullString `json:"contratoWarehouse"`
+
 	Numerodelinea *UnionNullString `json:"numerodelinea"`
 
 	Tipoacondicionamientoescundario *UnionNullString `json:"tipoacondicionamientoescundario"`
@@ -27,12 +31,13 @@ type DetallePedido struct {
 	Admitepickingparcial *UnionNullString `json:"admitepickingparcial"`
 }
 
-const DetallePedidoAvroCRC64Fingerprint = "\x8da\xf9)\xef`\x01)"
+const DetallePedidoAvroCRC64Fingerprint = ":\x0f\t\xb6\x8a4\x03\x84"
 
 func NewDetallePedido() DetallePedido {
 	r := DetallePedido{}
 	r.Articulo = NewArticulo()
 
+	r.ContratoWarehouse = nil
 	r.Admitepickingparcial = nil
 	return r
 }
@@ -66,6 +71,14 @@ func writeDetallePedido(r DetallePedido, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Almacen, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ContratoWarehouse, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Numerodelinea, w)
 	if err != nil {
 		return err
@@ -86,7 +99,7 @@ func (r DetallePedido) Serialize(w io.Writer) error {
 }
 
 func (r DetallePedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"contratoWarehouse\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.DetallePedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"contratoWarehouse\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"almacen\",\"type\":\"string\"},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.DetallePedido\",\"type\":\"record\"}"
 }
 
 func (r DetallePedido) SchemaName() string {
@@ -112,14 +125,23 @@ func (r *DetallePedido) Get(i int) types.Field {
 		return w
 
 	case 1:
+		w := types.String{Target: &r.Almacen}
+
+		return w
+
+	case 2:
+		r.ContratoWarehouse = NewUnionNullString()
+
+		return r.ContratoWarehouse
+	case 3:
 		r.Numerodelinea = NewUnionNullString()
 
 		return r.Numerodelinea
-	case 2:
+	case 4:
 		r.Tipoacondicionamientoescundario = NewUnionNullString()
 
 		return r.Tipoacondicionamientoescundario
-	case 3:
+	case 5:
 		r.Admitepickingparcial = NewUnionNullString()
 
 		return r.Admitepickingparcial
@@ -129,7 +151,10 @@ func (r *DetallePedido) Get(i int) types.Field {
 
 func (r *DetallePedido) SetDefault(i int) {
 	switch i {
-	case 3:
+	case 2:
+		r.ContratoWarehouse = nil
+		return
+	case 5:
 		r.Admitepickingparcial = nil
 		return
 	}
@@ -138,13 +163,16 @@ func (r *DetallePedido) SetDefault(i int) {
 
 func (r *DetallePedido) NullField(i int) {
 	switch i {
-	case 1:
-		r.Numerodelinea = nil
-		return
 	case 2:
-		r.Tipoacondicionamientoescundario = nil
+		r.ContratoWarehouse = nil
 		return
 	case 3:
+		r.Numerodelinea = nil
+		return
+	case 4:
+		r.Tipoacondicionamientoescundario = nil
+		return
+	case 5:
 		r.Admitepickingparcial = nil
 		return
 	}
@@ -164,6 +192,14 @@ func (r DetallePedido) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["articulo"], err = json.Marshal(r.Articulo)
+	if err != nil {
+		return nil, err
+	}
+	output["almacen"], err = json.Marshal(r.Almacen)
+	if err != nil {
+		return nil, err
+	}
+	output["contratoWarehouse"], err = json.Marshal(r.ContratoWarehouse)
 	if err != nil {
 		return nil, err
 	}
@@ -202,6 +238,36 @@ func (r *DetallePedido) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for articulo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["almacen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Almacen); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for almacen")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["contratoWarehouse"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContratoWarehouse); err != nil {
+			return err
+		}
+	} else {
+		r.ContratoWarehouse = NewUnionNullString()
+
+		r.ContratoWarehouse = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numerodelinea"]; ok {
