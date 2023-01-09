@@ -33,9 +33,11 @@ type Traza struct {
 	Motivo *UnionNullString `json:"Motivo"`
 
 	SubMotivo *UnionNullString `json:"SubMotivo"`
+
+	Remitente *UnionNullString `json:"Remitente"`
 }
 
-const TrazaAvroCRC64Fingerprint = "!\xd1K\x05Q\xbf\x84\f"
+const TrazaAvroCRC64Fingerprint = "@\xc1\x98\x9fYv\x82\xdf"
 
 func NewTraza() Traza {
 	r := Traza{}
@@ -46,6 +48,7 @@ func NewTraza() Traza {
 	r.CicloDelEnvio = nil
 	r.Motivo = nil
 	r.SubMotivo = nil
+	r.Remitente = nil
 	return r
 }
 
@@ -106,6 +109,10 @@ func writeTraza(r Traza, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Remitente, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -114,7 +121,7 @@ func (r Traza) Serialize(w io.Writer) error {
 }
 
 func (r Traza) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Common.Traza\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Common.Traza\",\"type\":\"record\"}"
 }
 
 func (r Traza) SchemaName() string {
@@ -165,6 +172,10 @@ func (r *Traza) Get(i int) types.Field {
 		r.SubMotivo = NewUnionNullString()
 
 		return r.SubMotivo
+	case 8:
+		r.Remitente = NewUnionNullString()
+
+		return r.Remitente
 	}
 	panic("Unknown field index")
 }
@@ -192,6 +203,9 @@ func (r *Traza) SetDefault(i int) {
 	case 7:
 		r.SubMotivo = nil
 		return
+	case 8:
+		r.Remitente = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -218,6 +232,9 @@ func (r *Traza) NullField(i int) {
 		return
 	case 7:
 		r.SubMotivo = nil
+		return
+	case 8:
+		r.Remitente = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -264,6 +281,10 @@ func (r Traza) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["SubMotivo"], err = json.Marshal(r.SubMotivo)
+	if err != nil {
+		return nil, err
+	}
+	output["Remitente"], err = json.Marshal(r.Remitente)
 	if err != nil {
 		return nil, err
 	}
@@ -402,6 +423,22 @@ func (r *Traza) UnmarshalJSON(data []byte) error {
 		r.SubMotivo = NewUnionNullString()
 
 		r.SubMotivo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Remitente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Remitente); err != nil {
+			return err
+		}
+	} else {
+		r.Remitente = NewUnionNullString()
+
+		r.Remitente = nil
 	}
 	return nil
 }
