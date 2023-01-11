@@ -26,6 +26,8 @@ type Cabecera struct {
 
 	CodigoDestinatario string `json:"CodigoDestinatario"`
 
+	TipoDeIntegracion *UnionNullString `json:"TipoDeIntegracion"`
+
 	Acondicionamiento *UnionNullString `json:"Acondicionamiento"`
 
 	AlmacenCliente *UnionNullString `json:"AlmacenCliente"`
@@ -46,7 +48,7 @@ type Cabecera struct {
 
 	AdmiteCambioLoteDirigido *UnionNullString `json:"AdmiteCambioLoteDirigido"`
 
-	AdmitePickingParcial *UnionNullString `json:"AdmitePickingParcial"`
+	NoAdmitePickingParcial *UnionNullString `json:"NoAdmitePickingParcial"`
 
 	ImprimeDocumentacion *UnionNullString `json:"ImprimeDocumentacion"`
 
@@ -147,7 +149,7 @@ type Cabecera struct {
 	CantidadPickeadaTotal float32 `json:"CantidadPickeadaTotal"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\x8b\xc2g-\x1e(\xd7L"
+const CabeceraAvroCRC64Fingerprint = "\x8c\xc5{\x18S\xfdc\x1b"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -195,6 +197,10 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.TipoDeIntegracion, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Acondicionamiento, w)
 	if err != nil {
 		return err
@@ -235,7 +241,7 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.AdmitePickingParcial, w)
+	err = writeUnionNullString(r.NoAdmitePickingParcial, w)
 	if err != nil {
 		return err
 	}
@@ -443,7 +449,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDestinatario\",\"type\":\"string\"},{\"name\":\"Acondicionamiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"AlmacenCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"PrioridadApiPlani\",\"type\":[\"null\",\"string\"]},{\"name\":\"CuentaTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"FacturaLegal\",\"type\":[\"null\",\"string\"]},{\"name\":\"FacturaInterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"AdmiteCambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"name\":\"AdmitePickingParcial\",\"type\":[\"null\",\"string\"]},{\"name\":\"ImprimeDocumentacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroCale\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cot\",\"type\":[\"null\",\"string\"]},{\"name\":\"ComprobanteIngresosBrutos\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioAlmacenes\",\"type\":[\"null\",\"string\"]},{\"name\":\"Marketplace\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Destinario\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClientePadre\",\"type\":\"string\"},{\"name\":\"CodigoEstado\",\"type\":\"string\"},{\"name\":\"CodigoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoCodigo\",\"type\":\"string\"},{\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoGrilla\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaEnvioFacturar\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"PrecioValorFC\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"NotasPedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaCita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionPrometida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntregaPlanificada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntregaProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GrupoOrdenes\",\"type\":\"string\"},{\"name\":\"FranjaHorario\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraz\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaEvento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"CreacionPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GlnOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantidadTotal\",\"type\":\"float\"},{\"name\":\"CantidadExpedidaTotal\",\"type\":\"float\"},{\"name\":\"CantidadPickeadaTotal\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhPedidos.Events.PreparacionCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDestinatario\",\"type\":\"string\"},{\"name\":\"TipoDeIntegracion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Acondicionamiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"AlmacenCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"PrioridadApiPlani\",\"type\":[\"null\",\"string\"]},{\"name\":\"CuentaTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"FacturaLegal\",\"type\":[\"null\",\"string\"]},{\"name\":\"FacturaInterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"AdmiteCambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"name\":\"NoAdmitePickingParcial\",\"type\":[\"null\",\"string\"]},{\"name\":\"ImprimeDocumentacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroCale\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cot\",\"type\":[\"null\",\"string\"]},{\"name\":\"ComprobanteIngresosBrutos\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioAlmacenes\",\"type\":[\"null\",\"string\"]},{\"name\":\"Marketplace\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Destinario\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClientePadre\",\"type\":\"string\"},{\"name\":\"CodigoEstado\",\"type\":\"string\"},{\"name\":\"CodigoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoCodigo\",\"type\":\"string\"},{\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoGrilla\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaEnvioFacturar\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"PrecioValorFC\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"NotasPedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaCita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaExpedicionPrometida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntregaPlanificada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaEntregaProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GrupoOrdenes\",\"type\":\"string\"},{\"name\":\"FranjaHorario\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraz\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaEvento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"CreacionPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GlnOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantidadTotal\",\"type\":\"float\"},{\"name\":\"CantidadExpedidaTotal\",\"type\":\"float\"},{\"name\":\"CantidadPickeadaTotal\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhPedidos.Events.PreparacionCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -481,248 +487,252 @@ func (r *Cabecera) Get(i int) types.Field {
 		return w
 
 	case 4:
+		r.TipoDeIntegracion = NewUnionNullString()
+
+		return r.TipoDeIntegracion
+	case 5:
 		r.Acondicionamiento = NewUnionNullString()
 
 		return r.Acondicionamiento
-	case 5:
+	case 6:
 		r.AlmacenCliente = NewUnionNullString()
 
 		return r.AlmacenCliente
-	case 6:
+	case 7:
 		r.PrioridadApiPlani = NewUnionNullString()
 
 		return r.PrioridadApiPlani
-	case 7:
+	case 8:
 		r.CuentaTMS = NewUnionNullString()
 
 		return r.CuentaTMS
-	case 8:
+	case 9:
 		r.ContratoTMS = NewUnionNullString()
 
 		return r.ContratoTMS
-	case 9:
+	case 10:
 		r.FacturaLegal = NewUnionNullString()
 
 		return r.FacturaLegal
-	case 10:
+	case 11:
 		r.FacturaInterna = NewUnionNullString()
 
 		return r.FacturaInterna
-	case 11:
+	case 12:
 		r.TieneGestionCobranza = NewUnionNullString()
 
 		return r.TieneGestionCobranza
-	case 12:
+	case 13:
 		r.ValorSeguro = NewUnionNullString()
 
 		return r.ValorSeguro
-	case 13:
+	case 14:
 		r.AdmiteCambioLoteDirigido = NewUnionNullString()
 
 		return r.AdmiteCambioLoteDirigido
-	case 14:
-		r.AdmitePickingParcial = NewUnionNullString()
-
-		return r.AdmitePickingParcial
 	case 15:
+		r.NoAdmitePickingParcial = NewUnionNullString()
+
+		return r.NoAdmitePickingParcial
+	case 16:
 		r.ImprimeDocumentacion = NewUnionNullString()
 
 		return r.ImprimeDocumentacion
-	case 16:
+	case 17:
 		r.NumeroCale = NewUnionNullString()
 
 		return r.NumeroCale
-	case 17:
+	case 18:
 		r.Cot = NewUnionNullString()
 
 		return r.Cot
-	case 18:
+	case 19:
 		r.ComprobanteIngresosBrutos = NewUnionNullString()
 
 		return r.ComprobanteIngresosBrutos
-	case 19:
+	case 20:
 		r.ContratoServicioAlmacenes = NewUnionNullString()
 
 		return r.ContratoServicioAlmacenes
-	case 20:
+	case 21:
 		r.Marketplace = NewUnionNullString()
 
 		return r.Marketplace
-	case 21:
+	case 22:
 		r.TipoPedidoMatriz = NewUnionNullString()
 
 		return r.TipoPedidoMatriz
-	case 22:
+	case 23:
 		r.Contacto = NewUnionNullString()
 
 		return r.Contacto
-	case 23:
+	case 24:
 		r.Destinario = NewUnionNullString()
 
 		return r.Destinario
-	case 24:
+	case 25:
 		r.DestinatarioCalle = NewUnionNullString()
 
 		return r.DestinatarioCalle
-	case 25:
+	case 26:
 		r.DestinarioNumero = NewUnionNullString()
 
 		return r.DestinarioNumero
-	case 26:
+	case 27:
 		r.DestinatarioPiso = NewUnionNullString()
 
 		return r.DestinatarioPiso
-	case 27:
+	case 28:
 		r.DestinatarioDepartamento = NewUnionNullString()
 
 		return r.DestinatarioDepartamento
-	case 28:
+	case 29:
 		r.DestinatarioGLNDNI = NewUnionNullString()
 
 		return r.DestinatarioGLNDNI
-	case 29:
+	case 30:
 		r.DestinatarioCiudad = NewUnionNullString()
 
 		return r.DestinatarioCiudad
-	case 30:
+	case 31:
 		r.DestinatarioProvincia = NewUnionNullString()
 
 		return r.DestinatarioProvincia
-	case 31:
+	case 32:
 		r.DestinatarioCodigoPostal = NewUnionNullString()
 
 		return r.DestinatarioCodigoPostal
-	case 32:
+	case 33:
 		r.DestinatarioTelefono = NewUnionNullString()
 
 		return r.DestinatarioTelefono
-	case 33:
+	case 34:
 		r.DestinatarioEmail = NewUnionNullString()
 
 		return r.DestinatarioEmail
-	case 34:
+	case 35:
 		r.OrdenCompra = NewUnionNullString()
 
 		return r.OrdenCompra
-	case 35:
+	case 36:
 		w := types.String{Target: &r.ClientePadre}
 
 		return w
 
-	case 36:
+	case 37:
 		w := types.String{Target: &r.CodigoEstado}
 
 		return w
 
-	case 37:
+	case 38:
 		r.CodigoDescripcion = NewUnionNullString()
 
 		return r.CodigoDescripcion
-	case 38:
+	case 39:
 		w := types.String{Target: &r.TipoPedidoCodigo}
 
 		return w
 
-	case 39:
+	case 40:
 		r.TipoPedidoDescripcion = NewUnionNullString()
 
 		return r.TipoPedidoDescripcion
-	case 40:
+	case 41:
 		r.TipoGrilla = NewUnionNullString()
 
 		return r.TipoGrilla
-	case 41:
+	case 42:
 		r.FechaEnvioFacturar = NewUnionNullLong()
 
 		return r.FechaEnvioFacturar
-	case 42:
+	case 43:
 		r.FechaFacturacion = NewUnionNullLong()
 
 		return r.FechaFacturacion
-	case 43:
+	case 44:
 		r.PrecioValorFC = NewUnionNullString()
 
 		return r.PrecioValorFC
-	case 44:
+	case 45:
 		r.NumeroEnvio = NewUnionNullString()
 
 		return r.NumeroEnvio
-	case 45:
+	case 46:
 		r.NotasPedido = NewUnionNullString()
 
 		return r.NotasPedido
-	case 46:
+	case 47:
 		r.FechaCita = NewUnionNullLong()
 
 		return r.FechaCita
-	case 47:
+	case 48:
 		r.FechaEntrega = NewUnionNullLong()
 
 		return r.FechaEntrega
-	case 48:
+	case 49:
 		r.FechaExpedicionSolicitada = NewUnionNullLong()
 
 		return r.FechaExpedicionSolicitada
-	case 49:
+	case 50:
 		r.FechaExpedicionProgramada = NewUnionNullLong()
 
 		return r.FechaExpedicionProgramada
-	case 50:
+	case 51:
 		r.FechaExpedicionPrometida = NewUnionNullLong()
 
 		return r.FechaExpedicionPrometida
-	case 51:
+	case 52:
 		r.FechaEntregaPlanificada = NewUnionNullLong()
 
 		return r.FechaEntregaPlanificada
-	case 52:
+	case 53:
 		r.FechaEntregaProgramada = NewUnionNullLong()
 
 		return r.FechaEntregaProgramada
-	case 53:
+	case 54:
 		w := types.String{Target: &r.GrupoOrdenes}
 
 		return w
 
-	case 54:
+	case 55:
 		r.FranjaHorario = NewUnionNullString()
 
 		return r.FranjaHorario
-	case 55:
+	case 56:
 		r.EstadoOTAcondi = NewUnionNullString()
 
 		return r.EstadoOTAcondi
-	case 56:
+	case 57:
 		r.EstadoOTTraz = NewUnionNullString()
 
 		return r.EstadoOTTraz
-	case 57:
+	case 58:
 		r.FechaEvento = NewUnionNullLong()
 
 		return r.FechaEvento
-	case 58:
+	case 59:
 		r.CreacionPedido = NewUnionNullLong()
 
 		return r.CreacionPedido
-	case 59:
+	case 60:
 		r.FechaPedido = NewUnionNullLong()
 
 		return r.FechaPedido
-	case 60:
+	case 61:
 		r.GlnOrigen = NewUnionNullString()
 
 		return r.GlnOrigen
-	case 61:
+	case 62:
 		w := types.Float{Target: &r.CantidadTotal}
 
 		return w
 
-	case 62:
+	case 63:
 		w := types.Float{Target: &r.CantidadExpedidaTotal}
 
 		return w
 
-	case 63:
+	case 64:
 		w := types.Float{Target: &r.CantidadPickeadaTotal}
 
 		return w
@@ -743,162 +753,165 @@ func (r *Cabecera) NullField(i int) {
 		r.Remito = nil
 		return
 	case 4:
-		r.Acondicionamiento = nil
+		r.TipoDeIntegracion = nil
 		return
 	case 5:
-		r.AlmacenCliente = nil
+		r.Acondicionamiento = nil
 		return
 	case 6:
-		r.PrioridadApiPlani = nil
+		r.AlmacenCliente = nil
 		return
 	case 7:
-		r.CuentaTMS = nil
+		r.PrioridadApiPlani = nil
 		return
 	case 8:
-		r.ContratoTMS = nil
+		r.CuentaTMS = nil
 		return
 	case 9:
-		r.FacturaLegal = nil
+		r.ContratoTMS = nil
 		return
 	case 10:
-		r.FacturaInterna = nil
+		r.FacturaLegal = nil
 		return
 	case 11:
-		r.TieneGestionCobranza = nil
+		r.FacturaInterna = nil
 		return
 	case 12:
-		r.ValorSeguro = nil
+		r.TieneGestionCobranza = nil
 		return
 	case 13:
-		r.AdmiteCambioLoteDirigido = nil
+		r.ValorSeguro = nil
 		return
 	case 14:
-		r.AdmitePickingParcial = nil
+		r.AdmiteCambioLoteDirigido = nil
 		return
 	case 15:
-		r.ImprimeDocumentacion = nil
+		r.NoAdmitePickingParcial = nil
 		return
 	case 16:
-		r.NumeroCale = nil
+		r.ImprimeDocumentacion = nil
 		return
 	case 17:
-		r.Cot = nil
+		r.NumeroCale = nil
 		return
 	case 18:
-		r.ComprobanteIngresosBrutos = nil
+		r.Cot = nil
 		return
 	case 19:
-		r.ContratoServicioAlmacenes = nil
+		r.ComprobanteIngresosBrutos = nil
 		return
 	case 20:
-		r.Marketplace = nil
+		r.ContratoServicioAlmacenes = nil
 		return
 	case 21:
-		r.TipoPedidoMatriz = nil
+		r.Marketplace = nil
 		return
 	case 22:
-		r.Contacto = nil
+		r.TipoPedidoMatriz = nil
 		return
 	case 23:
-		r.Destinario = nil
+		r.Contacto = nil
 		return
 	case 24:
-		r.DestinatarioCalle = nil
+		r.Destinario = nil
 		return
 	case 25:
-		r.DestinarioNumero = nil
+		r.DestinatarioCalle = nil
 		return
 	case 26:
-		r.DestinatarioPiso = nil
+		r.DestinarioNumero = nil
 		return
 	case 27:
-		r.DestinatarioDepartamento = nil
+		r.DestinatarioPiso = nil
 		return
 	case 28:
-		r.DestinatarioGLNDNI = nil
+		r.DestinatarioDepartamento = nil
 		return
 	case 29:
-		r.DestinatarioCiudad = nil
+		r.DestinatarioGLNDNI = nil
 		return
 	case 30:
-		r.DestinatarioProvincia = nil
+		r.DestinatarioCiudad = nil
 		return
 	case 31:
-		r.DestinatarioCodigoPostal = nil
+		r.DestinatarioProvincia = nil
 		return
 	case 32:
-		r.DestinatarioTelefono = nil
+		r.DestinatarioCodigoPostal = nil
 		return
 	case 33:
-		r.DestinatarioEmail = nil
+		r.DestinatarioTelefono = nil
 		return
 	case 34:
+		r.DestinatarioEmail = nil
+		return
+	case 35:
 		r.OrdenCompra = nil
 		return
-	case 37:
+	case 38:
 		r.CodigoDescripcion = nil
 		return
-	case 39:
+	case 40:
 		r.TipoPedidoDescripcion = nil
 		return
-	case 40:
+	case 41:
 		r.TipoGrilla = nil
 		return
-	case 41:
+	case 42:
 		r.FechaEnvioFacturar = nil
 		return
-	case 42:
+	case 43:
 		r.FechaFacturacion = nil
 		return
-	case 43:
+	case 44:
 		r.PrecioValorFC = nil
 		return
-	case 44:
+	case 45:
 		r.NumeroEnvio = nil
 		return
-	case 45:
+	case 46:
 		r.NotasPedido = nil
 		return
-	case 46:
+	case 47:
 		r.FechaCita = nil
 		return
-	case 47:
+	case 48:
 		r.FechaEntrega = nil
 		return
-	case 48:
+	case 49:
 		r.FechaExpedicionSolicitada = nil
 		return
-	case 49:
+	case 50:
 		r.FechaExpedicionProgramada = nil
 		return
-	case 50:
+	case 51:
 		r.FechaExpedicionPrometida = nil
 		return
-	case 51:
+	case 52:
 		r.FechaEntregaPlanificada = nil
 		return
-	case 52:
+	case 53:
 		r.FechaEntregaProgramada = nil
 		return
-	case 54:
+	case 55:
 		r.FranjaHorario = nil
 		return
-	case 55:
+	case 56:
 		r.EstadoOTAcondi = nil
 		return
-	case 56:
+	case 57:
 		r.EstadoOTTraz = nil
 		return
-	case 57:
+	case 58:
 		r.FechaEvento = nil
 		return
-	case 58:
+	case 59:
 		r.CreacionPedido = nil
 		return
-	case 59:
+	case 60:
 		r.FechaPedido = nil
 		return
-	case 60:
+	case 61:
 		r.GlnOrigen = nil
 		return
 	}
@@ -930,6 +943,10 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CodigoDestinatario"], err = json.Marshal(r.CodigoDestinatario)
+	if err != nil {
+		return nil, err
+	}
+	output["TipoDeIntegracion"], err = json.Marshal(r.TipoDeIntegracion)
 	if err != nil {
 		return nil, err
 	}
@@ -973,7 +990,7 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["AdmitePickingParcial"], err = json.Marshal(r.AdmitePickingParcial)
+	output["NoAdmitePickingParcial"], err = json.Marshal(r.NoAdmitePickingParcial)
 	if err != nil {
 		return nil, err
 	}
@@ -1240,6 +1257,20 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for CodigoDestinatario")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["TipoDeIntegracion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoDeIntegracion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for TipoDeIntegracion")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["Acondicionamiento"]; ok {
 			return v
 		}
@@ -1380,18 +1411,18 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for AdmiteCambioLoteDirigido")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["AdmitePickingParcial"]; ok {
+		if v, ok := fields["NoAdmitePickingParcial"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AdmitePickingParcial); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.NoAdmitePickingParcial); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for AdmitePickingParcial")
+		return fmt.Errorf("no value specified for NoAdmitePickingParcial")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ImprimeDocumentacion"]; ok {
