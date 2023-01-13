@@ -36,10 +36,12 @@ type Traza struct {
 
 	Remitente *UnionNullString `json:"Remitente"`
 
+	EstadoDelEnvio *UnionNullString `json:"EstadoDelEnvio"`
+
 	SucursalAsociada *UnionNullString `json:"SucursalAsociada"`
 }
 
-const TrazaAvroCRC64Fingerprint = "\xafo \x8d\xb4X\xb4J"
+const TrazaAvroCRC64Fingerprint = "\xa6\r\xaaن\xb1\x922"
 
 func NewTraza() Traza {
 	r := Traza{}
@@ -51,6 +53,7 @@ func NewTraza() Traza {
 	r.Motivo = nil
 	r.SubMotivo = nil
 	r.Remitente = nil
+	r.EstadoDelEnvio = nil
 	r.SucursalAsociada = nil
 	return r
 }
@@ -116,6 +119,10 @@ func writeTraza(r Traza, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.EstadoDelEnvio, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.SucursalAsociada, w)
 	if err != nil {
 		return err
@@ -128,7 +135,7 @@ func (r Traza) Serialize(w io.Writer) error {
 }
 
 func (r Traza) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Common.Traza\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Common.Traza\",\"type\":\"record\"}"
 }
 
 func (r Traza) SchemaName() string {
@@ -184,6 +191,10 @@ func (r *Traza) Get(i int) types.Field {
 
 		return r.Remitente
 	case 9:
+		r.EstadoDelEnvio = NewUnionNullString()
+
+		return r.EstadoDelEnvio
+	case 10:
 		r.SucursalAsociada = NewUnionNullString()
 
 		return r.SucursalAsociada
@@ -218,6 +229,9 @@ func (r *Traza) SetDefault(i int) {
 		r.Remitente = nil
 		return
 	case 9:
+		r.EstadoDelEnvio = nil
+		return
+	case 10:
 		r.SucursalAsociada = nil
 		return
 	}
@@ -251,6 +265,9 @@ func (r *Traza) NullField(i int) {
 		r.Remitente = nil
 		return
 	case 9:
+		r.EstadoDelEnvio = nil
+		return
+	case 10:
 		r.SucursalAsociada = nil
 		return
 	}
@@ -302,6 +319,10 @@ func (r Traza) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Remitente"], err = json.Marshal(r.Remitente)
+	if err != nil {
+		return nil, err
+	}
+	output["EstadoDelEnvio"], err = json.Marshal(r.EstadoDelEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -460,6 +481,22 @@ func (r *Traza) UnmarshalJSON(data []byte) error {
 		r.Remitente = NewUnionNullString()
 
 		r.Remitente = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EstadoDelEnvio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EstadoDelEnvio); err != nil {
+			return err
+		}
+	} else {
+		r.EstadoDelEnvio = NewUnionNullString()
+
+		r.EstadoDelEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SucursalAsociada"]; ok {
