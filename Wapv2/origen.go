@@ -22,6 +22,8 @@ type Origen struct {
 
 	Calle *UnionNullString `json:"calle"`
 
+	Numero *UnionNullString `json:"numero"`
+
 	CodigoPostal *UnionNullString `json:"codigoPostal"`
 
 	NombreProvincia *UnionNullString `json:"nombreProvincia"`
@@ -37,12 +39,13 @@ type Origen struct {
 	DatosAdicionales *UnionNullListaDePropiedades `json:"datosAdicionales"`
 }
 
-const OrigenAvroCRC64Fingerprint = "\xe5I^\r \x13\x9a\xa4"
+const OrigenAvroCRC64Fingerprint = "\xb0KɊ\xd7v-\xbc"
 
 func NewOrigen() Origen {
 	r := Origen{}
 	r.IdOrigen = nil
 	r.Calle = nil
+	r.Numero = nil
 	r.CodigoPostal = nil
 	r.NombreProvincia = nil
 	r.Localidad = nil
@@ -86,6 +89,10 @@ func writeOrigen(r Origen, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Numero, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.CodigoPostal, w)
 	if err != nil {
 		return err
@@ -122,7 +129,7 @@ func (r Origen) Serialize(w io.Writer) error {
 }
 
 func (r Origen) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"idOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.Origen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"idOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.Origen\",\"type\":\"record\"}"
 }
 
 func (r Origen) SchemaName() string {
@@ -149,30 +156,34 @@ func (r *Origen) Get(i int) types.Field {
 
 		return r.Calle
 	case 2:
+		r.Numero = NewUnionNullString()
+
+		return r.Numero
+	case 3:
 		r.CodigoPostal = NewUnionNullString()
 
 		return r.CodigoPostal
-	case 3:
+	case 4:
 		r.NombreProvincia = NewUnionNullString()
 
 		return r.NombreProvincia
-	case 4:
+	case 5:
 		r.Localidad = NewUnionNullString()
 
 		return r.Localidad
-	case 5:
+	case 6:
 		r.Piso = NewUnionNullString()
 
 		return r.Piso
-	case 6:
+	case 7:
 		r.Departamento = NewUnionNullString()
 
 		return r.Departamento
-	case 7:
+	case 8:
 		r.Contacto = NewUnionNullString()
 
 		return r.Contacto
-	case 8:
+	case 9:
 		r.DatosAdicionales = NewUnionNullListaDePropiedades()
 
 		return r.DatosAdicionales
@@ -189,24 +200,27 @@ func (r *Origen) SetDefault(i int) {
 		r.Calle = nil
 		return
 	case 2:
-		r.CodigoPostal = nil
+		r.Numero = nil
 		return
 	case 3:
-		r.NombreProvincia = nil
+		r.CodigoPostal = nil
 		return
 	case 4:
-		r.Localidad = nil
+		r.NombreProvincia = nil
 		return
 	case 5:
-		r.Piso = nil
+		r.Localidad = nil
 		return
 	case 6:
-		r.Departamento = nil
+		r.Piso = nil
 		return
 	case 7:
-		r.Contacto = nil
+		r.Departamento = nil
 		return
 	case 8:
+		r.Contacto = nil
+		return
+	case 9:
 		r.DatosAdicionales = nil
 		return
 	}
@@ -222,24 +236,27 @@ func (r *Origen) NullField(i int) {
 		r.Calle = nil
 		return
 	case 2:
-		r.CodigoPostal = nil
+		r.Numero = nil
 		return
 	case 3:
-		r.NombreProvincia = nil
+		r.CodigoPostal = nil
 		return
 	case 4:
-		r.Localidad = nil
+		r.NombreProvincia = nil
 		return
 	case 5:
-		r.Piso = nil
+		r.Localidad = nil
 		return
 	case 6:
-		r.Departamento = nil
+		r.Piso = nil
 		return
 	case 7:
-		r.Contacto = nil
+		r.Departamento = nil
 		return
 	case 8:
+		r.Contacto = nil
+		return
+	case 9:
 		r.DatosAdicionales = nil
 		return
 	}
@@ -263,6 +280,10 @@ func (r Origen) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["calle"], err = json.Marshal(r.Calle)
+	if err != nil {
+		return nil, err
+	}
+	output["numero"], err = json.Marshal(r.Numero)
 	if err != nil {
 		return nil, err
 	}
@@ -335,6 +356,22 @@ func (r *Origen) UnmarshalJSON(data []byte) error {
 		r.Calle = NewUnionNullString()
 
 		r.Calle = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["numero"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Numero); err != nil {
+			return err
+		}
+	} else {
+		r.Numero = NewUnionNullString()
+
+		r.Numero = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoPostal"]; ok {
