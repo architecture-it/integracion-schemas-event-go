@@ -28,8 +28,6 @@ type ArticuloAsn struct {
 
 	UbicacionDestino *UnionNullString `json:"ubicacionDestino"`
 
-	AvisoContramuestra *UnionNullString `json:"avisoContramuestra"`
-
 	PaqueteLote *UnionNullString `json:"paqueteLote"`
 
 	FechaFabricacion *UnionNullLong `json:"fechaFabricacion"`
@@ -43,11 +41,9 @@ type ArticuloAsn struct {
 	NomenclaturaServicio *UnionNullString `json:"nomenclaturaServicio"`
 
 	DescripcionServicio *UnionNullString `json:"descripcionServicio"`
-
-	VidaUtilLote *UnionNullString `json:"vidaUtilLote"`
 }
 
-const ArticuloAsnAvroCRC64Fingerprint = "\xc94\xa5ӥC;f"
+const ArticuloAsnAvroCRC64Fingerprint = "\xee렁Ï\x19\x9f"
 
 func NewArticuloAsn() ArticuloAsn {
 	r := ArticuloAsn{}
@@ -56,7 +52,6 @@ func NewArticuloAsn() ArticuloAsn {
 	r.Lote = NewLoteAsn()
 
 	r.UbicacionDestino = nil
-	r.AvisoContramuestra = nil
 	r.PaqueteLote = nil
 	r.FechaFabricacion = nil
 	r.ProdTrazable = nil
@@ -64,7 +59,6 @@ func NewArticuloAsn() ArticuloAsn {
 	r.EntrarAntesDe = nil
 	r.NomenclaturaServicio = nil
 	r.DescripcionServicio = nil
-	r.VidaUtilLote = nil
 	return r
 }
 
@@ -113,10 +107,6 @@ func writeArticuloAsn(r ArticuloAsn, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.AvisoContramuestra, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.PaqueteLote, w)
 	if err != nil {
 		return err
@@ -145,10 +135,6 @@ func writeArticuloAsn(r ArticuloAsn, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.VidaUtilLote, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -157,7 +143,7 @@ func (r ArticuloAsn) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloAsn) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":\"Andreani.Wapv2.Events.Record.Metadato\",\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"LoteAsn\",\"type\":\"record\"}},{\"default\":null,\"name\":\"ubicacionDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"avisoContramuestra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"paqueteLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"prodTrazable\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"consumirAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"entrarAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"nomenclaturaServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vidaUtilLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloAsn\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":\"Andreani.Wapv2.Events.Record.Metadato\",\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"LoteAsn\",\"type\":\"record\"}},{\"default\":null,\"name\":\"ubicacionDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"paqueteLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"prodTrazable\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"consumirAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"entrarAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"nomenclaturaServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionServicio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloAsn\",\"type\":\"record\"}"
 }
 
 func (r ArticuloAsn) SchemaName() string {
@@ -200,41 +186,33 @@ func (r *ArticuloAsn) Get(i int) types.Field {
 
 		return r.UbicacionDestino
 	case 5:
-		r.AvisoContramuestra = NewUnionNullString()
-
-		return r.AvisoContramuestra
-	case 6:
 		r.PaqueteLote = NewUnionNullString()
 
 		return r.PaqueteLote
-	case 7:
+	case 6:
 		r.FechaFabricacion = NewUnionNullLong()
 
 		return r.FechaFabricacion
-	case 8:
+	case 7:
 		r.ProdTrazable = NewUnionNullString()
 
 		return r.ProdTrazable
-	case 9:
+	case 8:
 		r.ConsumirAntesDe = NewUnionNullLong()
 
 		return r.ConsumirAntesDe
-	case 10:
+	case 9:
 		r.EntrarAntesDe = NewUnionNullLong()
 
 		return r.EntrarAntesDe
-	case 11:
+	case 10:
 		r.NomenclaturaServicio = NewUnionNullString()
 
 		return r.NomenclaturaServicio
-	case 12:
+	case 11:
 		r.DescripcionServicio = NewUnionNullString()
 
 		return r.DescripcionServicio
-	case 13:
-		r.VidaUtilLote = NewUnionNullString()
-
-		return r.VidaUtilLote
 	}
 	panic("Unknown field index")
 }
@@ -251,31 +229,25 @@ func (r *ArticuloAsn) SetDefault(i int) {
 		r.UbicacionDestino = nil
 		return
 	case 5:
-		r.AvisoContramuestra = nil
-		return
-	case 6:
 		r.PaqueteLote = nil
 		return
-	case 7:
+	case 6:
 		r.FechaFabricacion = nil
 		return
-	case 8:
+	case 7:
 		r.ProdTrazable = nil
 		return
-	case 9:
+	case 8:
 		r.ConsumirAntesDe = nil
 		return
-	case 10:
+	case 9:
 		r.EntrarAntesDe = nil
 		return
-	case 11:
+	case 10:
 		r.NomenclaturaServicio = nil
 		return
-	case 12:
+	case 11:
 		r.DescripcionServicio = nil
-		return
-	case 13:
-		r.VidaUtilLote = nil
 		return
 	}
 	panic("Unknown field index")
@@ -293,31 +265,25 @@ func (r *ArticuloAsn) NullField(i int) {
 		r.UbicacionDestino = nil
 		return
 	case 5:
-		r.AvisoContramuestra = nil
-		return
-	case 6:
 		r.PaqueteLote = nil
 		return
-	case 7:
+	case 6:
 		r.FechaFabricacion = nil
 		return
-	case 8:
+	case 7:
 		r.ProdTrazable = nil
 		return
-	case 9:
+	case 8:
 		r.ConsumirAntesDe = nil
 		return
-	case 10:
+	case 9:
 		r.EntrarAntesDe = nil
 		return
-	case 11:
+	case 10:
 		r.NomenclaturaServicio = nil
 		return
-	case 12:
+	case 11:
 		r.DescripcionServicio = nil
-		return
-	case 13:
-		r.VidaUtilLote = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -355,10 +321,6 @@ func (r ArticuloAsn) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["avisoContramuestra"], err = json.Marshal(r.AvisoContramuestra)
-	if err != nil {
-		return nil, err
-	}
 	output["paqueteLote"], err = json.Marshal(r.PaqueteLote)
 	if err != nil {
 		return nil, err
@@ -384,10 +346,6 @@ func (r ArticuloAsn) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["descripcionServicio"], err = json.Marshal(r.DescripcionServicio)
-	if err != nil {
-		return nil, err
-	}
-	output["vidaUtilLote"], err = json.Marshal(r.VidaUtilLote)
 	if err != nil {
 		return nil, err
 	}
@@ -476,22 +434,6 @@ func (r *ArticuloAsn) UnmarshalJSON(data []byte) error {
 		r.UbicacionDestino = NewUnionNullString()
 
 		r.UbicacionDestino = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["avisoContramuestra"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AvisoContramuestra); err != nil {
-			return err
-		}
-	} else {
-		r.AvisoContramuestra = NewUnionNullString()
-
-		r.AvisoContramuestra = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["paqueteLote"]; ok {
@@ -604,22 +546,6 @@ func (r *ArticuloAsn) UnmarshalJSON(data []byte) error {
 		r.DescripcionServicio = NewUnionNullString()
 
 		r.DescripcionServicio = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["vidaUtilLote"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.VidaUtilLote); err != nil {
-			return err
-		}
-	} else {
-		r.VidaUtilLote = NewUnionNullString()
-
-		r.VidaUtilLote = nil
 	}
 	return nil
 }
