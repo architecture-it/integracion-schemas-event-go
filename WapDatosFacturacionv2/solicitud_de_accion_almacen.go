@@ -20,16 +20,16 @@ var _ = fmt.Printf
 type SolicitudDeAccionAlmacen struct {
 	IdTransaccion string `json:"IdTransaccion"`
 
-	Contrato string `json:"Contrato"`
+	ContratoDistribución string `json:"ContratoDistribución"`
 
 	Almacen string `json:"Almacen"`
 
-	Planta string `json:"Planta"`
+	Instancia string `json:"Instancia"`
 
 	EventoDeNegocio EventoDeNegocio `json:"EventoDeNegocio"`
 }
 
-const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "\x14`^\x98[b\xe2%"
+const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "\xf0\x15\xb7\xfaזNo"
 
 func NewSolicitudDeAccionAlmacen() SolicitudDeAccionAlmacen {
 	r := SolicitudDeAccionAlmacen{}
@@ -67,7 +67,7 @@ func writeSolicitudDeAccionAlmacen(r SolicitudDeAccionAlmacen, w io.Writer) erro
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Contrato, w)
+	err = vm.WriteString(r.ContratoDistribución, w)
 	if err != nil {
 		return err
 	}
@@ -75,7 +75,7 @@ func writeSolicitudDeAccionAlmacen(r SolicitudDeAccionAlmacen, w io.Writer) erro
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Planta, w)
+	err = vm.WriteString(r.Instancia, w)
 	if err != nil {
 		return err
 	}
@@ -91,7 +91,7 @@ func (r SolicitudDeAccionAlmacen) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudDeAccionAlmacen) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"EventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"Timestamp\",\"type\":\"int\"},{\"name\":\"Remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Vencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}}],\"name\":\"Andreani.WapDatosFacturacionv2.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":\"string\"},{\"name\":\"ContratoDistribución\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"EventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"Timestamp\",\"type\":\"int\"},{\"name\":\"Remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Vencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}}],\"name\":\"Andreani.WapDatosFacturacionv2.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
 }
 
 func (r SolicitudDeAccionAlmacen) SchemaName() string {
@@ -115,7 +115,7 @@ func (r *SolicitudDeAccionAlmacen) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Contrato}
+		w := types.String{Target: &r.ContratoDistribución}
 
 		return w
 
@@ -125,7 +125,7 @@ func (r *SolicitudDeAccionAlmacen) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.Planta}
+		w := types.String{Target: &r.Instancia}
 
 		return w
 
@@ -168,7 +168,7 @@ func (r SolicitudDeAccionAlmacen) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Contrato"], err = json.Marshal(r.Contrato)
+	output["ContratoDistribución"], err = json.Marshal(r.ContratoDistribución)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +176,7 @@ func (r SolicitudDeAccionAlmacen) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Planta"], err = json.Marshal(r.Planta)
+	output["Instancia"], err = json.Marshal(r.Instancia)
 	if err != nil {
 		return nil, err
 	}
@@ -209,18 +209,18 @@ func (r *SolicitudDeAccionAlmacen) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for IdTransaccion")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Contrato"]; ok {
+		if v, ok := fields["ContratoDistribución"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContratoDistribución); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Contrato")
+		return fmt.Errorf("no value specified for ContratoDistribución")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Almacen"]; ok {
@@ -237,18 +237,18 @@ func (r *SolicitudDeAccionAlmacen) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Almacen")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Planta"]; ok {
+		if v, ok := fields["Instancia"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Planta); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Instancia); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Planta")
+		return fmt.Errorf("no value specified for Instancia")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EventoDeNegocio"]; ok {

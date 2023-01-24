@@ -18,18 +18,18 @@ import (
 var _ = fmt.Printf
 
 type DatosFacturacionSolicitadaV2 struct {
-	ActualizacionDatosFacturacion ActualizacionDatosFacturacion `json:"ActualizacionDatosFacturacion"`
+	Pedido Pedido `json:"Pedido"`
 
 	SolicitudDeAccionAlmacen SolicitudDeAccionAlmacen `json:"SolicitudDeAccionAlmacen"`
 
 	Topic string `json:"Topic"`
 }
 
-const DatosFacturacionSolicitadaV2AvroCRC64Fingerprint = "\xf8\n!\x80\x01=2 "
+const DatosFacturacionSolicitadaV2AvroCRC64Fingerprint = "\xaa\xfb:\xe9\xb8-\x98\x18"
 
 func NewDatosFacturacionSolicitadaV2() DatosFacturacionSolicitadaV2 {
 	r := DatosFacturacionSolicitadaV2{}
-	r.ActualizacionDatosFacturacion = NewActualizacionDatosFacturacion()
+	r.Pedido = NewPedido()
 
 	r.SolicitudDeAccionAlmacen = NewSolicitudDeAccionAlmacen()
 
@@ -61,7 +61,7 @@ func DeserializeDatosFacturacionSolicitadaV2FromSchema(r io.Reader, schema strin
 
 func writeDatosFacturacionSolicitadaV2(r DatosFacturacionSolicitadaV2, w io.Writer) error {
 	var err error
-	err = writeActualizacionDatosFacturacion(r.ActualizacionDatosFacturacion, w)
+	err = writePedido(r.Pedido, w)
 	if err != nil {
 		return err
 	}
@@ -81,7 +81,7 @@ func (r DatosFacturacionSolicitadaV2) Serialize(w io.Writer) error {
 }
 
 func (r DatosFacturacionSolicitadaV2) Schema() string {
-	return "{\"fields\":[{\"name\":\"ActualizacionDatosFacturacion\",\"type\":{\"fields\":[{\"name\":\"OrdenExterna\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Factura\",\"type\":\"string\"},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaFactura\",\"type\":[\"null\",\"string\"]}],\"name\":\"ActualizacionDatosFacturacion\",\"type\":\"record\"}},{\"name\":\"SolicitudDeAccionAlmacen\",\"type\":{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"EventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"Timestamp\",\"type\":\"int\"},{\"name\":\"Remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Vencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}}],\"name\":\"SolicitudDeAccionAlmacen\",\"type\":\"record\"}},{\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WapDatosFacturacionv2.Events.Record.DatosFacturacionSolicitadaV2\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Pedido\",\"type\":{\"fields\":[{\"name\":\"NumeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"name\":\"Remito\",\"type\":\"string\"},{\"default\":null,\"name\":\"LinkImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ArchivoImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"name\":\"FacturaLegal\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaDeFacturacion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"PrecioValorFc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"COT\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaEntrega\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"DatosAdicionales\",\"type\":\"record\"}]}],\"name\":\"Pedido\",\"type\":\"record\"}},{\"name\":\"SolicitudDeAccionAlmacen\",\"type\":{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":\"string\"},{\"name\":\"ContratoDistribución\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"EventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"Timestamp\",\"type\":\"int\"},{\"name\":\"Remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Vencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}}],\"name\":\"SolicitudDeAccionAlmacen\",\"type\":\"record\"}},{\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WapDatosFacturacionv2.Events.Record.DatosFacturacionSolicitadaV2\",\"type\":\"record\"}"
 }
 
 func (r DatosFacturacionSolicitadaV2) SchemaName() string {
@@ -100,9 +100,9 @@ func (_ DatosFacturacionSolicitadaV2) SetUnionElem(v int64) { panic("Unsupported
 func (r *DatosFacturacionSolicitadaV2) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.ActualizacionDatosFacturacion = NewActualizacionDatosFacturacion()
+		r.Pedido = NewPedido()
 
-		w := types.Record{Target: &r.ActualizacionDatosFacturacion}
+		w := types.Record{Target: &r.Pedido}
 
 		return w
 
@@ -148,7 +148,7 @@ func (_ DatosFacturacionSolicitadaV2) AvroCRC64Fingerprint() []byte {
 func (r DatosFacturacionSolicitadaV2) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["ActualizacionDatosFacturacion"], err = json.Marshal(r.ActualizacionDatosFacturacion)
+	output["Pedido"], err = json.Marshal(r.Pedido)
 	if err != nil {
 		return nil, err
 	}
@@ -171,18 +171,18 @@ func (r *DatosFacturacionSolicitadaV2) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["ActualizacionDatosFacturacion"]; ok {
+		if v, ok := fields["Pedido"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ActualizacionDatosFacturacion); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Pedido); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ActualizacionDatosFacturacion")
+		return fmt.Errorf("no value specified for Pedido")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SolicitudDeAccionAlmacen"]; ok {
