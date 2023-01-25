@@ -84,7 +84,7 @@ func DeserializeUnionNullLongFromSchema(r io.Reader, schema string) (*UnionNullL
 }
 
 func (r *UnionNullLong) Schema() string {
-	return "[\"null\",\"long\"]"
+	return "[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]"
 }
 
 func (_ *UnionNullLong) SetBoolean(v bool)   { panic("Unsupported operation") }
