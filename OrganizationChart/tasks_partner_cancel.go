@@ -22,17 +22,20 @@ type TasksPartnerCancel struct {
 
 	PartnerId *UnionNullString `json:"partnerId"`
 
+	ParentId *UnionNullString `json:"parentId"`
+
 	Amount int32 `json:"amount"`
 
 	TotalAmount int32 `json:"totalAmount"`
 }
 
-const TasksPartnerCancelAvroCRC64Fingerprint = "\x8a\xea\x01?\xe7|\x94\x18"
+const TasksPartnerCancelAvroCRC64Fingerprint = "\x8aT\r\xf7\x99\xec=\x9b"
 
 func NewTasksPartnerCancel() TasksPartnerCancel {
 	r := TasksPartnerCancel{}
 	r.TaskId = nil
 	r.PartnerId = nil
+	r.ParentId = nil
 	return r
 }
 
@@ -69,6 +72,10 @@ func writeTasksPartnerCancel(r TasksPartnerCancel, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ParentId, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteInt(r.Amount, w)
 	if err != nil {
 		return err
@@ -85,7 +92,7 @@ func (r TasksPartnerCancel) Serialize(w io.Writer) error {
 }
 
 func (r TasksPartnerCancel) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"taskId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"partnerId\",\"type\":[\"null\",\"string\"]},{\"name\":\"amount\",\"type\":\"int\"},{\"name\":\"totalAmount\",\"type\":\"int\"}],\"name\":\"Andreani.OrganizationChart.Events.Record.TasksPartnerCancel\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"taskId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"partnerId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"parentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"amount\",\"type\":\"int\"},{\"name\":\"totalAmount\",\"type\":\"int\"}],\"name\":\"Andreani.OrganizationChart.Events.Record.TasksPartnerCancel\",\"type\":\"record\"}"
 }
 
 func (r TasksPartnerCancel) SchemaName() string {
@@ -112,11 +119,15 @@ func (r *TasksPartnerCancel) Get(i int) types.Field {
 
 		return r.PartnerId
 	case 2:
+		r.ParentId = NewUnionNullString()
+
+		return r.ParentId
+	case 3:
 		w := types.Int{Target: &r.Amount}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.Int{Target: &r.TotalAmount}
 
 		return w
@@ -133,6 +144,9 @@ func (r *TasksPartnerCancel) SetDefault(i int) {
 	case 1:
 		r.PartnerId = nil
 		return
+	case 2:
+		r.ParentId = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -144,6 +158,9 @@ func (r *TasksPartnerCancel) NullField(i int) {
 		return
 	case 1:
 		r.PartnerId = nil
+		return
+	case 2:
+		r.ParentId = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -166,6 +183,10 @@ func (r TasksPartnerCancel) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["partnerId"], err = json.Marshal(r.PartnerId)
+	if err != nil {
+		return nil, err
+	}
+	output["parentId"], err = json.Marshal(r.ParentId)
 	if err != nil {
 		return nil, err
 	}
@@ -218,6 +239,22 @@ func (r *TasksPartnerCancel) UnmarshalJSON(data []byte) error {
 		r.PartnerId = NewUnionNullString()
 
 		r.PartnerId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["parentId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ParentId); err != nil {
+			return err
+		}
+	} else {
+		r.ParentId = NewUnionNullString()
+
+		r.ParentId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["amount"]; ok {
