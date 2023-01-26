@@ -20,14 +20,14 @@ var _ = fmt.Printf
 type Listado_pedidos struct {
 	Orden string `json:"orden"`
 
-	Orden_prioridad string `json:"orden_prioridad"`
+	Orden_prioridad int32 `json:"orden_prioridad"`
 
-	Indice_prioridad string `json:"indice_prioridad"`
+	Indice_prioridad float32 `json:"indice_prioridad"`
 
 	Sku []Resupply `json:"sku"`
 }
 
-const Listado_pedidosAvroCRC64Fingerprint = "/\xf0:\x82\xc5/\xf4\x9e"
+const Listado_pedidosAvroCRC64Fingerprint = "\xe80\x01\xa7 η0"
 
 func NewListado_pedidos() Listado_pedidos {
 	r := Listado_pedidos{}
@@ -65,11 +65,11 @@ func writeListado_pedidos(r Listado_pedidos, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Orden_prioridad, w)
+	err = vm.WriteInt(r.Orden_prioridad, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Indice_prioridad, w)
+	err = vm.WriteFloat(r.Indice_prioridad, w)
 	if err != nil {
 		return err
 	}
@@ -85,7 +85,7 @@ func (r Listado_pedidos) Serialize(w io.Writer) error {
 }
 
 func (r Listado_pedidos) Schema() string {
-	return "{\"fields\":[{\"name\":\"orden\",\"type\":\"string\"},{\"name\":\"orden_prioridad\",\"type\":\"string\"},{\"name\":\"indice_prioridad\",\"type\":\"string\"},{\"name\":\"sku\",\"type\":{\"items\":{\"fields\":[{\"name\":\"sku\",\"type\":\"string\"}],\"name\":\"resupply\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.PriorizacionWarehouse.Events.Common.listado_pedidos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"orden\",\"type\":\"string\"},{\"name\":\"orden_prioridad\",\"type\":\"int\"},{\"name\":\"indice_prioridad\",\"type\":\"float\"},{\"name\":\"sku\",\"type\":{\"items\":{\"fields\":[{\"name\":\"sku\",\"type\":\"string\"}],\"name\":\"resupply\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.PriorizacionWarehouse.Events.Common.listado_pedidos\",\"type\":\"record\"}"
 }
 
 func (r Listado_pedidos) SchemaName() string {
@@ -109,12 +109,12 @@ func (r *Listado_pedidos) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Orden_prioridad}
+		w := types.Int{Target: &r.Orden_prioridad}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Indice_prioridad}
+		w := types.Float{Target: &r.Indice_prioridad}
 
 		return w
 

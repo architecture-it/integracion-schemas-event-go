@@ -20,16 +20,16 @@ var _ = fmt.Printf
 type EventoPriorizacionWarehouse struct {
 	Identificacion Identificacion `json:"Identificacion"`
 
-	Listado_pedidos Listado_pedidos `json:"listado_pedidos"`
+	Listado_pedidos []Listado_pedidos `json:"listado_pedidos"`
 }
 
-const EventoPriorizacionWarehouseAvroCRC64Fingerprint = "\xcf\u007f\x040\xc2z\x00_"
+const EventoPriorizacionWarehouseAvroCRC64Fingerprint = "\\\xff\xeaž\xb4\xbc\xb2"
 
 func NewEventoPriorizacionWarehouse() EventoPriorizacionWarehouse {
 	r := EventoPriorizacionWarehouse{}
 	r.Identificacion = NewIdentificacion()
 
-	r.Listado_pedidos = NewListado_pedidos()
+	r.Listado_pedidos = make([]Listado_pedidos, 0)
 
 	return r
 }
@@ -63,7 +63,7 @@ func writeEventoPriorizacionWarehouse(r EventoPriorizacionWarehouse, w io.Writer
 	if err != nil {
 		return err
 	}
-	err = writeListado_pedidos(r.Listado_pedidos, w)
+	err = writeArrayListado_pedidos(r.Listado_pedidos, w)
 	if err != nil {
 		return err
 	}
@@ -75,7 +75,7 @@ func (r EventoPriorizacionWarehouse) Serialize(w io.Writer) error {
 }
 
 func (r EventoPriorizacionWarehouse) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.PriorizacionWarehouse.Events.Common\",\"type\":\"record\"}},{\"name\":\"listado_pedidos\",\"type\":{\"fields\":[{\"name\":\"orden\",\"type\":\"string\"},{\"name\":\"orden_prioridad\",\"type\":\"string\"},{\"name\":\"indice_prioridad\",\"type\":\"string\"},{\"name\":\"sku\",\"type\":{\"items\":{\"fields\":[{\"name\":\"sku\",\"type\":\"string\"}],\"name\":\"resupply\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"listado_pedidos\",\"namespace\":\"Andreani.PriorizacionWarehouse.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.PriorizacionWarehouse.Events.Record.EventoPriorizacionWarehouse\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.PriorizacionWarehouse.Events.Common\",\"type\":\"record\"}},{\"name\":\"listado_pedidos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"orden\",\"type\":\"string\"},{\"name\":\"orden_prioridad\",\"type\":\"int\"},{\"name\":\"indice_prioridad\",\"type\":\"float\"},{\"name\":\"sku\",\"type\":{\"items\":{\"fields\":[{\"name\":\"sku\",\"type\":\"string\"}],\"name\":\"resupply\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"listado_pedidos\",\"namespace\":\"Andreani.PriorizacionWarehouse.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.PriorizacionWarehouse.Events.Record.EventoPriorizacionWarehouse\",\"type\":\"record\"}"
 }
 
 func (r EventoPriorizacionWarehouse) SchemaName() string {
@@ -101,9 +101,9 @@ func (r *EventoPriorizacionWarehouse) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.Listado_pedidos = NewListado_pedidos()
+		r.Listado_pedidos = make([]Listado_pedidos, 0)
 
-		w := types.Record{Target: &r.Listado_pedidos}
+		w := ArrayListado_pedidosWrapper{Target: &r.Listado_pedidos}
 
 		return w
 
