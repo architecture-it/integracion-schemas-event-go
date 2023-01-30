@@ -36,7 +36,7 @@ type NovedadCliente struct {
 
 	Segmento string `json:"Segmento"`
 
-	TipoDeEntidadFiscal TipoDocumentoFiscal `json:"TipoDeEntidadFiscal"`
+	TipoDeEntidadFiscal int32 `json:"TipoDeEntidadFiscal"`
 
 	EjecutivoDeCuentasLogin string `json:"EjecutivoDeCuentasLogin"`
 
@@ -45,7 +45,7 @@ type NovedadCliente struct {
 	Fecha *UnionNullLong `json:"Fecha"`
 }
 
-const NovedadClienteAvroCRC64Fingerprint = "\x19\x98\xe5\x9e\t\xac\xf4\xe9"
+const NovedadClienteAvroCRC64Fingerprint = "%\xba\xf3\xedZ5\xa9\xe9"
 
 func NewNovedadCliente() NovedadCliente {
 	r := NovedadCliente{}
@@ -113,7 +113,7 @@ func writeNovedadCliente(r NovedadCliente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeTipoDocumentoFiscal(r.TipoDeEntidadFiscal, w)
+	err = vm.WriteInt(r.TipoDeEntidadFiscal, w)
 	if err != nil {
 		return err
 	}
@@ -137,7 +137,7 @@ func (r NovedadCliente) Serialize(w io.Writer) error {
 }
 
 func (r NovedadCliente) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoDeClienteInterno\",\"type\":\"long\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"DepartamentoDeVentas\",\"type\":\"string\"},{\"name\":\"CodigoDeDireccion\",\"type\":\"long\"},{\"name\":\"EjecutivoDeCuentas\",\"type\":\"string\"},{\"name\":\"EstaActivo\",\"type\":\"int\"},{\"name\":\"GerenteDeCuentas\",\"type\":\"string\"},{\"name\":\"RazonSocial\",\"type\":\"string\"},{\"name\":\"Segmento\",\"type\":\"string\"},{\"name\":\"TipoDeEntidadFiscal\",\"type\":{\"name\":\"TipoDocumentoFiscal\",\"namespace\":\"Andreani.Facturacion.Events.Common\",\"symbols\":[\"undefined\",\"TDF86\",\"TDF80\",\"TDF83\",\"TDF96\",\"TDF13\",\"TDF14\",\"TDF16\",\"TDF17\",\"TDF18\",\"TDF19\",\"TDF20\",\"TDF21\",\"TDF22\",\"TDF23\",\"TDF24\",\"TDF85\",\"TDF87\",\"TDF89\",\"TDF90\",\"TDF94\",\"TDF99\"],\"type\":\"enum\"}},{\"name\":\"EjecutivoDeCuentasLogin\",\"type\":\"string\"},{\"name\":\"NombreDeFantasia\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Facturacion.Events.Record.NovedadCliente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoDeClienteInterno\",\"type\":\"long\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"DepartamentoDeVentas\",\"type\":\"string\"},{\"name\":\"CodigoDeDireccion\",\"type\":\"long\"},{\"name\":\"EjecutivoDeCuentas\",\"type\":\"string\"},{\"name\":\"EstaActivo\",\"type\":\"int\"},{\"name\":\"GerenteDeCuentas\",\"type\":\"string\"},{\"name\":\"RazonSocial\",\"type\":\"string\"},{\"name\":\"Segmento\",\"type\":\"string\"},{\"name\":\"TipoDeEntidadFiscal\",\"type\":\"int\"},{\"name\":\"EjecutivoDeCuentasLogin\",\"type\":\"string\"},{\"name\":\"NombreDeFantasia\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Facturacion.Events.Record.NovedadCliente\",\"type\":\"record\"}"
 }
 
 func (r NovedadCliente) SchemaName() string {
@@ -201,7 +201,7 @@ func (r *NovedadCliente) Get(i int) types.Field {
 		return w
 
 	case 9:
-		w := TipoDocumentoFiscalWrapper{Target: &r.TipoDeEntidadFiscal}
+		w := types.Int{Target: &r.TipoDeEntidadFiscal}
 
 		return w
 

@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type VueltaNroLegal struct {
-	SistemaDestino Sistema `json:"SistemaDestino"`
+	SistemaDestino string `json:"SistemaDestino"`
 
 	Sucursal string `json:"Sucursal"`
 
@@ -37,7 +37,7 @@ type VueltaNroLegal struct {
 	Facturado bool `json:"Facturado"`
 }
 
-const VueltaNroLegalAvroCRC64Fingerprint = "M\x85i6vֽY"
+const VueltaNroLegalAvroCRC64Fingerprint = "QVw\x06\xd3ÜX"
 
 func NewVueltaNroLegal() VueltaNroLegal {
 	r := VueltaNroLegal{}
@@ -69,7 +69,7 @@ func DeserializeVueltaNroLegalFromSchema(r io.Reader, schema string) (VueltaNroL
 
 func writeVueltaNroLegal(r VueltaNroLegal, w io.Writer) error {
 	var err error
-	err = writeSistema(r.SistemaDestino, w)
+	err = vm.WriteString(r.SistemaDestino, w)
 	if err != nil {
 		return err
 	}
@@ -113,7 +113,7 @@ func (r VueltaNroLegal) Serialize(w io.Writer) error {
 }
 
 func (r VueltaNroLegal) Schema() string {
-	return "{\"fields\":[{\"name\":\"SistemaDestino\",\"type\":{\"name\":\"Sistema\",\"namespace\":\"Andreani.Facturacion.Events.Common\",\"symbols\":[\"Sistema1710\",\"Sistema1720\",\"Sistema1760\",\"Sistema1771\"],\"type\":\"enum\"}},{\"name\":\"Sucursal\",\"type\":\"string\"},{\"name\":\"CentroEmisor\",\"type\":\"int\"},{\"name\":\"NumeroComprobante\",\"type\":\"int\"},{\"name\":\"LetraComprobante\",\"type\":{\"name\":\"Letra\",\"namespace\":\"Andreani.Facturacion.Events.Common\",\"symbols\":[\"A\",\"B\",\"undefined\",\"all\"],\"type\":\"enum\"}},{\"name\":\"FechaComprobante\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SerieComprobante\",\"type\":\"string\"},{\"name\":\"NumeroPrefactura\",\"type\":\"string\"},{\"name\":\"Facturado\",\"type\":\"boolean\"}],\"name\":\"Andreani.Facturacion.Events.Record.VueltaNroLegal\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SistemaDestino\",\"type\":\"string\"},{\"name\":\"Sucursal\",\"type\":\"string\"},{\"name\":\"CentroEmisor\",\"type\":\"int\"},{\"name\":\"NumeroComprobante\",\"type\":\"int\"},{\"name\":\"LetraComprobante\",\"type\":{\"name\":\"Letra\",\"namespace\":\"Andreani.Facturacion.Events.Common\",\"symbols\":[\"A\",\"B\",\"undefined\",\"all\"],\"type\":\"enum\"}},{\"name\":\"FechaComprobante\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SerieComprobante\",\"type\":\"string\"},{\"name\":\"NumeroPrefactura\",\"type\":\"string\"},{\"name\":\"Facturado\",\"type\":\"boolean\"}],\"name\":\"Andreani.Facturacion.Events.Record.VueltaNroLegal\",\"type\":\"record\"}"
 }
 
 func (r VueltaNroLegal) SchemaName() string {
@@ -132,7 +132,7 @@ func (_ VueltaNroLegal) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *VueltaNroLegal) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := SistemaWrapper{Target: &r.SistemaDestino}
+		w := types.String{Target: &r.SistemaDestino}
 
 		return w
 

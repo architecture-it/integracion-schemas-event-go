@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type NovedadContrato struct {
-	SistemaDestino Sistema `json:"SistemaDestino"`
+	SistemaDestino string `json:"SistemaDestino"`
 
 	CodigoDeContratoInterno int64 `json:"CodigoDeContratoInterno"`
 
@@ -37,7 +37,7 @@ type NovedadContrato struct {
 	VigenciaHasta int64 `json:"VigenciaHasta"`
 }
 
-const NovedadContratoAvroCRC64Fingerprint = "Č\xd4YB\x14\xa1\xd1"
+const NovedadContratoAvroCRC64Fingerprint = "\xb5\x8dP\x91o\xb6%O"
 
 func NewNovedadContrato() NovedadContrato {
 	r := NovedadContrato{}
@@ -69,7 +69,7 @@ func DeserializeNovedadContratoFromSchema(r io.Reader, schema string) (NovedadCo
 
 func writeNovedadContrato(r NovedadContrato, w io.Writer) error {
 	var err error
-	err = writeSistema(r.SistemaDestino, w)
+	err = vm.WriteString(r.SistemaDestino, w)
 	if err != nil {
 		return err
 	}
@@ -113,7 +113,7 @@ func (r NovedadContrato) Serialize(w io.Writer) error {
 }
 
 func (r NovedadContrato) Schema() string {
-	return "{\"fields\":[{\"name\":\"SistemaDestino\",\"type\":{\"name\":\"Sistema\",\"namespace\":\"Andreani.Facturacion.Events.Common\",\"symbols\":[\"Sistema1710\",\"Sistema1720\",\"Sistema1760\",\"Sistema1771\"],\"type\":\"enum\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"long\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeServicio\",\"type\":\"string\"},{\"name\":\"CodigoDeDireccion\",\"type\":\"long\"},{\"name\":\"CodigoDeClienteInterno\",\"type\":\"long\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaDesde\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaHasta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Facturacion.Events.Record.NovedadContrato\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SistemaDestino\",\"type\":\"string\"},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"long\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeServicio\",\"type\":\"string\"},{\"name\":\"CodigoDeDireccion\",\"type\":\"long\"},{\"name\":\"CodigoDeClienteInterno\",\"type\":\"long\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaDesde\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaHasta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Facturacion.Events.Record.NovedadContrato\",\"type\":\"record\"}"
 }
 
 func (r NovedadContrato) SchemaName() string {
@@ -132,7 +132,7 @@ func (_ NovedadContrato) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *NovedadContrato) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := SistemaWrapper{Target: &r.SistemaDestino}
+		w := types.String{Target: &r.SistemaDestino}
 
 		return w
 
