@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type Articulo struct {
-	Cantidad string `json:"Cantidad"`
+	Cantidad float32 `json:"Cantidad"`
 
 	CodigoDestino string `json:"CodigoDestino"`
 
@@ -31,7 +31,7 @@ type Articulo struct {
 	LPN *UnionNullString `json:"LPN"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "դ\xaf\xaa\xe8\x1e\xe0U"
+const ArticuloAvroCRC64Fingerprint = "\ue2a2_<\x1bj\xfb"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
@@ -66,7 +66,7 @@ func DeserializeArticuloFromSchema(r io.Reader, schema string) (Articulo, error)
 
 func writeArticulo(r Articulo, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Cantidad, w)
+	err = vm.WriteFloat(r.Cantidad, w)
 	if err != nil {
 		return err
 	}
@@ -98,7 +98,7 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"string\"},{\"name\":\"CodigoDestino\",\"type\":\"string\"},{\"name\":\"CodigoOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"LoteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPN\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WapTrasladoInternoDeMercaderiaV2.Events.Record.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"float\"},{\"name\":\"CodigoDestino\",\"type\":\"string\"},{\"name\":\"CodigoOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"LoteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPN\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WapTrasladoInternoDeMercaderiaV2.Events.Record.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
@@ -117,7 +117,7 @@ func (_ Articulo) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Articulo) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Cantidad}
+		w := types.Float{Target: &r.Cantidad}
 
 		return w
 

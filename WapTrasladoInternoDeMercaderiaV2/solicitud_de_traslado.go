@@ -27,7 +27,7 @@ type SolicitudDeTraslado struct {
 	Acondicionamiento Acondicionamiento `json:"Acondicionamiento"`
 }
 
-const SolicitudDeTrasladoAvroCRC64Fingerprint = "\xc9hu̧\xc2\"\x04"
+const SolicitudDeTrasladoAvroCRC64Fingerprint = "\x1f\xb7$g\x8e\xccM\xf5"
 
 func NewSolicitudDeTraslado() SolicitudDeTraslado {
 	r := SolicitudDeTraslado{}
@@ -91,7 +91,7 @@ func (r SolicitudDeTraslado) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudDeTraslado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":{\"fields\":[{\"name\":\"Destino\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":\"string\"}],\"name\":\"Almacen\",\"type\":\"record\"}},{\"name\":\"Articulo\",\"type\":{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"string\"},{\"name\":\"CodigoDestino\",\"type\":\"string\"},{\"name\":\"CodigoOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"LoteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPN\",\"type\":[\"null\",\"string\"]}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"Propietario\",\"type\":{\"fields\":[{\"name\":\"Destino\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":\"string\"}],\"name\":\"Propietario\",\"type\":\"record\"}},{\"name\":\"Acondicionamiento\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"CodigoDeAconding\",\"type\":[\"null\",\"string\"]}],\"name\":\"Acondicionamiento\",\"type\":\"record\"}}],\"name\":\"Andreani.WapTrasladoInternoDeMercaderiaV2.Events.Record.SolicitudDeTraslado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":{\"fields\":[{\"name\":\"Destino\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":\"string\"}],\"name\":\"Almacen\",\"type\":\"record\"}},{\"name\":\"Articulo\",\"type\":{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"float\"},{\"name\":\"CodigoDestino\",\"type\":\"string\"},{\"name\":\"CodigoOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"LoteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPN\",\"type\":[\"null\",\"string\"]}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"Propietario\",\"type\":{\"fields\":[{\"name\":\"Destino\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":\"string\"}],\"name\":\"Propietario\",\"type\":\"record\"}},{\"name\":\"Acondicionamiento\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"CodigoDeAconding\",\"type\":[\"null\",\"string\"]}],\"name\":\"Acondicionamiento\",\"type\":\"record\"}}],\"name\":\"Andreani.WapTrasladoInternoDeMercaderiaV2.Events.Record.SolicitudDeTraslado\",\"type\":\"record\"}"
 }
 
 func (r SolicitudDeTraslado) SchemaName() string {
