@@ -18,6 +18,12 @@ import (
 var _ = fmt.Printf
 
 type SolicitudDeTraslado struct {
+	NumeroOrdenExterna string `json:"NumeroOrdenExterna"`
+
+	TipoDeMovimiento string `json:"TipoDeMovimiento"`
+
+	Motivo string `json:"Motivo"`
+
 	Almacen Almacen `json:"Almacen"`
 
 	Articulo Articulo `json:"Articulo"`
@@ -27,7 +33,7 @@ type SolicitudDeTraslado struct {
 	Acondicionamiento Acondicionamiento `json:"Acondicionamiento"`
 }
 
-const SolicitudDeTrasladoAvroCRC64Fingerprint = "\x1f\xb7$g\x8e\xccM\xf5"
+const SolicitudDeTrasladoAvroCRC64Fingerprint = "\x1a\x9f\xa3:Y%bx"
 
 func NewSolicitudDeTraslado() SolicitudDeTraslado {
 	r := SolicitudDeTraslado{}
@@ -67,6 +73,18 @@ func DeserializeSolicitudDeTrasladoFromSchema(r io.Reader, schema string) (Solic
 
 func writeSolicitudDeTraslado(r SolicitudDeTraslado, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.NumeroOrdenExterna, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.TipoDeMovimiento, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Motivo, w)
+	if err != nil {
+		return err
+	}
 	err = writeAlmacen(r.Almacen, w)
 	if err != nil {
 		return err
@@ -91,7 +109,7 @@ func (r SolicitudDeTraslado) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudDeTraslado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":{\"fields\":[{\"name\":\"Destino\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":\"string\"}],\"name\":\"Almacen\",\"type\":\"record\"}},{\"name\":\"Articulo\",\"type\":{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"float\"},{\"name\":\"CodigoDestino\",\"type\":\"string\"},{\"name\":\"CodigoOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"LoteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPN\",\"type\":[\"null\",\"string\"]}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"Propietario\",\"type\":{\"fields\":[{\"name\":\"Destino\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":\"string\"}],\"name\":\"Propietario\",\"type\":\"record\"}},{\"name\":\"Acondicionamiento\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"CodigoDeAconding\",\"type\":[\"null\",\"string\"]}],\"name\":\"Acondicionamiento\",\"type\":\"record\"}}],\"name\":\"Andreani.WapTrasladoInternoDeMercaderiaV2.Events.Record.SolicitudDeTraslado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NumeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"TipoDeMovimiento\",\"type\":\"string\"},{\"name\":\"Motivo\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":{\"fields\":[{\"name\":\"Destino\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":\"string\"}],\"name\":\"Almacen\",\"type\":\"record\"}},{\"name\":\"Articulo\",\"type\":{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"float\"},{\"name\":\"CodigoDestino\",\"type\":\"string\"},{\"name\":\"CodigoOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"LoteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPN\",\"type\":[\"null\",\"string\"]}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"Propietario\",\"type\":{\"fields\":[{\"name\":\"Destino\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":\"string\"}],\"name\":\"Propietario\",\"type\":\"record\"}},{\"name\":\"Acondicionamiento\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"CodigoDeAconding\",\"type\":[\"null\",\"string\"]}],\"name\":\"Acondicionamiento\",\"type\":\"record\"}}],\"name\":\"Andreani.WapTrasladoInternoDeMercaderiaV2.Events.Record.SolicitudDeTraslado\",\"type\":\"record\"}"
 }
 
 func (r SolicitudDeTraslado) SchemaName() string {
@@ -110,27 +128,42 @@ func (_ SolicitudDeTraslado) SetUnionElem(v int64) { panic("Unsupported operatio
 func (r *SolicitudDeTraslado) Get(i int) types.Field {
 	switch i {
 	case 0:
+		w := types.String{Target: &r.NumeroOrdenExterna}
+
+		return w
+
+	case 1:
+		w := types.String{Target: &r.TipoDeMovimiento}
+
+		return w
+
+	case 2:
+		w := types.String{Target: &r.Motivo}
+
+		return w
+
+	case 3:
 		r.Almacen = NewAlmacen()
 
 		w := types.Record{Target: &r.Almacen}
 
 		return w
 
-	case 1:
+	case 4:
 		r.Articulo = NewArticulo()
 
 		w := types.Record{Target: &r.Articulo}
 
 		return w
 
-	case 2:
+	case 5:
 		r.Propietario = NewPropietario()
 
 		w := types.Record{Target: &r.Propietario}
 
 		return w
 
-	case 3:
+	case 6:
 		r.Acondicionamiento = NewAcondicionamiento()
 
 		w := types.Record{Target: &r.Acondicionamiento}
@@ -165,6 +198,18 @@ func (_ SolicitudDeTraslado) AvroCRC64Fingerprint() []byte {
 func (r SolicitudDeTraslado) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["NumeroOrdenExterna"], err = json.Marshal(r.NumeroOrdenExterna)
+	if err != nil {
+		return nil, err
+	}
+	output["TipoDeMovimiento"], err = json.Marshal(r.TipoDeMovimiento)
+	if err != nil {
+		return nil, err
+	}
+	output["Motivo"], err = json.Marshal(r.Motivo)
+	if err != nil {
+		return nil, err
+	}
 	output["Almacen"], err = json.Marshal(r.Almacen)
 	if err != nil {
 		return nil, err
@@ -191,6 +236,48 @@ func (r *SolicitudDeTraslado) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["NumeroOrdenExterna"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroOrdenExterna); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for NumeroOrdenExterna")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TipoDeMovimiento"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoDeMovimiento); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for TipoDeMovimiento")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Motivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Motivo")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Almacen"]; ok {
 			return v
