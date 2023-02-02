@@ -18,9 +18,44 @@ import (
 var _ = fmt.Printf
 
 type Cabecera struct {
+	CargaWH *UnionNullString `json:"CargaWH"`
+
+	Ruta *UnionNullString `json:"Ruta"`
+
+	MuelleDeCarga *UnionNullString `json:"MuelleDeCarga"`
+
+	Estado *UnionNullString `json:"Estado"`
+
+	FechaDePartida *UnionNullLong `json:"FechaDePartida"`
+
+	IDTransportista *UnionNullString `json:"IDTransportista"`
+
+	PatenteDelTransporte *UnionNullString `json:"PatenteDelTransporte"`
+
+	TipoDeTransporte *UnionNullString `json:"TipoDeTransporte"`
+
+	TotalUnidades float32 `json:"TotalUnidades"`
+
+	NumeroDeCargaExterno *UnionNullString `json:"NumeroDeCargaExterno"`
+
+	FechaInicioDeCarga *UnionNullLong `json:"FechaInicioDeCarga"`
+
+	FechaFinDeCarga *UnionNullLong `json:"FechaFinDeCarga"`
+
+	NumerosDeIdCargados *UnionNullString `json:"NumerosDeIdCargados"`
+
+	FechaDeCierreDeCarga *UnionNullLong `json:"FechaDeCierreDeCarga"`
+
+	AdmitePickingParcial *UnionNullString `json:"AdmitePickingParcial"`
+
+	NombreDelConductor *UnionNullString `json:"NombreDelConductor"`
+
+	NumeroDelPrecinto *UnionNullString `json:"NumeroDelPrecinto"`
+
+	FechaExpedicion *UnionNullLong `json:"FechaExpedicion"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "m\xa7\xa9D\xba\xa3d\x1a"
+const CabeceraAvroCRC64Fingerprint = "\x11\xfeδ=K\xbe\x98"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -52,6 +87,78 @@ func DeserializeCabeceraFromSchema(r io.Reader, schema string) (Cabecera, error)
 
 func writeCabecera(r Cabecera, w io.Writer) error {
 	var err error
+	err = writeUnionNullString(r.CargaWH, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Ruta, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.MuelleDeCarga, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Estado, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.FechaDePartida, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.IDTransportista, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.PatenteDelTransporte, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.TipoDeTransporte, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.TotalUnidades, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumeroDeCargaExterno, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.FechaInicioDeCarga, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.FechaFinDeCarga, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumerosDeIdCargados, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.FechaDeCierreDeCarga, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.AdmitePickingParcial, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NombreDelConductor, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumeroDelPrecinto, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.FechaExpedicion, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -60,7 +167,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[],\"name\":\"Andreani.EventoWhMantenimientoCarga.Events.IniciadaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CargaWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"Ruta\",\"type\":[\"null\",\"string\"]},{\"name\":\"MuelleDeCarga\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estado\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDePartida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"IDTransportista\",\"type\":[\"null\",\"string\"]},{\"name\":\"PatenteDelTransporte\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDeTransporte\",\"type\":[\"null\",\"string\"]},{\"name\":\"TotalUnidades\",\"type\":\"float\"},{\"name\":\"NumeroDeCargaExterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaInicioDeCarga\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaFinDeCarga\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"NumerosDeIdCargados\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDeCierreDeCarga\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"AdmitePickingParcial\",\"type\":[\"null\",\"string\"]},{\"name\":\"NombreDelConductor\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDelPrecinto\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaExpedicion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhMantenimientoCarga.Events.IniciadaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -78,6 +185,79 @@ func (_ Cabecera) SetUnionElem(v int64) { panic("Unsupported operation") }
 
 func (r *Cabecera) Get(i int) types.Field {
 	switch i {
+	case 0:
+		r.CargaWH = NewUnionNullString()
+
+		return r.CargaWH
+	case 1:
+		r.Ruta = NewUnionNullString()
+
+		return r.Ruta
+	case 2:
+		r.MuelleDeCarga = NewUnionNullString()
+
+		return r.MuelleDeCarga
+	case 3:
+		r.Estado = NewUnionNullString()
+
+		return r.Estado
+	case 4:
+		r.FechaDePartida = NewUnionNullLong()
+
+		return r.FechaDePartida
+	case 5:
+		r.IDTransportista = NewUnionNullString()
+
+		return r.IDTransportista
+	case 6:
+		r.PatenteDelTransporte = NewUnionNullString()
+
+		return r.PatenteDelTransporte
+	case 7:
+		r.TipoDeTransporte = NewUnionNullString()
+
+		return r.TipoDeTransporte
+	case 8:
+		w := types.Float{Target: &r.TotalUnidades}
+
+		return w
+
+	case 9:
+		r.NumeroDeCargaExterno = NewUnionNullString()
+
+		return r.NumeroDeCargaExterno
+	case 10:
+		r.FechaInicioDeCarga = NewUnionNullLong()
+
+		return r.FechaInicioDeCarga
+	case 11:
+		r.FechaFinDeCarga = NewUnionNullLong()
+
+		return r.FechaFinDeCarga
+	case 12:
+		r.NumerosDeIdCargados = NewUnionNullString()
+
+		return r.NumerosDeIdCargados
+	case 13:
+		r.FechaDeCierreDeCarga = NewUnionNullLong()
+
+		return r.FechaDeCierreDeCarga
+	case 14:
+		r.AdmitePickingParcial = NewUnionNullString()
+
+		return r.AdmitePickingParcial
+	case 15:
+		r.NombreDelConductor = NewUnionNullString()
+
+		return r.NombreDelConductor
+	case 16:
+		r.NumeroDelPrecinto = NewUnionNullString()
+
+		return r.NumeroDelPrecinto
+	case 17:
+		r.FechaExpedicion = NewUnionNullLong()
+
+		return r.FechaExpedicion
 	}
 	panic("Unknown field index")
 }
@@ -90,6 +270,57 @@ func (r *Cabecera) SetDefault(i int) {
 
 func (r *Cabecera) NullField(i int) {
 	switch i {
+	case 0:
+		r.CargaWH = nil
+		return
+	case 1:
+		r.Ruta = nil
+		return
+	case 2:
+		r.MuelleDeCarga = nil
+		return
+	case 3:
+		r.Estado = nil
+		return
+	case 4:
+		r.FechaDePartida = nil
+		return
+	case 5:
+		r.IDTransportista = nil
+		return
+	case 6:
+		r.PatenteDelTransporte = nil
+		return
+	case 7:
+		r.TipoDeTransporte = nil
+		return
+	case 9:
+		r.NumeroDeCargaExterno = nil
+		return
+	case 10:
+		r.FechaInicioDeCarga = nil
+		return
+	case 11:
+		r.FechaFinDeCarga = nil
+		return
+	case 12:
+		r.NumerosDeIdCargados = nil
+		return
+	case 13:
+		r.FechaDeCierreDeCarga = nil
+		return
+	case 14:
+		r.AdmitePickingParcial = nil
+		return
+	case 15:
+		r.NombreDelConductor = nil
+		return
+	case 16:
+		r.NumeroDelPrecinto = nil
+		return
+	case 17:
+		r.FechaExpedicion = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -106,6 +337,78 @@ func (_ Cabecera) AvroCRC64Fingerprint() []byte {
 func (r Cabecera) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["CargaWH"], err = json.Marshal(r.CargaWH)
+	if err != nil {
+		return nil, err
+	}
+	output["Ruta"], err = json.Marshal(r.Ruta)
+	if err != nil {
+		return nil, err
+	}
+	output["MuelleDeCarga"], err = json.Marshal(r.MuelleDeCarga)
+	if err != nil {
+		return nil, err
+	}
+	output["Estado"], err = json.Marshal(r.Estado)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaDePartida"], err = json.Marshal(r.FechaDePartida)
+	if err != nil {
+		return nil, err
+	}
+	output["IDTransportista"], err = json.Marshal(r.IDTransportista)
+	if err != nil {
+		return nil, err
+	}
+	output["PatenteDelTransporte"], err = json.Marshal(r.PatenteDelTransporte)
+	if err != nil {
+		return nil, err
+	}
+	output["TipoDeTransporte"], err = json.Marshal(r.TipoDeTransporte)
+	if err != nil {
+		return nil, err
+	}
+	output["TotalUnidades"], err = json.Marshal(r.TotalUnidades)
+	if err != nil {
+		return nil, err
+	}
+	output["NumeroDeCargaExterno"], err = json.Marshal(r.NumeroDeCargaExterno)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaInicioDeCarga"], err = json.Marshal(r.FechaInicioDeCarga)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaFinDeCarga"], err = json.Marshal(r.FechaFinDeCarga)
+	if err != nil {
+		return nil, err
+	}
+	output["NumerosDeIdCargados"], err = json.Marshal(r.NumerosDeIdCargados)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaDeCierreDeCarga"], err = json.Marshal(r.FechaDeCierreDeCarga)
+	if err != nil {
+		return nil, err
+	}
+	output["AdmitePickingParcial"], err = json.Marshal(r.AdmitePickingParcial)
+	if err != nil {
+		return nil, err
+	}
+	output["NombreDelConductor"], err = json.Marshal(r.NombreDelConductor)
+	if err != nil {
+		return nil, err
+	}
+	output["NumeroDelPrecinto"], err = json.Marshal(r.NumeroDelPrecinto)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaExpedicion"], err = json.Marshal(r.FechaExpedicion)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -116,5 +419,257 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["CargaWH"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CargaWH); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CargaWH")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Ruta"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Ruta); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Ruta")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["MuelleDeCarga"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.MuelleDeCarga); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for MuelleDeCarga")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Estado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Estado); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Estado")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaDePartida"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaDePartida); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaDePartida")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IDTransportista"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IDTransportista); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IDTransportista")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PatenteDelTransporte"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PatenteDelTransporte); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for PatenteDelTransporte")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TipoDeTransporte"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoDeTransporte); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for TipoDeTransporte")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TotalUnidades"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TotalUnidades); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for TotalUnidades")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NumeroDeCargaExterno"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeCargaExterno); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for NumeroDeCargaExterno")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaInicioDeCarga"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaInicioDeCarga); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaInicioDeCarga")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaFinDeCarga"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaFinDeCarga); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaFinDeCarga")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NumerosDeIdCargados"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumerosDeIdCargados); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for NumerosDeIdCargados")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaDeCierreDeCarga"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaDeCierreDeCarga); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaDeCierreDeCarga")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["AdmitePickingParcial"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AdmitePickingParcial); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for AdmitePickingParcial")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NombreDelConductor"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NombreDelConductor); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for NombreDelConductor")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NumeroDelPrecinto"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDelPrecinto); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for NumeroDelPrecinto")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaExpedicion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaExpedicion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaExpedicion")
+	}
 	return nil
 }

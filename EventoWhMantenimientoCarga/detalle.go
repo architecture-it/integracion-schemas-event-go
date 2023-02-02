@@ -18,9 +18,14 @@ import (
 var _ = fmt.Printf
 
 type Detalle struct {
+	UnidadesDelPedido float32 `json:"UnidadesDelPedido"`
+
+	OrdenCliente *UnionNullString `json:"OrdenCliente"`
+
+	OrdenWH *UnionNullString `json:"OrdenWH"`
 }
 
-const DetalleAvroCRC64Fingerprint = "B\x87`G\xb7\bK\x8e"
+const DetalleAvroCRC64Fingerprint = "\x92A*\xffC\t\x11\xea"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -52,6 +57,18 @@ func DeserializeDetalleFromSchema(r io.Reader, schema string) (Detalle, error) {
 
 func writeDetalle(r Detalle, w io.Writer) error {
 	var err error
+	err = vm.WriteFloat(r.UnidadesDelPedido, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.OrdenCliente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.OrdenWH, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -60,7 +77,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[],\"name\":\"Andreani.EventoWhMantenimientoCarga.Events.IniciadaCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"UnidadesDelPedido\",\"type\":\"float\"},{\"name\":\"OrdenCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenWH\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhMantenimientoCarga.Events.IniciadaCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -78,6 +95,19 @@ func (_ Detalle) SetUnionElem(v int64) { panic("Unsupported operation") }
 
 func (r *Detalle) Get(i int) types.Field {
 	switch i {
+	case 0:
+		w := types.Float{Target: &r.UnidadesDelPedido}
+
+		return w
+
+	case 1:
+		r.OrdenCliente = NewUnionNullString()
+
+		return r.OrdenCliente
+	case 2:
+		r.OrdenWH = NewUnionNullString()
+
+		return r.OrdenWH
 	}
 	panic("Unknown field index")
 }
@@ -90,6 +120,12 @@ func (r *Detalle) SetDefault(i int) {
 
 func (r *Detalle) NullField(i int) {
 	switch i {
+	case 1:
+		r.OrdenCliente = nil
+		return
+	case 2:
+		r.OrdenWH = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -106,6 +142,18 @@ func (_ Detalle) AvroCRC64Fingerprint() []byte {
 func (r Detalle) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["UnidadesDelPedido"], err = json.Marshal(r.UnidadesDelPedido)
+	if err != nil {
+		return nil, err
+	}
+	output["OrdenCliente"], err = json.Marshal(r.OrdenCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["OrdenWH"], err = json.Marshal(r.OrdenWH)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -116,5 +164,47 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["UnidadesDelPedido"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UnidadesDelPedido); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for UnidadesDelPedido")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["OrdenCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OrdenCliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for OrdenCliente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["OrdenWH"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OrdenWH); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for OrdenWH")
+	}
 	return nil
 }
