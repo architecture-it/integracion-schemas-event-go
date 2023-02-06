@@ -18,14 +18,14 @@ import (
 var _ = fmt.Printf
 
 type NovedadDireccion struct {
-	CodigoDeDireccion int64 `json:"CodigoDeDireccion"`
+	CodigoDeDireccion string `json:"CodigoDeDireccion"`
 
 	Fecha int64 `json:"Fecha"`
 
 	DomicilioReal DatosDomicilio `json:"DomicilioReal"`
 }
 
-const NovedadDireccionAvroCRC64Fingerprint = "Ҡ\xaa\xd3\xc8\x14F/"
+const NovedadDireccionAvroCRC64Fingerprint = "V\xc0F\xcd'\x03\x18\xe3"
 
 func NewNovedadDireccion() NovedadDireccion {
 	r := NovedadDireccion{}
@@ -59,7 +59,7 @@ func DeserializeNovedadDireccionFromSchema(r io.Reader, schema string) (NovedadD
 
 func writeNovedadDireccion(r NovedadDireccion, w io.Writer) error {
 	var err error
-	err = vm.WriteLong(r.CodigoDeDireccion, w)
+	err = vm.WriteString(r.CodigoDeDireccion, w)
 	if err != nil {
 		return err
 	}
@@ -79,7 +79,7 @@ func (r NovedadDireccion) Serialize(w io.Writer) error {
 }
 
 func (r NovedadDireccion) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoDeDireccion\",\"type\":\"long\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"DomicilioReal\",\"type\":{\"fields\":[{\"name\":\"AbreviaturaProvincia\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"CodigoCiudad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"int\"},{\"name\":\"NombreProvincia\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"int\"}],\"name\":\"DatosDomicilio\",\"namespace\":\"Andreani.Facturacion.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.Facturacion.Events.Record.NovedadDireccion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoDeDireccion\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"DomicilioReal\",\"type\":{\"fields\":[{\"name\":\"AbreviaturaProvincia\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"CodigoCiudad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"int\"},{\"name\":\"NombreProvincia\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"int\"}],\"name\":\"DatosDomicilio\",\"namespace\":\"Andreani.Facturacion.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.Facturacion.Events.Record.NovedadDireccion\",\"type\":\"record\"}"
 }
 
 func (r NovedadDireccion) SchemaName() string {
@@ -98,7 +98,7 @@ func (_ NovedadDireccion) SetUnionElem(v int64) { panic("Unsupported operation")
 func (r *NovedadDireccion) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Long{Target: &r.CodigoDeDireccion}
+		w := types.String{Target: &r.CodigoDeDireccion}
 
 		return w
 

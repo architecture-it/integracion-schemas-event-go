@@ -18,13 +18,13 @@ import (
 var _ = fmt.Printf
 
 type NovedadCliente struct {
-	CodigoDeClienteInterno int64 `json:"CodigoDeClienteInterno"`
+	CodigoDeClienteInterno string `json:"CodigoDeClienteInterno"`
 
 	Canal string `json:"Canal"`
 
 	DepartamentoDeVentas string `json:"DepartamentoDeVentas"`
 
-	CodigoDeDireccion int64 `json:"CodigoDeDireccion"`
+	CodigoDeDireccion string `json:"CodigoDeDireccion"`
 
 	EjecutivoDeCuentas string `json:"EjecutivoDeCuentas"`
 
@@ -45,7 +45,7 @@ type NovedadCliente struct {
 	Fecha *UnionNullLong `json:"Fecha"`
 }
 
-const NovedadClienteAvroCRC64Fingerprint = "%\xba\xf3\xedZ5\xa9\xe9"
+const NovedadClienteAvroCRC64Fingerprint = "BD\xb5\xff\x8c&\x17\xf5"
 
 func NewNovedadCliente() NovedadCliente {
 	r := NovedadCliente{}
@@ -77,7 +77,7 @@ func DeserializeNovedadClienteFromSchema(r io.Reader, schema string) (NovedadCli
 
 func writeNovedadCliente(r NovedadCliente, w io.Writer) error {
 	var err error
-	err = vm.WriteLong(r.CodigoDeClienteInterno, w)
+	err = vm.WriteString(r.CodigoDeClienteInterno, w)
 	if err != nil {
 		return err
 	}
@@ -89,7 +89,7 @@ func writeNovedadCliente(r NovedadCliente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.CodigoDeDireccion, w)
+	err = vm.WriteString(r.CodigoDeDireccion, w)
 	if err != nil {
 		return err
 	}
@@ -137,7 +137,7 @@ func (r NovedadCliente) Serialize(w io.Writer) error {
 }
 
 func (r NovedadCliente) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoDeClienteInterno\",\"type\":\"long\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"DepartamentoDeVentas\",\"type\":\"string\"},{\"name\":\"CodigoDeDireccion\",\"type\":\"long\"},{\"name\":\"EjecutivoDeCuentas\",\"type\":\"string\"},{\"name\":\"EstaActivo\",\"type\":\"int\"},{\"name\":\"GerenteDeCuentas\",\"type\":\"string\"},{\"name\":\"RazonSocial\",\"type\":\"string\"},{\"name\":\"Segmento\",\"type\":\"string\"},{\"name\":\"TipoDeEntidadFiscal\",\"type\":\"int\"},{\"name\":\"EjecutivoDeCuentasLogin\",\"type\":\"string\"},{\"name\":\"NombreDeFantasia\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Facturacion.Events.Record.NovedadCliente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoDeClienteInterno\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"DepartamentoDeVentas\",\"type\":\"string\"},{\"name\":\"CodigoDeDireccion\",\"type\":\"string\"},{\"name\":\"EjecutivoDeCuentas\",\"type\":\"string\"},{\"name\":\"EstaActivo\",\"type\":\"int\"},{\"name\":\"GerenteDeCuentas\",\"type\":\"string\"},{\"name\":\"RazonSocial\",\"type\":\"string\"},{\"name\":\"Segmento\",\"type\":\"string\"},{\"name\":\"TipoDeEntidadFiscal\",\"type\":\"int\"},{\"name\":\"EjecutivoDeCuentasLogin\",\"type\":\"string\"},{\"name\":\"NombreDeFantasia\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Facturacion.Events.Record.NovedadCliente\",\"type\":\"record\"}"
 }
 
 func (r NovedadCliente) SchemaName() string {
@@ -156,7 +156,7 @@ func (_ NovedadCliente) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *NovedadCliente) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Long{Target: &r.CodigoDeClienteInterno}
+		w := types.String{Target: &r.CodigoDeClienteInterno}
 
 		return w
 
@@ -171,7 +171,7 @@ func (r *NovedadCliente) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.Long{Target: &r.CodigoDeDireccion}
+		w := types.String{Target: &r.CodigoDeDireccion}
 
 		return w
 

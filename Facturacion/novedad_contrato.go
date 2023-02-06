@@ -20,15 +20,15 @@ var _ = fmt.Printf
 type NovedadContrato struct {
 	SistemaDestino string `json:"SistemaDestino"`
 
-	CodigoDeContratoInterno int64 `json:"CodigoDeContratoInterno"`
+	CodigoDeContratoInterno string `json:"CodigoDeContratoInterno"`
 
 	Descripcion string `json:"Descripcion"`
 
 	TipoDeServicio string `json:"TipoDeServicio"`
 
-	CodigoDeDireccion int64 `json:"CodigoDeDireccion"`
+	CodigoDeDireccion string `json:"CodigoDeDireccion"`
 
-	CodigoDeClienteInterno int64 `json:"CodigoDeClienteInterno"`
+	CodigoDeClienteInterno string `json:"CodigoDeClienteInterno"`
 
 	Fecha int64 `json:"Fecha"`
 
@@ -37,7 +37,7 @@ type NovedadContrato struct {
 	VigenciaHasta int64 `json:"VigenciaHasta"`
 }
 
-const NovedadContratoAvroCRC64Fingerprint = "\xb5\x8dP\x91o\xb6%O"
+const NovedadContratoAvroCRC64Fingerprint = "\xafv\xd0Z\xfd\xf6\xf3@"
 
 func NewNovedadContrato() NovedadContrato {
 	r := NovedadContrato{}
@@ -73,7 +73,7 @@ func writeNovedadContrato(r NovedadContrato, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.CodigoDeContratoInterno, w)
+	err = vm.WriteString(r.CodigoDeContratoInterno, w)
 	if err != nil {
 		return err
 	}
@@ -85,11 +85,11 @@ func writeNovedadContrato(r NovedadContrato, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.CodigoDeDireccion, w)
+	err = vm.WriteString(r.CodigoDeDireccion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.CodigoDeClienteInterno, w)
+	err = vm.WriteString(r.CodigoDeClienteInterno, w)
 	if err != nil {
 		return err
 	}
@@ -113,7 +113,7 @@ func (r NovedadContrato) Serialize(w io.Writer) error {
 }
 
 func (r NovedadContrato) Schema() string {
-	return "{\"fields\":[{\"name\":\"SistemaDestino\",\"type\":\"string\"},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"long\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeServicio\",\"type\":\"string\"},{\"name\":\"CodigoDeDireccion\",\"type\":\"long\"},{\"name\":\"CodigoDeClienteInterno\",\"type\":\"long\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaDesde\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaHasta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Facturacion.Events.Record.NovedadContrato\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SistemaDestino\",\"type\":\"string\"},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeServicio\",\"type\":\"string\"},{\"name\":\"CodigoDeDireccion\",\"type\":\"string\"},{\"name\":\"CodigoDeClienteInterno\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaDesde\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaHasta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Facturacion.Events.Record.NovedadContrato\",\"type\":\"record\"}"
 }
 
 func (r NovedadContrato) SchemaName() string {
@@ -137,7 +137,7 @@ func (r *NovedadContrato) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.Long{Target: &r.CodigoDeContratoInterno}
+		w := types.String{Target: &r.CodigoDeContratoInterno}
 
 		return w
 
@@ -152,12 +152,12 @@ func (r *NovedadContrato) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.Long{Target: &r.CodigoDeDireccion}
+		w := types.String{Target: &r.CodigoDeDireccion}
 
 		return w
 
 	case 5:
-		w := types.Long{Target: &r.CodigoDeClienteInterno}
+		w := types.String{Target: &r.CodigoDeClienteInterno}
 
 		return w
 
