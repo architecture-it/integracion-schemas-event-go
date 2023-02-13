@@ -27,9 +27,11 @@ type DetallePedido struct {
 	Tipoacondicionamientoescundario *UnionNullString `json:"tipoacondicionamientoescundario"`
 
 	Admitepickingparcial *UnionNullString `json:"admitepickingparcial"`
+
+	TiposDeAcondicionamientoSecundario *UnionNullListaDeTiposDeAcondicionamientoSecundario `json:"tiposDeAcondicionamientoSecundario"`
 }
 
-const DetallePedidoAvroCRC64Fingerprint = "\xa3\x18\x87\t\xbf\x84P\xd8"
+const DetallePedidoAvroCRC64Fingerprint = "|\nۓ\xb3.(/"
 
 func NewDetallePedido() DetallePedido {
 	r := DetallePedido{}
@@ -37,6 +39,7 @@ func NewDetallePedido() DetallePedido {
 
 	r.ContratoWarehouse = nil
 	r.Admitepickingparcial = nil
+	r.TiposDeAcondicionamientoSecundario = nil
 	return r
 }
 
@@ -85,6 +88,10 @@ func writeDetallePedido(r DetallePedido, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullListaDeTiposDeAcondicionamientoSecundario(r.TiposDeAcondicionamientoSecundario, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -93,7 +100,7 @@ func (r DetallePedido) Serialize(w io.Writer) error {
 }
 
 func (r DetallePedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"contratoWarehouse\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.DetallePedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"contratoWarehouse\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"int\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.DetallePedido\",\"type\":\"record\"}"
 }
 
 func (r DetallePedido) SchemaName() string {
@@ -134,6 +141,10 @@ func (r *DetallePedido) Get(i int) types.Field {
 		r.Admitepickingparcial = NewUnionNullString()
 
 		return r.Admitepickingparcial
+	case 5:
+		r.TiposDeAcondicionamientoSecundario = NewUnionNullListaDeTiposDeAcondicionamientoSecundario()
+
+		return r.TiposDeAcondicionamientoSecundario
 	}
 	panic("Unknown field index")
 }
@@ -145,6 +156,9 @@ func (r *DetallePedido) SetDefault(i int) {
 		return
 	case 4:
 		r.Admitepickingparcial = nil
+		return
+	case 5:
+		r.TiposDeAcondicionamientoSecundario = nil
 		return
 	}
 	panic("Unknown field index")
@@ -163,6 +177,9 @@ func (r *DetallePedido) NullField(i int) {
 		return
 	case 4:
 		r.Admitepickingparcial = nil
+		return
+	case 5:
+		r.TiposDeAcondicionamientoSecundario = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -197,6 +214,10 @@ func (r DetallePedido) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["admitepickingparcial"], err = json.Marshal(r.Admitepickingparcial)
+	if err != nil {
+		return nil, err
+	}
+	output["tiposDeAcondicionamientoSecundario"], err = json.Marshal(r.TiposDeAcondicionamientoSecundario)
 	if err != nil {
 		return nil, err
 	}
@@ -283,6 +304,22 @@ func (r *DetallePedido) UnmarshalJSON(data []byte) error {
 		r.Admitepickingparcial = NewUnionNullString()
 
 		r.Admitepickingparcial = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["tiposDeAcondicionamientoSecundario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TiposDeAcondicionamientoSecundario); err != nil {
+			return err
+		}
+	} else {
+		r.TiposDeAcondicionamientoSecundario = NewUnionNullListaDeTiposDeAcondicionamientoSecundario()
+
+		r.TiposDeAcondicionamientoSecundario = nil
 	}
 	return nil
 }
