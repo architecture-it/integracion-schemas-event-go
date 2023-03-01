@@ -38,7 +38,7 @@ type LoteSCE struct {
 
 	Paquete *UnionNullString `json:"paquete"`
 
-	VidaUtil *UnionNullString `json:"vidaUtil"`
+	VidaUtil *UnionNullInt `json:"vidaUtil"`
 
 	Etregaantesde *UnionNullLong `json:"etregaantesde"`
 
@@ -47,7 +47,7 @@ type LoteSCE struct {
 	EstadoDeUbicacionLote *UnionNullString `json:"estadoDeUbicacionLote"`
 }
 
-const LoteSCEAvroCRC64Fingerprint = "\x80\xfa\xa4\x90\x12W\xd3!"
+const LoteSCEAvroCRC64Fingerprint = "dw\xe4_\x1b\xa5\x983"
 
 func NewLoteSCE() LoteSCE {
 	r := LoteSCE{}
@@ -123,7 +123,7 @@ func writeLoteSCE(r LoteSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.VidaUtil, w)
+	err = writeUnionNullInt(r.VidaUtil, w)
 	if err != nil {
 		return err
 	}
@@ -147,7 +147,7 @@ func (r LoteSCE) Serialize(w io.Writer) error {
 }
 
 func (r LoteSCE) Schema() string {
-	return "{\"fields\":[{\"name\":\"articulo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"estadolote\",\"type\":\"string\"},{\"name\":\"loteCaja\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"trazable\",\"type\":\"int\"},{\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"paquete\",\"type\":[\"null\",\"string\"]},{\"name\":\"vidaUtil\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"etregaantesde\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"consumoantesde\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"estadoDeUbicacionLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteSCE\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"articulo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"estadolote\",\"type\":\"string\"},{\"name\":\"loteCaja\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"trazable\",\"type\":\"int\"},{\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"paquete\",\"type\":[\"null\",\"string\"]},{\"name\":\"vidaUtil\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"etregaantesde\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"consumoantesde\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"estadoDeUbicacionLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteSCE\",\"type\":\"record\"}"
 }
 
 func (r LoteSCE) SchemaName() string {
@@ -212,7 +212,7 @@ func (r *LoteSCE) Get(i int) types.Field {
 
 		return r.Paquete
 	case 10:
-		r.VidaUtil = NewUnionNullString()
+		r.VidaUtil = NewUnionNullInt()
 
 		return r.VidaUtil
 	case 11:
