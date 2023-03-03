@@ -32,22 +32,22 @@ type LoteSCE struct {
 
 	ZonaConsumo *UnionNullString `json:"zonaConsumo"`
 
-	FechaFabricacion *UnionNullString `json:"fechaFabricacion"`
+	FechaFabricacion *UnionNullLong `json:"fechaFabricacion"`
 
-	FechaVencimiento *UnionNullString `json:"fechaVencimiento"`
+	FechaVencimiento *UnionNullLong `json:"fechaVencimiento"`
 
 	Paquete *UnionNullString `json:"paquete"`
 
 	VidaUtil *UnionNullInt `json:"vidaUtil"`
 
-	Etregaantesde *UnionNullString `json:"etregaantesde"`
+	Etregaantesde *UnionNullLong `json:"etregaantesde"`
 
-	Consumoantesde *UnionNullString `json:"consumoantesde"`
+	Consumoantesde *UnionNullLong `json:"consumoantesde"`
 
 	EstadoDeUbicacionLote *UnionNullString `json:"estadoDeUbicacionLote"`
 }
 
-const LoteSCEAvroCRC64Fingerprint = "\xd5 \u007fFyA\xdeN"
+const LoteSCEAvroCRC64Fingerprint = "dw\xe4_\x1b\xa5\x983"
 
 func NewLoteSCE() LoteSCE {
 	r := LoteSCE{}
@@ -112,11 +112,11 @@ func writeLoteSCE(r LoteSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.FechaFabricacion, w)
+	err = writeUnionNullLong(r.FechaFabricacion, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.FechaVencimiento, w)
+	err = writeUnionNullLong(r.FechaVencimiento, w)
 	if err != nil {
 		return err
 	}
@@ -128,11 +128,11 @@ func writeLoteSCE(r LoteSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Etregaantesde, w)
+	err = writeUnionNullLong(r.Etregaantesde, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Consumoantesde, w)
+	err = writeUnionNullLong(r.Consumoantesde, w)
 	if err != nil {
 		return err
 	}
@@ -148,7 +148,7 @@ func (r LoteSCE) Serialize(w io.Writer) error {
 }
 
 func (r LoteSCE) Schema() string {
-	return "{\"fields\":[{\"name\":\"articulo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"estadolote\",\"type\":\"string\"},{\"name\":\"loteCaja\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"trazable\",\"type\":\"int\"},{\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaFabricacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"paquete\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vidaUtil\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"etregaantesde\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"consumoantesde\",\"type\":[\"null\",\"string\"]},{\"name\":\"estadoDeUbicacionLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteSCE\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"articulo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"estadolote\",\"type\":\"string\"},{\"name\":\"loteCaja\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"trazable\",\"type\":\"int\"},{\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"paquete\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vidaUtil\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"etregaantesde\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"consumoantesde\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"estadoDeUbicacionLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteSCE\",\"type\":\"record\"}"
 }
 
 func (r LoteSCE) SchemaName() string {
@@ -201,11 +201,11 @@ func (r *LoteSCE) Get(i int) types.Field {
 
 		return r.ZonaConsumo
 	case 7:
-		r.FechaFabricacion = NewUnionNullString()
+		r.FechaFabricacion = NewUnionNullLong()
 
 		return r.FechaFabricacion
 	case 8:
-		r.FechaVencimiento = NewUnionNullString()
+		r.FechaVencimiento = NewUnionNullLong()
 
 		return r.FechaVencimiento
 	case 9:
@@ -217,11 +217,11 @@ func (r *LoteSCE) Get(i int) types.Field {
 
 		return r.VidaUtil
 	case 11:
-		r.Etregaantesde = NewUnionNullString()
+		r.Etregaantesde = NewUnionNullLong()
 
 		return r.Etregaantesde
 	case 12:
-		r.Consumoantesde = NewUnionNullString()
+		r.Consumoantesde = NewUnionNullLong()
 
 		return r.Consumoantesde
 	case 13:
@@ -471,7 +471,7 @@ func (r *LoteSCE) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.FechaFabricacion = NewUnionNullString()
+		r.FechaFabricacion = NewUnionNullLong()
 
 		r.FechaFabricacion = nil
 	}
@@ -487,7 +487,7 @@ func (r *LoteSCE) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.FechaVencimiento = NewUnionNullString()
+		r.FechaVencimiento = NewUnionNullLong()
 
 		r.FechaVencimiento = nil
 	}
@@ -533,7 +533,7 @@ func (r *LoteSCE) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Etregaantesde = NewUnionNullString()
+		r.Etregaantesde = NewUnionNullLong()
 
 		r.Etregaantesde = nil
 	}
@@ -549,7 +549,7 @@ func (r *LoteSCE) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Consumoantesde = NewUnionNullString()
+		r.Consumoantesde = NewUnionNullLong()
 
 		r.Consumoantesde = nil
 	}
