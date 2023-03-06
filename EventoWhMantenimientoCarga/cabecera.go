@@ -46,8 +46,6 @@ type Cabecera struct {
 
 	FechaDeCierreDeCarga *UnionNullLong `json:"FechaDeCierreDeCarga"`
 
-	AdmitePickingParcial *UnionNullString `json:"AdmitePickingParcial"`
-
 	NombreDelConductor *UnionNullString `json:"NombreDelConductor"`
 
 	NumeroDelPrecinto *UnionNullString `json:"NumeroDelPrecinto"`
@@ -55,7 +53,7 @@ type Cabecera struct {
 	FechaExpedicion *UnionNullLong `json:"FechaExpedicion"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\x11\xfeδ=K\xbe\x98"
+const CabeceraAvroCRC64Fingerprint = "v-\xa0ܗ`E\x1a"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -143,10 +141,6 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.AdmitePickingParcial, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.NombreDelConductor, w)
 	if err != nil {
 		return err
@@ -167,7 +161,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"CargaWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"Ruta\",\"type\":[\"null\",\"string\"]},{\"name\":\"MuelleDeCarga\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estado\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDePartida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"IDTransportista\",\"type\":[\"null\",\"string\"]},{\"name\":\"PatenteDelTransporte\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDeTransporte\",\"type\":[\"null\",\"string\"]},{\"name\":\"TotalUnidades\",\"type\":\"float\"},{\"name\":\"NumeroDeCargaExterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaInicioDeCarga\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaFinDeCarga\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"NumerosDeIdCargados\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDeCierreDeCarga\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"AdmitePickingParcial\",\"type\":[\"null\",\"string\"]},{\"name\":\"NombreDelConductor\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDelPrecinto\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaExpedicion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhMantenimientoCarga.Events.IniciadaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CargaWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"Ruta\",\"type\":[\"null\",\"string\"]},{\"name\":\"MuelleDeCarga\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estado\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDePartida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"IDTransportista\",\"type\":[\"null\",\"string\"]},{\"name\":\"PatenteDelTransporte\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDeTransporte\",\"type\":[\"null\",\"string\"]},{\"name\":\"TotalUnidades\",\"type\":\"float\"},{\"name\":\"NumeroDeCargaExterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaInicioDeCarga\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaFinDeCarga\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"NumerosDeIdCargados\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDeCierreDeCarga\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"NombreDelConductor\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDelPrecinto\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaExpedicion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhMantenimientoCarga.Events.IniciadaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -243,18 +237,14 @@ func (r *Cabecera) Get(i int) types.Field {
 
 		return r.FechaDeCierreDeCarga
 	case 14:
-		r.AdmitePickingParcial = NewUnionNullString()
-
-		return r.AdmitePickingParcial
-	case 15:
 		r.NombreDelConductor = NewUnionNullString()
 
 		return r.NombreDelConductor
-	case 16:
+	case 15:
 		r.NumeroDelPrecinto = NewUnionNullString()
 
 		return r.NumeroDelPrecinto
-	case 17:
+	case 16:
 		r.FechaExpedicion = NewUnionNullLong()
 
 		return r.FechaExpedicion
@@ -310,15 +300,12 @@ func (r *Cabecera) NullField(i int) {
 		r.FechaDeCierreDeCarga = nil
 		return
 	case 14:
-		r.AdmitePickingParcial = nil
-		return
-	case 15:
 		r.NombreDelConductor = nil
 		return
-	case 16:
+	case 15:
 		r.NumeroDelPrecinto = nil
 		return
-	case 17:
+	case 16:
 		r.FechaExpedicion = nil
 		return
 	}
@@ -390,10 +377,6 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["FechaDeCierreDeCarga"], err = json.Marshal(r.FechaDeCierreDeCarga)
-	if err != nil {
-		return nil, err
-	}
-	output["AdmitePickingParcial"], err = json.Marshal(r.AdmitePickingParcial)
 	if err != nil {
 		return nil, err
 	}
@@ -614,20 +597,6 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for FechaDeCierreDeCarga")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["AdmitePickingParcial"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AdmitePickingParcial); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for AdmitePickingParcial")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NombreDelConductor"]; ok {
