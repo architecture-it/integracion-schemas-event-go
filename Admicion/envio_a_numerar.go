@@ -31,11 +31,9 @@ type EnvioANumerar struct {
 	OperatorId int32 `json:"OperatorId"`
 
 	Published bool `json:"Published"`
-
-	Status bool `json:"Status"`
 }
 
-const EnvioANumerarAvroCRC64Fingerprint = "\xfa\x8d\xa9\x01\x01kg\xc4"
+const EnvioANumerarAvroCRC64Fingerprint = "Is\x8c\xd0\xcf\x1d\x86\r"
 
 func NewEnvioANumerar() EnvioANumerar {
 	r := EnvioANumerar{}
@@ -96,10 +94,6 @@ func writeEnvioANumerar(r EnvioANumerar, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteBool(r.Status, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -108,7 +102,7 @@ func (r EnvioANumerar) Serialize(w io.Writer) error {
 }
 
 func (r EnvioANumerar) Schema() string {
-	return "{\"fields\":[{\"name\":\"PrePieceHeader\",\"type\":\"long\"},{\"name\":\"PrePiece\",\"type\":\"int\"},{\"default\":null,\"name\":\"PostalStampNumber\",\"type\":[\"null\",\"string\"]},{\"name\":\"internalContrac\",\"type\":\"string\"},{\"name\":\"branchID\",\"type\":\"int\"},{\"name\":\"OperatorId\",\"type\":\"int\"},{\"name\":\"Published\",\"type\":\"boolean\"},{\"name\":\"Status\",\"type\":\"boolean\"}],\"name\":\"Andreani.Admicion.Events.Record.EnvioANumerar\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PrePieceHeader\",\"type\":\"long\"},{\"name\":\"PrePiece\",\"type\":\"int\"},{\"default\":null,\"name\":\"PostalStampNumber\",\"type\":[\"null\",\"string\"]},{\"name\":\"internalContrac\",\"type\":\"string\"},{\"name\":\"branchID\",\"type\":\"int\"},{\"name\":\"OperatorId\",\"type\":\"int\"},{\"name\":\"Published\",\"type\":\"boolean\"}],\"name\":\"Andreani.Admicion.Events.Record.EnvioANumerar\",\"type\":\"record\"}"
 }
 
 func (r EnvioANumerar) SchemaName() string {
@@ -157,11 +151,6 @@ func (r *EnvioANumerar) Get(i int) types.Field {
 
 	case 6:
 		w := types.Boolean{Target: &r.Published}
-
-		return w
-
-	case 7:
-		w := types.Boolean{Target: &r.Status}
 
 		return w
 
@@ -224,10 +213,6 @@ func (r EnvioANumerar) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Published"], err = json.Marshal(r.Published)
-	if err != nil {
-		return nil, err
-	}
-	output["Status"], err = json.Marshal(r.Status)
 	if err != nil {
 		return nil, err
 	}
@@ -340,20 +325,6 @@ func (r *EnvioANumerar) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Published")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Status"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Status); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Status")
 	}
 	return nil
 }
