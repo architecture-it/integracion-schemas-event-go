@@ -55,7 +55,7 @@ type Orden struct {
 	Detalle []OrdenDetalle `json:"detalle"`
 }
 
-const OrdenAvroCRC64Fingerprint = "\xb6\x06xg\x92S,["
+const OrdenAvroCRC64Fingerprint = "3\x90\xbd\xd4\u007f\xc2u\x12"
 
 func NewOrden() Orden {
 	r := Orden{}
@@ -170,11 +170,11 @@ func (r Orden) Serialize(w io.Writer) error {
 }
 
 func (r Orden) Schema() string {
-	return "{\"fields\":[{\"name\":\"storerkey\",\"type\":\"string\"},{\"name\":\"externorderkey\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"int\"},{\"name\":\"buyerpo\",\"type\":\"string\"},{\"name\":\"caddress1\",\"type\":\"string\"},{\"name\":\"caddress2\",\"type\":\"string\"},{\"name\":\"caddress3\",\"type\":\"string\"},{\"name\":\"caddress4\",\"type\":\"string\"},{\"name\":\"caddress6\",\"type\":\"string\"},{\"name\":\"ccity\",\"type\":\"string\"},{\"name\":\"ccompany\",\"type\":\"string\"},{\"name\":\"ccontact1\",\"type\":\"string\"},{\"name\":\"cemail1\",\"type\":\"string\"},{\"default\":null,\"name\":\"cphone1\",\"type\":[\"null\",\"string\"]},{\"name\":\"cstate\",\"type\":\"string\"},{\"name\":\"czip\",\"type\":\"string\"},{\"name\":\"consigneekey\",\"type\":\"string\"},{\"name\":\"detalle\",\"type\":{\"items\":{\"fields\":[{\"name\":\"sku\",\"type\":\"string\"},{\"name\":\"storerkey\",\"type\":\"string\"},{\"name\":\"externorderkey\",\"type\":\"string\"},{\"name\":\"openqty\",\"type\":\"int\"}],\"name\":\"ordenDetalle\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.sce.Events.Record.orden\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"storerkey\",\"type\":\"string\"},{\"name\":\"externorderkey\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"int\"},{\"name\":\"buyerpo\",\"type\":\"string\"},{\"name\":\"caddress1\",\"type\":\"string\"},{\"name\":\"caddress2\",\"type\":\"string\"},{\"name\":\"caddress3\",\"type\":\"string\"},{\"name\":\"caddress4\",\"type\":\"string\"},{\"name\":\"caddress6\",\"type\":\"string\"},{\"name\":\"ccity\",\"type\":\"string\"},{\"name\":\"ccompany\",\"type\":\"string\"},{\"name\":\"ccontact1\",\"type\":\"string\"},{\"name\":\"cemail1\",\"type\":\"string\"},{\"default\":null,\"name\":\"cphone1\",\"type\":[\"null\",\"string\"]},{\"name\":\"cstate\",\"type\":\"string\"},{\"name\":\"czip\",\"type\":\"string\"},{\"name\":\"consigneekey\",\"type\":\"string\"},{\"name\":\"detalle\",\"type\":{\"items\":{\"fields\":[{\"name\":\"sku\",\"type\":\"string\"},{\"name\":\"storerkey\",\"type\":\"string\"},{\"name\":\"externorderkey\",\"type\":\"string\"},{\"name\":\"openqty\",\"type\":\"int\"}],\"name\":\"ordenDetalle\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.sceImportador.Events.Record.orden\",\"type\":\"record\"}"
 }
 
 func (r Orden) SchemaName() string {
-	return "Andreani.sce.Events.Record.orden"
+	return "Andreani.sceImportador.Events.Record.orden"
 }
 
 func (_ Orden) SetBoolean(v bool)    { panic("Unsupported operation") }

@@ -27,7 +27,7 @@ type OrdenDetalle struct {
 	Openqty int32 `json:"openqty"`
 }
 
-const OrdenDetalleAvroCRC64Fingerprint = "\xf6\xdc9\xedx\xbf\xbau"
+const OrdenDetalleAvroCRC64Fingerprint = "\x9b\xa6\x18\xf0\xa9\r\x801"
 
 func NewOrdenDetalle() OrdenDetalle {
 	r := OrdenDetalle{}
@@ -83,11 +83,11 @@ func (r OrdenDetalle) Serialize(w io.Writer) error {
 }
 
 func (r OrdenDetalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"sku\",\"type\":\"string\"},{\"name\":\"storerkey\",\"type\":\"string\"},{\"name\":\"externorderkey\",\"type\":\"string\"},{\"name\":\"openqty\",\"type\":\"int\"}],\"name\":\"Andreani.sce.Events.Record.ordenDetalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"sku\",\"type\":\"string\"},{\"name\":\"storerkey\",\"type\":\"string\"},{\"name\":\"externorderkey\",\"type\":\"string\"},{\"name\":\"openqty\",\"type\":\"int\"}],\"name\":\"Andreani.sceImportador.Events.Record.ordenDetalle\",\"type\":\"record\"}"
 }
 
 func (r OrdenDetalle) SchemaName() string {
-	return "Andreani.sce.Events.Record.ordenDetalle"
+	return "Andreani.sceImportador.Events.Record.ordenDetalle"
 }
 
 func (_ OrdenDetalle) SetBoolean(v bool)    { panic("Unsupported operation") }
