@@ -22,17 +22,20 @@ type LoteAsn struct {
 
 	LoteSecundario *UnionNullString `json:"loteSecundario"`
 
+	Estado *UnionNullString `json:"estado"`
+
 	FechaDeVencimiento *UnionNullLong `json:"fechaDeVencimiento"`
 
 	OtrosDatos *UnionNullListaDePropiedades `json:"otrosDatos"`
 }
 
-const LoteAsnAvroCRC64Fingerprint = "V^\x1a\x03\xfd'FA"
+const LoteAsnAvroCRC64Fingerprint = "=9\xf4m\x82\xabc0"
 
 func NewLoteAsn() LoteAsn {
 	r := LoteAsn{}
 	r.LoteDeFabricante = nil
 	r.LoteSecundario = nil
+	r.Estado = nil
 	r.FechaDeVencimiento = nil
 	r.OtrosDatos = nil
 	return r
@@ -71,6 +74,10 @@ func writeLoteAsn(r LoteAsn, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Estado, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullLong(r.FechaDeVencimiento, w)
 	if err != nil {
 		return err
@@ -87,7 +94,7 @@ func (r LoteAsn) Serialize(w io.Writer) error {
 }
 
 func (r LoteAsn) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteAsn\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteAsn\",\"type\":\"record\"}"
 }
 
 func (r LoteAsn) SchemaName() string {
@@ -114,10 +121,14 @@ func (r *LoteAsn) Get(i int) types.Field {
 
 		return r.LoteSecundario
 	case 2:
+		r.Estado = NewUnionNullString()
+
+		return r.Estado
+	case 3:
 		r.FechaDeVencimiento = NewUnionNullLong()
 
 		return r.FechaDeVencimiento
-	case 3:
+	case 4:
 		r.OtrosDatos = NewUnionNullListaDePropiedades()
 
 		return r.OtrosDatos
@@ -134,9 +145,12 @@ func (r *LoteAsn) SetDefault(i int) {
 		r.LoteSecundario = nil
 		return
 	case 2:
-		r.FechaDeVencimiento = nil
+		r.Estado = nil
 		return
 	case 3:
+		r.FechaDeVencimiento = nil
+		return
+	case 4:
 		r.OtrosDatos = nil
 		return
 	}
@@ -152,9 +166,12 @@ func (r *LoteAsn) NullField(i int) {
 		r.LoteSecundario = nil
 		return
 	case 2:
-		r.FechaDeVencimiento = nil
+		r.Estado = nil
 		return
 	case 3:
+		r.FechaDeVencimiento = nil
+		return
+	case 4:
 		r.OtrosDatos = nil
 		return
 	}
@@ -178,6 +195,10 @@ func (r LoteAsn) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["loteSecundario"], err = json.Marshal(r.LoteSecundario)
+	if err != nil {
+		return nil, err
+	}
+	output["estado"], err = json.Marshal(r.Estado)
 	if err != nil {
 		return nil, err
 	}
@@ -230,6 +251,22 @@ func (r *LoteAsn) UnmarshalJSON(data []byte) error {
 		r.LoteSecundario = NewUnionNullString()
 
 		r.LoteSecundario = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["estado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Estado); err != nil {
+			return err
+		}
+	} else {
+		r.Estado = NewUnionNullString()
+
+		r.Estado = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["fechaDeVencimiento"]; ok {
