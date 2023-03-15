@@ -37,7 +37,7 @@ type Origen struct {
 	SucursalId *UnionNullString `json:"SucursalId"`
 }
 
-const OrigenAvroCRC64Fingerprint = "*\xd4\xeb\x93qϨ\x01"
+const OrigenAvroCRC64Fingerprint = "\x97eH\xf8\xcc̮L"
 
 func NewOrigen() Origen {
 	r := Origen{}
@@ -114,11 +114,11 @@ func (r Origen) Serialize(w io.Writer) error {
 }
 
 func (r Origen) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PymeBackend.Events.Common.Origen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PersonaBackend.Events.Common.Origen\",\"type\":\"record\"}"
 }
 
 func (r Origen) SchemaName() string {
-	return "Andreani.PymeBackend.Events.Common.Origen"
+	return "Andreani.PersonaBackend.Events.Common.Origen"
 }
 
 func (_ Origen) SetBoolean(v bool)    { panic("Unsupported operation") }

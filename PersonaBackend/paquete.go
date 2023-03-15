@@ -35,7 +35,7 @@ type Paquete struct {
 	ValorDeclarado int32 `json:"ValorDeclarado"`
 }
 
-const PaqueteAvroCRC64Fingerprint = "\xb2]\xfa\xfaeA\x90\x8e"
+const PaqueteAvroCRC64Fingerprint = "\r\xe0u\xbdk9U["
 
 func NewPaquete() Paquete {
 	r := Paquete{}
@@ -107,11 +107,11 @@ func (r Paquete) Serialize(w io.Writer) error {
 }
 
 func (r Paquete) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoId\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Alto\",\"type\":\"string\"},{\"name\":\"Ancho\",\"type\":\"string\"},{\"name\":\"Largo\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"int\"}],\"name\":\"Andreani.PymeBackend.Events.Common.Paquete\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoId\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Alto\",\"type\":\"string\"},{\"name\":\"Ancho\",\"type\":\"string\"},{\"name\":\"Largo\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"int\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.Paquete\",\"type\":\"record\"}"
 }
 
 func (r Paquete) SchemaName() string {
-	return "Andreani.PymeBackend.Events.Common.Paquete"
+	return "Andreani.PersonaBackend.Events.Common.Paquete"
 }
 
 func (_ Paquete) SetBoolean(v bool)    { panic("Unsupported operation") }

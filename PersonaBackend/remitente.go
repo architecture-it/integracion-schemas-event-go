@@ -45,7 +45,7 @@ type Remitente struct {
 	Region string `json:"Region"`
 }
 
-const RemitenteAvroCRC64Fingerprint = "8\xd29\x14\xa8\x99\xd1|"
+const RemitenteAvroCRC64Fingerprint = "\xbb|b\xbf\t\xffYU"
 
 func NewRemitente() Remitente {
 	r := Remitente{}
@@ -137,11 +137,11 @@ func (r Remitente) Serialize(w io.Writer) error {
 }
 
 func (r Remitente) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"}],\"name\":\"Andreani.PymeBackend.Events.Common.Remitente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.Remitente\",\"type\":\"record\"}"
 }
 
 func (r Remitente) SchemaName() string {
-	return "Andreani.PymeBackend.Events.Common.Remitente"
+	return "Andreani.PersonaBackend.Events.Common.Remitente"
 }
 
 func (_ Remitente) SetBoolean(v bool)    { panic("Unsupported operation") }

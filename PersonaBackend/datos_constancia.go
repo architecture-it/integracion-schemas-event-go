@@ -47,7 +47,7 @@ type DatosConstancia struct {
 	CodigoZonaReparto string `json:"CodigoZonaReparto"`
 }
 
-const DatosConstanciaAvroCRC64Fingerprint = "\f\x98r\xaa\x8e9\x19V"
+const DatosConstanciaAvroCRC64Fingerprint = "\xfc\x8c-\xcc\xca7c+"
 
 func NewDatosConstancia() DatosConstancia {
 	r := DatosConstancia{}
@@ -143,11 +143,11 @@ func (r DatosConstancia) Serialize(w io.Writer) error {
 }
 
 func (r DatosConstancia) Schema() string {
-	return "{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"}],\"name\":\"Andreani.PymeBackend.Events.Common.DatosConstancia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.DatosConstancia\",\"type\":\"record\"}"
 }
 
 func (r DatosConstancia) SchemaName() string {
-	return "Andreani.PymeBackend.Events.Common.DatosConstancia"
+	return "Andreani.PersonaBackend.Events.Common.DatosConstancia"
 }
 
 func (_ DatosConstancia) SetBoolean(v bool)    { panic("Unsupported operation") }

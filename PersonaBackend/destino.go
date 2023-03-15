@@ -37,7 +37,7 @@ type Destino struct {
 	ObservacionesAdicionales string `json:"ObservacionesAdicionales"`
 }
 
-const DestinoAvroCRC64Fingerprint = "A/\tqȝ\xd0\t"
+const DestinoAvroCRC64Fingerprint = "gO\xda\x10d\x1d\xff\xa0"
 
 func NewDestino() Destino {
 	r := Destino{}
@@ -113,11 +113,11 @@ func (r Destino) Serialize(w io.Writer) error {
 }
 
 func (r Destino) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"ObservacionesAdicionales\",\"type\":\"string\"}],\"name\":\"Andreani.PymeBackend.Events.Common.Destino\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"ObservacionesAdicionales\",\"type\":\"string\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.Destino\",\"type\":\"record\"}"
 }
 
 func (r Destino) SchemaName() string {
-	return "Andreani.PymeBackend.Events.Common.Destino"
+	return "Andreani.PersonaBackend.Events.Common.Destino"
 }
 
 func (_ Destino) SetBoolean(v bool)    { panic("Unsupported operation") }

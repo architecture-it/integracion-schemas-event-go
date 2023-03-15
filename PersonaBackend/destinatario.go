@@ -29,7 +29,7 @@ type Destinatario struct {
 	Dni string `json:"Dni"`
 }
 
-const DestinatarioAvroCRC64Fingerprint = "@\x98@\xa0$\x91\xb0\n"
+const DestinatarioAvroCRC64Fingerprint = "\x9f\x02\x87\xe2\xe1sd\xb5"
 
 func NewDestinatario() Destinatario {
 	r := Destinatario{}
@@ -89,11 +89,11 @@ func (r Destinatario) Serialize(w io.Writer) error {
 }
 
 func (r Destinatario) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Andreani.PymeBackend.Events.Common.Destinatario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.Destinatario\",\"type\":\"record\"}"
 }
 
 func (r Destinatario) SchemaName() string {
-	return "Andreani.PymeBackend.Events.Common.Destinatario"
+	return "Andreani.PersonaBackend.Events.Common.Destinatario"
 }
 
 func (_ Destinatario) SetBoolean(v bool)    { panic("Unsupported operation") }

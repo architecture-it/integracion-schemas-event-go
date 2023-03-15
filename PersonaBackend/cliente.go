@@ -25,7 +25,7 @@ type Cliente struct {
 	Logo string `json:"Logo"`
 }
 
-const ClienteAvroCRC64Fingerprint = "GpM㼓\xaf\xe0"
+const ClienteAvroCRC64Fingerprint = "+=\xe7\xd6\x16\xdf\"\xdb"
 
 func NewCliente() Cliente {
 	r := Cliente{}
@@ -77,11 +77,11 @@ func (r Cliente) Serialize(w io.Writer) error {
 }
 
 func (r Cliente) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoAndreani\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Logo\",\"type\":\"string\"}],\"name\":\"Andreani.PymeBackend.Events.Common.Cliente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoAndreani\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Logo\",\"type\":\"string\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.Cliente\",\"type\":\"record\"}"
 }
 
 func (r Cliente) SchemaName() string {
-	return "Andreani.PymeBackend.Events.Common.Cliente"
+	return "Andreani.PersonaBackend.Events.Common.Cliente"
 }
 
 func (_ Cliente) SetBoolean(v bool)    { panic("Unsupported operation") }
