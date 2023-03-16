@@ -33,9 +33,11 @@ type MobileEleccionesEvento struct {
 	FechaEnvio *UnionNullString `json:"fechaEnvio"`
 
 	MotivoCodigo *UnionNullString `json:"motivoCodigo"`
+
+	Visita bool `json:"visita"`
 }
 
-const MobileEleccionesEventoAvroCRC64Fingerprint = "\xca\xfc\xb8\x80\x95\xf0\xf16"
+const MobileEleccionesEventoAvroCRC64Fingerprint = "\xc8xV\xb3\xc5\xe9\xc3\xe0"
 
 func NewMobileEleccionesEvento() MobileEleccionesEvento {
 	r := MobileEleccionesEvento{}
@@ -105,6 +107,10 @@ func writeMobileEleccionesEvento(r MobileEleccionesEvento, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteBool(r.Visita, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -113,7 +119,7 @@ func (r MobileEleccionesEvento) Serialize(w io.Writer) error {
 }
 
 func (r MobileEleccionesEvento) Schema() string {
-	return "{\"fields\":[{\"name\":\"operacionId\",\"type\":\"int\"},{\"name\":\"tareaId\",\"type\":\"int\"},{\"default\":null,\"name\":\"tipoDeServicioNombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"value\",\"type\":[\"null\",\"string\"]}],\"name\":\"PropiedadAdicionalElecciones\",\"namespace\":\"Andreani.PublicadorMobileElecciones.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"imagenes\",\"type\":[\"null\",{\"items\":\"Andreani.PublicadorMobileElecciones.Events.Common.PropiedadAdicionalElecciones\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivoCodigo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PublicadorMobileElecciones.Events.Record.MobileEleccionesEvento\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"operacionId\",\"type\":\"int\"},{\"name\":\"tareaId\",\"type\":\"int\"},{\"default\":null,\"name\":\"tipoDeServicioNombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"value\",\"type\":[\"null\",\"string\"]}],\"name\":\"PropiedadAdicionalElecciones\",\"namespace\":\"Andreani.PublicadorMobileElecciones.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"imagenes\",\"type\":[\"null\",{\"items\":\"Andreani.PublicadorMobileElecciones.Events.Common.PropiedadAdicionalElecciones\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivoCodigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"visita\",\"type\":\"boolean\"}],\"name\":\"Andreani.PublicadorMobileElecciones.Events.Record.MobileEleccionesEvento\",\"type\":\"record\"}"
 }
 
 func (r MobileEleccionesEvento) SchemaName() string {
@@ -165,6 +171,11 @@ func (r *MobileEleccionesEvento) Get(i int) types.Field {
 		r.MotivoCodigo = NewUnionNullString()
 
 		return r.MotivoCodigo
+	case 8:
+		w := types.Boolean{Target: &r.Visita}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -258,6 +269,10 @@ func (r MobileEleccionesEvento) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["motivoCodigo"], err = json.Marshal(r.MotivoCodigo)
+	if err != nil {
+		return nil, err
+	}
+	output["visita"], err = json.Marshal(r.Visita)
 	if err != nil {
 		return nil, err
 	}
@@ -394,6 +409,20 @@ func (r *MobileEleccionesEvento) UnmarshalJSON(data []byte) error {
 		r.MotivoCodigo = NewUnionNullString()
 
 		r.MotivoCodigo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["visita"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Visita); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for visita")
 	}
 	return nil
 }
