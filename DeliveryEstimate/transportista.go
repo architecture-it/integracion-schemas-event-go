@@ -32,10 +32,10 @@ type Transportista struct {
 
 	TipoDeDocumento int32 `json:"tipoDeDocumento"`
 
-	TransportistaCumplimientoSecuenciaHR int32 `json:"transportistaCumplimientoSecuenciaHR"`
+	CumplimientoSecuenciaHR int32 `json:"cumplimientoSecuenciaHR"`
 }
 
-const TransportistaAvroCRC64Fingerprint = "\xa0\rH\xf2\x1d\x8e.X"
+const TransportistaAvroCRC64Fingerprint = "\x16\xf1\xc79\xa6\x8f\xb7|"
 
 func NewTransportista() Transportista {
 	r := Transportista{}
@@ -97,7 +97,7 @@ func writeTransportista(r Transportista, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.TransportistaCumplimientoSecuenciaHR, w)
+	err = vm.WriteInt(r.CumplimientoSecuenciaHR, w)
 	if err != nil {
 		return err
 	}
@@ -109,7 +109,7 @@ func (r Transportista) Serialize(w io.Writer) error {
 }
 
 func (r Transportista) Schema() string {
-	return "{\"fields\":[{\"name\":\"esEventual\",\"type\":\"boolean\"},{\"name\":\"idGla\",\"type\":\"string\"},{\"name\":\"idGli\",\"type\":\"string\"},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"codigoAlertran\",\"type\":\"string\"},{\"name\":\"codigoIntegra\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"numeroDeDocumento\",\"type\":\"string\"},{\"name\":\"nombreCompleto\",\"type\":\"string\"},{\"name\":\"tipoDeDocumento\",\"type\":\"int\"},{\"name\":\"transportistaCumplimientoSecuenciaHR\",\"type\":\"int\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"esEventual\",\"type\":\"boolean\"},{\"name\":\"idGla\",\"type\":\"string\"},{\"name\":\"idGli\",\"type\":\"string\"},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"codigoAlertran\",\"type\":\"string\"},{\"name\":\"codigoIntegra\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"numeroDeDocumento\",\"type\":\"string\"},{\"name\":\"nombreCompleto\",\"type\":\"string\"},{\"name\":\"tipoDeDocumento\",\"type\":\"int\"},{\"name\":\"cumplimientoSecuenciaHR\",\"type\":\"int\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
 }
 
 func (r Transportista) SchemaName() string {
@@ -165,7 +165,7 @@ func (r *Transportista) Get(i int) types.Field {
 		return w
 
 	case 7:
-		w := types.Int{Target: &r.TransportistaCumplimientoSecuenciaHR}
+		w := types.Int{Target: &r.CumplimientoSecuenciaHR}
 
 		return w
 
@@ -225,7 +225,7 @@ func (r Transportista) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["transportistaCumplimientoSecuenciaHR"], err = json.Marshal(r.TransportistaCumplimientoSecuenciaHR)
+	output["cumplimientoSecuenciaHR"], err = json.Marshal(r.CumplimientoSecuenciaHR)
 	if err != nil {
 		return nil, err
 	}
@@ -338,18 +338,18 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for tipoDeDocumento")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["transportistaCumplimientoSecuenciaHR"]; ok {
+		if v, ok := fields["cumplimientoSecuenciaHR"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TransportistaCumplimientoSecuenciaHR); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CumplimientoSecuenciaHR); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for transportistaCumplimientoSecuenciaHR")
+		return fmt.Errorf("no value specified for cumplimientoSecuenciaHR")
 	}
 	return nil
 }
