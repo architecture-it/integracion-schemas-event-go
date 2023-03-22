@@ -56,12 +56,12 @@ type DetalleBultos struct {
 
 	VidaUtilLote string `json:"VidaUtilLote"`
 
-	EntregaAntesDe string `json:"EntregaAntesDe"`
+	EntregaAntesDe *UnionNullLong `json:"EntregaAntesDe"`
 
-	ConsumoAntesDe string `json:"ConsumoAntesDe"`
+	ConsumoAntesDe *UnionNullLong `json:"ConsumoAntesDe"`
 }
 
-const DetalleBultosAvroCRC64Fingerprint = "\xf0\x0e\xd2\xdcs\xd2s`"
+const DetalleBultosAvroCRC64Fingerprint = "q\x85\xf1\x99\xad=\x0eK"
 
 func NewDetalleBultos() DetalleBultos {
 	r := DetalleBultos{}
@@ -69,6 +69,8 @@ func NewDetalleBultos() DetalleBultos {
 	r.TipoDeContenedor = nil
 	r.FechaFabricacion = nil
 	r.FechaVencimiento = nil
+	r.EntregaAntesDe = nil
+	r.ConsumoAntesDe = nil
 	return r
 }
 
@@ -173,11 +175,11 @@ func writeDetalleBultos(r DetalleBultos, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.EntregaAntesDe, w)
+	err = writeUnionNullLong(r.EntregaAntesDe, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ConsumoAntesDe, w)
+	err = writeUnionNullLong(r.ConsumoAntesDe, w)
 	if err != nil {
 		return err
 	}
@@ -189,7 +191,7 @@ func (r DetalleBultos) Serialize(w io.Writer) error {
 }
 
 func (r DetalleBultos) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"CantidadEmbalada\",\"type\":\"float\"},{\"name\":\"EtiquetaEmbalaje\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoDeContenedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":\"string\"},{\"name\":\"ConsumoAntesDe\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.DetalleBultos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"CantidadEmbalada\",\"type\":\"float\"},{\"name\":\"EtiquetaEmbalaje\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoDeContenedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.DetalleBultos\",\"type\":\"record\"}"
 }
 
 func (r DetalleBultos) SchemaName() string {
@@ -299,15 +301,13 @@ func (r *DetalleBultos) Get(i int) types.Field {
 		return w
 
 	case 19:
-		w := types.String{Target: &r.EntregaAntesDe}
+		r.EntregaAntesDe = NewUnionNullLong()
 
-		return w
-
+		return r.EntregaAntesDe
 	case 20:
-		w := types.String{Target: &r.ConsumoAntesDe}
+		r.ConsumoAntesDe = NewUnionNullLong()
 
-		return w
-
+		return r.ConsumoAntesDe
 	}
 	panic("Unknown field index")
 }
@@ -326,6 +326,12 @@ func (r *DetalleBultos) SetDefault(i int) {
 	case 13:
 		r.FechaVencimiento = nil
 		return
+	case 19:
+		r.EntregaAntesDe = nil
+		return
+	case 20:
+		r.ConsumoAntesDe = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -343,6 +349,12 @@ func (r *DetalleBultos) NullField(i int) {
 		return
 	case 13:
 		r.FechaVencimiento = nil
+		return
+	case 19:
+		r.EntregaAntesDe = nil
+		return
+	case 20:
+		r.ConsumoAntesDe = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -740,7 +752,9 @@ func (r *DetalleBultos) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EntregaAntesDe")
+		r.EntregaAntesDe = NewUnionNullLong()
+
+		r.EntregaAntesDe = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ConsumoAntesDe"]; ok {
@@ -754,7 +768,9 @@ func (r *DetalleBultos) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ConsumoAntesDe")
+		r.ConsumoAntesDe = NewUnionNullLong()
+
+		r.ConsumoAntesDe = nil
 	}
 	return nil
 }

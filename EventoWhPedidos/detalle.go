@@ -83,8 +83,20 @@ const DetalleAvroCRC64Fingerprint = "p\x17R^lt^g"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
+	r.FechaFabricacion = nil
+	r.FechaVencimiento = nil
+	r.EntregaAntesDe = nil
+	r.ConsumoAntesDe = nil
+	r.EsfuerzoLineaApiPlani = nil
+	r.VidaUtil = nil
 	r.Series = make([]Series, 0)
 
+	r.Contrato = nil
+	r.Nomenclatura = nil
+	r.TipoPedido = nil
+	r.TipoPedidoDescripcion = nil
+	r.DetalleAcondicionamiento = nil
+	r.EstadoOTAcondicionamiento = nil
 	return r
 }
 
@@ -241,7 +253,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"LineaExterna\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"EsfuerzoLineaApiPlani\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":\"float\"},{\"name\":\"CantidadPickeada\",\"type\":\"float\"},{\"name\":\"CantidadExpedida\",\"type\":\"float\"},{\"name\":\"EstadoLineaCodigo\",\"type\":\"string\"},{\"name\":\"EstadoLineaDescripcion\",\"type\":\"string\"},{\"name\":\"CantidadBultos\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"Series\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"Nomenclatura\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"DetalleAcondicionamiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondicionamiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"LineaExterna\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"EsfuerzoLineaApiPlani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"VidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":\"float\"},{\"name\":\"CantidadPickeada\",\"type\":\"float\"},{\"name\":\"CantidadExpedida\",\"type\":\"float\"},{\"name\":\"EstadoLineaCodigo\",\"type\":\"string\"},{\"name\":\"EstadoLineaDescripcion\",\"type\":\"string\"},{\"name\":\"CantidadBultos\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"Series\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nomenclatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DetalleAcondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTAcondicionamiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -405,6 +417,42 @@ func (r *Detalle) Get(i int) types.Field {
 
 func (r *Detalle) SetDefault(i int) {
 	switch i {
+	case 6:
+		r.FechaFabricacion = nil
+		return
+	case 7:
+		r.FechaVencimiento = nil
+		return
+	case 13:
+		r.EntregaAntesDe = nil
+		return
+	case 14:
+		r.ConsumoAntesDe = nil
+		return
+	case 15:
+		r.EsfuerzoLineaApiPlani = nil
+		return
+	case 16:
+		r.VidaUtil = nil
+		return
+	case 24:
+		r.Contrato = nil
+		return
+	case 25:
+		r.Nomenclatura = nil
+		return
+	case 26:
+		r.TipoPedido = nil
+		return
+	case 27:
+		r.TipoPedidoDescripcion = nil
+		return
+	case 28:
+		r.DetalleAcondicionamiento = nil
+		return
+	case 29:
+		r.EstadoOTAcondicionamiento = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -689,7 +737,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FechaFabricacion")
+		r.FechaFabricacion = NewUnionNullLong()
+
+		r.FechaFabricacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["FechaVencimiento"]; ok {
@@ -703,7 +753,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FechaVencimiento")
+		r.FechaVencimiento = NewUnionNullLong()
+
+		r.FechaVencimiento = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ProductoTrazable"]; ok {
@@ -787,7 +839,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EntregaAntesDe")
+		r.EntregaAntesDe = NewUnionNullLong()
+
+		r.EntregaAntesDe = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ConsumoAntesDe"]; ok {
@@ -801,7 +855,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ConsumoAntesDe")
+		r.ConsumoAntesDe = NewUnionNullLong()
+
+		r.ConsumoAntesDe = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EsfuerzoLineaApiPlani"]; ok {
@@ -815,7 +871,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EsfuerzoLineaApiPlani")
+		r.EsfuerzoLineaApiPlani = NewUnionNullString()
+
+		r.EsfuerzoLineaApiPlani = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["VidaUtil"]; ok {
@@ -829,7 +887,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for VidaUtil")
+		r.VidaUtil = NewUnionNullString()
+
+		r.VidaUtil = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Cantidad"]; ok {
@@ -941,7 +1001,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Contrato")
+		r.Contrato = NewUnionNullString()
+
+		r.Contrato = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Nomenclatura"]; ok {
@@ -955,7 +1017,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Nomenclatura")
+		r.Nomenclatura = NewUnionNullString()
+
+		r.Nomenclatura = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TipoPedido"]; ok {
@@ -969,7 +1033,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for TipoPedido")
+		r.TipoPedido = NewUnionNullString()
+
+		r.TipoPedido = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TipoPedidoDescripcion"]; ok {
@@ -983,7 +1049,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for TipoPedidoDescripcion")
+		r.TipoPedidoDescripcion = NewUnionNullString()
+
+		r.TipoPedidoDescripcion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DetalleAcondicionamiento"]; ok {
@@ -997,7 +1065,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DetalleAcondicionamiento")
+		r.DetalleAcondicionamiento = NewUnionNullString()
+
+		r.DetalleAcondicionamiento = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EstadoOTAcondicionamiento"]; ok {
@@ -1011,7 +1081,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EstadoOTAcondicionamiento")
+		r.EstadoOTAcondicionamiento = NewUnionNullString()
+
+		r.EstadoOTAcondicionamiento = nil
 	}
 	return nil
 }
