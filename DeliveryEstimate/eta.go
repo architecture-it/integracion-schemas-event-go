@@ -30,10 +30,10 @@ type ETA struct {
 
 	Transportista Transportista `json:"transportista"`
 
-	Timestamp string `json:"Timestamp"`
+	Timestamp int64 `json:"Timestamp"`
 }
 
-const ETAAvroCRC64Fingerprint = "\xe6\xf9\xb4\x18c\xa8\u007f\x05"
+const ETAAvroCRC64Fingerprint = "\x1d\x95'\x19zP\xf0w"
 
 func NewETA() ETA {
 	r := ETA{}
@@ -93,7 +93,7 @@ func writeETA(r ETA, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Timestamp, w)
+	err = vm.WriteLong(r.Timestamp, w)
 	if err != nil {
 		return err
 	}
@@ -105,7 +105,7 @@ func (r ETA) Serialize(w io.Writer) error {
 }
 
 func (r ETA) Schema() string {
-	return "{\"fields\":[{\"name\":\"etaRangoInicio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"etaRangoFin\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"eta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"numeroEnvio\",\"type\":\"string\"},{\"name\":\"calculoEta\",\"type\":{\"fields\":[{\"name\":\"ordenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"numeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"geocoordenadas\",\"type\":\"string\"},{\"name\":\"recorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"recorridoEnMetros\",\"type\":\"double\"},{\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"etaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"CalculoEta\",\"type\":\"record\"}},{\"name\":\"transportista\",\"type\":{\"fields\":[{\"name\":\"esEventual\",\"type\":\"boolean\"},{\"name\":\"idGla\",\"type\":\"string\"},{\"name\":\"idGli\",\"type\":\"string\"},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"codigoAlertran\",\"type\":\"string\"},{\"name\":\"codigoIntegra\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"numeroDeDocumento\",\"type\":\"string\"},{\"name\":\"nombreCompleto\",\"type\":\"string\"},{\"name\":\"tipoDeDocumento\",\"type\":\"int\"},{\"name\":\"cumplimientoSecuenciaHR\",\"type\":\"int\"}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"name\":\"Timestamp\",\"type\":\"string\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ETA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"etaRangoInicio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"etaRangoFin\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"eta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"numeroEnvio\",\"type\":\"string\"},{\"name\":\"calculoEta\",\"type\":{\"fields\":[{\"name\":\"ordenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"numeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"geocoordenadas\",\"type\":\"string\"},{\"name\":\"recorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"recorridoEnMetros\",\"type\":\"double\"},{\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"etaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"fechaCreacionHojaDeRuta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"CalculoEta\",\"type\":\"record\"}},{\"name\":\"transportista\",\"type\":{\"fields\":[{\"name\":\"esEventual\",\"type\":\"boolean\"},{\"name\":\"idGla\",\"type\":\"string\"},{\"name\":\"idGli\",\"type\":\"string\"},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"codigoAlertran\",\"type\":\"string\"},{\"name\":\"codigoIntegra\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"numeroDeDocumento\",\"type\":\"string\"},{\"name\":\"nombreCompleto\",\"type\":\"string\"},{\"name\":\"tipoDeDocumento\",\"type\":\"int\"},{\"name\":\"cumplimientoSecuenciaHR\",\"type\":\"int\"}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"name\":\"Timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ETA\",\"type\":\"record\"}"
 }
 
 func (r ETA) SchemaName() string {
@@ -158,7 +158,7 @@ func (r *ETA) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.String{Target: &r.Timestamp}
+		w := types.Long{Target: &r.Timestamp}
 
 		return w
 

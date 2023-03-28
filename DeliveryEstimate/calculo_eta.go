@@ -33,9 +33,11 @@ type CalculoEta struct {
 	DemoraSalidaSucursalEnMinutos int32 `json:"demoraSalidaSucursalEnMinutos"`
 
 	EtaAnterior *UnionNullLong `json:"etaAnterior"`
+
+	FechaCreacionHojaDeRuta int64 `json:"fechaCreacionHojaDeRuta"`
 }
 
-const CalculoEtaAvroCRC64Fingerprint = "8a5\x12[\xe9\xdf\xdd"
+const CalculoEtaAvroCRC64Fingerprint = "\x0e\xa8\xbf\xf7;\xa4ٓ"
 
 func NewCalculoEta() CalculoEta {
 	r := CalculoEta{}
@@ -100,6 +102,10 @@ func writeCalculoEta(r CalculoEta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteLong(r.FechaCreacionHojaDeRuta, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -108,7 +114,7 @@ func (r CalculoEta) Serialize(w io.Writer) error {
 }
 
 func (r CalculoEta) Schema() string {
-	return "{\"fields\":[{\"name\":\"ordenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"numeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"geocoordenadas\",\"type\":\"string\"},{\"name\":\"recorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"recorridoEnMetros\",\"type\":\"double\"},{\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"etaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ordenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"numeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"geocoordenadas\",\"type\":\"string\"},{\"name\":\"recorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"recorridoEnMetros\",\"type\":\"double\"},{\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"etaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"fechaCreacionHojaDeRuta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
 }
 
 func (r CalculoEta) SchemaName() string {
@@ -165,6 +171,11 @@ func (r *CalculoEta) Get(i int) types.Field {
 		r.EtaAnterior = NewUnionNullLong()
 
 		return r.EtaAnterior
+	case 8:
+		w := types.Long{Target: &r.FechaCreacionHojaDeRuta}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -228,6 +239,10 @@ func (r CalculoEta) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["etaAnterior"], err = json.Marshal(r.EtaAnterior)
+	if err != nil {
+		return nil, err
+	}
+	output["fechaCreacionHojaDeRuta"], err = json.Marshal(r.FechaCreacionHojaDeRuta)
 	if err != nil {
 		return nil, err
 	}
@@ -354,6 +369,20 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 		r.EtaAnterior = NewUnionNullLong()
 
 		r.EtaAnterior = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["fechaCreacionHojaDeRuta"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaCreacionHojaDeRuta); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for fechaCreacionHojaDeRuta")
 	}
 	return nil
 }
