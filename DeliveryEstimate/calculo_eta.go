@@ -18,27 +18,28 @@ import (
 var _ = fmt.Printf
 
 type CalculoEta struct {
-	OrdenDeEnvioEnHR string `json:"ordenDeEnvioEnHR"`
+	OrdenDeEnvioEnHR int32 `json:"ordenDeEnvioEnHR"`
 
 	NumeroHojaDeRuta string `json:"numeroHojaDeRuta"`
 
 	Geocoordenadas string `json:"geocoordenadas"`
 
-	RecorridoEnSegundos int32 `json:"recorridoEnSegundos"`
+	RecorridoEnSegundos float64 `json:"recorridoEnSegundos"`
 
-	RecorridoEnMetros int32 `json:"recorridoEnMetros"`
+	RecorridoEnMetros float64 `json:"recorridoEnMetros"`
 
 	DemoraEnDomicilioEnMinutos int32 `json:"demoraEnDomicilioEnMinutos"`
 
 	DemoraSalidaSucursalEnMinutos int32 `json:"demoraSalidaSucursalEnMinutos"`
 
-	EtaAnterior int64 `json:"etaAnterior"`
+	EtaAnterior *UnionNullLong `json:"etaAnterior"`
 }
 
-const CalculoEtaAvroCRC64Fingerprint = "\xe3\\-\xbaOhw\xcf"
+const CalculoEtaAvroCRC64Fingerprint = "8a5\x12[\xe9\xdf\xdd"
 
 func NewCalculoEta() CalculoEta {
 	r := CalculoEta{}
+	r.EtaAnterior = nil
 	return r
 }
 
@@ -67,7 +68,7 @@ func DeserializeCalculoEtaFromSchema(r io.Reader, schema string) (CalculoEta, er
 
 func writeCalculoEta(r CalculoEta, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.OrdenDeEnvioEnHR, w)
+	err = vm.WriteInt(r.OrdenDeEnvioEnHR, w)
 	if err != nil {
 		return err
 	}
@@ -79,11 +80,11 @@ func writeCalculoEta(r CalculoEta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.RecorridoEnSegundos, w)
+	err = vm.WriteDouble(r.RecorridoEnSegundos, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.RecorridoEnMetros, w)
+	err = vm.WriteDouble(r.RecorridoEnMetros, w)
 	if err != nil {
 		return err
 	}
@@ -95,7 +96,7 @@ func writeCalculoEta(r CalculoEta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.EtaAnterior, w)
+	err = writeUnionNullLong(r.EtaAnterior, w)
 	if err != nil {
 		return err
 	}
@@ -107,7 +108,7 @@ func (r CalculoEta) Serialize(w io.Writer) error {
 }
 
 func (r CalculoEta) Schema() string {
-	return "{\"fields\":[{\"name\":\"ordenDeEnvioEnHR\",\"type\":\"string\"},{\"name\":\"numeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"geocoordenadas\",\"type\":\"string\"},{\"name\":\"recorridoEnSegundos\",\"type\":\"int\"},{\"name\":\"recorridoEnMetros\",\"type\":\"int\"},{\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"name\":\"etaAnterior\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ordenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"numeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"geocoordenadas\",\"type\":\"string\"},{\"name\":\"recorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"recorridoEnMetros\",\"type\":\"double\"},{\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"etaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
 }
 
 func (r CalculoEta) SchemaName() string {
@@ -126,7 +127,7 @@ func (_ CalculoEta) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *CalculoEta) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.OrdenDeEnvioEnHR}
+		w := types.Int{Target: &r.OrdenDeEnvioEnHR}
 
 		return w
 
@@ -141,12 +142,12 @@ func (r *CalculoEta) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.Int{Target: &r.RecorridoEnSegundos}
+		w := types.Double{Target: &r.RecorridoEnSegundos}
 
 		return w
 
 	case 4:
-		w := types.Int{Target: &r.RecorridoEnMetros}
+		w := types.Double{Target: &r.RecorridoEnMetros}
 
 		return w
 
@@ -161,22 +162,27 @@ func (r *CalculoEta) Get(i int) types.Field {
 		return w
 
 	case 7:
-		w := types.Long{Target: &r.EtaAnterior}
+		r.EtaAnterior = NewUnionNullLong()
 
-		return w
-
+		return r.EtaAnterior
 	}
 	panic("Unknown field index")
 }
 
 func (r *CalculoEta) SetDefault(i int) {
 	switch i {
+	case 7:
+		r.EtaAnterior = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *CalculoEta) NullField(i int) {
 	switch i {
+	case 7:
+		r.EtaAnterior = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -345,7 +351,9 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for etaAnterior")
+		r.EtaAnterior = NewUnionNullLong()
+
+		r.EtaAnterior = nil
 	}
 	return nil
 }
