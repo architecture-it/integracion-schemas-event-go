@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type Tarea struct {
+	IDTarea string `json:"IDTarea"`
+
 	OrdenWH *UnionNullString `json:"OrdenWH"`
 
 	TipoDeTarea string `json:"TipoDeTarea"`
@@ -91,7 +93,7 @@ type Tarea struct {
 	ConsumoAntesDe string `json:"ConsumoAntesDe"`
 }
 
-const TareaAvroCRC64Fingerprint = "\xbe\xfc\x96\x8d<e\x94o"
+const TareaAvroCRC64Fingerprint = "\x15\xba>\xf9\xa2\xda\xff\xb4"
 
 func NewTarea() Tarea {
 	r := Tarea{}
@@ -131,6 +133,10 @@ func DeserializeTareaFromSchema(r io.Reader, schema string) (Tarea, error) {
 
 func writeTarea(r Tarea, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.IDTarea, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.OrdenWH, w)
 	if err != nil {
 		return err
@@ -283,7 +289,7 @@ func (r Tarea) Serialize(w io.Writer) error {
 }
 
 func (r Tarea) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"OrdenWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDeTarea\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LoteInternoWH\",\"type\":\"string\"},{\"name\":\"CantidadTarea\",\"type\":\"string\"},{\"name\":\"UbicacionInicial\",\"type\":\"string\"},{\"default\":null,\"name\":\"IDInicial\",\"type\":[\"null\",\"string\"]},{\"name\":\"UbicacionFinal\",\"type\":\"string\"},{\"name\":\"IDFinal\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"Prioridad\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"FechaInicioTarea\",\"type\":\"string\"},{\"name\":\"FechaFinTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"LineaDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOleadaWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDeCreacion\",\"type\":\"string\"},{\"name\":\"UsuarioCreacion\",\"type\":\"string\"},{\"name\":\"FechaEdicion\",\"type\":\"string\"},{\"name\":\"UsuarioEdicion\",\"type\":\"string\"},{\"name\":\"PesoTara\",\"type\":\"string\"},{\"name\":\"PesoNeto\",\"type\":\"string\"},{\"name\":\"PesoBruto\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroDeAsignacionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":\"string\"},{\"name\":\"ConsumoAntesDe\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhTareas.Events.TareasMobilePickingCommon.Tarea\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IDTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"OrdenWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDeTarea\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LoteInternoWH\",\"type\":\"string\"},{\"name\":\"CantidadTarea\",\"type\":\"string\"},{\"name\":\"UbicacionInicial\",\"type\":\"string\"},{\"default\":null,\"name\":\"IDInicial\",\"type\":[\"null\",\"string\"]},{\"name\":\"UbicacionFinal\",\"type\":\"string\"},{\"name\":\"IDFinal\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"Prioridad\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"FechaInicioTarea\",\"type\":\"string\"},{\"name\":\"FechaFinTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"LineaDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOleadaWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDeCreacion\",\"type\":\"string\"},{\"name\":\"UsuarioCreacion\",\"type\":\"string\"},{\"name\":\"FechaEdicion\",\"type\":\"string\"},{\"name\":\"UsuarioEdicion\",\"type\":\"string\"},{\"name\":\"PesoTara\",\"type\":\"string\"},{\"name\":\"PesoNeto\",\"type\":\"string\"},{\"name\":\"PesoBruto\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroDeAsignacionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":\"string\"},{\"name\":\"ConsumoAntesDe\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhTareas.Events.TareasMobilePickingCommon.Tarea\",\"type\":\"record\"}"
 }
 
 func (r Tarea) SchemaName() string {
@@ -302,173 +308,178 @@ func (_ Tarea) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Tarea) Get(i int) types.Field {
 	switch i {
 	case 0:
+		w := types.String{Target: &r.IDTarea}
+
+		return w
+
+	case 1:
 		r.OrdenWH = NewUnionNullString()
 
 		return r.OrdenWH
-	case 1:
+	case 2:
 		w := types.String{Target: &r.TipoDeTarea}
 
 		return w
 
-	case 2:
+	case 3:
 		w := types.String{Target: &r.Propietario}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.String{Target: &r.SKU}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.LoteInternoWH}
 
 		return w
 
-	case 5:
+	case 6:
 		w := types.String{Target: &r.CantidadTarea}
 
 		return w
 
-	case 6:
+	case 7:
 		w := types.String{Target: &r.UbicacionInicial}
 
 		return w
 
-	case 7:
+	case 8:
 		r.IDInicial = NewUnionNullString()
 
 		return r.IDInicial
-	case 8:
+	case 9:
 		w := types.String{Target: &r.UbicacionFinal}
 
 		return w
 
-	case 9:
+	case 10:
 		w := types.String{Target: &r.IDFinal}
 
 		return w
 
-	case 10:
+	case 11:
 		w := types.String{Target: &r.Estado}
 
 		return w
 
-	case 11:
+	case 12:
 		w := types.String{Target: &r.Prioridad}
 
 		return w
 
-	case 12:
+	case 13:
 		w := types.String{Target: &r.Usuario}
 
 		return w
 
-	case 13:
+	case 14:
 		w := types.String{Target: &r.FechaInicioTarea}
 
 		return w
 
-	case 14:
+	case 15:
 		w := types.String{Target: &r.FechaFinTarea}
 
 		return w
 
-	case 15:
+	case 16:
 		r.LineaDeOrden = NewUnionNullString()
 
 		return r.LineaDeOrden
-	case 16:
+	case 17:
 		r.NumeroDeOleadaWH = NewUnionNullString()
 
 		return r.NumeroDeOleadaWH
-	case 17:
+	case 18:
 		w := types.String{Target: &r.FechaDeCreacion}
 
 		return w
 
-	case 18:
+	case 19:
 		w := types.String{Target: &r.UsuarioCreacion}
 
 		return w
 
-	case 19:
+	case 20:
 		w := types.String{Target: &r.FechaEdicion}
 
 		return w
 
-	case 20:
+	case 21:
 		w := types.String{Target: &r.UsuarioEdicion}
 
 		return w
 
-	case 21:
+	case 22:
 		w := types.String{Target: &r.PesoTara}
 
 		return w
 
-	case 22:
+	case 23:
 		w := types.String{Target: &r.PesoNeto}
 
 		return w
 
-	case 23:
+	case 24:
 		w := types.String{Target: &r.PesoBruto}
 
 		return w
 
-	case 24:
+	case 25:
 		r.NumeroDeAsignacionWH = NewUnionNullString()
 
 		return r.NumeroDeAsignacionWH
-	case 25:
+	case 26:
 		r.TipoDeOrigen = NewUnionNullString()
 
 		return r.TipoDeOrigen
-	case 26:
+	case 27:
 		w := types.String{Target: &r.LoteSecundario}
 
 		return w
 
-	case 27:
+	case 28:
 		r.FechaFabricacion = NewUnionNullLong()
 
 		return r.FechaFabricacion
-	case 28:
+	case 29:
 		r.FechaVencimiento = NewUnionNullLong()
 
 		return r.FechaVencimiento
-	case 29:
+	case 30:
 		w := types.String{Target: &r.ProductoTrazable}
 
 		return w
 
-	case 30:
+	case 31:
 		w := types.String{Target: &r.AlmacenConsumo}
 
 		return w
 
-	case 31:
+	case 32:
 		w := types.String{Target: &r.EstadoLote}
 
 		return w
 
-	case 32:
+	case 33:
 		w := types.String{Target: &r.BloqueoUbicacion}
 
 		return w
 
-	case 33:
+	case 34:
 		w := types.String{Target: &r.VidaUtilLote}
 
 		return w
 
-	case 34:
+	case 35:
 		w := types.String{Target: &r.EntregaAntesDe}
 
 		return w
 
-	case 35:
+	case 36:
 		w := types.String{Target: &r.ConsumoAntesDe}
 
 		return w
@@ -479,28 +490,28 @@ func (r *Tarea) Get(i int) types.Field {
 
 func (r *Tarea) SetDefault(i int) {
 	switch i {
-	case 0:
+	case 1:
 		r.OrdenWH = nil
 		return
-	case 7:
+	case 8:
 		r.IDInicial = nil
 		return
-	case 15:
+	case 16:
 		r.LineaDeOrden = nil
 		return
-	case 16:
+	case 17:
 		r.NumeroDeOleadaWH = nil
 		return
-	case 24:
+	case 25:
 		r.NumeroDeAsignacionWH = nil
 		return
-	case 25:
+	case 26:
 		r.TipoDeOrigen = nil
 		return
-	case 27:
+	case 28:
 		r.FechaFabricacion = nil
 		return
-	case 28:
+	case 29:
 		r.FechaVencimiento = nil
 		return
 	}
@@ -509,28 +520,28 @@ func (r *Tarea) SetDefault(i int) {
 
 func (r *Tarea) NullField(i int) {
 	switch i {
-	case 0:
+	case 1:
 		r.OrdenWH = nil
 		return
-	case 7:
+	case 8:
 		r.IDInicial = nil
 		return
-	case 15:
+	case 16:
 		r.LineaDeOrden = nil
 		return
-	case 16:
+	case 17:
 		r.NumeroDeOleadaWH = nil
 		return
-	case 24:
+	case 25:
 		r.NumeroDeAsignacionWH = nil
 		return
-	case 25:
+	case 26:
 		r.TipoDeOrigen = nil
 		return
-	case 27:
+	case 28:
 		r.FechaFabricacion = nil
 		return
-	case 28:
+	case 29:
 		r.FechaVencimiento = nil
 		return
 	}
@@ -549,6 +560,10 @@ func (_ Tarea) AvroCRC64Fingerprint() []byte {
 func (r Tarea) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["IDTarea"], err = json.Marshal(r.IDTarea)
+	if err != nil {
+		return nil, err
+	}
 	output["OrdenWH"], err = json.Marshal(r.OrdenWH)
 	if err != nil {
 		return nil, err
@@ -703,6 +718,20 @@ func (r *Tarea) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["IDTarea"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IDTarea); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IDTarea")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["OrdenWH"]; ok {
 			return v
