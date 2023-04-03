@@ -88,12 +88,12 @@ type Tarea struct {
 
 	VidaUtilLote string `json:"VidaUtilLote"`
 
-	EntregaAntesDe string `json:"EntregaAntesDe"`
+	EntregaAntesDe *UnionNullLong `json:"EntregaAntesDe"`
 
-	ConsumoAntesDe string `json:"ConsumoAntesDe"`
+	ConsumoAntesDe *UnionNullLong `json:"ConsumoAntesDe"`
 }
 
-const TareaAvroCRC64Fingerprint = "\x15\xba>\xf9\xa2\xda\xff\xb4"
+const TareaAvroCRC64Fingerprint = "\xf0\xc7#\xfd\x90v\xb0\x91"
 
 func NewTarea() Tarea {
 	r := Tarea{}
@@ -105,6 +105,8 @@ func NewTarea() Tarea {
 	r.TipoDeOrigen = nil
 	r.FechaFabricacion = nil
 	r.FechaVencimiento = nil
+	r.EntregaAntesDe = nil
+	r.ConsumoAntesDe = nil
 	return r
 }
 
@@ -273,11 +275,11 @@ func writeTarea(r Tarea, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.EntregaAntesDe, w)
+	err = writeUnionNullLong(r.EntregaAntesDe, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ConsumoAntesDe, w)
+	err = writeUnionNullLong(r.ConsumoAntesDe, w)
 	if err != nil {
 		return err
 	}
@@ -289,7 +291,7 @@ func (r Tarea) Serialize(w io.Writer) error {
 }
 
 func (r Tarea) Schema() string {
-	return "{\"fields\":[{\"name\":\"IDTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"OrdenWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDeTarea\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LoteInternoWH\",\"type\":\"string\"},{\"name\":\"CantidadTarea\",\"type\":\"string\"},{\"name\":\"UbicacionInicial\",\"type\":\"string\"},{\"default\":null,\"name\":\"IDInicial\",\"type\":[\"null\",\"string\"]},{\"name\":\"UbicacionFinal\",\"type\":\"string\"},{\"name\":\"IDFinal\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"Prioridad\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"FechaInicioTarea\",\"type\":\"string\"},{\"name\":\"FechaFinTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"LineaDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOleadaWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDeCreacion\",\"type\":\"string\"},{\"name\":\"UsuarioCreacion\",\"type\":\"string\"},{\"name\":\"FechaEdicion\",\"type\":\"string\"},{\"name\":\"UsuarioEdicion\",\"type\":\"string\"},{\"name\":\"PesoTara\",\"type\":\"string\"},{\"name\":\"PesoNeto\",\"type\":\"string\"},{\"name\":\"PesoBruto\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroDeAsignacionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"name\":\"EntregaAntesDe\",\"type\":\"string\"},{\"name\":\"ConsumoAntesDe\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhTareas.Events.TareasMobilePickingCommon.Tarea\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IDTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"OrdenWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDeTarea\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LoteInternoWH\",\"type\":\"string\"},{\"name\":\"CantidadTarea\",\"type\":\"string\"},{\"name\":\"UbicacionInicial\",\"type\":\"string\"},{\"default\":null,\"name\":\"IDInicial\",\"type\":[\"null\",\"string\"]},{\"name\":\"UbicacionFinal\",\"type\":\"string\"},{\"name\":\"IDFinal\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"Prioridad\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"FechaInicioTarea\",\"type\":\"string\"},{\"name\":\"FechaFinTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"LineaDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOleadaWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDeCreacion\",\"type\":\"string\"},{\"name\":\"UsuarioCreacion\",\"type\":\"string\"},{\"name\":\"FechaEdicion\",\"type\":\"string\"},{\"name\":\"UsuarioEdicion\",\"type\":\"string\"},{\"name\":\"PesoTara\",\"type\":\"string\"},{\"name\":\"PesoNeto\",\"type\":\"string\"},{\"name\":\"PesoBruto\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroDeAsignacionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhTareas.Events.TareasMobilePickingCommon.Tarea\",\"type\":\"record\"}"
 }
 
 func (r Tarea) SchemaName() string {
@@ -475,15 +477,13 @@ func (r *Tarea) Get(i int) types.Field {
 		return w
 
 	case 35:
-		w := types.String{Target: &r.EntregaAntesDe}
+		r.EntregaAntesDe = NewUnionNullLong()
 
-		return w
-
+		return r.EntregaAntesDe
 	case 36:
-		w := types.String{Target: &r.ConsumoAntesDe}
+		r.ConsumoAntesDe = NewUnionNullLong()
 
-		return w
-
+		return r.ConsumoAntesDe
 	}
 	panic("Unknown field index")
 }
@@ -514,6 +514,12 @@ func (r *Tarea) SetDefault(i int) {
 	case 29:
 		r.FechaVencimiento = nil
 		return
+	case 35:
+		r.EntregaAntesDe = nil
+		return
+	case 36:
+		r.ConsumoAntesDe = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -543,6 +549,12 @@ func (r *Tarea) NullField(i int) {
 		return
 	case 29:
 		r.FechaVencimiento = nil
+		return
+	case 35:
+		r.EntregaAntesDe = nil
+		return
+	case 36:
+		r.ConsumoAntesDe = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -1236,7 +1248,9 @@ func (r *Tarea) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EntregaAntesDe")
+		r.EntregaAntesDe = NewUnionNullLong()
+
+		r.EntregaAntesDe = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ConsumoAntesDe"]; ok {
@@ -1250,7 +1264,9 @@ func (r *Tarea) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ConsumoAntesDe")
+		r.ConsumoAntesDe = NewUnionNullLong()
+
+		r.ConsumoAntesDe = nil
 	}
 	return nil
 }
