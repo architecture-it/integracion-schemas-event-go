@@ -30,7 +30,7 @@ type Tarea struct {
 
 	LoteInternoWH string `json:"LoteInternoWH"`
 
-	CantidadTarea string `json:"CantidadTarea"`
+	CantidadTarea float32 `json:"CantidadTarea"`
 
 	UbicacionInicial string `json:"UbicacionInicial"`
 
@@ -54,19 +54,19 @@ type Tarea struct {
 
 	NumeroDeOleadaWH *UnionNullString `json:"NumeroDeOleadaWH"`
 
-	FechaDeCreacion string `json:"FechaDeCreacion"`
+	FechaDeCreacion *UnionNullLong `json:"FechaDeCreacion"`
 
 	UsuarioCreacion string `json:"UsuarioCreacion"`
 
-	FechaEdicion string `json:"FechaEdicion"`
+	FechaEdicion *UnionNullLong `json:"FechaEdicion"`
 
 	UsuarioEdicion string `json:"UsuarioEdicion"`
 
-	PesoTara string `json:"PesoTara"`
+	PesoTara float32 `json:"PesoTara"`
 
-	PesoNeto string `json:"PesoNeto"`
+	PesoNeto float32 `json:"PesoNeto"`
 
-	PesoBruto string `json:"PesoBruto"`
+	PesoBruto float32 `json:"PesoBruto"`
 
 	NumeroDeAsignacionWH *UnionNullString `json:"NumeroDeAsignacionWH"`
 
@@ -93,7 +93,7 @@ type Tarea struct {
 	ConsumoAntesDe *UnionNullLong `json:"ConsumoAntesDe"`
 }
 
-const TareaAvroCRC64Fingerprint = "\xf0\xc7#\xfd\x90v\xb0\x91"
+const TareaAvroCRC64Fingerprint = "\xe2s\x9c\x9c2\x01\xa6\xfd"
 
 func NewTarea() Tarea {
 	r := Tarea{}
@@ -101,6 +101,8 @@ func NewTarea() Tarea {
 	r.IDInicial = nil
 	r.LineaDeOrden = nil
 	r.NumeroDeOleadaWH = nil
+	r.FechaDeCreacion = nil
+	r.FechaEdicion = nil
 	r.NumeroDeAsignacionWH = nil
 	r.TipoDeOrigen = nil
 	r.FechaFabricacion = nil
@@ -159,7 +161,7 @@ func writeTarea(r Tarea, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CantidadTarea, w)
+	err = vm.WriteFloat(r.CantidadTarea, w)
 	if err != nil {
 		return err
 	}
@@ -207,7 +209,7 @@ func writeTarea(r Tarea, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FechaDeCreacion, w)
+	err = writeUnionNullLong(r.FechaDeCreacion, w)
 	if err != nil {
 		return err
 	}
@@ -215,7 +217,7 @@ func writeTarea(r Tarea, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FechaEdicion, w)
+	err = writeUnionNullLong(r.FechaEdicion, w)
 	if err != nil {
 		return err
 	}
@@ -223,15 +225,15 @@ func writeTarea(r Tarea, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PesoTara, w)
+	err = vm.WriteFloat(r.PesoTara, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PesoNeto, w)
+	err = vm.WriteFloat(r.PesoNeto, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PesoBruto, w)
+	err = vm.WriteFloat(r.PesoBruto, w)
 	if err != nil {
 		return err
 	}
@@ -291,7 +293,7 @@ func (r Tarea) Serialize(w io.Writer) error {
 }
 
 func (r Tarea) Schema() string {
-	return "{\"fields\":[{\"name\":\"IDTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"OrdenWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDeTarea\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LoteInternoWH\",\"type\":\"string\"},{\"name\":\"CantidadTarea\",\"type\":\"string\"},{\"name\":\"UbicacionInicial\",\"type\":\"string\"},{\"default\":null,\"name\":\"IDInicial\",\"type\":[\"null\",\"string\"]},{\"name\":\"UbicacionFinal\",\"type\":\"string\"},{\"name\":\"IDFinal\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"Prioridad\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"FechaInicioTarea\",\"type\":\"string\"},{\"name\":\"FechaFinTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"LineaDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOleadaWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaDeCreacion\",\"type\":\"string\"},{\"name\":\"UsuarioCreacion\",\"type\":\"string\"},{\"name\":\"FechaEdicion\",\"type\":\"string\"},{\"name\":\"UsuarioEdicion\",\"type\":\"string\"},{\"name\":\"PesoTara\",\"type\":\"string\"},{\"name\":\"PesoNeto\",\"type\":\"string\"},{\"name\":\"PesoBruto\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroDeAsignacionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhTareas.Events.TareasMobilePickingCommon.Tarea\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IDTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"OrdenWH\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDeTarea\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LoteInternoWH\",\"type\":\"string\"},{\"name\":\"CantidadTarea\",\"type\":\"float\"},{\"name\":\"UbicacionInicial\",\"type\":\"string\"},{\"default\":null,\"name\":\"IDInicial\",\"type\":[\"null\",\"string\"]},{\"name\":\"UbicacionFinal\",\"type\":\"string\"},{\"name\":\"IDFinal\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"Prioridad\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"FechaInicioTarea\",\"type\":\"string\"},{\"name\":\"FechaFinTarea\",\"type\":\"string\"},{\"default\":null,\"name\":\"LineaDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeOleadaWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaDeCreacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"UsuarioCreacion\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaEdicion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"UsuarioEdicion\",\"type\":\"string\"},{\"name\":\"PesoTara\",\"type\":\"float\"},{\"name\":\"PesoNeto\",\"type\":\"float\"},{\"name\":\"PesoBruto\",\"type\":\"float\"},{\"default\":null,\"name\":\"NumeroDeAsignacionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhTareas.Events.TareasMobilePickingCommon.Tarea\",\"type\":\"record\"}"
 }
 
 func (r Tarea) SchemaName() string {
@@ -339,7 +341,7 @@ func (r *Tarea) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.String{Target: &r.CantidadTarea}
+		w := types.Float{Target: &r.CantidadTarea}
 
 		return w
 
@@ -396,37 +398,35 @@ func (r *Tarea) Get(i int) types.Field {
 
 		return r.NumeroDeOleadaWH
 	case 18:
-		w := types.String{Target: &r.FechaDeCreacion}
+		r.FechaDeCreacion = NewUnionNullLong()
 
-		return w
-
+		return r.FechaDeCreacion
 	case 19:
 		w := types.String{Target: &r.UsuarioCreacion}
 
 		return w
 
 	case 20:
-		w := types.String{Target: &r.FechaEdicion}
+		r.FechaEdicion = NewUnionNullLong()
 
-		return w
-
+		return r.FechaEdicion
 	case 21:
 		w := types.String{Target: &r.UsuarioEdicion}
 
 		return w
 
 	case 22:
-		w := types.String{Target: &r.PesoTara}
+		w := types.Float{Target: &r.PesoTara}
 
 		return w
 
 	case 23:
-		w := types.String{Target: &r.PesoNeto}
+		w := types.Float{Target: &r.PesoNeto}
 
 		return w
 
 	case 24:
-		w := types.String{Target: &r.PesoBruto}
+		w := types.Float{Target: &r.PesoBruto}
 
 		return w
 
@@ -502,6 +502,12 @@ func (r *Tarea) SetDefault(i int) {
 	case 17:
 		r.NumeroDeOleadaWH = nil
 		return
+	case 18:
+		r.FechaDeCreacion = nil
+		return
+	case 20:
+		r.FechaEdicion = nil
+		return
 	case 25:
 		r.NumeroDeAsignacionWH = nil
 		return
@@ -537,6 +543,12 @@ func (r *Tarea) NullField(i int) {
 		return
 	case 17:
 		r.NumeroDeOleadaWH = nil
+		return
+	case 18:
+		r.FechaDeCreacion = nil
+		return
+	case 20:
+		r.FechaEdicion = nil
 		return
 	case 25:
 		r.NumeroDeAsignacionWH = nil
@@ -1002,7 +1014,9 @@ func (r *Tarea) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FechaDeCreacion")
+		r.FechaDeCreacion = NewUnionNullLong()
+
+		r.FechaDeCreacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UsuarioCreacion"]; ok {
@@ -1030,7 +1044,9 @@ func (r *Tarea) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FechaEdicion")
+		r.FechaEdicion = NewUnionNullLong()
+
+		r.FechaEdicion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UsuarioEdicion"]; ok {
