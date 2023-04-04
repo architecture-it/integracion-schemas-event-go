@@ -27,11 +27,9 @@ type LoteAsn struct {
 	FechaDeVencimiento *UnionNullLong `json:"fechaDeVencimiento"`
 
 	OtrosDatos *UnionNullListaDePropiedades `json:"otrosDatos"`
-
-	EstadoLote *UnionNullString `json:"estadoLote"`
 }
 
-const LoteAsnAvroCRC64Fingerprint = "m\x1e\xb0Q\x10V\x92\xf3"
+const LoteAsnAvroCRC64Fingerprint = "=9\xf4m\x82\xabc0"
 
 func NewLoteAsn() LoteAsn {
 	r := LoteAsn{}
@@ -40,7 +38,6 @@ func NewLoteAsn() LoteAsn {
 	r.Estado = nil
 	r.FechaDeVencimiento = nil
 	r.OtrosDatos = nil
-	r.EstadoLote = nil
 	return r
 }
 
@@ -89,10 +86,6 @@ func writeLoteAsn(r LoteAsn, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.EstadoLote, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -101,7 +94,7 @@ func (r LoteAsn) Serialize(w io.Writer) error {
 }
 
 func (r LoteAsn) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteAsn\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteAsn\",\"type\":\"record\"}"
 }
 
 func (r LoteAsn) SchemaName() string {
@@ -139,10 +132,6 @@ func (r *LoteAsn) Get(i int) types.Field {
 		r.OtrosDatos = NewUnionNullListaDePropiedades()
 
 		return r.OtrosDatos
-	case 5:
-		r.EstadoLote = NewUnionNullString()
-
-		return r.EstadoLote
 	}
 	panic("Unknown field index")
 }
@@ -164,9 +153,6 @@ func (r *LoteAsn) SetDefault(i int) {
 	case 4:
 		r.OtrosDatos = nil
 		return
-	case 5:
-		r.EstadoLote = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -187,9 +173,6 @@ func (r *LoteAsn) NullField(i int) {
 		return
 	case 4:
 		r.OtrosDatos = nil
-		return
-	case 5:
-		r.EstadoLote = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -224,10 +207,6 @@ func (r LoteAsn) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["otrosDatos"], err = json.Marshal(r.OtrosDatos)
-	if err != nil {
-		return nil, err
-	}
-	output["estadoLote"], err = json.Marshal(r.EstadoLote)
 	if err != nil {
 		return nil, err
 	}
@@ -320,22 +299,6 @@ func (r *LoteAsn) UnmarshalJSON(data []byte) error {
 		r.OtrosDatos = NewUnionNullListaDePropiedades()
 
 		r.OtrosDatos = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["estadoLote"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.EstadoLote); err != nil {
-			return err
-		}
-	} else {
-		r.EstadoLote = NewUnionNullString()
-
-		r.EstadoLote = nil
 	}
 	return nil
 }
