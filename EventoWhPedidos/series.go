@@ -21,7 +21,7 @@ type Series struct {
 	Serie string `json:"Serie"`
 }
 
-const SeriesAvroCRC64Fingerprint = "Y,\xa7\xcd\xde)۱"
+const SeriesAvroCRC64Fingerprint = "K\xaawl\xa25G\xa7"
 
 func NewSeries() Series {
 	r := Series{}
@@ -65,11 +65,11 @@ func (r Series) Serialize(w io.Writer) error {
 }
 
 func (r Series) Schema() string {
-	return "{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.Series\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEBultosControladosCommon.Series\",\"type\":\"record\"}"
 }
 
 func (r Series) SchemaName() string {
-	return "Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.Series"
+	return "Andreani.EventoWhPedidos.Events.SCEBultosControladosCommon.Series"
 }
 
 func (_ Series) SetBoolean(v bool)    { panic("Unsupported operation") }

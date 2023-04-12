@@ -27,7 +27,7 @@ type EventoWhSCEPedidosEmpaquetados struct {
 	DetalleBultos []DetalleBultos `json:"DetalleBultos"`
 }
 
-const EventoWhSCEPedidosEmpaquetadosAvroCRC64Fingerprint = "\u007f\xe9$\x19\x1d9^\xd6"
+const EventoWhSCEPedidosEmpaquetadosAvroCRC64Fingerprint = "\x7f\xe9$\x19\x1d9^\xd6"
 
 func NewEventoWhSCEPedidosEmpaquetados() EventoWhSCEPedidosEmpaquetados {
 	r := EventoWhSCEPedidosEmpaquetados{}
