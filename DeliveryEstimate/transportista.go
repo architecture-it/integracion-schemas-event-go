@@ -32,10 +32,10 @@ type Transportista struct {
 
 	TipoDeDocumento int32 `json:"tipoDeDocumento"`
 
-	CumplimientoSecuenciaHR int32 `json:"cumplimientoSecuenciaHR"`
+	CumplimientoSecuenciaHR float64 `json:"cumplimientoSecuenciaHR"`
 }
 
-const TransportistaAvroCRC64Fingerprint = "\x16\xf1\xc79\xa6\x8f\xb7|"
+const TransportistaAvroCRC64Fingerprint = "X#\xc2DWw\xfb\xd7"
 
 func NewTransportista() Transportista {
 	r := Transportista{}
@@ -97,7 +97,7 @@ func writeTransportista(r Transportista, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.CumplimientoSecuenciaHR, w)
+	err = vm.WriteDouble(r.CumplimientoSecuenciaHR, w)
 	if err != nil {
 		return err
 	}
@@ -109,7 +109,7 @@ func (r Transportista) Serialize(w io.Writer) error {
 }
 
 func (r Transportista) Schema() string {
-	return "{\"fields\":[{\"name\":\"esEventual\",\"type\":\"boolean\"},{\"name\":\"idGla\",\"type\":\"string\"},{\"name\":\"idGli\",\"type\":\"string\"},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"codigoAlertran\",\"type\":\"string\"},{\"name\":\"codigoIntegra\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"numeroDeDocumento\",\"type\":\"string\"},{\"name\":\"nombreCompleto\",\"type\":\"string\"},{\"name\":\"tipoDeDocumento\",\"type\":\"int\"},{\"name\":\"cumplimientoSecuenciaHR\",\"type\":\"int\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"esEventual\",\"type\":\"boolean\"},{\"name\":\"idGla\",\"type\":\"string\"},{\"name\":\"idGli\",\"type\":\"string\"},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"codigoAlertran\",\"type\":\"string\"},{\"name\":\"codigoIntegra\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"numeroDeDocumento\",\"type\":\"string\"},{\"name\":\"nombreCompleto\",\"type\":\"string\"},{\"name\":\"tipoDeDocumento\",\"type\":\"int\"},{\"name\":\"cumplimientoSecuenciaHR\",\"type\":\"double\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
 }
 
 func (r Transportista) SchemaName() string {
@@ -165,7 +165,7 @@ func (r *Transportista) Get(i int) types.Field {
 		return w
 
 	case 7:
-		w := types.Int{Target: &r.CumplimientoSecuenciaHR}
+		w := types.Double{Target: &r.CumplimientoSecuenciaHR}
 
 		return w
 
