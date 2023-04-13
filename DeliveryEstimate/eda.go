@@ -20,7 +20,7 @@ var _ = fmt.Printf
 type EDA struct {
 	DiasHabiles int32 `json:"diasHabiles"`
 
-	Eda string `json:"eda"`
+	Eda int64 `json:"eda"`
 
 	NumeroEnvio string `json:"numeroEnvio"`
 
@@ -33,7 +33,7 @@ type EDA struct {
 	FechaAlta int64 `json:"FechaAlta"`
 }
 
-const EDAAvroCRC64Fingerprint = "\xb7\xacT\xbe\xb7WRZ"
+const EDAAvroCRC64Fingerprint = "\xcd\xf9 \x05)\x9d\xde\xcd"
 
 func NewEDA() EDA {
 	r := EDA{}
@@ -71,7 +71,7 @@ func writeEDA(r EDA, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Eda, w)
+	err = vm.WriteLong(r.Eda, w)
 	if err != nil {
 		return err
 	}
@@ -103,7 +103,7 @@ func (r EDA) Serialize(w io.Writer) error {
 }
 
 func (r EDA) Schema() string {
-	return "{\"fields\":[{\"name\":\"diasHabiles\",\"type\":\"int\"},{\"name\":\"eda\",\"type\":\"string\"},{\"name\":\"numeroEnvio\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"CalculoEda\",\"type\":{\"fields\":[{\"name\":\"cpSucursalOrigen\",\"type\":\"string\"},{\"name\":\"cpSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"cpDestino\",\"type\":\"string\"}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"name\":\"Timestamp\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.EDA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"diasHabiles\",\"type\":\"int\"},{\"name\":\"eda\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"numeroEnvio\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"CalculoEda\",\"type\":{\"fields\":[{\"name\":\"cpSucursalOrigen\",\"type\":\"string\"},{\"name\":\"cpSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"cpDestino\",\"type\":\"string\"}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"name\":\"Timestamp\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.EDA\",\"type\":\"record\"}"
 }
 
 func (r EDA) SchemaName() string {
@@ -127,7 +127,7 @@ func (r *EDA) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Eda}
+		w := types.Long{Target: &r.Eda}
 
 		return w
 
