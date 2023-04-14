@@ -23,7 +23,7 @@ type ProcesoIdaVLMSchema struct {
 	PedidoDeVLM PedidoDeVLM `json:"PedidoDeVLM"`
 }
 
-const ProcesoIdaVLMSchemaAvroCRC64Fingerprint = "C\xc4~\x167\xc7v\xe3"
+const ProcesoIdaVLMSchemaAvroCRC64Fingerprint = "5\x17\xd2\x02\x13\x8f\xe0\x89"
 
 func NewProcesoIdaVLMSchema() ProcesoIdaVLMSchema {
 	r := ProcesoIdaVLMSchema{}
@@ -75,11 +75,11 @@ func (r ProcesoIdaVLMSchema) Serialize(w io.Writer) error {
 }
 
 func (r ProcesoIdaVLMSchema) Schema() string {
-	return "{\"fields\":[{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"topic\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.PedidosVLM.Events.ProcesoIda\",\"type\":\"record\"}},{\"name\":\"PedidoDeVLM\",\"type\":{\"fields\":[{\"name\":\"idPedido\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"tipoOperacion\",\"type\":\"string\"},{\"name\":\"tipoEjecucion\",\"type\":\"string\"},{\"name\":\"prioridad\",\"type\":\"int\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"almacenDeOrigen\",\"type\":\"string\"},{\"name\":\"tipoPedido\",\"type\":\"string\"},{\"name\":\"detallesDePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"lote\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"fechadeVencimiento\",\"type\":\"string\"}],\"name\":\"Lote\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"categoriaDeUbicacionDeOrigen\",\"type\":\"string\"},{\"name\":\"idDeTarea\",\"type\":\"string\"},{\"name\":\"almacenDeOrigen\",\"type\":\"string\"},{\"name\":\"idPedido\",\"type\":\"string\"}],\"name\":\"DetallesDePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"PedidoDeVLM\",\"namespace\":\"Andreani.PedidosVLM.Events.ProcesoIda\",\"type\":\"record\"}}],\"name\":\"Andreani.PedidosVLM.Events.Record.ProcesoIdaVLMSchema\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"topic\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.PedidosVlmSce.Events.ProcesoIda\",\"type\":\"record\"}},{\"name\":\"PedidoDeVLM\",\"type\":{\"fields\":[{\"name\":\"idPedido\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"tipoOperacion\",\"type\":\"string\"},{\"name\":\"tipoEjecucion\",\"type\":\"string\"},{\"name\":\"prioridad\",\"type\":\"int\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"almacenDeOrigen\",\"type\":\"string\"},{\"name\":\"tipoPedido\",\"type\":\"string\"},{\"name\":\"detallesDePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"lote\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"fechadeVencimiento\",\"type\":\"string\"}],\"name\":\"Lote\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"categoriaDeUbicacionDeOrigen\",\"type\":\"string\"},{\"name\":\"idDeTarea\",\"type\":\"string\"},{\"name\":\"almacenDeOrigen\",\"type\":\"string\"},{\"name\":\"idPedido\",\"type\":\"string\"}],\"name\":\"DetallesDePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"PedidoDeVLM\",\"namespace\":\"Andreani.PedidosVlmSce.Events.ProcesoIda\",\"type\":\"record\"}}],\"name\":\"Andreani.PedidosVlmSce.Events.Record.ProcesoIdaVLMSchema\",\"type\":\"record\"}"
 }
 
 func (r ProcesoIdaVLMSchema) SchemaName() string {
-	return "Andreani.PedidosVLM.Events.Record.ProcesoIdaVLMSchema"
+	return "Andreani.PedidosVlmSce.Events.Record.ProcesoIdaVLMSchema"
 }
 
 func (_ ProcesoIdaVLMSchema) SetBoolean(v bool)    { panic("Unsupported operation") }

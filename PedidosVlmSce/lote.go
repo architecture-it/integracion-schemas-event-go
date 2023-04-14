@@ -23,7 +23,7 @@ type Lote struct {
 	FechadeVencimiento string `json:"fechadeVencimiento"`
 }
 
-const LoteAvroCRC64Fingerprint = "\xa7{2\xcf\xc9\xeb\x83\n"
+const LoteAvroCRC64Fingerprint = "$ov\x8d\xd7r\xa1z"
 
 func NewLote() Lote {
 	r := Lote{}
@@ -71,11 +71,11 @@ func (r Lote) Serialize(w io.Writer) error {
 }
 
 func (r Lote) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"fechadeVencimiento\",\"type\":\"string\"}],\"name\":\"Andreani.PedidosVLM.Events.ProcesoIda.Lote\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"fechadeVencimiento\",\"type\":\"string\"}],\"name\":\"Andreani.PedidosVlmSce.Events.ProcesoIda.Lote\",\"type\":\"record\"}"
 }
 
 func (r Lote) SchemaName() string {
-	return "Andreani.PedidosVLM.Events.ProcesoIda.Lote"
+	return "Andreani.PedidosVlmSce.Events.ProcesoIda.Lote"
 }
 
 func (_ Lote) SetBoolean(v bool)    { panic("Unsupported operation") }

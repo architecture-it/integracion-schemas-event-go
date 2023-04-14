@@ -25,7 +25,7 @@ type Articulo struct {
 	Lote Lote `json:"lote"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "\x0f\xb5\x18\xa1 -\x93M"
+const ArticuloAvroCRC64Fingerprint = "v\xae*\x97\x88<3\xe4"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
@@ -79,11 +79,11 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"lote\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"fechadeVencimiento\",\"type\":\"string\"}],\"name\":\"Lote\",\"type\":\"record\"}}],\"name\":\"Andreani.PedidosVLM.Events.ProcesoIda.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"lote\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"fechadeVencimiento\",\"type\":\"string\"}],\"name\":\"Lote\",\"type\":\"record\"}}],\"name\":\"Andreani.PedidosVlmSce.Events.ProcesoIda.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
-	return "Andreani.PedidosVLM.Events.ProcesoIda.Articulo"
+	return "Andreani.PedidosVlmSce.Events.ProcesoIda.Articulo"
 }
 
 func (_ Articulo) SetBoolean(v bool)    { panic("Unsupported operation") }

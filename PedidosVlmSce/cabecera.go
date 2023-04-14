@@ -27,7 +27,7 @@ type Cabecera struct {
 	Topic string `json:"topic"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\xf0#\x99qR\x9e/\x81"
+const CabeceraAvroCRC64Fingerprint = "U\xfa\xc0\xa2\x96\xfb\x15\xa6"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -83,11 +83,11 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"timestamp\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"topic\",\"type\":\"string\"}],\"name\":\"Andreani.PedidosVLM.Events.ProcesoIda.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"timestamp\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"topic\",\"type\":\"string\"}],\"name\":\"Andreani.PedidosVlmSce.Events.ProcesoIda.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
-	return "Andreani.PedidosVLM.Events.ProcesoIda.Cabecera"
+	return "Andreani.PedidosVlmSce.Events.ProcesoIda.Cabecera"
 }
 
 func (_ Cabecera) SetBoolean(v bool)    { panic("Unsupported operation") }

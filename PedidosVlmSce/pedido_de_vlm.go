@@ -37,7 +37,7 @@ type PedidoDeVLM struct {
 	DetallesDePedido []DetallesDePedido `json:"detallesDePedido"`
 }
 
-const PedidoDeVLMAvroCRC64Fingerprint = "V(\xb9_\x11\fw\xc3"
+const PedidoDeVLMAvroCRC64Fingerprint = "\x1buE}\xf1\xf0<\xff"
 
 func NewPedidoDeVLM() PedidoDeVLM {
 	r := PedidoDeVLM{}
@@ -115,11 +115,11 @@ func (r PedidoDeVLM) Serialize(w io.Writer) error {
 }
 
 func (r PedidoDeVLM) Schema() string {
-	return "{\"fields\":[{\"name\":\"idPedido\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"tipoOperacion\",\"type\":\"string\"},{\"name\":\"tipoEjecucion\",\"type\":\"string\"},{\"name\":\"prioridad\",\"type\":\"int\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"almacenDeOrigen\",\"type\":\"string\"},{\"name\":\"tipoPedido\",\"type\":\"string\"},{\"name\":\"detallesDePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"lote\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"fechadeVencimiento\",\"type\":\"string\"}],\"name\":\"Lote\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"categoriaDeUbicacionDeOrigen\",\"type\":\"string\"},{\"name\":\"idDeTarea\",\"type\":\"string\"},{\"name\":\"almacenDeOrigen\",\"type\":\"string\"},{\"name\":\"idPedido\",\"type\":\"string\"}],\"name\":\"DetallesDePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.PedidosVLM.Events.ProcesoIda.PedidoDeVLM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idPedido\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"tipoOperacion\",\"type\":\"string\"},{\"name\":\"tipoEjecucion\",\"type\":\"string\"},{\"name\":\"prioridad\",\"type\":\"int\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"almacenDeOrigen\",\"type\":\"string\"},{\"name\":\"tipoPedido\",\"type\":\"string\"},{\"name\":\"detallesDePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"lote\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"fechadeVencimiento\",\"type\":\"string\"}],\"name\":\"Lote\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"categoriaDeUbicacionDeOrigen\",\"type\":\"string\"},{\"name\":\"idDeTarea\",\"type\":\"string\"},{\"name\":\"almacenDeOrigen\",\"type\":\"string\"},{\"name\":\"idPedido\",\"type\":\"string\"}],\"name\":\"DetallesDePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.PedidosVlmSce.Events.ProcesoIda.PedidoDeVLM\",\"type\":\"record\"}"
 }
 
 func (r PedidoDeVLM) SchemaName() string {
-	return "Andreani.PedidosVLM.Events.ProcesoIda.PedidoDeVLM"
+	return "Andreani.PedidosVlmSce.Events.ProcesoIda.PedidoDeVLM"
 }
 
 func (_ PedidoDeVLM) SetBoolean(v bool)    { panic("Unsupported operation") }

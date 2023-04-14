@@ -31,7 +31,7 @@ type DetallesDePedido struct {
 	IdPedido string `json:"idPedido"`
 }
 
-const DetallesDePedidoAvroCRC64Fingerprint = "V\x86\xa2lv˄\xef"
+const DetallesDePedidoAvroCRC64Fingerprint = "\x10\x83\xf0\x91G8f\xa0"
 
 func NewDetallesDePedido() DetallesDePedido {
 	r := DetallesDePedido{}
@@ -97,11 +97,11 @@ func (r DetallesDePedido) Serialize(w io.Writer) error {
 }
 
 func (r DetallesDePedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"lote\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"fechadeVencimiento\",\"type\":\"string\"}],\"name\":\"Lote\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"categoriaDeUbicacionDeOrigen\",\"type\":\"string\"},{\"name\":\"idDeTarea\",\"type\":\"string\"},{\"name\":\"almacenDeOrigen\",\"type\":\"string\"},{\"name\":\"idPedido\",\"type\":\"string\"}],\"name\":\"Andreani.PedidosVLM.Events.ProcesoIda.DetallesDePedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"lote\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"fechadeVencimiento\",\"type\":\"string\"}],\"name\":\"Lote\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"categoriaDeUbicacionDeOrigen\",\"type\":\"string\"},{\"name\":\"idDeTarea\",\"type\":\"string\"},{\"name\":\"almacenDeOrigen\",\"type\":\"string\"},{\"name\":\"idPedido\",\"type\":\"string\"}],\"name\":\"Andreani.PedidosVlmSce.Events.ProcesoIda.DetallesDePedido\",\"type\":\"record\"}"
 }
 
 func (r DetallesDePedido) SchemaName() string {
-	return "Andreani.PedidosVLM.Events.ProcesoIda.DetallesDePedido"
+	return "Andreani.PedidosVlmSce.Events.ProcesoIda.DetallesDePedido"
 }
 
 func (_ DetallesDePedido) SetBoolean(v bool)    { panic("Unsupported operation") }
