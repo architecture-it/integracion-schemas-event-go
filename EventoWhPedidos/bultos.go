@@ -31,7 +31,7 @@ type Bultos struct {
 	Contenedor *UnionNullContenedor `json:"Contenedor"`
 }
 
-const BultosAvroCRC64Fingerprint = "\x9a$\xf4\xae\xaa\xf6\xc7K"
+const BultosAvroCRC64Fingerprint = "\xa3K\xe7y\xea\t\xc74"
 
 func NewBultos() Bultos {
 	r := Bultos{}
@@ -96,7 +96,7 @@ func (r Bultos) Serialize(w io.Writer) error {
 }
 
 func (r Bultos) Schema() string {
-	return "{\"fields\":[{\"name\":\"DropId\",\"type\":\"string\"},{\"name\":\"Altura\",\"type\":\"float\"},{\"name\":\"Profundidad\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"default\":null,\"name\":\"Contenedor\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tara\",\"type\":\"float\"},{\"name\":\"CartonType\",\"type\":\"string\"},{\"name\":\"Contenedor\",\"type\":[\"null\",\"string\"]}],\"name\":\"Contenedor\",\"type\":\"record\"}]}],\"name\":\"Andreani.EventoWhPedidos.Events.EmpaquetadoCommon.Bultos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"DropId\",\"type\":\"string\"},{\"name\":\"Altura\",\"type\":\"float\"},{\"name\":\"Profundidad\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"default\":null,\"name\":\"Contenedor\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tara\",\"type\":\"float\"},{\"name\":\"CartonType\",\"type\":\"string\"},{\"name\":\"ContratoRetornable\",\"type\":[\"null\",\"string\"]}],\"name\":\"Contenedor\",\"type\":\"record\"}]}],\"name\":\"Andreani.EventoWhPedidos.Events.EmpaquetadoCommon.Bultos\",\"type\":\"record\"}"
 }
 
 func (r Bultos) SchemaName() string {

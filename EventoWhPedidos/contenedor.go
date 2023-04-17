@@ -22,10 +22,10 @@ type Contenedor struct {
 
 	CartonType string `json:"CartonType"`
 
-	Contenedor *UnionNullString `json:"Contenedor"`
+	ContratoRetornable *UnionNullString `json:"ContratoRetornable"`
 }
 
-const ContenedorAvroCRC64Fingerprint = "\xe6\xe2\xc54\x80\n\x0eD"
+const ContenedorAvroCRC64Fingerprint = "^\xa7*\xea\xce\xd4\n\xd5"
 
 func NewContenedor() Contenedor {
 	r := Contenedor{}
@@ -65,7 +65,7 @@ func writeContenedor(r Contenedor, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Contenedor, w)
+	err = writeUnionNullString(r.ContratoRetornable, w)
 	if err != nil {
 		return err
 	}
@@ -77,7 +77,7 @@ func (r Contenedor) Serialize(w io.Writer) error {
 }
 
 func (r Contenedor) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tara\",\"type\":\"float\"},{\"name\":\"CartonType\",\"type\":\"string\"},{\"name\":\"Contenedor\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhPedidos.Events.EmpaquetadoCommon.Contenedor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tara\",\"type\":\"float\"},{\"name\":\"CartonType\",\"type\":\"string\"},{\"name\":\"ContratoRetornable\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhPedidos.Events.EmpaquetadoCommon.Contenedor\",\"type\":\"record\"}"
 }
 
 func (r Contenedor) SchemaName() string {
@@ -106,9 +106,9 @@ func (r *Contenedor) Get(i int) types.Field {
 		return w
 
 	case 2:
-		r.Contenedor = NewUnionNullString()
+		r.ContratoRetornable = NewUnionNullString()
 
-		return r.Contenedor
+		return r.ContratoRetornable
 	}
 	panic("Unknown field index")
 }
@@ -122,7 +122,7 @@ func (r *Contenedor) SetDefault(i int) {
 func (r *Contenedor) NullField(i int) {
 	switch i {
 	case 2:
-		r.Contenedor = nil
+		r.ContratoRetornable = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -148,7 +148,7 @@ func (r Contenedor) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Contenedor"], err = json.Marshal(r.Contenedor)
+	output["ContratoRetornable"], err = json.Marshal(r.ContratoRetornable)
 	if err != nil {
 		return nil, err
 	}
@@ -191,18 +191,18 @@ func (r *Contenedor) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for CartonType")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Contenedor"]; ok {
+		if v, ok := fields["ContratoRetornable"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contenedor); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContratoRetornable); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Contenedor")
+		return fmt.Errorf("no value specified for ContratoRetornable")
 	}
 	return nil
 }
