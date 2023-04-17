@@ -33,7 +33,6 @@ func NewEventoWhBultosEmpaquetado() EventoWhBultosEmpaquetado {
 
 	r.Cabecera = NewCabecera()
 
-	r.ContenedorRetornable = nil
 	return r
 }
 
@@ -82,7 +81,7 @@ func (r EventoWhBultosEmpaquetado) Serialize(w io.Writer) error {
 }
 
 func (r EventoWhBultosEmpaquetado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhPedidos.Events.BultosEmpaquetadoCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"Lpn\",\"type\":\"string\"},{\"name\":\"BultosTotal\",\"type\":\"int\"},{\"name\":\"EXT_UDF_STR1\",\"type\":[\"null\",\"string\"]}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.EventoWhPedidos.Events.BultosEmpaquetadoCommon\",\"type\":\"record\"}},{\"default\":null,\"name\":\"ContenedorRetornable\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tara\",\"type\":\"float\"},{\"name\":\"CartonType\",\"type\":\"string\"},{\"name\":\"ContratoRetornable\",\"type\":[\"null\",\"string\"]}],\"name\":\"ContenedorRetornable\",\"namespace\":\"Andreani.EventoWhPedidos.Events.BultosEmpaquetadoCommon\",\"type\":\"record\"}]}],\"name\":\"Andreani.EventoWhPedidos.Events.Record.EventoWhBultosEmpaquetado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhPedidos.Events.BultosEmpaquetadoCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"Lpn\",\"type\":\"string\"},{\"name\":\"BultosTotal\",\"type\":\"int\"},{\"name\":\"EXT_UDF_STR1\",\"type\":[\"null\",\"string\"]}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.EventoWhPedidos.Events.BultosEmpaquetadoCommon\",\"type\":\"record\"}},{\"name\":\"ContenedorRetornable\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tara\",\"type\":\"float\"},{\"name\":\"CartonType\",\"type\":\"string\"},{\"name\":\"ContratoRetornable\",\"type\":[\"null\",\"string\"]}],\"name\":\"ContenedorRetornable\",\"namespace\":\"Andreani.EventoWhPedidos.Events.BultosEmpaquetadoCommon\",\"type\":\"record\"}]}],\"name\":\"Andreani.EventoWhPedidos.Events.Record.EventoWhBultosEmpaquetado\",\"type\":\"record\"}"
 }
 
 func (r EventoWhBultosEmpaquetado) SchemaName() string {
@@ -124,9 +123,6 @@ func (r *EventoWhBultosEmpaquetado) Get(i int) types.Field {
 
 func (r *EventoWhBultosEmpaquetado) SetDefault(i int) {
 	switch i {
-	case 2:
-		r.ContenedorRetornable = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -214,9 +210,7 @@ func (r *EventoWhBultosEmpaquetado) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.ContenedorRetornable = NewUnionNullContenedorRetornable()
-
-		r.ContenedorRetornable = nil
+		return fmt.Errorf("no value specified for ContenedorRetornable")
 	}
 	return nil
 }
