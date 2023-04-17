@@ -27,12 +27,15 @@ type Bultos struct {
 	Ancho float32 `json:"Ancho"`
 
 	Peso float32 `json:"Peso"`
+
+	ContenedorRetornable *UnionNullContenedorRetornable `json:"ContenedorRetornable"`
 }
 
-const BultosAvroCRC64Fingerprint = "D\x01\xa5\xa4\xb3m\x83\x9b"
+const BultosAvroCRC64Fingerprint = "\xcay\x7f\xa1\xf8\x01\x90\xbf"
 
 func NewBultos() Bultos {
 	r := Bultos{}
+	r.ContenedorRetornable = nil
 	return r
 }
 
@@ -81,6 +84,10 @@ func writeBultos(r Bultos, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullContenedorRetornable(r.ContenedorRetornable, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -89,7 +96,7 @@ func (r Bultos) Serialize(w io.Writer) error {
 }
 
 func (r Bultos) Schema() string {
-	return "{\"fields\":[{\"name\":\"DropId\",\"type\":\"string\"},{\"name\":\"Altura\",\"type\":\"float\"},{\"name\":\"Profundidad\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Peso\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhPedidos.Events.EmpaquetadoCommon.Bultos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"DropId\",\"type\":\"string\"},{\"name\":\"Altura\",\"type\":\"float\"},{\"name\":\"Profundidad\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"default\":null,\"name\":\"ContenedorRetornable\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tara\",\"type\":\"float\"},{\"name\":\"CartonType\",\"type\":\"string\"},{\"name\":\"ContratoRetornable\",\"type\":[\"null\",\"string\"]}],\"name\":\"ContenedorRetornable\",\"type\":\"record\"}]}],\"name\":\"Andreani.EventoWhPedidos.Events.EmpaquetadoCommon.Bultos\",\"type\":\"record\"}"
 }
 
 func (r Bultos) SchemaName() string {
@@ -132,18 +139,28 @@ func (r *Bultos) Get(i int) types.Field {
 
 		return w
 
+	case 5:
+		r.ContenedorRetornable = NewUnionNullContenedorRetornable()
+
+		return r.ContenedorRetornable
 	}
 	panic("Unknown field index")
 }
 
 func (r *Bultos) SetDefault(i int) {
 	switch i {
+	case 5:
+		r.ContenedorRetornable = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Bultos) NullField(i int) {
 	switch i {
+	case 5:
+		r.ContenedorRetornable = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -177,6 +194,10 @@ func (r Bultos) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Peso"], err = json.Marshal(r.Peso)
+	if err != nil {
+		return nil, err
+	}
+	output["ContenedorRetornable"], err = json.Marshal(r.ContenedorRetornable)
 	if err != nil {
 		return nil, err
 	}
@@ -259,6 +280,22 @@ func (r *Bultos) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Peso")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ContenedorRetornable"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContenedorRetornable); err != nil {
+			return err
+		}
+	} else {
+		r.ContenedorRetornable = NewUnionNullContenedorRetornable()
+
+		r.ContenedorRetornable = nil
 	}
 	return nil
 }
