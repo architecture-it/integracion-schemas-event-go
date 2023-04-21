@@ -23,9 +23,11 @@ type CambioEstadoLoteV2Rechazado struct {
 	CambioEstadoDeLoteV2 CambioEstadoDeLoteV2 `json:"cambioEstadoDeLoteV2"`
 
 	Topic string `json:"Topic"`
+
+	Razon string `json:"razon"`
 }
 
-const CambioEstadoLoteV2RechazadoAvroCRC64Fingerprint = "7h_\a\x03P\xdd\xc9"
+const CambioEstadoLoteV2RechazadoAvroCRC64Fingerprint = "\xad\xca\\0\x03P\xf0]"
 
 func NewCambioEstadoLoteV2Rechazado() CambioEstadoLoteV2Rechazado {
 	r := CambioEstadoLoteV2Rechazado{}
@@ -74,6 +76,10 @@ func writeCambioEstadoLoteV2Rechazado(r CambioEstadoLoteV2Rechazado, w io.Writer
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Razon, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -82,7 +88,7 @@ func (r CambioEstadoLoteV2Rechazado) Serialize(w io.Writer) error {
 }
 
 func (r CambioEstadoLoteV2Rechazado) Schema() string {
-	return "{\"fields\":[{\"name\":\"solicitudDeAccionAlmacen\",\"type\":{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]}],\"name\":\"SolicitudDeAccionAlmacen\",\"type\":\"record\"}},{\"name\":\"cambioEstadoDeLoteV2\",\"type\":{\"fields\":[{\"name\":\"articulo\",\"type\":\"string\"},{\"name\":\"estadoLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"loteCaja\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"}],\"name\":\"CambioEstadoDeLoteV2\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/CambioEstadoLoteV2Rechazado\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.CambioEstadoLoteV2Rechazado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"solicitudDeAccionAlmacen\",\"type\":{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]}],\"name\":\"SolicitudDeAccionAlmacen\",\"type\":\"record\"}},{\"name\":\"cambioEstadoDeLoteV2\",\"type\":{\"fields\":[{\"name\":\"articulo\",\"type\":\"string\"},{\"name\":\"estadoLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"loteCaja\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"}],\"name\":\"CambioEstadoDeLoteV2\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/CambioEstadoLoteV2Rechazado\",\"name\":\"Topic\",\"type\":\"string\"},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.CambioEstadoLoteV2Rechazado\",\"type\":\"record\"}"
 }
 
 func (r CambioEstadoLoteV2Rechazado) SchemaName() string {
@@ -116,6 +122,11 @@ func (r *CambioEstadoLoteV2Rechazado) Get(i int) types.Field {
 
 	case 2:
 		w := types.String{Target: &r.Topic}
+
+		return w
+
+	case 3:
+		w := types.String{Target: &r.Razon}
 
 		return w
 
@@ -161,6 +172,10 @@ func (r CambioEstadoLoteV2Rechazado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Topic"], err = json.Marshal(r.Topic)
+	if err != nil {
+		return nil, err
+	}
+	output["razon"], err = json.Marshal(r.Razon)
 	if err != nil {
 		return nil, err
 	}
@@ -215,6 +230,20 @@ func (r *CambioEstadoLoteV2Rechazado) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		r.Topic = "Almacen/Solicitudes/CambioEstadoLoteV2Rechazado"
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["razon"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Razon); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for razon")
 	}
 	return nil
 }
