@@ -20,10 +20,10 @@ var _ = fmt.Printf
 type File struct {
 	NumeroEntidad string `json:"numeroEntidad"`
 
-	Documento Bytes `json:"documento"`
+	Documento string `json:"documento"`
 }
 
-const FileAvroCRC64Fingerprint = "\xac\xb0\x11)a<\f5"
+const FileAvroCRC64Fingerprint = "\x87\xaf$\xfd\xd2\xe4\xc1\x95"
 
 func NewFile() File {
 	r := File{}
@@ -59,7 +59,7 @@ func writeFile(r File, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteBytes(r.Documento, w)
+	err = vm.WriteString(r.Documento, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func (r File) Serialize(w io.Writer) error {
 }
 
 func (r File) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"bytes\"}],\"name\":\"Andreani.Wapv2.Events.Record.File\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.File\",\"type\":\"record\"}"
 }
 
 func (r File) SchemaName() string {
@@ -95,7 +95,7 @@ func (r *File) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := BytesWrapper{Target: &r.Documento}
+		w := types.String{Target: &r.Documento}
 
 		return w
 

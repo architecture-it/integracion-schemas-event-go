@@ -84,7 +84,7 @@ func DeserializeUnionNullListaDeFilesFromSchema(r io.Reader, schema string) (*Un
 }
 
 func (r *UnionNullListaDeFiles) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"bytes\"}],\"name\":\"File\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeFiles\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"File\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeFiles\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullListaDeFiles) SetBoolean(v bool)   { panic("Unsupported operation") }

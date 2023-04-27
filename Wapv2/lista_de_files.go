@@ -21,7 +21,7 @@ type ListaDeFiles struct {
 	Documentos []File `json:"documentos"`
 }
 
-const ListaDeFilesAvroCRC64Fingerprint = "\x9aS\x93\xc9\xfaR\xb0\xec"
+const ListaDeFilesAvroCRC64Fingerprint = "\x04^\xb0\xc6]S\x94/"
 
 func NewListaDeFiles() ListaDeFiles {
 	r := ListaDeFiles{}
@@ -67,7 +67,7 @@ func (r ListaDeFiles) Serialize(w io.Writer) error {
 }
 
 func (r ListaDeFiles) Schema() string {
-	return "{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"bytes\"}],\"name\":\"File\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Wapv2.Events.Record.ListaDeFiles\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"File\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Wapv2.Events.Record.ListaDeFiles\",\"type\":\"record\"}"
 }
 
 func (r ListaDeFiles) SchemaName() string {
