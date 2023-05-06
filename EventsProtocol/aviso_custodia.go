@@ -25,12 +25,16 @@ type AvisoCustodia struct {
 	Cuando int64 `json:"cuando"`
 
 	FechaIngresoCustodia int64 `json:"fechaIngresoCustodia"`
+
+	SucursalActual Sucursal `json:"sucursalActual"`
 }
 
-const AvisoCustodiaAvroCRC64Fingerprint = "\xa5ݰ\xe4B\xf2AU"
+const AvisoCustodiaAvroCRC64Fingerprint = "I\xbe\x8aޟ\xa18\xcf"
 
 func NewAvisoCustodia() AvisoCustodia {
 	r := AvisoCustodia{}
+	r.SucursalActual = NewSucursal()
+
 	return r
 }
 
@@ -75,6 +79,10 @@ func writeAvisoCustodia(r AvisoCustodia, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeSucursal(r.SucursalActual, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -83,7 +91,7 @@ func (r AvisoCustodia) Serialize(w io.Writer) error {
 }
 
 func (r AvisoCustodia) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"nombreDestinatario\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaIngresoCustodia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoCustodia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"nombreDestinatario\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaIngresoCustodia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"sucursalActual\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"horarioAtencion\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"}],\"name\":\"Sucursal\",\"type\":\"record\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoCustodia\",\"type\":\"record\"}"
 }
 
 func (r AvisoCustodia) SchemaName() string {
@@ -118,6 +126,13 @@ func (r *AvisoCustodia) Get(i int) types.Field {
 
 	case 3:
 		w := types.Long{Target: &r.FechaIngresoCustodia}
+
+		return w
+
+	case 4:
+		r.SucursalActual = NewSucursal()
+
+		w := types.Record{Target: &r.SucursalActual}
 
 		return w
 
@@ -162,6 +177,10 @@ func (r AvisoCustodia) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["fechaIngresoCustodia"], err = json.Marshal(r.FechaIngresoCustodia)
+	if err != nil {
+		return nil, err
+	}
+	output["sucursalActual"], err = json.Marshal(r.SucursalActual)
 	if err != nil {
 		return nil, err
 	}
@@ -230,6 +249,20 @@ func (r *AvisoCustodia) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for fechaIngresoCustodia")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["sucursalActual"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SucursalActual); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for sucursalActual")
 	}
 	return nil
 }
