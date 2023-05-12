@@ -18,13 +18,13 @@ import (
 var _ = fmt.Printf
 
 type DatosLogisticos struct {
-	Volumen *UnionNullDouble `json:"volumen"`
+	Volumen *UnionNullFloat `json:"volumen"`
 
-	PesoBruto *UnionNullDouble `json:"pesoBruto"`
+	PesoBruto *UnionNullFloat `json:"pesoBruto"`
 
-	PesoTara *UnionNullDouble `json:"pesoTara"`
+	PesoTara *UnionNullFloat `json:"pesoTara"`
 
-	PesoNeto *UnionNullDouble `json:"pesoNeto"`
+	PesoNeto *UnionNullFloat `json:"pesoNeto"`
 
 	CantidadporPaquete *UnionNullFloat `json:"cantidadporPaquete"`
 
@@ -75,7 +75,7 @@ type DatosLogisticos struct {
 	Volumencubico *UnionNullFloat `json:"volumencubico"`
 }
 
-const DatosLogisticosAvroCRC64Fingerprint = "\x11V\xac\x93)\x0f\x03\x9a"
+const DatosLogisticosAvroCRC64Fingerprint = "\xa9\x13y\xf6\xa7C\xa9\f"
 
 func NewDatosLogisticos() DatosLogisticos {
 	r := DatosLogisticos{}
@@ -135,19 +135,19 @@ func DeserializeDatosLogisticosFromSchema(r io.Reader, schema string) (DatosLogi
 
 func writeDatosLogisticos(r DatosLogisticos, w io.Writer) error {
 	var err error
-	err = writeUnionNullDouble(r.Volumen, w)
+	err = writeUnionNullFloat(r.Volumen, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullDouble(r.PesoBruto, w)
+	err = writeUnionNullFloat(r.PesoBruto, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullDouble(r.PesoTara, w)
+	err = writeUnionNullFloat(r.PesoTara, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullDouble(r.PesoNeto, w)
+	err = writeUnionNullFloat(r.PesoNeto, w)
 	if err != nil {
 		return err
 	}
@@ -255,7 +255,7 @@ func (r DatosLogisticos) Serialize(w io.Writer) error {
 }
 
 func (r DatosLogisticos) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"volumen\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoBruto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoTara\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"pesoNeto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"cantidadporPaquete\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"nivelesporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cajasporNivel\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"volumencubico\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.Wapv2.Events.Record.DatosLogisticos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"volumen\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoBruto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoTara\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoNeto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPaquete\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"nivelesporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cajasporNivel\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"volumencubico\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.Wapv2.Events.Record.DatosLogisticos\",\"type\":\"record\"}"
 }
 
 func (r DatosLogisticos) SchemaName() string {
@@ -274,19 +274,19 @@ func (_ DatosLogisticos) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *DatosLogisticos) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Volumen = NewUnionNullDouble()
+		r.Volumen = NewUnionNullFloat()
 
 		return r.Volumen
 	case 1:
-		r.PesoBruto = NewUnionNullDouble()
+		r.PesoBruto = NewUnionNullFloat()
 
 		return r.PesoBruto
 	case 2:
-		r.PesoTara = NewUnionNullDouble()
+		r.PesoTara = NewUnionNullFloat()
 
 		return r.PesoTara
 	case 3:
-		r.PesoNeto = NewUnionNullDouble()
+		r.PesoNeto = NewUnionNullFloat()
 
 		return r.PesoNeto
 	case 4:
@@ -715,7 +715,7 @@ func (r *DatosLogisticos) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Volumen = NewUnionNullDouble()
+		r.Volumen = NewUnionNullFloat()
 
 		r.Volumen = nil
 	}
@@ -731,7 +731,7 @@ func (r *DatosLogisticos) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.PesoBruto = NewUnionNullDouble()
+		r.PesoBruto = NewUnionNullFloat()
 
 		r.PesoBruto = nil
 	}
@@ -747,7 +747,7 @@ func (r *DatosLogisticos) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.PesoTara = NewUnionNullDouble()
+		r.PesoTara = NewUnionNullFloat()
 
 		r.PesoTara = nil
 	}
@@ -763,7 +763,7 @@ func (r *DatosLogisticos) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.PesoNeto = NewUnionNullDouble()
+		r.PesoNeto = NewUnionNullFloat()
 
 		r.PesoNeto = nil
 	}
