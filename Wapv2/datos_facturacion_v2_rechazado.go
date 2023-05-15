@@ -23,9 +23,11 @@ type DatosFacturacionV2Rechazado struct {
 	Pedido Pedido `json:"pedido"`
 
 	Topic string `json:"Topic"`
+
+	Razon string `json:"razon"`
 }
 
-const DatosFacturacionV2RechazadoAvroCRC64Fingerprint = "\x19\xc9\xf4\x12\x9c\x8fr\x0f"
+const DatosFacturacionV2RechazadoAvroCRC64Fingerprint = "\x97\xf1V\x8a\x19YVL"
 
 func NewDatosFacturacionV2Rechazado() DatosFacturacionV2Rechazado {
 	r := DatosFacturacionV2Rechazado{}
@@ -74,6 +76,10 @@ func writeDatosFacturacionV2Rechazado(r DatosFacturacionV2Rechazado, w io.Writer
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Razon, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -82,7 +88,7 @@ func (r DatosFacturacionV2Rechazado) Serialize(w io.Writer) error {
 }
 
 func (r DatosFacturacionV2Rechazado) Schema() string {
-	return "{\"fields\":[{\"name\":\"solicitudDeAccionAlmacen\",\"type\":{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]}],\"name\":\"SolicitudDeAccionAlmacen\",\"type\":\"record\"}},{\"name\":\"pedido\",\"type\":{\"fields\":[{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linkImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"archivoImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"precioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Pedido\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/DatosFacturacionV2Rechazado\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.DatosFacturacionV2Rechazado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"solicitudDeAccionAlmacen\",\"type\":{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]}],\"name\":\"SolicitudDeAccionAlmacen\",\"type\":\"record\"}},{\"name\":\"pedido\",\"type\":{\"fields\":[{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linkImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"archivoImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"precioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Pedido\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/DatosFacturacionV2Rechazado\",\"name\":\"Topic\",\"type\":\"string\"},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.DatosFacturacionV2Rechazado\",\"type\":\"record\"}"
 }
 
 func (r DatosFacturacionV2Rechazado) SchemaName() string {
@@ -116,6 +122,11 @@ func (r *DatosFacturacionV2Rechazado) Get(i int) types.Field {
 
 	case 2:
 		w := types.String{Target: &r.Topic}
+
+		return w
+
+	case 3:
+		w := types.String{Target: &r.Razon}
 
 		return w
 
@@ -161,6 +172,10 @@ func (r DatosFacturacionV2Rechazado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Topic"], err = json.Marshal(r.Topic)
+	if err != nil {
+		return nil, err
+	}
+	output["razon"], err = json.Marshal(r.Razon)
 	if err != nil {
 		return nil, err
 	}
@@ -215,6 +230,20 @@ func (r *DatosFacturacionV2Rechazado) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		r.Topic = "Almacen/Solicitudes/DatosFacturacionV2Rechazado"
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["razon"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Razon); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for razon")
 	}
 	return nil
 }
