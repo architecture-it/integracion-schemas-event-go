@@ -18,24 +18,24 @@ import (
 var _ = fmt.Printf
 
 type Transportista struct {
-	EsEventual bool `json:"esEventual"`
+	EsEventual bool `json:"EsEventual"`
 
-	IdGla string `json:"idGla"`
+	IdGla string `json:"IdGla"`
 
-	IdGli string `json:"idGli"`
+	IdGli string `json:"IdGli"`
 
-	SucursalDondeTrabaja SucursalDondeTrabaja `json:"sucursalDondeTrabaja"`
+	SucursalDondeTrabaja SucursalDondeTrabaja `json:"SucursalDondeTrabaja"`
 
-	NumeroDeDocumento string `json:"numeroDeDocumento"`
+	NumeroDeDocumento string `json:"NumeroDeDocumento"`
 
-	NombreCompleto string `json:"nombreCompleto"`
+	NombreCompleto string `json:"NombreCompleto"`
 
-	TipoDeDocumento int32 `json:"tipoDeDocumento"`
+	TipoDeDocumento int32 `json:"TipoDeDocumento"`
 
-	CumplimientoSecuenciaHR float64 `json:"cumplimientoSecuenciaHR"`
+	CumplimientoSecuenciaHR float64 `json:"CumplimientoSecuenciaHR"`
 }
 
-const TransportistaAvroCRC64Fingerprint = "X#\xc2DWw\xfb\xd7"
+const TransportistaAvroCRC64Fingerprint = "/\x96\t\x11\xf1H%I"
 
 func NewTransportista() Transportista {
 	r := Transportista{}
@@ -109,7 +109,7 @@ func (r Transportista) Serialize(w io.Writer) error {
 }
 
 func (r Transportista) Schema() string {
-	return "{\"fields\":[{\"name\":\"esEventual\",\"type\":\"boolean\"},{\"name\":\"idGla\",\"type\":\"string\"},{\"name\":\"idGli\",\"type\":\"string\"},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"codigoAlertran\",\"type\":\"string\"},{\"name\":\"codigoIntegra\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"numeroDeDocumento\",\"type\":\"string\"},{\"name\":\"nombreCompleto\",\"type\":\"string\"},{\"name\":\"tipoDeDocumento\",\"type\":\"int\"},{\"name\":\"cumplimientoSecuenciaHR\",\"type\":\"double\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"EsEventual\",\"type\":\"boolean\"},{\"name\":\"IdGla\",\"type\":\"string\"},{\"name\":\"IdGli\",\"type\":\"string\"},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"CodigoAlertran\",\"type\":\"string\"},{\"name\":\"CodigoIntegra\",\"type\":\"string\"},{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"NumeroDeDocumento\",\"type\":\"string\"},{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"TipoDeDocumento\",\"type\":\"int\"},{\"name\":\"CumplimientoSecuenciaHR\",\"type\":\"double\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
 }
 
 func (r Transportista) SchemaName() string {
@@ -197,35 +197,35 @@ func (_ Transportista) AvroCRC64Fingerprint() []byte {
 func (r Transportista) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["esEventual"], err = json.Marshal(r.EsEventual)
+	output["EsEventual"], err = json.Marshal(r.EsEventual)
 	if err != nil {
 		return nil, err
 	}
-	output["idGla"], err = json.Marshal(r.IdGla)
+	output["IdGla"], err = json.Marshal(r.IdGla)
 	if err != nil {
 		return nil, err
 	}
-	output["idGli"], err = json.Marshal(r.IdGli)
+	output["IdGli"], err = json.Marshal(r.IdGli)
 	if err != nil {
 		return nil, err
 	}
-	output["sucursalDondeTrabaja"], err = json.Marshal(r.SucursalDondeTrabaja)
+	output["SucursalDondeTrabaja"], err = json.Marshal(r.SucursalDondeTrabaja)
 	if err != nil {
 		return nil, err
 	}
-	output["numeroDeDocumento"], err = json.Marshal(r.NumeroDeDocumento)
+	output["NumeroDeDocumento"], err = json.Marshal(r.NumeroDeDocumento)
 	if err != nil {
 		return nil, err
 	}
-	output["nombreCompleto"], err = json.Marshal(r.NombreCompleto)
+	output["NombreCompleto"], err = json.Marshal(r.NombreCompleto)
 	if err != nil {
 		return nil, err
 	}
-	output["tipoDeDocumento"], err = json.Marshal(r.TipoDeDocumento)
+	output["TipoDeDocumento"], err = json.Marshal(r.TipoDeDocumento)
 	if err != nil {
 		return nil, err
 	}
-	output["cumplimientoSecuenciaHR"], err = json.Marshal(r.CumplimientoSecuenciaHR)
+	output["CumplimientoSecuenciaHR"], err = json.Marshal(r.CumplimientoSecuenciaHR)
 	if err != nil {
 		return nil, err
 	}
@@ -240,7 +240,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["esEventual"]; ok {
+		if v, ok := fields["EsEventual"]; ok {
 			return v
 		}
 		return nil
@@ -251,10 +251,10 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for esEventual")
+		return fmt.Errorf("no value specified for EsEventual")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["idGla"]; ok {
+		if v, ok := fields["IdGla"]; ok {
 			return v
 		}
 		return nil
@@ -265,10 +265,10 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for idGla")
+		return fmt.Errorf("no value specified for IdGla")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["idGli"]; ok {
+		if v, ok := fields["IdGli"]; ok {
 			return v
 		}
 		return nil
@@ -279,10 +279,10 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for idGli")
+		return fmt.Errorf("no value specified for IdGli")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["sucursalDondeTrabaja"]; ok {
+		if v, ok := fields["SucursalDondeTrabaja"]; ok {
 			return v
 		}
 		return nil
@@ -293,10 +293,10 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for sucursalDondeTrabaja")
+		return fmt.Errorf("no value specified for SucursalDondeTrabaja")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numeroDeDocumento"]; ok {
+		if v, ok := fields["NumeroDeDocumento"]; ok {
 			return v
 		}
 		return nil
@@ -307,10 +307,10 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroDeDocumento")
+		return fmt.Errorf("no value specified for NumeroDeDocumento")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["nombreCompleto"]; ok {
+		if v, ok := fields["NombreCompleto"]; ok {
 			return v
 		}
 		return nil
@@ -321,10 +321,10 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nombreCompleto")
+		return fmt.Errorf("no value specified for NombreCompleto")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tipoDeDocumento"]; ok {
+		if v, ok := fields["TipoDeDocumento"]; ok {
 			return v
 		}
 		return nil
@@ -335,10 +335,10 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipoDeDocumento")
+		return fmt.Errorf("no value specified for TipoDeDocumento")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cumplimientoSecuenciaHR"]; ok {
+		if v, ok := fields["CumplimientoSecuenciaHR"]; ok {
 			return v
 		}
 		return nil
@@ -349,7 +349,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cumplimientoSecuenciaHR")
+		return fmt.Errorf("no value specified for CumplimientoSecuenciaHR")
 	}
 	return nil
 }

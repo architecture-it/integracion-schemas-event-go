@@ -18,22 +18,22 @@ import (
 var _ = fmt.Printf
 
 type ETA struct {
-	EtaRangoInicio int64 `json:"etaRangoInicio"`
+	EtaRangoInicio int64 `json:"EtaRangoInicio"`
 
-	EtaRangoFin int64 `json:"etaRangoFin"`
+	EtaRangoFin int64 `json:"EtaRangoFin"`
 
-	Eta int64 `json:"eta"`
+	Eta int64 `json:"Eta"`
 
-	NumeroEnvio string `json:"numeroEnvio"`
+	NumeroEnvio string `json:"NumeroEnvio"`
 
-	CalculoEta CalculoEta `json:"calculoEta"`
+	CalculoEta CalculoEta `json:"CalculoEta"`
 
-	Transportista Transportista `json:"transportista"`
+	Transportista Transportista `json:"Transportista"`
 
 	Timestamp int64 `json:"Timestamp"`
 }
 
-const ETAAvroCRC64Fingerprint = "\xf0\x11\xbd\x19\r\xc6!T"
+const ETAAvroCRC64Fingerprint = "\x80y8\xd8UTg\b"
 
 func NewETA() ETA {
 	r := ETA{}
@@ -105,7 +105,7 @@ func (r ETA) Serialize(w io.Writer) error {
 }
 
 func (r ETA) Schema() string {
-	return "{\"fields\":[{\"name\":\"etaRangoInicio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"etaRangoFin\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"eta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"numeroEnvio\",\"type\":\"string\"},{\"name\":\"calculoEta\",\"type\":{\"fields\":[{\"name\":\"ordenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"numeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"geocoordenadas\",\"type\":\"string\"},{\"name\":\"recorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"recorridoEnMetros\",\"type\":\"double\"},{\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"etaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"fechaCreacionHojaDeRuta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"CalculoEta\",\"type\":\"record\"}},{\"name\":\"transportista\",\"type\":{\"fields\":[{\"name\":\"esEventual\",\"type\":\"boolean\"},{\"name\":\"idGla\",\"type\":\"string\"},{\"name\":\"idGli\",\"type\":\"string\"},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"codigoAlertran\",\"type\":\"string\"},{\"name\":\"codigoIntegra\",\"type\":\"string\"},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"numeroDeDocumento\",\"type\":\"string\"},{\"name\":\"nombreCompleto\",\"type\":\"string\"},{\"name\":\"tipoDeDocumento\",\"type\":\"int\"},{\"name\":\"cumplimientoSecuenciaHR\",\"type\":\"double\"}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"name\":\"Timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ETA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"EtaRangoInicio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"EtaRangoFin\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Eta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"CalculoEta\",\"type\":{\"fields\":[{\"name\":\"OrdenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"NumeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"Geocoordenadas\",\"type\":\"string\"},{\"name\":\"RecorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"RecorridoEnMetros\",\"type\":\"double\"},{\"name\":\"DemoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"DemoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"EtaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaCreacionHojaDeRuta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"CalculoEta\",\"type\":\"record\"}},{\"name\":\"Transportista\",\"type\":{\"fields\":[{\"name\":\"EsEventual\",\"type\":\"boolean\"},{\"name\":\"IdGla\",\"type\":\"string\"},{\"name\":\"IdGli\",\"type\":\"string\"},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"CodigoAlertran\",\"type\":\"string\"},{\"name\":\"CodigoIntegra\",\"type\":\"string\"},{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"NumeroDeDocumento\",\"type\":\"string\"},{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"TipoDeDocumento\",\"type\":\"int\"},{\"name\":\"CumplimientoSecuenciaHR\",\"type\":\"double\"}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"name\":\"Timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ETA\",\"type\":\"record\"}"
 }
 
 func (r ETA) SchemaName() string {
@@ -190,27 +190,27 @@ func (_ ETA) AvroCRC64Fingerprint() []byte {
 func (r ETA) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["etaRangoInicio"], err = json.Marshal(r.EtaRangoInicio)
+	output["EtaRangoInicio"], err = json.Marshal(r.EtaRangoInicio)
 	if err != nil {
 		return nil, err
 	}
-	output["etaRangoFin"], err = json.Marshal(r.EtaRangoFin)
+	output["EtaRangoFin"], err = json.Marshal(r.EtaRangoFin)
 	if err != nil {
 		return nil, err
 	}
-	output["eta"], err = json.Marshal(r.Eta)
+	output["Eta"], err = json.Marshal(r.Eta)
 	if err != nil {
 		return nil, err
 	}
-	output["numeroEnvio"], err = json.Marshal(r.NumeroEnvio)
+	output["NumeroEnvio"], err = json.Marshal(r.NumeroEnvio)
 	if err != nil {
 		return nil, err
 	}
-	output["calculoEta"], err = json.Marshal(r.CalculoEta)
+	output["CalculoEta"], err = json.Marshal(r.CalculoEta)
 	if err != nil {
 		return nil, err
 	}
-	output["transportista"], err = json.Marshal(r.Transportista)
+	output["Transportista"], err = json.Marshal(r.Transportista)
 	if err != nil {
 		return nil, err
 	}
@@ -229,7 +229,7 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["etaRangoInicio"]; ok {
+		if v, ok := fields["EtaRangoInicio"]; ok {
 			return v
 		}
 		return nil
@@ -240,10 +240,10 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for etaRangoInicio")
+		return fmt.Errorf("no value specified for EtaRangoInicio")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["etaRangoFin"]; ok {
+		if v, ok := fields["EtaRangoFin"]; ok {
 			return v
 		}
 		return nil
@@ -254,10 +254,10 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for etaRangoFin")
+		return fmt.Errorf("no value specified for EtaRangoFin")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["eta"]; ok {
+		if v, ok := fields["Eta"]; ok {
 			return v
 		}
 		return nil
@@ -268,10 +268,10 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for eta")
+		return fmt.Errorf("no value specified for Eta")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numeroEnvio"]; ok {
+		if v, ok := fields["NumeroEnvio"]; ok {
 			return v
 		}
 		return nil
@@ -282,10 +282,10 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroEnvio")
+		return fmt.Errorf("no value specified for NumeroEnvio")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["calculoEta"]; ok {
+		if v, ok := fields["CalculoEta"]; ok {
 			return v
 		}
 		return nil
@@ -296,10 +296,10 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for calculoEta")
+		return fmt.Errorf("no value specified for CalculoEta")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["transportista"]; ok {
+		if v, ok := fields["Transportista"]; ok {
 			return v
 		}
 		return nil
@@ -310,7 +310,7 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for transportista")
+		return fmt.Errorf("no value specified for Transportista")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Timestamp"]; ok {

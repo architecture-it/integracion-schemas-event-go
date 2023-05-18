@@ -18,26 +18,26 @@ import (
 var _ = fmt.Printf
 
 type CalculoEta struct {
-	OrdenDeEnvioEnHR int32 `json:"ordenDeEnvioEnHR"`
+	OrdenDeEnvioEnHR int32 `json:"OrdenDeEnvioEnHR"`
 
-	NumeroHojaDeRuta string `json:"numeroHojaDeRuta"`
+	NumeroHojaDeRuta string `json:"NumeroHojaDeRuta"`
 
-	Geocoordenadas string `json:"geocoordenadas"`
+	Geocoordenadas string `json:"Geocoordenadas"`
 
-	RecorridoEnSegundos float64 `json:"recorridoEnSegundos"`
+	RecorridoEnSegundos float64 `json:"RecorridoEnSegundos"`
 
-	RecorridoEnMetros float64 `json:"recorridoEnMetros"`
+	RecorridoEnMetros float64 `json:"RecorridoEnMetros"`
 
-	DemoraEnDomicilioEnMinutos int32 `json:"demoraEnDomicilioEnMinutos"`
+	DemoraEnDomicilioEnMinutos int32 `json:"DemoraEnDomicilioEnMinutos"`
 
-	DemoraSalidaSucursalEnMinutos int32 `json:"demoraSalidaSucursalEnMinutos"`
+	DemoraSalidaSucursalEnMinutos int32 `json:"DemoraSalidaSucursalEnMinutos"`
 
-	EtaAnterior *UnionNullLong `json:"etaAnterior"`
+	EtaAnterior *UnionNullLong `json:"EtaAnterior"`
 
-	FechaCreacionHojaDeRuta int64 `json:"fechaCreacionHojaDeRuta"`
+	FechaCreacionHojaDeRuta int64 `json:"FechaCreacionHojaDeRuta"`
 }
 
-const CalculoEtaAvroCRC64Fingerprint = "\x0e\xa8\xbf\xf7;\xa4ٓ"
+const CalculoEtaAvroCRC64Fingerprint = "зX\xe8\\c\xd7\x03"
 
 func NewCalculoEta() CalculoEta {
 	r := CalculoEta{}
@@ -114,7 +114,7 @@ func (r CalculoEta) Serialize(w io.Writer) error {
 }
 
 func (r CalculoEta) Schema() string {
-	return "{\"fields\":[{\"name\":\"ordenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"numeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"geocoordenadas\",\"type\":\"string\"},{\"name\":\"recorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"recorridoEnMetros\",\"type\":\"double\"},{\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"etaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"fechaCreacionHojaDeRuta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"NumeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"Geocoordenadas\",\"type\":\"string\"},{\"name\":\"RecorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"RecorridoEnMetros\",\"type\":\"double\"},{\"name\":\"DemoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"DemoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"EtaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaCreacionHojaDeRuta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
 }
 
 func (r CalculoEta) SchemaName() string {
@@ -210,39 +210,39 @@ func (_ CalculoEta) AvroCRC64Fingerprint() []byte {
 func (r CalculoEta) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["ordenDeEnvioEnHR"], err = json.Marshal(r.OrdenDeEnvioEnHR)
+	output["OrdenDeEnvioEnHR"], err = json.Marshal(r.OrdenDeEnvioEnHR)
 	if err != nil {
 		return nil, err
 	}
-	output["numeroHojaDeRuta"], err = json.Marshal(r.NumeroHojaDeRuta)
+	output["NumeroHojaDeRuta"], err = json.Marshal(r.NumeroHojaDeRuta)
 	if err != nil {
 		return nil, err
 	}
-	output["geocoordenadas"], err = json.Marshal(r.Geocoordenadas)
+	output["Geocoordenadas"], err = json.Marshal(r.Geocoordenadas)
 	if err != nil {
 		return nil, err
 	}
-	output["recorridoEnSegundos"], err = json.Marshal(r.RecorridoEnSegundos)
+	output["RecorridoEnSegundos"], err = json.Marshal(r.RecorridoEnSegundos)
 	if err != nil {
 		return nil, err
 	}
-	output["recorridoEnMetros"], err = json.Marshal(r.RecorridoEnMetros)
+	output["RecorridoEnMetros"], err = json.Marshal(r.RecorridoEnMetros)
 	if err != nil {
 		return nil, err
 	}
-	output["demoraEnDomicilioEnMinutos"], err = json.Marshal(r.DemoraEnDomicilioEnMinutos)
+	output["DemoraEnDomicilioEnMinutos"], err = json.Marshal(r.DemoraEnDomicilioEnMinutos)
 	if err != nil {
 		return nil, err
 	}
-	output["demoraSalidaSucursalEnMinutos"], err = json.Marshal(r.DemoraSalidaSucursalEnMinutos)
+	output["DemoraSalidaSucursalEnMinutos"], err = json.Marshal(r.DemoraSalidaSucursalEnMinutos)
 	if err != nil {
 		return nil, err
 	}
-	output["etaAnterior"], err = json.Marshal(r.EtaAnterior)
+	output["EtaAnterior"], err = json.Marshal(r.EtaAnterior)
 	if err != nil {
 		return nil, err
 	}
-	output["fechaCreacionHojaDeRuta"], err = json.Marshal(r.FechaCreacionHojaDeRuta)
+	output["FechaCreacionHojaDeRuta"], err = json.Marshal(r.FechaCreacionHojaDeRuta)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +257,7 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["ordenDeEnvioEnHR"]; ok {
+		if v, ok := fields["OrdenDeEnvioEnHR"]; ok {
 			return v
 		}
 		return nil
@@ -268,10 +268,10 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ordenDeEnvioEnHR")
+		return fmt.Errorf("no value specified for OrdenDeEnvioEnHR")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numeroHojaDeRuta"]; ok {
+		if v, ok := fields["NumeroHojaDeRuta"]; ok {
 			return v
 		}
 		return nil
@@ -282,10 +282,10 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroHojaDeRuta")
+		return fmt.Errorf("no value specified for NumeroHojaDeRuta")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["geocoordenadas"]; ok {
+		if v, ok := fields["Geocoordenadas"]; ok {
 			return v
 		}
 		return nil
@@ -296,10 +296,10 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for geocoordenadas")
+		return fmt.Errorf("no value specified for Geocoordenadas")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["recorridoEnSegundos"]; ok {
+		if v, ok := fields["RecorridoEnSegundos"]; ok {
 			return v
 		}
 		return nil
@@ -310,10 +310,10 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for recorridoEnSegundos")
+		return fmt.Errorf("no value specified for RecorridoEnSegundos")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["recorridoEnMetros"]; ok {
+		if v, ok := fields["RecorridoEnMetros"]; ok {
 			return v
 		}
 		return nil
@@ -324,10 +324,10 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for recorridoEnMetros")
+		return fmt.Errorf("no value specified for RecorridoEnMetros")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["demoraEnDomicilioEnMinutos"]; ok {
+		if v, ok := fields["DemoraEnDomicilioEnMinutos"]; ok {
 			return v
 		}
 		return nil
@@ -338,10 +338,10 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for demoraEnDomicilioEnMinutos")
+		return fmt.Errorf("no value specified for DemoraEnDomicilioEnMinutos")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["demoraSalidaSucursalEnMinutos"]; ok {
+		if v, ok := fields["DemoraSalidaSucursalEnMinutos"]; ok {
 			return v
 		}
 		return nil
@@ -352,10 +352,10 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for demoraSalidaSucursalEnMinutos")
+		return fmt.Errorf("no value specified for DemoraSalidaSucursalEnMinutos")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["etaAnterior"]; ok {
+		if v, ok := fields["EtaAnterior"]; ok {
 			return v
 		}
 		return nil
@@ -371,7 +371,7 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 		r.EtaAnterior = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["fechaCreacionHojaDeRuta"]; ok {
+		if v, ok := fields["FechaCreacionHojaDeRuta"]; ok {
 			return v
 		}
 		return nil
@@ -382,7 +382,7 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for fechaCreacionHojaDeRuta")
+		return fmt.Errorf("no value specified for FechaCreacionHojaDeRuta")
 	}
 	return nil
 }
