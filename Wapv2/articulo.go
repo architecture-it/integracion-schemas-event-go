@@ -18,8 +18,6 @@ import (
 var _ = fmt.Printf
 
 type Articulo struct {
-	ContratoWarehouse string `json:"contratoWarehouse"`
-
 	Codigo string `json:"codigo"`
 
 	Cantidad float64 `json:"cantidad"`
@@ -37,7 +35,7 @@ type Articulo struct {
 	Lote LoteArticulo `json:"lote"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "t0\xbdY\x86\xd9\x01\xe0"
+const ArticuloAvroCRC64Fingerprint = "\xf4K\xd4\x06\xc9\xd9H\xa9"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
@@ -72,10 +70,6 @@ func DeserializeArticuloFromSchema(r io.Reader, schema string) (Articulo, error)
 
 func writeArticulo(r Articulo, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.ContratoWarehouse, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.Codigo, w)
 	if err != nil {
 		return err
@@ -116,7 +110,7 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"contratoWarehouse\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.Wapv2.Events.Record.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.Wapv2.Events.Record.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
@@ -135,43 +129,38 @@ func (_ Articulo) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Articulo) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.ContratoWarehouse}
-
-		return w
-
-	case 1:
 		w := types.String{Target: &r.Codigo}
 
 		return w
 
-	case 2:
+	case 1:
 		w := types.Double{Target: &r.Cantidad}
 
 		return w
 
-	case 3:
+	case 2:
 		w := types.String{Target: &r.Propietario}
 
 		return w
 
-	case 4:
+	case 3:
 		r.Numeropedido = NewUnionNullString()
 
 		return r.Numeropedido
-	case 5:
+	case 4:
 		r.ZonaConsumo = NewUnionNullString()
 
 		return r.ZonaConsumo
-	case 6:
+	case 5:
 		w := types.String{Target: &r.Unidadmedida}
 
 		return w
 
-	case 7:
+	case 6:
 		r.Datosadicionales = NewUnionNullListaDePropiedades()
 
 		return r.Datosadicionales
-	case 8:
+	case 7:
 		r.Lote = NewLoteArticulo()
 
 		w := types.Record{Target: &r.Lote}
@@ -184,7 +173,7 @@ func (r *Articulo) Get(i int) types.Field {
 
 func (r *Articulo) SetDefault(i int) {
 	switch i {
-	case 7:
+	case 6:
 		r.Datosadicionales = nil
 		return
 	}
@@ -193,13 +182,13 @@ func (r *Articulo) SetDefault(i int) {
 
 func (r *Articulo) NullField(i int) {
 	switch i {
-	case 4:
+	case 3:
 		r.Numeropedido = nil
 		return
-	case 5:
+	case 4:
 		r.ZonaConsumo = nil
 		return
-	case 7:
+	case 6:
 		r.Datosadicionales = nil
 		return
 	}
@@ -218,10 +207,6 @@ func (_ Articulo) AvroCRC64Fingerprint() []byte {
 func (r Articulo) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["contratoWarehouse"], err = json.Marshal(r.ContratoWarehouse)
-	if err != nil {
-		return nil, err
-	}
 	output["codigo"], err = json.Marshal(r.Codigo)
 	if err != nil {
 		return nil, err
@@ -264,20 +249,6 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["contratoWarehouse"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ContratoWarehouse); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for contratoWarehouse")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigo"]; ok {
 			return v
