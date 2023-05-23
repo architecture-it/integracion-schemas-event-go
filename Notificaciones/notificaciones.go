@@ -26,44 +26,54 @@ type Notificaciones struct {
 
 	FechaEvento int64 `json:"FechaEvento"`
 
+	IdSistema int32 `json:"IdSistema"`
+
 	Sistema string `json:"Sistema"`
 
 	Contrato string `json:"Contrato"`
 
 	Envio string `json:"Envio"`
 
+	IdEvento *UnionNullInt `json:"IdEvento"`
+
 	Evento string `json:"Evento"`
 
-	Motivo string `json:"Motivo"`
+	Motivo *UnionNullString `json:"Motivo"`
+
+	IdMotivo *UnionNullInt `json:"IdMotivo"`
+
+	IdSalida int32 `json:"IdSalida"`
 
 	Salida string `json:"Salida"`
 
-	Destinatario string `json:"Destinatario"`
+	Destinatario *UnionNullString `json:"Destinatario"`
 
-	DestinatarioNotificacion string `json:"DestinatarioNotificacion"`
+	DestinatarioNotificacion *UnionNullString `json:"DestinatarioNotificacion"`
 
-	DestinatarioEstado string `json:"DestinatarioEstado"`
+	DestinatarioEstado *UnionNullString `json:"DestinatarioEstado"`
 
-	DestinatarioObservacion string `json:"DestinatarioObservacion"`
+	DestinatarioObservacion *UnionNullString `json:"DestinatarioObservacion"`
 
-	Remitente string `json:"Remitente"`
+	Remitente *UnionNullString `json:"Remitente"`
 
-	RemitenteNotificacion string `json:"RemitenteNotificacion"`
+	RemitenteNotificacion *UnionNullString `json:"RemitenteNotificacion"`
 
-	RemitenteEstado string `json:"RemitenteEstado"`
+	RemitenteEstado *UnionNullString `json:"RemitenteEstado"`
 
-	RemitenteObservacion string `json:"RemitenteObservacion"`
+	RemitenteObservacion *UnionNullString `json:"RemitenteObservacion"`
 
 	DestinatarioNotificacionCaracteres *UnionNullInt `json:"DestinatarioNotificacionCaracteres"`
 
 	RemitenteNotificacionCaracteres *UnionNullInt `json:"RemitenteNotificacionCaracteres"`
 
-	ProveedorSMS string `json:"ProveedorSMS"`
+	ProveedorSMS *UnionNullString `json:"ProveedorSMS"`
 
 	UrlSalida string `json:"UrlSalida"`
+
+	IdUrlSalida int32 `json:"IdUrlSalida"`
 }
 
-const NotificacionesAvroCRC64Fingerprint = "\x85ٚ/Hc\x008"
+const NotificacionesAvroCRC64Fingerprint = "\x06=\xacm^\rڱ"
 
 func NewNotificaciones() Notificaciones {
 	r := Notificaciones{}
@@ -113,6 +123,10 @@ func writeNotificaciones(r Notificaciones, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.IdSistema, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Sistema, w)
 	if err != nil {
 		return err
@@ -125,11 +139,23 @@ func writeNotificaciones(r Notificaciones, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullInt(r.IdEvento, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Evento, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Motivo, w)
+	err = writeUnionNullString(r.Motivo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullInt(r.IdMotivo, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteInt(r.IdSalida, w)
 	if err != nil {
 		return err
 	}
@@ -137,35 +163,35 @@ func writeNotificaciones(r Notificaciones, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Destinatario, w)
+	err = writeUnionNullString(r.Destinatario, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioNotificacion, w)
+	err = writeUnionNullString(r.DestinatarioNotificacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioEstado, w)
+	err = writeUnionNullString(r.DestinatarioEstado, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioObservacion, w)
+	err = writeUnionNullString(r.DestinatarioObservacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Remitente, w)
+	err = writeUnionNullString(r.Remitente, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.RemitenteNotificacion, w)
+	err = writeUnionNullString(r.RemitenteNotificacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.RemitenteEstado, w)
+	err = writeUnionNullString(r.RemitenteEstado, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.RemitenteObservacion, w)
+	err = writeUnionNullString(r.RemitenteObservacion, w)
 	if err != nil {
 		return err
 	}
@@ -177,11 +203,15 @@ func writeNotificaciones(r Notificaciones, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ProveedorSMS, w)
+	err = writeUnionNullString(r.ProveedorSMS, w)
 	if err != nil {
 		return err
 	}
 	err = vm.WriteString(r.UrlSalida, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteInt(r.IdUrlSalida, w)
 	if err != nil {
 		return err
 	}
@@ -193,7 +223,7 @@ func (r Notificaciones) Serialize(w io.Writer) error {
 }
 
 func (r Notificaciones) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"IdModelo\",\"type\":\"long\"},{\"name\":\"FechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Sistema\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Envio\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Motivo\",\"type\":\"string\"},{\"name\":\"Salida\",\"type\":\"string\"},{\"name\":\"Destinatario\",\"type\":\"string\"},{\"name\":\"DestinatarioNotificacion\",\"type\":\"string\"},{\"name\":\"DestinatarioEstado\",\"type\":\"string\"},{\"name\":\"DestinatarioObservacion\",\"type\":\"string\"},{\"name\":\"Remitente\",\"type\":\"string\"},{\"name\":\"RemitenteNotificacion\",\"type\":\"string\"},{\"name\":\"RemitenteEstado\",\"type\":\"string\"},{\"name\":\"RemitenteObservacion\",\"type\":\"string\"},{\"default\":null,\"name\":\"DestinatarioNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"RemitenteNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"name\":\"ProveedorSMS\",\"type\":\"string\"},{\"name\":\"UrlSalida\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.Notificaciones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"IdModelo\",\"type\":\"long\"},{\"name\":\"FechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"IdSistema\",\"type\":\"int\"},{\"name\":\"Sistema\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Envio\",\"type\":\"string\"},{\"name\":\"IdEvento\",\"type\":[\"null\",\"int\"]},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdMotivo\",\"type\":[\"null\",\"int\"]},{\"name\":\"IdSalida\",\"type\":\"int\"},{\"name\":\"Salida\",\"type\":\"string\"},{\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioNotificacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioEstado\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioObservacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteNotificacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteEstado\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"RemitenteNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"name\":\"ProveedorSMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"UrlSalida\",\"type\":\"string\"},{\"name\":\"IdUrlSalida\",\"type\":\"int\"}],\"name\":\"Andreani.Notificaciones.Events.Records.Notificaciones\",\"type\":\"record\"}"
 }
 
 func (r Notificaciones) SchemaName() string {
@@ -232,90 +262,103 @@ func (r *Notificaciones) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.String{Target: &r.Sistema}
+		w := types.Int{Target: &r.IdSistema}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.Contrato}
+		w := types.String{Target: &r.Sistema}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.Envio}
+		w := types.String{Target: &r.Contrato}
 
 		return w
 
 	case 7:
-		w := types.String{Target: &r.Evento}
+		w := types.String{Target: &r.Envio}
 
 		return w
 
 	case 8:
-		w := types.String{Target: &r.Motivo}
+		r.IdEvento = NewUnionNullInt()
 
-		return w
-
+		return r.IdEvento
 	case 9:
-		w := types.String{Target: &r.Salida}
+		w := types.String{Target: &r.Evento}
 
 		return w
 
 	case 10:
-		w := types.String{Target: &r.Destinatario}
+		r.Motivo = NewUnionNullString()
 
-		return w
-
+		return r.Motivo
 	case 11:
-		w := types.String{Target: &r.DestinatarioNotificacion}
+		r.IdMotivo = NewUnionNullInt()
 
-		return w
-
+		return r.IdMotivo
 	case 12:
-		w := types.String{Target: &r.DestinatarioEstado}
+		w := types.Int{Target: &r.IdSalida}
 
 		return w
 
 	case 13:
-		w := types.String{Target: &r.DestinatarioObservacion}
+		w := types.String{Target: &r.Salida}
 
 		return w
 
 	case 14:
-		w := types.String{Target: &r.Remitente}
+		r.Destinatario = NewUnionNullString()
 
-		return w
-
+		return r.Destinatario
 	case 15:
-		w := types.String{Target: &r.RemitenteNotificacion}
+		r.DestinatarioNotificacion = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioNotificacion
 	case 16:
-		w := types.String{Target: &r.RemitenteEstado}
+		r.DestinatarioEstado = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioEstado
 	case 17:
-		w := types.String{Target: &r.RemitenteObservacion}
+		r.DestinatarioObservacion = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioObservacion
 	case 18:
+		r.Remitente = NewUnionNullString()
+
+		return r.Remitente
+	case 19:
+		r.RemitenteNotificacion = NewUnionNullString()
+
+		return r.RemitenteNotificacion
+	case 20:
+		r.RemitenteEstado = NewUnionNullString()
+
+		return r.RemitenteEstado
+	case 21:
+		r.RemitenteObservacion = NewUnionNullString()
+
+		return r.RemitenteObservacion
+	case 22:
 		r.DestinatarioNotificacionCaracteres = NewUnionNullInt()
 
 		return r.DestinatarioNotificacionCaracteres
-	case 19:
+	case 23:
 		r.RemitenteNotificacionCaracteres = NewUnionNullInt()
 
 		return r.RemitenteNotificacionCaracteres
-	case 20:
-		w := types.String{Target: &r.ProveedorSMS}
+	case 24:
+		r.ProveedorSMS = NewUnionNullString()
+
+		return r.ProveedorSMS
+	case 25:
+		w := types.String{Target: &r.UrlSalida}
 
 		return w
 
-	case 21:
-		w := types.String{Target: &r.UrlSalida}
+	case 26:
+		w := types.Int{Target: &r.IdUrlSalida}
 
 		return w
 
@@ -325,10 +368,10 @@ func (r *Notificaciones) Get(i int) types.Field {
 
 func (r *Notificaciones) SetDefault(i int) {
 	switch i {
-	case 18:
+	case 22:
 		r.DestinatarioNotificacionCaracteres = nil
 		return
-	case 19:
+	case 23:
 		r.RemitenteNotificacionCaracteres = nil
 		return
 	}
@@ -337,11 +380,47 @@ func (r *Notificaciones) SetDefault(i int) {
 
 func (r *Notificaciones) NullField(i int) {
 	switch i {
+	case 8:
+		r.IdEvento = nil
+		return
+	case 10:
+		r.Motivo = nil
+		return
+	case 11:
+		r.IdMotivo = nil
+		return
+	case 14:
+		r.Destinatario = nil
+		return
+	case 15:
+		r.DestinatarioNotificacion = nil
+		return
+	case 16:
+		r.DestinatarioEstado = nil
+		return
+	case 17:
+		r.DestinatarioObservacion = nil
+		return
 	case 18:
-		r.DestinatarioNotificacionCaracteres = nil
+		r.Remitente = nil
 		return
 	case 19:
+		r.RemitenteNotificacion = nil
+		return
+	case 20:
+		r.RemitenteEstado = nil
+		return
+	case 21:
+		r.RemitenteObservacion = nil
+		return
+	case 22:
+		r.DestinatarioNotificacionCaracteres = nil
+		return
+	case 23:
 		r.RemitenteNotificacionCaracteres = nil
+		return
+	case 24:
+		r.ProveedorSMS = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -375,6 +454,10 @@ func (r Notificaciones) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["IdSistema"], err = json.Marshal(r.IdSistema)
+	if err != nil {
+		return nil, err
+	}
 	output["Sistema"], err = json.Marshal(r.Sistema)
 	if err != nil {
 		return nil, err
@@ -387,11 +470,23 @@ func (r Notificaciones) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["IdEvento"], err = json.Marshal(r.IdEvento)
+	if err != nil {
+		return nil, err
+	}
 	output["Evento"], err = json.Marshal(r.Evento)
 	if err != nil {
 		return nil, err
 	}
 	output["Motivo"], err = json.Marshal(r.Motivo)
+	if err != nil {
+		return nil, err
+	}
+	output["IdMotivo"], err = json.Marshal(r.IdMotivo)
+	if err != nil {
+		return nil, err
+	}
+	output["IdSalida"], err = json.Marshal(r.IdSalida)
 	if err != nil {
 		return nil, err
 	}
@@ -444,6 +539,10 @@ func (r Notificaciones) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["UrlSalida"], err = json.Marshal(r.UrlSalida)
+	if err != nil {
+		return nil, err
+	}
+	output["IdUrlSalida"], err = json.Marshal(r.IdUrlSalida)
 	if err != nil {
 		return nil, err
 	}
@@ -514,6 +613,20 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for FechaEvento")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["IdSistema"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdSistema); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IdSistema")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["Sistema"]; ok {
 			return v
 		}
@@ -556,6 +669,20 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Envio")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["IdEvento"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdEvento); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IdEvento")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["Evento"]; ok {
 			return v
 		}
@@ -582,6 +709,34 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Motivo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdMotivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdMotivo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IdMotivo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdSalida"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdSalida); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IdSalida")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Salida"]; ok {
@@ -768,6 +923,20 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for UrlSalida")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdUrlSalida"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdUrlSalida); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IdUrlSalida")
 	}
 	return nil
 }
