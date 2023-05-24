@@ -21,7 +21,7 @@ type GestionCobranzaReembolsoCobrado struct {
 	Traza Traza `json:"traza"`
 }
 
-const GestionCobranzaReembolsoCobradoAvroCRC64Fingerprint = "\x19\x1fb\u007f\xe0~(Z"
+const GestionCobranzaReembolsoCobradoAvroCRC64Fingerprint = "\x19\x1fb\x7f\xe0~(Z"
 
 func NewGestionCobranzaReembolsoCobrado() GestionCobranzaReembolsoCobrado {
 	r := GestionCobranzaReembolsoCobrado{}

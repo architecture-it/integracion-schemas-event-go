@@ -21,7 +21,7 @@ type SeReemplazaRefrigeranteConservadora struct {
 	Traza Traza `json:"traza"`
 }
 
-const SeReemplazaRefrigeranteConservadoraAvroCRC64Fingerprint = "\x97f\xa4\x02¿\xd8\u007f"
+const SeReemplazaRefrigeranteConservadoraAvroCRC64Fingerprint = "\x97f\xa4\x02¿\xd8\x7f"
 
 func NewSeReemplazaRefrigeranteConservadora() SeReemplazaRefrigeranteConservadora {
 	r := SeReemplazaRefrigeranteConservadora{}

@@ -21,7 +21,7 @@ type EnvioDesactivadoAutomaticamente struct {
 	Traza Traza `json:"traza"`
 }
 
-const EnvioDesactivadoAutomaticamenteAvroCRC64Fingerprint = "\x84\xd0\u007fR\xe3\xadۋ"
+const EnvioDesactivadoAutomaticamenteAvroCRC64Fingerprint = "\x84\xd0\x7fR\xe3\xadۋ"
 
 func NewEnvioDesactivadoAutomaticamente() EnvioDesactivadoAutomaticamente {
 	r := EnvioDesactivadoAutomaticamente{}

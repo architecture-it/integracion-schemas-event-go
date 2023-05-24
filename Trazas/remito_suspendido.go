@@ -21,7 +21,7 @@ type RemitoSuspendido struct {
 	Traza Traza `json:"traza"`
 }
 
-const RemitoSuspendidoAvroCRC64Fingerprint = "}y\u007fM\xb5\xa4\x17\xec"
+const RemitoSuspendidoAvroCRC64Fingerprint = "}y\x7fM\xb5\xa4\x17\xec"
 
 func NewRemitoSuspendido() RemitoSuspendido {
 	r := RemitoSuspendido{}
