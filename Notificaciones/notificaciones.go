@@ -77,8 +77,20 @@ const NotificacionesAvroCRC64Fingerprint = "\x06=\xacm^\rڱ"
 
 func NewNotificaciones() Notificaciones {
 	r := Notificaciones{}
+	r.IdEvento = nil
+	r.Motivo = nil
+	r.IdMotivo = nil
+	r.Destinatario = nil
+	r.DestinatarioNotificacion = nil
+	r.DestinatarioEstado = nil
+	r.DestinatarioObservacion = nil
+	r.Remitente = nil
+	r.RemitenteNotificacion = nil
+	r.RemitenteEstado = nil
+	r.RemitenteObservacion = nil
 	r.DestinatarioNotificacionCaracteres = nil
 	r.RemitenteNotificacionCaracteres = nil
+	r.ProveedorSMS = nil
 	return r
 }
 
@@ -223,7 +235,7 @@ func (r Notificaciones) Serialize(w io.Writer) error {
 }
 
 func (r Notificaciones) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"IdModelo\",\"type\":\"long\"},{\"name\":\"FechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"IdSistema\",\"type\":\"int\"},{\"name\":\"Sistema\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Envio\",\"type\":\"string\"},{\"name\":\"IdEvento\",\"type\":[\"null\",\"int\"]},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdMotivo\",\"type\":[\"null\",\"int\"]},{\"name\":\"IdSalida\",\"type\":\"int\"},{\"name\":\"Salida\",\"type\":\"string\"},{\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioNotificacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioEstado\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioObservacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteNotificacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteEstado\",\"type\":[\"null\",\"string\"]},{\"name\":\"RemitenteObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"RemitenteNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"name\":\"ProveedorSMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"UrlSalida\",\"type\":\"string\"},{\"name\":\"IdUrlSalida\",\"type\":\"int\"}],\"name\":\"Andreani.Notificaciones.Events.Records.Notificaciones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"IdModelo\",\"type\":\"long\"},{\"name\":\"FechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"IdSistema\",\"type\":\"int\"},{\"name\":\"Sistema\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"Envio\",\"type\":\"string\"},{\"default\":null,\"name\":\"IdEvento\",\"type\":[\"null\",\"int\"]},{\"name\":\"Evento\",\"type\":\"string\"},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivo\",\"type\":[\"null\",\"int\"]},{\"name\":\"IdSalida\",\"type\":\"int\"},{\"name\":\"Salida\",\"type\":\"string\"},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioNotificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RemitenteNotificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RemitenteEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RemitenteObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"RemitenteNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ProveedorSMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"UrlSalida\",\"type\":\"string\"},{\"name\":\"IdUrlSalida\",\"type\":\"int\"}],\"name\":\"Andreani.Notificaciones.Events.Records.Notificaciones\",\"type\":\"record\"}"
 }
 
 func (r Notificaciones) SchemaName() string {
@@ -368,11 +380,47 @@ func (r *Notificaciones) Get(i int) types.Field {
 
 func (r *Notificaciones) SetDefault(i int) {
 	switch i {
+	case 8:
+		r.IdEvento = nil
+		return
+	case 10:
+		r.Motivo = nil
+		return
+	case 11:
+		r.IdMotivo = nil
+		return
+	case 14:
+		r.Destinatario = nil
+		return
+	case 15:
+		r.DestinatarioNotificacion = nil
+		return
+	case 16:
+		r.DestinatarioEstado = nil
+		return
+	case 17:
+		r.DestinatarioObservacion = nil
+		return
+	case 18:
+		r.Remitente = nil
+		return
+	case 19:
+		r.RemitenteNotificacion = nil
+		return
+	case 20:
+		r.RemitenteEstado = nil
+		return
+	case 21:
+		r.RemitenteObservacion = nil
+		return
 	case 22:
 		r.DestinatarioNotificacionCaracteres = nil
 		return
 	case 23:
 		r.RemitenteNotificacionCaracteres = nil
+		return
+	case 24:
+		r.ProveedorSMS = nil
 		return
 	}
 	panic("Unknown field index")
@@ -680,7 +728,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for IdEvento")
+		r.IdEvento = NewUnionNullInt()
+
+		r.IdEvento = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Evento"]; ok {
@@ -708,7 +758,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Motivo")
+		r.Motivo = NewUnionNullString()
+
+		r.Motivo = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IdMotivo"]; ok {
@@ -722,7 +774,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for IdMotivo")
+		r.IdMotivo = NewUnionNullInt()
+
+		r.IdMotivo = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IdSalida"]; ok {
@@ -764,7 +818,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Destinatario")
+		r.Destinatario = NewUnionNullString()
+
+		r.Destinatario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DestinatarioNotificacion"]; ok {
@@ -778,7 +834,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DestinatarioNotificacion")
+		r.DestinatarioNotificacion = NewUnionNullString()
+
+		r.DestinatarioNotificacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DestinatarioEstado"]; ok {
@@ -792,7 +850,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DestinatarioEstado")
+		r.DestinatarioEstado = NewUnionNullString()
+
+		r.DestinatarioEstado = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DestinatarioObservacion"]; ok {
@@ -806,7 +866,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DestinatarioObservacion")
+		r.DestinatarioObservacion = NewUnionNullString()
+
+		r.DestinatarioObservacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Remitente"]; ok {
@@ -820,7 +882,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Remitente")
+		r.Remitente = NewUnionNullString()
+
+		r.Remitente = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["RemitenteNotificacion"]; ok {
@@ -834,7 +898,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for RemitenteNotificacion")
+		r.RemitenteNotificacion = NewUnionNullString()
+
+		r.RemitenteNotificacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["RemitenteEstado"]; ok {
@@ -848,7 +914,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for RemitenteEstado")
+		r.RemitenteEstado = NewUnionNullString()
+
+		r.RemitenteEstado = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["RemitenteObservacion"]; ok {
@@ -862,7 +930,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for RemitenteObservacion")
+		r.RemitenteObservacion = NewUnionNullString()
+
+		r.RemitenteObservacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DestinatarioNotificacionCaracteres"]; ok {
@@ -908,7 +978,9 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ProveedorSMS")
+		r.ProveedorSMS = NewUnionNullString()
+
+		r.ProveedorSMS = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UrlSalida"]; ok {
