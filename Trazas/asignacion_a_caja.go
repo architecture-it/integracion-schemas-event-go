@@ -28,10 +28,12 @@ type AsignacionACaja struct {
 
 	Operador *UnionNullString `json:"operador"`
 
+	FechaVencimiento *UnionNullString `json:"fechaVencimiento"`
+
 	UltimoDiaDeCustodia *UnionNullString `json:"ultimoDiaDeCustodia"`
 }
 
-const AsignacionACajaAvroCRC64Fingerprint = "\xc7\f\xbdI\xa7T\x06/"
+const AsignacionACajaAvroCRC64Fingerprint = "\xb2\xb1J\xb4\x9e\a8\xe6"
 
 func NewAsignacionACaja() AsignacionACaja {
 	r := AsignacionACaja{}
@@ -40,6 +42,7 @@ func NewAsignacionACaja() AsignacionACaja {
 	r.SucursalActual = NewDatosSucursal()
 
 	r.Operador = nil
+	r.FechaVencimiento = nil
 	r.UltimoDiaDeCustodia = nil
 	return r
 }
@@ -89,6 +92,10 @@ func writeAsignacionACaja(r AsignacionACaja, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.FechaVencimiento, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.UltimoDiaDeCustodia, w)
 	if err != nil {
 		return err
@@ -101,7 +108,7 @@ func (r AsignacionACaja) Serialize(w io.Writer) error {
 }
 
 func (r AsignacionACaja) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"caja\",\"type\":\"string\"},{\"name\":\"fajo\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ultimoDiaDeCustodia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Trazas.AsignacionACaja\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"caja\",\"type\":\"string\"},{\"name\":\"fajo\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ultimoDiaDeCustodia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Trazas.AsignacionACaja\",\"type\":\"record\"}"
 }
 
 func (r AsignacionACaja) SchemaName() string {
@@ -148,6 +155,10 @@ func (r *AsignacionACaja) Get(i int) types.Field {
 
 		return r.Operador
 	case 5:
+		r.FechaVencimiento = NewUnionNullString()
+
+		return r.FechaVencimiento
+	case 6:
 		r.UltimoDiaDeCustodia = NewUnionNullString()
 
 		return r.UltimoDiaDeCustodia
@@ -161,6 +172,9 @@ func (r *AsignacionACaja) SetDefault(i int) {
 		r.Operador = nil
 		return
 	case 5:
+		r.FechaVencimiento = nil
+		return
+	case 6:
 		r.UltimoDiaDeCustodia = nil
 		return
 	}
@@ -173,6 +187,9 @@ func (r *AsignacionACaja) NullField(i int) {
 		r.Operador = nil
 		return
 	case 5:
+		r.FechaVencimiento = nil
+		return
+	case 6:
 		r.UltimoDiaDeCustodia = nil
 		return
 	}
@@ -208,6 +225,10 @@ func (r AsignacionACaja) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["operador"], err = json.Marshal(r.Operador)
+	if err != nil {
+		return nil, err
+	}
+	output["fechaVencimiento"], err = json.Marshal(r.FechaVencimiento)
 	if err != nil {
 		return nil, err
 	}
@@ -296,6 +317,22 @@ func (r *AsignacionACaja) UnmarshalJSON(data []byte) error {
 		r.Operador = NewUnionNullString()
 
 		r.Operador = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["fechaVencimiento"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaVencimiento); err != nil {
+			return err
+		}
+	} else {
+		r.FechaVencimiento = NewUnionNullString()
+
+		r.FechaVencimiento = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ultimoDiaDeCustodia"]; ok {
