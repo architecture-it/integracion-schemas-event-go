@@ -22,6 +22,8 @@ type EDA struct {
 
 	Eda int64 `json:"Eda"`
 
+	Sistema string `json:"Sistema"`
+
 	NumeroEnvio string `json:"NumeroEnvio"`
 
 	Contrato string `json:"Contrato"`
@@ -33,7 +35,7 @@ type EDA struct {
 	FechaAlta int64 `json:"FechaAlta"`
 }
 
-const EDAAvroCRC64Fingerprint = "\x03\x8e\xb9 \xd1M\x1e9"
+const EDAAvroCRC64Fingerprint = "Aa\xf7\xa4\x9f&\xddb"
 
 func NewEDA() EDA {
 	r := EDA{}
@@ -75,6 +77,10 @@ func writeEDA(r EDA, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Sistema, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.NumeroEnvio, w)
 	if err != nil {
 		return err
@@ -103,7 +109,7 @@ func (r EDA) Serialize(w io.Writer) error {
 }
 
 func (r EDA) Schema() string {
-	return "{\"fields\":[{\"name\":\"DiasHabiles\",\"type\":\"int\"},{\"name\":\"Eda\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"CalculoEda\",\"type\":{\"fields\":[{\"name\":\"CodigoPostalSucursalOrigen\",\"type\":\"string\"},{\"name\":\"CodigoPostalSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestino\",\"type\":\"string\"},{\"name\":\"LocalidadDestino\",\"type\":\"string\"},{\"name\":\"LocalidadSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"LocalidadSucursalOrigen\",\"type\":\"string\"}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"name\":\"Timestamp\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.EDA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"DiasHabiles\",\"type\":\"int\"},{\"name\":\"Eda\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Sistema\",\"type\":\"string\"},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"CalculoEda\",\"type\":{\"fields\":[{\"name\":\"CodigoPostalSucursalOrigen\",\"type\":\"string\"},{\"name\":\"CodigoPostalSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestino\",\"type\":\"string\"},{\"name\":\"LocalidadDestino\",\"type\":\"string\"},{\"name\":\"LocalidadSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"LocalidadSucursalOrigen\",\"type\":\"string\"}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"name\":\"Timestamp\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.EDA\",\"type\":\"record\"}"
 }
 
 func (r EDA) SchemaName() string {
@@ -132,28 +138,33 @@ func (r *EDA) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.NumeroEnvio}
+		w := types.String{Target: &r.Sistema}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.Contrato}
+		w := types.String{Target: &r.NumeroEnvio}
 
 		return w
 
 	case 4:
+		w := types.String{Target: &r.Contrato}
+
+		return w
+
+	case 5:
 		r.CalculoEda = NewCalculoEda()
 
 		w := types.Record{Target: &r.CalculoEda}
 
 		return w
 
-	case 5:
+	case 6:
 		w := types.String{Target: &r.Timestamp}
 
 		return w
 
-	case 6:
+	case 7:
 		w := types.Long{Target: &r.FechaAlta}
 
 		return w
@@ -191,6 +202,10 @@ func (r EDA) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Eda"], err = json.Marshal(r.Eda)
+	if err != nil {
+		return nil, err
+	}
+	output["Sistema"], err = json.Marshal(r.Sistema)
 	if err != nil {
 		return nil, err
 	}
@@ -251,6 +266,20 @@ func (r *EDA) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Eda")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Sistema"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Sistema); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Sistema")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NumeroEnvio"]; ok {
