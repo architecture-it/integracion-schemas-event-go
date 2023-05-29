@@ -24,18 +24,18 @@ type EDA struct {
 
 	Sistema string `json:"Sistema"`
 
-	NumeroEnvio string `json:"NumeroEnvio"`
+	CodigoDeEnvio string `json:"CodigoDeEnvio"`
 
-	Contrato string `json:"Contrato"`
+	CodigoDeContratoInterno string `json:"CodigoDeContratoInterno"`
 
 	CalculoEda CalculoEda `json:"CalculoEda"`
 
-	Timestamp string `json:"Timestamp"`
+	Cuando int64 `json:"Cuando"`
 
 	FechaAlta int64 `json:"FechaAlta"`
 }
 
-const EDAAvroCRC64Fingerprint = "Aa\xf7\xa4\x9f&\xddb"
+const EDAAvroCRC64Fingerprint = "\U000a09bd\x01\xcfB\xd4"
 
 func NewEDA() EDA {
 	r := EDA{}
@@ -81,11 +81,11 @@ func writeEDA(r EDA, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroEnvio, w)
+	err = vm.WriteString(r.CodigoDeEnvio, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Contrato, w)
+	err = vm.WriteString(r.CodigoDeContratoInterno, w)
 	if err != nil {
 		return err
 	}
@@ -93,7 +93,7 @@ func writeEDA(r EDA, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Timestamp, w)
+	err = vm.WriteLong(r.Cuando, w)
 	if err != nil {
 		return err
 	}
@@ -109,7 +109,7 @@ func (r EDA) Serialize(w io.Writer) error {
 }
 
 func (r EDA) Schema() string {
-	return "{\"fields\":[{\"name\":\"DiasHabiles\",\"type\":\"int\"},{\"name\":\"Eda\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Sistema\",\"type\":\"string\"},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"CalculoEda\",\"type\":{\"fields\":[{\"name\":\"CodigoPostalSucursalOrigen\",\"type\":\"string\"},{\"name\":\"CodigoPostalSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestino\",\"type\":\"string\"},{\"name\":\"LocalidadDestino\",\"type\":\"string\"},{\"name\":\"LocalidadSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"LocalidadSucursalOrigen\",\"type\":\"string\"}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"name\":\"Timestamp\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.EDA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"DiasHabiles\",\"type\":\"int\"},{\"name\":\"Eda\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Sistema\",\"type\":\"string\"},{\"name\":\"CodigoDeEnvio\",\"type\":\"string\"},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"CalculoEda\",\"type\":{\"fields\":[{\"name\":\"CodigoPostalSucursalOrigen\",\"type\":\"string\"},{\"name\":\"CodigoPostalSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestino\",\"type\":\"string\"},{\"name\":\"LocalidadDestino\",\"type\":\"string\"},{\"name\":\"LocalidadSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"LocalidadSucursalOrigen\",\"type\":\"string\"}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaAlta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.EDA\",\"type\":\"record\"}"
 }
 
 func (r EDA) SchemaName() string {
@@ -143,12 +143,12 @@ func (r *EDA) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.NumeroEnvio}
+		w := types.String{Target: &r.CodigoDeEnvio}
 
 		return w
 
 	case 4:
-		w := types.String{Target: &r.Contrato}
+		w := types.String{Target: &r.CodigoDeContratoInterno}
 
 		return w
 
@@ -160,7 +160,7 @@ func (r *EDA) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.String{Target: &r.Timestamp}
+		w := types.Long{Target: &r.Cuando}
 
 		return w
 
@@ -209,11 +209,11 @@ func (r EDA) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["NumeroEnvio"], err = json.Marshal(r.NumeroEnvio)
+	output["CodigoDeEnvio"], err = json.Marshal(r.CodigoDeEnvio)
 	if err != nil {
 		return nil, err
 	}
-	output["Contrato"], err = json.Marshal(r.Contrato)
+	output["CodigoDeContratoInterno"], err = json.Marshal(r.CodigoDeContratoInterno)
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +221,7 @@ func (r EDA) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Timestamp"], err = json.Marshal(r.Timestamp)
+	output["Cuando"], err = json.Marshal(r.Cuando)
 	if err != nil {
 		return nil, err
 	}
@@ -282,32 +282,32 @@ func (r *EDA) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Sistema")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["NumeroEnvio"]; ok {
+		if v, ok := fields["CodigoDeEnvio"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroEnvio); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeEnvio); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NumeroEnvio")
+		return fmt.Errorf("no value specified for CodigoDeEnvio")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Contrato"]; ok {
+		if v, ok := fields["CodigoDeContratoInterno"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeContratoInterno); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Contrato")
+		return fmt.Errorf("no value specified for CodigoDeContratoInterno")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CalculoEda"]; ok {
@@ -324,18 +324,18 @@ func (r *EDA) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for CalculoEda")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Timestamp"]; ok {
+		if v, ok := fields["Cuando"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Timestamp); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cuando); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Timestamp")
+		return fmt.Errorf("no value specified for Cuando")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["FechaAlta"]; ok {
