@@ -18,20 +18,20 @@ import (
 var _ = fmt.Printf
 
 type CalculoEda struct {
-	CodigoPostalSucursalOrigen string `json:"CodigoPostalSucursalOrigen"`
+	CodigoPostalSucursalOrigen string `json:"codigoPostalSucursalOrigen"`
 
-	CodigoPostalSucursalDistribucion string `json:"CodigoPostalSucursalDistribucion"`
+	CodigoPostalSucursalDistribucion string `json:"codigoPostalSucursalDistribucion"`
 
-	CodigoPostalDestino string `json:"CodigoPostalDestino"`
+	CodigoPostalDestino string `json:"codigoPostalDestino"`
 
-	LocalidadDestino string `json:"LocalidadDestino"`
+	LocalidadDestino string `json:"localidadDestino"`
 
-	LocalidadSucursalDistribucion string `json:"LocalidadSucursalDistribucion"`
+	LocalidadSucursalDistribucion string `json:"localidadSucursalDistribucion"`
 
-	LocalidadSucursalOrigen string `json:"LocalidadSucursalOrigen"`
+	LocalidadSucursalOrigen string `json:"localidadSucursalOrigen"`
 }
 
-const CalculoEdaAvroCRC64Fingerprint = ")\x8f\xa9\xa7`\x8db'"
+const CalculoEdaAvroCRC64Fingerprint = "{\xe9\t\x05\xf7\x9d\x9d8"
 
 func NewCalculoEda() CalculoEda {
 	r := CalculoEda{}
@@ -95,7 +95,7 @@ func (r CalculoEda) Serialize(w io.Writer) error {
 }
 
 func (r CalculoEda) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoPostalSucursalOrigen\",\"type\":\"string\"},{\"name\":\"CodigoPostalSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestino\",\"type\":\"string\"},{\"name\":\"LocalidadDestino\",\"type\":\"string\"},{\"name\":\"LocalidadSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"LocalidadSucursalOrigen\",\"type\":\"string\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEda\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigoPostalSucursalOrigen\",\"type\":\"string\"},{\"name\":\"codigoPostalSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"codigoPostalDestino\",\"type\":\"string\"},{\"name\":\"localidadDestino\",\"type\":\"string\"},{\"name\":\"localidadSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"localidadSucursalOrigen\",\"type\":\"string\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEda\",\"type\":\"record\"}"
 }
 
 func (r CalculoEda) SchemaName() string {
@@ -171,27 +171,27 @@ func (_ CalculoEda) AvroCRC64Fingerprint() []byte {
 func (r CalculoEda) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["CodigoPostalSucursalOrigen"], err = json.Marshal(r.CodigoPostalSucursalOrigen)
+	output["codigoPostalSucursalOrigen"], err = json.Marshal(r.CodigoPostalSucursalOrigen)
 	if err != nil {
 		return nil, err
 	}
-	output["CodigoPostalSucursalDistribucion"], err = json.Marshal(r.CodigoPostalSucursalDistribucion)
+	output["codigoPostalSucursalDistribucion"], err = json.Marshal(r.CodigoPostalSucursalDistribucion)
 	if err != nil {
 		return nil, err
 	}
-	output["CodigoPostalDestino"], err = json.Marshal(r.CodigoPostalDestino)
+	output["codigoPostalDestino"], err = json.Marshal(r.CodigoPostalDestino)
 	if err != nil {
 		return nil, err
 	}
-	output["LocalidadDestino"], err = json.Marshal(r.LocalidadDestino)
+	output["localidadDestino"], err = json.Marshal(r.LocalidadDestino)
 	if err != nil {
 		return nil, err
 	}
-	output["LocalidadSucursalDistribucion"], err = json.Marshal(r.LocalidadSucursalDistribucion)
+	output["localidadSucursalDistribucion"], err = json.Marshal(r.LocalidadSucursalDistribucion)
 	if err != nil {
 		return nil, err
 	}
-	output["LocalidadSucursalOrigen"], err = json.Marshal(r.LocalidadSucursalOrigen)
+	output["localidadSucursalOrigen"], err = json.Marshal(r.LocalidadSucursalOrigen)
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +206,7 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["CodigoPostalSucursalOrigen"]; ok {
+		if v, ok := fields["codigoPostalSucursalOrigen"]; ok {
 			return v
 		}
 		return nil
@@ -217,10 +217,10 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CodigoPostalSucursalOrigen")
+		return fmt.Errorf("no value specified for codigoPostalSucursalOrigen")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["CodigoPostalSucursalDistribucion"]; ok {
+		if v, ok := fields["codigoPostalSucursalDistribucion"]; ok {
 			return v
 		}
 		return nil
@@ -231,10 +231,10 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CodigoPostalSucursalDistribucion")
+		return fmt.Errorf("no value specified for codigoPostalSucursalDistribucion")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["CodigoPostalDestino"]; ok {
+		if v, ok := fields["codigoPostalDestino"]; ok {
 			return v
 		}
 		return nil
@@ -245,10 +245,10 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CodigoPostalDestino")
+		return fmt.Errorf("no value specified for codigoPostalDestino")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["LocalidadDestino"]; ok {
+		if v, ok := fields["localidadDestino"]; ok {
 			return v
 		}
 		return nil
@@ -259,10 +259,10 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LocalidadDestino")
+		return fmt.Errorf("no value specified for localidadDestino")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["LocalidadSucursalDistribucion"]; ok {
+		if v, ok := fields["localidadSucursalDistribucion"]; ok {
 			return v
 		}
 		return nil
@@ -273,10 +273,10 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LocalidadSucursalDistribucion")
+		return fmt.Errorf("no value specified for localidadSucursalDistribucion")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["LocalidadSucursalOrigen"]; ok {
+		if v, ok := fields["localidadSucursalOrigen"]; ok {
 			return v
 		}
 		return nil
@@ -287,7 +287,7 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LocalidadSucursalOrigen")
+		return fmt.Errorf("no value specified for localidadSucursalOrigen")
 	}
 	return nil
 }
