@@ -22,17 +22,20 @@ type CambioDeEstadoDeLote struct {
 
 	Articulo string `json:"articulo"`
 
-	LoteSecundario string `json:"loteSecundario"`
+	LoteCaja string `json:"loteCaja"`
+
+	LoteSecundario *UnionNullString `json:"loteSecundario"`
 
 	EstadoActual string `json:"estadoActual"`
 
 	EstadoNuevo string `json:"estadoNuevo"`
 }
 
-const CambioDeEstadoDeLoteAvroCRC64Fingerprint = "\xdf\xc9\xe6\xe3Jի\xdc"
+const CambioDeEstadoDeLoteAvroCRC64Fingerprint = "\xe8\xd3\a7\b\xd1R\xa9"
 
 func NewCambioDeEstadoDeLote() CambioDeEstadoDeLote {
 	r := CambioDeEstadoDeLote{}
+	r.LoteSecundario = nil
 	return r
 }
 
@@ -69,7 +72,11 @@ func writeCambioDeEstadoDeLote(r CambioDeEstadoDeLote, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LoteSecundario, w)
+	err = vm.WriteString(r.LoteCaja, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.LoteSecundario, w)
 	if err != nil {
 		return err
 	}
@@ -89,7 +96,7 @@ func (r CambioDeEstadoDeLote) Serialize(w io.Writer) error {
 }
 
 func (r CambioDeEstadoDeLote) Schema() string {
-	return "{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"articulo\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"estadoActual\",\"type\":\"string\"},{\"name\":\"estadoNuevo\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.CambioDeEstadoDeLote\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"articulo\",\"type\":\"string\"},{\"name\":\"loteCaja\",\"type\":\"string\"},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"estadoActual\",\"type\":\"string\"},{\"name\":\"estadoNuevo\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.CambioDeEstadoDeLote\",\"type\":\"record\"}"
 }
 
 func (r CambioDeEstadoDeLote) SchemaName() string {
@@ -118,16 +125,20 @@ func (r *CambioDeEstadoDeLote) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.LoteSecundario}
+		w := types.String{Target: &r.LoteCaja}
 
 		return w
 
 	case 3:
+		r.LoteSecundario = NewUnionNullString()
+
+		return r.LoteSecundario
+	case 4:
 		w := types.String{Target: &r.EstadoActual}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.EstadoNuevo}
 
 		return w
@@ -138,12 +149,18 @@ func (r *CambioDeEstadoDeLote) Get(i int) types.Field {
 
 func (r *CambioDeEstadoDeLote) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.LoteSecundario = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *CambioDeEstadoDeLote) NullField(i int) {
 	switch i {
+	case 3:
+		r.LoteSecundario = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -165,6 +182,10 @@ func (r CambioDeEstadoDeLote) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["articulo"], err = json.Marshal(r.Articulo)
+	if err != nil {
+		return nil, err
+	}
+	output["loteCaja"], err = json.Marshal(r.LoteCaja)
 	if err != nil {
 		return nil, err
 	}
@@ -219,6 +240,20 @@ func (r *CambioDeEstadoDeLote) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for articulo")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["loteCaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LoteCaja); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for loteCaja")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["loteSecundario"]; ok {
 			return v
 		}
@@ -230,7 +265,9 @@ func (r *CambioDeEstadoDeLote) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for loteSecundario")
+		r.LoteSecundario = NewUnionNullString()
+
+		r.LoteSecundario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["estadoActual"]; ok {
