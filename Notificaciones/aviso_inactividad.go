@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type AvisoInactividad struct {
+	Sistema string `json:"sistema"`
+
 	Cuando int64 `json:"cuando"`
 
 	CodigoDeContratoInterno string `json:"codigoDeContratoInterno"`
@@ -47,7 +49,7 @@ type AvisoInactividad struct {
 	TipoContacto string `json:"tipoContacto"`
 }
 
-const AvisoInactividadAvroCRC64Fingerprint = "\x18BhiPI\xd3\xfb"
+const AvisoInactividadAvroCRC64Fingerprint = "\xaf\xd5m\x90:\xf3\x1a\xeb"
 
 func NewAvisoInactividad() AvisoInactividad {
 	r := AvisoInactividad{}
@@ -79,6 +81,10 @@ func DeserializeAvisoInactividadFromSchema(r io.Reader, schema string) (AvisoIna
 
 func writeAvisoInactividad(r AvisoInactividad, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.Sistema, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteLong(r.Cuando, w)
 	if err != nil {
 		return err
@@ -143,7 +149,7 @@ func (r AvisoInactividad) Serialize(w io.Writer) error {
 }
 
 func (r AvisoInactividad) Schema() string {
-	return "{\"fields\":[{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"diasInactivo\",\"type\":\"int\"},{\"name\":\"destinatarioNombre\",\"type\":\"string\"},{\"name\":\"destinatarioEmail\",\"type\":\"string\"},{\"name\":\"destinatarioTelefono\",\"type\":\"string\"},{\"name\":\"idMovimiento\",\"type\":\"int\"},{\"name\":\"movimiento\",\"type\":\"string\"},{\"name\":\"idSubMovimiento\",\"type\":\"int\"},{\"name\":\"subMovimiento\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"idTipoContacto\",\"type\":\"int\"},{\"name\":\"tipoContacto\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoInactividad\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"diasInactivo\",\"type\":\"int\"},{\"name\":\"destinatarioNombre\",\"type\":\"string\"},{\"name\":\"destinatarioEmail\",\"type\":\"string\"},{\"name\":\"destinatarioTelefono\",\"type\":\"string\"},{\"name\":\"idMovimiento\",\"type\":\"int\"},{\"name\":\"movimiento\",\"type\":\"string\"},{\"name\":\"idSubMovimiento\",\"type\":\"int\"},{\"name\":\"subMovimiento\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"idTipoContacto\",\"type\":\"int\"},{\"name\":\"tipoContacto\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoInactividad\",\"type\":\"record\"}"
 }
 
 func (r AvisoInactividad) SchemaName() string {
@@ -162,71 +168,76 @@ func (_ AvisoInactividad) SetUnionElem(v int64) { panic("Unsupported operation")
 func (r *AvisoInactividad) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Long{Target: &r.Cuando}
+		w := types.String{Target: &r.Sistema}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.CodigoDeContratoInterno}
+		w := types.Long{Target: &r.Cuando}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.CodigoDeEnvio}
+		w := types.String{Target: &r.CodigoDeContratoInterno}
 
 		return w
 
 	case 3:
-		w := types.Int{Target: &r.DiasInactivo}
+		w := types.String{Target: &r.CodigoDeEnvio}
 
 		return w
 
 	case 4:
-		w := types.String{Target: &r.DestinatarioNombre}
+		w := types.Int{Target: &r.DiasInactivo}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.DestinatarioEmail}
+		w := types.String{Target: &r.DestinatarioNombre}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.DestinatarioTelefono}
+		w := types.String{Target: &r.DestinatarioEmail}
 
 		return w
 
 	case 7:
-		w := types.Int{Target: &r.IdMovimiento}
+		w := types.String{Target: &r.DestinatarioTelefono}
 
 		return w
 
 	case 8:
-		w := types.String{Target: &r.Movimiento}
+		w := types.Int{Target: &r.IdMovimiento}
 
 		return w
 
 	case 9:
-		w := types.Int{Target: &r.IdSubMovimiento}
+		w := types.String{Target: &r.Movimiento}
 
 		return w
 
 	case 10:
-		w := types.String{Target: &r.SubMovimiento}
+		w := types.Int{Target: &r.IdSubMovimiento}
 
 		return w
 
 	case 11:
-		w := types.String{Target: &r.Motivo}
+		w := types.String{Target: &r.SubMovimiento}
 
 		return w
 
 	case 12:
-		w := types.Int{Target: &r.IdTipoContacto}
+		w := types.String{Target: &r.Motivo}
 
 		return w
 
 	case 13:
+		w := types.Int{Target: &r.IdTipoContacto}
+
+		return w
+
+	case 14:
 		w := types.String{Target: &r.TipoContacto}
 
 		return w
@@ -259,6 +270,10 @@ func (_ AvisoInactividad) AvroCRC64Fingerprint() []byte {
 func (r AvisoInactividad) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["sistema"], err = json.Marshal(r.Sistema)
+	if err != nil {
+		return nil, err
+	}
 	output["cuando"], err = json.Marshal(r.Cuando)
 	if err != nil {
 		return nil, err
@@ -325,6 +340,20 @@ func (r *AvisoInactividad) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["sistema"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Sistema); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for sistema")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cuando"]; ok {
 			return v

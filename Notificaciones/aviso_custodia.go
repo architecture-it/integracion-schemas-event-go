@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type AvisoCustodia struct {
+	Sistema string `json:"sistema"`
+
 	CodigoDeEnvio string `json:"codigoDeEnvio"`
 
 	NombreDestinatario string `json:"nombreDestinatario"`
@@ -29,7 +31,7 @@ type AvisoCustodia struct {
 	SucursalActual Sucursal `json:"sucursalActual"`
 }
 
-const AvisoCustodiaAvroCRC64Fingerprint = "I\xbe\x8aޟ\xa18\xcf"
+const AvisoCustodiaAvroCRC64Fingerprint = ">\xed\xeeF\xf9\xb70\x8b"
 
 func NewAvisoCustodia() AvisoCustodia {
 	r := AvisoCustodia{}
@@ -63,6 +65,10 @@ func DeserializeAvisoCustodiaFromSchema(r io.Reader, schema string) (AvisoCustod
 
 func writeAvisoCustodia(r AvisoCustodia, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.Sistema, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.CodigoDeEnvio, w)
 	if err != nil {
 		return err
@@ -91,7 +97,7 @@ func (r AvisoCustodia) Serialize(w io.Writer) error {
 }
 
 func (r AvisoCustodia) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"nombreDestinatario\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaIngresoCustodia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"sucursalActual\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"horarioAtencion\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"}],\"name\":\"Sucursal\",\"type\":\"record\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoCustodia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"nombreDestinatario\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaIngresoCustodia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"sucursalActual\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"horarioAtencion\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"}],\"name\":\"Sucursal\",\"type\":\"record\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoCustodia\",\"type\":\"record\"}"
 }
 
 func (r AvisoCustodia) SchemaName() string {
@@ -110,26 +116,31 @@ func (_ AvisoCustodia) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *AvisoCustodia) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.CodigoDeEnvio}
+		w := types.String{Target: &r.Sistema}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.NombreDestinatario}
+		w := types.String{Target: &r.CodigoDeEnvio}
 
 		return w
 
 	case 2:
-		w := types.Long{Target: &r.Cuando}
+		w := types.String{Target: &r.NombreDestinatario}
 
 		return w
 
 	case 3:
-		w := types.Long{Target: &r.FechaIngresoCustodia}
+		w := types.Long{Target: &r.Cuando}
 
 		return w
 
 	case 4:
+		w := types.Long{Target: &r.FechaIngresoCustodia}
+
+		return w
+
+	case 5:
 		r.SucursalActual = NewSucursal()
 
 		w := types.Record{Target: &r.SucursalActual}
@@ -164,6 +175,10 @@ func (_ AvisoCustodia) AvroCRC64Fingerprint() []byte {
 func (r AvisoCustodia) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["sistema"], err = json.Marshal(r.Sistema)
+	if err != nil {
+		return nil, err
+	}
 	output["codigoDeEnvio"], err = json.Marshal(r.CodigoDeEnvio)
 	if err != nil {
 		return nil, err
@@ -194,6 +209,20 @@ func (r *AvisoCustodia) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["sistema"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Sistema); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for sistema")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoDeEnvio"]; ok {
 			return v
