@@ -24,7 +24,7 @@ type Impresiones struct {
 
 	OrdenCliente string `json:"OrdenCliente"`
 
-	CodigoEmbalaje string `json:"CodigoEmbalaje"`
+	CodigoEmbalaje *UnionNullString `json:"CodigoEmbalaje"`
 
 	TipoImpresion string `json:"TipoImpresion"`
 
@@ -35,10 +35,11 @@ type Impresiones struct {
 	Ts string `json:"Ts"`
 }
 
-const ImpresionesAvroCRC64Fingerprint = "\xbc\x9a\xb3<\x85\n%\x91"
+const ImpresionesAvroCRC64Fingerprint = "\xa9\xa9k\x95\xc1>Ę"
 
 func NewImpresiones() Impresiones {
 	r := Impresiones{}
+	r.CodigoEmbalaje = nil
 	return r
 }
 
@@ -79,7 +80,7 @@ func writeImpresiones(r Impresiones, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoEmbalaje, w)
+	err = writeUnionNullString(r.CodigoEmbalaje, w)
 	if err != nil {
 		return err
 	}
@@ -107,7 +108,7 @@ func (r Impresiones) Serialize(w io.Writer) error {
 }
 
 func (r Impresiones) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"TipoImpresion\",\"type\":\"string\"},{\"name\":\"Motivo\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"Ts\",\"type\":\"string\"}],\"name\":\"Andreani.WosExpedicion.Events.Record.Impresiones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"CodigoEmbalaje\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoImpresion\",\"type\":\"string\"},{\"name\":\"Motivo\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"Ts\",\"type\":\"string\"}],\"name\":\"Andreani.WosExpedicion.Events.Record.Impresiones\",\"type\":\"record\"}"
 }
 
 func (r Impresiones) SchemaName() string {
@@ -141,10 +142,9 @@ func (r *Impresiones) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.CodigoEmbalaje}
+		r.CodigoEmbalaje = NewUnionNullString()
 
-		return w
-
+		return r.CodigoEmbalaje
 	case 4:
 		w := types.String{Target: &r.TipoImpresion}
 
@@ -171,12 +171,18 @@ func (r *Impresiones) Get(i int) types.Field {
 
 func (r *Impresiones) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.CodigoEmbalaje = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Impresiones) NullField(i int) {
 	switch i {
+	case 3:
+		r.CodigoEmbalaje = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -289,7 +295,9 @@ func (r *Impresiones) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CodigoEmbalaje")
+		r.CodigoEmbalaje = NewUnionNullString()
+
+		r.CodigoEmbalaje = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TipoImpresion"]; ok {
