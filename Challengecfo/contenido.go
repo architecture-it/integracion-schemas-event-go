@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type Contenido struct {
-	NumeroPedido int32 `json:"numeroPedido"`
+	NumeroPedido string `json:"numeroPedido"`
 
 	NombreContenido string `json:"nombreContenido"`
 }
 
-const ContenidoAvroCRC64Fingerprint = "\x894\x93\x92OwҪ"
+const ContenidoAvroCRC64Fingerprint = "\x02]_\xed\xddO0\xd2"
 
 func NewContenido() Contenido {
 	r := Contenido{}
@@ -55,7 +55,7 @@ func DeserializeContenidoFromSchema(r io.Reader, schema string) (Contenido, erro
 
 func writeContenido(r Contenido, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.NumeroPedido, w)
+	err = vm.WriteString(r.NumeroPedido, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func (r Contenido) Serialize(w io.Writer) error {
 }
 
 func (r Contenido) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroPedido\",\"type\":\"int\"},{\"name\":\"nombreContenido\",\"type\":\"string\"}],\"name\":\"Andreani.Challengecfo.Events.PedidoCreadoCommon.Contenido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroPedido\",\"type\":\"string\"},{\"name\":\"nombreContenido\",\"type\":\"string\"}],\"name\":\"Andreani.Challengecfo.Events.PedidoCreadoCommon.Contenido\",\"type\":\"record\"}"
 }
 
 func (r Contenido) SchemaName() string {
@@ -90,7 +90,7 @@ func (_ Contenido) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Contenido) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.NumeroPedido}
+		w := types.String{Target: &r.NumeroPedido}
 
 		return w
 

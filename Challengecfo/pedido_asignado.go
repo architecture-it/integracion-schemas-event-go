@@ -21,7 +21,7 @@ type PedidoAsignado struct {
 	Detalle Contenido `json:"Detalle"`
 }
 
-const PedidoAsignadoAvroCRC64Fingerprint = "\xae70\x81\x18\x8c%~"
+const PedidoAsignadoAvroCRC64Fingerprint = "?\x03\x19\xccK\xa1Pn"
 
 func NewPedidoAsignado() PedidoAsignado {
 	r := PedidoAsignado{}
@@ -67,7 +67,7 @@ func (r PedidoAsignado) Serialize(w io.Writer) error {
 }
 
 func (r PedidoAsignado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Detalle\",\"type\":{\"fields\":[{\"name\":\"numeroPedido\",\"type\":\"int\"},{\"name\":\"nombreContenido\",\"type\":\"string\"}],\"name\":\"Contenido\",\"namespace\":\"Andreani.Challengecfo.Events.PedidoAsignadoCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.Challengecfo.Events.Record.PedidoAsignado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Detalle\",\"type\":{\"fields\":[{\"name\":\"numeroPedido\",\"type\":\"string\"},{\"name\":\"nombreContenido\",\"type\":\"string\"}],\"name\":\"Contenido\",\"namespace\":\"Andreani.Challengecfo.Events.PedidoAsignadoCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.Challengecfo.Events.Record.PedidoAsignado\",\"type\":\"record\"}"
 }
 
 func (r PedidoAsignado) SchemaName() string {
