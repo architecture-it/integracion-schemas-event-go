@@ -24,20 +24,20 @@ type Origen struct {
 
 	OrigenCalle string `json:"OrigenCalle"`
 
-	OrigenNumero string `json:"OrigenNumero"`
+	OrigenNumero *UnionNullString `json:"OrigenNumero"`
 
 	OrigenPiso *UnionNullString `json:"OrigenPiso"`
 
 	OrigenDepartamento *UnionNullString `json:"OrigenDepartamento"`
 
-	OrigenEmail string `json:"OrigenEmail"`
+	OrigenEmail *UnionNullString `json:"OrigenEmail"`
 
 	OrigenTelefono *UnionNullString `json:"OrigenTelefono"`
 
 	OrigenRegion string `json:"OrigenRegion"`
 }
 
-const OrigenAvroCRC64Fingerprint = "\bG\xfc\xa4\xa5\"\x16^"
+const OrigenAvroCRC64Fingerprint = "\"3鄸\xc3\xf6\xec"
 
 func NewOrigen() Origen {
 	r := Origen{}
@@ -81,7 +81,7 @@ func writeOrigen(r Origen, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.OrigenNumero, w)
+	err = writeUnionNullString(r.OrigenNumero, w)
 	if err != nil {
 		return err
 	}
@@ -93,7 +93,7 @@ func writeOrigen(r Origen, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.OrigenEmail, w)
+	err = writeUnionNullString(r.OrigenEmail, w)
 	if err != nil {
 		return err
 	}
@@ -113,7 +113,7 @@ func (r Origen) Serialize(w io.Writer) error {
 }
 
 func (r Origen) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrigenCiudad\",\"type\":\"string\"},{\"name\":\"OrigenCodigoPostal\",\"type\":\"string\"},{\"name\":\"OrigenCalle\",\"type\":\"string\"},{\"name\":\"OrigenNumero\",\"type\":\"string\"},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenEmail\",\"type\":\"string\"},{\"name\":\"OrigenTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenRegion\",\"type\":\"string\"}],\"name\":\"Andreani.SppeApi.Events.OrdenDeEnvioRechazadaCommon.Origen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrigenCiudad\",\"type\":\"string\"},{\"name\":\"OrigenCodigoPostal\",\"type\":\"string\"},{\"name\":\"OrigenCalle\",\"type\":\"string\"},{\"name\":\"OrigenNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenRegion\",\"type\":\"string\"}],\"name\":\"Andreani.SppeApi.Events.OrdenDeEnvioRechazadaCommon.Origen\",\"type\":\"record\"}"
 }
 
 func (r Origen) SchemaName() string {
@@ -147,10 +147,9 @@ func (r *Origen) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.OrigenNumero}
+		r.OrigenNumero = NewUnionNullString()
 
-		return w
-
+		return r.OrigenNumero
 	case 4:
 		r.OrigenPiso = NewUnionNullString()
 
@@ -160,10 +159,9 @@ func (r *Origen) Get(i int) types.Field {
 
 		return r.OrigenDepartamento
 	case 6:
-		w := types.String{Target: &r.OrigenEmail}
+		r.OrigenEmail = NewUnionNullString()
 
-		return w
-
+		return r.OrigenEmail
 	case 7:
 		r.OrigenTelefono = NewUnionNullString()
 
@@ -185,11 +183,17 @@ func (r *Origen) SetDefault(i int) {
 
 func (r *Origen) NullField(i int) {
 	switch i {
+	case 3:
+		r.OrigenNumero = nil
+		return
 	case 4:
 		r.OrigenPiso = nil
 		return
 	case 5:
 		r.OrigenDepartamento = nil
+		return
+	case 6:
+		r.OrigenEmail = nil
 		return
 	case 7:
 		r.OrigenTelefono = nil
