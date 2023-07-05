@@ -37,7 +37,7 @@ type Origen struct {
 	OrigenRegion *UnionNullString `json:"OrigenRegion"`
 }
 
-const OrigenAvroCRC64Fingerprint = "7\xf2\\\x93\xec\xa3\x03\x84"
+const OrigenAvroCRC64Fingerprint = "\xbby\x19\x1c\"2I\x19"
 
 func NewOrigen() Origen {
 	r := Origen{}
@@ -113,11 +113,11 @@ func (r Origen) Serialize(w io.Writer) error {
 }
 
 func (r Origen) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrigenCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenRegion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeApi.Events.OrdenDeEnvioRechazadaCommon.Origen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrigenCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenRegion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeApi.Events.OrdenDeRetiroRechazadaCommon.Origen\",\"type\":\"record\"}"
 }
 
 func (r Origen) SchemaName() string {
-	return "Andreani.SppeApi.Events.OrdenDeEnvioRechazadaCommon.Origen"
+	return "Andreani.SppeApi.Events.OrdenDeRetiroRechazadaCommon.Origen"
 }
 
 func (_ Origen) SetBoolean(v bool)    { panic("Unsupported operation") }
