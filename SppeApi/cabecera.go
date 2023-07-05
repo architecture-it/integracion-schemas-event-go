@@ -24,12 +24,12 @@ type Cabecera struct {
 
 	ContratoTMS string `json:"ContratoTMS"`
 
-	ValorSeguro string `json:"ValorSeguro"`
+	ValorSeguro *UnionNullString `json:"ValorSeguro"`
 
 	MensajeError string `json:"MensajeError"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "ݵ\xc2\xc9\xe4\x7f\xfa\xca"
+const CabeceraAvroCRC64Fingerprint = "\xb5\x11\x8c\xf1\xe3\xees\x8c"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -73,7 +73,7 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ValorSeguro, w)
+	err = writeUnionNullString(r.ValorSeguro, w)
 	if err != nil {
 		return err
 	}
@@ -89,7 +89,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"ValorSeguro\",\"type\":\"string\"},{\"name\":\"MensajeError\",\"type\":\"string\"}],\"name\":\"Andreani.SppeApi.Events.OrdenDeEnvioRechazadaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"MensajeError\",\"type\":\"string\"}],\"name\":\"Andreani.SppeApi.Events.OrdenDeEnvioRechazadaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -123,10 +123,9 @@ func (r *Cabecera) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.ValorSeguro}
+		r.ValorSeguro = NewUnionNullString()
 
-		return w
-
+		return r.ValorSeguro
 	case 4:
 		w := types.String{Target: &r.MensajeError}
 
@@ -144,6 +143,9 @@ func (r *Cabecera) SetDefault(i int) {
 
 func (r *Cabecera) NullField(i int) {
 	switch i {
+	case 3:
+		r.ValorSeguro = nil
+		return
 	}
 	panic("Not a nullable field index")
 }

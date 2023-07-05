@@ -18,11 +18,11 @@ import (
 var _ = fmt.Printf
 
 type Origen struct {
-	OrigenCiudad string `json:"OrigenCiudad"`
+	OrigenCiudad *UnionNullString `json:"OrigenCiudad"`
 
-	OrigenCodigoPostal string `json:"OrigenCodigoPostal"`
+	OrigenCodigoPostal *UnionNullString `json:"OrigenCodigoPostal"`
 
-	OrigenCalle string `json:"OrigenCalle"`
+	OrigenCalle *UnionNullString `json:"OrigenCalle"`
 
 	OrigenNumero *UnionNullString `json:"OrigenNumero"`
 
@@ -34,10 +34,10 @@ type Origen struct {
 
 	OrigenTelefono *UnionNullString `json:"OrigenTelefono"`
 
-	OrigenRegion string `json:"OrigenRegion"`
+	OrigenRegion *UnionNullString `json:"OrigenRegion"`
 }
 
-const OrigenAvroCRC64Fingerprint = "\"3鄸\xc3\xf6\xec"
+const OrigenAvroCRC64Fingerprint = "7\xf2\\\x93\xec\xa3\x03\x84"
 
 func NewOrigen() Origen {
 	r := Origen{}
@@ -69,15 +69,15 @@ func DeserializeOrigenFromSchema(r io.Reader, schema string) (Origen, error) {
 
 func writeOrigen(r Origen, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.OrigenCiudad, w)
+	err = writeUnionNullString(r.OrigenCiudad, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.OrigenCodigoPostal, w)
+	err = writeUnionNullString(r.OrigenCodigoPostal, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.OrigenCalle, w)
+	err = writeUnionNullString(r.OrigenCalle, w)
 	if err != nil {
 		return err
 	}
@@ -101,7 +101,7 @@ func writeOrigen(r Origen, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.OrigenRegion, w)
+	err = writeUnionNullString(r.OrigenRegion, w)
 	if err != nil {
 		return err
 	}
@@ -113,7 +113,7 @@ func (r Origen) Serialize(w io.Writer) error {
 }
 
 func (r Origen) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrigenCiudad\",\"type\":\"string\"},{\"name\":\"OrigenCodigoPostal\",\"type\":\"string\"},{\"name\":\"OrigenCalle\",\"type\":\"string\"},{\"name\":\"OrigenNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenRegion\",\"type\":\"string\"}],\"name\":\"Andreani.SppeApi.Events.OrdenDeEnvioRechazadaCommon.Origen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrigenCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenEmail\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenRegion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeApi.Events.OrdenDeEnvioRechazadaCommon.Origen\",\"type\":\"record\"}"
 }
 
 func (r Origen) SchemaName() string {
@@ -132,20 +132,17 @@ func (_ Origen) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Origen) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.OrigenCiudad}
+		r.OrigenCiudad = NewUnionNullString()
 
-		return w
-
+		return r.OrigenCiudad
 	case 1:
-		w := types.String{Target: &r.OrigenCodigoPostal}
+		r.OrigenCodigoPostal = NewUnionNullString()
 
-		return w
-
+		return r.OrigenCodigoPostal
 	case 2:
-		w := types.String{Target: &r.OrigenCalle}
+		r.OrigenCalle = NewUnionNullString()
 
-		return w
-
+		return r.OrigenCalle
 	case 3:
 		r.OrigenNumero = NewUnionNullString()
 
@@ -167,10 +164,9 @@ func (r *Origen) Get(i int) types.Field {
 
 		return r.OrigenTelefono
 	case 8:
-		w := types.String{Target: &r.OrigenRegion}
+		r.OrigenRegion = NewUnionNullString()
 
-		return w
-
+		return r.OrigenRegion
 	}
 	panic("Unknown field index")
 }
@@ -183,6 +179,15 @@ func (r *Origen) SetDefault(i int) {
 
 func (r *Origen) NullField(i int) {
 	switch i {
+	case 0:
+		r.OrigenCiudad = nil
+		return
+	case 1:
+		r.OrigenCodigoPostal = nil
+		return
+	case 2:
+		r.OrigenCalle = nil
+		return
 	case 3:
 		r.OrigenNumero = nil
 		return
@@ -197,6 +202,9 @@ func (r *Origen) NullField(i int) {
 		return
 	case 7:
 		r.OrigenTelefono = nil
+		return
+	case 8:
+		r.OrigenRegion = nil
 		return
 	}
 	panic("Not a nullable field index")

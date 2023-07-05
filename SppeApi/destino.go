@@ -18,11 +18,11 @@ import (
 var _ = fmt.Printf
 
 type Destino struct {
-	Destinario string `json:"Destinario"`
+	Destinario *UnionNullString `json:"Destinario"`
 
-	DestinatarioCalle string `json:"DestinatarioCalle"`
+	DestinatarioCalle *UnionNullString `json:"DestinatarioCalle"`
 
-	DestinarioNumero string `json:"DestinarioNumero"`
+	DestinarioNumero *UnionNullString `json:"DestinarioNumero"`
 
 	DestinatarioPiso *UnionNullString `json:"DestinatarioPiso"`
 
@@ -30,18 +30,18 @@ type Destino struct {
 
 	DestinatarioGLNDNI *UnionNullString `json:"DestinatarioGLNDNI"`
 
-	DestinatarioCiudad string `json:"DestinatarioCiudad"`
+	DestinatarioCiudad *UnionNullString `json:"DestinatarioCiudad"`
 
-	DestinatarioProvincia string `json:"DestinatarioProvincia"`
+	DestinatarioProvincia *UnionNullString `json:"DestinatarioProvincia"`
 
-	DestinatarioCodigoPostal string `json:"DestinatarioCodigoPostal"`
+	DestinatarioCodigoPostal *UnionNullString `json:"DestinatarioCodigoPostal"`
 
 	DestinatarioTelefono *UnionNullString `json:"DestinatarioTelefono"`
 
 	DestinatarioEmail *UnionNullString `json:"DestinatarioEmail"`
 }
 
-const DestinoAvroCRC64Fingerprint = "\x89ڼ^\x88\xc4\x00\t"
+const DestinoAvroCRC64Fingerprint = "#MA\xfc\xf3\x8f\xc2\f"
 
 func NewDestino() Destino {
 	r := Destino{}
@@ -73,15 +73,15 @@ func DeserializeDestinoFromSchema(r io.Reader, schema string) (Destino, error) {
 
 func writeDestino(r Destino, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Destinario, w)
+	err = writeUnionNullString(r.Destinario, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioCalle, w)
+	err = writeUnionNullString(r.DestinatarioCalle, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinarioNumero, w)
+	err = writeUnionNullString(r.DestinarioNumero, w)
 	if err != nil {
 		return err
 	}
@@ -97,15 +97,15 @@ func writeDestino(r Destino, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioCiudad, w)
+	err = writeUnionNullString(r.DestinatarioCiudad, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioProvincia, w)
+	err = writeUnionNullString(r.DestinatarioProvincia, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioCodigoPostal, w)
+	err = writeUnionNullString(r.DestinatarioCodigoPostal, w)
 	if err != nil {
 		return err
 	}
@@ -125,7 +125,7 @@ func (r Destino) Serialize(w io.Writer) error {
 }
 
 func (r Destino) Schema() string {
-	return "{\"fields\":[{\"name\":\"Destinario\",\"type\":\"string\"},{\"name\":\"DestinatarioCalle\",\"type\":\"string\"},{\"name\":\"DestinarioNumero\",\"type\":\"string\"},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCiudad\",\"type\":\"string\"},{\"name\":\"DestinatarioProvincia\",\"type\":\"string\"},{\"name\":\"DestinatarioCodigoPostal\",\"type\":\"string\"},{\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeApi.Events.OrdenDeEnvioRechazadaCommon.Destino\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Destinario\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeApi.Events.OrdenDeEnvioRechazadaCommon.Destino\",\"type\":\"record\"}"
 }
 
 func (r Destino) SchemaName() string {
@@ -144,20 +144,17 @@ func (_ Destino) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Destino) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Destinario}
+		r.Destinario = NewUnionNullString()
 
-		return w
-
+		return r.Destinario
 	case 1:
-		w := types.String{Target: &r.DestinatarioCalle}
+		r.DestinatarioCalle = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioCalle
 	case 2:
-		w := types.String{Target: &r.DestinarioNumero}
+		r.DestinarioNumero = NewUnionNullString()
 
-		return w
-
+		return r.DestinarioNumero
 	case 3:
 		r.DestinatarioPiso = NewUnionNullString()
 
@@ -171,20 +168,17 @@ func (r *Destino) Get(i int) types.Field {
 
 		return r.DestinatarioGLNDNI
 	case 6:
-		w := types.String{Target: &r.DestinatarioCiudad}
+		r.DestinatarioCiudad = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioCiudad
 	case 7:
-		w := types.String{Target: &r.DestinatarioProvincia}
+		r.DestinatarioProvincia = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioProvincia
 	case 8:
-		w := types.String{Target: &r.DestinatarioCodigoPostal}
+		r.DestinatarioCodigoPostal = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioCodigoPostal
 	case 9:
 		r.DestinatarioTelefono = NewUnionNullString()
 
@@ -205,6 +199,15 @@ func (r *Destino) SetDefault(i int) {
 
 func (r *Destino) NullField(i int) {
 	switch i {
+	case 0:
+		r.Destinario = nil
+		return
+	case 1:
+		r.DestinatarioCalle = nil
+		return
+	case 2:
+		r.DestinarioNumero = nil
+		return
 	case 3:
 		r.DestinatarioPiso = nil
 		return
@@ -213,6 +216,15 @@ func (r *Destino) NullField(i int) {
 		return
 	case 5:
 		r.DestinatarioGLNDNI = nil
+		return
+	case 6:
+		r.DestinatarioCiudad = nil
+		return
+	case 7:
+		r.DestinatarioProvincia = nil
+		return
+	case 8:
+		r.DestinatarioCodigoPostal = nil
 		return
 	case 9:
 		r.DestinatarioTelefono = nil
