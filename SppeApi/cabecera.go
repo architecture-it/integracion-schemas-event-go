@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type Cabecera struct {
+	Remito string `json:"Remito"`
+
 	OrdenWh string `json:"OrdenWh"`
 
 	OrdenCliente string `json:"OrdenCliente"`
@@ -29,7 +31,7 @@ type Cabecera struct {
 	MensajeError string `json:"MensajeError"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\x9dlCq\x1f\xf4\xe7l"
+const CabeceraAvroCRC64Fingerprint = "y\x9c\x83\xd3F\xf4\xb7M"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -61,6 +63,10 @@ func DeserializeCabeceraFromSchema(r io.Reader, schema string) (Cabecera, error)
 
 func writeCabecera(r Cabecera, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.Remito, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.OrdenWh, w)
 	if err != nil {
 		return err
@@ -89,7 +95,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"MensajeError\",\"type\":\"string\"}],\"name\":\"Andreani.SppeApi.Events.OrdenDeRetiroRechazadaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"MensajeError\",\"type\":\"string\"}],\"name\":\"Andreani.SppeApi.Events.OrdenDeRetiroRechazadaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -108,25 +114,30 @@ func (_ Cabecera) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Cabecera) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.OrdenWh}
+		w := types.String{Target: &r.Remito}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.OrdenCliente}
+		w := types.String{Target: &r.OrdenWh}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.ContratoTMS}
+		w := types.String{Target: &r.OrdenCliente}
 
 		return w
 
 	case 3:
+		w := types.String{Target: &r.ContratoTMS}
+
+		return w
+
+	case 4:
 		r.ValorSeguro = NewUnionNullString()
 
 		return r.ValorSeguro
-	case 4:
+	case 5:
 		w := types.String{Target: &r.MensajeError}
 
 		return w
@@ -143,7 +154,7 @@ func (r *Cabecera) SetDefault(i int) {
 
 func (r *Cabecera) NullField(i int) {
 	switch i {
-	case 3:
+	case 4:
 		r.ValorSeguro = nil
 		return
 	}
@@ -162,6 +173,10 @@ func (_ Cabecera) AvroCRC64Fingerprint() []byte {
 func (r Cabecera) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["Remito"], err = json.Marshal(r.Remito)
+	if err != nil {
+		return nil, err
+	}
 	output["OrdenWh"], err = json.Marshal(r.OrdenWh)
 	if err != nil {
 		return nil, err
@@ -192,6 +207,20 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["Remito"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Remito); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Remito")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["OrdenWh"]; ok {
 			return v

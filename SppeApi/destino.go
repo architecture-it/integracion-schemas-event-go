@@ -18,8 +18,6 @@ import (
 var _ = fmt.Printf
 
 type Destino struct {
-	Destinario *UnionNullString `json:"Destinario"`
-
 	DestinatarioCalle *UnionNullString `json:"DestinatarioCalle"`
 
 	DestinarioNumero *UnionNullString `json:"DestinarioNumero"`
@@ -41,7 +39,7 @@ type Destino struct {
 	DestinatarioEmail *UnionNullString `json:"DestinatarioEmail"`
 }
 
-const DestinoAvroCRC64Fingerprint = "$\xbc:.\xdcMT\xaa"
+const DestinoAvroCRC64Fingerprint = ",s\xc99M\xe3c\x8a"
 
 func NewDestino() Destino {
 	r := Destino{}
@@ -73,10 +71,6 @@ func DeserializeDestinoFromSchema(r io.Reader, schema string) (Destino, error) {
 
 func writeDestino(r Destino, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.Destinario, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.DestinatarioCalle, w)
 	if err != nil {
 		return err
@@ -125,7 +119,7 @@ func (r Destino) Serialize(w io.Writer) error {
 }
 
 func (r Destino) Schema() string {
-	return "{\"fields\":[{\"name\":\"Destinario\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeApi.Events.OrdenDeRetiroRechazadaCommon.Destino\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppeApi.Events.OrdenDeRetiroRechazadaCommon.Destino\",\"type\":\"record\"}"
 }
 
 func (r Destino) SchemaName() string {
@@ -144,46 +138,42 @@ func (_ Destino) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Destino) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Destinario = NewUnionNullString()
-
-		return r.Destinario
-	case 1:
 		r.DestinatarioCalle = NewUnionNullString()
 
 		return r.DestinatarioCalle
-	case 2:
+	case 1:
 		r.DestinarioNumero = NewUnionNullString()
 
 		return r.DestinarioNumero
-	case 3:
+	case 2:
 		r.DestinatarioPiso = NewUnionNullString()
 
 		return r.DestinatarioPiso
-	case 4:
+	case 3:
 		r.DestinatarioDepartamento = NewUnionNullString()
 
 		return r.DestinatarioDepartamento
-	case 5:
+	case 4:
 		r.DestinatarioGLNDNI = NewUnionNullString()
 
 		return r.DestinatarioGLNDNI
-	case 6:
+	case 5:
 		r.DestinatarioCiudad = NewUnionNullString()
 
 		return r.DestinatarioCiudad
-	case 7:
+	case 6:
 		r.DestinatarioProvincia = NewUnionNullString()
 
 		return r.DestinatarioProvincia
-	case 8:
+	case 7:
 		r.DestinatarioCodigoPostal = NewUnionNullString()
 
 		return r.DestinatarioCodigoPostal
-	case 9:
+	case 8:
 		r.DestinatarioTelefono = NewUnionNullString()
 
 		return r.DestinatarioTelefono
-	case 10:
+	case 9:
 		r.DestinatarioEmail = NewUnionNullString()
 
 		return r.DestinatarioEmail
@@ -200,36 +190,33 @@ func (r *Destino) SetDefault(i int) {
 func (r *Destino) NullField(i int) {
 	switch i {
 	case 0:
-		r.Destinario = nil
-		return
-	case 1:
 		r.DestinatarioCalle = nil
 		return
-	case 2:
+	case 1:
 		r.DestinarioNumero = nil
 		return
-	case 3:
+	case 2:
 		r.DestinatarioPiso = nil
 		return
-	case 4:
+	case 3:
 		r.DestinatarioDepartamento = nil
 		return
-	case 5:
+	case 4:
 		r.DestinatarioGLNDNI = nil
 		return
-	case 6:
+	case 5:
 		r.DestinatarioCiudad = nil
 		return
-	case 7:
+	case 6:
 		r.DestinatarioProvincia = nil
 		return
-	case 8:
+	case 7:
 		r.DestinatarioCodigoPostal = nil
 		return
-	case 9:
+	case 8:
 		r.DestinatarioTelefono = nil
 		return
-	case 10:
+	case 9:
 		r.DestinatarioEmail = nil
 		return
 	}
@@ -248,10 +235,6 @@ func (_ Destino) AvroCRC64Fingerprint() []byte {
 func (r Destino) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Destinario"], err = json.Marshal(r.Destinario)
-	if err != nil {
-		return nil, err
-	}
 	output["DestinatarioCalle"], err = json.Marshal(r.DestinatarioCalle)
 	if err != nil {
 		return nil, err
@@ -302,20 +285,6 @@ func (r *Destino) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["Destinario"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Destinario); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Destinario")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DestinatarioCalle"]; ok {
 			return v
