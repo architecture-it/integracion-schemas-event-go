@@ -24,6 +24,8 @@ type CambioAlmacenConLpn struct {
 
 	Lote *UnionNullString `json:"lote"`
 
+	LpnId *UnionNullString `json:"lpnId"`
+
 	Cantidad *UnionNullInt `json:"cantidad"`
 
 	AlmacenOrigen *UnionNullString `json:"almacenOrigen"`
@@ -31,13 +33,14 @@ type CambioAlmacenConLpn struct {
 	AlmacenDestino *UnionNullString `json:"almacenDestino"`
 }
 
-const CambioAlmacenConLpnAvroCRC64Fingerprint = "\xfdZ\x7f\xf6\x9bJ\x1a\x05"
+const CambioAlmacenConLpnAvroCRC64Fingerprint = "\x1dS\xbbW\x03\x84\x05\x10"
 
 func NewCambioAlmacenConLpn() CambioAlmacenConLpn {
 	r := CambioAlmacenConLpn{}
 	r.Propietario = nil
 	r.Articulo = nil
 	r.Lote = nil
+	r.LpnId = nil
 	r.Cantidad = nil
 	r.AlmacenOrigen = nil
 	r.AlmacenDestino = nil
@@ -81,6 +84,10 @@ func writeCambioAlmacenConLpn(r CambioAlmacenConLpn, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.LpnId, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullInt(r.Cantidad, w)
 	if err != nil {
 		return err
@@ -101,7 +108,7 @@ func (r CambioAlmacenConLpn) Serialize(w io.Writer) error {
 }
 
 func (r CambioAlmacenConLpn) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"almacenOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacenDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.CambioAlmacenConLpn\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lpnId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"almacenOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacenDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.CambioAlmacenConLpn\",\"type\":\"record\"}"
 }
 
 func (r CambioAlmacenConLpn) SchemaName() string {
@@ -132,14 +139,18 @@ func (r *CambioAlmacenConLpn) Get(i int) types.Field {
 
 		return r.Lote
 	case 3:
+		r.LpnId = NewUnionNullString()
+
+		return r.LpnId
+	case 4:
 		r.Cantidad = NewUnionNullInt()
 
 		return r.Cantidad
-	case 4:
+	case 5:
 		r.AlmacenOrigen = NewUnionNullString()
 
 		return r.AlmacenOrigen
-	case 5:
+	case 6:
 		r.AlmacenDestino = NewUnionNullString()
 
 		return r.AlmacenDestino
@@ -159,12 +170,15 @@ func (r *CambioAlmacenConLpn) SetDefault(i int) {
 		r.Lote = nil
 		return
 	case 3:
-		r.Cantidad = nil
+		r.LpnId = nil
 		return
 	case 4:
-		r.AlmacenOrigen = nil
+		r.Cantidad = nil
 		return
 	case 5:
+		r.AlmacenOrigen = nil
+		return
+	case 6:
 		r.AlmacenDestino = nil
 		return
 	}
@@ -183,12 +197,15 @@ func (r *CambioAlmacenConLpn) NullField(i int) {
 		r.Lote = nil
 		return
 	case 3:
-		r.Cantidad = nil
+		r.LpnId = nil
 		return
 	case 4:
-		r.AlmacenOrigen = nil
+		r.Cantidad = nil
 		return
 	case 5:
+		r.AlmacenOrigen = nil
+		return
+	case 6:
 		r.AlmacenDestino = nil
 		return
 	}
@@ -216,6 +233,10 @@ func (r CambioAlmacenConLpn) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["lote"], err = json.Marshal(r.Lote)
+	if err != nil {
+		return nil, err
+	}
+	output["lpnId"], err = json.Marshal(r.LpnId)
 	if err != nil {
 		return nil, err
 	}
@@ -288,6 +309,22 @@ func (r *CambioAlmacenConLpn) UnmarshalJSON(data []byte) error {
 		r.Lote = NewUnionNullString()
 
 		r.Lote = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["lpnId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LpnId); err != nil {
+			return err
+		}
+	} else {
+		r.LpnId = NewUnionNullString()
+
+		r.LpnId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cantidad"]; ok {
