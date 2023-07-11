@@ -38,10 +38,12 @@ type Linea struct {
 
 	Estado int32 `json:"estado"`
 
+	DescripcionEstado string `json:"descripcionEstado"`
+
 	Series []Serie `json:"Series"`
 }
 
-const LineaAvroCRC64Fingerprint = "\xf66f\x7f?2(\xdc"
+const LineaAvroCRC64Fingerprint = ";|\xf6\x80\xd1ZE\b"
 
 func NewLinea() Linea {
 	r := Linea{}
@@ -115,6 +117,10 @@ func writeLinea(r Linea, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.DescripcionEstado, w)
+	if err != nil {
+		return err
+	}
 	err = writeArraySerie(r.Series, w)
 	if err != nil {
 		return err
@@ -127,7 +133,7 @@ func (r Linea) Serialize(w io.Writer) error {
 }
 
 func (r Linea) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroDeLinea\",\"type\":\"int\"},{\"name\":\"numeroDeLineaWMS\",\"type\":\"string\"},{\"name\":\"numeroDeLineaCliente\",\"type\":\"string\"},{\"name\":\"sku\",\"type\":\"string\"},{\"name\":\"loteCajita\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"fechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"productoTrazable\",\"type\":\"boolean\"},{\"name\":\"cantidad\",\"type\":\"int\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"}],\"name\":\"Serie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Linea\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroDeLinea\",\"type\":\"int\"},{\"name\":\"numeroDeLineaWMS\",\"type\":\"string\"},{\"name\":\"numeroDeLineaCliente\",\"type\":\"string\"},{\"name\":\"sku\",\"type\":\"string\"},{\"name\":\"loteCajita\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"fechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"productoTrazable\",\"type\":\"boolean\"},{\"name\":\"cantidad\",\"type\":\"int\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"}],\"name\":\"Serie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Linea\",\"type\":\"record\"}"
 }
 
 func (r Linea) SchemaName() string {
@@ -196,6 +202,11 @@ func (r *Linea) Get(i int) types.Field {
 		return w
 
 	case 10:
+		w := types.String{Target: &r.DescripcionEstado}
+
+		return w
+
+	case 11:
 		r.Series = make([]Serie, 0)
 
 		w := ArraySerieWrapper{Target: &r.Series}
@@ -267,6 +278,10 @@ func (r Linea) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["estado"], err = json.Marshal(r.Estado)
+	if err != nil {
+		return nil, err
+	}
+	output["descripcionEstado"], err = json.Marshal(r.DescripcionEstado)
 	if err != nil {
 		return nil, err
 	}
@@ -423,6 +438,20 @@ func (r *Linea) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for estado")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["descripcionEstado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionEstado); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for descripcionEstado")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Series"]; ok {

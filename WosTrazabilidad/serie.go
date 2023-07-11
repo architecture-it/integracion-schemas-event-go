@@ -19,9 +19,11 @@ var _ = fmt.Printf
 
 type Serie struct {
 	Serie string `json:"serie"`
+
+	DescripcionEstado string `json:"descripcionEstado"`
 }
 
-const SerieAvroCRC64Fingerprint = ",\x1e\x04C @.\xd3"
+const SerieAvroCRC64Fingerprint = "\xbbRəG\xb0\xfd("
 
 func NewSerie() Serie {
 	r := Serie{}
@@ -57,6 +59,10 @@ func writeSerie(r Serie, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.DescripcionEstado, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -65,7 +71,7 @@ func (r Serie) Serialize(w io.Writer) error {
 }
 
 func (r Serie) Schema() string {
-	return "{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Serie\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Serie\",\"type\":\"record\"}"
 }
 
 func (r Serie) SchemaName() string {
@@ -85,6 +91,11 @@ func (r *Serie) Get(i int) types.Field {
 	switch i {
 	case 0:
 		w := types.String{Target: &r.Serie}
+
+		return w
+
+	case 1:
+		w := types.String{Target: &r.DescripcionEstado}
 
 		return w
 
@@ -120,6 +131,10 @@ func (r Serie) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["descripcionEstado"], err = json.Marshal(r.DescripcionEstado)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -143,6 +158,20 @@ func (r *Serie) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for serie")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["descripcionEstado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionEstado); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for descripcionEstado")
 	}
 	return nil
 }

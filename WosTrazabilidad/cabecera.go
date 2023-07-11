@@ -37,9 +37,11 @@ type Cabecera struct {
 	GlnDestino string `json:"glnDestino"`
 
 	Estado int32 `json:"estado"`
+
+	DescripcionEstado string `json:"descripcionEstado"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "N\xa5a\xa7\x02Z\x84\xd9"
+const CabeceraAvroCRC64Fingerprint = "\xae\xd3G\x0e\xc5\xfa\f6"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -111,6 +113,10 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.DescripcionEstado, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -119,7 +125,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"Serialkey\",\"type\":\"int\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"instancia\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"tipoDocumento\",\"type\":\"int\"},{\"name\":\"nroDocumento\",\"type\":\"string\"},{\"name\":\"nroDocumentoWMS\",\"type\":\"string\"},{\"name\":\"glnOrigen\",\"type\":\"string\"},{\"name\":\"glnDestino\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"int\"}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Serialkey\",\"type\":\"int\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"instancia\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"tipoDocumento\",\"type\":\"int\"},{\"name\":\"nroDocumento\",\"type\":\"string\"},{\"name\":\"nroDocumentoWMS\",\"type\":\"string\"},{\"name\":\"glnOrigen\",\"type\":\"string\"},{\"name\":\"glnDestino\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -184,6 +190,11 @@ func (r *Cabecera) Get(i int) types.Field {
 
 	case 9:
 		w := types.Int{Target: &r.Estado}
+
+		return w
+
+	case 10:
+		w := types.String{Target: &r.DescripcionEstado}
 
 		return w
 
@@ -252,6 +263,10 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["estado"], err = json.Marshal(r.Estado)
+	if err != nil {
+		return nil, err
+	}
+	output["descripcionEstado"], err = json.Marshal(r.DescripcionEstado)
 	if err != nil {
 		return nil, err
 	}
@@ -404,6 +419,20 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for estado")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["descripcionEstado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionEstado); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for descripcionEstado")
 	}
 	return nil
 }
