@@ -20,13 +20,17 @@ var _ = fmt.Printf
 type Serie struct {
 	Serie string `json:"serie"`
 
-	DescripcionEstado string `json:"descripcionEstado"`
+	Estado *UnionNullInt `json:"estado"`
+
+	DescripcionEstado *UnionNullString `json:"descripcionEstado"`
 }
 
-const SerieAvroCRC64Fingerprint = "\xbbRəG\xb0\xfd("
+const SerieAvroCRC64Fingerprint = "7){\x88\x8d\v\xb8n"
 
 func NewSerie() Serie {
 	r := Serie{}
+	r.Estado = nil
+	r.DescripcionEstado = nil
 	return r
 }
 
@@ -59,7 +63,11 @@ func writeSerie(r Serie, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DescripcionEstado, w)
+	err = writeUnionNullInt(r.Estado, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.DescripcionEstado, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +79,7 @@ func (r Serie) Serialize(w io.Writer) error {
 }
 
 func (r Serie) Schema() string {
-	return "{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Serie\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"descripcionEstado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Serie\",\"type\":\"record\"}"
 }
 
 func (r Serie) SchemaName() string {
@@ -95,22 +103,37 @@ func (r *Serie) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.DescripcionEstado}
+		r.Estado = NewUnionNullInt()
 
-		return w
+		return r.Estado
+	case 2:
+		r.DescripcionEstado = NewUnionNullString()
 
+		return r.DescripcionEstado
 	}
 	panic("Unknown field index")
 }
 
 func (r *Serie) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.Estado = nil
+		return
+	case 2:
+		r.DescripcionEstado = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Serie) NullField(i int) {
 	switch i {
+	case 1:
+		r.Estado = nil
+		return
+	case 2:
+		r.DescripcionEstado = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -128,6 +151,10 @@ func (r Serie) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["serie"], err = json.Marshal(r.Serie)
+	if err != nil {
+		return nil, err
+	}
+	output["estado"], err = json.Marshal(r.Estado)
 	if err != nil {
 		return nil, err
 	}
@@ -160,6 +187,22 @@ func (r *Serie) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for serie")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["estado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Estado); err != nil {
+			return err
+		}
+	} else {
+		r.Estado = NewUnionNullInt()
+
+		r.Estado = nil
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["descripcionEstado"]; ok {
 			return v
 		}
@@ -171,7 +214,9 @@ func (r *Serie) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for descripcionEstado")
+		r.DescripcionEstado = NewUnionNullString()
+
+		r.DescripcionEstado = nil
 	}
 	return nil
 }

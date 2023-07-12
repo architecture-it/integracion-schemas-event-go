@@ -21,9 +21,11 @@ type WosTrazaAnmat struct {
 	Cabecera Cabecera `json:"Cabecera"`
 
 	Lineas []Linea `json:"Lineas"`
+
+	RespuestaAnmat *UnionNullRespuestaAnmat `json:"RespuestaAnmat"`
 }
 
-const WosTrazaAnmatAvroCRC64Fingerprint = "\xe1\xfd\xd9\x0f\x94\"\x86\xc8"
+const WosTrazaAnmatAvroCRC64Fingerprint = "\xe9\xfd]\x97\x84F\x923"
 
 func NewWosTrazaAnmat() WosTrazaAnmat {
 	r := WosTrazaAnmat{}
@@ -31,6 +33,7 @@ func NewWosTrazaAnmat() WosTrazaAnmat {
 
 	r.Lineas = make([]Linea, 0)
 
+	r.RespuestaAnmat = nil
 	return r
 }
 
@@ -67,6 +70,10 @@ func writeWosTrazaAnmat(r WosTrazaAnmat, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullRespuestaAnmat(r.RespuestaAnmat, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -75,7 +82,7 @@ func (r WosTrazaAnmat) Serialize(w io.Writer) error {
 }
 
 func (r WosTrazaAnmat) Schema() string {
-	return "{\"fields\":[{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"Serialkey\",\"type\":\"int\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"instancia\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"tipoDocumento\",\"type\":\"int\"},{\"name\":\"nroDocumento\",\"type\":\"string\"},{\"name\":\"nroDocumentoWMS\",\"type\":\"string\"},{\"name\":\"glnOrigen\",\"type\":\"string\"},{\"name\":\"glnDestino\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.WosTrazabilidad.Events.AnmatCommon\",\"type\":\"record\"}},{\"name\":\"Lineas\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroDeLinea\",\"type\":\"int\"},{\"name\":\"numeroDeLineaWMS\",\"type\":\"string\"},{\"name\":\"numeroDeLineaCliente\",\"type\":\"string\"},{\"name\":\"sku\",\"type\":\"string\"},{\"name\":\"loteCajita\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"fechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"productoTrazable\",\"type\":\"boolean\"},{\"name\":\"cantidad\",\"type\":\"int\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"}],\"name\":\"Serie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Linea\",\"namespace\":\"Andreani.WosTrazabilidad.Events.AnmatCommon\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WosTrazabilidad.Events.Record.WosTrazaAnmat\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"Serialkey\",\"type\":\"int\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"instancia\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"tipoDocumento\",\"type\":\"int\"},{\"name\":\"nroDocumento\",\"type\":\"string\"},{\"name\":\"nroDocumentoWMS\",\"type\":\"string\"},{\"name\":\"glnOrigen\",\"type\":\"string\"},{\"name\":\"glnDestino\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.WosTrazabilidad.Events.AnmatCommon\",\"type\":\"record\"}},{\"name\":\"Lineas\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroDeLinea\",\"type\":\"int\"},{\"name\":\"numeroDeLineaWMS\",\"type\":\"string\"},{\"name\":\"numeroDeLineaCliente\",\"type\":\"string\"},{\"name\":\"sku\",\"type\":\"string\"},{\"name\":\"loteCajita\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"fechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"productoTrazable\",\"type\":\"boolean\"},{\"name\":\"cantidad\",\"type\":\"int\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"descripcionEstado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Serie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Linea\",\"namespace\":\"Andreani.WosTrazabilidad.Events.AnmatCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"RespuestaAnmat\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"codigoTransaccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"resultado\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"errores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"RespuestaAnmat\",\"namespace\":\"Andreani.WosTrazabilidad.Events.AnmatCommon\",\"type\":\"record\"}]}],\"name\":\"Andreani.WosTrazabilidad.Events.Record.WosTrazaAnmat\",\"type\":\"record\"}"
 }
 
 func (r WosTrazaAnmat) SchemaName() string {
@@ -107,18 +114,28 @@ func (r *WosTrazaAnmat) Get(i int) types.Field {
 
 		return w
 
+	case 2:
+		r.RespuestaAnmat = NewUnionNullRespuestaAnmat()
+
+		return r.RespuestaAnmat
 	}
 	panic("Unknown field index")
 }
 
 func (r *WosTrazaAnmat) SetDefault(i int) {
 	switch i {
+	case 2:
+		r.RespuestaAnmat = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *WosTrazaAnmat) NullField(i int) {
 	switch i {
+	case 2:
+		r.RespuestaAnmat = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -140,6 +157,10 @@ func (r WosTrazaAnmat) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Lineas"], err = json.Marshal(r.Lineas)
+	if err != nil {
+		return nil, err
+	}
+	output["RespuestaAnmat"], err = json.Marshal(r.RespuestaAnmat)
 	if err != nil {
 		return nil, err
 	}
@@ -180,6 +201,22 @@ func (r *WosTrazaAnmat) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Lineas")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["RespuestaAnmat"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RespuestaAnmat); err != nil {
+			return err
+		}
+	} else {
+		r.RespuestaAnmat = NewUnionNullRespuestaAnmat()
+
+		r.RespuestaAnmat = nil
 	}
 	return nil
 }
