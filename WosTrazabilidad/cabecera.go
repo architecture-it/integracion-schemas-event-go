@@ -39,9 +39,13 @@ type Cabecera struct {
 	Estado int32 `json:"estado"`
 
 	DescripcionEstado string `json:"descripcionEstado"`
+
+	Remito string `json:"remito"`
+
+	IdEventoAnmat string `json:"idEventoAnmat"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\xae\xd3G\x0e\xc5\xfa\f6"
+const CabeceraAvroCRC64Fingerprint = "!/ \xe4\xf2\xe4\xa2x"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -117,6 +121,14 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Remito, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.IdEventoAnmat, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -125,7 +137,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"Serialkey\",\"type\":\"int\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"instancia\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"tipoDocumento\",\"type\":\"int\"},{\"name\":\"nroDocumento\",\"type\":\"string\"},{\"name\":\"nroDocumentoWMS\",\"type\":\"string\"},{\"name\":\"glnOrigen\",\"type\":\"string\"},{\"name\":\"glnDestino\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Serialkey\",\"type\":\"int\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"instancia\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"tipoDocumento\",\"type\":\"int\"},{\"name\":\"nroDocumento\",\"type\":\"string\"},{\"name\":\"nroDocumentoWMS\",\"type\":\"string\"},{\"name\":\"glnOrigen\",\"type\":\"string\"},{\"name\":\"glnDestino\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"},{\"name\":\"remito\",\"type\":\"string\"},{\"name\":\"idEventoAnmat\",\"type\":\"string\"}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -198,6 +210,16 @@ func (r *Cabecera) Get(i int) types.Field {
 
 		return w
 
+	case 11:
+		w := types.String{Target: &r.Remito}
+
+		return w
+
+	case 12:
+		w := types.String{Target: &r.IdEventoAnmat}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -267,6 +289,14 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["descripcionEstado"], err = json.Marshal(r.DescripcionEstado)
+	if err != nil {
+		return nil, err
+	}
+	output["remito"], err = json.Marshal(r.Remito)
+	if err != nil {
+		return nil, err
+	}
+	output["idEventoAnmat"], err = json.Marshal(r.IdEventoAnmat)
 	if err != nil {
 		return nil, err
 	}
@@ -433,6 +463,34 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for descripcionEstado")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["remito"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Remito); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for remito")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idEventoAnmat"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdEventoAnmat); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idEventoAnmat")
 	}
 	return nil
 }
