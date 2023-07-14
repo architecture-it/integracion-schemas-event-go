@@ -22,11 +22,11 @@ type Destino struct {
 
 	Calle string `json:"Calle"`
 
-	Numero string `json:"Numero"`
+	Numero *UnionNullString `json:"Numero"`
 
-	Piso string `json:"Piso"`
+	Piso *UnionNullString `json:"Piso"`
 
-	Unidad string `json:"Unidad"`
+	Unidad *UnionNullString `json:"Unidad"`
 
 	Localidad string `json:"Localidad"`
 
@@ -34,13 +34,17 @@ type Destino struct {
 
 	Provincia string `json:"Provincia"`
 
-	ObservacionesAdicionales string `json:"ObservacionesAdicionales"`
+	ObservacionesAdicionales *UnionNullString `json:"ObservacionesAdicionales"`
 }
 
-const DestinoAvroCRC64Fingerprint = "gO\xda\x10d\x1d\xff\xa0"
+const DestinoAvroCRC64Fingerprint = "\x17\x1c\x99\x1c\x8b\xbbRk"
 
 func NewDestino() Destino {
 	r := Destino{}
+	r.Numero = nil
+	r.Piso = nil
+	r.Unidad = nil
+	r.ObservacionesAdicionales = nil
 	return r
 }
 
@@ -77,15 +81,15 @@ func writeDestino(r Destino, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Numero, w)
+	err = writeUnionNullString(r.Numero, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Piso, w)
+	err = writeUnionNullString(r.Piso, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Unidad, w)
+	err = writeUnionNullString(r.Unidad, w)
 	if err != nil {
 		return err
 	}
@@ -101,7 +105,7 @@ func writeDestino(r Destino, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ObservacionesAdicionales, w)
+	err = writeUnionNullString(r.ObservacionesAdicionales, w)
 	if err != nil {
 		return err
 	}
@@ -113,7 +117,7 @@ func (r Destino) Serialize(w io.Writer) error {
 }
 
 func (r Destino) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"ObservacionesAdicionales\",\"type\":\"string\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.Destino\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PersonaBackend.Events.Common.Destino\",\"type\":\"record\"}"
 }
 
 func (r Destino) SchemaName() string {
@@ -142,20 +146,17 @@ func (r *Destino) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Numero}
+		r.Numero = NewUnionNullString()
 
-		return w
-
+		return r.Numero
 	case 3:
-		w := types.String{Target: &r.Piso}
+		r.Piso = NewUnionNullString()
 
-		return w
-
+		return r.Piso
 	case 4:
-		w := types.String{Target: &r.Unidad}
+		r.Unidad = NewUnionNullString()
 
-		return w
-
+		return r.Unidad
 	case 5:
 		w := types.String{Target: &r.Localidad}
 
@@ -172,22 +173,45 @@ func (r *Destino) Get(i int) types.Field {
 		return w
 
 	case 8:
-		w := types.String{Target: &r.ObservacionesAdicionales}
+		r.ObservacionesAdicionales = NewUnionNullString()
 
-		return w
-
+		return r.ObservacionesAdicionales
 	}
 	panic("Unknown field index")
 }
 
 func (r *Destino) SetDefault(i int) {
 	switch i {
+	case 2:
+		r.Numero = nil
+		return
+	case 3:
+		r.Piso = nil
+		return
+	case 4:
+		r.Unidad = nil
+		return
+	case 8:
+		r.ObservacionesAdicionales = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Destino) NullField(i int) {
 	switch i {
+	case 2:
+		r.Numero = nil
+		return
+	case 3:
+		r.Piso = nil
+		return
+	case 4:
+		r.Unidad = nil
+		return
+	case 8:
+		r.ObservacionesAdicionales = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -290,7 +314,9 @@ func (r *Destino) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Numero")
+		r.Numero = NewUnionNullString()
+
+		r.Numero = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Piso"]; ok {
@@ -304,7 +330,9 @@ func (r *Destino) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Piso")
+		r.Piso = NewUnionNullString()
+
+		r.Piso = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Unidad"]; ok {
@@ -318,7 +346,9 @@ func (r *Destino) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Unidad")
+		r.Unidad = NewUnionNullString()
+
+		r.Unidad = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Localidad"]; ok {
@@ -374,7 +404,9 @@ func (r *Destino) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ObservacionesAdicionales")
+		r.ObservacionesAdicionales = NewUnionNullString()
+
+		r.ObservacionesAdicionales = nil
 	}
 	return nil
 }

@@ -20,7 +20,7 @@ var _ = fmt.Printf
 type Remitente struct {
 	Nombre string `json:"Nombre"`
 
-	Apellido string `json:"Apellido"`
+	Apellido *UnionNullString `json:"Apellido"`
 
 	Email string `json:"Email"`
 
@@ -30,25 +30,29 @@ type Remitente struct {
 
 	Calle string `json:"Calle"`
 
-	Numero string `json:"Numero"`
+	Numero *UnionNullString `json:"Numero"`
 
 	Localidad string `json:"Localidad"`
 
 	CodigoPostal string `json:"CodigoPostal"`
 
-	Piso string `json:"Piso"`
+	Piso *UnionNullString `json:"Piso"`
 
-	Unidad string `json:"Unidad"`
+	Unidad *UnionNullString `json:"Unidad"`
 
 	Pais string `json:"Pais"`
 
 	Region string `json:"Region"`
 }
 
-const RemitenteAvroCRC64Fingerprint = "\xbb|b\xbf\t\xffYU"
+const RemitenteAvroCRC64Fingerprint = "\t20\xe45\xdc\xcfW"
 
 func NewRemitente() Remitente {
 	r := Remitente{}
+	r.Apellido = nil
+	r.Numero = nil
+	r.Piso = nil
+	r.Unidad = nil
 	return r
 }
 
@@ -81,7 +85,7 @@ func writeRemitente(r Remitente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Apellido, w)
+	err = writeUnionNullString(r.Apellido, w)
 	if err != nil {
 		return err
 	}
@@ -101,7 +105,7 @@ func writeRemitente(r Remitente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Numero, w)
+	err = writeUnionNullString(r.Numero, w)
 	if err != nil {
 		return err
 	}
@@ -113,11 +117,11 @@ func writeRemitente(r Remitente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Piso, w)
+	err = writeUnionNullString(r.Piso, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Unidad, w)
+	err = writeUnionNullString(r.Unidad, w)
 	if err != nil {
 		return err
 	}
@@ -137,7 +141,7 @@ func (r Remitente) Serialize(w io.Writer) error {
 }
 
 func (r Remitente) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.Remitente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.Remitente\",\"type\":\"record\"}"
 }
 
 func (r Remitente) SchemaName() string {
@@ -161,10 +165,9 @@ func (r *Remitente) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Apellido}
+		r.Apellido = NewUnionNullString()
 
-		return w
-
+		return r.Apellido
 	case 2:
 		w := types.String{Target: &r.Email}
 
@@ -186,10 +189,9 @@ func (r *Remitente) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.String{Target: &r.Numero}
+		r.Numero = NewUnionNullString()
 
-		return w
-
+		return r.Numero
 	case 7:
 		w := types.String{Target: &r.Localidad}
 
@@ -201,15 +203,13 @@ func (r *Remitente) Get(i int) types.Field {
 		return w
 
 	case 9:
-		w := types.String{Target: &r.Piso}
+		r.Piso = NewUnionNullString()
 
-		return w
-
+		return r.Piso
 	case 10:
-		w := types.String{Target: &r.Unidad}
+		r.Unidad = NewUnionNullString()
 
-		return w
-
+		return r.Unidad
 	case 11:
 		w := types.String{Target: &r.Pais}
 
@@ -226,12 +226,36 @@ func (r *Remitente) Get(i int) types.Field {
 
 func (r *Remitente) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.Apellido = nil
+		return
+	case 6:
+		r.Numero = nil
+		return
+	case 9:
+		r.Piso = nil
+		return
+	case 10:
+		r.Unidad = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Remitente) NullField(i int) {
 	switch i {
+	case 1:
+		r.Apellido = nil
+		return
+	case 6:
+		r.Numero = nil
+		return
+	case 9:
+		r.Piso = nil
+		return
+	case 10:
+		r.Unidad = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -336,7 +360,9 @@ func (r *Remitente) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Apellido")
+		r.Apellido = NewUnionNullString()
+
+		r.Apellido = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Email"]; ok {
@@ -406,7 +432,9 @@ func (r *Remitente) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Numero")
+		r.Numero = NewUnionNullString()
+
+		r.Numero = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Localidad"]; ok {
@@ -448,7 +476,9 @@ func (r *Remitente) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Piso")
+		r.Piso = NewUnionNullString()
+
+		r.Piso = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Unidad"]; ok {
@@ -462,7 +492,9 @@ func (r *Remitente) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Unidad")
+		r.Unidad = NewUnionNullString()
+
+		r.Unidad = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Pais"]; ok {
