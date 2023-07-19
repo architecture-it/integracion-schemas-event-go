@@ -48,7 +48,7 @@ type Notificaciones struct {
 
 	IdRegla *UnionNullInt `json:"idRegla"`
 
-	Regla *UnionNullString `json:"Regla"`
+	Regla *UnionNullString `json:"regla"`
 
 	Destinatario *UnionNullString `json:"destinatario"`
 
@@ -73,7 +73,7 @@ type Notificaciones struct {
 	ProveedorSMS *UnionNullString `json:"proveedorSMS"`
 }
 
-const NotificacionesAvroCRC64Fingerprint = "\xb9\xadqFf\x04\xfc\xf4"
+const NotificacionesAvroCRC64Fingerprint = "Z\x9d\xb6\xf6]\xdaB\xbe"
 
 func NewNotificaciones() Notificaciones {
 	r := Notificaciones{}
@@ -236,7 +236,7 @@ func (r Notificaciones) Serialize(w io.Writer) error {
 }
 
 func (r Notificaciones) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"fechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"idSistema\",\"type\":\"int\"},{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"idEvento\",\"type\":\"int\"},{\"name\":\"evento\",\"type\":\"string\"},{\"default\":null,\"name\":\"idMotivo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"idSalida\",\"type\":\"int\"},{\"name\":\"salida\",\"type\":\"string\"},{\"name\":\"urlSalida\",\"type\":\"string\"},{\"default\":null,\"name\":\"idRegla\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Regla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioNotificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteNotificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"proveedorSMS\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.Notificaciones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"fechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"idSistema\",\"type\":\"int\"},{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"idEvento\",\"type\":\"int\"},{\"name\":\"evento\",\"type\":\"string\"},{\"default\":null,\"name\":\"idMotivo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"idSalida\",\"type\":\"int\"},{\"name\":\"salida\",\"type\":\"string\"},{\"name\":\"urlSalida\",\"type\":\"string\"},{\"default\":null,\"name\":\"idRegla\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"regla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioNotificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteNotificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"proveedorSMS\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.Notificaciones\",\"type\":\"record\"}"
 }
 
 func (r Notificaciones) SchemaName() string {
@@ -552,7 +552,7 @@ func (r Notificaciones) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Regla"], err = json.Marshal(r.Regla)
+	output["regla"], err = json.Marshal(r.Regla)
 	if err != nil {
 		return nil, err
 	}
@@ -827,7 +827,7 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 		r.IdRegla = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Regla"]; ok {
+		if v, ok := fields["regla"]; ok {
 			return v
 		}
 		return nil
