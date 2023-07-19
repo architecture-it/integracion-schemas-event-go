@@ -26,6 +26,8 @@ type Notificacion struct {
 
 	Evento string `json:"evento"`
 
+	Regla string `json:"regla"`
+
 	Envio string `json:"envio"`
 
 	Sistema string `json:"sistema"`
@@ -47,7 +49,7 @@ type Notificacion struct {
 	RemitenteObservacion string `json:"remitenteObservacion"`
 }
 
-const NotificacionAvroCRC64Fingerprint = "]b\xa4\x9b\xd5\xf0\x13t"
+const NotificacionAvroCRC64Fingerprint = "\xf6\xdb\xd2J\xf6\xb1\xda\x03"
 
 func NewNotificacion() Notificacion {
 	r := Notificacion{}
@@ -92,6 +94,10 @@ func writeNotificacion(r Notificacion, w io.Writer) error {
 		return err
 	}
 	err = vm.WriteString(r.Evento, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Regla, w)
 	if err != nil {
 		return err
 	}
@@ -143,7 +149,7 @@ func (r Notificacion) Serialize(w io.Writer) error {
 }
 
 func (r Notificacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"fechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"evento\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"salida\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"destinatarioEstado\",\"type\":\"string\"},{\"name\":\"destinatarioObservacion\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"remitenteEstado\",\"type\":\"string\"},{\"name\":\"remitenteObservacion\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.Notificacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"fechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"evento\",\"type\":\"string\"},{\"name\":\"regla\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"salida\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"destinatarioEstado\",\"type\":\"string\"},{\"name\":\"destinatarioObservacion\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"remitenteEstado\",\"type\":\"string\"},{\"name\":\"remitenteObservacion\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.Notificacion\",\"type\":\"record\"}"
 }
 
 func (r Notificacion) SchemaName() string {
@@ -182,51 +188,56 @@ func (r *Notificacion) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.String{Target: &r.Envio}
+		w := types.String{Target: &r.Regla}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.Sistema}
+		w := types.String{Target: &r.Envio}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.Salida}
+		w := types.String{Target: &r.Sistema}
 
 		return w
 
 	case 7:
-		w := types.String{Target: &r.Motivo}
+		w := types.String{Target: &r.Salida}
 
 		return w
 
 	case 8:
-		w := types.String{Target: &r.Destinatario}
+		w := types.String{Target: &r.Motivo}
 
 		return w
 
 	case 9:
-		w := types.String{Target: &r.DestinatarioEstado}
+		w := types.String{Target: &r.Destinatario}
 
 		return w
 
 	case 10:
-		w := types.String{Target: &r.DestinatarioObservacion}
+		w := types.String{Target: &r.DestinatarioEstado}
 
 		return w
 
 	case 11:
-		w := types.String{Target: &r.Remitente}
+		w := types.String{Target: &r.DestinatarioObservacion}
 
 		return w
 
 	case 12:
-		w := types.String{Target: &r.RemitenteEstado}
+		w := types.String{Target: &r.Remitente}
 
 		return w
 
 	case 13:
+		w := types.String{Target: &r.RemitenteEstado}
+
+		return w
+
+	case 14:
 		w := types.String{Target: &r.RemitenteObservacion}
 
 		return w
@@ -272,6 +283,10 @@ func (r Notificacion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["evento"], err = json.Marshal(r.Evento)
+	if err != nil {
+		return nil, err
+	}
+	output["regla"], err = json.Marshal(r.Regla)
 	if err != nil {
 		return nil, err
 	}
@@ -380,6 +395,20 @@ func (r *Notificacion) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for evento")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["regla"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Regla); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for regla")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["envio"]; ok {

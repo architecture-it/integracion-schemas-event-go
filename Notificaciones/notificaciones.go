@@ -46,6 +46,8 @@ type Notificaciones struct {
 
 	UrlSalida string `json:"urlSalida"`
 
+	IdRegla int32 `json:"idRegla"`
+
 	Destinatario *UnionNullString `json:"destinatario"`
 
 	DestinatarioNotificacion *UnionNullString `json:"destinatarioNotificacion"`
@@ -69,7 +71,7 @@ type Notificaciones struct {
 	ProveedorSMS *UnionNullString `json:"proveedorSMS"`
 }
 
-const NotificacionesAvroCRC64Fingerprint = "Bu\x9fxO\x97\xbbY"
+const NotificacionesAvroCRC64Fingerprint = "\x81B\xd4\f\xdd(q\x17"
 
 func NewNotificaciones() Notificaciones {
 	r := Notificaciones{}
@@ -170,6 +172,10 @@ func writeNotificaciones(r Notificaciones, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.IdRegla, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Destinatario, w)
 	if err != nil {
 		return err
@@ -222,7 +228,7 @@ func (r Notificaciones) Serialize(w io.Writer) error {
 }
 
 func (r Notificaciones) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"fechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"idSistema\",\"type\":\"int\"},{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"idEvento\",\"type\":\"int\"},{\"name\":\"evento\",\"type\":\"string\"},{\"default\":null,\"name\":\"idMotivo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"idSalida\",\"type\":\"int\"},{\"name\":\"salida\",\"type\":\"string\"},{\"name\":\"urlSalida\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioNotificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteNotificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"proveedorSMS\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.Notificaciones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"fechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"idSistema\",\"type\":\"int\"},{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"idEvento\",\"type\":\"int\"},{\"name\":\"evento\",\"type\":\"string\"},{\"default\":null,\"name\":\"idMotivo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"idSalida\",\"type\":\"int\"},{\"name\":\"salida\",\"type\":\"string\"},{\"name\":\"urlSalida\",\"type\":\"string\"},{\"name\":\"idRegla\",\"type\":\"int\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioNotificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteNotificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitenteNotificacionCaracteres\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"proveedorSMS\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.Notificaciones\",\"type\":\"record\"}"
 }
 
 func (r Notificaciones) SchemaName() string {
@@ -309,46 +315,51 @@ func (r *Notificaciones) Get(i int) types.Field {
 		return w
 
 	case 14:
+		w := types.Int{Target: &r.IdRegla}
+
+		return w
+
+	case 15:
 		r.Destinatario = NewUnionNullString()
 
 		return r.Destinatario
-	case 15:
+	case 16:
 		r.DestinatarioNotificacion = NewUnionNullString()
 
 		return r.DestinatarioNotificacion
-	case 16:
+	case 17:
 		r.DestinatarioEstado = NewUnionNullString()
 
 		return r.DestinatarioEstado
-	case 17:
+	case 18:
 		r.DestinatarioObservacion = NewUnionNullString()
 
 		return r.DestinatarioObservacion
-	case 18:
+	case 19:
 		r.DestinatarioNotificacionCaracteres = NewUnionNullInt()
 
 		return r.DestinatarioNotificacionCaracteres
-	case 19:
+	case 20:
 		r.Remitente = NewUnionNullString()
 
 		return r.Remitente
-	case 20:
+	case 21:
 		r.RemitenteNotificacion = NewUnionNullString()
 
 		return r.RemitenteNotificacion
-	case 21:
+	case 22:
 		r.RemitenteEstado = NewUnionNullString()
 
 		return r.RemitenteEstado
-	case 22:
+	case 23:
 		r.RemitenteObservacion = NewUnionNullString()
 
 		return r.RemitenteObservacion
-	case 23:
+	case 24:
 		r.RemitenteNotificacionCaracteres = NewUnionNullInt()
 
 		return r.RemitenteNotificacionCaracteres
-	case 24:
+	case 25:
 		r.ProveedorSMS = NewUnionNullString()
 
 		return r.ProveedorSMS
@@ -364,37 +375,37 @@ func (r *Notificaciones) SetDefault(i int) {
 	case 10:
 		r.Motivo = nil
 		return
-	case 14:
+	case 15:
 		r.Destinatario = nil
 		return
-	case 15:
+	case 16:
 		r.DestinatarioNotificacion = nil
 		return
-	case 16:
+	case 17:
 		r.DestinatarioEstado = nil
 		return
-	case 17:
+	case 18:
 		r.DestinatarioObservacion = nil
 		return
-	case 18:
+	case 19:
 		r.DestinatarioNotificacionCaracteres = nil
 		return
-	case 19:
+	case 20:
 		r.Remitente = nil
 		return
-	case 20:
+	case 21:
 		r.RemitenteNotificacion = nil
 		return
-	case 21:
+	case 22:
 		r.RemitenteEstado = nil
 		return
-	case 22:
+	case 23:
 		r.RemitenteObservacion = nil
 		return
-	case 23:
+	case 24:
 		r.RemitenteNotificacionCaracteres = nil
 		return
-	case 24:
+	case 25:
 		r.ProveedorSMS = nil
 		return
 	}
@@ -409,37 +420,37 @@ func (r *Notificaciones) NullField(i int) {
 	case 10:
 		r.Motivo = nil
 		return
-	case 14:
+	case 15:
 		r.Destinatario = nil
 		return
-	case 15:
+	case 16:
 		r.DestinatarioNotificacion = nil
 		return
-	case 16:
+	case 17:
 		r.DestinatarioEstado = nil
 		return
-	case 17:
+	case 18:
 		r.DestinatarioObservacion = nil
 		return
-	case 18:
+	case 19:
 		r.DestinatarioNotificacionCaracteres = nil
 		return
-	case 19:
+	case 20:
 		r.Remitente = nil
 		return
-	case 20:
+	case 21:
 		r.RemitenteNotificacion = nil
 		return
-	case 21:
+	case 22:
 		r.RemitenteEstado = nil
 		return
-	case 22:
+	case 23:
 		r.RemitenteObservacion = nil
 		return
-	case 23:
+	case 24:
 		r.RemitenteNotificacionCaracteres = nil
 		return
-	case 24:
+	case 25:
 		r.ProveedorSMS = nil
 		return
 	}
@@ -511,6 +522,10 @@ func (r Notificaciones) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["urlSalida"], err = json.Marshal(r.UrlSalida)
+	if err != nil {
+		return nil, err
+	}
+	output["idRegla"], err = json.Marshal(r.IdRegla)
 	if err != nil {
 		return nil, err
 	}
@@ -767,6 +782,20 @@ func (r *Notificaciones) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for urlSalida")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idRegla"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdRegla); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idRegla")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatario"]; ok {
