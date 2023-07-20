@@ -34,6 +34,8 @@ type Reporte struct {
 
 	Zona *UnionNullString `json:"Zona"`
 
+	Cantidad *UnionNullInt `json:"Cantidad"`
+
 	UnidadDeMedida *UnionNullString `json:"UnidadDeMedida"`
 
 	Volumetria *UnionNullFloat `json:"Volumetria"`
@@ -43,7 +45,7 @@ type Reporte struct {
 	UnidadFinales *UnionNullInt `json:"UnidadFinales"`
 }
 
-const ReporteAvroCRC64Fingerprint = "\xd6`-\x1a\xd2\xca\xdbK"
+const ReporteAvroCRC64Fingerprint = "h\xf6>\xa3\x16\xa6\xb7X"
 
 func NewReporte() Reporte {
 	r := Reporte{}
@@ -107,6 +109,10 @@ func writeReporte(r Reporte, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullInt(r.Cantidad, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.UnidadDeMedida, w)
 	if err != nil {
 		return err
@@ -131,7 +137,7 @@ func (r Reporte) Serialize(w io.Writer) error {
 }
 
 func (r Reporte) Schema() string {
-	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Operacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadDeVenta\",\"type\":[\"null\",\"string\"]},{\"name\":\"MacroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"MicroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadDeMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"Volumetria\",\"type\":[\"null\",\"float\"]},{\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"UnidadFinales\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.CostosWarehouse.Events.Common.Reporte\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Operacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadDeVenta\",\"type\":[\"null\",\"string\"]},{\"name\":\"MacroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"MicroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":[\"null\",\"int\"]},{\"name\":\"UnidadDeMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"Volumetria\",\"type\":[\"null\",\"float\"]},{\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"UnidadFinales\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.CostosWarehouse.Events.Common.Reporte\",\"type\":\"record\"}"
 }
 
 func (r Reporte) SchemaName() string {
@@ -182,18 +188,22 @@ func (r *Reporte) Get(i int) types.Field {
 
 		return r.Zona
 	case 8:
+		r.Cantidad = NewUnionNullInt()
+
+		return r.Cantidad
+	case 9:
 		r.UnidadDeMedida = NewUnionNullString()
 
 		return r.UnidadDeMedida
-	case 9:
+	case 10:
 		r.Volumetria = NewUnionNullFloat()
 
 		return r.Volumetria
-	case 10:
+	case 11:
 		r.Peso = NewUnionNullFloat()
 
 		return r.Peso
-	case 11:
+	case 12:
 		r.UnidadFinales = NewUnionNullInt()
 
 		return r.UnidadFinales
@@ -234,15 +244,18 @@ func (r *Reporte) NullField(i int) {
 		r.Zona = nil
 		return
 	case 8:
-		r.UnidadDeMedida = nil
+		r.Cantidad = nil
 		return
 	case 9:
-		r.Volumetria = nil
+		r.UnidadDeMedida = nil
 		return
 	case 10:
-		r.Peso = nil
+		r.Volumetria = nil
 		return
 	case 11:
+		r.Peso = nil
+		return
+	case 12:
 		r.UnidadFinales = nil
 		return
 	}
@@ -290,6 +303,10 @@ func (r Reporte) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Zona"], err = json.Marshal(r.Zona)
+	if err != nil {
+		return nil, err
+	}
+	output["Cantidad"], err = json.Marshal(r.Cantidad)
 	if err != nil {
 		return nil, err
 	}
@@ -430,6 +447,20 @@ func (r *Reporte) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Zona")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Cantidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cantidad); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Cantidad")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UnidadDeMedida"]; ok {
