@@ -45,7 +45,7 @@ type Identificacion struct {
 	FechaGeneracion int64 `json:"FechaGeneracion"`
 }
 
-const IdentificacionAvroCRC64Fingerprint = "\xfb\xe0d]\xbc<\v\xbc"
+const IdentificacionAvroCRC64Fingerprint = "\xfeG\xb2p\x18}\x80\xae"
 
 func NewIdentificacion() Identificacion {
 	r := Identificacion{}
@@ -161,11 +161,11 @@ func (r Identificacion) Serialize(w io.Writer) error {
 }
 
 func (r Identificacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Evento\",\"type\":[\"string\",\"null\"]},{\"name\":\"SchemaAvro\",\"type\":[\"string\",\"null\"]},{\"name\":\"DescripcionProceso\",\"type\":[\"string\",\"null\"]},{\"name\":\"Almacen\",\"type\":[\"string\",\"null\"]},{\"name\":\"Propietario\",\"type\":[\"string\",\"null\"]},{\"name\":\"Instancia\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key1\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key2\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key3\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key4\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key5\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key6\",\"type\":[\"string\",\"null\"]},{\"name\":\"FechaGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.CostosWarehouseCommon.Events.Common.Identificacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Evento\",\"type\":[\"string\",\"null\"]},{\"name\":\"SchemaAvro\",\"type\":[\"string\",\"null\"]},{\"name\":\"DescripcionProceso\",\"type\":[\"string\",\"null\"]},{\"name\":\"Almacen\",\"type\":[\"string\",\"null\"]},{\"name\":\"Propietario\",\"type\":[\"string\",\"null\"]},{\"name\":\"Instancia\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key1\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key2\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key3\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key4\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key5\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key6\",\"type\":[\"string\",\"null\"]},{\"name\":\"FechaGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.CostosWarehouse.Events.Common.Identificacion\",\"type\":\"record\"}"
 }
 
 func (r Identificacion) SchemaName() string {
-	return "Andreani.CostosWarehouseCommon.Events.Common.Identificacion"
+	return "Andreani.CostosWarehouse.Events.Common.Identificacion"
 }
 
 func (_ Identificacion) SetBoolean(v bool)    { panic("Unsupported operation") }

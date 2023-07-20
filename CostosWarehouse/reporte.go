@@ -43,7 +43,7 @@ type Reporte struct {
 	UnidadFinales *UnionNullInt `json:"UnidadFinales"`
 }
 
-const ReporteAvroCRC64Fingerprint = "\x86\xcf\x03|'<\xd2\xdf"
+const ReporteAvroCRC64Fingerprint = "\xd6`-\x1a\xd2\xca\xdbK"
 
 func NewReporte() Reporte {
 	r := Reporte{}
@@ -131,11 +131,11 @@ func (r Reporte) Serialize(w io.Writer) error {
 }
 
 func (r Reporte) Schema() string {
-	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Operacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadDeVenta\",\"type\":[\"null\",\"string\"]},{\"name\":\"MacroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"MicroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadDeMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"Volumetria\",\"type\":[\"null\",\"float\"]},{\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"UnidadFinales\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.CostosWarehouseCommon.Events.Common.Reporte\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Operacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadDeVenta\",\"type\":[\"null\",\"string\"]},{\"name\":\"MacroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"MicroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadDeMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"Volumetria\",\"type\":[\"null\",\"float\"]},{\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"UnidadFinales\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.CostosWarehouse.Events.Common.Reporte\",\"type\":\"record\"}"
 }
 
 func (r Reporte) SchemaName() string {
-	return "Andreani.CostosWarehouseCommon.Events.Common.Reporte"
+	return "Andreani.CostosWarehouse.Events.Common.Reporte"
 }
 
 func (_ Reporte) SetBoolean(v bool)    { panic("Unsupported operation") }
