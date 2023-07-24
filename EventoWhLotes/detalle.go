@@ -49,9 +49,11 @@ type Detalle struct {
 	ConsumoAntesDe *UnionNullLong `json:"ConsumoAntesDe"`
 
 	FechaCreacion int64 `json:"FechaCreacion"`
+
+	Cantidad *UnionNullString `json:"Cantidad"`
 }
 
-const DetalleAvroCRC64Fingerprint = "\xa2RH2\xa9\xc3\x18 "
+const DetalleAvroCRC64Fingerprint = "\x914\xd1\xc8\x16\x89\b\xd7"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -59,6 +61,7 @@ func NewDetalle() Detalle {
 	r.FechaVencimiento = nil
 	r.EntregaAntesDe = nil
 	r.ConsumoAntesDe = nil
+	r.Cantidad = nil
 	return r
 }
 
@@ -151,6 +154,10 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Cantidad, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -159,7 +166,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLoteDestino\",\"type\":\"string\"},{\"name\":\"EstadoLoteOrigen\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaCreacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.EventoWhLotes.Events.EstadoLoteCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLoteDestino\",\"type\":\"string\"},{\"name\":\"EstadoLoteOrigen\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaCreacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"Cantidad\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhLotes.Events.EstadoLoteCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -253,6 +260,10 @@ func (r *Detalle) Get(i int) types.Field {
 
 		return w
 
+	case 16:
+		r.Cantidad = NewUnionNullString()
+
+		return r.Cantidad
 	}
 	panic("Unknown field index")
 }
@@ -271,6 +282,9 @@ func (r *Detalle) SetDefault(i int) {
 	case 14:
 		r.ConsumoAntesDe = nil
 		return
+	case 16:
+		r.Cantidad = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -288,6 +302,9 @@ func (r *Detalle) NullField(i int) {
 		return
 	case 14:
 		r.ConsumoAntesDe = nil
+		return
+	case 16:
+		r.Cantidad = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -366,6 +383,10 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["FechaCreacion"], err = json.Marshal(r.FechaCreacion)
+	if err != nil {
+		return nil, err
+	}
+	output["Cantidad"], err = json.Marshal(r.Cantidad)
 	if err != nil {
 		return nil, err
 	}
@@ -610,6 +631,22 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for FechaCreacion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Cantidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cantidad); err != nil {
+			return err
+		}
+	} else {
+		r.Cantidad = NewUnionNullString()
+
+		r.Cantidad = nil
 	}
 	return nil
 }
