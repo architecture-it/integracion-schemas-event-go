@@ -18,10 +18,10 @@ import (
 var _ = fmt.Printf
 
 type TiposDeAcondicionamientoSecundario struct {
-	TipoDeAcondi int32 `json:"tipoDeAcondi"`
+	TipoDeAcondi string `json:"tipoDeAcondi"`
 }
 
-const TiposDeAcondicionamientoSecundarioAvroCRC64Fingerprint = "21\x80\xd3w\x13\xc9\xd6"
+const TiposDeAcondicionamientoSecundarioAvroCRC64Fingerprint = "\x85 d\xd89\xbe\xa7D"
 
 func NewTiposDeAcondicionamientoSecundario() TiposDeAcondicionamientoSecundario {
 	r := TiposDeAcondicionamientoSecundario{}
@@ -53,7 +53,7 @@ func DeserializeTiposDeAcondicionamientoSecundarioFromSchema(r io.Reader, schema
 
 func writeTiposDeAcondicionamientoSecundario(r TiposDeAcondicionamientoSecundario, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.TipoDeAcondi, w)
+	err = vm.WriteString(r.TipoDeAcondi, w)
 	if err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func (r TiposDeAcondicionamientoSecundario) Serialize(w io.Writer) error {
 }
 
 func (r TiposDeAcondicionamientoSecundario) Schema() string {
-	return "{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"int\"}],\"name\":\"Andreani.Wapv2.Events.Record.TiposDeAcondicionamientoSecundario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.TiposDeAcondicionamientoSecundario\",\"type\":\"record\"}"
 }
 
 func (r TiposDeAcondicionamientoSecundario) SchemaName() string {
@@ -84,7 +84,7 @@ func (_ TiposDeAcondicionamientoSecundario) SetUnionElem(v int64) { panic("Unsup
 func (r *TiposDeAcondicionamientoSecundario) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.TipoDeAcondi}
+		w := types.String{Target: &r.TipoDeAcondi}
 
 		return w
 

@@ -84,7 +84,7 @@ func DeserializeUnionNullListaDeTiposDeAcondicionamientoSecundarioFromSchema(r i
 }
 
 func (r *UnionNullListaDeTiposDeAcondicionamientoSecundario) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"int\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullListaDeTiposDeAcondicionamientoSecundario) SetBoolean(v bool) {
