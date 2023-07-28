@@ -26,16 +26,16 @@ type ArticulosDeBulto struct {
 
 	CodigoEmbalaje string `json:"CodigoEmbalaje"`
 
-	Articulos []Articulo `json:"Articulos"`
+	Articulos []ArticuloAuditar `json:"Articulos"`
 }
 
-const ArticulosDeBultoAvroCRC64Fingerprint = "Ȟr\xc5\xff$\x10\xc0"
+const ArticulosDeBultoAvroCRC64Fingerprint = "1N\xa7\xe9\x96\v\xbf%"
 
 func NewArticulosDeBulto() ArticulosDeBulto {
 	r := ArticulosDeBulto{}
 	r.Identificacion = NewIdentificacion()
 
-	r.Articulos = make([]Articulo, 0)
+	r.Articulos = make([]ArticuloAuditar, 0)
 
 	return r
 }
@@ -81,7 +81,7 @@ func writeArticulosDeBulto(r ArticulosDeBulto, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayArticulo(r.Articulos, w)
+	err = writeArrayArticuloAuditar(r.Articulos, w)
 	if err != nil {
 		return err
 	}
@@ -93,7 +93,7 @@ func (r ArticulosDeBulto) Serialize(w io.Writer) error {
 }
 
 func (r ArticulosDeBulto) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Auditoria.Events.Common\",\"type\":\"record\"}},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"CodigoCliente\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"default\":null,\"name\":\"ValorUnitario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Picker\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Packer\",\"type\":[\"null\",\"string\"]}],\"name\":\"Articulo\",\"namespace\":\"Andreani.Auditoria.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Auditoria.Events.Record.ArticulosDeBulto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Auditoria.Events.Common\",\"type\":\"record\"}},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"SKU\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCliente\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"NroLineaPedido\",\"type\":\"string\"}],\"name\":\"ArticuloAuditar\",\"namespace\":\"Andreani.Auditoria.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Auditoria.Events.Record.ArticulosDeBulto\",\"type\":\"record\"}"
 }
 
 func (r ArticulosDeBulto) SchemaName() string {
@@ -134,9 +134,9 @@ func (r *ArticulosDeBulto) Get(i int) types.Field {
 		return w
 
 	case 4:
-		r.Articulos = make([]Articulo, 0)
+		r.Articulos = make([]ArticuloAuditar, 0)
 
-		w := ArrayArticuloWrapper{Target: &r.Articulos}
+		w := ArrayArticuloAuditarWrapper{Target: &r.Articulos}
 
 		return w
 
