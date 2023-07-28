@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type Articulo struct {
-	Ean string `json:"Ean"`
+	Ean *UnionNullString `json:"Ean"`
 
 	SKU string `json:"SKU"`
 
@@ -33,10 +33,11 @@ type Articulo struct {
 	Packer *UnionNullString `json:"Packer"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "\"ϯ(\xf0\xaa$C"
+const ArticuloAvroCRC64Fingerprint = "\xb25\xc5w\x86Z-\xdb"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
+	r.Ean = nil
 	r.ValorUnitario = nil
 	r.Picker = nil
 	r.Packer = nil
@@ -68,7 +69,7 @@ func DeserializeArticuloFromSchema(r io.Reader, schema string) (Articulo, error)
 
 func writeArticulo(r Articulo, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Ean, w)
+	err = writeUnionNullString(r.Ean, w)
 	if err != nil {
 		return err
 	}
@@ -104,7 +105,7 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ean\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"default\":null,\"name\":\"ValorUnitario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Picker\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Packer\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Auditoria.Events.Common.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"default\":null,\"name\":\"ValorUnitario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Picker\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Packer\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Auditoria.Events.Common.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
@@ -123,10 +124,9 @@ func (_ Articulo) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Articulo) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Ean}
+		r.Ean = NewUnionNullString()
 
-		return w
-
+		return r.Ean
 	case 1:
 		w := types.String{Target: &r.SKU}
 
@@ -160,6 +160,9 @@ func (r *Articulo) Get(i int) types.Field {
 
 func (r *Articulo) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Ean = nil
+		return
 	case 4:
 		r.ValorUnitario = nil
 		return
@@ -175,6 +178,9 @@ func (r *Articulo) SetDefault(i int) {
 
 func (r *Articulo) NullField(i int) {
 	switch i {
+	case 0:
+		r.Ean = nil
+		return
 	case 4:
 		r.ValorUnitario = nil
 		return
@@ -250,7 +256,9 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Ean")
+		r.Ean = NewUnionNullString()
+
+		r.Ean = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SKU"]; ok {
