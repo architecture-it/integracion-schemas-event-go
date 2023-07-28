@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type ArticuloAuditar struct {
-	SKU *UnionNullString `json:"SKU"`
+	Ean *UnionNullString `json:"Ean"`
 
 	CodigoCliente string `json:"CodigoCliente"`
 
@@ -31,11 +31,11 @@ type ArticuloAuditar struct {
 	NroLineaPedido string `json:"NroLineaPedido"`
 }
 
-const ArticuloAuditarAvroCRC64Fingerprint = "\xaf\x9e,O\x99\f\t\x7f"
+const ArticuloAuditarAvroCRC64Fingerprint = "sbQ;~o6r"
 
 func NewArticuloAuditar() ArticuloAuditar {
 	r := ArticuloAuditar{}
-	r.SKU = nil
+	r.Ean = nil
 	return r
 }
 
@@ -64,7 +64,7 @@ func DeserializeArticuloAuditarFromSchema(r io.Reader, schema string) (ArticuloA
 
 func writeArticuloAuditar(r ArticuloAuditar, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.SKU, w)
+	err = writeUnionNullString(r.Ean, w)
 	if err != nil {
 		return err
 	}
@@ -96,7 +96,7 @@ func (r ArticuloAuditar) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloAuditar) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"SKU\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCliente\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"NroLineaPedido\",\"type\":\"string\"}],\"name\":\"Andreani.Auditoria.Events.Common.ArticuloAuditar\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCliente\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"NroLineaPedido\",\"type\":\"string\"}],\"name\":\"Andreani.Auditoria.Events.Common.ArticuloAuditar\",\"type\":\"record\"}"
 }
 
 func (r ArticuloAuditar) SchemaName() string {
@@ -115,9 +115,9 @@ func (_ ArticuloAuditar) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *ArticuloAuditar) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.SKU = NewUnionNullString()
+		r.Ean = NewUnionNullString()
 
-		return r.SKU
+		return r.Ean
 	case 1:
 		w := types.String{Target: &r.CodigoCliente}
 
@@ -150,7 +150,7 @@ func (r *ArticuloAuditar) Get(i int) types.Field {
 func (r *ArticuloAuditar) SetDefault(i int) {
 	switch i {
 	case 0:
-		r.SKU = nil
+		r.Ean = nil
 		return
 	}
 	panic("Unknown field index")
@@ -159,7 +159,7 @@ func (r *ArticuloAuditar) SetDefault(i int) {
 func (r *ArticuloAuditar) NullField(i int) {
 	switch i {
 	case 0:
-		r.SKU = nil
+		r.Ean = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -177,7 +177,7 @@ func (_ ArticuloAuditar) AvroCRC64Fingerprint() []byte {
 func (r ArticuloAuditar) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["SKU"], err = json.Marshal(r.SKU)
+	output["Ean"], err = json.Marshal(r.Ean)
 	if err != nil {
 		return nil, err
 	}
@@ -212,20 +212,20 @@ func (r *ArticuloAuditar) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["SKU"]; ok {
+		if v, ok := fields["Ean"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.SKU); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Ean); err != nil {
 			return err
 		}
 	} else {
-		r.SKU = NewUnionNullString()
+		r.Ean = NewUnionNullString()
 
-		r.SKU = nil
+		r.Ean = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CodigoCliente"]; ok {

@@ -18,9 +18,9 @@ import (
 var _ = fmt.Printf
 
 type Articulo struct {
-	SKU string `json:"SKU"`
+	Ean string `json:"Ean"`
 
-	CodigoCliente string `json:"CodigoCliente"`
+	SKU string `json:"SKU"`
 
 	Descripcion string `json:"Descripcion"`
 
@@ -33,7 +33,7 @@ type Articulo struct {
 	Packer *UnionNullString `json:"Packer"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "\x8frX\xfc(we\xe2"
+const ArticuloAvroCRC64Fingerprint = "\"ϯ(\xf0\xaa$C"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
@@ -68,11 +68,11 @@ func DeserializeArticuloFromSchema(r io.Reader, schema string) (Articulo, error)
 
 func writeArticulo(r Articulo, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.SKU, w)
+	err = vm.WriteString(r.Ean, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoCliente, w)
+	err = vm.WriteString(r.SKU, w)
 	if err != nil {
 		return err
 	}
@@ -104,7 +104,7 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"CodigoCliente\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"default\":null,\"name\":\"ValorUnitario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Picker\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Packer\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Auditoria.Events.Common.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ean\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"default\":null,\"name\":\"ValorUnitario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Picker\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Packer\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Auditoria.Events.Common.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
@@ -123,12 +123,12 @@ func (_ Articulo) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Articulo) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.SKU}
+		w := types.String{Target: &r.Ean}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.CodigoCliente}
+		w := types.String{Target: &r.SKU}
 
 		return w
 
@@ -200,11 +200,11 @@ func (_ Articulo) AvroCRC64Fingerprint() []byte {
 func (r Articulo) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["SKU"], err = json.Marshal(r.SKU)
+	output["Ean"], err = json.Marshal(r.Ean)
 	if err != nil {
 		return nil, err
 	}
-	output["CodigoCliente"], err = json.Marshal(r.CodigoCliente)
+	output["SKU"], err = json.Marshal(r.SKU)
 	if err != nil {
 		return nil, err
 	}
@@ -239,6 +239,20 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
+		if v, ok := fields["Ean"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Ean); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Ean")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["SKU"]; ok {
 			return v
 		}
@@ -251,20 +265,6 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for SKU")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["CodigoCliente"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for CodigoCliente")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Descripcion"]; ok {
