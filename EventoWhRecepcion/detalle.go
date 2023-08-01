@@ -85,12 +85,24 @@ type Detalle struct {
 	UnidadMedida *UnionNullString `json:"UnidadMedida"`
 
 	LineaRecepcionWH *UnionNullString `json:"LineaRecepcionWH"`
+
+	Temperatura *UnionNullString `json:"Temperatura"`
+
+	TipoCapturaSerie *UnionNullString `json:"TipoCapturaSerie"`
+
+	TipoValidacionLote *UnionNullString `json:"TipoValidacionLote"`
+
+	Series *UnionNullArraySeries `json:"Series"`
 }
 
-const DetalleAvroCRC64Fingerprint = "e؍\xd8\x19\xa9\xd4\xfb"
+const DetalleAvroCRC64Fingerprint = "X\x03~9-\x1e\xa9;"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
+	r.Temperatura = nil
+	r.TipoCapturaSerie = nil
+	r.TipoValidacionLote = nil
+	r.Series = nil
 	return r
 }
 
@@ -255,6 +267,22 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Temperatura, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.TipoCapturaSerie, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.TipoValidacionLote, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullArraySeries(r.Series, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -263,7 +291,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"UbicacionDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"LPNDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"PaqueteLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteCajitaFabricante\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"name\":\"AlmacenConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"BloqueoUbicacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Contramuestras\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DescripcionServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoLineaMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"AccionConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"ResultadoConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantEsperada\",\"type\":\"float\"},{\"name\":\"CantRecibida\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaRecepcionWH\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionCreacionCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"UbicacionDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"LPNDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"PaqueteLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteCajitaFabricante\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"name\":\"AlmacenConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"BloqueoUbicacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Contramuestras\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DescripcionServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoLineaMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"AccionConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"ResultadoConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantEsperada\",\"type\":\"float\"},{\"name\":\"CantRecibida\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaRecepcionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Temperatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoCapturaSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoValidacionLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"SKU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroSerieCorto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EtiquetaContenedora\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GTIN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecepcionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroLineaAsn\",\"type\":[\"null\",\"string\"]}],\"name\":\"Series\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionCreacionCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -421,12 +449,40 @@ func (r *Detalle) Get(i int) types.Field {
 		r.LineaRecepcionWH = NewUnionNullString()
 
 		return r.LineaRecepcionWH
+	case 34:
+		r.Temperatura = NewUnionNullString()
+
+		return r.Temperatura
+	case 35:
+		r.TipoCapturaSerie = NewUnionNullString()
+
+		return r.TipoCapturaSerie
+	case 36:
+		r.TipoValidacionLote = NewUnionNullString()
+
+		return r.TipoValidacionLote
+	case 37:
+		r.Series = NewUnionNullArraySeries()
+
+		return r.Series
 	}
 	panic("Unknown field index")
 }
 
 func (r *Detalle) SetDefault(i int) {
 	switch i {
+	case 34:
+		r.Temperatura = nil
+		return
+	case 35:
+		r.TipoCapturaSerie = nil
+		return
+	case 36:
+		r.TipoValidacionLote = nil
+		return
+	case 37:
+		r.Series = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -522,6 +578,18 @@ func (r *Detalle) NullField(i int) {
 		return
 	case 33:
 		r.LineaRecepcionWH = nil
+		return
+	case 34:
+		r.Temperatura = nil
+		return
+	case 35:
+		r.TipoCapturaSerie = nil
+		return
+	case 36:
+		r.TipoValidacionLote = nil
+		return
+	case 37:
+		r.Series = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -672,6 +740,22 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["LineaRecepcionWH"], err = json.Marshal(r.LineaRecepcionWH)
+	if err != nil {
+		return nil, err
+	}
+	output["Temperatura"], err = json.Marshal(r.Temperatura)
+	if err != nil {
+		return nil, err
+	}
+	output["TipoCapturaSerie"], err = json.Marshal(r.TipoCapturaSerie)
+	if err != nil {
+		return nil, err
+	}
+	output["TipoValidacionLote"], err = json.Marshal(r.TipoValidacionLote)
+	if err != nil {
+		return nil, err
+	}
+	output["Series"], err = json.Marshal(r.Series)
 	if err != nil {
 		return nil, err
 	}
@@ -1160,6 +1244,70 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for LineaRecepcionWH")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Temperatura"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Temperatura); err != nil {
+			return err
+		}
+	} else {
+		r.Temperatura = NewUnionNullString()
+
+		r.Temperatura = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TipoCapturaSerie"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoCapturaSerie); err != nil {
+			return err
+		}
+	} else {
+		r.TipoCapturaSerie = NewUnionNullString()
+
+		r.TipoCapturaSerie = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TipoValidacionLote"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoValidacionLote); err != nil {
+			return err
+		}
+	} else {
+		r.TipoValidacionLote = NewUnionNullString()
+
+		r.TipoValidacionLote = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Series"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Series); err != nil {
+			return err
+		}
+	} else {
+		r.Series = NewUnionNullArraySeries()
+
+		r.Series = nil
 	}
 	return nil
 }
