@@ -33,12 +33,15 @@ type Paquete struct {
 	Peso string `json:"Peso"`
 
 	ValorDeclarado int32 `json:"ValorDeclarado"`
+
+	NumeroDeBulto *UnionNullString `json:"NumeroDeBulto"`
 }
 
-const PaqueteAvroCRC64Fingerprint = "\r\xe0u\xbdk9U["
+const PaqueteAvroCRC64Fingerprint = "%\x15\xdf\x18\xd0\xe0\xcfb"
 
 func NewPaquete() Paquete {
 	r := Paquete{}
+	r.NumeroDeBulto = nil
 	return r
 }
 
@@ -99,6 +102,10 @@ func writePaquete(r Paquete, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.NumeroDeBulto, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -107,7 +114,7 @@ func (r Paquete) Serialize(w io.Writer) error {
 }
 
 func (r Paquete) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoId\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Alto\",\"type\":\"string\"},{\"name\":\"Ancho\",\"type\":\"string\"},{\"name\":\"Largo\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"int\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.Paquete\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoId\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Alto\",\"type\":\"string\"},{\"name\":\"Ancho\",\"type\":\"string\"},{\"name\":\"Largo\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"int\"},{\"default\":null,\"name\":\"NumeroDeBulto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PersonaBackend.Events.Common.Paquete\",\"type\":\"record\"}"
 }
 
 func (r Paquete) SchemaName() string {
@@ -165,18 +172,28 @@ func (r *Paquete) Get(i int) types.Field {
 
 		return w
 
+	case 8:
+		r.NumeroDeBulto = NewUnionNullString()
+
+		return r.NumeroDeBulto
 	}
 	panic("Unknown field index")
 }
 
 func (r *Paquete) SetDefault(i int) {
 	switch i {
+	case 8:
+		r.NumeroDeBulto = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Paquete) NullField(i int) {
 	switch i {
+	case 8:
+		r.NumeroDeBulto = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -222,6 +239,10 @@ func (r Paquete) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ValorDeclarado"], err = json.Marshal(r.ValorDeclarado)
+	if err != nil {
+		return nil, err
+	}
+	output["NumeroDeBulto"], err = json.Marshal(r.NumeroDeBulto)
 	if err != nil {
 		return nil, err
 	}
@@ -346,6 +367,22 @@ func (r *Paquete) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for ValorDeclarado")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NumeroDeBulto"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeBulto); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroDeBulto = NewUnionNullString()
+
+		r.NumeroDeBulto = nil
 	}
 	return nil
 }

@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayPaqueteFromSchema(r io.Reader, schema string) (*Un
 }
 
 func (r *UnionNullArrayPaquete) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoId\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Alto\",\"type\":\"string\"},{\"name\":\"Ancho\",\"type\":\"string\"},{\"name\":\"Largo\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"int\"}],\"name\":\"Paquete\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoId\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Alto\",\"type\":\"string\"},{\"name\":\"Ancho\",\"type\":\"string\"},{\"name\":\"Largo\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"int\"},{\"default\":null,\"name\":\"NumeroDeBulto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Paquete\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayPaquete) SetBoolean(v bool)   { panic("Unsupported operation") }
