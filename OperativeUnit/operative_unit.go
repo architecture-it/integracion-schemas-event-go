@@ -20,21 +20,109 @@ var _ = fmt.Printf
 type OperativeUnit struct {
 	Id string `json:"id"`
 
-	Email *UnionNullString `json:"email"`
+	Name string `json:"name"`
 
-	Name *UnionNullString `json:"name"`
+	Email string `json:"email"`
 
-	Address *UnionNullString `json:"address"`
+	IsFrontier bool `json:"isFrontier"`
 
-	City *UnionNullString `json:"city"`
+	IsActive bool `json:"isActive"`
 
-	ZipCode *UnionNullString `json:"zipCode"`
+	Address string `json:"address"`
+
+	NumberAddress string `json:"numberAddress"`
+
+	PostalCode string `json:"postalCode"`
+
+	City string `json:"city"`
+
+	State string `json:"state"`
+
+	Country string `json:"country"`
+
+	TaxJurisdiction string `json:"taxJurisdiction"`
+
+	Latitude string `json:"latitude"`
+
+	Longitude string `json:"longitude"`
+
+	GeospatialPolygon *UnionNullLong `json:"geospatialPolygon"`
+
+	CustomerServiceSchedule string `json:"customerServiceSchedule"`
+
+	OperationServiceSchedule string `json:"operationServiceSchedule"`
+
+	AllowsCustomerClient bool `json:"allowsCustomerClient"`
+
+	AllowsCentralizedReturn bool `json:"allowsCentralizedReturn"`
+
+	AllowsCashSale int64 `json:"allowsCashSale"`
+
+	AllowsImprest int64 `json:"allowsImprest"`
+
+	AllowsChargeRecipient int64 `json:"allowsChargeRecipient"`
+
+	AllowsSaleSerializedProducts int64 `json:"allowsSaleSerializedProducts"`
+
+	CostCenter string `json:"costCenter"`
+
+	AllowsCustody bool `json:"allowsCustody"`
+
+	AvailableSquareMetersForCustody *UnionNullLong `json:"availableSquareMetersForCustody"`
+
+	AllowsCustomerStock bool `json:"allowsCustomerStock"`
+
+	AvailableSquareMetersForCustomerStock *UnionNullLong `json:"availableSquareMetersForCustomerStock"`
+
+	PositionsForCustomerStock *UnionNullLong `json:"positionsForCustomerStock"`
+
+	SquareMetersIndoor *UnionNullLong `json:"squareMetersIndoor"`
+
+	SquareMetersOutdoor *UnionNullLong `json:"squareMetersOutdoor"`
+
+	SquareMetersCommercialAttention *UnionNullLong `json:"squareMetersCommercialAttention"`
+
+	SquareMetersParking *UnionNullLong `json:"squareMetersParking"`
+
+	UrlFrontPicture *UnionNullString `json:"urlFrontPicture"`
+
+	UrlInsidePicture *UnionNullString `json:"urlInsidePicture"`
+
+	UrlDepositPicture *UnionNullString `json:"urlDepositPicture"`
+
+	Users *UnionNullString `json:"users"`
+
+	Stamp *UnionNullLong `json:"stamp"`
+
+	StartDate *UnionNullLong `json:"startDate"`
+
+	IdResponsible *UnionNullString `json:"idResponsible"`
+
+	IdNetworkOwner *UnionNullString `json:"idNetworkOwner"`
+
+	IdRegion *UnionNullString `json:"idRegion"`
+
+	ContractsState *UnionNullLong `json:"contractsState"`
+
+	ListContracts []string `json:"listContracts"`
+
+	ListCharacteristics []Characteristics `json:"listCharacteristics"`
+
+	OperativeUnitTMSRelationship OperativeUnitTMSRelationship `json:"operativeUnitTMSRelationship"`
 }
 
-const OperativeUnitAvroCRC64Fingerprint = "\xae\x1a4\xf2^\x13?,"
+const OperativeUnitAvroCRC64Fingerprint = "\x17\xd0y\x8fM\x9f\xe3\xfb"
 
 func NewOperativeUnit() OperativeUnit {
 	r := OperativeUnit{}
+	r.ListContracts = make([]string, 0)
+
+	r.ListContracts = make([]string, 0)
+
+	r.ListCharacteristics = make([]Characteristics, 0)
+
+	r.OperativeUnitTMSRelationship = NewOperativeUnitTMSRelationship()
+
 	return r
 }
 
@@ -67,23 +155,183 @@ func writeOperativeUnit(r OperativeUnit, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Email, w)
+	err = vm.WriteString(r.Name, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Name, w)
+	err = vm.WriteString(r.Email, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Address, w)
+	err = vm.WriteBool(r.IsFrontier, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.City, w)
+	err = vm.WriteBool(r.IsActive, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.ZipCode, w)
+	err = vm.WriteString(r.Address, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.NumberAddress, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.PostalCode, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.City, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.State, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Country, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.TaxJurisdiction, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Latitude, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Longitude, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.GeospatialPolygon, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.CustomerServiceSchedule, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.OperationServiceSchedule, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteBool(r.AllowsCustomerClient, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteBool(r.AllowsCentralizedReturn, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteLong(r.AllowsCashSale, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteLong(r.AllowsImprest, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteLong(r.AllowsChargeRecipient, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteLong(r.AllowsSaleSerializedProducts, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.CostCenter, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteBool(r.AllowsCustody, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.AvailableSquareMetersForCustody, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteBool(r.AllowsCustomerStock, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.AvailableSquareMetersForCustomerStock, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.PositionsForCustomerStock, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.SquareMetersIndoor, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.SquareMetersOutdoor, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.SquareMetersCommercialAttention, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.SquareMetersParking, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.UrlFrontPicture, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.UrlInsidePicture, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.UrlDepositPicture, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Users, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.Stamp, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.StartDate, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.IdResponsible, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.IdNetworkOwner, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.IdRegion, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.ContractsState, w)
+	if err != nil {
+		return err
+	}
+	err = writeArrayString(r.ListContracts, w)
+	if err != nil {
+		return err
+	}
+	err = writeArrayCharacteristics(r.ListCharacteristics, w)
+	if err != nil {
+		return err
+	}
+	err = writeOperativeUnitTMSRelationship(r.OperativeUnitTMSRelationship, w)
 	if err != nil {
 		return err
 	}
@@ -95,7 +343,7 @@ func (r OperativeUnit) Serialize(w io.Writer) error {
 }
 
 func (r OperativeUnit) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"name\":\"name\",\"type\":[\"null\",\"string\"]},{\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"name\":\"city\",\"type\":[\"null\",\"string\"]},{\"name\":\"zipCode\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"isFrontier\",\"type\":\"boolean\"},{\"name\":\"isActive\",\"type\":\"boolean\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"numberAddress\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"taxJurisdiction\",\"type\":\"string\"},{\"name\":\"latitude\",\"type\":\"string\"},{\"name\":\"longitude\",\"type\":\"string\"},{\"name\":\"geospatialPolygon\",\"type\":[\"null\",\"long\"]},{\"name\":\"customerServiceSchedule\",\"type\":\"string\"},{\"name\":\"operationServiceSchedule\",\"type\":\"string\"},{\"name\":\"allowsCustomerClient\",\"type\":\"boolean\"},{\"name\":\"allowsCentralizedReturn\",\"type\":\"boolean\"},{\"name\":\"allowsCashSale\",\"type\":\"long\"},{\"name\":\"allowsImprest\",\"type\":\"long\"},{\"name\":\"allowsChargeRecipient\",\"type\":\"long\"},{\"name\":\"allowsSaleSerializedProducts\",\"type\":\"long\"},{\"name\":\"costCenter\",\"type\":\"string\"},{\"name\":\"allowsCustody\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustody\",\"type\":[\"null\",\"long\"]},{\"name\":\"allowsCustomerStock\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"positionsForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersIndoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersOutdoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersCommercialAttention\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParking\",\"type\":[\"null\",\"long\"]},{\"name\":\"urlFrontPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlInsidePicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlDepositPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"users\",\"type\":[\"null\",\"string\"]},{\"name\":\"stamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"startDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"idResponsible\",\"type\":[\"null\",\"string\"]},{\"name\":\"idNetworkOwner\",\"type\":[\"null\",\"string\"]},{\"name\":\"idRegion\",\"type\":[\"null\",\"string\"]},{\"name\":\"contractsState\",\"type\":[\"null\",\"long\"]},{\"default\":[],\"name\":\"listContracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"listCharacteristics\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Value\",\"type\":\"string\"}],\"name\":\"Characteristics\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"operativeUnitTMSRelationship\",\"type\":{\"fields\":[{\"name\":\"idIntegra\",\"type\":\"long\"},{\"name\":\"idAlertran\",\"type\":\"string\"},{\"name\":\"defaultTMS\",\"type\":\"string\"}],\"name\":\"OperativeUnitTMSRelationship\",\"type\":\"record\"}}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
 }
 
 func (r OperativeUnit) SchemaName() string {
@@ -119,51 +367,287 @@ func (r *OperativeUnit) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.Email = NewUnionNullString()
+		w := types.String{Target: &r.Name}
 
-		return r.Email
+		return w
+
 	case 2:
-		r.Name = NewUnionNullString()
+		w := types.String{Target: &r.Email}
 
-		return r.Name
+		return w
+
 	case 3:
-		r.Address = NewUnionNullString()
+		w := types.Boolean{Target: &r.IsFrontier}
 
-		return r.Address
+		return w
+
 	case 4:
-		r.City = NewUnionNullString()
+		w := types.Boolean{Target: &r.IsActive}
 
-		return r.City
+		return w
+
 	case 5:
-		r.ZipCode = NewUnionNullString()
+		w := types.String{Target: &r.Address}
 
-		return r.ZipCode
+		return w
+
+	case 6:
+		w := types.String{Target: &r.NumberAddress}
+
+		return w
+
+	case 7:
+		w := types.String{Target: &r.PostalCode}
+
+		return w
+
+	case 8:
+		w := types.String{Target: &r.City}
+
+		return w
+
+	case 9:
+		w := types.String{Target: &r.State}
+
+		return w
+
+	case 10:
+		w := types.String{Target: &r.Country}
+
+		return w
+
+	case 11:
+		w := types.String{Target: &r.TaxJurisdiction}
+
+		return w
+
+	case 12:
+		w := types.String{Target: &r.Latitude}
+
+		return w
+
+	case 13:
+		w := types.String{Target: &r.Longitude}
+
+		return w
+
+	case 14:
+		r.GeospatialPolygon = NewUnionNullLong()
+
+		return r.GeospatialPolygon
+	case 15:
+		w := types.String{Target: &r.CustomerServiceSchedule}
+
+		return w
+
+	case 16:
+		w := types.String{Target: &r.OperationServiceSchedule}
+
+		return w
+
+	case 17:
+		w := types.Boolean{Target: &r.AllowsCustomerClient}
+
+		return w
+
+	case 18:
+		w := types.Boolean{Target: &r.AllowsCentralizedReturn}
+
+		return w
+
+	case 19:
+		w := types.Long{Target: &r.AllowsCashSale}
+
+		return w
+
+	case 20:
+		w := types.Long{Target: &r.AllowsImprest}
+
+		return w
+
+	case 21:
+		w := types.Long{Target: &r.AllowsChargeRecipient}
+
+		return w
+
+	case 22:
+		w := types.Long{Target: &r.AllowsSaleSerializedProducts}
+
+		return w
+
+	case 23:
+		w := types.String{Target: &r.CostCenter}
+
+		return w
+
+	case 24:
+		w := types.Boolean{Target: &r.AllowsCustody}
+
+		return w
+
+	case 25:
+		r.AvailableSquareMetersForCustody = NewUnionNullLong()
+
+		return r.AvailableSquareMetersForCustody
+	case 26:
+		w := types.Boolean{Target: &r.AllowsCustomerStock}
+
+		return w
+
+	case 27:
+		r.AvailableSquareMetersForCustomerStock = NewUnionNullLong()
+
+		return r.AvailableSquareMetersForCustomerStock
+	case 28:
+		r.PositionsForCustomerStock = NewUnionNullLong()
+
+		return r.PositionsForCustomerStock
+	case 29:
+		r.SquareMetersIndoor = NewUnionNullLong()
+
+		return r.SquareMetersIndoor
+	case 30:
+		r.SquareMetersOutdoor = NewUnionNullLong()
+
+		return r.SquareMetersOutdoor
+	case 31:
+		r.SquareMetersCommercialAttention = NewUnionNullLong()
+
+		return r.SquareMetersCommercialAttention
+	case 32:
+		r.SquareMetersParking = NewUnionNullLong()
+
+		return r.SquareMetersParking
+	case 33:
+		r.UrlFrontPicture = NewUnionNullString()
+
+		return r.UrlFrontPicture
+	case 34:
+		r.UrlInsidePicture = NewUnionNullString()
+
+		return r.UrlInsidePicture
+	case 35:
+		r.UrlDepositPicture = NewUnionNullString()
+
+		return r.UrlDepositPicture
+	case 36:
+		r.Users = NewUnionNullString()
+
+		return r.Users
+	case 37:
+		r.Stamp = NewUnionNullLong()
+
+		return r.Stamp
+	case 38:
+		r.StartDate = NewUnionNullLong()
+
+		return r.StartDate
+	case 39:
+		r.IdResponsible = NewUnionNullString()
+
+		return r.IdResponsible
+	case 40:
+		r.IdNetworkOwner = NewUnionNullString()
+
+		return r.IdNetworkOwner
+	case 41:
+		r.IdRegion = NewUnionNullString()
+
+		return r.IdRegion
+	case 42:
+		r.ContractsState = NewUnionNullLong()
+
+		return r.ContractsState
+	case 43:
+		r.ListContracts = make([]string, 0)
+
+		w := ArrayStringWrapper{Target: &r.ListContracts}
+
+		return w
+
+	case 44:
+		r.ListCharacteristics = make([]Characteristics, 0)
+
+		w := ArrayCharacteristicsWrapper{Target: &r.ListCharacteristics}
+
+		return w
+
+	case 45:
+		r.OperativeUnitTMSRelationship = NewOperativeUnitTMSRelationship()
+
+		w := types.Record{Target: &r.OperativeUnitTMSRelationship}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
 
 func (r *OperativeUnit) SetDefault(i int) {
 	switch i {
+	case 43:
+		r.ListContracts = make([]string, 0)
+
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *OperativeUnit) NullField(i int) {
 	switch i {
-	case 1:
-		r.Email = nil
+	case 14:
+		r.GeospatialPolygon = nil
 		return
-	case 2:
-		r.Name = nil
+	case 25:
+		r.AvailableSquareMetersForCustody = nil
 		return
-	case 3:
-		r.Address = nil
+	case 27:
+		r.AvailableSquareMetersForCustomerStock = nil
 		return
-	case 4:
-		r.City = nil
+	case 28:
+		r.PositionsForCustomerStock = nil
 		return
-	case 5:
-		r.ZipCode = nil
+	case 29:
+		r.SquareMetersIndoor = nil
+		return
+	case 30:
+		r.SquareMetersOutdoor = nil
+		return
+	case 31:
+		r.SquareMetersCommercialAttention = nil
+		return
+	case 32:
+		r.SquareMetersParking = nil
+		return
+	case 33:
+		r.UrlFrontPicture = nil
+		return
+	case 34:
+		r.UrlInsidePicture = nil
+		return
+	case 35:
+		r.UrlDepositPicture = nil
+		return
+	case 36:
+		r.Users = nil
+		return
+	case 37:
+		r.Stamp = nil
+		return
+	case 38:
+		r.StartDate = nil
+		return
+	case 39:
+		r.IdResponsible = nil
+		return
+	case 40:
+		r.IdNetworkOwner = nil
+		return
+	case 41:
+		r.IdRegion = nil
+		return
+	case 42:
+		r.ContractsState = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -185,11 +669,19 @@ func (r OperativeUnit) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["name"], err = json.Marshal(r.Name)
+	if err != nil {
+		return nil, err
+	}
 	output["email"], err = json.Marshal(r.Email)
 	if err != nil {
 		return nil, err
 	}
-	output["name"], err = json.Marshal(r.Name)
+	output["isFrontier"], err = json.Marshal(r.IsFrontier)
+	if err != nil {
+		return nil, err
+	}
+	output["isActive"], err = json.Marshal(r.IsActive)
 	if err != nil {
 		return nil, err
 	}
@@ -197,11 +689,163 @@ func (r OperativeUnit) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["numberAddress"], err = json.Marshal(r.NumberAddress)
+	if err != nil {
+		return nil, err
+	}
+	output["postalCode"], err = json.Marshal(r.PostalCode)
+	if err != nil {
+		return nil, err
+	}
 	output["city"], err = json.Marshal(r.City)
 	if err != nil {
 		return nil, err
 	}
-	output["zipCode"], err = json.Marshal(r.ZipCode)
+	output["state"], err = json.Marshal(r.State)
+	if err != nil {
+		return nil, err
+	}
+	output["country"], err = json.Marshal(r.Country)
+	if err != nil {
+		return nil, err
+	}
+	output["taxJurisdiction"], err = json.Marshal(r.TaxJurisdiction)
+	if err != nil {
+		return nil, err
+	}
+	output["latitude"], err = json.Marshal(r.Latitude)
+	if err != nil {
+		return nil, err
+	}
+	output["longitude"], err = json.Marshal(r.Longitude)
+	if err != nil {
+		return nil, err
+	}
+	output["geospatialPolygon"], err = json.Marshal(r.GeospatialPolygon)
+	if err != nil {
+		return nil, err
+	}
+	output["customerServiceSchedule"], err = json.Marshal(r.CustomerServiceSchedule)
+	if err != nil {
+		return nil, err
+	}
+	output["operationServiceSchedule"], err = json.Marshal(r.OperationServiceSchedule)
+	if err != nil {
+		return nil, err
+	}
+	output["allowsCustomerClient"], err = json.Marshal(r.AllowsCustomerClient)
+	if err != nil {
+		return nil, err
+	}
+	output["allowsCentralizedReturn"], err = json.Marshal(r.AllowsCentralizedReturn)
+	if err != nil {
+		return nil, err
+	}
+	output["allowsCashSale"], err = json.Marshal(r.AllowsCashSale)
+	if err != nil {
+		return nil, err
+	}
+	output["allowsImprest"], err = json.Marshal(r.AllowsImprest)
+	if err != nil {
+		return nil, err
+	}
+	output["allowsChargeRecipient"], err = json.Marshal(r.AllowsChargeRecipient)
+	if err != nil {
+		return nil, err
+	}
+	output["allowsSaleSerializedProducts"], err = json.Marshal(r.AllowsSaleSerializedProducts)
+	if err != nil {
+		return nil, err
+	}
+	output["costCenter"], err = json.Marshal(r.CostCenter)
+	if err != nil {
+		return nil, err
+	}
+	output["allowsCustody"], err = json.Marshal(r.AllowsCustody)
+	if err != nil {
+		return nil, err
+	}
+	output["availableSquareMetersForCustody"], err = json.Marshal(r.AvailableSquareMetersForCustody)
+	if err != nil {
+		return nil, err
+	}
+	output["allowsCustomerStock"], err = json.Marshal(r.AllowsCustomerStock)
+	if err != nil {
+		return nil, err
+	}
+	output["availableSquareMetersForCustomerStock"], err = json.Marshal(r.AvailableSquareMetersForCustomerStock)
+	if err != nil {
+		return nil, err
+	}
+	output["positionsForCustomerStock"], err = json.Marshal(r.PositionsForCustomerStock)
+	if err != nil {
+		return nil, err
+	}
+	output["squareMetersIndoor"], err = json.Marshal(r.SquareMetersIndoor)
+	if err != nil {
+		return nil, err
+	}
+	output["squareMetersOutdoor"], err = json.Marshal(r.SquareMetersOutdoor)
+	if err != nil {
+		return nil, err
+	}
+	output["squareMetersCommercialAttention"], err = json.Marshal(r.SquareMetersCommercialAttention)
+	if err != nil {
+		return nil, err
+	}
+	output["squareMetersParking"], err = json.Marshal(r.SquareMetersParking)
+	if err != nil {
+		return nil, err
+	}
+	output["urlFrontPicture"], err = json.Marshal(r.UrlFrontPicture)
+	if err != nil {
+		return nil, err
+	}
+	output["urlInsidePicture"], err = json.Marshal(r.UrlInsidePicture)
+	if err != nil {
+		return nil, err
+	}
+	output["urlDepositPicture"], err = json.Marshal(r.UrlDepositPicture)
+	if err != nil {
+		return nil, err
+	}
+	output["users"], err = json.Marshal(r.Users)
+	if err != nil {
+		return nil, err
+	}
+	output["stamp"], err = json.Marshal(r.Stamp)
+	if err != nil {
+		return nil, err
+	}
+	output["startDate"], err = json.Marshal(r.StartDate)
+	if err != nil {
+		return nil, err
+	}
+	output["idResponsible"], err = json.Marshal(r.IdResponsible)
+	if err != nil {
+		return nil, err
+	}
+	output["idNetworkOwner"], err = json.Marshal(r.IdNetworkOwner)
+	if err != nil {
+		return nil, err
+	}
+	output["idRegion"], err = json.Marshal(r.IdRegion)
+	if err != nil {
+		return nil, err
+	}
+	output["contractsState"], err = json.Marshal(r.ContractsState)
+	if err != nil {
+		return nil, err
+	}
+	output["listContracts"], err = json.Marshal(r.ListContracts)
+	if err != nil {
+		return nil, err
+	}
+	output["listCharacteristics"], err = json.Marshal(r.ListCharacteristics)
+	if err != nil {
+		return nil, err
+	}
+	output["operativeUnitTMSRelationship"], err = json.Marshal(r.OperativeUnitTMSRelationship)
 	if err != nil {
 		return nil, err
 	}
@@ -230,6 +874,20 @@ func (r *OperativeUnit) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for id")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["name"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Name); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for name")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["email"]; ok {
 			return v
 		}
@@ -244,18 +902,32 @@ func (r *OperativeUnit) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for email")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["name"]; ok {
+		if v, ok := fields["isFrontier"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Name); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.IsFrontier); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for name")
+		return fmt.Errorf("no value specified for isFrontier")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["isActive"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IsActive); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for isActive")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["address"]; ok {
@@ -272,6 +944,34 @@ func (r *OperativeUnit) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for address")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["numberAddress"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumberAddress); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for numberAddress")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["postalCode"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PostalCode); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for postalCode")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["city"]; ok {
 			return v
 		}
@@ -286,18 +986,525 @@ func (r *OperativeUnit) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for city")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["zipCode"]; ok {
+		if v, ok := fields["state"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ZipCode); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.State); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for zipCode")
+		return fmt.Errorf("no value specified for state")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["country"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Country); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for country")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["taxJurisdiction"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TaxJurisdiction); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for taxJurisdiction")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["latitude"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Latitude); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for latitude")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["longitude"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Longitude); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for longitude")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["geospatialPolygon"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.GeospatialPolygon); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for geospatialPolygon")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["customerServiceSchedule"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CustomerServiceSchedule); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for customerServiceSchedule")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["operationServiceSchedule"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OperationServiceSchedule); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for operationServiceSchedule")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["allowsCustomerClient"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AllowsCustomerClient); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for allowsCustomerClient")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["allowsCentralizedReturn"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AllowsCentralizedReturn); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for allowsCentralizedReturn")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["allowsCashSale"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AllowsCashSale); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for allowsCashSale")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["allowsImprest"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AllowsImprest); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for allowsImprest")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["allowsChargeRecipient"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AllowsChargeRecipient); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for allowsChargeRecipient")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["allowsSaleSerializedProducts"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AllowsSaleSerializedProducts); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for allowsSaleSerializedProducts")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["costCenter"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CostCenter); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for costCenter")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["allowsCustody"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AllowsCustody); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for allowsCustody")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["availableSquareMetersForCustody"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AvailableSquareMetersForCustody); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for availableSquareMetersForCustody")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["allowsCustomerStock"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AllowsCustomerStock); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for allowsCustomerStock")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["availableSquareMetersForCustomerStock"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AvailableSquareMetersForCustomerStock); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for availableSquareMetersForCustomerStock")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["positionsForCustomerStock"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PositionsForCustomerStock); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for positionsForCustomerStock")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["squareMetersIndoor"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SquareMetersIndoor); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for squareMetersIndoor")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["squareMetersOutdoor"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SquareMetersOutdoor); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for squareMetersOutdoor")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["squareMetersCommercialAttention"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SquareMetersCommercialAttention); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for squareMetersCommercialAttention")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["squareMetersParking"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SquareMetersParking); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for squareMetersParking")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["urlFrontPicture"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlFrontPicture); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for urlFrontPicture")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["urlInsidePicture"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlInsidePicture); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for urlInsidePicture")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["urlDepositPicture"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlDepositPicture); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for urlDepositPicture")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["users"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Users); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for users")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["stamp"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Stamp); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for stamp")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["startDate"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StartDate); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for startDate")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idResponsible"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdResponsible); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idResponsible")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idNetworkOwner"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdNetworkOwner); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idNetworkOwner")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idRegion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdRegion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idRegion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["contractsState"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContractsState); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for contractsState")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["listContracts"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ListContracts); err != nil {
+			return err
+		}
+	} else {
+		r.ListContracts = make([]string, 0)
+
+		r.ListContracts = make([]string, 0)
+
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["listCharacteristics"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ListCharacteristics); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for listCharacteristics")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["operativeUnitTMSRelationship"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OperativeUnitTMSRelationship); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for operativeUnitTMSRelationship")
 	}
 	return nil
 }
