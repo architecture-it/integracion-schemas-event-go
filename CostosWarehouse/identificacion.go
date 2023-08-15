@@ -42,10 +42,14 @@ type Identificacion struct {
 
 	Key6 *UnionStringNull `json:"Key6"`
 
+	Key7 *UnionArrayStringNull `json:"Key7"`
+
+	Key8 *UnionArrayStringNull `json:"Key8"`
+
 	FechaGeneracion int64 `json:"FechaGeneracion"`
 }
 
-const IdentificacionAvroCRC64Fingerprint = "\xfeG\xb2p\x18}\x80\xae"
+const IdentificacionAvroCRC64Fingerprint = "m\x94\xebe \xd6i\xa5"
 
 func NewIdentificacion() Identificacion {
 	r := Identificacion{}
@@ -72,6 +76,10 @@ func NewIdentificacion() Identificacion {
 	r.Key5 = NewUnionStringNull()
 
 	r.Key6 = NewUnionStringNull()
+
+	r.Key7 = NewUnionArrayStringNull()
+
+	r.Key8 = NewUnionArrayStringNull()
 
 	return r
 }
@@ -149,6 +157,14 @@ func writeIdentificacion(r Identificacion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionArrayStringNull(r.Key7, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionArrayStringNull(r.Key8, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteLong(r.FechaGeneracion, w)
 	if err != nil {
 		return err
@@ -161,7 +177,7 @@ func (r Identificacion) Serialize(w io.Writer) error {
 }
 
 func (r Identificacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Evento\",\"type\":[\"string\",\"null\"]},{\"name\":\"SchemaAvro\",\"type\":[\"string\",\"null\"]},{\"name\":\"DescripcionProceso\",\"type\":[\"string\",\"null\"]},{\"name\":\"Almacen\",\"type\":[\"string\",\"null\"]},{\"name\":\"Propietario\",\"type\":[\"string\",\"null\"]},{\"name\":\"Instancia\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key1\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key2\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key3\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key4\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key5\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key6\",\"type\":[\"string\",\"null\"]},{\"name\":\"FechaGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.CostosWarehouse.Events.Common.Identificacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Evento\",\"type\":[\"string\",\"null\"]},{\"name\":\"SchemaAvro\",\"type\":[\"string\",\"null\"]},{\"name\":\"DescripcionProceso\",\"type\":[\"string\",\"null\"]},{\"name\":\"Almacen\",\"type\":[\"string\",\"null\"]},{\"name\":\"Propietario\",\"type\":[\"string\",\"null\"]},{\"name\":\"Instancia\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key1\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key2\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key3\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key4\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key5\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key6\",\"type\":[\"string\",\"null\"]},{\"name\":\"Key7\",\"type\":[{\"items\":\"string\",\"type\":\"array\"},\"null\"]},{\"name\":\"Key8\",\"type\":[{\"items\":\"string\",\"type\":\"array\"},\"null\"]},{\"name\":\"FechaGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.CostosWarehouse.Events.Common.Identificacion\",\"type\":\"record\"}"
 }
 
 func (r Identificacion) SchemaName() string {
@@ -228,6 +244,14 @@ func (r *Identificacion) Get(i int) types.Field {
 
 		return r.Key6
 	case 12:
+		r.Key7 = NewUnionArrayStringNull()
+
+		return r.Key7
+	case 13:
+		r.Key8 = NewUnionArrayStringNull()
+
+		return r.Key8
+	case 14:
 		w := types.Long{Target: &r.FechaGeneracion}
 
 		return w
@@ -279,6 +303,12 @@ func (r *Identificacion) NullField(i int) {
 		return
 	case 11:
 		r.Key6 = nil
+		return
+	case 12:
+		r.Key7 = nil
+		return
+	case 13:
+		r.Key8 = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -341,6 +371,14 @@ func (r Identificacion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Key6"], err = json.Marshal(r.Key6)
+	if err != nil {
+		return nil, err
+	}
+	output["Key7"], err = json.Marshal(r.Key7)
+	if err != nil {
+		return nil, err
+	}
+	output["Key8"], err = json.Marshal(r.Key8)
 	if err != nil {
 		return nil, err
 	}
@@ -525,6 +563,34 @@ func (r *Identificacion) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Key6")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Key7"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Key7); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Key7")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Key8"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Key8); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Key8")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["FechaGeneracion"]; ok {
