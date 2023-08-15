@@ -85,9 +85,11 @@ type ArticuloSCE struct {
 	Psicotropico *UnionNullString `json:"psicotropico"`
 
 	Temperatura *UnionNullString `json:"temperatura"`
+
+	MarketPlace *UnionNullString `json:"marketPlace"`
 }
 
-const ArticuloSCEAvroCRC64Fingerprint = "b\xd8\xddf1\xa0l\x1b"
+const ArticuloSCEAvroCRC64Fingerprint = "R\x89\x9b\xad@v\xa5\xd9"
 
 func NewArticuloSCE() ArticuloSCE {
 	r := ArticuloSCE{}
@@ -96,6 +98,7 @@ func NewArticuloSCE() ArticuloSCE {
 	r.OtrosDatos = nil
 	r.Grupos = nil
 	r.CamposLibres = nil
+	r.MarketPlace = nil
 	return r
 }
 
@@ -260,6 +263,10 @@ func writeArticuloSCE(r ArticuloSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.MarketPlace, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -268,7 +275,7 @@ func (r ArticuloSCE) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloSCE) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"ean\",\"type\":\"string\"},{\"name\":\"tipoEan\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"datosLogisticos\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"volumen\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoBruto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoTara\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoNeto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPaquete\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"nivelesporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cajasporNivel\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"volumencubico\",\"type\":[\"null\",\"float\"]}],\"name\":\"DatosLogisticos\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"}]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]},{\"name\":\"claseDeArticulo\",\"type\":[\"null\",\"string\"]},{\"name\":\"paisDeOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"esNumeroDeSerieDeEntradaUnico\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"esNumeroDeSerieSalidaUnico\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"instruccionesDePreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"vidaUtilSalidaEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigoDeVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"indicadorDeVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"consumoEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"vencimientoEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"vidaUtilEntradaEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"serializado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"grupos\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.Metadato\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.Metadato\"]},{\"name\":\"coleccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"tema\",\"type\":[\"null\",\"string\"]},{\"name\":\"temporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"estilo\",\"type\":[\"null\",\"string\"]},{\"name\":\"color\",\"type\":[\"null\",\"string\"]},{\"name\":\"iniciodeTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"findeTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"talle\",\"type\":[\"null\",\"string\"]},{\"name\":\"rubro\",\"type\":[\"null\",\"string\"]},{\"name\":\"pavu\",\"type\":[\"null\",\"string\"]},{\"name\":\"psicotropico\",\"type\":[\"null\",\"string\"]},{\"name\":\"temperatura\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloSCE\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"ean\",\"type\":\"string\"},{\"name\":\"tipoEan\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"datosLogisticos\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"volumen\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoBruto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoTara\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoNeto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPaquete\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cantidadporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoUnidad\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"alturaPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPack\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoCaja\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"pesoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"nivelesporPallet\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"cajasporNivel\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"volumencubico\",\"type\":[\"null\",\"float\"]}],\"name\":\"DatosLogisticos\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"}]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]},{\"name\":\"claseDeArticulo\",\"type\":[\"null\",\"string\"]},{\"name\":\"paisDeOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"esNumeroDeSerieDeEntradaUnico\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"esNumeroDeSerieSalidaUnico\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"instruccionesDePreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"vidaUtilSalidaEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigoDeVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"indicadorDeVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"consumoEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"vencimientoEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"vidaUtilEntradaEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"serializado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"grupos\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.Metadato\"]},{\"default\":null,\"name\":\"camposLibres\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.Metadato\"]},{\"name\":\"coleccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"tema\",\"type\":[\"null\",\"string\"]},{\"name\":\"temporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"estilo\",\"type\":[\"null\",\"string\"]},{\"name\":\"color\",\"type\":[\"null\",\"string\"]},{\"name\":\"iniciodeTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"findeTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"talle\",\"type\":[\"null\",\"string\"]},{\"name\":\"rubro\",\"type\":[\"null\",\"string\"]},{\"name\":\"pavu\",\"type\":[\"null\",\"string\"]},{\"name\":\"psicotropico\",\"type\":[\"null\",\"string\"]},{\"name\":\"temperatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"marketPlace\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloSCE\",\"type\":\"record\"}"
 }
 
 func (r ArticuloSCE) SchemaName() string {
@@ -430,6 +437,10 @@ func (r *ArticuloSCE) Get(i int) types.Field {
 		r.Temperatura = NewUnionNullString()
 
 		return r.Temperatura
+	case 34:
+		r.MarketPlace = NewUnionNullString()
+
+		return r.MarketPlace
 	}
 	panic("Unknown field index")
 }
@@ -444,6 +455,9 @@ func (r *ArticuloSCE) SetDefault(i int) {
 		return
 	case 21:
 		r.CamposLibres = nil
+		return
+	case 34:
+		r.MarketPlace = nil
 		return
 	}
 	panic("Unknown field index")
@@ -534,6 +548,9 @@ func (r *ArticuloSCE) NullField(i int) {
 		return
 	case 33:
 		r.Temperatura = nil
+		return
+	case 34:
+		r.MarketPlace = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -684,6 +701,10 @@ func (r ArticuloSCE) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["temperatura"], err = json.Marshal(r.Temperatura)
+	if err != nil {
+		return nil, err
+	}
+	output["marketPlace"], err = json.Marshal(r.MarketPlace)
 	if err != nil {
 		return nil, err
 	}
@@ -1178,6 +1199,22 @@ func (r *ArticuloSCE) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for temperatura")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["marketPlace"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.MarketPlace); err != nil {
+			return err
+		}
+	} else {
+		r.MarketPlace = NewUnionNullString()
+
+		r.MarketPlace = nil
 	}
 	return nil
 }
