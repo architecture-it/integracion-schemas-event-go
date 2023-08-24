@@ -18,8 +18,6 @@ import (
 var _ = fmt.Printf
 
 type CambioEstadoTarea struct {
-	Id int32 `json:"Id"`
-
 	TareaId int32 `json:"TareaId"`
 
 	PlantaOperacionId int32 `json:"PlantaOperacionId"`
@@ -35,7 +33,7 @@ type CambioEstadoTarea struct {
 	TiempoReal *UnionNullInt `json:"TiempoReal"`
 }
 
-const CambioEstadoTareaAvroCRC64Fingerprint = "\x19\x06\r\x06\xf63\xa5\xae"
+const CambioEstadoTareaAvroCRC64Fingerprint = "/\xf6P^\x1fS%\xa8"
 
 func NewCambioEstadoTarea() CambioEstadoTarea {
 	r := CambioEstadoTarea{}
@@ -70,10 +68,6 @@ func DeserializeCambioEstadoTareaFromSchema(r io.Reader, schema string) (CambioE
 
 func writeCambioEstadoTarea(r CambioEstadoTarea, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.Id, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteInt(r.TareaId, w)
 	if err != nil {
 		return err
@@ -110,7 +104,7 @@ func (r CambioEstadoTarea) Serialize(w io.Writer) error {
 }
 
 func (r CambioEstadoTarea) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"TareaId\",\"type\":\"int\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"EstadoId\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CantidadPickeados\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoReal\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.WosPickingEstadoTarea.Events.Record.CambioEstadoTarea\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TareaId\",\"type\":\"int\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"EstadoId\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CantidadPickeados\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoReal\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.WosPickingEstadoTarea.Events.Record.CambioEstadoTarea\",\"type\":\"record\"}"
 }
 
 func (r CambioEstadoTarea) SchemaName() string {
@@ -129,39 +123,34 @@ func (_ CambioEstadoTarea) SetUnionElem(v int64) { panic("Unsupported operation"
 func (r *CambioEstadoTarea) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.Id}
-
-		return w
-
-	case 1:
 		w := types.Int{Target: &r.TareaId}
 
 		return w
 
-	case 2:
+	case 1:
 		w := types.Int{Target: &r.PlantaOperacionId}
 
 		return w
 
-	case 3:
+	case 2:
 		w := types.String{Target: &r.EstadoId}
 
 		return w
 
-	case 4:
+	case 3:
 		w := types.Long{Target: &r.Fecha}
 
 		return w
 
-	case 5:
+	case 4:
 		r.UsuarioId = NewUnionNullInt()
 
 		return r.UsuarioId
-	case 6:
+	case 5:
 		r.CantidadPickeados = NewUnionNullInt()
 
 		return r.CantidadPickeados
-	case 7:
+	case 6:
 		r.TiempoReal = NewUnionNullInt()
 
 		return r.TiempoReal
@@ -171,13 +160,13 @@ func (r *CambioEstadoTarea) Get(i int) types.Field {
 
 func (r *CambioEstadoTarea) SetDefault(i int) {
 	switch i {
-	case 5:
+	case 4:
 		r.UsuarioId = nil
 		return
-	case 6:
+	case 5:
 		r.CantidadPickeados = nil
 		return
-	case 7:
+	case 6:
 		r.TiempoReal = nil
 		return
 	}
@@ -186,13 +175,13 @@ func (r *CambioEstadoTarea) SetDefault(i int) {
 
 func (r *CambioEstadoTarea) NullField(i int) {
 	switch i {
-	case 5:
+	case 4:
 		r.UsuarioId = nil
 		return
-	case 6:
+	case 5:
 		r.CantidadPickeados = nil
 		return
-	case 7:
+	case 6:
 		r.TiempoReal = nil
 		return
 	}
@@ -211,10 +200,6 @@ func (_ CambioEstadoTarea) AvroCRC64Fingerprint() []byte {
 func (r CambioEstadoTarea) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Id"], err = json.Marshal(r.Id)
-	if err != nil {
-		return nil, err
-	}
 	output["TareaId"], err = json.Marshal(r.TareaId)
 	if err != nil {
 		return nil, err
@@ -253,20 +238,6 @@ func (r *CambioEstadoTarea) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["Id"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Id); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Id")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TareaId"]; ok {
 			return v
