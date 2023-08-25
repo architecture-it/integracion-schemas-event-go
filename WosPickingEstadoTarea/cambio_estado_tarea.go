@@ -20,7 +20,7 @@ var _ = fmt.Printf
 type CambioEstadoTarea struct {
 	TareaId int32 `json:"TareaId"`
 
-	PedidoId string `json:"PedidoId"`
+	PedidoId int32 `json:"PedidoId"`
 
 	TareaIdExterno string `json:"TareaIdExterno"`
 
@@ -43,7 +43,7 @@ type CambioEstadoTarea struct {
 	TiempoReal *UnionNullInt `json:"TiempoReal"`
 }
 
-const CambioEstadoTareaAvroCRC64Fingerprint = "?h~S|(\xfe "
+const CambioEstadoTareaAvroCRC64Fingerprint = "\xfa=\xdd -\xf0\\\x8d"
 
 func NewCambioEstadoTarea() CambioEstadoTarea {
 	r := CambioEstadoTarea{}
@@ -84,7 +84,7 @@ func writeCambioEstadoTarea(r CambioEstadoTarea, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PedidoId, w)
+	err = vm.WriteInt(r.PedidoId, w)
 	if err != nil {
 		return err
 	}
@@ -136,7 +136,7 @@ func (r CambioEstadoTarea) Serialize(w io.Writer) error {
 }
 
 func (r CambioEstadoTarea) Schema() string {
-	return "{\"fields\":[{\"name\":\"TareaId\",\"type\":\"int\"},{\"name\":\"PedidoId\",\"type\":\"string\"},{\"name\":\"TareaIdExterno\",\"type\":\"string\"},{\"name\":\"PedidoIdExterno\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"EstadoId\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"MotivoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ContenedorId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadPickeados\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoReal\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.WosPickingEstadoTarea.Events.Record.CambioEstadoTarea\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TareaId\",\"type\":\"int\"},{\"name\":\"PedidoId\",\"type\":\"int\"},{\"name\":\"TareaIdExterno\",\"type\":\"string\"},{\"name\":\"PedidoIdExterno\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"EstadoId\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"MotivoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ContenedorId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadPickeados\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoReal\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.WosPickingEstadoTarea.Events.Record.CambioEstadoTarea\",\"type\":\"record\"}"
 }
 
 func (r CambioEstadoTarea) SchemaName() string {
@@ -160,7 +160,7 @@ func (r *CambioEstadoTarea) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.PedidoId}
+		w := types.Int{Target: &r.PedidoId}
 
 		return w
 
