@@ -29,7 +29,7 @@ type Cabecera struct {
 	MensajeError string `json:"MensajeError"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\xc5+Z\xd7B}\xb6*"
+const CabeceraAvroCRC64Fingerprint = "\xf8\x0eL/|\xec\xee\xfa"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -89,11 +89,11 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"MensajeError\",\"type\":\"string\"}],\"name\":\"Andreani.WosExpedicion.Events.TyDIntermedioFallidaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"MensajeError\",\"type\":\"string\"}],\"name\":\"Andreani.WosExpedicionTyD.Events.TyDIntermedioFallidaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
-	return "Andreani.WosExpedicion.Events.TyDIntermedioFallidaCommon.Cabecera"
+	return "Andreani.WosExpedicionTyD.Events.TyDIntermedioFallidaCommon.Cabecera"
 }
 
 func (_ Cabecera) SetBoolean(v bool)    { panic("Unsupported operation") }

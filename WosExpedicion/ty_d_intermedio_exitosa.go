@@ -23,7 +23,7 @@ type TyDIntermedioExitosa struct {
 	Cabecera Cabecera `json:"Cabecera"`
 }
 
-const TyDIntermedioExitosaAvroCRC64Fingerprint = "\xe5\x15>\x7f)\xea3\x9c"
+const TyDIntermedioExitosaAvroCRC64Fingerprint = "\xd4g\x02\x02Tz\xe8\xde"
 
 func NewTyDIntermedioExitosa() TyDIntermedioExitosa {
 	r := TyDIntermedioExitosa{}
@@ -75,11 +75,11 @@ func (r TyDIntermedioExitosa) Serialize(w io.Writer) error {
 }
 
 func (r TyDIntermedioExitosa) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.WosExpedicion.Events.TyDIntermedioExitosaCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.WosExpedicion.Events.TyDIntermedioExitosaCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.WosExpedicion.Events.Record.TyDIntermedioExitosa\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.WosExpedicionTyD.Events.TyDIntermedioExitosaCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.WosExpedicionTyD.Events.TyDIntermedioExitosaCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.WosExpedicionTyD.Events.Record.TyDIntermedioExitosa\",\"type\":\"record\"}"
 }
 
 func (r TyDIntermedioExitosa) SchemaName() string {
-	return "Andreani.WosExpedicion.Events.Record.TyDIntermedioExitosa"
+	return "Andreani.WosExpedicionTyD.Events.Record.TyDIntermedioExitosa"
 }
 
 func (_ TyDIntermedioExitosa) SetBoolean(v bool)    { panic("Unsupported operation") }
