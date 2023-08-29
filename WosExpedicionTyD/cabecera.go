@@ -27,9 +27,13 @@ type Cabecera struct {
 	ContratoTMS string `json:"ContratoTMS"`
 
 	MensajeError string `json:"MensajeError"`
+
+	PlantaDeOperacionId int32 `json:"PlantaDeOperacionId"`
+
+	Puerta string `json:"Puerta"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\xf8\x0eL/|\xec\xee\xfa"
+const CabeceraAvroCRC64Fingerprint = "ns\xb0q\x107\xe9r"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -81,6 +85,14 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.PlantaDeOperacionId, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Puerta, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -89,7 +101,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"MensajeError\",\"type\":\"string\"}],\"name\":\"Andreani.WosExpedicionTyD.Events.TyDIntermedioFallidaCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"MensajeError\",\"type\":\"string\"},{\"name\":\"PlantaDeOperacionId\",\"type\":\"int\"},{\"name\":\"Puerta\",\"type\":\"string\"}],\"name\":\"Andreani.WosExpedicionTyD.Events.TyDIntermedioFallidaCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -129,6 +141,16 @@ func (r *Cabecera) Get(i int) types.Field {
 
 	case 4:
 		w := types.String{Target: &r.MensajeError}
+
+		return w
+
+	case 5:
+		w := types.Int{Target: &r.PlantaDeOperacionId}
+
+		return w
+
+	case 6:
+		w := types.String{Target: &r.Puerta}
 
 		return w
 
@@ -177,6 +199,14 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["MensajeError"], err = json.Marshal(r.MensajeError)
+	if err != nil {
+		return nil, err
+	}
+	output["PlantaDeOperacionId"], err = json.Marshal(r.PlantaDeOperacionId)
+	if err != nil {
+		return nil, err
+	}
+	output["Puerta"], err = json.Marshal(r.Puerta)
 	if err != nil {
 		return nil, err
 	}
@@ -259,6 +289,34 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for MensajeError")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PlantaDeOperacionId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PlantaDeOperacionId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for PlantaDeOperacionId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Puerta"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Puerta); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Puerta")
 	}
 	return nil
 }

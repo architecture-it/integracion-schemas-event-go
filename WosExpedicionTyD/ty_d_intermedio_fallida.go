@@ -23,7 +23,7 @@ type TyDIntermedioFallida struct {
 	Cabecera Cabecera `json:"Cabecera"`
 }
 
-const TyDIntermedioFallidaAvroCRC64Fingerprint = "l\x87\xe1ٽe{\xa3"
+const TyDIntermedioFallidaAvroCRC64Fingerprint = "\xa63\xc8/\xe6\x96\x02,"
 
 func NewTyDIntermedioFallida() TyDIntermedioFallida {
 	r := TyDIntermedioFallida{}
@@ -75,7 +75,7 @@ func (r TyDIntermedioFallida) Serialize(w io.Writer) error {
 }
 
 func (r TyDIntermedioFallida) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.WosExpedicionTyD.Events.TyDIntermedioFallidaCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"MensajeError\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.WosExpedicionTyD.Events.TyDIntermedioFallidaCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.WosExpedicionTyD.Events.Record.TyDIntermedioFallida\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.WosExpedicionTyD.Events.TyDIntermedioFallidaCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"ContratoTMS\",\"type\":\"string\"},{\"name\":\"MensajeError\",\"type\":\"string\"},{\"name\":\"PlantaDeOperacionId\",\"type\":\"int\"},{\"name\":\"Puerta\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.WosExpedicionTyD.Events.TyDIntermedioFallidaCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.WosExpedicionTyD.Events.Record.TyDIntermedioFallida\",\"type\":\"record\"}"
 }
 
 func (r TyDIntermedioFallida) SchemaName() string {
