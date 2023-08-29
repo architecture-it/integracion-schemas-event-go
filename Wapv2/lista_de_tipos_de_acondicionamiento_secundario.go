@@ -21,7 +21,7 @@ type ListaDeTiposDeAcondicionamientoSecundario struct {
 	TiposDeAcondicionamientoSecundario []TiposDeAcondicionamientoSecundario `json:"tiposDeAcondicionamientoSecundario"`
 }
 
-const ListaDeTiposDeAcondicionamientoSecundarioAvroCRC64Fingerprint = "\xe4\x8dH\xba;\x8a\x9f_"
+const ListaDeTiposDeAcondicionamientoSecundarioAvroCRC64Fingerprint = "WW\x03\xa0\xae\xf7\xe9\x04"
 
 func NewListaDeTiposDeAcondicionamientoSecundario() ListaDeTiposDeAcondicionamientoSecundario {
 	r := ListaDeTiposDeAcondicionamientoSecundario{}
@@ -67,7 +67,7 @@ func (r ListaDeTiposDeAcondicionamientoSecundario) Serialize(w io.Writer) error 
 }
 
 func (r ListaDeTiposDeAcondicionamientoSecundario) Schema() string {
-	return "{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"int\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Wapv2.Events.Record.ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Wapv2.Events.Record.ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}"
 }
 
 func (r ListaDeTiposDeAcondicionamientoSecundario) SchemaName() string {
