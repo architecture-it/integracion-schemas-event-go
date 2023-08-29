@@ -18,18 +18,14 @@ import (
 var _ = fmt.Printf
 
 type Responsable struct {
-	Id int32 `json:"id"`
+	Nombre *UnionNullString `json:"nombre"`
 
-	PuntoDeTerceroID int32 `json:"puntoDeTerceroID"`
+	Apellido *UnionNullString `json:"apellido"`
 
-	Nombre string `json:"nombre"`
-
-	Apellido string `json:"apellido"`
-
-	Mail string `json:"mail"`
+	Mail *UnionNullString `json:"mail"`
 }
 
-const ResponsableAvroCRC64Fingerprint = "\xfcp\x13u\xa9\xe9\xa3\x0f"
+const ResponsableAvroCRC64Fingerprint = "\x14\x1c\x92\xe1۴m\x9e"
 
 func NewResponsable() Responsable {
 	r := Responsable{}
@@ -61,23 +57,15 @@ func DeserializeResponsableFromSchema(r io.Reader, schema string) (Responsable, 
 
 func writeResponsable(r Responsable, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.Id, w)
+	err = writeUnionNullString(r.Nombre, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.PuntoDeTerceroID, w)
+	err = writeUnionNullString(r.Apellido, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Nombre, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Apellido, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Mail, w)
+	err = writeUnionNullString(r.Mail, w)
 	if err != nil {
 		return err
 	}
@@ -89,7 +77,7 @@ func (r Responsable) Serialize(w io.Writer) error {
 }
 
 func (r Responsable) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"puntoDeTerceroID\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"mail\",\"type\":\"string\"}],\"name\":\"Andreani.PuntoDeTercero.Events.Record.Responsable\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"mail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Record.Responsable\",\"type\":\"record\"}"
 }
 
 func (r Responsable) SchemaName() string {
@@ -108,30 +96,17 @@ func (_ Responsable) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Responsable) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.Id}
+		r.Nombre = NewUnionNullString()
 
-		return w
-
+		return r.Nombre
 	case 1:
-		w := types.Int{Target: &r.PuntoDeTerceroID}
+		r.Apellido = NewUnionNullString()
 
-		return w
-
+		return r.Apellido
 	case 2:
-		w := types.String{Target: &r.Nombre}
+		r.Mail = NewUnionNullString()
 
-		return w
-
-	case 3:
-		w := types.String{Target: &r.Apellido}
-
-		return w
-
-	case 4:
-		w := types.String{Target: &r.Mail}
-
-		return w
-
+		return r.Mail
 	}
 	panic("Unknown field index")
 }
@@ -144,6 +119,15 @@ func (r *Responsable) SetDefault(i int) {
 
 func (r *Responsable) NullField(i int) {
 	switch i {
+	case 0:
+		r.Nombre = nil
+		return
+	case 1:
+		r.Apellido = nil
+		return
+	case 2:
+		r.Mail = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -160,14 +144,6 @@ func (_ Responsable) AvroCRC64Fingerprint() []byte {
 func (r Responsable) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["id"], err = json.Marshal(r.Id)
-	if err != nil {
-		return nil, err
-	}
-	output["puntoDeTerceroID"], err = json.Marshal(r.PuntoDeTerceroID)
-	if err != nil {
-		return nil, err
-	}
 	output["nombre"], err = json.Marshal(r.Nombre)
 	if err != nil {
 		return nil, err
@@ -190,34 +166,6 @@ func (r *Responsable) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["id"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Id); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for id")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["puntoDeTerceroID"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PuntoDeTerceroID); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for puntoDeTerceroID")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["nombre"]; ok {
 			return v

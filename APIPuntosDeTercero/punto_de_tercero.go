@@ -18,39 +18,35 @@ import (
 var _ = fmt.Printf
 
 type PuntoDeTercero struct {
-	Id int32 `json:"id"`
+	Id *UnionNullInt `json:"id"`
 
-	Nombre string `json:"nombre"`
+	Nombre *UnionNullString `json:"nombre"`
 
-	Telefono string `json:"telefono"`
+	Telefono *UnionNullString `json:"telefono"`
 
-	HorarioDeAtencion string `json:"horarioDeAtencion"`
+	HorarioDeAtencion *UnionNullString `json:"horarioDeAtencion"`
 
-	Observaciones string `json:"observaciones"`
+	Observaciones *UnionNullString `json:"observaciones"`
 
-	AdmiteEnvios int32 `json:"admiteEnvios"`
+	AdmiteEnvios *UnionNullInt `json:"admiteEnvios"`
 
-	EntregaEnvios int32 `json:"entregaEnvios"`
+	EntregaEnvios *UnionNullInt `json:"entregaEnvios"`
 
-	Tipo string `json:"tipo"`
+	Tipo *UnionNullString `json:"tipo"`
 
-	Referencia string `json:"referencia"`
+	Referencia *UnionNullString `json:"referencia"`
 
-	Responsable Responsable `json:"responsable"`
+	Responsable *UnionNullResponsable `json:"responsable"`
 
-	Ubicacion Ubicacion `json:"ubicacion"`
+	Ubicacion *UnionNullUbicacion `json:"ubicacion"`
 
-	Activo bool `json:"activo"`
+	Activo *UnionNullBool `json:"activo"`
 }
 
-const PuntoDeTerceroAvroCRC64Fingerprint = "\t\xb8w\x1c+\x8fӸ"
+const PuntoDeTerceroAvroCRC64Fingerprint = "\x12\xbd%%K\xdf {"
 
 func NewPuntoDeTercero() PuntoDeTercero {
 	r := PuntoDeTercero{}
-	r.Responsable = NewResponsable()
-
-	r.Ubicacion = NewUbicacion()
-
 	return r
 }
 
@@ -79,51 +75,51 @@ func DeserializePuntoDeTerceroFromSchema(r io.Reader, schema string) (PuntoDeTer
 
 func writePuntoDeTercero(r PuntoDeTercero, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.Id, w)
+	err = writeUnionNullInt(r.Id, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Nombre, w)
+	err = writeUnionNullString(r.Nombre, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Telefono, w)
+	err = writeUnionNullString(r.Telefono, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.HorarioDeAtencion, w)
+	err = writeUnionNullString(r.HorarioDeAtencion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Observaciones, w)
+	err = writeUnionNullString(r.Observaciones, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.AdmiteEnvios, w)
+	err = writeUnionNullInt(r.AdmiteEnvios, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.EntregaEnvios, w)
+	err = writeUnionNullInt(r.EntregaEnvios, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Tipo, w)
+	err = writeUnionNullString(r.Tipo, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Referencia, w)
+	err = writeUnionNullString(r.Referencia, w)
 	if err != nil {
 		return err
 	}
-	err = writeResponsable(r.Responsable, w)
+	err = writeUnionNullResponsable(r.Responsable, w)
 	if err != nil {
 		return err
 	}
-	err = writeUbicacion(r.Ubicacion, w)
+	err = writeUnionNullUbicacion(r.Ubicacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteBool(r.Activo, w)
+	err = writeUnionNullBool(r.Activo, w)
 	if err != nil {
 		return err
 	}
@@ -135,7 +131,7 @@ func (r PuntoDeTercero) Serialize(w io.Writer) error {
 }
 
 func (r PuntoDeTercero) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"},{\"name\":\"horarioDeAtencion\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"},{\"name\":\"admiteEnvios\",\"type\":\"int\"},{\"name\":\"entregaEnvios\",\"type\":\"int\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"referencia\",\"type\":\"string\"},{\"name\":\"responsable\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"puntoDeTerceroID\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"mail\",\"type\":\"string\"}],\"name\":\"Responsable\",\"type\":\"record\"}},{\"name\":\"ubicacion\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"puntoDeTerceroID\",\"type\":\"int\"},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"departamento\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"latitud\",\"type\":\"string\"},{\"name\":\"longitud\",\"type\":\"string\"}],\"name\":\"Ubicacion\",\"type\":\"record\"}},{\"name\":\"activo\",\"type\":\"boolean\"}],\"name\":\"Andreani.PuntoDeTercero.Events.Record.PuntoDeTercero\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"horarioDeAtencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"observaciones\",\"type\":[\"null\",\"string\"]},{\"name\":\"admiteEnvios\",\"type\":[\"null\",\"int\"]},{\"name\":\"entregaEnvios\",\"type\":[\"null\",\"int\"]},{\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"referencia\",\"type\":[\"null\",\"string\"]},{\"name\":\"responsable\",\"type\":[\"null\",{\"fields\":[{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"mail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Responsable\",\"type\":\"record\"}]},{\"name\":\"ubicacion\",\"type\":[\"null\",{\"fields\":[{\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"name\":\"longitud\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ubicacion\",\"type\":\"record\"}]},{\"name\":\"activo\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Record.PuntoDeTercero\",\"type\":\"record\"}"
 }
 
 func (r PuntoDeTercero) SchemaName() string {
@@ -154,69 +150,53 @@ func (_ PuntoDeTercero) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *PuntoDeTercero) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.Id}
+		r.Id = NewUnionNullInt()
 
-		return w
-
+		return r.Id
 	case 1:
-		w := types.String{Target: &r.Nombre}
+		r.Nombre = NewUnionNullString()
 
-		return w
-
+		return r.Nombre
 	case 2:
-		w := types.String{Target: &r.Telefono}
+		r.Telefono = NewUnionNullString()
 
-		return w
-
+		return r.Telefono
 	case 3:
-		w := types.String{Target: &r.HorarioDeAtencion}
+		r.HorarioDeAtencion = NewUnionNullString()
 
-		return w
-
+		return r.HorarioDeAtencion
 	case 4:
-		w := types.String{Target: &r.Observaciones}
+		r.Observaciones = NewUnionNullString()
 
-		return w
-
+		return r.Observaciones
 	case 5:
-		w := types.Int{Target: &r.AdmiteEnvios}
+		r.AdmiteEnvios = NewUnionNullInt()
 
-		return w
-
+		return r.AdmiteEnvios
 	case 6:
-		w := types.Int{Target: &r.EntregaEnvios}
+		r.EntregaEnvios = NewUnionNullInt()
 
-		return w
-
+		return r.EntregaEnvios
 	case 7:
-		w := types.String{Target: &r.Tipo}
+		r.Tipo = NewUnionNullString()
 
-		return w
-
+		return r.Tipo
 	case 8:
-		w := types.String{Target: &r.Referencia}
+		r.Referencia = NewUnionNullString()
 
-		return w
-
+		return r.Referencia
 	case 9:
-		r.Responsable = NewResponsable()
+		r.Responsable = NewUnionNullResponsable()
 
-		w := types.Record{Target: &r.Responsable}
-
-		return w
-
+		return r.Responsable
 	case 10:
-		r.Ubicacion = NewUbicacion()
+		r.Ubicacion = NewUnionNullUbicacion()
 
-		w := types.Record{Target: &r.Ubicacion}
-
-		return w
-
+		return r.Ubicacion
 	case 11:
-		w := types.Boolean{Target: &r.Activo}
+		r.Activo = NewUnionNullBool()
 
-		return w
-
+		return r.Activo
 	}
 	panic("Unknown field index")
 }
@@ -229,6 +209,42 @@ func (r *PuntoDeTercero) SetDefault(i int) {
 
 func (r *PuntoDeTercero) NullField(i int) {
 	switch i {
+	case 0:
+		r.Id = nil
+		return
+	case 1:
+		r.Nombre = nil
+		return
+	case 2:
+		r.Telefono = nil
+		return
+	case 3:
+		r.HorarioDeAtencion = nil
+		return
+	case 4:
+		r.Observaciones = nil
+		return
+	case 5:
+		r.AdmiteEnvios = nil
+		return
+	case 6:
+		r.EntregaEnvios = nil
+		return
+	case 7:
+		r.Tipo = nil
+		return
+	case 8:
+		r.Referencia = nil
+		return
+	case 9:
+		r.Responsable = nil
+		return
+	case 10:
+		r.Ubicacion = nil
+		return
+	case 11:
+		r.Activo = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
