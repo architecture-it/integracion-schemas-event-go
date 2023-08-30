@@ -103,12 +103,16 @@ type OperativeUnit struct {
 	IdRegion *UnionNullString `json:"idRegion"`
 
 	ContractsState *UnionNullLong `json:"contractsState"`
+
+	OperativeUnitTMSRelationship OperativeUnitTMSRelationship `json:"operativeUnitTMSRelationship"`
 }
 
-const OperativeUnitAvroCRC64Fingerprint = "\x84w\xf5\x82~\x90f5"
+const OperativeUnitAvroCRC64Fingerprint = "e\xafG\x1fu\xd6\xfc("
 
 func NewOperativeUnit() OperativeUnit {
 	r := OperativeUnit{}
+	r.OperativeUnitTMSRelationship = NewOperativeUnitTMSRelationship()
+
 	return r
 }
 
@@ -309,6 +313,10 @@ func writeOperativeUnit(r OperativeUnit, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeOperativeUnitTMSRelationship(r.OperativeUnitTMSRelationship, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -317,7 +325,7 @@ func (r OperativeUnit) Serialize(w io.Writer) error {
 }
 
 func (r OperativeUnit) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"isFrontier\",\"type\":\"boolean\"},{\"name\":\"isActive\",\"type\":\"boolean\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"numberAddress\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"taxJurisdiction\",\"type\":\"string\"},{\"name\":\"latitude\",\"type\":\"string\"},{\"name\":\"longitude\",\"type\":\"string\"},{\"name\":\"geospatialPolygon\",\"type\":[\"null\",\"long\"]},{\"name\":\"customerServiceSchedule\",\"type\":\"string\"},{\"name\":\"operationServiceSchedule\",\"type\":\"string\"},{\"name\":\"allowsCustomerClient\",\"type\":\"boolean\"},{\"name\":\"allowsCentralizedReturn\",\"type\":\"boolean\"},{\"name\":\"allowsCashSale\",\"type\":\"long\"},{\"name\":\"allowsImprest\",\"type\":\"long\"},{\"name\":\"allowsChargeRecipient\",\"type\":\"long\"},{\"name\":\"allowsSaleSerializedProducts\",\"type\":\"long\"},{\"name\":\"costCenter\",\"type\":\"string\"},{\"name\":\"allowsCustody\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustody\",\"type\":[\"null\",\"long\"]},{\"name\":\"allowsCustomerStock\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"positionsForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersIndoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersOutdoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersCommercialAttention\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParking\",\"type\":[\"null\",\"long\"]},{\"name\":\"urlFrontPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlInsidePicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlDepositPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"users\",\"type\":[\"null\",\"string\"]},{\"name\":\"stamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"startDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"DniResponsible\",\"type\":[\"null\",\"string\"]},{\"name\":\"idNetworkOwner\",\"type\":[\"null\",\"string\"]},{\"name\":\"idRegion\",\"type\":[\"null\",\"string\"]},{\"name\":\"contractsState\",\"type\":[\"null\",\"long\"]}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"isFrontier\",\"type\":\"boolean\"},{\"name\":\"isActive\",\"type\":\"boolean\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"numberAddress\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"taxJurisdiction\",\"type\":\"string\"},{\"name\":\"latitude\",\"type\":\"string\"},{\"name\":\"longitude\",\"type\":\"string\"},{\"name\":\"geospatialPolygon\",\"type\":[\"null\",\"long\"]},{\"name\":\"customerServiceSchedule\",\"type\":\"string\"},{\"name\":\"operationServiceSchedule\",\"type\":\"string\"},{\"name\":\"allowsCustomerClient\",\"type\":\"boolean\"},{\"name\":\"allowsCentralizedReturn\",\"type\":\"boolean\"},{\"name\":\"allowsCashSale\",\"type\":\"long\"},{\"name\":\"allowsImprest\",\"type\":\"long\"},{\"name\":\"allowsChargeRecipient\",\"type\":\"long\"},{\"name\":\"allowsSaleSerializedProducts\",\"type\":\"long\"},{\"name\":\"costCenter\",\"type\":\"string\"},{\"name\":\"allowsCustody\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustody\",\"type\":[\"null\",\"long\"]},{\"name\":\"allowsCustomerStock\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"positionsForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersIndoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersOutdoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersCommercialAttention\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParking\",\"type\":[\"null\",\"long\"]},{\"name\":\"urlFrontPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlInsidePicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlDepositPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"users\",\"type\":[\"null\",\"string\"]},{\"name\":\"stamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"startDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"DniResponsible\",\"type\":[\"null\",\"string\"]},{\"name\":\"idNetworkOwner\",\"type\":[\"null\",\"string\"]},{\"name\":\"idRegion\",\"type\":[\"null\",\"string\"]},{\"name\":\"contractsState\",\"type\":[\"null\",\"long\"]},{\"name\":\"operativeUnitTMSRelationship\",\"type\":{\"fields\":[{\"name\":\"idIntegra\",\"type\":\"long\"},{\"name\":\"idAlertran\",\"type\":\"string\"},{\"name\":\"defaultTMS\",\"type\":\"string\"}],\"name\":\"OperativeUnitTMSRelationship\",\"type\":\"record\"}}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
 }
 
 func (r OperativeUnit) SchemaName() string {
@@ -532,6 +540,13 @@ func (r *OperativeUnit) Get(i int) types.Field {
 		r.ContractsState = NewUnionNullLong()
 
 		return r.ContractsState
+	case 43:
+		r.OperativeUnitTMSRelationship = NewOperativeUnitTMSRelationship()
+
+		w := types.Record{Target: &r.OperativeUnitTMSRelationship}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -783,6 +798,10 @@ func (r OperativeUnit) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["contractsState"], err = json.Marshal(r.ContractsState)
+	if err != nil {
+		return nil, err
+	}
+	output["operativeUnitTMSRelationship"], err = json.Marshal(r.OperativeUnitTMSRelationship)
 	if err != nil {
 		return nil, err
 	}
@@ -1397,6 +1416,20 @@ func (r *OperativeUnit) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for contractsState")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["operativeUnitTMSRelationship"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OperativeUnitTMSRelationship); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for operativeUnitTMSRelationship")
 	}
 	return nil
 }
