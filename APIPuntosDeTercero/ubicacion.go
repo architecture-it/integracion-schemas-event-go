@@ -33,7 +33,7 @@ type Ubicacion struct {
 	Longitud *UnionNullString `json:"longitud"`
 }
 
-const UbicacionAvroCRC64Fingerprint = "\xa4R\x9e\x05q\x12\v\xcc"
+const UbicacionAvroCRC64Fingerprint = "\xf8\x9a\xfdŔ\xe9b\xa6"
 
 func NewUbicacion() Ubicacion {
 	r := Ubicacion{}
@@ -101,11 +101,11 @@ func (r Ubicacion) Serialize(w io.Writer) error {
 }
 
 func (r Ubicacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"name\":\"longitud\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Record.Ubicacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"name\":\"longitud\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Common.Ubicacion\",\"type\":\"record\"}"
 }
 
 func (r Ubicacion) SchemaName() string {
-	return "Andreani.PuntoDeTercero.Events.Record.Ubicacion"
+	return "Andreani.PuntoDeTercero.Events.Common.Ubicacion"
 }
 
 func (_ Ubicacion) SetBoolean(v bool)    { panic("Unsupported operation") }

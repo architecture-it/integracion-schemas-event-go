@@ -43,7 +43,7 @@ type PuntoDeTercero struct {
 	Activo *UnionNullBool `json:"activo"`
 }
 
-const PuntoDeTerceroAvroCRC64Fingerprint = "\x12\xbd%%K\xdf {"
+const PuntoDeTerceroAvroCRC64Fingerprint = "\x9d\x1d\x81|\xb8\xde\x18\xb1"
 
 func NewPuntoDeTercero() PuntoDeTercero {
 	r := PuntoDeTercero{}
@@ -131,11 +131,11 @@ func (r PuntoDeTercero) Serialize(w io.Writer) error {
 }
 
 func (r PuntoDeTercero) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"horarioDeAtencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"observaciones\",\"type\":[\"null\",\"string\"]},{\"name\":\"admiteEnvios\",\"type\":[\"null\",\"int\"]},{\"name\":\"entregaEnvios\",\"type\":[\"null\",\"int\"]},{\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"referencia\",\"type\":[\"null\",\"string\"]},{\"name\":\"responsable\",\"type\":[\"null\",{\"fields\":[{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"mail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Responsable\",\"type\":\"record\"}]},{\"name\":\"ubicacion\",\"type\":[\"null\",{\"fields\":[{\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"name\":\"longitud\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ubicacion\",\"type\":\"record\"}]},{\"name\":\"activo\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Record.PuntoDeTercero\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"horarioDeAtencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"observaciones\",\"type\":[\"null\",\"string\"]},{\"name\":\"admiteEnvios\",\"type\":[\"null\",\"int\"]},{\"name\":\"entregaEnvios\",\"type\":[\"null\",\"int\"]},{\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"referencia\",\"type\":[\"null\",\"string\"]},{\"name\":\"responsable\",\"type\":[\"null\",{\"fields\":[{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"mail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Responsable\",\"type\":\"record\"}]},{\"name\":\"ubicacion\",\"type\":[\"null\",{\"fields\":[{\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"name\":\"longitud\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ubicacion\",\"type\":\"record\"}]},{\"name\":\"activo\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Common.PuntoDeTercero\",\"type\":\"record\"}"
 }
 
 func (r PuntoDeTercero) SchemaName() string {
-	return "Andreani.PuntoDeTercero.Events.Record.PuntoDeTercero"
+	return "Andreani.PuntoDeTercero.Events.Common.PuntoDeTercero"
 }
 
 func (_ PuntoDeTercero) SetBoolean(v bool)    { panic("Unsupported operation") }

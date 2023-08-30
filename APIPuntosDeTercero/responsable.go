@@ -25,7 +25,7 @@ type Responsable struct {
 	Mail *UnionNullString `json:"mail"`
 }
 
-const ResponsableAvroCRC64Fingerprint = "\x14\x1c\x92\xe1۴m\x9e"
+const ResponsableAvroCRC64Fingerprint = "\x7f\x8a\x98\xa4\x1aM\x9f\x93"
 
 func NewResponsable() Responsable {
 	r := Responsable{}
@@ -77,11 +77,11 @@ func (r Responsable) Serialize(w io.Writer) error {
 }
 
 func (r Responsable) Schema() string {
-	return "{\"fields\":[{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"mail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Record.Responsable\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"mail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Common.Responsable\",\"type\":\"record\"}"
 }
 
 func (r Responsable) SchemaName() string {
-	return "Andreani.PuntoDeTercero.Events.Record.Responsable"
+	return "Andreani.PuntoDeTercero.Events.Common.Responsable"
 }
 
 func (_ Responsable) SetBoolean(v bool)    { panic("Unsupported operation") }
