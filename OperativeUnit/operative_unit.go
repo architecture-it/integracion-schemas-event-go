@@ -96,33 +96,19 @@ type OperativeUnit struct {
 
 	StartDate *UnionNullLong `json:"startDate"`
 
-	IdResponsible *UnionNullString `json:"idResponsible"`
+	DniResponsible *UnionNullString `json:"DniResponsible"`
 
 	IdNetworkOwner *UnionNullString `json:"idNetworkOwner"`
 
 	IdRegion *UnionNullString `json:"idRegion"`
 
 	ContractsState *UnionNullLong `json:"contractsState"`
-
-	ListContracts []string `json:"listContracts"`
-
-	ListCharacteristics []Characteristics `json:"listCharacteristics"`
-
-	OperativeUnitTMSRelationship OperativeUnitTMSRelationship `json:"operativeUnitTMSRelationship"`
 }
 
-const OperativeUnitAvroCRC64Fingerprint = "\x17\xd0y\x8fM\x9f\xe3\xfb"
+const OperativeUnitAvroCRC64Fingerprint = "\x84w\xf5\x82~\x90f5"
 
 func NewOperativeUnit() OperativeUnit {
 	r := OperativeUnit{}
-	r.ListContracts = make([]string, 0)
-
-	r.ListContracts = make([]string, 0)
-
-	r.ListCharacteristics = make([]Characteristics, 0)
-
-	r.OperativeUnitTMSRelationship = NewOperativeUnitTMSRelationship()
-
 	return r
 }
 
@@ -307,7 +293,7 @@ func writeOperativeUnit(r OperativeUnit, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.IdResponsible, w)
+	err = writeUnionNullString(r.DniResponsible, w)
 	if err != nil {
 		return err
 	}
@@ -323,18 +309,6 @@ func writeOperativeUnit(r OperativeUnit, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayString(r.ListContracts, w)
-	if err != nil {
-		return err
-	}
-	err = writeArrayCharacteristics(r.ListCharacteristics, w)
-	if err != nil {
-		return err
-	}
-	err = writeOperativeUnitTMSRelationship(r.OperativeUnitTMSRelationship, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -343,7 +317,7 @@ func (r OperativeUnit) Serialize(w io.Writer) error {
 }
 
 func (r OperativeUnit) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"isFrontier\",\"type\":\"boolean\"},{\"name\":\"isActive\",\"type\":\"boolean\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"numberAddress\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"taxJurisdiction\",\"type\":\"string\"},{\"name\":\"latitude\",\"type\":\"string\"},{\"name\":\"longitude\",\"type\":\"string\"},{\"name\":\"geospatialPolygon\",\"type\":[\"null\",\"long\"]},{\"name\":\"customerServiceSchedule\",\"type\":\"string\"},{\"name\":\"operationServiceSchedule\",\"type\":\"string\"},{\"name\":\"allowsCustomerClient\",\"type\":\"boolean\"},{\"name\":\"allowsCentralizedReturn\",\"type\":\"boolean\"},{\"name\":\"allowsCashSale\",\"type\":\"long\"},{\"name\":\"allowsImprest\",\"type\":\"long\"},{\"name\":\"allowsChargeRecipient\",\"type\":\"long\"},{\"name\":\"allowsSaleSerializedProducts\",\"type\":\"long\"},{\"name\":\"costCenter\",\"type\":\"string\"},{\"name\":\"allowsCustody\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustody\",\"type\":[\"null\",\"long\"]},{\"name\":\"allowsCustomerStock\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"positionsForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersIndoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersOutdoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersCommercialAttention\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParking\",\"type\":[\"null\",\"long\"]},{\"name\":\"urlFrontPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlInsidePicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlDepositPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"users\",\"type\":[\"null\",\"string\"]},{\"name\":\"stamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"startDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"idResponsible\",\"type\":[\"null\",\"string\"]},{\"name\":\"idNetworkOwner\",\"type\":[\"null\",\"string\"]},{\"name\":\"idRegion\",\"type\":[\"null\",\"string\"]},{\"name\":\"contractsState\",\"type\":[\"null\",\"long\"]},{\"default\":[],\"name\":\"listContracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"listCharacteristics\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Value\",\"type\":\"string\"}],\"name\":\"Characteristics\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"operativeUnitTMSRelationship\",\"type\":{\"fields\":[{\"name\":\"idIntegra\",\"type\":\"long\"},{\"name\":\"idAlertran\",\"type\":\"string\"},{\"name\":\"defaultTMS\",\"type\":\"string\"}],\"name\":\"OperativeUnitTMSRelationship\",\"type\":\"record\"}}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"isFrontier\",\"type\":\"boolean\"},{\"name\":\"isActive\",\"type\":\"boolean\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"numberAddress\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"taxJurisdiction\",\"type\":\"string\"},{\"name\":\"latitude\",\"type\":\"string\"},{\"name\":\"longitude\",\"type\":\"string\"},{\"name\":\"geospatialPolygon\",\"type\":[\"null\",\"long\"]},{\"name\":\"customerServiceSchedule\",\"type\":\"string\"},{\"name\":\"operationServiceSchedule\",\"type\":\"string\"},{\"name\":\"allowsCustomerClient\",\"type\":\"boolean\"},{\"name\":\"allowsCentralizedReturn\",\"type\":\"boolean\"},{\"name\":\"allowsCashSale\",\"type\":\"long\"},{\"name\":\"allowsImprest\",\"type\":\"long\"},{\"name\":\"allowsChargeRecipient\",\"type\":\"long\"},{\"name\":\"allowsSaleSerializedProducts\",\"type\":\"long\"},{\"name\":\"costCenter\",\"type\":\"string\"},{\"name\":\"allowsCustody\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustody\",\"type\":[\"null\",\"long\"]},{\"name\":\"allowsCustomerStock\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"positionsForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersIndoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersOutdoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersCommercialAttention\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParking\",\"type\":[\"null\",\"long\"]},{\"name\":\"urlFrontPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlInsidePicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlDepositPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"users\",\"type\":[\"null\",\"string\"]},{\"name\":\"stamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"startDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"DniResponsible\",\"type\":[\"null\",\"string\"]},{\"name\":\"idNetworkOwner\",\"type\":[\"null\",\"string\"]},{\"name\":\"idRegion\",\"type\":[\"null\",\"string\"]},{\"name\":\"contractsState\",\"type\":[\"null\",\"long\"]}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
 }
 
 func (r OperativeUnit) SchemaName() string {
@@ -543,9 +517,9 @@ func (r *OperativeUnit) Get(i int) types.Field {
 
 		return r.StartDate
 	case 39:
-		r.IdResponsible = NewUnionNullString()
+		r.DniResponsible = NewUnionNullString()
 
-		return r.IdResponsible
+		return r.DniResponsible
 	case 40:
 		r.IdNetworkOwner = NewUnionNullString()
 
@@ -558,37 +532,12 @@ func (r *OperativeUnit) Get(i int) types.Field {
 		r.ContractsState = NewUnionNullLong()
 
 		return r.ContractsState
-	case 43:
-		r.ListContracts = make([]string, 0)
-
-		w := ArrayStringWrapper{Target: &r.ListContracts}
-
-		return w
-
-	case 44:
-		r.ListCharacteristics = make([]Characteristics, 0)
-
-		w := ArrayCharacteristicsWrapper{Target: &r.ListCharacteristics}
-
-		return w
-
-	case 45:
-		r.OperativeUnitTMSRelationship = NewOperativeUnitTMSRelationship()
-
-		w := types.Record{Target: &r.OperativeUnitTMSRelationship}
-
-		return w
-
 	}
 	panic("Unknown field index")
 }
 
 func (r *OperativeUnit) SetDefault(i int) {
 	switch i {
-	case 43:
-		r.ListContracts = make([]string, 0)
-
-		return
 	}
 	panic("Unknown field index")
 }
@@ -638,7 +587,7 @@ func (r *OperativeUnit) NullField(i int) {
 		r.StartDate = nil
 		return
 	case 39:
-		r.IdResponsible = nil
+		r.DniResponsible = nil
 		return
 	case 40:
 		r.IdNetworkOwner = nil
@@ -821,7 +770,7 @@ func (r OperativeUnit) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["idResponsible"], err = json.Marshal(r.IdResponsible)
+	output["DniResponsible"], err = json.Marshal(r.DniResponsible)
 	if err != nil {
 		return nil, err
 	}
@@ -834,18 +783,6 @@ func (r OperativeUnit) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["contractsState"], err = json.Marshal(r.ContractsState)
-	if err != nil {
-		return nil, err
-	}
-	output["listContracts"], err = json.Marshal(r.ListContracts)
-	if err != nil {
-		return nil, err
-	}
-	output["listCharacteristics"], err = json.Marshal(r.ListCharacteristics)
-	if err != nil {
-		return nil, err
-	}
-	output["operativeUnitTMSRelationship"], err = json.Marshal(r.OperativeUnitTMSRelationship)
 	if err != nil {
 		return nil, err
 	}
@@ -1406,18 +1343,18 @@ func (r *OperativeUnit) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for startDate")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["idResponsible"]; ok {
+		if v, ok := fields["DniResponsible"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IdResponsible); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DniResponsible); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for idResponsible")
+		return fmt.Errorf("no value specified for DniResponsible")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["idNetworkOwner"]; ok {
@@ -1460,51 +1397,6 @@ func (r *OperativeUnit) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for contractsState")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["listContracts"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ListContracts); err != nil {
-			return err
-		}
-	} else {
-		r.ListContracts = make([]string, 0)
-
-		r.ListContracts = make([]string, 0)
-
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["listCharacteristics"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ListCharacteristics); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for listCharacteristics")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["operativeUnitTMSRelationship"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.OperativeUnitTMSRelationship); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for operativeUnitTMSRelationship")
 	}
 	return nil
 }
