@@ -45,7 +45,7 @@ type Linea struct {
 	Series []Serie `json:"Series"`
 }
 
-const LineaAvroCRC64Fingerprint = "\xac?\f\x158p_z"
+const LineaAvroCRC64Fingerprint = "58\xf4R\x1c\xc4.\x01"
 
 func NewLinea() Linea {
 	r := Linea{}
@@ -139,7 +139,7 @@ func (r Linea) Serialize(w io.Writer) error {
 }
 
 func (r Linea) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroDeLinea\",\"type\":\"int\"},{\"name\":\"numeroDeLineaWMS\",\"type\":\"string\"},{\"name\":\"numeroDeLineaCliente\",\"type\":\"string\"},{\"name\":\"sku\",\"type\":\"string\"},{\"name\":\"loteCajita\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"fechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"productoTrazable\",\"type\":\"boolean\"},{\"name\":\"cantidad\",\"type\":\"int\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"},{\"name\":\"gtin\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"descripcionEstado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Serie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Linea\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroDeLinea\",\"type\":\"int\"},{\"name\":\"numeroDeLineaWMS\",\"type\":\"string\"},{\"name\":\"numeroDeLineaCliente\",\"type\":\"string\"},{\"name\":\"sku\",\"type\":\"string\"},{\"name\":\"loteCajita\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"fechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"productoTrazable\",\"type\":\"boolean\"},{\"name\":\"cantidad\",\"type\":\"int\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"},{\"name\":\"gtin\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"descripcionEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoTransaccion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Serie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Linea\",\"type\":\"record\"}"
 }
 
 func (r Linea) SchemaName() string {
