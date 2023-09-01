@@ -26,9 +26,9 @@ type Pedido struct {
 
 	Remito *UnionNullString `json:"remito"`
 
-	LinkImpresionRemito *UnionNullString `json:"linkImpresionRemito"`
+	UrlsDocumentos *UnionNullListaUrlsDocumentos `json:"urlsDocumentos"`
 
-	ArchivoImpresionRemito *UnionNullString `json:"archivoImpresionRemito"`
+	DocumentosBase64 *UnionNullListaDeDocumentos `json:"documentosBase64"`
 
 	TieneGestionCobranza *UnionNullString `json:"tieneGestionCobranza"`
 
@@ -45,14 +45,14 @@ type Pedido struct {
 	DatosAdicionales *UnionNullListaDePropiedades `json:"datosAdicionales"`
 }
 
-const PedidoAvroCRC64Fingerprint = "\xda\xe4\x14k+\x84\xb5\r"
+const PedidoAvroCRC64Fingerprint = "8f\xd2]v\x9cN\xa8"
 
 func NewPedido() Pedido {
 	r := Pedido{}
 	r.ValorDeclarado = nil
 	r.Remito = nil
-	r.LinkImpresionRemito = nil
-	r.ArchivoImpresionRemito = nil
+	r.UrlsDocumentos = nil
+	r.DocumentosBase64 = nil
 	r.TieneGestionCobranza = nil
 	r.FacturaLegal = nil
 	r.FechaDeFacturacion = nil
@@ -104,11 +104,11 @@ func writePedido(r Pedido, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.LinkImpresionRemito, w)
+	err = writeUnionNullListaUrlsDocumentos(r.UrlsDocumentos, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.ArchivoImpresionRemito, w)
+	err = writeUnionNullListaDeDocumentos(r.DocumentosBase64, w)
 	if err != nil {
 		return err
 	}
@@ -148,7 +148,7 @@ func (r Pedido) Serialize(w io.Writer) error {
 }
 
 func (r Pedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linkImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"archivoImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"precioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.Pedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urlsDocumentos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"UrlDocumento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaUrlsDocumentos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"documentosBase64\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"documentoBase64\",\"type\":\"string\"}],\"name\":\"Documentos\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDocumentos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"precioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.Pedido\",\"type\":\"record\"}"
 }
 
 func (r Pedido) SchemaName() string {
@@ -185,13 +185,13 @@ func (r *Pedido) Get(i int) types.Field {
 
 		return r.Remito
 	case 4:
-		r.LinkImpresionRemito = NewUnionNullString()
+		r.UrlsDocumentos = NewUnionNullListaUrlsDocumentos()
 
-		return r.LinkImpresionRemito
+		return r.UrlsDocumentos
 	case 5:
-		r.ArchivoImpresionRemito = NewUnionNullString()
+		r.DocumentosBase64 = NewUnionNullListaDeDocumentos()
 
-		return r.ArchivoImpresionRemito
+		return r.DocumentosBase64
 	case 6:
 		r.TieneGestionCobranza = NewUnionNullString()
 
@@ -233,10 +233,10 @@ func (r *Pedido) SetDefault(i int) {
 		r.Remito = nil
 		return
 	case 4:
-		r.LinkImpresionRemito = nil
+		r.UrlsDocumentos = nil
 		return
 	case 5:
-		r.ArchivoImpresionRemito = nil
+		r.DocumentosBase64 = nil
 		return
 	case 6:
 		r.TieneGestionCobranza = nil
@@ -272,10 +272,10 @@ func (r *Pedido) NullField(i int) {
 		r.Remito = nil
 		return
 	case 4:
-		r.LinkImpresionRemito = nil
+		r.UrlsDocumentos = nil
 		return
 	case 5:
-		r.ArchivoImpresionRemito = nil
+		r.DocumentosBase64 = nil
 		return
 	case 6:
 		r.TieneGestionCobranza = nil
@@ -330,11 +330,11 @@ func (r Pedido) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["linkImpresionRemito"], err = json.Marshal(r.LinkImpresionRemito)
+	output["urlsDocumentos"], err = json.Marshal(r.UrlsDocumentos)
 	if err != nil {
 		return nil, err
 	}
-	output["archivoImpresionRemito"], err = json.Marshal(r.ArchivoImpresionRemito)
+	output["documentosBase64"], err = json.Marshal(r.DocumentosBase64)
 	if err != nil {
 		return nil, err
 	}
@@ -437,36 +437,36 @@ func (r *Pedido) UnmarshalJSON(data []byte) error {
 		r.Remito = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["linkImpresionRemito"]; ok {
+		if v, ok := fields["urlsDocumentos"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.LinkImpresionRemito); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlsDocumentos); err != nil {
 			return err
 		}
 	} else {
-		r.LinkImpresionRemito = NewUnionNullString()
+		r.UrlsDocumentos = NewUnionNullListaUrlsDocumentos()
 
-		r.LinkImpresionRemito = nil
+		r.UrlsDocumentos = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["archivoImpresionRemito"]; ok {
+		if v, ok := fields["documentosBase64"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ArchivoImpresionRemito); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DocumentosBase64); err != nil {
 			return err
 		}
 	} else {
-		r.ArchivoImpresionRemito = NewUnionNullString()
+		r.DocumentosBase64 = NewUnionNullListaDeDocumentos()
 
-		r.ArchivoImpresionRemito = nil
+		r.DocumentosBase64 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tieneGestionCobranza"]; ok {
