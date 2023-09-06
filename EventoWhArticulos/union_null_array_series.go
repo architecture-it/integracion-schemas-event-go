@@ -84,7 +84,7 @@ func DeserializeUnionNullArraySeriesFromSchema(r io.Reader, schema string) (*Uni
 }
 
 func (r *UnionNullArraySeries) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"},{\"name\":\"Data2\",\"type\":\"string\"},{\"name\":\"Data3\",\"type\":\"string\"}],\"name\":\"Series\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Data2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Data3\",\"type\":[\"null\",\"string\"]}],\"name\":\"Series\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArraySeries) SetBoolean(v bool)   { panic("Unsupported operation") }

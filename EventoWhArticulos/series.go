@@ -18,17 +18,20 @@ import (
 var _ = fmt.Printf
 
 type Series struct {
-	Serie string `json:"Serie"`
+	Serie *UnionNullString `json:"Serie"`
 
-	Data2 string `json:"Data2"`
+	Data2 *UnionNullString `json:"Data2"`
 
-	Data3 string `json:"Data3"`
+	Data3 *UnionNullString `json:"Data3"`
 }
 
-const SeriesAvroCRC64Fingerprint = "\x00\x89\xd8\xc1\x04]^\x14"
+const SeriesAvroCRC64Fingerprint = "\xd5\x10\x04\xcf\xcb|\xc8\xe1"
 
 func NewSeries() Series {
 	r := Series{}
+	r.Serie = nil
+	r.Data2 = nil
+	r.Data3 = nil
 	return r
 }
 
@@ -57,15 +60,15 @@ func DeserializeSeriesFromSchema(r io.Reader, schema string) (Series, error) {
 
 func writeSeries(r Series, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Serie, w)
+	err = writeUnionNullString(r.Serie, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Data2, w)
+	err = writeUnionNullString(r.Data2, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Data3, w)
+	err = writeUnionNullString(r.Data3, w)
 	if err != nil {
 		return err
 	}
@@ -77,7 +80,7 @@ func (r Series) Serialize(w io.Writer) error {
 }
 
 func (r Series) Schema() string {
-	return "{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"},{\"name\":\"Data2\",\"type\":\"string\"},{\"name\":\"Data3\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhArticulos.Events.ArticuloAjusteCommon.Series\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Data2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Data3\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhArticulos.Events.ArticuloAjusteCommon.Series\",\"type\":\"record\"}"
 }
 
 func (r Series) SchemaName() string {
@@ -96,32 +99,47 @@ func (_ Series) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Series) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Serie}
+		r.Serie = NewUnionNullString()
 
-		return w
-
+		return r.Serie
 	case 1:
-		w := types.String{Target: &r.Data2}
+		r.Data2 = NewUnionNullString()
 
-		return w
-
+		return r.Data2
 	case 2:
-		w := types.String{Target: &r.Data3}
+		r.Data3 = NewUnionNullString()
 
-		return w
-
+		return r.Data3
 	}
 	panic("Unknown field index")
 }
 
 func (r *Series) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Serie = nil
+		return
+	case 1:
+		r.Data2 = nil
+		return
+	case 2:
+		r.Data3 = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Series) NullField(i int) {
 	switch i {
+	case 0:
+		r.Serie = nil
+		return
+	case 1:
+		r.Data2 = nil
+		return
+	case 2:
+		r.Data3 = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -172,7 +190,9 @@ func (r *Series) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Serie")
+		r.Serie = NewUnionNullString()
+
+		r.Serie = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Data2"]; ok {
@@ -186,7 +206,9 @@ func (r *Series) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Data2")
+		r.Data2 = NewUnionNullString()
+
+		r.Data2 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Data3"]; ok {
@@ -200,7 +222,9 @@ func (r *Series) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Data3")
+		r.Data3 = NewUnionNullString()
+
+		r.Data3 = nil
 	}
 	return nil
 }
