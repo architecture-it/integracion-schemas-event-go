@@ -22,6 +22,8 @@ type CambioEstadoTarea struct {
 
 	PedidoId int32 `json:"PedidoId"`
 
+	CantidadTotal int32 `json:"CantidadTotal"`
+
 	TareaIdExterno string `json:"TareaIdExterno"`
 
 	PedidoIdExterno string `json:"PedidoIdExterno"`
@@ -36,6 +38,8 @@ type CambioEstadoTarea struct {
 
 	UsuarioId *UnionNullInt `json:"UsuarioId"`
 
+	Usuario *UnionNullString `json:"Usuario"`
+
 	ContenedorId *UnionNullString `json:"ContenedorId"`
 
 	CantidadPickeados *UnionNullInt `json:"CantidadPickeados"`
@@ -43,12 +47,13 @@ type CambioEstadoTarea struct {
 	TiempoReal *UnionNullInt `json:"TiempoReal"`
 }
 
-const CambioEstadoTareaAvroCRC64Fingerprint = "\xfa=\xdd -\xf0\\\x8d"
+const CambioEstadoTareaAvroCRC64Fingerprint = "\x8cֈ\xc7\x1c\xea@\xfd"
 
 func NewCambioEstadoTarea() CambioEstadoTarea {
 	r := CambioEstadoTarea{}
 	r.MotivoId = nil
 	r.UsuarioId = nil
+	r.Usuario = nil
 	r.ContenedorId = nil
 	r.CantidadPickeados = nil
 	r.TiempoReal = nil
@@ -88,6 +93,10 @@ func writeCambioEstadoTarea(r CambioEstadoTarea, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.CantidadTotal, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.TareaIdExterno, w)
 	if err != nil {
 		return err
@@ -116,6 +125,10 @@ func writeCambioEstadoTarea(r CambioEstadoTarea, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Usuario, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.ContenedorId, w)
 	if err != nil {
 		return err
@@ -136,7 +149,7 @@ func (r CambioEstadoTarea) Serialize(w io.Writer) error {
 }
 
 func (r CambioEstadoTarea) Schema() string {
-	return "{\"fields\":[{\"name\":\"TareaId\",\"type\":\"int\"},{\"name\":\"PedidoId\",\"type\":\"int\"},{\"name\":\"TareaIdExterno\",\"type\":\"string\"},{\"name\":\"PedidoIdExterno\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"EstadoId\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"MotivoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ContenedorId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadPickeados\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoReal\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.WosPickingEstadoTarea.Events.Record.CambioEstadoTarea\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TareaId\",\"type\":\"int\"},{\"name\":\"PedidoId\",\"type\":\"int\"},{\"name\":\"CantidadTotal\",\"type\":\"int\"},{\"name\":\"TareaIdExterno\",\"type\":\"string\"},{\"name\":\"PedidoIdExterno\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"EstadoId\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"MotivoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContenedorId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadPickeados\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoReal\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.WosPickingEstadoTarea.Events.Record.CambioEstadoTarea\",\"type\":\"record\"}"
 }
 
 func (r CambioEstadoTarea) SchemaName() string {
@@ -165,47 +178,56 @@ func (r *CambioEstadoTarea) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.TareaIdExterno}
+		w := types.Int{Target: &r.CantidadTotal}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.PedidoIdExterno}
+		w := types.String{Target: &r.TareaIdExterno}
 
 		return w
 
 	case 4:
-		w := types.Int{Target: &r.PlantaOperacionId}
+		w := types.String{Target: &r.PedidoIdExterno}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.EstadoId}
+		w := types.Int{Target: &r.PlantaOperacionId}
 
 		return w
 
 	case 6:
-		w := types.Long{Target: &r.Fecha}
+		w := types.String{Target: &r.EstadoId}
 
 		return w
 
 	case 7:
+		w := types.Long{Target: &r.Fecha}
+
+		return w
+
+	case 8:
 		r.MotivoId = NewUnionNullString()
 
 		return r.MotivoId
-	case 8:
+	case 9:
 		r.UsuarioId = NewUnionNullInt()
 
 		return r.UsuarioId
-	case 9:
+	case 10:
+		r.Usuario = NewUnionNullString()
+
+		return r.Usuario
+	case 11:
 		r.ContenedorId = NewUnionNullString()
 
 		return r.ContenedorId
-	case 10:
+	case 12:
 		r.CantidadPickeados = NewUnionNullInt()
 
 		return r.CantidadPickeados
-	case 11:
+	case 13:
 		r.TiempoReal = NewUnionNullInt()
 
 		return r.TiempoReal
@@ -215,19 +237,22 @@ func (r *CambioEstadoTarea) Get(i int) types.Field {
 
 func (r *CambioEstadoTarea) SetDefault(i int) {
 	switch i {
-	case 7:
+	case 8:
 		r.MotivoId = nil
 		return
-	case 8:
+	case 9:
 		r.UsuarioId = nil
 		return
-	case 9:
-		r.ContenedorId = nil
-		return
 	case 10:
-		r.CantidadPickeados = nil
+		r.Usuario = nil
 		return
 	case 11:
+		r.ContenedorId = nil
+		return
+	case 12:
+		r.CantidadPickeados = nil
+		return
+	case 13:
 		r.TiempoReal = nil
 		return
 	}
@@ -236,19 +261,22 @@ func (r *CambioEstadoTarea) SetDefault(i int) {
 
 func (r *CambioEstadoTarea) NullField(i int) {
 	switch i {
-	case 7:
+	case 8:
 		r.MotivoId = nil
 		return
-	case 8:
+	case 9:
 		r.UsuarioId = nil
 		return
-	case 9:
-		r.ContenedorId = nil
-		return
 	case 10:
-		r.CantidadPickeados = nil
+		r.Usuario = nil
 		return
 	case 11:
+		r.ContenedorId = nil
+		return
+	case 12:
+		r.CantidadPickeados = nil
+		return
+	case 13:
 		r.TiempoReal = nil
 		return
 	}
@@ -272,6 +300,10 @@ func (r CambioEstadoTarea) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["PedidoId"], err = json.Marshal(r.PedidoId)
+	if err != nil {
+		return nil, err
+	}
+	output["CantidadTotal"], err = json.Marshal(r.CantidadTotal)
 	if err != nil {
 		return nil, err
 	}
@@ -300,6 +332,10 @@ func (r CambioEstadoTarea) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["UsuarioId"], err = json.Marshal(r.UsuarioId)
+	if err != nil {
+		return nil, err
+	}
+	output["Usuario"], err = json.Marshal(r.Usuario)
 	if err != nil {
 		return nil, err
 	}
@@ -352,6 +388,20 @@ func (r *CambioEstadoTarea) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for PedidoId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CantidadTotal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantidadTotal); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CantidadTotal")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TareaIdExterno"]; ok {
@@ -454,6 +504,22 @@ func (r *CambioEstadoTarea) UnmarshalJSON(data []byte) error {
 		r.UsuarioId = NewUnionNullInt()
 
 		r.UsuarioId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Usuario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Usuario); err != nil {
+			return err
+		}
+	} else {
+		r.Usuario = NewUnionNullString()
+
+		r.Usuario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ContenedorId"]; ok {
