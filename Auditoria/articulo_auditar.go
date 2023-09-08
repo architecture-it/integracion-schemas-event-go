@@ -28,10 +28,12 @@ type ArticuloAuditar struct {
 
 	CantidadPickeada int32 `json:"CantidadPickeada"`
 
+	CantidadPedido int32 `json:"CantidadPedido"`
+
 	NroLineaPedido string `json:"NroLineaPedido"`
 }
 
-const ArticuloAuditarAvroCRC64Fingerprint = "\x9b\x93n\x12Ћ\xe4\xaf"
+const ArticuloAuditarAvroCRC64Fingerprint = "]v\xa4\x84\xa4\xc6@\xd0"
 
 func NewArticuloAuditar() ArticuloAuditar {
 	r := ArticuloAuditar{}
@@ -84,6 +86,10 @@ func writeArticuloAuditar(r ArticuloAuditar, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.CantidadPedido, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.NroLineaPedido, w)
 	if err != nil {
 		return err
@@ -96,7 +102,7 @@ func (r ArticuloAuditar) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloAuditar) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"NroLineaPedido\",\"type\":\"string\"}],\"name\":\"Andreani.Auditoria.Events.Common.ArticuloAuditar\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"NroLineaPedido\",\"type\":\"string\"}],\"name\":\"Andreani.Auditoria.Events.Common.ArticuloAuditar\",\"type\":\"record\"}"
 }
 
 func (r ArticuloAuditar) SchemaName() string {
@@ -139,6 +145,11 @@ func (r *ArticuloAuditar) Get(i int) types.Field {
 		return w
 
 	case 5:
+		w := types.Int{Target: &r.CantidadPedido}
+
+		return w
+
+	case 6:
 		w := types.String{Target: &r.NroLineaPedido}
 
 		return w
@@ -194,6 +205,10 @@ func (r ArticuloAuditar) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CantidadPickeada"], err = json.Marshal(r.CantidadPickeada)
+	if err != nil {
+		return nil, err
+	}
+	output["CantidadPedido"], err = json.Marshal(r.CantidadPedido)
 	if err != nil {
 		return nil, err
 	}
@@ -282,6 +297,20 @@ func (r *ArticuloAuditar) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CantidadPickeada")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CantidadPedido"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantidadPedido); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CantidadPedido")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NroLineaPedido"]; ok {
