@@ -25,7 +25,7 @@ type MercadoLibreAndreaniCredentialsEvent struct {
 	UserMeliId int32 `json:"UserMeliId"`
 }
 
-const MercadoLibreAndreaniCredentialsEventAvroCRC64Fingerprint = "q>$\xa2\x12\x88FL"
+const MercadoLibreAndreaniCredentialsEventAvroCRC64Fingerprint = "\xef-s.q$\xe4\xc1"
 
 func NewMercadoLibreAndreaniCredentialsEvent() MercadoLibreAndreaniCredentialsEvent {
 	r := MercadoLibreAndreaniCredentialsEvent{}
@@ -77,11 +77,11 @@ func (r MercadoLibreAndreaniCredentialsEvent) Serialize(w io.Writer) error {
 }
 
 func (r MercadoLibreAndreaniCredentialsEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"ClientId\",\"type\":\"string\"},{\"name\":\"ContractId\",\"type\":\"string\"},{\"name\":\"UserMeliId\",\"type\":\"int\"}],\"name\":\"Andreani.Me1Backend.Events.Record.MercadoLibreAndreaniCredentialsEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ClientId\",\"type\":\"string\"},{\"name\":\"ContractId\",\"type\":\"string\"},{\"name\":\"UserMeliId\",\"type\":\"int\"}],\"name\":\"Andreani.Me1Api.Events.Record.MercadoLibreAndreaniCredentialsEvent\",\"type\":\"record\"}"
 }
 
 func (r MercadoLibreAndreaniCredentialsEvent) SchemaName() string {
-	return "Andreani.Me1Backend.Events.Record.MercadoLibreAndreaniCredentialsEvent"
+	return "Andreani.Me1Api.Events.Record.MercadoLibreAndreaniCredentialsEvent"
 }
 
 func (_ MercadoLibreAndreaniCredentialsEvent) SetBoolean(v bool)    { panic("Unsupported operation") }
