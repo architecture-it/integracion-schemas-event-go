@@ -28,16 +28,17 @@ type ArticuloAuditar struct {
 
 	CantidadPickeada int32 `json:"CantidadPickeada"`
 
-	CantidadPedido int32 `json:"CantidadPedido"`
+	CantidadPedido *UnionNullInt `json:"CantidadPedido"`
 
 	NroLineaPedido string `json:"NroLineaPedido"`
 }
 
-const ArticuloAuditarAvroCRC64Fingerprint = "]v\xa4\x84\xa4\xc6@\xd0"
+const ArticuloAuditarAvroCRC64Fingerprint = "\x89\x92=\xb6\xb4\x1a\xee\xdb"
 
 func NewArticuloAuditar() ArticuloAuditar {
 	r := ArticuloAuditar{}
 	r.Ean = nil
+	r.CantidadPedido = nil
 	return r
 }
 
@@ -86,7 +87,7 @@ func writeArticuloAuditar(r ArticuloAuditar, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.CantidadPedido, w)
+	err = writeUnionNullInt(r.CantidadPedido, w)
 	if err != nil {
 		return err
 	}
@@ -102,7 +103,7 @@ func (r ArticuloAuditar) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloAuditar) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"NroLineaPedido\",\"type\":\"string\"}],\"name\":\"Andreani.Auditoria.Events.Common.ArticuloAuditar\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"CantidadControlada\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"CantidadPedido\",\"type\":[\"null\",\"int\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"}],\"name\":\"Andreani.Auditoria.Events.Common.ArticuloAuditar\",\"type\":\"record\"}"
 }
 
 func (r ArticuloAuditar) SchemaName() string {
@@ -145,10 +146,9 @@ func (r *ArticuloAuditar) Get(i int) types.Field {
 		return w
 
 	case 5:
-		w := types.Int{Target: &r.CantidadPedido}
+		r.CantidadPedido = NewUnionNullInt()
 
-		return w
-
+		return r.CantidadPedido
 	case 6:
 		w := types.String{Target: &r.NroLineaPedido}
 
@@ -163,6 +163,9 @@ func (r *ArticuloAuditar) SetDefault(i int) {
 	case 0:
 		r.Ean = nil
 		return
+	case 5:
+		r.CantidadPedido = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -171,6 +174,9 @@ func (r *ArticuloAuditar) NullField(i int) {
 	switch i {
 	case 0:
 		r.Ean = nil
+		return
+	case 5:
+		r.CantidadPedido = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -310,7 +316,9 @@ func (r *ArticuloAuditar) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CantidadPedido")
+		r.CantidadPedido = NewUnionNullInt()
+
+		r.CantidadPedido = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NroLineaPedido"]; ok {
