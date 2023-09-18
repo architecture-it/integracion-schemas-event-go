@@ -68,15 +68,30 @@ type Cabecera struct {
 
 	FechaRecepcion *UnionNullLong `json:"FechaRecepcion"`
 
+	ContratoServicioIngreso *UnionNullString `json:"ContratoServicioIngreso"`
+
+	ErrorOtTraza *UnionNullString `json:"ErrorOtTraza"`
+
+	PropietarioEcommerce *UnionNullString `json:"PropietarioEcommerce"`
+
+	CodigoCliente *UnionNullString `json:"CodigoCliente"`
+
+	AsnOriginalEcommerce *UnionNullString `json:"AsnOriginalEcommerce"`
+
 	CantEsperadaTotal float32 `json:"CantEsperadaTotal"`
 
 	CantRecibidaTotal float32 `json:"CantRecibidaTotal"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\xfbظ\xc1\x9bU\b\xc6"
+const CabeceraAvroCRC64Fingerprint = "\x10! Їu\x01w"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
+	r.ContratoServicioIngreso = nil
+	r.ErrorOtTraza = nil
+	r.PropietarioEcommerce = nil
+	r.CodigoCliente = nil
+	r.AsnOriginalEcommerce = nil
 	return r
 }
 
@@ -205,6 +220,26 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ContratoServicioIngreso, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ErrorOtTraza, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.PropietarioEcommerce, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoCliente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.AsnOriginalEcommerce, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteFloat(r.CantEsperadaTotal, w)
 	if err != nil {
 		return err
@@ -221,7 +256,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"RecepcionWH\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoRecepcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaTransportista\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaContenedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"Muelle\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroCita\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaProveedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroGuia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Dpto\",\"type\":[\"null\",\"string\"]},{\"name\":\"GLN\",\"type\":[\"null\",\"string\"]},{\"name\":\"CiudadExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodISOPais\",\"type\":[\"null\",\"string\"]},{\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodPostalExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaLlegada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaRecepcion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"CantEsperadaTotal\",\"type\":\"float\"},{\"name\":\"CantRecibidaTotal\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionCreacionCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"RecepcionWH\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoRecepcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaTransportista\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaContenedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"Muelle\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroCita\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReferenciaProveedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroGuia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Dpto\",\"type\":[\"null\",\"string\"]},{\"name\":\"GLN\",\"type\":[\"null\",\"string\"]},{\"name\":\"CiudadExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodISOPais\",\"type\":[\"null\",\"string\"]},{\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodPostalExpedidor\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaLlegada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaRecepcion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorOtTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PropietarioEcommerce\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AsnOriginalEcommerce\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantEsperadaTotal\",\"type\":\"float\"},{\"name\":\"CantRecibidaTotal\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionCreacionCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -342,11 +377,31 @@ func (r *Cabecera) Get(i int) types.Field {
 
 		return r.FechaRecepcion
 	case 25:
+		r.ContratoServicioIngreso = NewUnionNullString()
+
+		return r.ContratoServicioIngreso
+	case 26:
+		r.ErrorOtTraza = NewUnionNullString()
+
+		return r.ErrorOtTraza
+	case 27:
+		r.PropietarioEcommerce = NewUnionNullString()
+
+		return r.PropietarioEcommerce
+	case 28:
+		r.CodigoCliente = NewUnionNullString()
+
+		return r.CodigoCliente
+	case 29:
+		r.AsnOriginalEcommerce = NewUnionNullString()
+
+		return r.AsnOriginalEcommerce
+	case 30:
 		w := types.Float{Target: &r.CantEsperadaTotal}
 
 		return w
 
-	case 26:
+	case 31:
 		w := types.Float{Target: &r.CantRecibidaTotal}
 
 		return w
@@ -357,6 +412,21 @@ func (r *Cabecera) Get(i int) types.Field {
 
 func (r *Cabecera) SetDefault(i int) {
 	switch i {
+	case 25:
+		r.ContratoServicioIngreso = nil
+		return
+	case 26:
+		r.ErrorOtTraza = nil
+		return
+	case 27:
+		r.PropietarioEcommerce = nil
+		return
+	case 28:
+		r.CodigoCliente = nil
+		return
+	case 29:
+		r.AsnOriginalEcommerce = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -431,6 +501,21 @@ func (r *Cabecera) NullField(i int) {
 		return
 	case 24:
 		r.FechaRecepcion = nil
+		return
+	case 25:
+		r.ContratoServicioIngreso = nil
+		return
+	case 26:
+		r.ErrorOtTraza = nil
+		return
+	case 27:
+		r.PropietarioEcommerce = nil
+		return
+	case 28:
+		r.CodigoCliente = nil
+		return
+	case 29:
+		r.AsnOriginalEcommerce = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -545,6 +630,26 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["FechaRecepcion"], err = json.Marshal(r.FechaRecepcion)
+	if err != nil {
+		return nil, err
+	}
+	output["ContratoServicioIngreso"], err = json.Marshal(r.ContratoServicioIngreso)
+	if err != nil {
+		return nil, err
+	}
+	output["ErrorOtTraza"], err = json.Marshal(r.ErrorOtTraza)
+	if err != nil {
+		return nil, err
+	}
+	output["PropietarioEcommerce"], err = json.Marshal(r.PropietarioEcommerce)
+	if err != nil {
+		return nil, err
+	}
+	output["CodigoCliente"], err = json.Marshal(r.CodigoCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["AsnOriginalEcommerce"], err = json.Marshal(r.AsnOriginalEcommerce)
 	if err != nil {
 		return nil, err
 	}
@@ -915,6 +1020,86 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for FechaRecepcion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ContratoServicioIngreso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContratoServicioIngreso); err != nil {
+			return err
+		}
+	} else {
+		r.ContratoServicioIngreso = NewUnionNullString()
+
+		r.ContratoServicioIngreso = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ErrorOtTraza"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ErrorOtTraza); err != nil {
+			return err
+		}
+	} else {
+		r.ErrorOtTraza = NewUnionNullString()
+
+		r.ErrorOtTraza = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PropietarioEcommerce"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PropietarioEcommerce); err != nil {
+			return err
+		}
+	} else {
+		r.PropietarioEcommerce = NewUnionNullString()
+
+		r.PropietarioEcommerce = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigoCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoCliente = NewUnionNullString()
+
+		r.CodigoCliente = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["AsnOriginalEcommerce"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AsnOriginalEcommerce); err != nil {
+			return err
+		}
+	} else {
+		r.AsnOriginalEcommerce = NewUnionNullString()
+
+		r.AsnOriginalEcommerce = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CantEsperadaTotal"]; ok {

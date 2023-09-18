@@ -92,16 +92,37 @@ type Detalle struct {
 
 	TipoValidacionLote *UnionNullString `json:"TipoValidacionLote"`
 
+	DetalleAcondicionamiento *UnionNullString `json:"DetalleAcondicionamiento"`
+
+	CodigosAcondi *UnionNullString `json:"CodigosAcondi"`
+
+	ErrorOtTraza *UnionNullString `json:"ErrorOtTraza"`
+
+	ErrorOtAcondi *UnionNullString `json:"ErrorOtAcondi"`
+
+	CodigoAnmat *UnionNullString `json:"CodigoAnmat"`
+
+	NovedadesAcondi *UnionNullString `json:"NovedadesAcondi"`
+
+	MensajeErrorValidaciones *UnionNullString `json:"MensajeErrorValidaciones"`
+
 	Series *UnionNullArraySeries `json:"Series"`
 }
 
-const DetalleAvroCRC64Fingerprint = "X\x03~9-\x1e\xa9;"
+const DetalleAvroCRC64Fingerprint = "D\xa4p\xe2\xdf\xe4\x95\xd6"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
 	r.Temperatura = nil
 	r.TipoCapturaSerie = nil
 	r.TipoValidacionLote = nil
+	r.DetalleAcondicionamiento = nil
+	r.CodigosAcondi = nil
+	r.ErrorOtTraza = nil
+	r.ErrorOtAcondi = nil
+	r.CodigoAnmat = nil
+	r.NovedadesAcondi = nil
+	r.MensajeErrorValidaciones = nil
 	r.Series = nil
 	return r
 }
@@ -279,6 +300,34 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.DetalleAcondicionamiento, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigosAcondi, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ErrorOtTraza, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ErrorOtAcondi, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoAnmat, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NovedadesAcondi, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.MensajeErrorValidaciones, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullArraySeries(r.Series, w)
 	if err != nil {
 		return err
@@ -291,7 +340,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"UbicacionDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"LPNDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"PaqueteLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteCajitaFabricante\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"name\":\"AlmacenConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"BloqueoUbicacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Contramuestras\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DescripcionServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoLineaMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"AccionConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"ResultadoConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantEsperada\",\"type\":\"float\"},{\"name\":\"CantRecibida\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaRecepcionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Temperatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoCapturaSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoValidacionLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"SKU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroSerieCorto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EtiquetaContenedora\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GTIN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecepcionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroLineaAsn\",\"type\":[\"null\",\"string\"]}],\"name\":\"Series\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionCreacionCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"UbicacionDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"LPNDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"PaqueteLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteCajitaFabricante\",\"type\":[\"null\",\"string\"]},{\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"name\":\"AlmacenConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"BloqueoUbicacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Contramuestras\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoOTTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NomenclaturaContratoServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DescripcionServicioIngreso\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoLineaMatriz\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"AccionConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"ResultadoConCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaExterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantEsperada\",\"type\":\"float\"},{\"name\":\"CantRecibida\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoLinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaRecepcionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Temperatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoCapturaSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoValidacionLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DetalleAcondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigosAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorOtTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorOtAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoAnmat\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NovedadesAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MensajeErrorValidaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"SKU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroSerieCorto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EtiquetaContenedora\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GTIN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecepcionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroLineaAsn\",\"type\":[\"null\",\"string\"]}],\"name\":\"Series\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionCreacionCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -462,6 +511,34 @@ func (r *Detalle) Get(i int) types.Field {
 
 		return r.TipoValidacionLote
 	case 37:
+		r.DetalleAcondicionamiento = NewUnionNullString()
+
+		return r.DetalleAcondicionamiento
+	case 38:
+		r.CodigosAcondi = NewUnionNullString()
+
+		return r.CodigosAcondi
+	case 39:
+		r.ErrorOtTraza = NewUnionNullString()
+
+		return r.ErrorOtTraza
+	case 40:
+		r.ErrorOtAcondi = NewUnionNullString()
+
+		return r.ErrorOtAcondi
+	case 41:
+		r.CodigoAnmat = NewUnionNullString()
+
+		return r.CodigoAnmat
+	case 42:
+		r.NovedadesAcondi = NewUnionNullString()
+
+		return r.NovedadesAcondi
+	case 43:
+		r.MensajeErrorValidaciones = NewUnionNullString()
+
+		return r.MensajeErrorValidaciones
+	case 44:
 		r.Series = NewUnionNullArraySeries()
 
 		return r.Series
@@ -481,6 +558,27 @@ func (r *Detalle) SetDefault(i int) {
 		r.TipoValidacionLote = nil
 		return
 	case 37:
+		r.DetalleAcondicionamiento = nil
+		return
+	case 38:
+		r.CodigosAcondi = nil
+		return
+	case 39:
+		r.ErrorOtTraza = nil
+		return
+	case 40:
+		r.ErrorOtAcondi = nil
+		return
+	case 41:
+		r.CodigoAnmat = nil
+		return
+	case 42:
+		r.NovedadesAcondi = nil
+		return
+	case 43:
+		r.MensajeErrorValidaciones = nil
+		return
+	case 44:
 		r.Series = nil
 		return
 	}
@@ -589,6 +687,27 @@ func (r *Detalle) NullField(i int) {
 		r.TipoValidacionLote = nil
 		return
 	case 37:
+		r.DetalleAcondicionamiento = nil
+		return
+	case 38:
+		r.CodigosAcondi = nil
+		return
+	case 39:
+		r.ErrorOtTraza = nil
+		return
+	case 40:
+		r.ErrorOtAcondi = nil
+		return
+	case 41:
+		r.CodigoAnmat = nil
+		return
+	case 42:
+		r.NovedadesAcondi = nil
+		return
+	case 43:
+		r.MensajeErrorValidaciones = nil
+		return
+	case 44:
 		r.Series = nil
 		return
 	}
@@ -752,6 +871,34 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["TipoValidacionLote"], err = json.Marshal(r.TipoValidacionLote)
+	if err != nil {
+		return nil, err
+	}
+	output["DetalleAcondicionamiento"], err = json.Marshal(r.DetalleAcondicionamiento)
+	if err != nil {
+		return nil, err
+	}
+	output["CodigosAcondi"], err = json.Marshal(r.CodigosAcondi)
+	if err != nil {
+		return nil, err
+	}
+	output["ErrorOtTraza"], err = json.Marshal(r.ErrorOtTraza)
+	if err != nil {
+		return nil, err
+	}
+	output["ErrorOtAcondi"], err = json.Marshal(r.ErrorOtAcondi)
+	if err != nil {
+		return nil, err
+	}
+	output["CodigoAnmat"], err = json.Marshal(r.CodigoAnmat)
+	if err != nil {
+		return nil, err
+	}
+	output["NovedadesAcondi"], err = json.Marshal(r.NovedadesAcondi)
+	if err != nil {
+		return nil, err
+	}
+	output["MensajeErrorValidaciones"], err = json.Marshal(r.MensajeErrorValidaciones)
 	if err != nil {
 		return nil, err
 	}
@@ -1292,6 +1439,118 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		r.TipoValidacionLote = NewUnionNullString()
 
 		r.TipoValidacionLote = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DetalleAcondicionamiento"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DetalleAcondicionamiento); err != nil {
+			return err
+		}
+	} else {
+		r.DetalleAcondicionamiento = NewUnionNullString()
+
+		r.DetalleAcondicionamiento = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigosAcondi"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigosAcondi); err != nil {
+			return err
+		}
+	} else {
+		r.CodigosAcondi = NewUnionNullString()
+
+		r.CodigosAcondi = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ErrorOtTraza"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ErrorOtTraza); err != nil {
+			return err
+		}
+	} else {
+		r.ErrorOtTraza = NewUnionNullString()
+
+		r.ErrorOtTraza = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ErrorOtAcondi"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ErrorOtAcondi); err != nil {
+			return err
+		}
+	} else {
+		r.ErrorOtAcondi = NewUnionNullString()
+
+		r.ErrorOtAcondi = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigoAnmat"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoAnmat); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoAnmat = NewUnionNullString()
+
+		r.CodigoAnmat = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NovedadesAcondi"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NovedadesAcondi); err != nil {
+			return err
+		}
+	} else {
+		r.NovedadesAcondi = NewUnionNullString()
+
+		r.NovedadesAcondi = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["MensajeErrorValidaciones"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.MensajeErrorValidaciones); err != nil {
+			return err
+		}
+	} else {
+		r.MensajeErrorValidaciones = NewUnionNullString()
+
+		r.MensajeErrorValidaciones = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Series"]; ok {
