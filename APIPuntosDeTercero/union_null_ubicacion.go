@@ -84,7 +84,7 @@ func DeserializeUnionNullUbicacionFromSchema(r io.Reader, schema string) (*Union
 }
 
 func (r *UnionNullUbicacion) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"name\":\"longitud\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ubicacion\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"latitud\",\"type\":\"string\"},{\"name\":\"longitud\",\"type\":\"string\"},{\"name\":\"region\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ubicacion\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullUbicacion) SetBoolean(v bool)   { panic("Unsupported operation") }

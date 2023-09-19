@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type Ubicacion struct {
-	Calle *UnionNullString `json:"calle"`
+	Calle string `json:"calle"`
 
 	Numero *UnionNullString `json:"numero"`
 
@@ -26,14 +26,16 @@ type Ubicacion struct {
 
 	Departamento *UnionNullString `json:"departamento"`
 
-	CodigoPostal *UnionNullString `json:"codigoPostal"`
+	CodigoPostal string `json:"codigoPostal"`
 
-	Latitud *UnionNullString `json:"latitud"`
+	Latitud string `json:"latitud"`
 
-	Longitud *UnionNullString `json:"longitud"`
+	Longitud string `json:"longitud"`
+
+	Region *UnionNullString `json:"region"`
 }
 
-const UbicacionAvroCRC64Fingerprint = "\xf8\x9a\xfdŔ\xe9b\xa6"
+const UbicacionAvroCRC64Fingerprint = "\x06\xf9\xccA4ᨈ"
 
 func NewUbicacion() Ubicacion {
 	r := Ubicacion{}
@@ -65,7 +67,7 @@ func DeserializeUbicacionFromSchema(r io.Reader, schema string) (Ubicacion, erro
 
 func writeUbicacion(r Ubicacion, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.Calle, w)
+	err = vm.WriteString(r.Calle, w)
 	if err != nil {
 		return err
 	}
@@ -81,15 +83,19 @@ func writeUbicacion(r Ubicacion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.CodigoPostal, w)
+	err = vm.WriteString(r.CodigoPostal, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Latitud, w)
+	err = vm.WriteString(r.Latitud, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Longitud, w)
+	err = vm.WriteString(r.Longitud, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Region, w)
 	if err != nil {
 		return err
 	}
@@ -101,7 +107,7 @@ func (r Ubicacion) Serialize(w io.Writer) error {
 }
 
 func (r Ubicacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"name\":\"longitud\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Common.Ubicacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"latitud\",\"type\":\"string\"},{\"name\":\"longitud\",\"type\":\"string\"},{\"name\":\"region\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Common.Ubicacion\",\"type\":\"record\"}"
 }
 
 func (r Ubicacion) SchemaName() string {
@@ -120,9 +126,10 @@ func (_ Ubicacion) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Ubicacion) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Calle = NewUnionNullString()
+		w := types.String{Target: &r.Calle}
 
-		return r.Calle
+		return w
+
 	case 1:
 		r.Numero = NewUnionNullString()
 
@@ -136,17 +143,24 @@ func (r *Ubicacion) Get(i int) types.Field {
 
 		return r.Departamento
 	case 4:
-		r.CodigoPostal = NewUnionNullString()
+		w := types.String{Target: &r.CodigoPostal}
 
-		return r.CodigoPostal
+		return w
+
 	case 5:
-		r.Latitud = NewUnionNullString()
+		w := types.String{Target: &r.Latitud}
 
-		return r.Latitud
+		return w
+
 	case 6:
-		r.Longitud = NewUnionNullString()
+		w := types.String{Target: &r.Longitud}
 
-		return r.Longitud
+		return w
+
+	case 7:
+		r.Region = NewUnionNullString()
+
+		return r.Region
 	}
 	panic("Unknown field index")
 }
@@ -159,9 +173,6 @@ func (r *Ubicacion) SetDefault(i int) {
 
 func (r *Ubicacion) NullField(i int) {
 	switch i {
-	case 0:
-		r.Calle = nil
-		return
 	case 1:
 		r.Numero = nil
 		return
@@ -171,14 +182,8 @@ func (r *Ubicacion) NullField(i int) {
 	case 3:
 		r.Departamento = nil
 		return
-	case 4:
-		r.CodigoPostal = nil
-		return
-	case 5:
-		r.Latitud = nil
-		return
-	case 6:
-		r.Longitud = nil
+	case 7:
+		r.Region = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -221,6 +226,10 @@ func (r Ubicacion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["longitud"], err = json.Marshal(r.Longitud)
+	if err != nil {
+		return nil, err
+	}
+	output["region"], err = json.Marshal(r.Region)
 	if err != nil {
 		return nil, err
 	}
@@ -331,6 +340,20 @@ func (r *Ubicacion) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for longitud")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["region"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Region); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for region")
 	}
 	return nil
 }

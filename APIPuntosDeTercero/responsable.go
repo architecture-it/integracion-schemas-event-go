@@ -18,14 +18,14 @@ import (
 var _ = fmt.Printf
 
 type Responsable struct {
-	Nombre *UnionNullString `json:"nombre"`
+	Nombre string `json:"nombre"`
 
 	Apellido *UnionNullString `json:"apellido"`
 
-	Mail *UnionNullString `json:"mail"`
+	Mail string `json:"mail"`
 }
 
-const ResponsableAvroCRC64Fingerprint = "\x7f\x8a\x98\xa4\x1aM\x9f\x93"
+const ResponsableAvroCRC64Fingerprint = "犖po\x1d\x04\x81"
 
 func NewResponsable() Responsable {
 	r := Responsable{}
@@ -57,7 +57,7 @@ func DeserializeResponsableFromSchema(r io.Reader, schema string) (Responsable, 
 
 func writeResponsable(r Responsable, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.Nombre, w)
+	err = vm.WriteString(r.Nombre, w)
 	if err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func writeResponsable(r Responsable, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Mail, w)
+	err = vm.WriteString(r.Mail, w)
 	if err != nil {
 		return err
 	}
@@ -77,7 +77,7 @@ func (r Responsable) Serialize(w io.Writer) error {
 }
 
 func (r Responsable) Schema() string {
-	return "{\"fields\":[{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"mail\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PuntoDeTercero.Events.Common.Responsable\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"mail\",\"type\":\"string\"}],\"name\":\"Andreani.PuntoDeTercero.Events.Common.Responsable\",\"type\":\"record\"}"
 }
 
 func (r Responsable) SchemaName() string {
@@ -96,17 +96,19 @@ func (_ Responsable) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Responsable) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Nombre = NewUnionNullString()
+		w := types.String{Target: &r.Nombre}
 
-		return r.Nombre
+		return w
+
 	case 1:
 		r.Apellido = NewUnionNullString()
 
 		return r.Apellido
 	case 2:
-		r.Mail = NewUnionNullString()
+		w := types.String{Target: &r.Mail}
 
-		return r.Mail
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -119,14 +121,8 @@ func (r *Responsable) SetDefault(i int) {
 
 func (r *Responsable) NullField(i int) {
 	switch i {
-	case 0:
-		r.Nombre = nil
-		return
 	case 1:
 		r.Apellido = nil
-		return
-	case 2:
-		r.Mail = nil
 		return
 	}
 	panic("Not a nullable field index")
