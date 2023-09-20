@@ -77,9 +77,17 @@ type Detalle struct {
 	DetalleAcondicionamiento *UnionNullString `json:"DetalleAcondicionamiento"`
 
 	EstadoOTAcondicionamiento *UnionNullString `json:"EstadoOTAcondicionamiento"`
+
+	TipoFrio *UnionNullString `json:"TipoFrio"`
+
+	CodigosAcondi *UnionNullString `json:"CodigosAcondi"`
+
+	NovedadesAcondi *UnionNullString `json:"NovedadesAcondi"`
+
+	Propietario *UnionNullString `json:"Propietario"`
 }
 
-const DetalleAvroCRC64Fingerprint = "p\x17R^lt^g"
+const DetalleAvroCRC64Fingerprint = "C\xd8Ǉ\xa1\xa0\x91H"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -97,6 +105,10 @@ func NewDetalle() Detalle {
 	r.TipoPedidoDescripcion = nil
 	r.DetalleAcondicionamiento = nil
 	r.EstadoOTAcondicionamiento = nil
+	r.TipoFrio = nil
+	r.CodigosAcondi = nil
+	r.NovedadesAcondi = nil
+	r.Propietario = nil
 	return r
 }
 
@@ -245,6 +257,22 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.TipoFrio, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigosAcondi, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NovedadesAcondi, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Propietario, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -253,7 +281,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"LineaExterna\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"EsfuerzoLineaApiPlani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"VidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":\"float\"},{\"name\":\"CantidadPickeada\",\"type\":\"float\"},{\"name\":\"CantidadExpedida\",\"type\":\"float\"},{\"name\":\"EstadoLineaCodigo\",\"type\":\"string\"},{\"name\":\"EstadoLineaDescripcion\",\"type\":\"string\"},{\"name\":\"CantidadBultos\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"Series\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nomenclatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DetalleAcondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTAcondicionamiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"LineaExterna\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"EsfuerzoLineaApiPlani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"VidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":\"float\"},{\"name\":\"CantidadPickeada\",\"type\":\"float\"},{\"name\":\"CantidadExpedida\",\"type\":\"float\"},{\"name\":\"EstadoLineaCodigo\",\"type\":\"string\"},{\"name\":\"EstadoLineaDescripcion\",\"type\":\"string\"},{\"name\":\"CantidadBultos\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"Series\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nomenclatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DetalleAcondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTAcondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoFrio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigosAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NovedadesAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -411,6 +439,22 @@ func (r *Detalle) Get(i int) types.Field {
 		r.EstadoOTAcondicionamiento = NewUnionNullString()
 
 		return r.EstadoOTAcondicionamiento
+	case 30:
+		r.TipoFrio = NewUnionNullString()
+
+		return r.TipoFrio
+	case 31:
+		r.CodigosAcondi = NewUnionNullString()
+
+		return r.CodigosAcondi
+	case 32:
+		r.NovedadesAcondi = NewUnionNullString()
+
+		return r.NovedadesAcondi
+	case 33:
+		r.Propietario = NewUnionNullString()
+
+		return r.Propietario
 	}
 	panic("Unknown field index")
 }
@@ -453,6 +497,18 @@ func (r *Detalle) SetDefault(i int) {
 	case 29:
 		r.EstadoOTAcondicionamiento = nil
 		return
+	case 30:
+		r.TipoFrio = nil
+		return
+	case 31:
+		r.CodigosAcondi = nil
+		return
+	case 32:
+		r.NovedadesAcondi = nil
+		return
+	case 33:
+		r.Propietario = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -494,6 +550,18 @@ func (r *Detalle) NullField(i int) {
 		return
 	case 29:
 		r.EstadoOTAcondicionamiento = nil
+		return
+	case 30:
+		r.TipoFrio = nil
+		return
+	case 31:
+		r.CodigosAcondi = nil
+		return
+	case 32:
+		r.NovedadesAcondi = nil
+		return
+	case 33:
+		r.Propietario = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -628,6 +696,22 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["EstadoOTAcondicionamiento"], err = json.Marshal(r.EstadoOTAcondicionamiento)
+	if err != nil {
+		return nil, err
+	}
+	output["TipoFrio"], err = json.Marshal(r.TipoFrio)
+	if err != nil {
+		return nil, err
+	}
+	output["CodigosAcondi"], err = json.Marshal(r.CodigosAcondi)
+	if err != nil {
+		return nil, err
+	}
+	output["NovedadesAcondi"], err = json.Marshal(r.NovedadesAcondi)
+	if err != nil {
+		return nil, err
+	}
+	output["Propietario"], err = json.Marshal(r.Propietario)
 	if err != nil {
 		return nil, err
 	}
@@ -1084,6 +1168,70 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		r.EstadoOTAcondicionamiento = NewUnionNullString()
 
 		r.EstadoOTAcondicionamiento = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TipoFrio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoFrio); err != nil {
+			return err
+		}
+	} else {
+		r.TipoFrio = NewUnionNullString()
+
+		r.TipoFrio = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigosAcondi"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigosAcondi); err != nil {
+			return err
+		}
+	} else {
+		r.CodigosAcondi = NewUnionNullString()
+
+		r.CodigosAcondi = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NovedadesAcondi"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NovedadesAcondi); err != nil {
+			return err
+		}
+	} else {
+		r.NovedadesAcondi = NewUnionNullString()
+
+		r.NovedadesAcondi = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Propietario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Propietario); err != nil {
+			return err
+		}
+	} else {
+		r.Propietario = NewUnionNullString()
+
+		r.Propietario = nil
 	}
 	return nil
 }

@@ -147,9 +147,51 @@ type Cabecera struct {
 	CantidadExpedidaTotal float32 `json:"CantidadExpedidaTotal"`
 
 	CantidadPickeadaTotal float32 `json:"CantidadPickeadaTotal"`
+
+	DestinatarioDomicilioAdicional *UnionNullString `json:"DestinatarioDomicilioAdicional"`
+
+	Mail *UnionNullString `json:"Mail"`
+
+	CodigoIsoPais *UnionNullString `json:"CodigoIsoPais"`
+
+	EstadoControlCalidad *UnionNullString `json:"EstadoControlCalidad"`
+
+	DescripcionTipoPedido *UnionNullString `json:"DescripcionTipoPedido"`
+
+	LinkImpresionRemito *UnionNullString `json:"LinkImpresionRemito"`
+
+	LinkImpresionEtiquetaPedido *UnionNullString `json:"LinkImpresionEtiquetaPedido"`
+
+	CodigoANMAT *UnionNullString `json:"CodigoANMAT"`
+
+	ErrorOtTraza *UnionNullString `json:"ErrorOtTraza"`
+
+	ErrorOtAcondi *UnionNullString `json:"ErrorOtAcondi"`
+
+	ErrorValidaciones *UnionNullString `json:"ErrorValidaciones"`
+
+	PropietarioEcommerce *UnionNullString `json:"PropietarioEcommerce"`
+
+	CodigoCliente *UnionNullString `json:"CodigoCliente"`
+
+	NovedadesAcondi *UnionNullString `json:"NovedadesAcondi"`
+
+	NumeroVale *UnionNullString `json:"NumeroVale"`
+
+	CodigoEmbalaje *UnionNullString `json:"CodigoEmbalaje"`
+
+	NumeroTaco *UnionNullString `json:"NumeroTaco"`
+
+	UrlQR *UnionNullString `json:"UrlQR"`
+
+	NumeroOrdenOriginalEcommerce *UnionNullString `json:"NumeroOrdenOriginalEcommerce"`
+
+	NotasEmbalaje *UnionNullString `json:"NotasEmbalaje"`
+
+	Propietario *UnionNullString `json:"Propietario"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "o\xe1\xcb3\x03\xaa\xb6\x10"
+const CabeceraAvroCRC64Fingerprint = "\x8d|Q\x15\x01\xd4EZ"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -208,6 +250,27 @@ func NewCabecera() Cabecera {
 	r.CreacionPedido = nil
 	r.FechaPedido = nil
 	r.GlnOrigen = nil
+	r.DestinatarioDomicilioAdicional = nil
+	r.Mail = nil
+	r.CodigoIsoPais = nil
+	r.EstadoControlCalidad = nil
+	r.DescripcionTipoPedido = nil
+	r.LinkImpresionRemito = nil
+	r.LinkImpresionEtiquetaPedido = nil
+	r.CodigoANMAT = nil
+	r.ErrorOtTraza = nil
+	r.ErrorOtAcondi = nil
+	r.ErrorValidaciones = nil
+	r.PropietarioEcommerce = nil
+	r.CodigoCliente = nil
+	r.NovedadesAcondi = nil
+	r.NumeroVale = nil
+	r.CodigoEmbalaje = nil
+	r.NumeroTaco = nil
+	r.UrlQR = nil
+	r.NumeroOrdenOriginalEcommerce = nil
+	r.NotasEmbalaje = nil
+	r.Propietario = nil
 	return r
 }
 
@@ -496,6 +559,90 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.DestinatarioDomicilioAdicional, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Mail, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoIsoPais, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.EstadoControlCalidad, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.DescripcionTipoPedido, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.LinkImpresionRemito, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.LinkImpresionEtiquetaPedido, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoANMAT, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ErrorOtTraza, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ErrorOtAcondi, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ErrorValidaciones, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.PropietarioEcommerce, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoCliente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NovedadesAcondi, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumeroVale, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoEmbalaje, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumeroTaco, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.UrlQR, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumeroOrdenOriginalEcommerce, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NotasEmbalaje, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Propietario, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -504,7 +651,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDestinatario\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoDeIntegracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Acondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AlmacenCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrioridadApiPlani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CuentaTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AdmiteCambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NoAdmitePickingParcial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ImprimeDocumentacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroCale\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ComprobanteIngresosBrutos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoServicioAlmacenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Marketplace\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoPedidoMatriz\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Destinario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClientePadre\",\"type\":\"string\"},{\"name\":\"CodigoEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"CodigoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoCodigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoGrilla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaEnvioFacturar\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"PrecioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotasPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionPrometida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntregaPlanificada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntregaProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GrupoOrdenes\",\"type\":\"string\"},{\"default\":null,\"name\":\"FranjaHorario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTTraz\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaEvento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreacionPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"GlnOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantidadTotal\",\"type\":\"float\"},{\"name\":\"CantidadExpedidaTotal\",\"type\":\"float\"},{\"name\":\"CantidadPickeadaTotal\",\"type\":\"float\"}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDestinatario\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoDeIntegracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Acondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AlmacenCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrioridadApiPlani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CuentaTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AdmiteCambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NoAdmitePickingParcial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ImprimeDocumentacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroCale\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ComprobanteIngresosBrutos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoServicioAlmacenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Marketplace\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoPedidoMatriz\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Destinario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClientePadre\",\"type\":\"string\"},{\"name\":\"CodigoEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"CodigoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoCodigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoGrilla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaEnvioFacturar\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"PrecioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotasPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionPrometida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntregaPlanificada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntregaProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GrupoOrdenes\",\"type\":\"string\"},{\"default\":null,\"name\":\"FranjaHorario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTTraz\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaEvento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreacionPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"GlnOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantidadTotal\",\"type\":\"float\"},{\"name\":\"CantidadExpedidaTotal\",\"type\":\"float\"},{\"name\":\"CantidadPickeadaTotal\",\"type\":\"float\"},{\"default\":null,\"name\":\"DestinatarioDomicilioAdicional\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoIsoPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoControlCalidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionTipoPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LinkImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LinkImpresionEtiquetaPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoANMAT\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorOtTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorOtAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorValidaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PropietarioEcommerce\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NovedadesAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroVale\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroTaco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UrlQR\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroOrdenOriginalEcommerce\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotasEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -792,6 +939,90 @@ func (r *Cabecera) Get(i int) types.Field {
 
 		return w
 
+	case 65:
+		r.DestinatarioDomicilioAdicional = NewUnionNullString()
+
+		return r.DestinatarioDomicilioAdicional
+	case 66:
+		r.Mail = NewUnionNullString()
+
+		return r.Mail
+	case 67:
+		r.CodigoIsoPais = NewUnionNullString()
+
+		return r.CodigoIsoPais
+	case 68:
+		r.EstadoControlCalidad = NewUnionNullString()
+
+		return r.EstadoControlCalidad
+	case 69:
+		r.DescripcionTipoPedido = NewUnionNullString()
+
+		return r.DescripcionTipoPedido
+	case 70:
+		r.LinkImpresionRemito = NewUnionNullString()
+
+		return r.LinkImpresionRemito
+	case 71:
+		r.LinkImpresionEtiquetaPedido = NewUnionNullString()
+
+		return r.LinkImpresionEtiquetaPedido
+	case 72:
+		r.CodigoANMAT = NewUnionNullString()
+
+		return r.CodigoANMAT
+	case 73:
+		r.ErrorOtTraza = NewUnionNullString()
+
+		return r.ErrorOtTraza
+	case 74:
+		r.ErrorOtAcondi = NewUnionNullString()
+
+		return r.ErrorOtAcondi
+	case 75:
+		r.ErrorValidaciones = NewUnionNullString()
+
+		return r.ErrorValidaciones
+	case 76:
+		r.PropietarioEcommerce = NewUnionNullString()
+
+		return r.PropietarioEcommerce
+	case 77:
+		r.CodigoCliente = NewUnionNullString()
+
+		return r.CodigoCliente
+	case 78:
+		r.NovedadesAcondi = NewUnionNullString()
+
+		return r.NovedadesAcondi
+	case 79:
+		r.NumeroVale = NewUnionNullString()
+
+		return r.NumeroVale
+	case 80:
+		r.CodigoEmbalaje = NewUnionNullString()
+
+		return r.CodigoEmbalaje
+	case 81:
+		r.NumeroTaco = NewUnionNullString()
+
+		return r.NumeroTaco
+	case 82:
+		r.UrlQR = NewUnionNullString()
+
+		return r.UrlQR
+	case 83:
+		r.NumeroOrdenOriginalEcommerce = NewUnionNullString()
+
+		return r.NumeroOrdenOriginalEcommerce
+	case 84:
+		r.NotasEmbalaje = NewUnionNullString()
+
+		return r.NotasEmbalaje
+	case 85:
+		r.Propietario = NewUnionNullString()
+
+		return r.Propietario
 	}
 	panic("Unknown field index")
 }
@@ -963,6 +1194,69 @@ func (r *Cabecera) SetDefault(i int) {
 	case 61:
 		r.GlnOrigen = nil
 		return
+	case 65:
+		r.DestinatarioDomicilioAdicional = nil
+		return
+	case 66:
+		r.Mail = nil
+		return
+	case 67:
+		r.CodigoIsoPais = nil
+		return
+	case 68:
+		r.EstadoControlCalidad = nil
+		return
+	case 69:
+		r.DescripcionTipoPedido = nil
+		return
+	case 70:
+		r.LinkImpresionRemito = nil
+		return
+	case 71:
+		r.LinkImpresionEtiquetaPedido = nil
+		return
+	case 72:
+		r.CodigoANMAT = nil
+		return
+	case 73:
+		r.ErrorOtTraza = nil
+		return
+	case 74:
+		r.ErrorOtAcondi = nil
+		return
+	case 75:
+		r.ErrorValidaciones = nil
+		return
+	case 76:
+		r.PropietarioEcommerce = nil
+		return
+	case 77:
+		r.CodigoCliente = nil
+		return
+	case 78:
+		r.NovedadesAcondi = nil
+		return
+	case 79:
+		r.NumeroVale = nil
+		return
+	case 80:
+		r.CodigoEmbalaje = nil
+		return
+	case 81:
+		r.NumeroTaco = nil
+		return
+	case 82:
+		r.UrlQR = nil
+		return
+	case 83:
+		r.NumeroOrdenOriginalEcommerce = nil
+		return
+	case 84:
+		r.NotasEmbalaje = nil
+		return
+	case 85:
+		r.Propietario = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -1133,6 +1427,69 @@ func (r *Cabecera) NullField(i int) {
 		return
 	case 61:
 		r.GlnOrigen = nil
+		return
+	case 65:
+		r.DestinatarioDomicilioAdicional = nil
+		return
+	case 66:
+		r.Mail = nil
+		return
+	case 67:
+		r.CodigoIsoPais = nil
+		return
+	case 68:
+		r.EstadoControlCalidad = nil
+		return
+	case 69:
+		r.DescripcionTipoPedido = nil
+		return
+	case 70:
+		r.LinkImpresionRemito = nil
+		return
+	case 71:
+		r.LinkImpresionEtiquetaPedido = nil
+		return
+	case 72:
+		r.CodigoANMAT = nil
+		return
+	case 73:
+		r.ErrorOtTraza = nil
+		return
+	case 74:
+		r.ErrorOtAcondi = nil
+		return
+	case 75:
+		r.ErrorValidaciones = nil
+		return
+	case 76:
+		r.PropietarioEcommerce = nil
+		return
+	case 77:
+		r.CodigoCliente = nil
+		return
+	case 78:
+		r.NovedadesAcondi = nil
+		return
+	case 79:
+		r.NumeroVale = nil
+		return
+	case 80:
+		r.CodigoEmbalaje = nil
+		return
+	case 81:
+		r.NumeroTaco = nil
+		return
+	case 82:
+		r.UrlQR = nil
+		return
+	case 83:
+		r.NumeroOrdenOriginalEcommerce = nil
+		return
+	case 84:
+		r.NotasEmbalaje = nil
+		return
+	case 85:
+		r.Propietario = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -1407,6 +1764,90 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CantidadPickeadaTotal"], err = json.Marshal(r.CantidadPickeadaTotal)
+	if err != nil {
+		return nil, err
+	}
+	output["DestinatarioDomicilioAdicional"], err = json.Marshal(r.DestinatarioDomicilioAdicional)
+	if err != nil {
+		return nil, err
+	}
+	output["Mail"], err = json.Marshal(r.Mail)
+	if err != nil {
+		return nil, err
+	}
+	output["CodigoIsoPais"], err = json.Marshal(r.CodigoIsoPais)
+	if err != nil {
+		return nil, err
+	}
+	output["EstadoControlCalidad"], err = json.Marshal(r.EstadoControlCalidad)
+	if err != nil {
+		return nil, err
+	}
+	output["DescripcionTipoPedido"], err = json.Marshal(r.DescripcionTipoPedido)
+	if err != nil {
+		return nil, err
+	}
+	output["LinkImpresionRemito"], err = json.Marshal(r.LinkImpresionRemito)
+	if err != nil {
+		return nil, err
+	}
+	output["LinkImpresionEtiquetaPedido"], err = json.Marshal(r.LinkImpresionEtiquetaPedido)
+	if err != nil {
+		return nil, err
+	}
+	output["CodigoANMAT"], err = json.Marshal(r.CodigoANMAT)
+	if err != nil {
+		return nil, err
+	}
+	output["ErrorOtTraza"], err = json.Marshal(r.ErrorOtTraza)
+	if err != nil {
+		return nil, err
+	}
+	output["ErrorOtAcondi"], err = json.Marshal(r.ErrorOtAcondi)
+	if err != nil {
+		return nil, err
+	}
+	output["ErrorValidaciones"], err = json.Marshal(r.ErrorValidaciones)
+	if err != nil {
+		return nil, err
+	}
+	output["PropietarioEcommerce"], err = json.Marshal(r.PropietarioEcommerce)
+	if err != nil {
+		return nil, err
+	}
+	output["CodigoCliente"], err = json.Marshal(r.CodigoCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["NovedadesAcondi"], err = json.Marshal(r.NovedadesAcondi)
+	if err != nil {
+		return nil, err
+	}
+	output["NumeroVale"], err = json.Marshal(r.NumeroVale)
+	if err != nil {
+		return nil, err
+	}
+	output["CodigoEmbalaje"], err = json.Marshal(r.CodigoEmbalaje)
+	if err != nil {
+		return nil, err
+	}
+	output["NumeroTaco"], err = json.Marshal(r.NumeroTaco)
+	if err != nil {
+		return nil, err
+	}
+	output["UrlQR"], err = json.Marshal(r.UrlQR)
+	if err != nil {
+		return nil, err
+	}
+	output["NumeroOrdenOriginalEcommerce"], err = json.Marshal(r.NumeroOrdenOriginalEcommerce)
+	if err != nil {
+		return nil, err
+	}
+	output["NotasEmbalaje"], err = json.Marshal(r.NotasEmbalaje)
+	if err != nil {
+		return nil, err
+	}
+	output["Propietario"], err = json.Marshal(r.Propietario)
 	if err != nil {
 		return nil, err
 	}
@@ -2439,6 +2880,342 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CantidadPickeadaTotal")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DestinatarioDomicilioAdicional"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DestinatarioDomicilioAdicional); err != nil {
+			return err
+		}
+	} else {
+		r.DestinatarioDomicilioAdicional = NewUnionNullString()
+
+		r.DestinatarioDomicilioAdicional = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Mail"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Mail); err != nil {
+			return err
+		}
+	} else {
+		r.Mail = NewUnionNullString()
+
+		r.Mail = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigoIsoPais"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoIsoPais); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoIsoPais = NewUnionNullString()
+
+		r.CodigoIsoPais = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EstadoControlCalidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EstadoControlCalidad); err != nil {
+			return err
+		}
+	} else {
+		r.EstadoControlCalidad = NewUnionNullString()
+
+		r.EstadoControlCalidad = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DescripcionTipoPedido"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionTipoPedido); err != nil {
+			return err
+		}
+	} else {
+		r.DescripcionTipoPedido = NewUnionNullString()
+
+		r.DescripcionTipoPedido = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["LinkImpresionRemito"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LinkImpresionRemito); err != nil {
+			return err
+		}
+	} else {
+		r.LinkImpresionRemito = NewUnionNullString()
+
+		r.LinkImpresionRemito = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["LinkImpresionEtiquetaPedido"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LinkImpresionEtiquetaPedido); err != nil {
+			return err
+		}
+	} else {
+		r.LinkImpresionEtiquetaPedido = NewUnionNullString()
+
+		r.LinkImpresionEtiquetaPedido = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigoANMAT"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoANMAT); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoANMAT = NewUnionNullString()
+
+		r.CodigoANMAT = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ErrorOtTraza"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ErrorOtTraza); err != nil {
+			return err
+		}
+	} else {
+		r.ErrorOtTraza = NewUnionNullString()
+
+		r.ErrorOtTraza = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ErrorOtAcondi"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ErrorOtAcondi); err != nil {
+			return err
+		}
+	} else {
+		r.ErrorOtAcondi = NewUnionNullString()
+
+		r.ErrorOtAcondi = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ErrorValidaciones"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ErrorValidaciones); err != nil {
+			return err
+		}
+	} else {
+		r.ErrorValidaciones = NewUnionNullString()
+
+		r.ErrorValidaciones = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PropietarioEcommerce"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PropietarioEcommerce); err != nil {
+			return err
+		}
+	} else {
+		r.PropietarioEcommerce = NewUnionNullString()
+
+		r.PropietarioEcommerce = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigoCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoCliente = NewUnionNullString()
+
+		r.CodigoCliente = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NovedadesAcondi"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NovedadesAcondi); err != nil {
+			return err
+		}
+	} else {
+		r.NovedadesAcondi = NewUnionNullString()
+
+		r.NovedadesAcondi = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NumeroVale"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroVale); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroVale = NewUnionNullString()
+
+		r.NumeroVale = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigoEmbalaje"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoEmbalaje); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoEmbalaje = NewUnionNullString()
+
+		r.CodigoEmbalaje = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NumeroTaco"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroTaco); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroTaco = NewUnionNullString()
+
+		r.NumeroTaco = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["UrlQR"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlQR); err != nil {
+			return err
+		}
+	} else {
+		r.UrlQR = NewUnionNullString()
+
+		r.UrlQR = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NumeroOrdenOriginalEcommerce"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroOrdenOriginalEcommerce); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroOrdenOriginalEcommerce = NewUnionNullString()
+
+		r.NumeroOrdenOriginalEcommerce = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NotasEmbalaje"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NotasEmbalaje); err != nil {
+			return err
+		}
+	} else {
+		r.NotasEmbalaje = NewUnionNullString()
+
+		r.NotasEmbalaje = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Propietario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Propietario); err != nil {
+			return err
+		}
+	} else {
+		r.Propietario = NewUnionNullString()
+
+		r.Propietario = nil
 	}
 	return nil
 }
