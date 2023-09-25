@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type NovedadEventual struct {
+	IdModelo int64 `json:"idModelo"`
+
 	TipoPendiente string `json:"tipoPendiente"`
 
 	Motivo string `json:"motivo"`
@@ -45,7 +47,7 @@ type NovedadEventual struct {
 	Domicilio string `json:"domicilio"`
 }
 
-const NovedadEventualAvroCRC64Fingerprint = "vy<\x0e\xae\x98\xcd\xf3"
+const NovedadEventualAvroCRC64Fingerprint = "\xd7\xf9\xe7J٢\xfc\xa3"
 
 func NewNovedadEventual() NovedadEventual {
 	r := NovedadEventual{}
@@ -77,6 +79,10 @@ func DeserializeNovedadEventualFromSchema(r io.Reader, schema string) (NovedadEv
 
 func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	var err error
+	err = vm.WriteLong(r.IdModelo, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.TipoPendiente, w)
 	if err != nil {
 		return err
@@ -137,7 +143,7 @@ func (r NovedadEventual) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEventual) Schema() string {
-	return "{\"fields\":[{\"name\":\"tipoPendiente\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"domicilio\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"tipoPendiente\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"domicilio\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
 }
 
 func (r NovedadEventual) SchemaName() string {
@@ -156,66 +162,71 @@ func (_ NovedadEventual) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *NovedadEventual) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.TipoPendiente}
+		w := types.Long{Target: &r.IdModelo}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Motivo}
+		w := types.String{Target: &r.TipoPendiente}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Email}
+		w := types.String{Target: &r.Motivo}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.Telefono}
+		w := types.String{Target: &r.Email}
 
 		return w
 
 	case 4:
-		w := types.String{Target: &r.Canal}
+		w := types.String{Target: &r.Telefono}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.Envio}
+		w := types.String{Target: &r.Canal}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.SucursalActual}
+		w := types.String{Target: &r.Envio}
 
 		return w
 
 	case 7:
-		w := types.String{Target: &r.Segmento}
+		w := types.String{Target: &r.SucursalActual}
 
 		return w
 
 	case 8:
-		w := types.String{Target: &r.Cliente}
+		w := types.String{Target: &r.Segmento}
 
 		return w
 
 	case 9:
-		w := types.String{Target: &r.Contrato}
+		w := types.String{Target: &r.Cliente}
 
 		return w
 
 	case 10:
-		w := types.String{Target: &r.TipoServicio}
+		w := types.String{Target: &r.Contrato}
 
 		return w
 
 	case 11:
-		w := types.String{Target: &r.Destinatario}
+		w := types.String{Target: &r.TipoServicio}
 
 		return w
 
 	case 12:
+		w := types.String{Target: &r.Destinatario}
+
+		return w
+
+	case 13:
 		w := types.String{Target: &r.Domicilio}
 
 		return w
@@ -248,6 +259,10 @@ func (_ NovedadEventual) AvroCRC64Fingerprint() []byte {
 func (r NovedadEventual) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["idModelo"], err = json.Marshal(r.IdModelo)
+	if err != nil {
+		return nil, err
+	}
 	output["tipoPendiente"], err = json.Marshal(r.TipoPendiente)
 	if err != nil {
 		return nil, err
@@ -310,6 +325,20 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["idModelo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdModelo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idModelo")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoPendiente"]; ok {
 			return v
