@@ -27,11 +27,9 @@ type LoteArticulo struct {
 	OtrosDatos *UnionNullString `json:"otrosDatos"`
 
 	Estado *UnionNullString `json:"estado"`
-
-	Serie *UnionNullString `json:"serie"`
 }
 
-const LoteArticuloAvroCRC64Fingerprint = "\x04^\x8b\xd9n\x80A\xdb"
+const LoteArticuloAvroCRC64Fingerprint = "\xb9Ϸ\xe6\xa1\xd45\xc7"
 
 func NewLoteArticulo() LoteArticulo {
 	r := LoteArticulo{}
@@ -86,10 +84,6 @@ func writeLoteArticulo(r LoteArticulo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Serie, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -98,7 +92,7 @@ func (r LoteArticulo) Serialize(w io.Writer) error {
 }
 
 func (r LoteArticulo) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":[\"null\",\"string\"]},{\"name\":\"serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteArticulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.LoteArticulo\",\"type\":\"record\"}"
 }
 
 func (r LoteArticulo) SchemaName() string {
@@ -136,10 +130,6 @@ func (r *LoteArticulo) Get(i int) types.Field {
 		r.Estado = NewUnionNullString()
 
 		return r.Estado
-	case 5:
-		r.Serie = NewUnionNullString()
-
-		return r.Serie
 	}
 	panic("Unknown field index")
 }
@@ -176,9 +166,6 @@ func (r *LoteArticulo) NullField(i int) {
 	case 4:
 		r.Estado = nil
 		return
-	case 5:
-		r.Serie = nil
-		return
 	}
 	panic("Not a nullable field index")
 }
@@ -212,10 +199,6 @@ func (r LoteArticulo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["estado"], err = json.Marshal(r.Estado)
-	if err != nil {
-		return nil, err
-	}
-	output["serie"], err = json.Marshal(r.Serie)
 	if err != nil {
 		return nil, err
 	}
@@ -304,20 +287,6 @@ func (r *LoteArticulo) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for estado")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["serie"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Serie); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for serie")
 	}
 	return nil
 }
