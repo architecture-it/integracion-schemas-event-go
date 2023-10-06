@@ -28,6 +28,8 @@ type Articulo struct {
 
 	ZonaConsumo *UnionNullString `json:"zonaConsumo"`
 
+	Serie *UnionNullString `json:"serie"`
+
 	Unidadmedida string `json:"unidadmedida"`
 
 	Datosadicionales *UnionNullListaDePropiedades `json:"datosadicionales"`
@@ -35,7 +37,7 @@ type Articulo struct {
 	Lote LoteArticulo `json:"lote"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "\xf4K\xd4\x06\xc9\xd9H\xa9"
+const ArticuloAvroCRC64Fingerprint = "\xb5a\xfbCe\x92\x94\xc6"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
@@ -90,6 +92,10 @@ func writeArticulo(r Articulo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Serie, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Unidadmedida, w)
 	if err != nil {
 		return err
@@ -110,7 +116,7 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.Wapv2.Events.Record.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.Wapv2.Events.Record.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
@@ -152,15 +158,19 @@ func (r *Articulo) Get(i int) types.Field {
 
 		return r.ZonaConsumo
 	case 5:
+		r.Serie = NewUnionNullString()
+
+		return r.Serie
+	case 6:
 		w := types.String{Target: &r.Unidadmedida}
 
 		return w
 
-	case 6:
+	case 7:
 		r.Datosadicionales = NewUnionNullListaDePropiedades()
 
 		return r.Datosadicionales
-	case 7:
+	case 8:
 		r.Lote = NewLoteArticulo()
 
 		w := types.Record{Target: &r.Lote}
@@ -173,7 +183,7 @@ func (r *Articulo) Get(i int) types.Field {
 
 func (r *Articulo) SetDefault(i int) {
 	switch i {
-	case 6:
+	case 7:
 		r.Datosadicionales = nil
 		return
 	}
@@ -188,7 +198,10 @@ func (r *Articulo) NullField(i int) {
 	case 4:
 		r.ZonaConsumo = nil
 		return
-	case 6:
+	case 5:
+		r.Serie = nil
+		return
+	case 7:
 		r.Datosadicionales = nil
 		return
 	}
@@ -224,6 +237,10 @@ func (r Articulo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["zonaConsumo"], err = json.Marshal(r.ZonaConsumo)
+	if err != nil {
+		return nil, err
+	}
+	output["serie"], err = json.Marshal(r.Serie)
 	if err != nil {
 		return nil, err
 	}
@@ -318,6 +335,20 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for zonaConsumo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["serie"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Serie); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for serie")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["unidadmedida"]; ok {
