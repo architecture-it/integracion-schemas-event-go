@@ -30,7 +30,7 @@ type NovedadEventual struct {
 
 	Canal string `json:"canal"`
 
-	Envio string `json:"envio"`
+	CodigoDeEnvio string `json:"codigoDeEnvio"`
 
 	SucursalActual string `json:"sucursalActual"`
 
@@ -38,16 +38,18 @@ type NovedadEventual struct {
 
 	Cliente string `json:"cliente"`
 
-	Contrato string `json:"contrato"`
+	CodigoDeContratoInterno string `json:"codigoDeContratoInterno"`
 
 	TipoServicio string `json:"tipoServicio"`
 
 	Destinatario string `json:"destinatario"`
 
 	Domicilio string `json:"domicilio"`
+
+	Cuando int64 `json:"cuando"`
 }
 
-const NovedadEventualAvroCRC64Fingerprint = "\xd7\xf9\xe7J٢\xfc\xa3"
+const NovedadEventualAvroCRC64Fingerprint = "\xff?:\xed\xd3\xca\xe6q"
 
 func NewNovedadEventual() NovedadEventual {
 	r := NovedadEventual{}
@@ -103,7 +105,7 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Envio, w)
+	err = vm.WriteString(r.CodigoDeEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -119,7 +121,7 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Contrato, w)
+	err = vm.WriteString(r.CodigoDeContratoInterno, w)
 	if err != nil {
 		return err
 	}
@@ -135,6 +137,10 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteLong(r.Cuando, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -143,7 +149,7 @@ func (r NovedadEventual) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEventual) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"tipoPendiente\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"domicilio\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"tipoPendiente\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"domicilio\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
 }
 
 func (r NovedadEventual) SchemaName() string {
@@ -192,7 +198,7 @@ func (r *NovedadEventual) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.String{Target: &r.Envio}
+		w := types.String{Target: &r.CodigoDeEnvio}
 
 		return w
 
@@ -212,7 +218,7 @@ func (r *NovedadEventual) Get(i int) types.Field {
 		return w
 
 	case 10:
-		w := types.String{Target: &r.Contrato}
+		w := types.String{Target: &r.CodigoDeContratoInterno}
 
 		return w
 
@@ -228,6 +234,11 @@ func (r *NovedadEventual) Get(i int) types.Field {
 
 	case 13:
 		w := types.String{Target: &r.Domicilio}
+
+		return w
+
+	case 14:
+		w := types.Long{Target: &r.Cuando}
 
 		return w
 
@@ -283,7 +294,7 @@ func (r NovedadEventual) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["envio"], err = json.Marshal(r.Envio)
+	output["codigoDeEnvio"], err = json.Marshal(r.CodigoDeEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -299,7 +310,7 @@ func (r NovedadEventual) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["contrato"], err = json.Marshal(r.Contrato)
+	output["codigoDeContratoInterno"], err = json.Marshal(r.CodigoDeContratoInterno)
 	if err != nil {
 		return nil, err
 	}
@@ -312,6 +323,10 @@ func (r NovedadEventual) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["domicilio"], err = json.Marshal(r.Domicilio)
+	if err != nil {
+		return nil, err
+	}
+	output["cuando"], err = json.Marshal(r.Cuando)
 	if err != nil {
 		return nil, err
 	}
@@ -410,18 +425,18 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for canal")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["envio"]; ok {
+		if v, ok := fields["codigoDeEnvio"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Envio); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeEnvio); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for envio")
+		return fmt.Errorf("no value specified for codigoDeEnvio")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["sucursalActual"]; ok {
@@ -466,18 +481,18 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for cliente")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["contrato"]; ok {
+		if v, ok := fields["codigoDeContratoInterno"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeContratoInterno); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for contrato")
+		return fmt.Errorf("no value specified for codigoDeContratoInterno")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoServicio"]; ok {
@@ -520,6 +535,20 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for domicilio")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cuando"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cuando); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for cuando")
 	}
 	return nil
 }
