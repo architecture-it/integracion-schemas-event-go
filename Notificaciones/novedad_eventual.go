@@ -46,10 +46,10 @@ type NovedadEventual struct {
 
 	Domicilio string `json:"domicilio"`
 
-	Cuando string `json:"cuando"`
+	Cuando int64 `json:"cuando"`
 }
 
-const NovedadEventualAvroCRC64Fingerprint = "\x87\xddO\\\xcc\xc0\xc8\x12"
+const NovedadEventualAvroCRC64Fingerprint = "\xff?:\xed\xd3\xca\xe6q"
 
 func NewNovedadEventual() NovedadEventual {
 	r := NovedadEventual{}
@@ -137,7 +137,7 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Cuando, w)
+	err = vm.WriteLong(r.Cuando, w)
 	if err != nil {
 		return err
 	}
@@ -149,7 +149,7 @@ func (r NovedadEventual) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEventual) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"tipoPendiente\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"domicilio\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"tipoPendiente\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"domicilio\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
 }
 
 func (r NovedadEventual) SchemaName() string {
@@ -238,7 +238,7 @@ func (r *NovedadEventual) Get(i int) types.Field {
 		return w
 
 	case 14:
-		w := types.String{Target: &r.Cuando}
+		w := types.Long{Target: &r.Cuando}
 
 		return w
 
