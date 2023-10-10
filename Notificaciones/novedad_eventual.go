@@ -30,7 +30,7 @@ type NovedadEventual struct {
 
 	Canal string `json:"canal"`
 
-	Envio string `json:"envio"`
+	CodigoDeEnvio string `json:"codigoDeEnvio"`
 
 	SucursalActual string `json:"sucursalActual"`
 
@@ -47,7 +47,7 @@ type NovedadEventual struct {
 	Domicilio string `json:"domicilio"`
 }
 
-const NovedadEventualAvroCRC64Fingerprint = "\xd7\xf9\xe7J٢\xfc\xa3"
+const NovedadEventualAvroCRC64Fingerprint = "\xbe\x1b\x87\x0eM5_\x01"
 
 func NewNovedadEventual() NovedadEventual {
 	r := NovedadEventual{}
@@ -103,7 +103,7 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Envio, w)
+	err = vm.WriteString(r.CodigoDeEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -143,7 +143,7 @@ func (r NovedadEventual) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEventual) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"tipoPendiente\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"domicilio\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"tipoPendiente\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"domicilio\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
 }
 
 func (r NovedadEventual) SchemaName() string {
@@ -192,7 +192,7 @@ func (r *NovedadEventual) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.String{Target: &r.Envio}
+		w := types.String{Target: &r.CodigoDeEnvio}
 
 		return w
 
@@ -283,7 +283,7 @@ func (r NovedadEventual) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["envio"], err = json.Marshal(r.Envio)
+	output["codigoDeEnvio"], err = json.Marshal(r.CodigoDeEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -410,18 +410,18 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for canal")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["envio"]; ok {
+		if v, ok := fields["codigoDeEnvio"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Envio); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeEnvio); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for envio")
+		return fmt.Errorf("no value specified for codigoDeEnvio")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["sucursalActual"]; ok {
