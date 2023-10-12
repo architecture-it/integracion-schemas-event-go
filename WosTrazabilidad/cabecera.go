@@ -43,12 +43,15 @@ type Cabecera struct {
 	Remito string `json:"remito"`
 
 	IdEventoAnmat string `json:"idEventoAnmat"`
+
+	Destinatario *UnionNullDestinatario `json:"destinatario"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "!/ \xe4\xf2\xe4\xa2x"
+const CabeceraAvroCRC64Fingerprint = "\xb5\xe3\x9bR\xf7>fO"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
+	r.Destinatario = nil
 	return r
 }
 
@@ -129,6 +132,10 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullDestinatario(r.Destinatario, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -137,7 +144,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"Serialkey\",\"type\":\"int\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"instancia\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"tipoDocumento\",\"type\":\"int\"},{\"name\":\"nroDocumento\",\"type\":\"string\"},{\"name\":\"nroDocumentoWMS\",\"type\":\"string\"},{\"name\":\"glnOrigen\",\"type\":\"string\"},{\"name\":\"glnDestino\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"},{\"name\":\"remito\",\"type\":\"string\"},{\"name\":\"idEventoAnmat\",\"type\":\"string\"}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Serialkey\",\"type\":\"int\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"instancia\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"tipoDocumento\",\"type\":\"int\"},{\"name\":\"nroDocumento\",\"type\":\"string\"},{\"name\":\"nroDocumentoWMS\",\"type\":\"string\"},{\"name\":\"glnOrigen\",\"type\":\"string\"},{\"name\":\"glnDestino\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"int\"},{\"name\":\"descripcionEstado\",\"type\":\"string\"},{\"name\":\"remito\",\"type\":\"string\"},{\"name\":\"idEventoAnmat\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"TipoDocumento\",\"type\":\"int\"}],\"name\":\"Destinatario\",\"type\":\"record\"}]}],\"name\":\"Andreani.WosTrazabilidad.Events.AnmatCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -220,18 +227,28 @@ func (r *Cabecera) Get(i int) types.Field {
 
 		return w
 
+	case 13:
+		r.Destinatario = NewUnionNullDestinatario()
+
+		return r.Destinatario
 	}
 	panic("Unknown field index")
 }
 
 func (r *Cabecera) SetDefault(i int) {
 	switch i {
+	case 13:
+		r.Destinatario = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Cabecera) NullField(i int) {
 	switch i {
+	case 13:
+		r.Destinatario = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -297,6 +314,10 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["idEventoAnmat"], err = json.Marshal(r.IdEventoAnmat)
+	if err != nil {
+		return nil, err
+	}
+	output["destinatario"], err = json.Marshal(r.Destinatario)
 	if err != nil {
 		return nil, err
 	}
@@ -491,6 +512,22 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for idEventoAnmat")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["destinatario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Destinatario); err != nil {
+			return err
+		}
+	} else {
+		r.Destinatario = NewUnionNullDestinatario()
+
+		r.Destinatario = nil
 	}
 	return nil
 }
