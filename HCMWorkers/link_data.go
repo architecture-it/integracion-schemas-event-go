@@ -26,10 +26,10 @@ type LinkData struct {
 
 	Kind string `json:"kind"`
 
-	Properties *UnionNullProperties `json:"properties"`
+	Properties *UnionNullPropertiesData `json:"properties"`
 }
 
-const LinkDataAvroCRC64Fingerprint = "\xdf\xe7\xd0\xf36\x19k\x86"
+const LinkDataAvroCRC64Fingerprint = "\x14\xf7\xa1Kt\xca\xcd\xfb"
 
 func NewLinkData() LinkData {
 	r := LinkData{}
@@ -78,7 +78,7 @@ func writeLinkData(r LinkData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullProperties(r.Properties, w)
+	err = writeUnionNullPropertiesData(r.Properties, w)
 	if err != nil {
 		return err
 	}
@@ -90,7 +90,7 @@ func (r LinkData) Serialize(w io.Writer) error {
 }
 
 func (r LinkData) Schema() string {
-	return "{\"fields\":[{\"name\":\"rel\",\"type\":\"string\"},{\"name\":\"href\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"kind\",\"type\":\"string\"},{\"default\":null,\"name\":\"properties\",\"type\":[\"null\",{\"fields\":[{\"name\":\"changeIndicator\",\"type\":\"string\"}],\"name\":\"Properties\",\"type\":\"record\"}]}],\"name\":\"Andreani.HCMWorkers.Events.Record.LinkData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"rel\",\"type\":\"string\"},{\"name\":\"href\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"kind\",\"type\":\"string\"},{\"default\":null,\"name\":\"properties\",\"type\":[\"null\",{\"fields\":[{\"name\":\"changeIndicator\",\"type\":\"string\"}],\"name\":\"PropertiesData\",\"type\":\"record\"}]}],\"name\":\"Andreani.HCMWorkers.Events.Record.LinkData\",\"type\":\"record\"}"
 }
 
 func (r LinkData) SchemaName() string {
@@ -129,7 +129,7 @@ func (r *LinkData) Get(i int) types.Field {
 		return w
 
 	case 4:
-		r.Properties = NewUnionNullProperties()
+		r.Properties = NewUnionNullPropertiesData()
 
 		return r.Properties
 	}
@@ -264,7 +264,7 @@ func (r *LinkData) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Properties = NewUnionNullProperties()
+		r.Properties = NewUnionNullPropertiesData()
 
 		r.Properties = nil
 	}
