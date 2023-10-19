@@ -26,7 +26,7 @@ type WorkerData struct {
 
 	BloodType *UnionNullString `json:"BloodType"`
 
-	DateOfBirth string `json:"DateOfBirth"`
+	DateOfBirth *UnionNullString `json:"DateOfBirth"`
 
 	DateOfDeath *UnionNullString `json:"DateOfDeath"`
 
@@ -49,12 +49,13 @@ type WorkerData struct {
 	Links []LinkData `json:"links"`
 }
 
-const WorkerDataAvroCRC64Fingerprint = "\x1fR\xd2h\x1f\x85=\x15"
+const WorkerDataAvroCRC64Fingerprint = "\x92MZSmf\x84\xfd"
 
 func NewWorkerData() WorkerData {
 	r := WorkerData{}
 	r.CorrespondenceLanguage = nil
 	r.BloodType = nil
+	r.DateOfBirth = nil
 	r.DateOfDeath = nil
 	r.CountryOfBirth = nil
 	r.RegionOfBirth = nil
@@ -106,7 +107,7 @@ func writeWorkerData(r WorkerData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DateOfBirth, w)
+	err = writeUnionNullString(r.DateOfBirth, w)
 	if err != nil {
 		return err
 	}
@@ -158,7 +159,7 @@ func (r WorkerData) Serialize(w io.Writer) error {
 }
 
 func (r WorkerData) Schema() string {
-	return "{\"fields\":[{\"name\":\"PersonId\",\"type\":\"long\"},{\"name\":\"PersonNumber\",\"type\":\"string\"},{\"default\":null,\"name\":\"CorrespondenceLanguage\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BloodType\",\"type\":[\"null\",\"string\"]},{\"name\":\"DateOfBirth\",\"type\":\"string\"},{\"default\":null,\"name\":\"DateOfDeath\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CountryOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RegionOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TownOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ApplicantNumber\",\"type\":[\"null\",\"string\"]},{\"name\":\"CreatedBy\",\"type\":\"string\"},{\"name\":\"CreationDate\",\"type\":\"string\"},{\"name\":\"LastUpdatedBy\",\"type\":\"string\"},{\"name\":\"LastUpdateDate\",\"type\":\"string\"},{\"name\":\"links\",\"type\":{\"items\":{\"fields\":[{\"name\":\"rel\",\"type\":\"string\"},{\"name\":\"href\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"kind\",\"type\":\"string\"},{\"default\":null,\"name\":\"properties\",\"type\":[\"null\",{\"fields\":[{\"name\":\"changeIndicator\",\"type\":\"string\"}],\"name\":\"Properties\",\"type\":\"record\"}]}],\"name\":\"LinkData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMWorkers.Events.Record.WorkerData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PersonId\",\"type\":\"long\"},{\"name\":\"PersonNumber\",\"type\":\"string\"},{\"default\":null,\"name\":\"CorrespondenceLanguage\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BloodType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DateOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DateOfDeath\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CountryOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RegionOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TownOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ApplicantNumber\",\"type\":[\"null\",\"string\"]},{\"name\":\"CreatedBy\",\"type\":\"string\"},{\"name\":\"CreationDate\",\"type\":\"string\"},{\"name\":\"LastUpdatedBy\",\"type\":\"string\"},{\"name\":\"LastUpdateDate\",\"type\":\"string\"},{\"name\":\"links\",\"type\":{\"items\":{\"fields\":[{\"name\":\"rel\",\"type\":\"string\"},{\"name\":\"href\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"kind\",\"type\":\"string\"},{\"default\":null,\"name\":\"properties\",\"type\":[\"null\",{\"fields\":[{\"name\":\"changeIndicator\",\"type\":\"string\"}],\"name\":\"Properties\",\"type\":\"record\"}]}],\"name\":\"LinkData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMWorkers.Events.Record.WorkerData\",\"type\":\"record\"}"
 }
 
 func (r WorkerData) SchemaName() string {
@@ -195,10 +196,9 @@ func (r *WorkerData) Get(i int) types.Field {
 
 		return r.BloodType
 	case 4:
-		w := types.String{Target: &r.DateOfBirth}
+		r.DateOfBirth = NewUnionNullString()
 
-		return w
-
+		return r.DateOfBirth
 	case 5:
 		r.DateOfDeath = NewUnionNullString()
 
@@ -258,6 +258,9 @@ func (r *WorkerData) SetDefault(i int) {
 	case 3:
 		r.BloodType = nil
 		return
+	case 4:
+		r.DateOfBirth = nil
+		return
 	case 5:
 		r.DateOfDeath = nil
 		return
@@ -284,6 +287,9 @@ func (r *WorkerData) NullField(i int) {
 		return
 	case 3:
 		r.BloodType = nil
+		return
+	case 4:
+		r.DateOfBirth = nil
 		return
 	case 5:
 		r.DateOfDeath = nil
@@ -458,7 +464,9 @@ func (r *WorkerData) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DateOfBirth")
+		r.DateOfBirth = NewUnionNullString()
+
+		r.DateOfBirth = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DateOfDeath"]; ok {
