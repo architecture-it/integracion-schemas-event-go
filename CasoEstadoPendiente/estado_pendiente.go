@@ -26,7 +26,7 @@ type EstadoPendiente struct {
 
 	Title string `json:"Title"`
 
-	Description string `json:"Description"`
+	Description *UnionNullString `json:"Description"`
 
 	Customername string `json:"Customername"`
 
@@ -35,7 +35,7 @@ type EstadoPendiente struct {
 	StatusCode string `json:"StatusCode"`
 }
 
-const EstadoPendienteAvroCRC64Fingerprint = "\xa8\xbd\xf5\x86\x856+A"
+const EstadoPendienteAvroCRC64Fingerprint = "\x99\xeaE~H\x05\xb7\xaa"
 
 func NewEstadoPendiente() EstadoPendiente {
 	r := EstadoPendiente{}
@@ -83,7 +83,7 @@ func writeEstadoPendiente(r EstadoPendiente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Description, w)
+	err = writeUnionNullString(r.Description, w)
 	if err != nil {
 		return err
 	}
@@ -107,7 +107,7 @@ func (r EstadoPendiente) Serialize(w io.Writer) error {
 }
 
 func (r EstadoPendiente) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCode\",\"type\":\"string\"}],\"name\":\"Andreani.CasoEstadoPendiente.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCode\",\"type\":\"string\"}],\"name\":\"Andreani.CasoEstadoPendiente.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
 }
 
 func (r EstadoPendiente) SchemaName() string {
@@ -144,10 +144,9 @@ func (r *EstadoPendiente) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.String{Target: &r.Description}
+		r.Description = NewUnionNullString()
 
-		return w
-
+		return r.Description
 	case 5:
 		w := types.String{Target: &r.Customername}
 
@@ -179,6 +178,9 @@ func (r *EstadoPendiente) NullField(i int) {
 		return
 	case 2:
 		r.Cac_numerodeenvioincorrecto = nil
+		return
+	case 4:
+		r.Description = nil
 		return
 	case 6:
 		r.Cac_areainterna = nil
