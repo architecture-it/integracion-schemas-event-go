@@ -29,9 +29,11 @@ type ContenedorEmbalaje struct {
 	Ancho *UnionNullFloat `json:"Ancho"`
 
 	Peso *UnionNullFloat `json:"Peso"`
+
+	EsRetornable bool `json:"EsRetornable"`
 }
 
-const ContenedorEmbalajeAvroCRC64Fingerprint = "Zျ\u008f\xfd\xf1"
+const ContenedorEmbalajeAvroCRC64Fingerprint = "\x05ۥuU*\xaf\xe4"
 
 func NewContenedorEmbalaje() ContenedorEmbalaje {
 	r := ContenedorEmbalaje{}
@@ -91,6 +93,10 @@ func writeContenedorEmbalaje(r ContenedorEmbalaje, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteBool(r.EsRetornable, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -99,7 +105,7 @@ func (r ContenedorEmbalaje) Serialize(w io.Writer) error {
 }
 
 func (r ContenedorEmbalaje) Schema() string {
-	return "{\"fields\":[{\"name\":\"ContenedorId\",\"type\":\"string\"},{\"name\":\"ContenedorDescripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Longuitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ContenedorEmbalaje\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ContenedorId\",\"type\":\"string\"},{\"name\":\"ContenedorDescripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Longuitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"EsRetornable\",\"type\":\"boolean\"}],\"name\":\"Andreani.Empaquetado.Events.Common.ContenedorEmbalaje\",\"type\":\"record\"}"
 }
 
 func (r ContenedorEmbalaje) SchemaName() string {
@@ -143,6 +149,11 @@ func (r *ContenedorEmbalaje) Get(i int) types.Field {
 		r.Peso = NewUnionNullFloat()
 
 		return r.Peso
+	case 6:
+		w := types.Boolean{Target: &r.EsRetornable}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -216,6 +227,10 @@ func (r ContenedorEmbalaje) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Peso"], err = json.Marshal(r.Peso)
+	if err != nil {
+		return nil, err
+	}
+	output["EsRetornable"], err = json.Marshal(r.EsRetornable)
 	if err != nil {
 		return nil, err
 	}
@@ -320,6 +335,20 @@ func (r *ContenedorEmbalaje) UnmarshalJSON(data []byte) error {
 		r.Peso = NewUnionNullFloat()
 
 		r.Peso = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EsRetornable"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EsRetornable); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EsRetornable")
 	}
 	return nil
 }
