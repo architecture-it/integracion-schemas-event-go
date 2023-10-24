@@ -21,7 +21,7 @@ type ListaDePropiedades struct {
 	Metadatos *UnionNullArrayMetadato `json:"metadatos"`
 }
 
-const ListaDePropiedadesAvroCRC64Fingerprint = "\x11\x0f\x86]\xdc\xed\x00\u007f"
+const ListaDePropiedadesAvroCRC64Fingerprint = "\x11\x0f\x86]\xdc\xed\x00\x7f"
 
 func NewListaDePropiedades() ListaDePropiedades {
 	r := ListaDePropiedades{}
