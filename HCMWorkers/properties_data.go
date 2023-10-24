@@ -21,7 +21,7 @@ type PropertiesData struct {
 	ChangeIndicator string `json:"changeIndicator"`
 }
 
-const PropertiesDataAvroCRC64Fingerprint = "$\xa0\xc9\"q\\O<"
+const PropertiesDataAvroCRC64Fingerprint = "az\x16Y\xc1\x06\x05\x9c"
 
 func NewPropertiesData() PropertiesData {
 	r := PropertiesData{}
@@ -65,11 +65,11 @@ func (r PropertiesData) Serialize(w io.Writer) error {
 }
 
 func (r PropertiesData) Schema() string {
-	return "{\"fields\":[{\"name\":\"changeIndicator\",\"type\":\"string\"}],\"name\":\"Andreani.HCMWorkers.Events.Record.PropertiesData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"changeIndicator\",\"type\":\"string\"}],\"name\":\"Andreani.HCMWorkers.Events.Common.PropertiesData\",\"type\":\"record\"}"
 }
 
 func (r PropertiesData) SchemaName() string {
-	return "Andreani.HCMWorkers.Events.Record.PropertiesData"
+	return "Andreani.HCMWorkers.Events.Common.PropertiesData"
 }
 
 func (_ PropertiesData) SetBoolean(v bool)    { panic("Unsupported operation") }

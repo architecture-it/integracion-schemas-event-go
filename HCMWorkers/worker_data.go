@@ -49,7 +49,7 @@ type WorkerData struct {
 	Links []LinkData `json:"links"`
 }
 
-const WorkerDataAvroCRC64Fingerprint = "\tk\xffV\x7f\x19\xca!"
+const WorkerDataAvroCRC64Fingerprint = "\x9e{#\xe2L\x12P\x00"
 
 func NewWorkerData() WorkerData {
 	r := WorkerData{}
@@ -159,7 +159,7 @@ func (r WorkerData) Serialize(w io.Writer) error {
 }
 
 func (r WorkerData) Schema() string {
-	return "{\"fields\":[{\"name\":\"PersonId\",\"type\":\"long\"},{\"name\":\"PersonNumber\",\"type\":\"string\"},{\"default\":null,\"name\":\"CorrespondenceLanguage\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BloodType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DateOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DateOfDeath\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CountryOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RegionOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TownOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ApplicantNumber\",\"type\":[\"null\",\"string\"]},{\"name\":\"CreatedBy\",\"type\":\"string\"},{\"name\":\"CreationDate\",\"type\":\"string\"},{\"name\":\"LastUpdatedBy\",\"type\":\"string\"},{\"name\":\"LastUpdateDate\",\"type\":\"string\"},{\"name\":\"links\",\"type\":{\"items\":{\"fields\":[{\"name\":\"rel\",\"type\":\"string\"},{\"name\":\"href\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"kind\",\"type\":\"string\"},{\"default\":null,\"name\":\"properties\",\"type\":[\"null\",{\"fields\":[{\"name\":\"changeIndicator\",\"type\":\"string\"}],\"name\":\"PropertiesData\",\"type\":\"record\"}]}],\"name\":\"LinkData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMWorkers.Events.Record.WorkerData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PersonId\",\"type\":\"long\"},{\"name\":\"PersonNumber\",\"type\":\"string\"},{\"default\":null,\"name\":\"CorrespondenceLanguage\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BloodType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DateOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DateOfDeath\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CountryOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RegionOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TownOfBirth\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ApplicantNumber\",\"type\":[\"null\",\"string\"]},{\"name\":\"CreatedBy\",\"type\":\"string\"},{\"name\":\"CreationDate\",\"type\":\"string\"},{\"name\":\"LastUpdatedBy\",\"type\":\"string\"},{\"name\":\"LastUpdateDate\",\"type\":\"string\"},{\"name\":\"links\",\"type\":{\"items\":{\"fields\":[{\"name\":\"rel\",\"type\":\"string\"},{\"name\":\"href\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"kind\",\"type\":\"string\"},{\"default\":null,\"name\":\"properties\",\"type\":[\"null\",{\"fields\":[{\"name\":\"changeIndicator\",\"type\":\"string\"}],\"name\":\"PropertiesData\",\"type\":\"record\"}]}],\"name\":\"LinkData\",\"namespace\":\"Andreani.HCMWorkers.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMWorkers.Events.Record.WorkerData\",\"type\":\"record\"}"
 }
 
 func (r WorkerData) SchemaName() string {

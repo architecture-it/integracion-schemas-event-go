@@ -29,7 +29,7 @@ type LinkData struct {
 	Properties *UnionNullPropertiesData `json:"properties"`
 }
 
-const LinkDataAvroCRC64Fingerprint = "\x14\xf7\xa1Kt\xca\xcd\xfb"
+const LinkDataAvroCRC64Fingerprint = "l\xae\x92\xb1\xc1\xd4|f"
 
 func NewLinkData() LinkData {
 	r := LinkData{}
@@ -90,11 +90,11 @@ func (r LinkData) Serialize(w io.Writer) error {
 }
 
 func (r LinkData) Schema() string {
-	return "{\"fields\":[{\"name\":\"rel\",\"type\":\"string\"},{\"name\":\"href\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"kind\",\"type\":\"string\"},{\"default\":null,\"name\":\"properties\",\"type\":[\"null\",{\"fields\":[{\"name\":\"changeIndicator\",\"type\":\"string\"}],\"name\":\"PropertiesData\",\"type\":\"record\"}]}],\"name\":\"Andreani.HCMWorkers.Events.Record.LinkData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"rel\",\"type\":\"string\"},{\"name\":\"href\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"kind\",\"type\":\"string\"},{\"default\":null,\"name\":\"properties\",\"type\":[\"null\",{\"fields\":[{\"name\":\"changeIndicator\",\"type\":\"string\"}],\"name\":\"PropertiesData\",\"type\":\"record\"}]}],\"name\":\"Andreani.HCMWorkers.Events.Common.LinkData\",\"type\":\"record\"}"
 }
 
 func (r LinkData) SchemaName() string {
-	return "Andreani.HCMWorkers.Events.Record.LinkData"
+	return "Andreani.HCMWorkers.Events.Common.LinkData"
 }
 
 func (_ LinkData) SetBoolean(v bool)    { panic("Unsupported operation") }
