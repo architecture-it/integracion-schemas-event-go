@@ -53,7 +53,7 @@ type CambioEstadoTarea struct {
 	CambioEstadoExterno *UnionNullBool `json:"CambioEstadoExterno"`
 }
 
-const CambioEstadoTareaAvroCRC64Fingerprint = "WD\xe0s\xb7\xf1\xf5\f"
+const CambioEstadoTareaAvroCRC64Fingerprint = "\x05WG\xa4ǜ\xdf\xf5"
 
 func NewCambioEstadoTarea() CambioEstadoTarea {
 	r := CambioEstadoTarea{}
@@ -168,11 +168,11 @@ func (r CambioEstadoTarea) Serialize(w io.Writer) error {
 }
 
 func (r CambioEstadoTarea) Schema() string {
-	return "{\"fields\":[{\"name\":\"TareaId\",\"type\":\"int\"},{\"name\":\"PedidoId\",\"type\":\"int\"},{\"name\":\"CantidadTotal\",\"type\":\"int\"},{\"name\":\"TareaIdExterno\",\"type\":\"string\"},{\"name\":\"PedidoIdExterno\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"EstadoId\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Tenant\",\"type\":\"string\"},{\"name\":\"TareaInterna\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"MotivoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContenedorId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadPickeados\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoReal\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CambioEstadoExterno\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.WosPickingEstadoTarea.Events.Record.CambioEstadoTarea\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TareaId\",\"type\":\"int\"},{\"name\":\"PedidoId\",\"type\":\"int\"},{\"name\":\"CantidadTotal\",\"type\":\"int\"},{\"name\":\"TareaIdExterno\",\"type\":\"string\"},{\"name\":\"PedidoIdExterno\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"EstadoId\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Tenant\",\"type\":\"string\"},{\"name\":\"TareaInterna\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"MotivoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContenedorId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadPickeados\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoReal\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CambioEstadoExterno\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.WosPicking.Events.CambioEstadoTareaCommon.CambioEstadoTarea\",\"type\":\"record\"}"
 }
 
 func (r CambioEstadoTarea) SchemaName() string {
-	return "Andreani.WosPickingEstadoTarea.Events.Record.CambioEstadoTarea"
+	return "Andreani.WosPicking.Events.CambioEstadoTareaCommon.CambioEstadoTarea"
 }
 
 func (_ CambioEstadoTarea) SetBoolean(v bool)    { panic("Unsupported operation") }
