@@ -29,7 +29,7 @@ type CamaraPacking struct {
 	Estado *UnionNullString `json:"Estado"`
 }
 
-const CamaraPackingAvroCRC64Fingerprint = "4\x99\xc0OsA\xf60"
+const CamaraPackingAvroCRC64Fingerprint = "\xd9/7_\xd4\x1fft"
 
 func NewCamaraPacking() CamaraPacking {
 	r := CamaraPacking{}
@@ -89,11 +89,11 @@ func (r CamaraPacking) Serialize(w io.Writer) error {
 }
 
 func (r CamaraPacking) Schema() string {
-	return "{\"fields\":[{\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenWh\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Camara.Events.Record.CamaraPacking\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenWh\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosCamaras.Events.Record.CamaraPacking\",\"type\":\"record\"}"
 }
 
 func (r CamaraPacking) SchemaName() string {
-	return "Andreani.Camara.Events.Record.CamaraPacking"
+	return "Andreani.WosCamaras.Events.Record.CamaraPacking"
 }
 
 func (_ CamaraPacking) SetBoolean(v bool)    { panic("Unsupported operation") }
