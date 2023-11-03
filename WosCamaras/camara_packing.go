@@ -26,10 +26,12 @@ type CamaraPacking struct {
 
 	Propietario *UnionNullString `json:"Propietario"`
 
-	Estado *UnionNullString `json:"Estado"`
+	InstruccionCamara InstruccionesCamara `json:"InstruccionCamara"`
+
+	Proceso *UnionNullString `json:"Proceso"`
 }
 
-const CamaraPackingAvroCRC64Fingerprint = "\xd9/7_\xd4\x1fft"
+const CamaraPackingAvroCRC64Fingerprint = "\xb9g\xc0\xb0\xa2t&\x18"
 
 func NewCamaraPacking() CamaraPacking {
 	r := CamaraPacking{}
@@ -77,7 +79,11 @@ func writeCamaraPacking(r CamaraPacking, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Estado, w)
+	err = writeInstruccionesCamara(r.InstruccionCamara, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Proceso, w)
 	if err != nil {
 		return err
 	}
@@ -89,7 +95,7 @@ func (r CamaraPacking) Serialize(w io.Writer) error {
 }
 
 func (r CamaraPacking) Schema() string {
-	return "{\"fields\":[{\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenWh\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosCamaras.Events.Record.CamaraPacking\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenWh\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrdenCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"name\":\"InstruccionCamara\",\"type\":{\"name\":\"InstruccionesCamara\",\"symbols\":[\"IniciarGrabacion\",\"DetenerGrabacion\"],\"type\":\"enum\"}},{\"name\":\"Proceso\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosCamaras.Events.Record.CamaraPacking\",\"type\":\"record\"}"
 }
 
 func (r CamaraPacking) SchemaName() string {
@@ -124,9 +130,14 @@ func (r *CamaraPacking) Get(i int) types.Field {
 
 		return r.Propietario
 	case 4:
-		r.Estado = NewUnionNullString()
+		w := InstruccionesCamaraWrapper{Target: &r.InstruccionCamara}
 
-		return r.Estado
+		return w
+
+	case 5:
+		r.Proceso = NewUnionNullString()
+
+		return r.Proceso
 	}
 	panic("Unknown field index")
 }
@@ -151,8 +162,8 @@ func (r *CamaraPacking) NullField(i int) {
 	case 3:
 		r.Propietario = nil
 		return
-	case 4:
-		r.Estado = nil
+	case 5:
+		r.Proceso = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -186,7 +197,11 @@ func (r CamaraPacking) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Estado"], err = json.Marshal(r.Estado)
+	output["InstruccionCamara"], err = json.Marshal(r.InstruccionCamara)
+	if err != nil {
+		return nil, err
+	}
+	output["Proceso"], err = json.Marshal(r.Proceso)
 	if err != nil {
 		return nil, err
 	}
@@ -257,18 +272,32 @@ func (r *CamaraPacking) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Propietario")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Estado"]; ok {
+		if v, ok := fields["InstruccionCamara"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Estado); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.InstruccionCamara); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Estado")
+		return fmt.Errorf("no value specified for InstruccionCamara")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Proceso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Proceso); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Proceso")
 	}
 	return nil
 }
