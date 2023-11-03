@@ -20,17 +20,13 @@ var _ = fmt.Printf
 type NovedadEventual struct {
 	IdModelo int64 `json:"idModelo"`
 
-	TipoPendiente string `json:"tipoPendiente"`
+	DestinatarioEmail string `json:"destinatarioEmail"`
 
-	Motivo string `json:"motivo"`
-
-	Email string `json:"email"`
-
-	Telefono string `json:"telefono"`
+	DestinatarioTelefono string `json:"destinatarioTelefono"`
 
 	Canal string `json:"canal"`
 
-	Envio string `json:"envio"`
+	CodigoDeEnvio string `json:"codigoDeEnvio"`
 
 	SucursalActual string `json:"sucursalActual"`
 
@@ -38,16 +34,16 @@ type NovedadEventual struct {
 
 	Cliente string `json:"cliente"`
 
-	Contrato string `json:"contrato"`
+	CodigoDeContratoInterno string `json:"codigoDeContratoInterno"`
 
-	TipoServicio string `json:"tipoServicio"`
+	TipoContacto string `json:"tipoContacto"`
 
-	Destinatario string `json:"destinatario"`
+	CodigoPostal string `json:"codigoPostal"`
 
-	Domicilio string `json:"domicilio"`
+	Provincia string `json:"provincia"`
 }
 
-const NovedadEventualAvroCRC64Fingerprint = "\xd7\xf9\xe7J٢\xfc\xa3"
+const NovedadEventualAvroCRC64Fingerprint = "\x80`M\xa7\x17\x85\x18\xd4"
 
 func NewNovedadEventual() NovedadEventual {
 	r := NovedadEventual{}
@@ -83,19 +79,11 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TipoPendiente, w)
+	err = vm.WriteString(r.DestinatarioEmail, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Motivo, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Email, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Telefono, w)
+	err = vm.WriteString(r.DestinatarioTelefono, w)
 	if err != nil {
 		return err
 	}
@@ -103,7 +91,7 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Envio, w)
+	err = vm.WriteString(r.CodigoDeEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -119,19 +107,19 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Contrato, w)
+	err = vm.WriteString(r.CodigoDeContratoInterno, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TipoServicio, w)
+	err = vm.WriteString(r.TipoContacto, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Destinatario, w)
+	err = vm.WriteString(r.CodigoPostal, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Domicilio, w)
+	err = vm.WriteString(r.Provincia, w)
 	if err != nil {
 		return err
 	}
@@ -143,7 +131,7 @@ func (r NovedadEventual) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEventual) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"tipoPendiente\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"envio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"domicilio\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"destinatarioEmail\",\"type\":\"string\"},{\"name\":\"destinatarioTelefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"tipoContacto\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
 }
 
 func (r NovedadEventual) SchemaName() string {
@@ -167,67 +155,57 @@ func (r *NovedadEventual) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.TipoPendiente}
+		w := types.String{Target: &r.DestinatarioEmail}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Motivo}
+		w := types.String{Target: &r.DestinatarioTelefono}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.Email}
-
-		return w
-
-	case 4:
-		w := types.String{Target: &r.Telefono}
-
-		return w
-
-	case 5:
 		w := types.String{Target: &r.Canal}
 
 		return w
 
-	case 6:
-		w := types.String{Target: &r.Envio}
+	case 4:
+		w := types.String{Target: &r.CodigoDeEnvio}
 
 		return w
 
-	case 7:
+	case 5:
 		w := types.String{Target: &r.SucursalActual}
 
 		return w
 
-	case 8:
+	case 6:
 		w := types.String{Target: &r.Segmento}
 
 		return w
 
-	case 9:
+	case 7:
 		w := types.String{Target: &r.Cliente}
 
 		return w
 
+	case 8:
+		w := types.String{Target: &r.CodigoDeContratoInterno}
+
+		return w
+
+	case 9:
+		w := types.String{Target: &r.TipoContacto}
+
+		return w
+
 	case 10:
-		w := types.String{Target: &r.Contrato}
+		w := types.String{Target: &r.CodigoPostal}
 
 		return w
 
 	case 11:
-		w := types.String{Target: &r.TipoServicio}
-
-		return w
-
-	case 12:
-		w := types.String{Target: &r.Destinatario}
-
-		return w
-
-	case 13:
-		w := types.String{Target: &r.Domicilio}
+		w := types.String{Target: &r.Provincia}
 
 		return w
 
@@ -263,19 +241,11 @@ func (r NovedadEventual) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["tipoPendiente"], err = json.Marshal(r.TipoPendiente)
+	output["destinatarioEmail"], err = json.Marshal(r.DestinatarioEmail)
 	if err != nil {
 		return nil, err
 	}
-	output["motivo"], err = json.Marshal(r.Motivo)
-	if err != nil {
-		return nil, err
-	}
-	output["email"], err = json.Marshal(r.Email)
-	if err != nil {
-		return nil, err
-	}
-	output["telefono"], err = json.Marshal(r.Telefono)
+	output["destinatarioTelefono"], err = json.Marshal(r.DestinatarioTelefono)
 	if err != nil {
 		return nil, err
 	}
@@ -283,7 +253,7 @@ func (r NovedadEventual) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["envio"], err = json.Marshal(r.Envio)
+	output["codigoDeEnvio"], err = json.Marshal(r.CodigoDeEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -299,19 +269,19 @@ func (r NovedadEventual) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["contrato"], err = json.Marshal(r.Contrato)
+	output["codigoDeContratoInterno"], err = json.Marshal(r.CodigoDeContratoInterno)
 	if err != nil {
 		return nil, err
 	}
-	output["tipoServicio"], err = json.Marshal(r.TipoServicio)
+	output["tipoContacto"], err = json.Marshal(r.TipoContacto)
 	if err != nil {
 		return nil, err
 	}
-	output["destinatario"], err = json.Marshal(r.Destinatario)
+	output["codigoPostal"], err = json.Marshal(r.CodigoPostal)
 	if err != nil {
 		return nil, err
 	}
-	output["domicilio"], err = json.Marshal(r.Domicilio)
+	output["provincia"], err = json.Marshal(r.Provincia)
 	if err != nil {
 		return nil, err
 	}
@@ -340,60 +310,32 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for idModelo")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tipoPendiente"]; ok {
+		if v, ok := fields["destinatarioEmail"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TipoPendiente); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DestinatarioEmail); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipoPendiente")
+		return fmt.Errorf("no value specified for destinatarioEmail")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["motivo"]; ok {
+		if v, ok := fields["destinatarioTelefono"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DestinatarioTelefono); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for motivo")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["email"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Email); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for email")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["telefono"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Telefono); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for telefono")
+		return fmt.Errorf("no value specified for destinatarioTelefono")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["canal"]; ok {
@@ -410,18 +352,18 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for canal")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["envio"]; ok {
+		if v, ok := fields["codigoDeEnvio"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Envio); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeEnvio); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for envio")
+		return fmt.Errorf("no value specified for codigoDeEnvio")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["sucursalActual"]; ok {
@@ -466,60 +408,60 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for cliente")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["contrato"]; ok {
+		if v, ok := fields["codigoDeContratoInterno"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeContratoInterno); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for contrato")
+		return fmt.Errorf("no value specified for codigoDeContratoInterno")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tipoServicio"]; ok {
+		if v, ok := fields["tipoContacto"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TipoServicio); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoContacto); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipoServicio")
+		return fmt.Errorf("no value specified for tipoContacto")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["destinatario"]; ok {
+		if v, ok := fields["codigoPostal"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Destinatario); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoPostal); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for destinatario")
+		return fmt.Errorf("no value specified for codigoPostal")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["domicilio"]; ok {
+		if v, ok := fields["provincia"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Domicilio); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Provincia); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for domicilio")
+		return fmt.Errorf("no value specified for provincia")
 	}
 	return nil
 }
