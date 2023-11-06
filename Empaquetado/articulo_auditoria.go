@@ -32,14 +32,17 @@ type ArticuloAuditoria struct {
 
 	CantidadEmpacada int32 `json:"CantidadEmpacada"`
 
+	Diferencia *UnionNullInt `json:"Diferencia"`
+
 	Error *UnionNullString `json:"Error"`
 }
 
-const ArticuloAuditoriaAvroCRC64Fingerprint = "8\xc0\x98\xb8\xe5\x8dy\x00"
+const ArticuloAuditoriaAvroCRC64Fingerprint = "\xdb\xcb\x05|9Qf\x0e"
 
 func NewArticuloAuditoria() ArticuloAuditoria {
 	r := ArticuloAuditoria{}
 	r.Ean = nil
+	r.Diferencia = nil
 	r.Error = nil
 	return r
 }
@@ -97,6 +100,10 @@ func writeArticuloAuditoria(r ArticuloAuditoria, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullInt(r.Diferencia, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Error, w)
 	if err != nil {
 		return err
@@ -109,7 +116,7 @@ func (r ArticuloAuditoria) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloAuditoria) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"CantidadEmpacada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Error\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloAuditoria\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"CantidadEmpacada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Diferencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Error\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloAuditoria\",\"type\":\"record\"}"
 }
 
 func (r ArticuloAuditoria) SchemaName() string {
@@ -162,6 +169,10 @@ func (r *ArticuloAuditoria) Get(i int) types.Field {
 		return w
 
 	case 7:
+		r.Diferencia = NewUnionNullInt()
+
+		return r.Diferencia
+	case 8:
 		r.Error = NewUnionNullString()
 
 		return r.Error
@@ -175,6 +186,9 @@ func (r *ArticuloAuditoria) SetDefault(i int) {
 		r.Ean = nil
 		return
 	case 7:
+		r.Diferencia = nil
+		return
+	case 8:
 		r.Error = nil
 		return
 	}
@@ -187,6 +201,9 @@ func (r *ArticuloAuditoria) NullField(i int) {
 		r.Ean = nil
 		return
 	case 7:
+		r.Diferencia = nil
+		return
+	case 8:
 		r.Error = nil
 		return
 	}
@@ -230,6 +247,10 @@ func (r ArticuloAuditoria) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CantidadEmpacada"], err = json.Marshal(r.CantidadEmpacada)
+	if err != nil {
+		return nil, err
+	}
+	output["Diferencia"], err = json.Marshal(r.Diferencia)
 	if err != nil {
 		return nil, err
 	}
@@ -346,6 +367,22 @@ func (r *ArticuloAuditoria) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CantidadEmpacada")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Diferencia"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Diferencia); err != nil {
+			return err
+		}
+	} else {
+		r.Diferencia = NewUnionNullInt()
+
+		r.Diferencia = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Error"]; ok {

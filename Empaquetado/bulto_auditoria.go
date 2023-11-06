@@ -23,7 +23,7 @@ type BultoAuditoria struct {
 	Articulos []ArticuloAuditoria `json:"Articulos"`
 }
 
-const BultoAuditoriaAvroCRC64Fingerprint = "\x8b\x1ax\\\x98$D\xd0"
+const BultoAuditoriaAvroCRC64Fingerprint = "[%\x17n\x06jƘ"
 
 func NewBultoAuditoria() BultoAuditoria {
 	r := BultoAuditoria{}
@@ -73,7 +73,7 @@ func (r BultoAuditoria) Serialize(w io.Writer) error {
 }
 
 func (r BultoAuditoria) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"CantidadEmpacada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Error\",\"type\":[\"null\",\"string\"]}],\"name\":\"ArticuloAuditoria\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Common.BultoAuditoria\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"CantidadEmpacada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Diferencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Error\",\"type\":[\"null\",\"string\"]}],\"name\":\"ArticuloAuditoria\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Common.BultoAuditoria\",\"type\":\"record\"}"
 }
 
 func (r BultoAuditoria) SchemaName() string {
