@@ -20,10 +20,14 @@ var _ = fmt.Printf
 type BultoAuditoria struct {
 	CodigoEmbalaje string `json:"CodigoEmbalaje"`
 
+	ContenedorId string `json:"ContenedorId"`
+
+	ContenedorDescripcion string `json:"ContenedorDescripcion"`
+
 	Articulos []ArticuloAuditoria `json:"Articulos"`
 }
 
-const BultoAuditoriaAvroCRC64Fingerprint = "[%\x17n\x06jƘ"
+const BultoAuditoriaAvroCRC64Fingerprint = "hs~\xab\xf9-\xf9J"
 
 func NewBultoAuditoria() BultoAuditoria {
 	r := BultoAuditoria{}
@@ -61,6 +65,14 @@ func writeBultoAuditoria(r BultoAuditoria, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.ContenedorId, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.ContenedorDescripcion, w)
+	if err != nil {
+		return err
+	}
 	err = writeArrayArticuloAuditoria(r.Articulos, w)
 	if err != nil {
 		return err
@@ -73,7 +85,7 @@ func (r BultoAuditoria) Serialize(w io.Writer) error {
 }
 
 func (r BultoAuditoria) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"CantidadEmpacada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Diferencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Error\",\"type\":[\"null\",\"string\"]}],\"name\":\"ArticuloAuditoria\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Common.BultoAuditoria\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"ContenedorId\",\"type\":\"string\"},{\"name\":\"ContenedorDescripcion\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"CantidadEmpacada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Diferencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Error\",\"type\":[\"null\",\"string\"]}],\"name\":\"ArticuloAuditoria\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Common.BultoAuditoria\",\"type\":\"record\"}"
 }
 
 func (r BultoAuditoria) SchemaName() string {
@@ -97,6 +109,16 @@ func (r *BultoAuditoria) Get(i int) types.Field {
 		return w
 
 	case 1:
+		w := types.String{Target: &r.ContenedorId}
+
+		return w
+
+	case 2:
+		w := types.String{Target: &r.ContenedorDescripcion}
+
+		return w
+
+	case 3:
 		r.Articulos = make([]ArticuloAuditoria, 0)
 
 		w := ArrayArticuloAuditoriaWrapper{Target: &r.Articulos}
@@ -135,6 +157,14 @@ func (r BultoAuditoria) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["ContenedorId"], err = json.Marshal(r.ContenedorId)
+	if err != nil {
+		return nil, err
+	}
+	output["ContenedorDescripcion"], err = json.Marshal(r.ContenedorDescripcion)
+	if err != nil {
+		return nil, err
+	}
 	output["Articulos"], err = json.Marshal(r.Articulos)
 	if err != nil {
 		return nil, err
@@ -162,6 +192,34 @@ func (r *BultoAuditoria) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CodigoEmbalaje")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ContenedorId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContenedorId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for ContenedorId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ContenedorDescripcion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContenedorDescripcion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for ContenedorDescripcion")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Articulos"]; ok {

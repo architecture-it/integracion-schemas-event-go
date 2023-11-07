@@ -24,15 +24,26 @@ type PedidoAuditar struct {
 
 	OrdenCliente string `json:"OrdenCliente"`
 
+	Mesa string `json:"Mesa"`
+
+	Calle *UnionNullString `json:"Calle"`
+
+	PriorizacionId *UnionNullInt `json:"PriorizacionId"`
+
+	FechaExpedicion *UnionNullLong `json:"FechaExpedicion"`
+
 	Bultos []BultoAuditoria `json:"Bultos"`
 }
 
-const PedidoAuditarAvroCRC64Fingerprint = "o\x16\x1d\xc6\x03\xed\xe3-"
+const PedidoAuditarAvroCRC64Fingerprint = "\xfeX\xc6S\x14\v86"
 
 func NewPedidoAuditar() PedidoAuditar {
 	r := PedidoAuditar{}
 	r.Identificacion = NewIdentificacion()
 
+	r.Calle = nil
+	r.PriorizacionId = nil
+	r.FechaExpedicion = nil
 	r.Bultos = make([]BultoAuditoria, 0)
 
 	return r
@@ -75,6 +86,22 @@ func writePedidoAuditar(r PedidoAuditar, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Mesa, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Calle, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullInt(r.PriorizacionId, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.FechaExpedicion, w)
+	if err != nil {
+		return err
+	}
 	err = writeArrayBultoAuditoria(r.Bultos, w)
 	if err != nil {
 		return err
@@ -87,7 +114,7 @@ func (r PedidoAuditar) Serialize(w io.Writer) error {
 }
 
 func (r PedidoAuditar) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"}},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"Bultos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"CantidadEmpacada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Diferencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Error\",\"type\":[\"null\",\"string\"]}],\"name\":\"ArticuloAuditoria\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"BultoAuditoria\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Record.PedidoAuditar\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"}},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"Mesa\",\"type\":\"string\"},{\"default\":null,\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PriorizacionId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"FechaExpedicion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Bultos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"ContenedorId\",\"type\":\"string\"},{\"name\":\"ContenedorDescripcion\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"name\":\"CantidadEmpacada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Diferencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Error\",\"type\":[\"null\",\"string\"]}],\"name\":\"ArticuloAuditoria\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"BultoAuditoria\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Record.PedidoAuditar\",\"type\":\"record\"}"
 }
 
 func (r PedidoAuditar) SchemaName() string {
@@ -123,6 +150,23 @@ func (r *PedidoAuditar) Get(i int) types.Field {
 		return w
 
 	case 3:
+		w := types.String{Target: &r.Mesa}
+
+		return w
+
+	case 4:
+		r.Calle = NewUnionNullString()
+
+		return r.Calle
+	case 5:
+		r.PriorizacionId = NewUnionNullInt()
+
+		return r.PriorizacionId
+	case 6:
+		r.FechaExpedicion = NewUnionNullLong()
+
+		return r.FechaExpedicion
+	case 7:
 		r.Bultos = make([]BultoAuditoria, 0)
 
 		w := ArrayBultoAuditoriaWrapper{Target: &r.Bultos}
@@ -135,12 +179,30 @@ func (r *PedidoAuditar) Get(i int) types.Field {
 
 func (r *PedidoAuditar) SetDefault(i int) {
 	switch i {
+	case 4:
+		r.Calle = nil
+		return
+	case 5:
+		r.PriorizacionId = nil
+		return
+	case 6:
+		r.FechaExpedicion = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *PedidoAuditar) NullField(i int) {
 	switch i {
+	case 4:
+		r.Calle = nil
+		return
+	case 5:
+		r.PriorizacionId = nil
+		return
+	case 6:
+		r.FechaExpedicion = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -166,6 +228,22 @@ func (r PedidoAuditar) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["OrdenCliente"], err = json.Marshal(r.OrdenCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["Mesa"], err = json.Marshal(r.Mesa)
+	if err != nil {
+		return nil, err
+	}
+	output["Calle"], err = json.Marshal(r.Calle)
+	if err != nil {
+		return nil, err
+	}
+	output["PriorizacionId"], err = json.Marshal(r.PriorizacionId)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaExpedicion"], err = json.Marshal(r.FechaExpedicion)
 	if err != nil {
 		return nil, err
 	}
@@ -224,6 +302,68 @@ func (r *PedidoAuditar) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for OrdenCliente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Mesa"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Mesa); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Mesa")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Calle"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Calle); err != nil {
+			return err
+		}
+	} else {
+		r.Calle = NewUnionNullString()
+
+		r.Calle = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PriorizacionId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PriorizacionId); err != nil {
+			return err
+		}
+	} else {
+		r.PriorizacionId = NewUnionNullInt()
+
+		r.PriorizacionId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaExpedicion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaExpedicion); err != nil {
+			return err
+		}
+	} else {
+		r.FechaExpedicion = NewUnionNullLong()
+
+		r.FechaExpedicion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Bultos"]; ok {
