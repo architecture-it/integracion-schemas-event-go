@@ -189,9 +189,11 @@ type Cabecera struct {
 	NotasEmbalaje *UnionNullString `json:"NotasEmbalaje"`
 
 	Propietario *UnionNullString `json:"Propietario"`
+
+	InformaANMAT *UnionNullString `json:"InformaANMAT"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\x8d|Q\x15\x01\xd4EZ"
+const CabeceraAvroCRC64Fingerprint = "\xb4\xb1\x01\xfb\x10\x97\x81\xe6"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -271,6 +273,7 @@ func NewCabecera() Cabecera {
 	r.NumeroOrdenOriginalEcommerce = nil
 	r.NotasEmbalaje = nil
 	r.Propietario = nil
+	r.InformaANMAT = nil
 	return r
 }
 
@@ -643,6 +646,10 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.InformaANMAT, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -651,7 +658,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDestinatario\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoDeIntegracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Acondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AlmacenCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrioridadApiPlani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CuentaTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AdmiteCambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NoAdmitePickingParcial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ImprimeDocumentacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroCale\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ComprobanteIngresosBrutos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoServicioAlmacenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Marketplace\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoPedidoMatriz\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Destinario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClientePadre\",\"type\":\"string\"},{\"name\":\"CodigoEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"CodigoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoCodigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoGrilla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaEnvioFacturar\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"PrecioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotasPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionPrometida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntregaPlanificada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntregaProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GrupoOrdenes\",\"type\":\"string\"},{\"default\":null,\"name\":\"FranjaHorario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTTraz\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaEvento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreacionPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"GlnOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantidadTotal\",\"type\":\"float\"},{\"name\":\"CantidadExpedidaTotal\",\"type\":\"float\"},{\"name\":\"CantidadPickeadaTotal\",\"type\":\"float\"},{\"default\":null,\"name\":\"DestinatarioDomicilioAdicional\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoIsoPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoControlCalidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionTipoPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LinkImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LinkImpresionEtiquetaPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoANMAT\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorOtTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorOtAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorValidaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PropietarioEcommerce\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NovedadesAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroVale\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroTaco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UrlQR\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroOrdenOriginalEcommerce\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotasEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDestinatario\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoDeIntegracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Acondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AlmacenCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrioridadApiPlani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CuentaTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AdmiteCambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NoAdmitePickingParcial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ImprimeDocumentacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroCale\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ComprobanteIngresosBrutos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoServicioAlmacenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Marketplace\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoPedidoMatriz\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Destinario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinarioNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioGLNDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioCodigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrdenCompra\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClientePadre\",\"type\":\"string\"},{\"name\":\"CodigoEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"CodigoDescripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoPedidoCodigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoPedidoDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoGrilla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaEnvioFacturar\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"PrecioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotasPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaExpedicionPrometida\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntregaPlanificada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaEntregaProgramada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"GrupoOrdenes\",\"type\":\"string\"},{\"default\":null,\"name\":\"FranjaHorario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoOTTraz\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaEvento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreacionPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaPedido\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"GlnOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CantidadTotal\",\"type\":\"float\"},{\"name\":\"CantidadExpedidaTotal\",\"type\":\"float\"},{\"name\":\"CantidadPickeadaTotal\",\"type\":\"float\"},{\"default\":null,\"name\":\"DestinatarioDomicilioAdicional\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoIsoPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoControlCalidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionTipoPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LinkImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LinkImpresionEtiquetaPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoANMAT\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorOtTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorOtAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorValidaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PropietarioEcommerce\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NovedadesAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroVale\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroTaco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UrlQR\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroOrdenOriginalEcommerce\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotasEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"InformaANMAT\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -1023,6 +1030,10 @@ func (r *Cabecera) Get(i int) types.Field {
 		r.Propietario = NewUnionNullString()
 
 		return r.Propietario
+	case 86:
+		r.InformaANMAT = NewUnionNullString()
+
+		return r.InformaANMAT
 	}
 	panic("Unknown field index")
 }
@@ -1257,6 +1268,9 @@ func (r *Cabecera) SetDefault(i int) {
 	case 85:
 		r.Propietario = nil
 		return
+	case 86:
+		r.InformaANMAT = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -1490,6 +1504,9 @@ func (r *Cabecera) NullField(i int) {
 		return
 	case 85:
 		r.Propietario = nil
+		return
+	case 86:
+		r.InformaANMAT = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -1848,6 +1865,10 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Propietario"], err = json.Marshal(r.Propietario)
+	if err != nil {
+		return nil, err
+	}
+	output["InformaANMAT"], err = json.Marshal(r.InformaANMAT)
 	if err != nil {
 		return nil, err
 	}
@@ -3216,6 +3237,22 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		r.Propietario = NewUnionNullString()
 
 		r.Propietario = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["InformaANMAT"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.InformaANMAT); err != nil {
+			return err
+		}
+	} else {
+		r.InformaANMAT = NewUnionNullString()
+
+		r.InformaANMAT = nil
 	}
 	return nil
 }
