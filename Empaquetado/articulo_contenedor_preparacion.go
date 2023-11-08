@@ -48,10 +48,10 @@ type ArticuloContenedorPreparacion struct {
 
 	Peso *UnionNullFloat `json:"Peso"`
 
-	InstruccionesEmbalaje *UnionNullFloat `json:"InstruccionesEmbalaje"`
+	InstruccionesEmbalaje *UnionNullString `json:"InstruccionesEmbalaje"`
 }
 
-const ArticuloContenedorPreparacionAvroCRC64Fingerprint = "\xa0\xcf\x0e\xd6m\x18\x85\xa6"
+const ArticuloContenedorPreparacionAvroCRC64Fingerprint = "\xba\x042~d\xa3Is"
 
 func NewArticuloContenedorPreparacion() ArticuloContenedorPreparacion {
 	r := ArticuloContenedorPreparacion{}
@@ -154,7 +154,7 @@ func writeArticuloContenedorPreparacion(r ArticuloContenedorPreparacion, w io.Wr
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullFloat(r.InstruccionesEmbalaje, w)
+	err = writeUnionNullString(r.InstruccionesEmbalaje, w)
 	if err != nil {
 		return err
 	}
@@ -166,7 +166,7 @@ func (r ArticuloContenedorPreparacion) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloContenedorPreparacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloContenedorPreparacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloContenedorPreparacion\",\"type\":\"record\"}"
 }
 
 func (r ArticuloContenedorPreparacion) SchemaName() string {
@@ -250,7 +250,7 @@ func (r *ArticuloContenedorPreparacion) Get(i int) types.Field {
 
 		return r.Peso
 	case 15:
-		r.InstruccionesEmbalaje = NewUnionNullFloat()
+		r.InstruccionesEmbalaje = NewUnionNullString()
 
 		return r.InstruccionesEmbalaje
 	}
@@ -665,7 +665,7 @@ func (r *ArticuloContenedorPreparacion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.InstruccionesEmbalaje = NewUnionNullFloat()
+		r.InstruccionesEmbalaje = NewUnionNullString()
 
 		r.InstruccionesEmbalaje = nil
 	}
