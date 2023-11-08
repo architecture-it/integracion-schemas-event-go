@@ -47,9 +47,11 @@ type ArticuloContenedorPreparacion struct {
 	Ancho *UnionNullFloat `json:"Ancho"`
 
 	Peso *UnionNullFloat `json:"Peso"`
+
+	InstruccionesEmbalaje *UnionNullFloat `json:"InstruccionesEmbalaje"`
 }
 
-const ArticuloContenedorPreparacionAvroCRC64Fingerprint = "]\xfc\xacZ\xcc\v\x8b\xed"
+const ArticuloContenedorPreparacionAvroCRC64Fingerprint = "\xa0\xcf\x0e\xd6m\x18\x85\xa6"
 
 func NewArticuloContenedorPreparacion() ArticuloContenedorPreparacion {
 	r := ArticuloContenedorPreparacion{}
@@ -63,6 +65,7 @@ func NewArticuloContenedorPreparacion() ArticuloContenedorPreparacion {
 	r.Altura = nil
 	r.Ancho = nil
 	r.Peso = nil
+	r.InstruccionesEmbalaje = nil
 	return r
 }
 
@@ -151,6 +154,10 @@ func writeArticuloContenedorPreparacion(r ArticuloContenedorPreparacion, w io.Wr
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullFloat(r.InstruccionesEmbalaje, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -159,7 +166,7 @@ func (r ArticuloContenedorPreparacion) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloContenedorPreparacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloContenedorPreparacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloContenedorPreparacion\",\"type\":\"record\"}"
 }
 
 func (r ArticuloContenedorPreparacion) SchemaName() string {
@@ -242,6 +249,10 @@ func (r *ArticuloContenedorPreparacion) Get(i int) types.Field {
 		r.Peso = NewUnionNullFloat()
 
 		return r.Peso
+	case 15:
+		r.InstruccionesEmbalaje = NewUnionNullFloat()
+
+		return r.InstruccionesEmbalaje
 	}
 	panic("Unknown field index")
 }
@@ -278,6 +289,9 @@ func (r *ArticuloContenedorPreparacion) SetDefault(i int) {
 	case 14:
 		r.Peso = nil
 		return
+	case 15:
+		r.InstruccionesEmbalaje = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -313,6 +327,9 @@ func (r *ArticuloContenedorPreparacion) NullField(i int) {
 		return
 	case 14:
 		r.Peso = nil
+		return
+	case 15:
+		r.InstruccionesEmbalaje = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -389,6 +406,10 @@ func (r ArticuloContenedorPreparacion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Peso"], err = json.Marshal(r.Peso)
+	if err != nil {
+		return nil, err
+	}
+	output["InstruccionesEmbalaje"], err = json.Marshal(r.InstruccionesEmbalaje)
 	if err != nil {
 		return nil, err
 	}
@@ -631,6 +652,22 @@ func (r *ArticuloContenedorPreparacion) UnmarshalJSON(data []byte) error {
 		r.Peso = NewUnionNullFloat()
 
 		r.Peso = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["InstruccionesEmbalaje"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.InstruccionesEmbalaje); err != nil {
+			return err
+		}
+	} else {
+		r.InstruccionesEmbalaje = NewUnionNullFloat()
+
+		r.InstruccionesEmbalaje = nil
 	}
 	return nil
 }
