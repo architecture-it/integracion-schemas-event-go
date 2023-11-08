@@ -40,12 +40,16 @@ type PedidoEmpaquetar struct {
 
 	DescripcionEstadoTraza *UnionNullString `json:"DescripcionEstadoTraza"`
 
+	DescripcionErrorTraza *UnionNullString `json:"DescripcionErrorTraza"`
+
+	DescripcionErrorAcondi *UnionNullString `json:"DescripcionErrorAcondi"`
+
 	ContenedoresDePreparacion []ContenedorPreparacion `json:"ContenedoresDePreparacion"`
 
 	ContenedoresEmbalajeDeAlmacen []ContenedorEmbalaje `json:"ContenedoresEmbalajeDeAlmacen"`
 }
 
-const PedidoEmpaquetarAvroCRC64Fingerprint = "\xbcڰ\x86\xe9\xdd\xef\xba"
+const PedidoEmpaquetarAvroCRC64Fingerprint = "\x02\x9f\x17\xfa4,\na"
 
 func NewPedidoEmpaquetar() PedidoEmpaquetar {
 	r := PedidoEmpaquetar{}
@@ -59,6 +63,8 @@ func NewPedidoEmpaquetar() PedidoEmpaquetar {
 	r.DescripcionEstadoAcondi = nil
 	r.CodigoEstadoTraza = nil
 	r.DescripcionEstadoTraza = nil
+	r.DescripcionErrorTraza = nil
+	r.DescripcionErrorAcondi = nil
 	r.ContenedoresDePreparacion = make([]ContenedorPreparacion, 0)
 
 	r.ContenedoresEmbalajeDeAlmacen = make([]ContenedorEmbalaje, 0)
@@ -135,6 +141,14 @@ func writePedidoEmpaquetar(r PedidoEmpaquetar, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.DescripcionErrorTraza, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.DescripcionErrorAcondi, w)
+	if err != nil {
+		return err
+	}
 	err = writeArrayContenedorPreparacion(r.ContenedoresDePreparacion, w)
 	if err != nil {
 		return err
@@ -151,7 +165,7 @@ func (r PedidoEmpaquetar) Serialize(w io.Writer) error {
 }
 
 func (r PedidoEmpaquetar) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"}},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaExpedicion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"MarcaEspecial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContenedoresDePreparacion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"float\"]}],\"name\":\"ArticuloContenedorPreparacion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ContenedorPreparacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"ContenedoresEmbalajeDeAlmacen\",\"type\":{\"items\":{\"fields\":[{\"name\":\"ContenedorId\",\"type\":\"string\"},{\"name\":\"ContenedorDescripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Longuitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"EsRetornable\",\"type\":\"boolean\"}],\"name\":\"ContenedorEmbalaje\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Record.PedidoEmpaquetar\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"}},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaExpedicion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"MarcaEspecial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionErrorTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionErrorAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContenedoresDePreparacion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"float\"]}],\"name\":\"ArticuloContenedorPreparacion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ContenedorPreparacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"ContenedoresEmbalajeDeAlmacen\",\"type\":{\"items\":{\"fields\":[{\"name\":\"ContenedorId\",\"type\":\"string\"},{\"name\":\"ContenedorDescripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Longuitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"EsRetornable\",\"type\":\"boolean\"}],\"name\":\"ContenedorEmbalaje\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Record.PedidoEmpaquetar\",\"type\":\"record\"}"
 }
 
 func (r PedidoEmpaquetar) SchemaName() string {
@@ -219,13 +233,21 @@ func (r *PedidoEmpaquetar) Get(i int) types.Field {
 
 		return r.DescripcionEstadoTraza
 	case 11:
+		r.DescripcionErrorTraza = NewUnionNullString()
+
+		return r.DescripcionErrorTraza
+	case 12:
+		r.DescripcionErrorAcondi = NewUnionNullString()
+
+		return r.DescripcionErrorAcondi
+	case 13:
 		r.ContenedoresDePreparacion = make([]ContenedorPreparacion, 0)
 
 		w := ArrayContenedorPreparacionWrapper{Target: &r.ContenedoresDePreparacion}
 
 		return w
 
-	case 12:
+	case 14:
 		r.ContenedoresEmbalajeDeAlmacen = make([]ContenedorEmbalaje, 0)
 
 		w := ArrayContenedorEmbalajeWrapper{Target: &r.ContenedoresEmbalajeDeAlmacen}
@@ -262,6 +284,12 @@ func (r *PedidoEmpaquetar) SetDefault(i int) {
 	case 10:
 		r.DescripcionEstadoTraza = nil
 		return
+	case 11:
+		r.DescripcionErrorTraza = nil
+		return
+	case 12:
+		r.DescripcionErrorAcondi = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -291,6 +319,12 @@ func (r *PedidoEmpaquetar) NullField(i int) {
 		return
 	case 10:
 		r.DescripcionEstadoTraza = nil
+		return
+	case 11:
+		r.DescripcionErrorTraza = nil
+		return
+	case 12:
+		r.DescripcionErrorAcondi = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -349,6 +383,14 @@ func (r PedidoEmpaquetar) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["DescripcionEstadoTraza"], err = json.Marshal(r.DescripcionEstadoTraza)
+	if err != nil {
+		return nil, err
+	}
+	output["DescripcionErrorTraza"], err = json.Marshal(r.DescripcionErrorTraza)
+	if err != nil {
+		return nil, err
+	}
+	output["DescripcionErrorAcondi"], err = json.Marshal(r.DescripcionErrorAcondi)
 	if err != nil {
 		return nil, err
 	}
@@ -539,6 +581,38 @@ func (r *PedidoEmpaquetar) UnmarshalJSON(data []byte) error {
 		r.DescripcionEstadoTraza = NewUnionNullString()
 
 		r.DescripcionEstadoTraza = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DescripcionErrorTraza"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionErrorTraza); err != nil {
+			return err
+		}
+	} else {
+		r.DescripcionErrorTraza = NewUnionNullString()
+
+		r.DescripcionErrorTraza = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DescripcionErrorAcondi"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionErrorAcondi); err != nil {
+			return err
+		}
+	} else {
+		r.DescripcionErrorAcondi = NewUnionNullString()
+
+		r.DescripcionErrorAcondi = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ContenedoresDePreparacion"]; ok {
