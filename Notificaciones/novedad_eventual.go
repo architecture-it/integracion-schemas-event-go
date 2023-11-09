@@ -20,13 +20,13 @@ var _ = fmt.Printf
 type NovedadEventual struct {
 	IdModelo int64 `json:"idModelo"`
 
-	DestinatarioEmail string `json:"destinatarioEmail"`
+	DestinatarioEmail *UnionNullString `json:"destinatarioEmail"`
 
-	DestinatarioTelefono string `json:"destinatarioTelefono"`
+	DestinatarioTelefono *UnionNullString `json:"destinatarioTelefono"`
 
 	Canal string `json:"canal"`
 
-	CodigoDeEnvio string `json:"codigoDeEnvio"`
+	CodigoDeEnvio *UnionNullString `json:"codigoDeEnvio"`
 
 	SucursalActual string `json:"sucursalActual"`
 
@@ -34,19 +34,26 @@ type NovedadEventual struct {
 
 	Cliente string `json:"cliente"`
 
-	CodigoDeContratoInterno string `json:"codigoDeContratoInterno"`
+	CodigoDeContratoInterno *UnionNullString `json:"codigoDeContratoInterno"`
 
-	TipoContacto string `json:"tipoContacto"`
+	TipoContacto *UnionNullString `json:"tipoContacto"`
 
-	CodigoPostal string `json:"codigoPostal"`
+	CodigoPostal *UnionNullString `json:"codigoPostal"`
 
-	Provincia string `json:"provincia"`
+	Provincia *UnionNullString `json:"provincia"`
 }
 
-const NovedadEventualAvroCRC64Fingerprint = "\x80`M\xa7\x17\x85\x18\xd4"
+const NovedadEventualAvroCRC64Fingerprint = "\xabN\x8e\xad\x8a>\xb4\x95"
 
 func NewNovedadEventual() NovedadEventual {
 	r := NovedadEventual{}
+	r.DestinatarioEmail = nil
+	r.DestinatarioTelefono = nil
+	r.CodigoDeEnvio = nil
+	r.CodigoDeContratoInterno = nil
+	r.TipoContacto = nil
+	r.CodigoPostal = nil
+	r.Provincia = nil
 	return r
 }
 
@@ -79,11 +86,11 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioEmail, w)
+	err = writeUnionNullString(r.DestinatarioEmail, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioTelefono, w)
+	err = writeUnionNullString(r.DestinatarioTelefono, w)
 	if err != nil {
 		return err
 	}
@@ -91,7 +98,7 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoDeEnvio, w)
+	err = writeUnionNullString(r.CodigoDeEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -107,19 +114,19 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoDeContratoInterno, w)
+	err = writeUnionNullString(r.CodigoDeContratoInterno, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TipoContacto, w)
+	err = writeUnionNullString(r.TipoContacto, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoPostal, w)
+	err = writeUnionNullString(r.CodigoPostal, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Provincia, w)
+	err = writeUnionNullString(r.Provincia, w)
 	if err != nil {
 		return err
 	}
@@ -131,7 +138,7 @@ func (r NovedadEventual) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEventual) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"destinatarioEmail\",\"type\":\"string\"},{\"name\":\"destinatarioTelefono\",\"type\":\"string\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"tipoContacto\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"canal\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
 }
 
 func (r NovedadEventual) SchemaName() string {
@@ -155,25 +162,22 @@ func (r *NovedadEventual) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.DestinatarioEmail}
+		r.DestinatarioEmail = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioEmail
 	case 2:
-		w := types.String{Target: &r.DestinatarioTelefono}
+		r.DestinatarioTelefono = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioTelefono
 	case 3:
 		w := types.String{Target: &r.Canal}
 
 		return w
 
 	case 4:
-		w := types.String{Target: &r.CodigoDeEnvio}
+		r.CodigoDeEnvio = NewUnionNullString()
 
-		return w
-
+		return r.CodigoDeEnvio
 	case 5:
 		w := types.String{Target: &r.SucursalActual}
 
@@ -190,37 +194,75 @@ func (r *NovedadEventual) Get(i int) types.Field {
 		return w
 
 	case 8:
-		w := types.String{Target: &r.CodigoDeContratoInterno}
+		r.CodigoDeContratoInterno = NewUnionNullString()
 
-		return w
-
+		return r.CodigoDeContratoInterno
 	case 9:
-		w := types.String{Target: &r.TipoContacto}
+		r.TipoContacto = NewUnionNullString()
 
-		return w
-
+		return r.TipoContacto
 	case 10:
-		w := types.String{Target: &r.CodigoPostal}
+		r.CodigoPostal = NewUnionNullString()
 
-		return w
-
+		return r.CodigoPostal
 	case 11:
-		w := types.String{Target: &r.Provincia}
+		r.Provincia = NewUnionNullString()
 
-		return w
-
+		return r.Provincia
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadEventual) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.DestinatarioEmail = nil
+		return
+	case 2:
+		r.DestinatarioTelefono = nil
+		return
+	case 4:
+		r.CodigoDeEnvio = nil
+		return
+	case 8:
+		r.CodigoDeContratoInterno = nil
+		return
+	case 9:
+		r.TipoContacto = nil
+		return
+	case 10:
+		r.CodigoPostal = nil
+		return
+	case 11:
+		r.Provincia = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadEventual) NullField(i int) {
 	switch i {
+	case 1:
+		r.DestinatarioEmail = nil
+		return
+	case 2:
+		r.DestinatarioTelefono = nil
+		return
+	case 4:
+		r.CodigoDeEnvio = nil
+		return
+	case 8:
+		r.CodigoDeContratoInterno = nil
+		return
+	case 9:
+		r.TipoContacto = nil
+		return
+	case 10:
+		r.CodigoPostal = nil
+		return
+	case 11:
+		r.Provincia = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -321,7 +363,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for destinatarioEmail")
+		r.DestinatarioEmail = NewUnionNullString()
+
+		r.DestinatarioEmail = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatarioTelefono"]; ok {
@@ -335,7 +379,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for destinatarioTelefono")
+		r.DestinatarioTelefono = NewUnionNullString()
+
+		r.DestinatarioTelefono = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["canal"]; ok {
@@ -363,7 +409,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoDeEnvio")
+		r.CodigoDeEnvio = NewUnionNullString()
+
+		r.CodigoDeEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["sucursalActual"]; ok {
@@ -419,7 +467,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoDeContratoInterno")
+		r.CodigoDeContratoInterno = NewUnionNullString()
+
+		r.CodigoDeContratoInterno = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoContacto"]; ok {
@@ -433,7 +483,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipoContacto")
+		r.TipoContacto = NewUnionNullString()
+
+		r.TipoContacto = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoPostal"]; ok {
@@ -447,7 +499,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoPostal")
+		r.CodigoPostal = NewUnionNullString()
+
+		r.CodigoPostal = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["provincia"]; ok {
@@ -461,7 +515,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for provincia")
+		r.Provincia = NewUnionNullString()
+
+		r.Provincia = nil
 	}
 	return nil
 }
