@@ -61,7 +61,7 @@ type OperacionesTareaNotificacionEnvioNotificadoV2 struct {
 	Orientacion *UnionNullString `json:"orientacion"`
 }
 
-const OperacionesTareaNotificacionEnvioNotificadoV2AvroCRC64Fingerprint = "\xb1\xab\xe0\xbc\xd2L\xb5\xa2"
+const OperacionesTareaNotificacionEnvioNotificadoV2AvroCRC64Fingerprint = "&\x1b!\xeb\f\xa46\xea"
 
 func NewOperacionesTareaNotificacionEnvioNotificadoV2() OperacionesTareaNotificacionEnvioNotificadoV2 {
 	r := OperacionesTareaNotificacionEnvioNotificadoV2{}
@@ -206,11 +206,11 @@ func (r OperacionesTareaNotificacionEnvioNotificadoV2) Serialize(w io.Writer) er
 }
 
 func (r OperacionesTareaNotificacionEnvioNotificadoV2) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"notificada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"enviada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"verificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaCierre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroSeguimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"imagenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"observaciones\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivo_id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"orientacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.OperacionesConsumer.Events.Record.OperacionesTareaNotificacionEnvioNotificadoV2\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"notificada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"enviada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"verificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaCierre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroSeguimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"imagenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"observaciones\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivo_id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"orientacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.OperacionesProducer.Events.Record.OperacionesTareaNotificacionEnvioNotificadoV2\",\"type\":\"record\"}"
 }
 
 func (r OperacionesTareaNotificacionEnvioNotificadoV2) SchemaName() string {
-	return "Andreani.OperacionesConsumer.Events.Record.OperacionesTareaNotificacionEnvioNotificadoV2"
+	return "Andreani.OperacionesProducer.Events.Record.OperacionesTareaNotificacionEnvioNotificadoV2"
 }
 
 func (_ OperacionesTareaNotificacionEnvioNotificadoV2) SetBoolean(v bool) {
