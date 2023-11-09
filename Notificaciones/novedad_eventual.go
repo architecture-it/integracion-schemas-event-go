@@ -41,9 +41,11 @@ type NovedadEventual struct {
 	CodigoPostal *UnionNullString `json:"codigoPostal"`
 
 	Provincia *UnionNullString `json:"provincia"`
+
+	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const NovedadEventualAvroCRC64Fingerprint = "\xabN\x8e\xad\x8a>\xb4\x95"
+const NovedadEventualAvroCRC64Fingerprint = "\xb5@рE\xda\x17\xa8"
 
 func NewNovedadEventual() NovedadEventual {
 	r := NovedadEventual{}
@@ -54,6 +56,7 @@ func NewNovedadEventual() NovedadEventual {
 	r.TipoContacto = nil
 	r.CodigoPostal = nil
 	r.Provincia = nil
+	r.Cuando = nil
 	return r
 }
 
@@ -130,6 +133,10 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullLong(r.Cuando, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -138,7 +145,7 @@ func (r NovedadEventual) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEventual) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"canal\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"canal\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
 }
 
 func (r NovedadEventual) SchemaName() string {
@@ -209,6 +216,10 @@ func (r *NovedadEventual) Get(i int) types.Field {
 		r.Provincia = NewUnionNullString()
 
 		return r.Provincia
+	case 12:
+		r.Cuando = NewUnionNullLong()
+
+		return r.Cuando
 	}
 	panic("Unknown field index")
 }
@@ -236,6 +247,9 @@ func (r *NovedadEventual) SetDefault(i int) {
 	case 11:
 		r.Provincia = nil
 		return
+	case 12:
+		r.Cuando = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -262,6 +276,9 @@ func (r *NovedadEventual) NullField(i int) {
 		return
 	case 11:
 		r.Provincia = nil
+		return
+	case 12:
+		r.Cuando = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -324,6 +341,10 @@ func (r NovedadEventual) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["provincia"], err = json.Marshal(r.Provincia)
+	if err != nil {
+		return nil, err
+	}
+	output["cuando"], err = json.Marshal(r.Cuando)
 	if err != nil {
 		return nil, err
 	}
@@ -518,6 +539,22 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 		r.Provincia = NewUnionNullString()
 
 		r.Provincia = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cuando"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cuando); err != nil {
+			return err
+		}
+	} else {
+		r.Cuando = NewUnionNullLong()
+
+		r.Cuando = nil
 	}
 	return nil
 }
