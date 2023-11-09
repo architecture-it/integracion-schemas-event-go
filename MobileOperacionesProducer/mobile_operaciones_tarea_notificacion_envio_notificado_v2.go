@@ -59,9 +59,11 @@ type MobileOperacionesTareaNotificacionEnvioNotificadoV2 struct {
 	Motivo_id *UnionNullString `json:"motivo_id"`
 
 	Orientacion *UnionNullString `json:"orientacion"`
+
+	EsRectificacion *UnionNullBool `json:"esRectificacion"`
 }
 
-const MobileOperacionesTareaNotificacionEnvioNotificadoV2AvroCRC64Fingerprint = "\x8b\x13\xe7\xc4\v\xfek\xb9"
+const MobileOperacionesTareaNotificacionEnvioNotificadoV2AvroCRC64Fingerprint = "\x17;i\xc0\x9c\x89&\x12"
 
 func NewMobileOperacionesTareaNotificacionEnvioNotificadoV2() MobileOperacionesTareaNotificacionEnvioNotificadoV2 {
 	r := MobileOperacionesTareaNotificacionEnvioNotificadoV2{}
@@ -198,6 +200,10 @@ func writeMobileOperacionesTareaNotificacionEnvioNotificadoV2(r MobileOperacione
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullBool(r.EsRectificacion, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -206,7 +212,7 @@ func (r MobileOperacionesTareaNotificacionEnvioNotificadoV2) Serialize(w io.Writ
 }
 
 func (r MobileOperacionesTareaNotificacionEnvioNotificadoV2) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"notificada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"enviada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"verificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaCierre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroSeguimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"imagenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"observaciones\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivo_id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"orientacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.MobileOperacionesTareaNotificacionEnvioNotificadoV2\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"notificada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"enviada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"verificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaCierre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroSeguimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"imagenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"observaciones\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivo_id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"orientacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"esRectificacion\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.MobileOperacionesTareaNotificacionEnvioNotificadoV2\",\"type\":\"record\"}"
 }
 
 func (r MobileOperacionesTareaNotificacionEnvioNotificadoV2) SchemaName() string {
@@ -324,6 +330,10 @@ func (r *MobileOperacionesTareaNotificacionEnvioNotificadoV2) Get(i int) types.F
 		r.Orientacion = NewUnionNullString()
 
 		return r.Orientacion
+	case 21:
+		r.EsRectificacion = NewUnionNullBool()
+
+		return r.EsRectificacion
 	}
 	panic("Unknown field index")
 }
@@ -462,6 +472,9 @@ func (r *MobileOperacionesTareaNotificacionEnvioNotificadoV2) NullField(i int) {
 	case 20:
 		r.Orientacion = nil
 		return
+	case 21:
+		r.EsRectificacion = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -565,6 +578,10 @@ func (r MobileOperacionesTareaNotificacionEnvioNotificadoV2) MarshalJSON() ([]by
 		return nil, err
 	}
 	output["orientacion"], err = json.Marshal(r.Orientacion)
+	if err != nil {
+		return nil, err
+	}
+	output["esRectificacion"], err = json.Marshal(r.EsRectificacion)
 	if err != nil {
 		return nil, err
 	}
@@ -913,6 +930,20 @@ func (r *MobileOperacionesTareaNotificacionEnvioNotificadoV2) UnmarshalJSON(data
 		r.Orientacion = NewUnionNullString()
 
 		r.Orientacion = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["esRectificacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EsRectificacion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for esRectificacion")
 	}
 	return nil
 }
