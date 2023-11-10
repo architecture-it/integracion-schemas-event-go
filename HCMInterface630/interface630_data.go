@@ -20,7 +20,7 @@ var _ = fmt.Printf
 type Interface630Data struct {
 	TipoDeEstructura string `json:"TipoDeEstructura"`
 
-	Legajo int32 `json:"Legajo"`
+	Legajo int64 `json:"Legajo"`
 
 	Estructura string `json:"Estructura"`
 
@@ -39,7 +39,7 @@ type Interface630Data struct {
 	NumeroDeExpediente *UnionNullString `json:"NumeroDeExpediente"`
 }
 
-const Interface630DataAvroCRC64Fingerprint = "\x80\x9e\n\xd8)\x98\xe6\x01"
+const Interface630DataAvroCRC64Fingerprint = "\x82?\xbeT\xae\xb5\xe7m"
 
 func NewInterface630Data() Interface630Data {
 	r := Interface630Data{}
@@ -81,7 +81,7 @@ func writeInterface630Data(r Interface630Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.Legajo, w)
+	err = vm.WriteLong(r.Legajo, w)
 	if err != nil {
 		return err
 	}
@@ -125,7 +125,7 @@ func (r Interface630Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface630Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"TipoDeEstructura\",\"type\":\"string\"},{\"name\":\"Legajo\",\"type\":\"int\"},{\"name\":\"Estructura\",\"type\":\"string\"},{\"name\":\"FechaDesde\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaHasta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeExpediente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.HCMInterface630.Events.Record.Interface630Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TipoDeEstructura\",\"type\":\"string\"},{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"Estructura\",\"type\":\"string\"},{\"name\":\"FechaDesde\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaHasta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeExpediente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.HCMInterface630.Events.Record.Interface630Data\",\"type\":\"record\"}"
 }
 
 func (r Interface630Data) SchemaName() string {
@@ -149,7 +149,7 @@ func (r *Interface630Data) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.Int{Target: &r.Legajo}
+		w := types.Long{Target: &r.Legajo}
 
 		return w
 
