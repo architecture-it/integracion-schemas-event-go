@@ -18,13 +18,13 @@ import (
 var _ = fmt.Printf
 
 type Interface630Data struct {
-	TipoDeEstructura string `json:"TipoDeEstructura"`
-
 	Legajo int64 `json:"Legajo"`
 
-	FechaDesde string `json:"FechaDesde"`
+	TipoDeEstructura string `json:"TipoDeEstructura"`
 
-	Estructura *UnionNullString `json:"Estructura"`
+	Estructura string `json:"Estructura"`
+
+	FechaDesde string `json:"FechaDesde"`
 
 	FechaHasta *UnionNullString `json:"FechaHasta"`
 
@@ -39,7 +39,7 @@ type Interface630Data struct {
 	NumeroDeExpediente *UnionNullString `json:"NumeroDeExpediente"`
 }
 
-const Interface630DataAvroCRC64Fingerprint = "\xf6\xce\xce\xdf\v\xfew4"
+const Interface630DataAvroCRC64Fingerprint = "\xc2\x18\x1c\xde(ŵ\xbd"
 
 func NewInterface630Data() Interface630Data {
 	r := Interface630Data{}
@@ -77,19 +77,19 @@ func DeserializeInterface630DataFromSchema(r io.Reader, schema string) (Interfac
 
 func writeInterface630Data(r Interface630Data, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.TipoDeEstructura, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteLong(r.Legajo, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FechaDesde, w)
+	err = vm.WriteString(r.TipoDeEstructura, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Estructura, w)
+	err = vm.WriteString(r.Estructura, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.FechaDesde, w)
 	if err != nil {
 		return err
 	}
@@ -125,7 +125,7 @@ func (r Interface630Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface630Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"TipoDeEstructura\",\"type\":\"string\"},{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"FechaDesde\",\"type\":\"string\"},{\"name\":\"Estructura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaHasta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeExpediente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.HCMInterface630.Events.Record.Interface630Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"TipoDeEstructura\",\"type\":\"string\"},{\"name\":\"Estructura\",\"type\":\"string\"},{\"name\":\"FechaDesde\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaHasta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeExpediente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.HCMInterface630.Events.Record.Interface630Data\",\"type\":\"record\"}"
 }
 
 func (r Interface630Data) SchemaName() string {
@@ -144,24 +144,25 @@ func (_ Interface630Data) SetUnionElem(v int64) { panic("Unsupported operation")
 func (r *Interface630Data) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.TipoDeEstructura}
-
-		return w
-
-	case 1:
 		w := types.Long{Target: &r.Legajo}
 
 		return w
 
+	case 1:
+		w := types.String{Target: &r.TipoDeEstructura}
+
+		return w
+
 	case 2:
-		w := types.String{Target: &r.FechaDesde}
+		w := types.String{Target: &r.Estructura}
 
 		return w
 
 	case 3:
-		r.Estructura = NewUnionNullString()
+		w := types.String{Target: &r.FechaDesde}
 
-		return r.Estructura
+		return w
+
 	case 4:
 		r.FechaHasta = NewUnionNullString()
 
@@ -216,9 +217,6 @@ func (r *Interface630Data) SetDefault(i int) {
 
 func (r *Interface630Data) NullField(i int) {
 	switch i {
-	case 3:
-		r.Estructura = nil
-		return
 	case 4:
 		r.FechaHasta = nil
 		return
@@ -253,19 +251,19 @@ func (_ Interface630Data) AvroCRC64Fingerprint() []byte {
 func (r Interface630Data) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["TipoDeEstructura"], err = json.Marshal(r.TipoDeEstructura)
-	if err != nil {
-		return nil, err
-	}
 	output["Legajo"], err = json.Marshal(r.Legajo)
 	if err != nil {
 		return nil, err
 	}
-	output["FechaDesde"], err = json.Marshal(r.FechaDesde)
+	output["TipoDeEstructura"], err = json.Marshal(r.TipoDeEstructura)
 	if err != nil {
 		return nil, err
 	}
 	output["Estructura"], err = json.Marshal(r.Estructura)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaDesde"], err = json.Marshal(r.FechaDesde)
 	if err != nil {
 		return nil, err
 	}
@@ -304,20 +302,6 @@ func (r *Interface630Data) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["TipoDeEstructura"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TipoDeEstructura); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for TipoDeEstructura")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["Legajo"]; ok {
 			return v
 		}
@@ -332,18 +316,18 @@ func (r *Interface630Data) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Legajo")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["FechaDesde"]; ok {
+		if v, ok := fields["TipoDeEstructura"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.FechaDesde); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoDeEstructura); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FechaDesde")
+		return fmt.Errorf("no value specified for TipoDeEstructura")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Estructura"]; ok {
@@ -358,6 +342,20 @@ func (r *Interface630Data) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Estructura")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaDesde"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaDesde); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaDesde")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["FechaHasta"]; ok {
