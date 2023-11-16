@@ -24,6 +24,8 @@ type ActualizacionEstadoAcondiTraza struct {
 
 	OrdenCliente string `json:"OrdenCliente"`
 
+	CodigoEstadoAcondi *UnionNullString `json:"CodigoEstadoAcondi"`
+
 	DescripcionEstadoAcondi *UnionNullString `json:"DescripcionEstadoAcondi"`
 
 	CodigoEstadoTraza *UnionNullString `json:"CodigoEstadoTraza"`
@@ -35,12 +37,13 @@ type ActualizacionEstadoAcondiTraza struct {
 	DescripcionErrorAcondi *UnionNullString `json:"DescripcionErrorAcondi"`
 }
 
-const ActualizacionEstadoAcondiTrazaAvroCRC64Fingerprint = "\xb0\x8b\x86\xdc\x1b\xf2\xd2z"
+const ActualizacionEstadoAcondiTrazaAvroCRC64Fingerprint = "XF\x1a\xea\x18\x1f\xebp"
 
 func NewActualizacionEstadoAcondiTraza() ActualizacionEstadoAcondiTraza {
 	r := ActualizacionEstadoAcondiTraza{}
 	r.Identificacion = NewIdentificacion()
 
+	r.CodigoEstadoAcondi = nil
 	r.DescripcionEstadoAcondi = nil
 	r.CodigoEstadoTraza = nil
 	r.DescripcionEstadoTraza = nil
@@ -86,6 +89,10 @@ func writeActualizacionEstadoAcondiTraza(r ActualizacionEstadoAcondiTraza, w io.
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.CodigoEstadoAcondi, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.DescripcionEstadoAcondi, w)
 	if err != nil {
 		return err
@@ -114,7 +121,7 @@ func (r ActualizacionEstadoAcondiTraza) Serialize(w io.Writer) error {
 }
 
 func (r ActualizacionEstadoAcondiTraza) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"}},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"DescripcionEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionErrorTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionErrorAcondi\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Empaquetado.Events.Record.ActualizacionEstadoAcondiTraza\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"}},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"CodigoEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionErrorTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionErrorAcondi\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Empaquetado.Events.Record.ActualizacionEstadoAcondiTraza\",\"type\":\"record\"}"
 }
 
 func (r ActualizacionEstadoAcondiTraza) SchemaName() string {
@@ -150,22 +157,26 @@ func (r *ActualizacionEstadoAcondiTraza) Get(i int) types.Field {
 		return w
 
 	case 3:
+		r.CodigoEstadoAcondi = NewUnionNullString()
+
+		return r.CodigoEstadoAcondi
+	case 4:
 		r.DescripcionEstadoAcondi = NewUnionNullString()
 
 		return r.DescripcionEstadoAcondi
-	case 4:
+	case 5:
 		r.CodigoEstadoTraza = NewUnionNullString()
 
 		return r.CodigoEstadoTraza
-	case 5:
+	case 6:
 		r.DescripcionEstadoTraza = NewUnionNullString()
 
 		return r.DescripcionEstadoTraza
-	case 6:
+	case 7:
 		r.DescripcionErrorTraza = NewUnionNullString()
 
 		return r.DescripcionErrorTraza
-	case 7:
+	case 8:
 		r.DescripcionErrorAcondi = NewUnionNullString()
 
 		return r.DescripcionErrorAcondi
@@ -176,18 +187,21 @@ func (r *ActualizacionEstadoAcondiTraza) Get(i int) types.Field {
 func (r *ActualizacionEstadoAcondiTraza) SetDefault(i int) {
 	switch i {
 	case 3:
-		r.DescripcionEstadoAcondi = nil
+		r.CodigoEstadoAcondi = nil
 		return
 	case 4:
-		r.CodigoEstadoTraza = nil
+		r.DescripcionEstadoAcondi = nil
 		return
 	case 5:
-		r.DescripcionEstadoTraza = nil
+		r.CodigoEstadoTraza = nil
 		return
 	case 6:
-		r.DescripcionErrorTraza = nil
+		r.DescripcionEstadoTraza = nil
 		return
 	case 7:
+		r.DescripcionErrorTraza = nil
+		return
+	case 8:
 		r.DescripcionErrorAcondi = nil
 		return
 	}
@@ -197,18 +211,21 @@ func (r *ActualizacionEstadoAcondiTraza) SetDefault(i int) {
 func (r *ActualizacionEstadoAcondiTraza) NullField(i int) {
 	switch i {
 	case 3:
-		r.DescripcionEstadoAcondi = nil
+		r.CodigoEstadoAcondi = nil
 		return
 	case 4:
-		r.CodigoEstadoTraza = nil
+		r.DescripcionEstadoAcondi = nil
 		return
 	case 5:
-		r.DescripcionEstadoTraza = nil
+		r.CodigoEstadoTraza = nil
 		return
 	case 6:
-		r.DescripcionErrorTraza = nil
+		r.DescripcionEstadoTraza = nil
 		return
 	case 7:
+		r.DescripcionErrorTraza = nil
+		return
+	case 8:
 		r.DescripcionErrorAcondi = nil
 		return
 	}
@@ -238,6 +255,10 @@ func (r ActualizacionEstadoAcondiTraza) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["OrdenCliente"], err = json.Marshal(r.OrdenCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["CodigoEstadoAcondi"], err = json.Marshal(r.CodigoEstadoAcondi)
 	if err != nil {
 		return nil, err
 	}
@@ -312,6 +333,22 @@ func (r *ActualizacionEstadoAcondiTraza) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for OrdenCliente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigoEstadoAcondi"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoEstadoAcondi); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoEstadoAcondi = NewUnionNullString()
+
+		r.CodigoEstadoAcondi = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DescripcionEstadoAcondi"]; ok {
