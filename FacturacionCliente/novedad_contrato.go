@@ -35,12 +35,15 @@ type NovedadContrato struct {
 	VigenciaDesde int64 `json:"VigenciaDesde"`
 
 	VigenciaHasta int64 `json:"VigenciaHasta"`
+
+	Jerarquia *UnionNullString `json:"Jerarquia"`
 }
 
-const NovedadContratoAvroCRC64Fingerprint = "\x9f\x99(w\xbc\f^F"
+const NovedadContratoAvroCRC64Fingerprint = "\x8dܠô\x8e$_"
 
 func NewNovedadContrato() NovedadContrato {
 	r := NovedadContrato{}
+	r.Jerarquia = nil
 	return r
 }
 
@@ -105,6 +108,10 @@ func writeNovedadContrato(r NovedadContrato, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Jerarquia, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -113,7 +120,7 @@ func (r NovedadContrato) Serialize(w io.Writer) error {
 }
 
 func (r NovedadContrato) Schema() string {
-	return "{\"fields\":[{\"name\":\"SistemaDestino\",\"type\":\"string\"},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeServicio\",\"type\":\"string\"},{\"name\":\"CodigoDeDireccion\",\"type\":\"string\"},{\"name\":\"CodigoDeClienteInterno\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaDesde\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaHasta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.FacturacionCliente.Events.Record.NovedadContrato\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SistemaDestino\",\"type\":\"string\"},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeServicio\",\"type\":\"string\"},{\"name\":\"CodigoDeDireccion\",\"type\":\"string\"},{\"name\":\"CodigoDeClienteInterno\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaDesde\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"VigenciaHasta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"Jerarquia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.FacturacionCliente.Events.Record.NovedadContrato\",\"type\":\"record\"}"
 }
 
 func (r NovedadContrato) SchemaName() string {
@@ -176,18 +183,28 @@ func (r *NovedadContrato) Get(i int) types.Field {
 
 		return w
 
+	case 9:
+		r.Jerarquia = NewUnionNullString()
+
+		return r.Jerarquia
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadContrato) SetDefault(i int) {
 	switch i {
+	case 9:
+		r.Jerarquia = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadContrato) NullField(i int) {
 	switch i {
+	case 9:
+		r.Jerarquia = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -237,6 +254,10 @@ func (r NovedadContrato) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["VigenciaHasta"], err = json.Marshal(r.VigenciaHasta)
+	if err != nil {
+		return nil, err
+	}
+	output["Jerarquia"], err = json.Marshal(r.Jerarquia)
 	if err != nil {
 		return nil, err
 	}
@@ -375,6 +396,22 @@ func (r *NovedadContrato) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for VigenciaHasta")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Jerarquia"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Jerarquia); err != nil {
+			return err
+		}
+	} else {
+		r.Jerarquia = NewUnionNullString()
+
+		r.Jerarquia = nil
 	}
 	return nil
 }
