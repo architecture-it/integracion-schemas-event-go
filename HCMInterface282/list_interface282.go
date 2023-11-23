@@ -21,7 +21,7 @@ type ListInterface282 struct {
 	Interfaces []Interface282Data `json:"interfaces"`
 }
 
-const ListInterface282AvroCRC64Fingerprint = "\xe2\xc8\xf8\xaazļ'"
+const ListInterface282AvroCRC64Fingerprint = "\xfd[\xb0\xdd\xe9\xe4\xc7m"
 
 func NewListInterface282() ListInterface282 {
 	r := ListInterface282{}
@@ -67,7 +67,7 @@ func (r ListInterface282) Serialize(w io.Writer) error {
 }
 
 func (r ListInterface282) Schema() string {
-	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"FechaAcuerdo\",\"type\":\"string\"},{\"name\":\"SueldoJournal\",\"type\":\"long\"},{\"name\":\"ZonaBandaSalarial\",\"type\":\"string\"}],\"name\":\"Interface282Data\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMInterface282.Events.Record.ListInterface282\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"FechaAcuerdo\",\"type\":\"string\"},{\"name\":\"SueldoJournal\",\"type\":\"double\"},{\"name\":\"ZonaBandaSalarial\",\"type\":\"string\"}],\"name\":\"Interface282Data\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMInterface282.Events.Record.ListInterface282\",\"type\":\"record\"}"
 }
 
 func (r ListInterface282) SchemaName() string {
