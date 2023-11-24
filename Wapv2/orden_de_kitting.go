@@ -25,7 +25,7 @@ type OrdenDeKitting struct {
 	Articulos *UnionNullListaDeArticuloKitting `json:"articulos"`
 }
 
-const OrdenDeKittingAvroCRC64Fingerprint = "\x96\x900\x06S\x8f\xec\xe2"
+const OrdenDeKittingAvroCRC64Fingerprint = "NX\x18\xab+K\xabQ"
 
 func NewOrdenDeKitting() OrdenDeKitting {
 	r := OrdenDeKitting{}
@@ -78,7 +78,7 @@ func (r OrdenDeKitting) Serialize(w io.Writer) error {
 }
 
 func (r OrdenDeKitting) Schema() string {
-	return "{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"default\":null,\"name\":\"articulos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"ListaDeArticuloKitting\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeArticuloKitting\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.OrdenDeKitting\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"default\":null,\"name\":\"articulos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeArticuloKitting\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeArticuloKitting\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.OrdenDeKitting\",\"type\":\"record\"}"
 }
 
 func (r OrdenDeKitting) SchemaName() string {

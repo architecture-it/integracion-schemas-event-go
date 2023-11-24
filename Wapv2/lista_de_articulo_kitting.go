@@ -18,10 +18,10 @@ import (
 var _ = fmt.Printf
 
 type ListaDeArticuloKitting struct {
-	ListaDeArticuloKitting *UnionNullArrayArticuloKitting `json:"ListaDeArticuloKitting"`
+	ListaDeArticuloKitting *UnionNullArrayArticuloKitting `json:"listaDeArticuloKitting"`
 }
 
-const ListaDeArticuloKittingAvroCRC64Fingerprint = "\x92\x84\x06t\xc27\xd4\""
+const ListaDeArticuloKittingAvroCRC64Fingerprint = "*zKy;\x92ez"
 
 func NewListaDeArticuloKitting() ListaDeArticuloKitting {
 	r := ListaDeArticuloKitting{}
@@ -65,7 +65,7 @@ func (r ListaDeArticuloKitting) Serialize(w io.Writer) error {
 }
 
 func (r ListaDeArticuloKitting) Schema() string {
-	return "{\"fields\":[{\"name\":\"ListaDeArticuloKitting\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.ListaDeArticuloKitting\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"listaDeArticuloKitting\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.ListaDeArticuloKitting\",\"type\":\"record\"}"
 }
 
 func (r ListaDeArticuloKitting) SchemaName() string {
@@ -118,7 +118,7 @@ func (_ ListaDeArticuloKitting) AvroCRC64Fingerprint() []byte {
 func (r ListaDeArticuloKitting) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["ListaDeArticuloKitting"], err = json.Marshal(r.ListaDeArticuloKitting)
+	output["listaDeArticuloKitting"], err = json.Marshal(r.ListaDeArticuloKitting)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ func (r *ListaDeArticuloKitting) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["ListaDeArticuloKitting"]; ok {
+		if v, ok := fields["listaDeArticuloKitting"]; ok {
 			return v
 		}
 		return nil
@@ -144,7 +144,7 @@ func (r *ListaDeArticuloKitting) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ListaDeArticuloKitting")
+		return fmt.Errorf("no value specified for listaDeArticuloKitting")
 	}
 	return nil
 }

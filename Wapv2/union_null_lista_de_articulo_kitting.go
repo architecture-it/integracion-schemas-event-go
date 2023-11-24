@@ -84,7 +84,7 @@ func DeserializeUnionNullListaDeArticuloKittingFromSchema(r io.Reader, schema st
 }
 
 func (r *UnionNullListaDeArticuloKitting) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"ListaDeArticuloKitting\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeArticuloKitting\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"listaDeArticuloKitting\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeArticuloKitting\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullListaDeArticuloKitting) SetBoolean(v bool)   { panic("Unsupported operation") }
