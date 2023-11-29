@@ -58,7 +58,7 @@ type Interface2018Data struct {
 
 	FechaVto1 string `json:"FechaVto1"`
 
-	ItemDDJJ int32 `json:"ItemDDJJ"`
+	ItemDDJJ string `json:"ItemDDJJ"`
 
 	FechaDesdeDDJJ string `json:"FechaDesdeDDJJ"`
 
@@ -107,7 +107,7 @@ type Interface2018Data struct {
 	Comuna string `json:"Comuna"`
 }
 
-const Interface2018DataAvroCRC64Fingerprint = "4\xcc\xcbR\xbf\xb9\n\t"
+const Interface2018DataAvroCRC64Fingerprint = "\xc1\xdec\x85&LP\xa5"
 
 func NewInterface2018Data() Interface2018Data {
 	r := Interface2018Data{}
@@ -219,7 +219,7 @@ func writeInterface2018Data(r Interface2018Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.ItemDDJJ, w)
+	err = vm.WriteString(r.ItemDDJJ, w)
 	if err != nil {
 		return err
 	}
@@ -323,7 +323,7 @@ func (r Interface2018Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface2018Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"LegajoDelEmpleado\",\"type\":\"long\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Nombres\",\"type\":\"string\"},{\"name\":\"FechaNacimiento\",\"type\":\"string\"},{\"name\":\"PaisDeNacimiento\",\"type\":\"string\"},{\"name\":\"Nacionalidad\",\"type\":\"string\"},{\"name\":\"EstadoCivil\",\"type\":\"string\"},{\"name\":\"Sexo\",\"type\":\"string\"},{\"name\":\"Parentesco\",\"type\":\"string\"},{\"name\":\"Incapacitado\",\"type\":\"string\"},{\"name\":\"FechaDeDiscapacidad\",\"type\":\"string\"},{\"name\":\"TipoDocumento1\",\"type\":\"string\"},{\"name\":\"NroDocumento1\",\"type\":\"long\"},{\"name\":\"ObraSocial\",\"type\":\"string\"},{\"name\":\"PlanOS\",\"type\":\"string\"},{\"name\":\"AvisarAnteEmergencia\",\"type\":\"string\"},{\"name\":\"PagaSalarioFamiliar\",\"type\":\"string\"},{\"name\":\"Ganancias\",\"type\":\"string\"},{\"name\":\"FechaInicioVinculo\",\"type\":\"string\"},{\"name\":\"FechaVto1\",\"type\":\"string\"},{\"name\":\"ItemDDJJ\",\"type\":\"int\"},{\"name\":\"FechaDesdeDDJJ\",\"type\":\"string\"},{\"name\":\"FechaHastaDDJJ\",\"type\":\"string\"},{\"name\":\"TipoDocumento2\",\"type\":\"string\"},{\"name\":\"Documento2\",\"type\":\"long\"},{\"name\":\"Guarderia\",\"type\":\"string\"},{\"name\":\"FechaVto2\",\"type\":\"string\"},{\"name\":\"Adopcion\",\"type\":\"string\"},{\"name\":\"Estudia\",\"type\":\"string\"},{\"name\":\"PeriodoEscolar\",\"type\":\"string\"},{\"name\":\"NivelDeEstudio\",\"type\":\"string\"},{\"name\":\"GradoAnio\",\"type\":\"string\"},{\"name\":\"Anio\",\"type\":\"string\"},{\"name\":\"FechaDeInicio\",\"type\":\"string\"},{\"name\":\"ConstInicial\",\"type\":\"string\"},{\"name\":\"ConstFinal\",\"type\":\"string\"},{\"name\":\"FechaDocumentacion\",\"type\":\"string\"},{\"name\":\"Acta\",\"type\":\"string\"},{\"name\":\"Tomo\",\"type\":\"string\"},{\"name\":\"Folio\",\"type\":\"string\"},{\"name\":\"Tribunal\",\"type\":\"string\"},{\"name\":\"Juzgado\",\"type\":\"string\"},{\"name\":\"Secretaria\",\"type\":\"string\"},{\"name\":\"Comuna\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface2018.Events.Record.Interface2018Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"LegajoDelEmpleado\",\"type\":\"long\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Nombres\",\"type\":\"string\"},{\"name\":\"FechaNacimiento\",\"type\":\"string\"},{\"name\":\"PaisDeNacimiento\",\"type\":\"string\"},{\"name\":\"Nacionalidad\",\"type\":\"string\"},{\"name\":\"EstadoCivil\",\"type\":\"string\"},{\"name\":\"Sexo\",\"type\":\"string\"},{\"name\":\"Parentesco\",\"type\":\"string\"},{\"name\":\"Incapacitado\",\"type\":\"string\"},{\"name\":\"FechaDeDiscapacidad\",\"type\":\"string\"},{\"name\":\"TipoDocumento1\",\"type\":\"string\"},{\"name\":\"NroDocumento1\",\"type\":\"long\"},{\"name\":\"ObraSocial\",\"type\":\"string\"},{\"name\":\"PlanOS\",\"type\":\"string\"},{\"name\":\"AvisarAnteEmergencia\",\"type\":\"string\"},{\"name\":\"PagaSalarioFamiliar\",\"type\":\"string\"},{\"name\":\"Ganancias\",\"type\":\"string\"},{\"name\":\"FechaInicioVinculo\",\"type\":\"string\"},{\"name\":\"FechaVto1\",\"type\":\"string\"},{\"name\":\"ItemDDJJ\",\"type\":\"string\"},{\"name\":\"FechaDesdeDDJJ\",\"type\":\"string\"},{\"name\":\"FechaHastaDDJJ\",\"type\":\"string\"},{\"name\":\"TipoDocumento2\",\"type\":\"string\"},{\"name\":\"Documento2\",\"type\":\"long\"},{\"name\":\"Guarderia\",\"type\":\"string\"},{\"name\":\"FechaVto2\",\"type\":\"string\"},{\"name\":\"Adopcion\",\"type\":\"string\"},{\"name\":\"Estudia\",\"type\":\"string\"},{\"name\":\"PeriodoEscolar\",\"type\":\"string\"},{\"name\":\"NivelDeEstudio\",\"type\":\"string\"},{\"name\":\"GradoAnio\",\"type\":\"string\"},{\"name\":\"Anio\",\"type\":\"string\"},{\"name\":\"FechaDeInicio\",\"type\":\"string\"},{\"name\":\"ConstInicial\",\"type\":\"string\"},{\"name\":\"ConstFinal\",\"type\":\"string\"},{\"name\":\"FechaDocumentacion\",\"type\":\"string\"},{\"name\":\"Acta\",\"type\":\"string\"},{\"name\":\"Tomo\",\"type\":\"string\"},{\"name\":\"Folio\",\"type\":\"string\"},{\"name\":\"Tribunal\",\"type\":\"string\"},{\"name\":\"Juzgado\",\"type\":\"string\"},{\"name\":\"Secretaria\",\"type\":\"string\"},{\"name\":\"Comuna\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface2018.Events.Record.Interface2018Data\",\"type\":\"record\"}"
 }
 
 func (r Interface2018Data) SchemaName() string {
@@ -442,7 +442,7 @@ func (r *Interface2018Data) Get(i int) types.Field {
 		return w
 
 	case 20:
-		w := types.Int{Target: &r.ItemDDJJ}
+		w := types.String{Target: &r.ItemDDJJ}
 
 		return w
 
