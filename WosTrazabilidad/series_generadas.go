@@ -21,7 +21,7 @@ type SeriesGeneradas struct {
 	TareaSeriesGeneradas TareaConSeriesGeneradas `json:"TareaSeriesGeneradas"`
 }
 
-const SeriesGeneradasAvroCRC64Fingerprint = "NFG3I\xaf!\xf2"
+const SeriesGeneradasAvroCRC64Fingerprint = "\xbc\x81\xed27\xe6\xe5\xc3"
 
 func NewSeriesGeneradas() SeriesGeneradas {
 	r := SeriesGeneradas{}
@@ -67,7 +67,7 @@ func (r SeriesGeneradas) Serialize(w io.Writer) error {
 }
 
 func (r SeriesGeneradas) Schema() string {
-	return "{\"fields\":[{\"name\":\"TareaSeriesGeneradas\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"nroTarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeTarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteCajita\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteFechaVencimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"serie\",\"type\":\"string\"},{\"default\":null,\"name\":\"nroAgrupadora\",\"type\":[\"null\",\"string\"]}],\"name\":\"Series\",\"namespace\":\"Andreani.WosTrazabilidad.Events.AnmatCommon\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"TareaConSeriesGeneradas\",\"namespace\":\"Andreani.WosTrazabilidad.Events.WosTrazaTareaSeriesGeneradas\",\"type\":\"record\"}}],\"name\":\"Andreani.WosTrazabilidad.Events.Record.SeriesGeneradas\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TareaSeriesGeneradas\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"nroTarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeTarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteCajita\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteFechaVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"TareaConSeriesGeneradas\",\"namespace\":\"Andreani.WosTrazabilidad.Events.WosTrazaTareaSeriesGeneradas\",\"type\":\"record\"}}],\"name\":\"Andreani.WosTrazabilidad.Events.Record.SeriesGeneradas\",\"type\":\"record\"}"
 }
 
 func (r SeriesGeneradas) SchemaName() string {
