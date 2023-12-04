@@ -39,9 +39,11 @@ type TareaConSeriesGeneradas struct {
 	LoteFechaVencimiento *UnionNullString `json:"loteFechaVencimiento"`
 
 	Series *UnionNullArrayString `json:"series"`
+
+	Propietario *UnionNullString `json:"propietario"`
 }
 
-const TareaConSeriesGeneradasAvroCRC64Fingerprint = "\xc3zQ\xc2\xc0\xa3\xad\x9a"
+const TareaConSeriesGeneradasAvroCRC64Fingerprint = "\x8bW K\x9a\xdd\xd8'"
 
 func NewTareaConSeriesGeneradas() TareaConSeriesGeneradas {
 	r := TareaConSeriesGeneradas{}
@@ -56,6 +58,7 @@ func NewTareaConSeriesGeneradas() TareaConSeriesGeneradas {
 	r.Gtin = nil
 	r.LoteFechaVencimiento = nil
 	r.Series = nil
+	r.Propietario = nil
 	return r
 }
 
@@ -128,6 +131,10 @@ func writeTareaConSeriesGeneradas(r TareaConSeriesGeneradas, w io.Writer) error 
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Propietario, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -136,7 +143,7 @@ func (r TareaConSeriesGeneradas) Serialize(w io.Writer) error {
 }
 
 func (r TareaConSeriesGeneradas) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"nroTarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeTarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteCajita\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteFechaVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.WosTrazabilidad.Events.WosTrazaTareaSeriesGeneradas.TareaConSeriesGeneradas\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"nroTarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeTarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteCajita\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteFechaVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosTrazabilidad.Events.WosTrazaTareaSeriesGeneradas.TareaConSeriesGeneradas\",\"type\":\"record\"}"
 }
 
 func (r TareaConSeriesGeneradas) SchemaName() string {
@@ -198,6 +205,10 @@ func (r *TareaConSeriesGeneradas) Get(i int) types.Field {
 		r.Series = NewUnionNullArrayString()
 
 		return r.Series
+	case 11:
+		r.Propietario = NewUnionNullString()
+
+		return r.Propietario
 	}
 	panic("Unknown field index")
 }
@@ -237,6 +248,9 @@ func (r *TareaConSeriesGeneradas) SetDefault(i int) {
 	case 10:
 		r.Series = nil
 		return
+	case 11:
+		r.Propietario = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -275,6 +289,9 @@ func (r *TareaConSeriesGeneradas) NullField(i int) {
 		return
 	case 10:
 		r.Series = nil
+		return
+	case 11:
+		r.Propietario = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -333,6 +350,10 @@ func (r TareaConSeriesGeneradas) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["series"], err = json.Marshal(r.Series)
+	if err != nil {
+		return nil, err
+	}
+	output["propietario"], err = json.Marshal(r.Propietario)
 	if err != nil {
 		return nil, err
 	}
@@ -521,6 +542,22 @@ func (r *TareaConSeriesGeneradas) UnmarshalJSON(data []byte) error {
 		r.Series = NewUnionNullArrayString()
 
 		r.Series = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["propietario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Propietario); err != nil {
+			return err
+		}
+	} else {
+		r.Propietario = NewUnionNullString()
+
+		r.Propietario = nil
 	}
 	return nil
 }
