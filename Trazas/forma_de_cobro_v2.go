@@ -28,29 +28,30 @@ const (
 	FormaDeCobroV2NotaCredito                         FormaDeCobroV2 = 6
 	FormaDeCobroV2Efectivo                            FormaDeCobroV2 = 7
 	FormaDeCobroV2PlanillaRendicionExcCasa            FormaDeCobroV2 = 8
-	FormaDeCobroV2AjusteImporteAnterior               FormaDeCobroV2 = 9
-	FormaDeCobroV2NotaCreditoPami                     FormaDeCobroV2 = 10
-	FormaDeCobroV2NotaCreditoAConfirmarDevolucion     FormaDeCobroV2 = 11
-	FormaDeCobroV2EnviaDiferenciaEnProximaLiquidacion FormaDeCobroV2 = 12
-	FormaDeCobroV2PagoEfectivoCobrado                 FormaDeCobroV2 = 13
-	FormaDeCobroV2PagoEfectivoChequePropio            FormaDeCobroV2 = 14
-	FormaDeCobroV2ComprobanteTransferenciaACliente    FormaDeCobroV2 = 15
-	FormaDeCobroV2ImpuestoAlCheque                    FormaDeCobroV2 = 16
-	FormaDeCobroV2SaldoAFavor                         FormaDeCobroV2 = 17
-	FormaDeCobroV2AgregaPagoOtraFactura               FormaDeCobroV2 = 18
-	FormaDeCobroV2EnviadoEnLiquidacionAnterior        FormaDeCobroV2 = 19
-	FormaDeCobroV2CartaCompromisoExcCasa              FormaDeCobroV2 = 20
-	FormaDeCobroV2VisaDebitoCredito                   FormaDeCobroV2 = 21
-	FormaDeCobroV2AutorizacionAdjunta                 FormaDeCobroV2 = 22
-	FormaDeCobroV2ReciboOficialAndreani               FormaDeCobroV2 = 23
-	FormaDeCobroV2DescuentoNotaAdjunta                FormaDeCobroV2 = 24
-	FormaDeCobroV2PagoFacilComprobante                FormaDeCobroV2 = 25
-	FormaDeCobroV2ChequeElectronico                   FormaDeCobroV2 = 26
-	FormaDeCobroV2MercadoPago                         FormaDeCobroV2 = 27
-	FormaDeCobroV2AjustePorPendiente                  FormaDeCobroV2 = 28
-	FormaDeCobroV2Cbu                                 FormaDeCobroV2 = 29
-	FormaDeCobroV2CajaUnificadaExcCasa                FormaDeCobroV2 = 30
-	FormaDeCobroV2NotaCreditoFarma                    FormaDeCobroV2 = 31
+	FormaDeCobroV2EnviadoEnPManualAnteriormente       FormaDeCobroV2 = 9
+	FormaDeCobroV2AjusteImporteAnterior               FormaDeCobroV2 = 10
+	FormaDeCobroV2NotaCreditoPami                     FormaDeCobroV2 = 11
+	FormaDeCobroV2NotaCreditoAConfirmarDevolucion     FormaDeCobroV2 = 12
+	FormaDeCobroV2EnviaDiferenciaEnProximaLiquidacion FormaDeCobroV2 = 13
+	FormaDeCobroV2PagoEfectivoCobrado                 FormaDeCobroV2 = 14
+	FormaDeCobroV2PagoEfectivoChequePropio            FormaDeCobroV2 = 15
+	FormaDeCobroV2DescuentoDevolucionMercaderia       FormaDeCobroV2 = 16
+	FormaDeCobroV2ComprobanteTransferenciaACliente    FormaDeCobroV2 = 17
+	FormaDeCobroV2ImpuestoAlCheque                    FormaDeCobroV2 = 18
+	FormaDeCobroV2SaldoAFavor                         FormaDeCobroV2 = 19
+	FormaDeCobroV2AgregaPagoOtraFactura               FormaDeCobroV2 = 20
+	FormaDeCobroV2EnviadoEnLiquidacionAnterior        FormaDeCobroV2 = 21
+	FormaDeCobroV2CartaCompromisoExcCasa              FormaDeCobroV2 = 22
+	FormaDeCobroV2VisaDebitoCredito                   FormaDeCobroV2 = 23
+	FormaDeCobroV2AutorizacionAdjunta                 FormaDeCobroV2 = 24
+	FormaDeCobroV2ReciboOficialAndreani               FormaDeCobroV2 = 25
+	FormaDeCobroV2DescuentoNotaAdjunta                FormaDeCobroV2 = 26
+	FormaDeCobroV2PagoFacilComprobante                FormaDeCobroV2 = 27
+	FormaDeCobroV2ChequeElectronico                   FormaDeCobroV2 = 28
+	FormaDeCobroV2MercadoPago                         FormaDeCobroV2 = 29
+	FormaDeCobroV2AjustePorPendiente                  FormaDeCobroV2 = 30
+	FormaDeCobroV2Cbu                                 FormaDeCobroV2 = 31
+	FormaDeCobroV2CajaUnificadaExcCasa                FormaDeCobroV2 = 32
 )
 
 func (e FormaDeCobroV2) String() string {
@@ -73,6 +74,8 @@ func (e FormaDeCobroV2) String() string {
 		return "efectivo"
 	case FormaDeCobroV2PlanillaRendicionExcCasa:
 		return "planillaRendicionExcCasa"
+	case FormaDeCobroV2EnviadoEnPManualAnteriormente:
+		return "enviadoEnPManualAnteriormente"
 	case FormaDeCobroV2AjusteImporteAnterior:
 		return "ajusteImporteAnterior"
 	case FormaDeCobroV2NotaCreditoPami:
@@ -85,6 +88,8 @@ func (e FormaDeCobroV2) String() string {
 		return "pagoEfectivoCobrado"
 	case FormaDeCobroV2PagoEfectivoChequePropio:
 		return "pagoEfectivoChequePropio"
+	case FormaDeCobroV2DescuentoDevolucionMercaderia:
+		return "descuentoDevolucionMercaderia"
 	case FormaDeCobroV2ComprobanteTransferenciaACliente:
 		return "comprobanteTransferenciaACliente"
 	case FormaDeCobroV2ImpuestoAlCheque:
@@ -117,8 +122,6 @@ func (e FormaDeCobroV2) String() string {
 		return "cbu"
 	case FormaDeCobroV2CajaUnificadaExcCasa:
 		return "cajaUnificadaExcCasa"
-	case FormaDeCobroV2NotaCreditoFarma:
-		return "notaCreditoFarma"
 	}
 	return "unknown"
 }
@@ -147,6 +150,8 @@ func NewFormaDeCobroV2Value(raw string) (r FormaDeCobroV2, err error) {
 		return FormaDeCobroV2Efectivo, nil
 	case "planillaRendicionExcCasa":
 		return FormaDeCobroV2PlanillaRendicionExcCasa, nil
+	case "enviadoEnPManualAnteriormente":
+		return FormaDeCobroV2EnviadoEnPManualAnteriormente, nil
 	case "ajusteImporteAnterior":
 		return FormaDeCobroV2AjusteImporteAnterior, nil
 	case "notaCreditoPami":
@@ -159,6 +164,8 @@ func NewFormaDeCobroV2Value(raw string) (r FormaDeCobroV2, err error) {
 		return FormaDeCobroV2PagoEfectivoCobrado, nil
 	case "pagoEfectivoChequePropio":
 		return FormaDeCobroV2PagoEfectivoChequePropio, nil
+	case "descuentoDevolucionMercaderia":
+		return FormaDeCobroV2DescuentoDevolucionMercaderia, nil
 	case "comprobanteTransferenciaACliente":
 		return FormaDeCobroV2ComprobanteTransferenciaACliente, nil
 	case "impuestoAlCheque":
@@ -191,8 +198,6 @@ func NewFormaDeCobroV2Value(raw string) (r FormaDeCobroV2, err error) {
 		return FormaDeCobroV2Cbu, nil
 	case "cajaUnificadaExcCasa":
 		return FormaDeCobroV2CajaUnificadaExcCasa, nil
-	case "notaCreditoFarma":
-		return FormaDeCobroV2NotaCreditoFarma, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for FormaDeCobroV2: '%s'", raw)
