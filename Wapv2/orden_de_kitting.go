@@ -22,14 +22,14 @@ type OrdenDeKitting struct {
 
 	NumeroOrdenExterna string `json:"numeroOrdenExterna"`
 
-	Articulos *UnionNullListaDeArticuloKitting `json:"articulos"`
+	Articulo *UnionNullArrayArticuloKitting `json:"articulo"`
 }
 
-const OrdenDeKittingAvroCRC64Fingerprint = "NX\x18\xab+K\xabQ"
+const OrdenDeKittingAvroCRC64Fingerprint = "F\xdbg\r\xb6\x17\x0eo"
 
 func NewOrdenDeKitting() OrdenDeKitting {
 	r := OrdenDeKitting{}
-	r.Articulos = nil
+	r.Articulo = nil
 	return r
 }
 
@@ -66,7 +66,7 @@ func writeOrdenDeKitting(r OrdenDeKitting, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullListaDeArticuloKitting(r.Articulos, w)
+	err = writeUnionNullArrayArticuloKitting(r.Articulo, w)
 	if err != nil {
 		return err
 	}
@@ -78,7 +78,7 @@ func (r OrdenDeKitting) Serialize(w io.Writer) error {
 }
 
 func (r OrdenDeKitting) Schema() string {
-	return "{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"default\":null,\"name\":\"articulos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeArticuloKitting\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeArticuloKitting\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.OrdenDeKitting\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.OrdenDeKitting\",\"type\":\"record\"}"
 }
 
 func (r OrdenDeKitting) SchemaName() string {
@@ -107,9 +107,9 @@ func (r *OrdenDeKitting) Get(i int) types.Field {
 		return w
 
 	case 2:
-		r.Articulos = NewUnionNullListaDeArticuloKitting()
+		r.Articulo = NewUnionNullArrayArticuloKitting()
 
-		return r.Articulos
+		return r.Articulo
 	}
 	panic("Unknown field index")
 }
@@ -117,7 +117,7 @@ func (r *OrdenDeKitting) Get(i int) types.Field {
 func (r *OrdenDeKitting) SetDefault(i int) {
 	switch i {
 	case 2:
-		r.Articulos = nil
+		r.Articulo = nil
 		return
 	}
 	panic("Unknown field index")
@@ -126,7 +126,7 @@ func (r *OrdenDeKitting) SetDefault(i int) {
 func (r *OrdenDeKitting) NullField(i int) {
 	switch i {
 	case 2:
-		r.Articulos = nil
+		r.Articulo = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -152,7 +152,7 @@ func (r OrdenDeKitting) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["articulos"], err = json.Marshal(r.Articulos)
+	output["articulo"], err = json.Marshal(r.Articulo)
 	if err != nil {
 		return nil, err
 	}
@@ -195,20 +195,20 @@ func (r *OrdenDeKitting) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for numeroOrdenExterna")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["articulos"]; ok {
+		if v, ok := fields["articulo"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Articulos); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Articulo); err != nil {
 			return err
 		}
 	} else {
-		r.Articulos = NewUnionNullListaDeArticuloKitting()
+		r.Articulo = NewUnionNullArrayArticuloKitting()
 
-		r.Articulos = nil
+		r.Articulo = nil
 	}
 	return nil
 }
