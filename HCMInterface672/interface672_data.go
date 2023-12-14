@@ -20,7 +20,7 @@ var _ = fmt.Printf
 type Interface672Data struct {
 	Empresa *UnionNullString `json:"Empresa"`
 
-	Legajo *UnionNullLong `json:"Legajo"`
+	Legajo *UnionNullString `json:"Legajo"`
 
 	Apellido string `json:"Apellido"`
 
@@ -107,7 +107,7 @@ type Interface672Data struct {
 	DocumentoPrincipal int32 `json:"DocumentoPrincipal"`
 }
 
-const Interface672DataAvroCRC64Fingerprint = "d\xbb\xe9\xfd4\xd0zJ"
+const Interface672DataAvroCRC64Fingerprint = "c\xf9\xc7\b:\x1d\x01\x85"
 
 func NewInterface672Data() Interface672Data {
 	r := Interface672Data{}
@@ -178,7 +178,7 @@ func writeInterface672Data(r Interface672Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullLong(r.Legajo, w)
+	err = writeUnionNullString(r.Legajo, w)
 	if err != nil {
 		return err
 	}
@@ -358,7 +358,7 @@ func (r Interface672Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface672Data) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Empresa\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Legajo\",\"type\":[\"null\",\"long\"]},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"FechaNacimiento\",\"type\":\"string\"},{\"default\":null,\"name\":\"PaisDeNacimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nacionalidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaIngresoAlPais\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoCivil\",\"type\":\"string\"},{\"default\":null,\"name\":\"Sexo\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaAlta\",\"type\":\"string\"},{\"name\":\"CodigoDePais\",\"type\":\"int\"},{\"name\":\"TipoDocumento1\",\"type\":\"string\"},{\"name\":\"NroDocumento1\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoDocumento2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroDocumento2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estudia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NivelDeEstudio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaDeVtoContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CausaDeBaja\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaDeBaja\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ModeloOrganizacional\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PeriodoPrueba\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaVencimientoDePrueba\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeEstructura1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estructura1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeEstructura2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estructura2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeEstructura3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estructura3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeEstructura4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estructura4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeEstructura5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estructura5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeIL1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeIL1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeExpediente1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeIL2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeIL2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeExpediente2\",\"type\":[\"null\",\"string\"]},{\"name\":\"DocumentoPrincipal\",\"type\":\"int\"}],\"name\":\"Andreani.HCMInterface672.Events.Record.Interface672Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Empresa\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Legajo\",\"type\":[\"null\",\"string\"]},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"FechaNacimiento\",\"type\":\"string\"},{\"default\":null,\"name\":\"PaisDeNacimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nacionalidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaIngresoAlPais\",\"type\":[\"null\",\"string\"]},{\"name\":\"EstadoCivil\",\"type\":\"string\"},{\"default\":null,\"name\":\"Sexo\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaAlta\",\"type\":\"string\"},{\"name\":\"CodigoDePais\",\"type\":\"int\"},{\"name\":\"TipoDocumento1\",\"type\":\"string\"},{\"name\":\"NroDocumento1\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoDocumento2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroDocumento2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estudia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NivelDeEstudio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaDeVtoContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CausaDeBaja\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaDeBaja\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ModeloOrganizacional\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PeriodoPrueba\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaVencimientoDePrueba\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeEstructura1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estructura1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeEstructura2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estructura2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeEstructura3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estructura3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeEstructura4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estructura4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeEstructura5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estructura5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeIL1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeIL1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeExpediente1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeIL2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeIL2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeExpediente2\",\"type\":[\"null\",\"string\"]},{\"name\":\"DocumentoPrincipal\",\"type\":\"int\"}],\"name\":\"Andreani.HCMInterface672.Events.Record.Interface672Data\",\"type\":\"record\"}"
 }
 
 func (r Interface672Data) SchemaName() string {
@@ -381,7 +381,7 @@ func (r *Interface672Data) Get(i int) types.Field {
 
 		return r.Empresa
 	case 1:
-		r.Legajo = NewUnionNullLong()
+		r.Legajo = NewUnionNullString()
 
 		return r.Legajo
 	case 2:
@@ -1013,7 +1013,7 @@ func (r *Interface672Data) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Legajo = NewUnionNullLong()
+		r.Legajo = NewUnionNullString()
 
 		r.Legajo = nil
 	}
