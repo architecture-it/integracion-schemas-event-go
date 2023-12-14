@@ -18,29 +18,34 @@ import (
 var _ = fmt.Printf
 
 type ETA struct {
-	EtaRangoInicio int64 `json:"EtaRangoInicio"`
+	EtaRangoInicio *UnionNullLong `json:"EtaRangoInicio"`
 
-	EtaRangoFin int64 `json:"EtaRangoFin"`
+	EtaRangoFin *UnionNullLong `json:"EtaRangoFin"`
 
-	Eta int64 `json:"Eta"`
+	Eta *UnionNullLong `json:"Eta"`
 
-	NumeroEnvio string `json:"NumeroEnvio"`
+	NumeroEnvio *UnionNullString `json:"NumeroEnvio"`
 
 	CalculoEta CalculoEta `json:"CalculoEta"`
 
 	Transportista Transportista `json:"Transportista"`
 
-	Timestamp int64 `json:"Timestamp"`
+	Timestamp *UnionNullLong `json:"Timestamp"`
 }
 
-const ETAAvroCRC64Fingerprint = "\x80y8\xd8UTg\b"
+const ETAAvroCRC64Fingerprint = "\x15\xc0\x17\xe2\xf3\xd1\xe2w"
 
 func NewETA() ETA {
 	r := ETA{}
+	r.EtaRangoInicio = nil
+	r.EtaRangoFin = nil
+	r.Eta = nil
+	r.NumeroEnvio = nil
 	r.CalculoEta = NewCalculoEta()
 
 	r.Transportista = NewTransportista()
 
+	r.Timestamp = nil
 	return r
 }
 
@@ -69,19 +74,19 @@ func DeserializeETAFromSchema(r io.Reader, schema string) (ETA, error) {
 
 func writeETA(r ETA, w io.Writer) error {
 	var err error
-	err = vm.WriteLong(r.EtaRangoInicio, w)
+	err = writeUnionNullLong(r.EtaRangoInicio, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.EtaRangoFin, w)
+	err = writeUnionNullLong(r.EtaRangoFin, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.Eta, w)
+	err = writeUnionNullLong(r.Eta, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroEnvio, w)
+	err = writeUnionNullString(r.NumeroEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -93,7 +98,7 @@ func writeETA(r ETA, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.Timestamp, w)
+	err = writeUnionNullLong(r.Timestamp, w)
 	if err != nil {
 		return err
 	}
@@ -105,7 +110,7 @@ func (r ETA) Serialize(w io.Writer) error {
 }
 
 func (r ETA) Schema() string {
-	return "{\"fields\":[{\"name\":\"EtaRangoInicio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"EtaRangoFin\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Eta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"CalculoEta\",\"type\":{\"fields\":[{\"name\":\"OrdenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"NumeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"Geocoordenadas\",\"type\":\"string\"},{\"name\":\"RecorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"RecorridoEnMetros\",\"type\":\"double\"},{\"name\":\"DemoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"DemoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"EtaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaCreacionHojaDeRuta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"CalculoEta\",\"type\":\"record\"}},{\"name\":\"Transportista\",\"type\":{\"fields\":[{\"name\":\"EsEventual\",\"type\":\"boolean\"},{\"name\":\"IdGla\",\"type\":\"string\"},{\"name\":\"IdGli\",\"type\":\"string\"},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"CodigoAlertran\",\"type\":\"string\"},{\"name\":\"CodigoIntegra\",\"type\":\"string\"},{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"NumeroDeDocumento\",\"type\":\"string\"},{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"TipoDeDocumento\",\"type\":\"int\"},{\"name\":\"CumplimientoSecuenciaHR\",\"type\":\"double\"}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"name\":\"Timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ETA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"EtaRangoInicio\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"EtaRangoFin\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Eta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"CalculoEta\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"OrdenDeEnvioEnHR\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Geocoordenadas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecorridoEnSegundos\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"RecorridoEnMetros\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"DemoraEnDomicilioEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"DemoraSalidaSucursalEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"EtaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"CalculoEta\",\"type\":\"record\"}},{\"name\":\"Transportista\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"EsEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IdGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"CodigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"NumeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"default\":null,\"name\":\"Timestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ETA\",\"type\":\"record\"}"
 }
 
 func (r ETA) SchemaName() string {
@@ -124,25 +129,21 @@ func (_ ETA) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *ETA) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Long{Target: &r.EtaRangoInicio}
+		r.EtaRangoInicio = NewUnionNullLong()
 
-		return w
-
+		return r.EtaRangoInicio
 	case 1:
-		w := types.Long{Target: &r.EtaRangoFin}
+		r.EtaRangoFin = NewUnionNullLong()
 
-		return w
-
+		return r.EtaRangoFin
 	case 2:
-		w := types.Long{Target: &r.Eta}
+		r.Eta = NewUnionNullLong()
 
-		return w
-
+		return r.Eta
 	case 3:
-		w := types.String{Target: &r.NumeroEnvio}
+		r.NumeroEnvio = NewUnionNullString()
 
-		return w
-
+		return r.NumeroEnvio
 	case 4:
 		r.CalculoEta = NewCalculoEta()
 
@@ -158,22 +159,51 @@ func (r *ETA) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.Long{Target: &r.Timestamp}
+		r.Timestamp = NewUnionNullLong()
 
-		return w
-
+		return r.Timestamp
 	}
 	panic("Unknown field index")
 }
 
 func (r *ETA) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.EtaRangoInicio = nil
+		return
+	case 1:
+		r.EtaRangoFin = nil
+		return
+	case 2:
+		r.Eta = nil
+		return
+	case 3:
+		r.NumeroEnvio = nil
+		return
+	case 6:
+		r.Timestamp = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ETA) NullField(i int) {
 	switch i {
+	case 0:
+		r.EtaRangoInicio = nil
+		return
+	case 1:
+		r.EtaRangoFin = nil
+		return
+	case 2:
+		r.Eta = nil
+		return
+	case 3:
+		r.NumeroEnvio = nil
+		return
+	case 6:
+		r.Timestamp = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -240,7 +270,9 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EtaRangoInicio")
+		r.EtaRangoInicio = NewUnionNullLong()
+
+		r.EtaRangoInicio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EtaRangoFin"]; ok {
@@ -254,7 +286,9 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EtaRangoFin")
+		r.EtaRangoFin = NewUnionNullLong()
+
+		r.EtaRangoFin = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Eta"]; ok {
@@ -268,7 +302,9 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Eta")
+		r.Eta = NewUnionNullLong()
+
+		r.Eta = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NumeroEnvio"]; ok {
@@ -282,7 +318,9 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NumeroEnvio")
+		r.NumeroEnvio = NewUnionNullString()
+
+		r.NumeroEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CalculoEta"]; ok {
@@ -324,7 +362,9 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Timestamp")
+		r.Timestamp = NewUnionNullLong()
+
+		r.Timestamp = nil
 	}
 	return nil
 }

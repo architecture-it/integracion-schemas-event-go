@@ -18,19 +18,23 @@ import (
 var _ = fmt.Printf
 
 type SucursalDondeTrabaja struct {
-	CodigoAlertran string `json:"CodigoAlertran"`
+	CodigoAlertran *UnionNullString `json:"CodigoAlertran"`
 
-	CodigoIntegra string `json:"CodigoIntegra"`
+	CodigoIntegra *UnionNullString `json:"CodigoIntegra"`
 
-	Id string `json:"Id"`
+	Id *UnionNullString `json:"Id"`
 
-	Nombre string `json:"Nombre"`
+	Nombre *UnionNullString `json:"Nombre"`
 }
 
-const SucursalDondeTrabajaAvroCRC64Fingerprint = "\xd9u\xa0\xc9\xd4\xe4\xfe\x13"
+const SucursalDondeTrabajaAvroCRC64Fingerprint = "\x1d7l\xa0\xe5\xd3G\r"
 
 func NewSucursalDondeTrabaja() SucursalDondeTrabaja {
 	r := SucursalDondeTrabaja{}
+	r.CodigoAlertran = nil
+	r.CodigoIntegra = nil
+	r.Id = nil
+	r.Nombre = nil
 	return r
 }
 
@@ -59,19 +63,19 @@ func DeserializeSucursalDondeTrabajaFromSchema(r io.Reader, schema string) (Sucu
 
 func writeSucursalDondeTrabaja(r SucursalDondeTrabaja, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.CodigoAlertran, w)
+	err = writeUnionNullString(r.CodigoAlertran, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoIntegra, w)
+	err = writeUnionNullString(r.CodigoIntegra, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Id, w)
+	err = writeUnionNullString(r.Id, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Nombre, w)
+	err = writeUnionNullString(r.Nombre, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +87,7 @@ func (r SucursalDondeTrabaja) Serialize(w io.Writer) error {
 }
 
 func (r SucursalDondeTrabaja) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoAlertran\",\"type\":\"string\"},{\"name\":\"CodigoIntegra\",\"type\":\"string\"},{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.SucursalDondeTrabaja\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"CodigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.SucursalDondeTrabaja\",\"type\":\"record\"}"
 }
 
 func (r SucursalDondeTrabaja) SchemaName() string {
@@ -102,37 +106,57 @@ func (_ SucursalDondeTrabaja) SetUnionElem(v int64) { panic("Unsupported operati
 func (r *SucursalDondeTrabaja) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.CodigoAlertran}
+		r.CodigoAlertran = NewUnionNullString()
 
-		return w
-
+		return r.CodigoAlertran
 	case 1:
-		w := types.String{Target: &r.CodigoIntegra}
+		r.CodigoIntegra = NewUnionNullString()
 
-		return w
-
+		return r.CodigoIntegra
 	case 2:
-		w := types.String{Target: &r.Id}
+		r.Id = NewUnionNullString()
 
-		return w
-
+		return r.Id
 	case 3:
-		w := types.String{Target: &r.Nombre}
+		r.Nombre = NewUnionNullString()
 
-		return w
-
+		return r.Nombre
 	}
 	panic("Unknown field index")
 }
 
 func (r *SucursalDondeTrabaja) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.CodigoAlertran = nil
+		return
+	case 1:
+		r.CodigoIntegra = nil
+		return
+	case 2:
+		r.Id = nil
+		return
+	case 3:
+		r.Nombre = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *SucursalDondeTrabaja) NullField(i int) {
 	switch i {
+	case 0:
+		r.CodigoAlertran = nil
+		return
+	case 1:
+		r.CodigoIntegra = nil
+		return
+	case 2:
+		r.Id = nil
+		return
+	case 3:
+		r.Nombre = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -187,7 +211,9 @@ func (r *SucursalDondeTrabaja) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CodigoAlertran")
+		r.CodigoAlertran = NewUnionNullString()
+
+		r.CodigoAlertran = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CodigoIntegra"]; ok {
@@ -201,7 +227,9 @@ func (r *SucursalDondeTrabaja) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CodigoIntegra")
+		r.CodigoIntegra = NewUnionNullString()
+
+		r.CodigoIntegra = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Id"]; ok {
@@ -215,7 +243,9 @@ func (r *SucursalDondeTrabaja) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Id")
+		r.Id = NewUnionNullString()
+
+		r.Id = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Nombre"]; ok {
@@ -229,7 +259,9 @@ func (r *SucursalDondeTrabaja) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Nombre")
+		r.Nombre = NewUnionNullString()
+
+		r.Nombre = nil
 	}
 	return nil
 }

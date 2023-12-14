@@ -18,29 +18,36 @@ import (
 var _ = fmt.Printf
 
 type Transportista struct {
-	EsEventual bool `json:"EsEventual"`
+	EsEventual *UnionNullBool `json:"EsEventual"`
 
-	IdGla string `json:"IdGla"`
+	IdGla *UnionNullString `json:"IdGla"`
 
-	IdGli string `json:"IdGli"`
+	IdGli *UnionNullString `json:"IdGli"`
 
 	SucursalDondeTrabaja SucursalDondeTrabaja `json:"SucursalDondeTrabaja"`
 
-	NumeroDeDocumento string `json:"NumeroDeDocumento"`
+	NumeroDeDocumento *UnionNullString `json:"NumeroDeDocumento"`
 
-	NombreCompleto string `json:"NombreCompleto"`
+	NombreCompleto *UnionNullString `json:"NombreCompleto"`
 
-	TipoDeDocumento int32 `json:"TipoDeDocumento"`
+	TipoDeDocumento *UnionNullInt `json:"TipoDeDocumento"`
 
-	CumplimientoSecuenciaHR float64 `json:"CumplimientoSecuenciaHR"`
+	CumplimientoSecuenciaHR *UnionNullDouble `json:"CumplimientoSecuenciaHR"`
 }
 
-const TransportistaAvroCRC64Fingerprint = "/\x96\t\x11\xf1H%I"
+const TransportistaAvroCRC64Fingerprint = "\x12e#\xdd\x1c;\xf6\xe2"
 
 func NewTransportista() Transportista {
 	r := Transportista{}
+	r.EsEventual = nil
+	r.IdGla = nil
+	r.IdGli = nil
 	r.SucursalDondeTrabaja = NewSucursalDondeTrabaja()
 
+	r.NumeroDeDocumento = nil
+	r.NombreCompleto = nil
+	r.TipoDeDocumento = nil
+	r.CumplimientoSecuenciaHR = nil
 	return r
 }
 
@@ -69,15 +76,15 @@ func DeserializeTransportistaFromSchema(r io.Reader, schema string) (Transportis
 
 func writeTransportista(r Transportista, w io.Writer) error {
 	var err error
-	err = vm.WriteBool(r.EsEventual, w)
+	err = writeUnionNullBool(r.EsEventual, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.IdGla, w)
+	err = writeUnionNullString(r.IdGla, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.IdGli, w)
+	err = writeUnionNullString(r.IdGli, w)
 	if err != nil {
 		return err
 	}
@@ -85,19 +92,19 @@ func writeTransportista(r Transportista, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroDeDocumento, w)
+	err = writeUnionNullString(r.NumeroDeDocumento, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NombreCompleto, w)
+	err = writeUnionNullString(r.NombreCompleto, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.TipoDeDocumento, w)
+	err = writeUnionNullInt(r.TipoDeDocumento, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteDouble(r.CumplimientoSecuenciaHR, w)
+	err = writeUnionNullDouble(r.CumplimientoSecuenciaHR, w)
 	if err != nil {
 		return err
 	}
@@ -109,7 +116,7 @@ func (r Transportista) Serialize(w io.Writer) error {
 }
 
 func (r Transportista) Schema() string {
-	return "{\"fields\":[{\"name\":\"EsEventual\",\"type\":\"boolean\"},{\"name\":\"IdGla\",\"type\":\"string\"},{\"name\":\"IdGli\",\"type\":\"string\"},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"name\":\"CodigoAlertran\",\"type\":\"string\"},{\"name\":\"CodigoIntegra\",\"type\":\"string\"},{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"name\":\"NumeroDeDocumento\",\"type\":\"string\"},{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"TipoDeDocumento\",\"type\":\"int\"},{\"name\":\"CumplimientoSecuenciaHR\",\"type\":\"double\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"EsEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IdGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"CodigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"NumeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
 }
 
 func (r Transportista) SchemaName() string {
@@ -128,20 +135,17 @@ func (_ Transportista) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Transportista) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Boolean{Target: &r.EsEventual}
+		r.EsEventual = NewUnionNullBool()
 
-		return w
-
+		return r.EsEventual
 	case 1:
-		w := types.String{Target: &r.IdGla}
+		r.IdGla = NewUnionNullString()
 
-		return w
-
+		return r.IdGla
 	case 2:
-		w := types.String{Target: &r.IdGli}
+		r.IdGli = NewUnionNullString()
 
-		return w
-
+		return r.IdGli
 	case 3:
 		r.SucursalDondeTrabaja = NewSucursalDondeTrabaja()
 
@@ -150,37 +154,75 @@ func (r *Transportista) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.String{Target: &r.NumeroDeDocumento}
+		r.NumeroDeDocumento = NewUnionNullString()
 
-		return w
-
+		return r.NumeroDeDocumento
 	case 5:
-		w := types.String{Target: &r.NombreCompleto}
+		r.NombreCompleto = NewUnionNullString()
 
-		return w
-
+		return r.NombreCompleto
 	case 6:
-		w := types.Int{Target: &r.TipoDeDocumento}
+		r.TipoDeDocumento = NewUnionNullInt()
 
-		return w
-
+		return r.TipoDeDocumento
 	case 7:
-		w := types.Double{Target: &r.CumplimientoSecuenciaHR}
+		r.CumplimientoSecuenciaHR = NewUnionNullDouble()
 
-		return w
-
+		return r.CumplimientoSecuenciaHR
 	}
 	panic("Unknown field index")
 }
 
 func (r *Transportista) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.EsEventual = nil
+		return
+	case 1:
+		r.IdGla = nil
+		return
+	case 2:
+		r.IdGli = nil
+		return
+	case 4:
+		r.NumeroDeDocumento = nil
+		return
+	case 5:
+		r.NombreCompleto = nil
+		return
+	case 6:
+		r.TipoDeDocumento = nil
+		return
+	case 7:
+		r.CumplimientoSecuenciaHR = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Transportista) NullField(i int) {
 	switch i {
+	case 0:
+		r.EsEventual = nil
+		return
+	case 1:
+		r.IdGla = nil
+		return
+	case 2:
+		r.IdGli = nil
+		return
+	case 4:
+		r.NumeroDeDocumento = nil
+		return
+	case 5:
+		r.NombreCompleto = nil
+		return
+	case 6:
+		r.TipoDeDocumento = nil
+		return
+	case 7:
+		r.CumplimientoSecuenciaHR = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -251,7 +293,9 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EsEventual")
+		r.EsEventual = NewUnionNullBool()
+
+		r.EsEventual = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IdGla"]; ok {
@@ -265,7 +309,9 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for IdGla")
+		r.IdGla = NewUnionNullString()
+
+		r.IdGla = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IdGli"]; ok {
@@ -279,7 +325,9 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for IdGli")
+		r.IdGli = NewUnionNullString()
+
+		r.IdGli = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SucursalDondeTrabaja"]; ok {
@@ -307,7 +355,9 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NumeroDeDocumento")
+		r.NumeroDeDocumento = NewUnionNullString()
+
+		r.NumeroDeDocumento = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NombreCompleto"]; ok {
@@ -321,7 +371,9 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NombreCompleto")
+		r.NombreCompleto = NewUnionNullString()
+
+		r.NombreCompleto = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TipoDeDocumento"]; ok {
@@ -335,7 +387,9 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for TipoDeDocumento")
+		r.TipoDeDocumento = NewUnionNullInt()
+
+		r.TipoDeDocumento = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CumplimientoSecuenciaHR"]; ok {
@@ -349,7 +403,9 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CumplimientoSecuenciaHR")
+		r.CumplimientoSecuenciaHR = NewUnionNullDouble()
+
+		r.CumplimientoSecuenciaHR = nil
 	}
 	return nil
 }

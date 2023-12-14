@@ -18,30 +18,38 @@ import (
 var _ = fmt.Printf
 
 type CalculoEta struct {
-	OrdenDeEnvioEnHR int32 `json:"OrdenDeEnvioEnHR"`
+	OrdenDeEnvioEnHR *UnionNullInt `json:"OrdenDeEnvioEnHR"`
 
-	NumeroHojaDeRuta string `json:"NumeroHojaDeRuta"`
+	NumeroHojaDeRuta *UnionNullString `json:"NumeroHojaDeRuta"`
 
-	Geocoordenadas string `json:"Geocoordenadas"`
+	Geocoordenadas *UnionNullString `json:"Geocoordenadas"`
 
-	RecorridoEnSegundos float64 `json:"RecorridoEnSegundos"`
+	RecorridoEnSegundos *UnionNullDouble `json:"RecorridoEnSegundos"`
 
-	RecorridoEnMetros float64 `json:"RecorridoEnMetros"`
+	RecorridoEnMetros *UnionNullDouble `json:"RecorridoEnMetros"`
 
-	DemoraEnDomicilioEnMinutos int32 `json:"DemoraEnDomicilioEnMinutos"`
+	DemoraEnDomicilioEnMinutos *UnionNullInt `json:"DemoraEnDomicilioEnMinutos"`
 
-	DemoraSalidaSucursalEnMinutos int32 `json:"DemoraSalidaSucursalEnMinutos"`
+	DemoraSalidaSucursalEnMinutos *UnionNullInt `json:"DemoraSalidaSucursalEnMinutos"`
 
 	EtaAnterior *UnionNullLong `json:"EtaAnterior"`
 
-	FechaCreacionHojaDeRuta int64 `json:"FechaCreacionHojaDeRuta"`
+	FechaCreacionHojaDeRuta *UnionNullLong `json:"FechaCreacionHojaDeRuta"`
 }
 
-const CalculoEtaAvroCRC64Fingerprint = "зX\xe8\\c\xd7\x03"
+const CalculoEtaAvroCRC64Fingerprint = "Ȥ\xd8\aC\x91n\x9d"
 
 func NewCalculoEta() CalculoEta {
 	r := CalculoEta{}
+	r.OrdenDeEnvioEnHR = nil
+	r.NumeroHojaDeRuta = nil
+	r.Geocoordenadas = nil
+	r.RecorridoEnSegundos = nil
+	r.RecorridoEnMetros = nil
+	r.DemoraEnDomicilioEnMinutos = nil
+	r.DemoraSalidaSucursalEnMinutos = nil
 	r.EtaAnterior = nil
+	r.FechaCreacionHojaDeRuta = nil
 	return r
 }
 
@@ -70,31 +78,31 @@ func DeserializeCalculoEtaFromSchema(r io.Reader, schema string) (CalculoEta, er
 
 func writeCalculoEta(r CalculoEta, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.OrdenDeEnvioEnHR, w)
+	err = writeUnionNullInt(r.OrdenDeEnvioEnHR, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroHojaDeRuta, w)
+	err = writeUnionNullString(r.NumeroHojaDeRuta, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Geocoordenadas, w)
+	err = writeUnionNullString(r.Geocoordenadas, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteDouble(r.RecorridoEnSegundos, w)
+	err = writeUnionNullDouble(r.RecorridoEnSegundos, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteDouble(r.RecorridoEnMetros, w)
+	err = writeUnionNullDouble(r.RecorridoEnMetros, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.DemoraEnDomicilioEnMinutos, w)
+	err = writeUnionNullInt(r.DemoraEnDomicilioEnMinutos, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.DemoraSalidaSucursalEnMinutos, w)
+	err = writeUnionNullInt(r.DemoraSalidaSucursalEnMinutos, w)
 	if err != nil {
 		return err
 	}
@@ -102,7 +110,7 @@ func writeCalculoEta(r CalculoEta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.FechaCreacionHojaDeRuta, w)
+	err = writeUnionNullLong(r.FechaCreacionHojaDeRuta, w)
 	if err != nil {
 		return err
 	}
@@ -114,7 +122,7 @@ func (r CalculoEta) Serialize(w io.Writer) error {
 }
 
 func (r CalculoEta) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenDeEnvioEnHR\",\"type\":\"int\"},{\"name\":\"NumeroHojaDeRuta\",\"type\":\"string\"},{\"name\":\"Geocoordenadas\",\"type\":\"string\"},{\"name\":\"RecorridoEnSegundos\",\"type\":\"double\"},{\"name\":\"RecorridoEnMetros\",\"type\":\"double\"},{\"name\":\"DemoraEnDomicilioEnMinutos\",\"type\":\"int\"},{\"name\":\"DemoraSalidaSucursalEnMinutos\",\"type\":\"int\"},{\"default\":null,\"name\":\"EtaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaCreacionHojaDeRuta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"OrdenDeEnvioEnHR\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Geocoordenadas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecorridoEnSegundos\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"RecorridoEnMetros\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"DemoraEnDomicilioEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"DemoraSalidaSucursalEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"EtaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
 }
 
 func (r CalculoEta) SchemaName() string {
@@ -133,57 +141,73 @@ func (_ CalculoEta) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *CalculoEta) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.OrdenDeEnvioEnHR}
+		r.OrdenDeEnvioEnHR = NewUnionNullInt()
 
-		return w
-
+		return r.OrdenDeEnvioEnHR
 	case 1:
-		w := types.String{Target: &r.NumeroHojaDeRuta}
+		r.NumeroHojaDeRuta = NewUnionNullString()
 
-		return w
-
+		return r.NumeroHojaDeRuta
 	case 2:
-		w := types.String{Target: &r.Geocoordenadas}
+		r.Geocoordenadas = NewUnionNullString()
 
-		return w
-
+		return r.Geocoordenadas
 	case 3:
-		w := types.Double{Target: &r.RecorridoEnSegundos}
+		r.RecorridoEnSegundos = NewUnionNullDouble()
 
-		return w
-
+		return r.RecorridoEnSegundos
 	case 4:
-		w := types.Double{Target: &r.RecorridoEnMetros}
+		r.RecorridoEnMetros = NewUnionNullDouble()
 
-		return w
-
+		return r.RecorridoEnMetros
 	case 5:
-		w := types.Int{Target: &r.DemoraEnDomicilioEnMinutos}
+		r.DemoraEnDomicilioEnMinutos = NewUnionNullInt()
 
-		return w
-
+		return r.DemoraEnDomicilioEnMinutos
 	case 6:
-		w := types.Int{Target: &r.DemoraSalidaSucursalEnMinutos}
+		r.DemoraSalidaSucursalEnMinutos = NewUnionNullInt()
 
-		return w
-
+		return r.DemoraSalidaSucursalEnMinutos
 	case 7:
 		r.EtaAnterior = NewUnionNullLong()
 
 		return r.EtaAnterior
 	case 8:
-		w := types.Long{Target: &r.FechaCreacionHojaDeRuta}
+		r.FechaCreacionHojaDeRuta = NewUnionNullLong()
 
-		return w
-
+		return r.FechaCreacionHojaDeRuta
 	}
 	panic("Unknown field index")
 }
 
 func (r *CalculoEta) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.OrdenDeEnvioEnHR = nil
+		return
+	case 1:
+		r.NumeroHojaDeRuta = nil
+		return
+	case 2:
+		r.Geocoordenadas = nil
+		return
+	case 3:
+		r.RecorridoEnSegundos = nil
+		return
+	case 4:
+		r.RecorridoEnMetros = nil
+		return
+	case 5:
+		r.DemoraEnDomicilioEnMinutos = nil
+		return
+	case 6:
+		r.DemoraSalidaSucursalEnMinutos = nil
+		return
 	case 7:
 		r.EtaAnterior = nil
+		return
+	case 8:
+		r.FechaCreacionHojaDeRuta = nil
 		return
 	}
 	panic("Unknown field index")
@@ -191,8 +215,32 @@ func (r *CalculoEta) SetDefault(i int) {
 
 func (r *CalculoEta) NullField(i int) {
 	switch i {
+	case 0:
+		r.OrdenDeEnvioEnHR = nil
+		return
+	case 1:
+		r.NumeroHojaDeRuta = nil
+		return
+	case 2:
+		r.Geocoordenadas = nil
+		return
+	case 3:
+		r.RecorridoEnSegundos = nil
+		return
+	case 4:
+		r.RecorridoEnMetros = nil
+		return
+	case 5:
+		r.DemoraEnDomicilioEnMinutos = nil
+		return
+	case 6:
+		r.DemoraSalidaSucursalEnMinutos = nil
+		return
 	case 7:
 		r.EtaAnterior = nil
+		return
+	case 8:
+		r.FechaCreacionHojaDeRuta = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -268,7 +316,9 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for OrdenDeEnvioEnHR")
+		r.OrdenDeEnvioEnHR = NewUnionNullInt()
+
+		r.OrdenDeEnvioEnHR = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NumeroHojaDeRuta"]; ok {
@@ -282,7 +332,9 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NumeroHojaDeRuta")
+		r.NumeroHojaDeRuta = NewUnionNullString()
+
+		r.NumeroHojaDeRuta = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Geocoordenadas"]; ok {
@@ -296,7 +348,9 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Geocoordenadas")
+		r.Geocoordenadas = NewUnionNullString()
+
+		r.Geocoordenadas = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["RecorridoEnSegundos"]; ok {
@@ -310,7 +364,9 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for RecorridoEnSegundos")
+		r.RecorridoEnSegundos = NewUnionNullDouble()
+
+		r.RecorridoEnSegundos = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["RecorridoEnMetros"]; ok {
@@ -324,7 +380,9 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for RecorridoEnMetros")
+		r.RecorridoEnMetros = NewUnionNullDouble()
+
+		r.RecorridoEnMetros = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DemoraEnDomicilioEnMinutos"]; ok {
@@ -338,7 +396,9 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DemoraEnDomicilioEnMinutos")
+		r.DemoraEnDomicilioEnMinutos = NewUnionNullInt()
+
+		r.DemoraEnDomicilioEnMinutos = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DemoraSalidaSucursalEnMinutos"]; ok {
@@ -352,7 +412,9 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DemoraSalidaSucursalEnMinutos")
+		r.DemoraSalidaSucursalEnMinutos = NewUnionNullInt()
+
+		r.DemoraSalidaSucursalEnMinutos = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EtaAnterior"]; ok {
@@ -382,7 +444,9 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FechaCreacionHojaDeRuta")
+		r.FechaCreacionHojaDeRuta = NewUnionNullLong()
+
+		r.FechaCreacionHojaDeRuta = nil
 	}
 	return nil
 }
