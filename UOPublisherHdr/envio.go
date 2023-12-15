@@ -20,9 +20,9 @@ var _ = fmt.Printf
 type Envio struct {
 	NumeroDeEnvio string `json:"NumeroDeEnvio"`
 
-	OrdenEscaneo int32 `json:"ordenEscaneo"`
+	OrdenEscaneo int32 `json:"OrdenEscaneo"`
 
-	OrdenEntrega int32 `json:"ordenEntrega"`
+	OrdenEntrega int32 `json:"OrdenEntrega"`
 
 	Origen string `json:"Origen"`
 
@@ -38,18 +38,20 @@ type Envio struct {
 
 	Contrato *UnionNullString `json:"Contrato"`
 
-	FranjaHoraria *UnionNullString `json:"franjaHoraria"`
+	FranjaHoraria *UnionNullString `json:"FranjaHoraria"`
 
-	ProximaFase *UnionNullString `json:"proximaFase"`
+	ProximaFase *UnionNullString `json:"ProximaFase"`
 
 	DeclarationState *UnionNullInt `json:"DeclarationState"`
 
 	Componentes *UnionNullArrayPieceComponent `json:"Componentes"`
 
 	BultoData *UnionNullBultoData `json:"BultoData"`
+
+	GeoPos GeoPos `json:"GeoPos"`
 }
 
-const EnvioAvroCRC64Fingerprint = " \xe7\xc7!\xf6\xa1|\x96"
+const EnvioAvroCRC64Fingerprint = "\x8c\x87\xdc踠\x1e9"
 
 func NewEnvio() Envio {
 	r := Envio{}
@@ -61,6 +63,8 @@ func NewEnvio() Envio {
 	r.DeclarationState = nil
 	r.Componentes = nil
 	r.BultoData = nil
+	r.GeoPos = NewGeoPos()
+
 	return r
 }
 
@@ -149,6 +153,10 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeGeoPos(r.GeoPos, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -157,7 +165,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"ordenEscaneo\",\"type\":\"int\"},{\"name\":\"ordenEntrega\",\"type\":\"int\"},{\"name\":\"Origen\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroHdrOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"TipoDeServicioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"franjaHoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"proximaFase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeclarationState\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Componentes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"componentCode\",\"type\":\"string\"},{\"name\":\"componentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"BultoData\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"BultoData\",\"type\":\"record\"}]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"OrdenEscaneo\",\"type\":\"int\"},{\"name\":\"OrdenEntrega\",\"type\":\"int\"},{\"name\":\"Origen\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroHdrOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"TipoDeServicioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FranjaHoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProximaFase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeclarationState\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Componentes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ComponentCode\",\"type\":\"string\"},{\"name\":\"ComponentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"BultoData\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"BultoData\",\"type\":\"record\"}]},{\"name\":\"GeoPos\",\"type\":{\"fields\":[{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"GeoPos\",\"type\":\"record\"}}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -242,6 +250,13 @@ func (r *Envio) Get(i int) types.Field {
 		r.BultoData = NewUnionNullBultoData()
 
 		return r.BultoData
+	case 15:
+		r.GeoPos = NewGeoPos()
+
+		w := types.Record{Target: &r.GeoPos}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -322,11 +337,11 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["ordenEscaneo"], err = json.Marshal(r.OrdenEscaneo)
+	output["OrdenEscaneo"], err = json.Marshal(r.OrdenEscaneo)
 	if err != nil {
 		return nil, err
 	}
-	output["ordenEntrega"], err = json.Marshal(r.OrdenEntrega)
+	output["OrdenEntrega"], err = json.Marshal(r.OrdenEntrega)
 	if err != nil {
 		return nil, err
 	}
@@ -358,11 +373,11 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["franjaHoraria"], err = json.Marshal(r.FranjaHoraria)
+	output["FranjaHoraria"], err = json.Marshal(r.FranjaHoraria)
 	if err != nil {
 		return nil, err
 	}
-	output["proximaFase"], err = json.Marshal(r.ProximaFase)
+	output["ProximaFase"], err = json.Marshal(r.ProximaFase)
 	if err != nil {
 		return nil, err
 	}
@@ -375,6 +390,10 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["BultoData"], err = json.Marshal(r.BultoData)
+	if err != nil {
+		return nil, err
+	}
+	output["GeoPos"], err = json.Marshal(r.GeoPos)
 	if err != nil {
 		return nil, err
 	}
@@ -403,7 +422,7 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for NumeroDeEnvio")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["ordenEscaneo"]; ok {
+		if v, ok := fields["OrdenEscaneo"]; ok {
 			return v
 		}
 		return nil
@@ -414,10 +433,10 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ordenEscaneo")
+		return fmt.Errorf("no value specified for OrdenEscaneo")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["ordenEntrega"]; ok {
+		if v, ok := fields["OrdenEntrega"]; ok {
 			return v
 		}
 		return nil
@@ -428,7 +447,7 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ordenEntrega")
+		return fmt.Errorf("no value specified for OrdenEntrega")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Origen"]; ok {
@@ -535,7 +554,7 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		r.Contrato = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["franjaHoraria"]; ok {
+		if v, ok := fields["FranjaHoraria"]; ok {
 			return v
 		}
 		return nil
@@ -551,7 +570,7 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		r.FranjaHoraria = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["proximaFase"]; ok {
+		if v, ok := fields["ProximaFase"]; ok {
 			return v
 		}
 		return nil
@@ -613,6 +632,20 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		r.BultoData = NewUnionNullBultoData()
 
 		r.BultoData = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["GeoPos"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.GeoPos); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for GeoPos")
 	}
 	return nil
 }

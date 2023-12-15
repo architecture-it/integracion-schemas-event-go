@@ -22,10 +22,10 @@ type ContratoData struct {
 
 	Motivos *UnionNullArrayString `json:"Motivos"`
 
-	CondicionDeEntregaId int32 `json:"condicionDeEntregaId"`
+	CondicionDeEntregaId int32 `json:"CondicionDeEntregaId"`
 }
 
-const ContratoDataAvroCRC64Fingerprint = "\xf2y\xf6oݣ\xdf "
+const ContratoDataAvroCRC64Fingerprint = "\x13\xcfK8\xfb\xe5t\x88"
 
 func NewContratoData() ContratoData {
 	r := ContratoData{}
@@ -78,7 +78,7 @@ func (r ContratoData) Serialize(w io.Writer) error {
 }
 
 func (r ContratoData) Schema() string {
-	return "{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"Motivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"condicionDeEntregaId\",\"type\":\"int\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.ContratoData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"Motivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"CondicionDeEntregaId\",\"type\":\"int\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.ContratoData\",\"type\":\"record\"}"
 }
 
 func (r ContratoData) SchemaName() string {
@@ -152,7 +152,7 @@ func (r ContratoData) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["condicionDeEntregaId"], err = json.Marshal(r.CondicionDeEntregaId)
+	output["CondicionDeEntregaId"], err = json.Marshal(r.CondicionDeEntregaId)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +197,7 @@ func (r *ContratoData) UnmarshalJSON(data []byte) error {
 		r.Motivos = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["condicionDeEntregaId"]; ok {
+		if v, ok := fields["CondicionDeEntregaId"]; ok {
 			return v
 		}
 		return nil
@@ -208,7 +208,7 @@ func (r *ContratoData) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for condicionDeEntregaId")
+		return fmt.Errorf("no value specified for CondicionDeEntregaId")
 	}
 	return nil
 }

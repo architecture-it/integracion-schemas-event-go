@@ -20,20 +20,20 @@ var _ = fmt.Printf
 type Destinatario struct {
 	DestinatarioId int32 `json:"DestinatarioId"`
 
-	Nombre *UnionNullString `json:"nombre"`
+	Nombre *UnionNullString `json:"Nombre"`
 
-	Apellido *UnionNullString `json:"apellido"`
+	Apellido *UnionNullString `json:"Apellido"`
 
-	Dni *UnionNullString `json:"dni"`
+	Dni *UnionNullString `json:"Dni"`
 
-	Telefono *UnionNullString `json:"telefono"`
+	Telefono *UnionNullString `json:"Telefono"`
 
-	Celular *UnionNullString `json:"celular"`
+	Celular *UnionNullString `json:"Celular"`
 
-	Email *UnionNullString `json:"email"`
+	Email *UnionNullString `json:"Email"`
 }
 
-const DestinatarioAvroCRC64Fingerprint = "\x90 (\xcb\xfb\x11Y\xa4"
+const DestinatarioAvroCRC64Fingerprint = "\x15\x03\xa5\xc5*\r\x03\x1f"
 
 func NewDestinatario() Destinatario {
 	r := Destinatario{}
@@ -107,7 +107,7 @@ func (r Destinatario) Serialize(w io.Writer) error {
 }
 
 func (r Destinatario) Schema() string {
-	return "{\"fields\":[{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"celular\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Destinatario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Celular\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Destinatario\",\"type\":\"record\"}"
 }
 
 func (r Destinatario) SchemaName() string {
@@ -222,27 +222,27 @@ func (r Destinatario) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["nombre"], err = json.Marshal(r.Nombre)
+	output["Nombre"], err = json.Marshal(r.Nombre)
 	if err != nil {
 		return nil, err
 	}
-	output["apellido"], err = json.Marshal(r.Apellido)
+	output["Apellido"], err = json.Marshal(r.Apellido)
 	if err != nil {
 		return nil, err
 	}
-	output["dni"], err = json.Marshal(r.Dni)
+	output["Dni"], err = json.Marshal(r.Dni)
 	if err != nil {
 		return nil, err
 	}
-	output["telefono"], err = json.Marshal(r.Telefono)
+	output["Telefono"], err = json.Marshal(r.Telefono)
 	if err != nil {
 		return nil, err
 	}
-	output["celular"], err = json.Marshal(r.Celular)
+	output["Celular"], err = json.Marshal(r.Celular)
 	if err != nil {
 		return nil, err
 	}
-	output["email"], err = json.Marshal(r.Email)
+	output["Email"], err = json.Marshal(r.Email)
 	if err != nil {
 		return nil, err
 	}
@@ -271,7 +271,7 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for DestinatarioId")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["nombre"]; ok {
+		if v, ok := fields["Nombre"]; ok {
 			return v
 		}
 		return nil
@@ -287,7 +287,7 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 		r.Nombre = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["apellido"]; ok {
+		if v, ok := fields["Apellido"]; ok {
 			return v
 		}
 		return nil
@@ -303,7 +303,7 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 		r.Apellido = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["dni"]; ok {
+		if v, ok := fields["Dni"]; ok {
 			return v
 		}
 		return nil
@@ -319,7 +319,7 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 		r.Dni = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["telefono"]; ok {
+		if v, ok := fields["Telefono"]; ok {
 			return v
 		}
 		return nil
@@ -335,7 +335,7 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 		r.Telefono = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["celular"]; ok {
+		if v, ok := fields["Celular"]; ok {
 			return v
 		}
 		return nil
@@ -351,7 +351,7 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 		r.Celular = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["email"]; ok {
+		if v, ok := fields["Email"]; ok {
 			return v
 		}
 		return nil

@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type UOHdrCreada struct {
+	CodigoOperacionUnificacion string `json:"CodigoOperacionUnificacion"`
+
 	NumeroDeHojaDeRuta string `json:"NumeroDeHojaDeRuta"`
 
 	Distribuidor Distribuidor `json:"Distribuidor"`
@@ -39,9 +41,11 @@ type UOHdrCreada struct {
 	TiposDeServicio *UnionNullArrayTipoDeServicio `json:"TiposDeServicio"`
 
 	Linking *UnionNullArrayMetadato `json:"Linking"`
+
+	Stamp *UnionNullString `json:"Stamp"`
 }
 
-const UOHdrCreadaAvroCRC64Fingerprint = "!\fk6ҕd5"
+const UOHdrCreadaAvroCRC64Fingerprint = "۞\xbb\x0e\xf1\x0f\xf1w"
 
 func NewUOHdrCreada() UOHdrCreada {
 	r := UOHdrCreada{}
@@ -59,6 +63,7 @@ func NewUOHdrCreada() UOHdrCreada {
 	r.Contratos = nil
 	r.TiposDeServicio = nil
 	r.Linking = nil
+	r.Stamp = nil
 	return r
 }
 
@@ -87,6 +92,10 @@ func DeserializeUOHdrCreadaFromSchema(r io.Reader, schema string) (UOHdrCreada, 
 
 func writeUOHdrCreada(r UOHdrCreada, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.CodigoOperacionUnificacion, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.NumeroDeHojaDeRuta, w)
 	if err != nil {
 		return err
@@ -131,6 +140,10 @@ func writeUOHdrCreada(r UOHdrCreada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Stamp, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -139,7 +152,7 @@ func (r UOHdrCreada) Serialize(w io.Writer) error {
 }
 
 func (r UOHdrCreada) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroDeHojaDeRuta\",\"type\":\"string\"},{\"name\":\"Distribuidor\",\"type\":{\"fields\":[{\"name\":\"Dni\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Movilidad\",\"type\":[\"null\",\"int\"]}],\"name\":\"Distribuidor\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"}},{\"name\":\"SucursalDeEntrega\",\"type\":\"string\"},{\"name\":\"Envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"ordenEscaneo\",\"type\":\"int\"},{\"name\":\"ordenEntrega\",\"type\":\"int\"},{\"name\":\"Origen\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroHdrOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"TipoDeServicioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"franjaHoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"proximaFase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeclarationState\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Componentes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"componentCode\",\"type\":\"string\"},{\"name\":\"componentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"BultoData\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"BultoData\",\"type\":\"record\"}]}],\"name\":\"Envio\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Clientes\",\"type\":{\"items\":{\"fields\":[{\"name\":\"clienteId\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"identificadorCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Cliente\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Direcciones\",\"type\":{\"items\":{\"fields\":[{\"name\":\"direccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"latitud\",\"type\":\"string\"},{\"name\":\"longitud\",\"type\":\"string\"}],\"name\":\"Direccion\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Destinatarios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"celular\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destinatario\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"CondicionesDeEntrega\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"CondicionDeEntregaId\",\"type\":\"int\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"CondicionesDeEntrega\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Contratos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"Motivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"condicionDeEntregaId\",\"type\":\"int\"}],\"name\":\"ContratoData\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"TiposDeServicio\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"TipoDeServicioId\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"TipoDeServicio\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.UOPublisherHdr.Events.Record.UOHdrCreada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoOperacionUnificacion\",\"type\":\"string\"},{\"name\":\"NumeroDeHojaDeRuta\",\"type\":\"string\"},{\"name\":\"Distribuidor\",\"type\":{\"fields\":[{\"name\":\"Dni\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Movilidad\",\"type\":[\"null\",\"int\"]}],\"name\":\"Distribuidor\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"}},{\"name\":\"SucursalDeEntrega\",\"type\":\"string\"},{\"name\":\"Envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"OrdenEscaneo\",\"type\":\"int\"},{\"name\":\"OrdenEntrega\",\"type\":\"int\"},{\"name\":\"Origen\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroHdrOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"TipoDeServicioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FranjaHoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProximaFase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeclarationState\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Componentes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ComponentCode\",\"type\":\"string\"},{\"name\":\"ComponentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"BultoData\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"BultoData\",\"type\":\"record\"}]},{\"name\":\"GeoPos\",\"type\":{\"fields\":[{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"GeoPos\",\"type\":\"record\"}}],\"name\":\"Envio\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Clientes\",\"type\":{\"items\":{\"fields\":[{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"IdentificadorCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"Cliente\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Direcciones\",\"type\":{\"items\":{\"fields\":[{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"Direccion\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Destinatarios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Celular\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destinatario\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"CondicionesDeEntrega\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"CondicionDeEntregaId\",\"type\":\"int\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"CondicionesDeEntrega\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Contratos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"Motivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"CondicionDeEntregaId\",\"type\":\"int\"}],\"name\":\"ContratoData\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"TiposDeServicio\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"TipoDeServicioId\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"TipoDeServicio\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Stamp\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.UOPublisherHdr.Events.Record.UOHdrCreada\",\"type\":\"record\"}"
 }
 
 func (r UOHdrCreada) SchemaName() string {
@@ -158,83 +171,95 @@ func (_ UOHdrCreada) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *UOHdrCreada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.NumeroDeHojaDeRuta}
+		w := types.String{Target: &r.CodigoOperacionUnificacion}
 
 		return w
 
 	case 1:
+		w := types.String{Target: &r.NumeroDeHojaDeRuta}
+
+		return w
+
+	case 2:
 		r.Distribuidor = NewDistribuidor()
 
 		w := types.Record{Target: &r.Distribuidor}
 
 		return w
 
-	case 2:
+	case 3:
 		w := types.String{Target: &r.SucursalDeEntrega}
 
 		return w
 
-	case 3:
+	case 4:
 		r.Envios = make([]Envio, 0)
 
 		w := ArrayEnvioWrapper{Target: &r.Envios}
 
 		return w
 
-	case 4:
+	case 5:
 		r.Clientes = make([]Cliente, 0)
 
 		w := ArrayClienteWrapper{Target: &r.Clientes}
 
 		return w
 
-	case 5:
+	case 6:
 		r.Direcciones = make([]Direccion, 0)
 
 		w := ArrayDireccionWrapper{Target: &r.Direcciones}
 
 		return w
 
-	case 6:
+	case 7:
 		r.Destinatarios = make([]Destinatario, 0)
 
 		w := ArrayDestinatarioWrapper{Target: &r.Destinatarios}
 
 		return w
 
-	case 7:
+	case 8:
 		r.CondicionesDeEntrega = NewUnionNullArrayCondicionesDeEntrega()
 
 		return r.CondicionesDeEntrega
-	case 8:
+	case 9:
 		r.Contratos = NewUnionNullArrayContratoData()
 
 		return r.Contratos
-	case 9:
+	case 10:
 		r.TiposDeServicio = NewUnionNullArrayTipoDeServicio()
 
 		return r.TiposDeServicio
-	case 10:
+	case 11:
 		r.Linking = NewUnionNullArrayMetadato()
 
 		return r.Linking
+	case 12:
+		r.Stamp = NewUnionNullString()
+
+		return r.Stamp
 	}
 	panic("Unknown field index")
 }
 
 func (r *UOHdrCreada) SetDefault(i int) {
 	switch i {
-	case 7:
+	case 8:
 		r.CondicionesDeEntrega = nil
 		return
-	case 8:
+	case 9:
 		r.Contratos = nil
 		return
-	case 9:
+	case 10:
 		r.TiposDeServicio = nil
 		return
-	case 10:
+	case 11:
 		r.Linking = nil
+		return
+	case 12:
+		r.Stamp = nil
 		return
 	}
 	panic("Unknown field index")
@@ -242,17 +267,20 @@ func (r *UOHdrCreada) SetDefault(i int) {
 
 func (r *UOHdrCreada) NullField(i int) {
 	switch i {
-	case 7:
+	case 8:
 		r.CondicionesDeEntrega = nil
 		return
-	case 8:
+	case 9:
 		r.Contratos = nil
 		return
-	case 9:
+	case 10:
 		r.TiposDeServicio = nil
 		return
-	case 10:
+	case 11:
 		r.Linking = nil
+		return
+	case 12:
+		r.Stamp = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -270,6 +298,10 @@ func (_ UOHdrCreada) AvroCRC64Fingerprint() []byte {
 func (r UOHdrCreada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["CodigoOperacionUnificacion"], err = json.Marshal(r.CodigoOperacionUnificacion)
+	if err != nil {
+		return nil, err
+	}
 	output["NumeroDeHojaDeRuta"], err = json.Marshal(r.NumeroDeHojaDeRuta)
 	if err != nil {
 		return nil, err
@@ -314,6 +346,10 @@ func (r UOHdrCreada) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["Stamp"], err = json.Marshal(r.Stamp)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -324,6 +360,20 @@ func (r *UOHdrCreada) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigoOperacionUnificacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoOperacionUnificacion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CodigoOperacionUnificacion")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NumeroDeHojaDeRuta"]; ok {
 			return v
@@ -485,6 +535,22 @@ func (r *UOHdrCreada) UnmarshalJSON(data []byte) error {
 		r.Linking = NewUnionNullArrayMetadato()
 
 		r.Linking = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Stamp"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Stamp); err != nil {
+			return err
+		}
+	} else {
+		r.Stamp = NewUnionNullString()
+
+		r.Stamp = nil
 	}
 	return nil
 }

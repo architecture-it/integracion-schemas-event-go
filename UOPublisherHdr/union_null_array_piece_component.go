@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayPieceComponentFromSchema(r io.Reader, schema strin
 }
 
 func (r *UnionNullArrayPieceComponent) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"componentCode\",\"type\":\"string\"},{\"name\":\"componentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"ComponentCode\",\"type\":\"string\"},{\"name\":\"ComponentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayPieceComponent) SetBoolean(v bool)   { panic("Unsupported operation") }

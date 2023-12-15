@@ -18,16 +18,16 @@ import (
 var _ = fmt.Printf
 
 type Cliente struct {
-	ClienteId int32 `json:"clienteId"`
+	ClienteId int32 `json:"ClienteId"`
 
-	Codigo string `json:"codigo"`
+	Codigo string `json:"Codigo"`
 
-	IdentificadorCliente *UnionNullString `json:"identificadorCliente"`
+	IdentificadorCliente *UnionNullString `json:"IdentificadorCliente"`
 
-	Nombre string `json:"nombre"`
+	Nombre string `json:"Nombre"`
 }
 
-const ClienteAvroCRC64Fingerprint = "c\xa8\x89\xf4\xd5\xe2\x90e"
+const ClienteAvroCRC64Fingerprint = "\x0f;\x90\xbcu>\x9e\xa6"
 
 func NewCliente() Cliente {
 	r := Cliente{}
@@ -84,7 +84,7 @@ func (r Cliente) Serialize(w io.Writer) error {
 }
 
 func (r Cliente) Schema() string {
-	return "{\"fields\":[{\"name\":\"clienteId\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"identificadorCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Cliente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"IdentificadorCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Cliente\",\"type\":\"record\"}"
 }
 
 func (r Cliente) SchemaName() string {
@@ -155,19 +155,19 @@ func (_ Cliente) AvroCRC64Fingerprint() []byte {
 func (r Cliente) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["clienteId"], err = json.Marshal(r.ClienteId)
+	output["ClienteId"], err = json.Marshal(r.ClienteId)
 	if err != nil {
 		return nil, err
 	}
-	output["codigo"], err = json.Marshal(r.Codigo)
+	output["Codigo"], err = json.Marshal(r.Codigo)
 	if err != nil {
 		return nil, err
 	}
-	output["identificadorCliente"], err = json.Marshal(r.IdentificadorCliente)
+	output["IdentificadorCliente"], err = json.Marshal(r.IdentificadorCliente)
 	if err != nil {
 		return nil, err
 	}
-	output["nombre"], err = json.Marshal(r.Nombre)
+	output["Nombre"], err = json.Marshal(r.Nombre)
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +182,7 @@ func (r *Cliente) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["clienteId"]; ok {
+		if v, ok := fields["ClienteId"]; ok {
 			return v
 		}
 		return nil
@@ -193,10 +193,10 @@ func (r *Cliente) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for clienteId")
+		return fmt.Errorf("no value specified for ClienteId")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigo"]; ok {
+		if v, ok := fields["Codigo"]; ok {
 			return v
 		}
 		return nil
@@ -207,10 +207,10 @@ func (r *Cliente) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigo")
+		return fmt.Errorf("no value specified for Codigo")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["identificadorCliente"]; ok {
+		if v, ok := fields["IdentificadorCliente"]; ok {
 			return v
 		}
 		return nil
@@ -226,7 +226,7 @@ func (r *Cliente) UnmarshalJSON(data []byte) error {
 		r.IdentificadorCliente = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["nombre"]; ok {
+		if v, ok := fields["Nombre"]; ok {
 			return v
 		}
 		return nil
@@ -237,7 +237,7 @@ func (r *Cliente) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nombre")
+		return fmt.Errorf("no value specified for Nombre")
 	}
 	return nil
 }

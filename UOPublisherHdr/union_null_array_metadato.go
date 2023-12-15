@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayMetadatoFromSchema(r io.Reader, schema string) (*U
 }
 
 func (r *UnionNullArrayMetadato) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayMetadato) SetBoolean(v bool)   { panic("Unsupported operation") }

@@ -18,28 +18,28 @@ import (
 var _ = fmt.Printf
 
 type Direccion struct {
-	DireccionId int32 `json:"direccionId"`
+	DireccionId int32 `json:"DireccionId"`
 
-	Numero *UnionNullString `json:"numero"`
+	Numero *UnionNullString `json:"Numero"`
 
-	Piso *UnionNullString `json:"piso"`
+	Piso *UnionNullString `json:"Piso"`
 
-	Unidad *UnionNullString `json:"unidad"`
+	Unidad *UnionNullString `json:"Unidad"`
 
-	Calle string `json:"calle"`
+	Calle string `json:"Calle"`
 
-	Provincia string `json:"provincia"`
+	Provincia string `json:"Provincia"`
 
-	Localidad string `json:"localidad"`
+	Localidad string `json:"Localidad"`
 
-	CodigoPostal string `json:"codigoPostal"`
+	CodigoPostal string `json:"CodigoPostal"`
 
-	Latitud string `json:"latitud"`
+	Latitud string `json:"Latitud"`
 
-	Longitud string `json:"longitud"`
+	Longitud string `json:"Longitud"`
 }
 
-const DireccionAvroCRC64Fingerprint = "\x14\xd3))OZ\x8e6"
+const DireccionAvroCRC64Fingerprint = "\xc3\x7f%m\xfd\x90y\xf3"
 
 func NewDireccion() Direccion {
 	r := Direccion{}
@@ -122,7 +122,7 @@ func (r Direccion) Serialize(w io.Writer) error {
 }
 
 func (r Direccion) Schema() string {
-	return "{\"fields\":[{\"name\":\"direccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"latitud\",\"type\":\"string\"},{\"name\":\"longitud\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Direccion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Direccion\",\"type\":\"record\"}"
 }
 
 func (r Direccion) SchemaName() string {
@@ -233,43 +233,43 @@ func (_ Direccion) AvroCRC64Fingerprint() []byte {
 func (r Direccion) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["direccionId"], err = json.Marshal(r.DireccionId)
+	output["DireccionId"], err = json.Marshal(r.DireccionId)
 	if err != nil {
 		return nil, err
 	}
-	output["numero"], err = json.Marshal(r.Numero)
+	output["Numero"], err = json.Marshal(r.Numero)
 	if err != nil {
 		return nil, err
 	}
-	output["piso"], err = json.Marshal(r.Piso)
+	output["Piso"], err = json.Marshal(r.Piso)
 	if err != nil {
 		return nil, err
 	}
-	output["unidad"], err = json.Marshal(r.Unidad)
+	output["Unidad"], err = json.Marshal(r.Unidad)
 	if err != nil {
 		return nil, err
 	}
-	output["calle"], err = json.Marshal(r.Calle)
+	output["Calle"], err = json.Marshal(r.Calle)
 	if err != nil {
 		return nil, err
 	}
-	output["provincia"], err = json.Marshal(r.Provincia)
+	output["Provincia"], err = json.Marshal(r.Provincia)
 	if err != nil {
 		return nil, err
 	}
-	output["localidad"], err = json.Marshal(r.Localidad)
+	output["Localidad"], err = json.Marshal(r.Localidad)
 	if err != nil {
 		return nil, err
 	}
-	output["codigoPostal"], err = json.Marshal(r.CodigoPostal)
+	output["CodigoPostal"], err = json.Marshal(r.CodigoPostal)
 	if err != nil {
 		return nil, err
 	}
-	output["latitud"], err = json.Marshal(r.Latitud)
+	output["Latitud"], err = json.Marshal(r.Latitud)
 	if err != nil {
 		return nil, err
 	}
-	output["longitud"], err = json.Marshal(r.Longitud)
+	output["Longitud"], err = json.Marshal(r.Longitud)
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +284,7 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["direccionId"]; ok {
+		if v, ok := fields["DireccionId"]; ok {
 			return v
 		}
 		return nil
@@ -295,10 +295,10 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for direccionId")
+		return fmt.Errorf("no value specified for DireccionId")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numero"]; ok {
+		if v, ok := fields["Numero"]; ok {
 			return v
 		}
 		return nil
@@ -314,7 +314,7 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 		r.Numero = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["piso"]; ok {
+		if v, ok := fields["Piso"]; ok {
 			return v
 		}
 		return nil
@@ -330,7 +330,7 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 		r.Piso = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["unidad"]; ok {
+		if v, ok := fields["Unidad"]; ok {
 			return v
 		}
 		return nil
@@ -346,7 +346,7 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 		r.Unidad = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["calle"]; ok {
+		if v, ok := fields["Calle"]; ok {
 			return v
 		}
 		return nil
@@ -357,10 +357,10 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for calle")
+		return fmt.Errorf("no value specified for Calle")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["provincia"]; ok {
+		if v, ok := fields["Provincia"]; ok {
 			return v
 		}
 		return nil
@@ -371,10 +371,10 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for provincia")
+		return fmt.Errorf("no value specified for Provincia")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["localidad"]; ok {
+		if v, ok := fields["Localidad"]; ok {
 			return v
 		}
 		return nil
@@ -385,10 +385,10 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for localidad")
+		return fmt.Errorf("no value specified for Localidad")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigoPostal"]; ok {
+		if v, ok := fields["CodigoPostal"]; ok {
 			return v
 		}
 		return nil
@@ -399,10 +399,10 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoPostal")
+		return fmt.Errorf("no value specified for CodigoPostal")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["latitud"]; ok {
+		if v, ok := fields["Latitud"]; ok {
 			return v
 		}
 		return nil
@@ -413,10 +413,10 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for latitud")
+		return fmt.Errorf("no value specified for Latitud")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["longitud"]; ok {
+		if v, ok := fields["Longitud"]; ok {
 			return v
 		}
 		return nil
@@ -427,7 +427,7 @@ func (r *Direccion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for longitud")
+		return fmt.Errorf("no value specified for Longitud")
 	}
 	return nil
 }

@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type PieceComponent struct {
-	ComponentCode string `json:"componentCode"`
+	ComponentCode string `json:"ComponentCode"`
 
-	ComponentValue string `json:"componentValue"`
+	ComponentValue string `json:"ComponentValue"`
 }
 
-const PieceComponentAvroCRC64Fingerprint = "\xd8M\xa2\xfc\x17\xf7\xc4F"
+const PieceComponentAvroCRC64Fingerprint = "R~\xe4\x93\xe9I\xf4\xa7"
 
 func NewPieceComponent() PieceComponent {
 	r := PieceComponent{}
@@ -71,7 +71,7 @@ func (r PieceComponent) Serialize(w io.Writer) error {
 }
 
 func (r PieceComponent) Schema() string {
-	return "{\"fields\":[{\"name\":\"componentCode\",\"type\":\"string\"},{\"name\":\"componentValue\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.PieceComponent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ComponentCode\",\"type\":\"string\"},{\"name\":\"ComponentValue\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.PieceComponent\",\"type\":\"record\"}"
 }
 
 func (r PieceComponent) SchemaName() string {
@@ -127,11 +127,11 @@ func (_ PieceComponent) AvroCRC64Fingerprint() []byte {
 func (r PieceComponent) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["componentCode"], err = json.Marshal(r.ComponentCode)
+	output["ComponentCode"], err = json.Marshal(r.ComponentCode)
 	if err != nil {
 		return nil, err
 	}
-	output["componentValue"], err = json.Marshal(r.ComponentValue)
+	output["ComponentValue"], err = json.Marshal(r.ComponentValue)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func (r *PieceComponent) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["componentCode"]; ok {
+		if v, ok := fields["ComponentCode"]; ok {
 			return v
 		}
 		return nil
@@ -157,10 +157,10 @@ func (r *PieceComponent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for componentCode")
+		return fmt.Errorf("no value specified for ComponentCode")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["componentValue"]; ok {
+		if v, ok := fields["ComponentValue"]; ok {
 			return v
 		}
 		return nil
@@ -171,7 +171,7 @@ func (r *PieceComponent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for componentValue")
+		return fmt.Errorf("no value specified for ComponentValue")
 	}
 	return nil
 }

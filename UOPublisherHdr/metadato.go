@@ -20,10 +20,10 @@ var _ = fmt.Printf
 type Metadato struct {
 	Meta string `json:"Meta"`
 
-	Contenido string `json:"contenido"`
+	Contenido string `json:"Contenido"`
 }
 
-const MetadatoAvroCRC64Fingerprint = "o\x03\xaa\xc8H\xb31\x15"
+const MetadatoAvroCRC64Fingerprint = "\xbf\x9d\xb8(\x10r\xd3\xe0"
 
 func NewMetadato() Metadato {
 	r := Metadato{}
@@ -71,7 +71,7 @@ func (r Metadato) Serialize(w io.Writer) error {
 }
 
 func (r Metadato) Schema() string {
-	return "{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Metadato\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Metadato\",\"type\":\"record\"}"
 }
 
 func (r Metadato) SchemaName() string {
@@ -131,7 +131,7 @@ func (r Metadato) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["contenido"], err = json.Marshal(r.Contenido)
+	output["Contenido"], err = json.Marshal(r.Contenido)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +160,7 @@ func (r *Metadato) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Meta")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["contenido"]; ok {
+		if v, ok := fields["Contenido"]; ok {
 			return v
 		}
 		return nil
@@ -171,7 +171,7 @@ func (r *Metadato) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for contenido")
+		return fmt.Errorf("no value specified for Contenido")
 	}
 	return nil
 }

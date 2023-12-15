@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayContratoDataFromSchema(r io.Reader, schema string)
 }
 
 func (r *UnionNullArrayContratoData) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"Motivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"condicionDeEntregaId\",\"type\":\"int\"}],\"name\":\"ContratoData\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"Motivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"CondicionDeEntregaId\",\"type\":\"int\"}],\"name\":\"ContratoData\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayContratoData) SetBoolean(v bool)   { panic("Unsupported operation") }
