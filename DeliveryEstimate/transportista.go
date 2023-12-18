@@ -18,24 +18,24 @@ import (
 var _ = fmt.Printf
 
 type Transportista struct {
-	EsEventual *UnionNullBool `json:"EsEventual"`
+	EsEventual *UnionNullBool `json:"esEventual"`
 
-	IdGla *UnionNullString `json:"IdGla"`
+	IdGla *UnionNullString `json:"idGla"`
 
-	IdGli *UnionNullString `json:"IdGli"`
+	IdGli *UnionNullString `json:"idGli"`
 
 	SucursalDondeTrabaja SucursalDondeTrabaja `json:"SucursalDondeTrabaja"`
 
-	NumeroDeDocumento *UnionNullString `json:"NumeroDeDocumento"`
+	NumeroDeDocumento *UnionNullString `json:"numeroDeDocumento"`
 
-	NombreCompleto *UnionNullString `json:"NombreCompleto"`
+	NombreCompleto *UnionNullString `json:"nombreCompleto"`
 
-	TipoDeDocumento *UnionNullInt `json:"TipoDeDocumento"`
+	TipoDeDocumento *UnionNullInt `json:"tipoDeDocumento"`
 
-	CumplimientoSecuenciaHR *UnionNullDouble `json:"CumplimientoSecuenciaHR"`
+	CumplimientoSecuenciaHR *UnionNullDouble `json:"cumplimientoSecuenciaHR"`
 }
 
-const TransportistaAvroCRC64Fingerprint = "\x12e#\xdd\x1c;\xf6\xe2"
+const TransportistaAvroCRC64Fingerprint = "\x87!-8\x94-5:"
 
 func NewTransportista() Transportista {
 	r := Transportista{}
@@ -116,7 +116,7 @@ func (r Transportista) Serialize(w io.Writer) error {
 }
 
 func (r Transportista) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"EsEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IdGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"CodigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"NumeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"esEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"idGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"codigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"cumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
 }
 
 func (r Transportista) SchemaName() string {
@@ -239,15 +239,15 @@ func (_ Transportista) AvroCRC64Fingerprint() []byte {
 func (r Transportista) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["EsEventual"], err = json.Marshal(r.EsEventual)
+	output["esEventual"], err = json.Marshal(r.EsEventual)
 	if err != nil {
 		return nil, err
 	}
-	output["IdGla"], err = json.Marshal(r.IdGla)
+	output["idGla"], err = json.Marshal(r.IdGla)
 	if err != nil {
 		return nil, err
 	}
-	output["IdGli"], err = json.Marshal(r.IdGli)
+	output["idGli"], err = json.Marshal(r.IdGli)
 	if err != nil {
 		return nil, err
 	}
@@ -255,19 +255,19 @@ func (r Transportista) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["NumeroDeDocumento"], err = json.Marshal(r.NumeroDeDocumento)
+	output["numeroDeDocumento"], err = json.Marshal(r.NumeroDeDocumento)
 	if err != nil {
 		return nil, err
 	}
-	output["NombreCompleto"], err = json.Marshal(r.NombreCompleto)
+	output["nombreCompleto"], err = json.Marshal(r.NombreCompleto)
 	if err != nil {
 		return nil, err
 	}
-	output["TipoDeDocumento"], err = json.Marshal(r.TipoDeDocumento)
+	output["tipoDeDocumento"], err = json.Marshal(r.TipoDeDocumento)
 	if err != nil {
 		return nil, err
 	}
-	output["CumplimientoSecuenciaHR"], err = json.Marshal(r.CumplimientoSecuenciaHR)
+	output["cumplimientoSecuenciaHR"], err = json.Marshal(r.CumplimientoSecuenciaHR)
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +282,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["EsEventual"]; ok {
+		if v, ok := fields["esEventual"]; ok {
 			return v
 		}
 		return nil
@@ -298,7 +298,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 		r.EsEventual = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["IdGla"]; ok {
+		if v, ok := fields["idGla"]; ok {
 			return v
 		}
 		return nil
@@ -314,7 +314,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 		r.IdGla = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["IdGli"]; ok {
+		if v, ok := fields["idGli"]; ok {
 			return v
 		}
 		return nil
@@ -344,7 +344,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for SucursalDondeTrabaja")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["NumeroDeDocumento"]; ok {
+		if v, ok := fields["numeroDeDocumento"]; ok {
 			return v
 		}
 		return nil
@@ -360,7 +360,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 		r.NumeroDeDocumento = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["NombreCompleto"]; ok {
+		if v, ok := fields["nombreCompleto"]; ok {
 			return v
 		}
 		return nil
@@ -376,7 +376,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 		r.NombreCompleto = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["TipoDeDocumento"]; ok {
+		if v, ok := fields["tipoDeDocumento"]; ok {
 			return v
 		}
 		return nil
@@ -392,7 +392,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 		r.TipoDeDocumento = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["CumplimientoSecuenciaHR"]; ok {
+		if v, ok := fields["cumplimientoSecuenciaHR"]; ok {
 			return v
 		}
 		return nil
