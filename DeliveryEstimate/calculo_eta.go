@@ -35,9 +35,11 @@ type CalculoEta struct {
 	EtaAnterior *UnionNullLong `json:"EtaAnterior"`
 
 	FechaCreacionHojaDeRuta *UnionNullLong `json:"FechaCreacionHojaDeRuta"`
+
+	PosicionHDR *UnionNullInt `json:"PosicionHDR"`
 }
 
-const CalculoEtaAvroCRC64Fingerprint = "Ȥ\xd8\aC\x91n\x9d"
+const CalculoEtaAvroCRC64Fingerprint = "`q\xe2ׅ\xbf~T"
 
 func NewCalculoEta() CalculoEta {
 	r := CalculoEta{}
@@ -50,6 +52,7 @@ func NewCalculoEta() CalculoEta {
 	r.DemoraSalidaSucursalEnMinutos = nil
 	r.EtaAnterior = nil
 	r.FechaCreacionHojaDeRuta = nil
+	r.PosicionHDR = nil
 	return r
 }
 
@@ -114,6 +117,10 @@ func writeCalculoEta(r CalculoEta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullInt(r.PosicionHDR, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -122,7 +129,7 @@ func (r CalculoEta) Serialize(w io.Writer) error {
 }
 
 func (r CalculoEta) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"OrdenDeEnvioEnHR\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Geocoordenadas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecorridoEnSegundos\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"RecorridoEnMetros\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"DemoraEnDomicilioEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"DemoraSalidaSucursalEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"EtaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"OrdenDeEnvioEnHR\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Geocoordenadas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecorridoEnSegundos\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"RecorridoEnMetros\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"DemoraEnDomicilioEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"DemoraSalidaSucursalEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"EtaAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"PosicionHDR\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
 }
 
 func (r CalculoEta) SchemaName() string {
@@ -176,6 +183,10 @@ func (r *CalculoEta) Get(i int) types.Field {
 		r.FechaCreacionHojaDeRuta = NewUnionNullLong()
 
 		return r.FechaCreacionHojaDeRuta
+	case 9:
+		r.PosicionHDR = NewUnionNullInt()
+
+		return r.PosicionHDR
 	}
 	panic("Unknown field index")
 }
@@ -209,6 +220,9 @@ func (r *CalculoEta) SetDefault(i int) {
 	case 8:
 		r.FechaCreacionHojaDeRuta = nil
 		return
+	case 9:
+		r.PosicionHDR = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -241,6 +255,9 @@ func (r *CalculoEta) NullField(i int) {
 		return
 	case 8:
 		r.FechaCreacionHojaDeRuta = nil
+		return
+	case 9:
+		r.PosicionHDR = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -291,6 +308,10 @@ func (r CalculoEta) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["FechaCreacionHojaDeRuta"], err = json.Marshal(r.FechaCreacionHojaDeRuta)
+	if err != nil {
+		return nil, err
+	}
+	output["PosicionHDR"], err = json.Marshal(r.PosicionHDR)
 	if err != nil {
 		return nil, err
 	}
@@ -447,6 +468,22 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 		r.FechaCreacionHojaDeRuta = NewUnionNullLong()
 
 		r.FechaCreacionHojaDeRuta = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PosicionHDR"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PosicionHDR); err != nil {
+			return err
+		}
+	} else {
+		r.PosicionHDR = NewUnionNullInt()
+
+		r.PosicionHDR = nil
 	}
 	return nil
 }
