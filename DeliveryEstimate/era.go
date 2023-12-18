@@ -24,7 +24,7 @@ type ERA struct {
 
 	Era *UnionNullLong `json:"Era"`
 
-	NumeroDeEnvio *UnionNullString `json:"NumeroDeEnvio"`
+	CodigoDeEnvio *UnionNullString `json:"codigoDeEnvio"`
 
 	CalculoEra CalculoEra `json:"CalculoEra"`
 
@@ -35,14 +35,14 @@ type ERA struct {
 	Cuando *UnionNullLong `json:"Cuando"`
 }
 
-const ERAAvroCRC64Fingerprint = "\xe9\x14\xb0\x88Sc\x9eb"
+const ERAAvroCRC64Fingerprint = "^\xb95\x15\xb3\x9b<\xa7"
 
 func NewERA() ERA {
 	r := ERA{}
 	r.EraRangoInicio = nil
 	r.EraRangoFin = nil
 	r.Era = nil
-	r.NumeroDeEnvio = nil
+	r.CodigoDeEnvio = nil
 	r.CalculoEra = NewCalculoEra()
 
 	r.Transportista = NewTransportista()
@@ -89,7 +89,7 @@ func writeERA(r ERA, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.NumeroDeEnvio, w)
+	err = writeUnionNullString(r.CodigoDeEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -117,7 +117,7 @@ func (r ERA) Serialize(w io.Writer) error {
 }
 
 func (r ERA) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"EraRangoInicio\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"EraRangoFin\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Era\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"CalculoEra\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"OrdenDeEnvioEnHR\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Geocoordenadas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecorridoEnSegundos\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"RecorridoEnMetros\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"DemoraEnDomicilioEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"DemoraSalidaSucursalEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"EraAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"CalculoEra\",\"type\":\"record\"}},{\"name\":\"Transportista\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"EsEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IdGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"CodigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"NumeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"default\":null,\"name\":\"Timestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ERA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"EraRangoInicio\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"EraRangoFin\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Era\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"CalculoEra\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"OrdenDeEnvioEnHR\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Geocoordenadas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecorridoEnSegundos\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"RecorridoEnMetros\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"DemoraEnDomicilioEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"DemoraSalidaSucursalEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"EraAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"CalculoEra\",\"type\":\"record\"}},{\"name\":\"Transportista\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"EsEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IdGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"CodigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"NumeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"default\":null,\"name\":\"Timestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ERA\",\"type\":\"record\"}"
 }
 
 func (r ERA) SchemaName() string {
@@ -148,9 +148,9 @@ func (r *ERA) Get(i int) types.Field {
 
 		return r.Era
 	case 3:
-		r.NumeroDeEnvio = NewUnionNullString()
+		r.CodigoDeEnvio = NewUnionNullString()
 
-		return r.NumeroDeEnvio
+		return r.CodigoDeEnvio
 	case 4:
 		r.CalculoEra = NewCalculoEra()
 
@@ -189,7 +189,7 @@ func (r *ERA) SetDefault(i int) {
 		r.Era = nil
 		return
 	case 3:
-		r.NumeroDeEnvio = nil
+		r.CodigoDeEnvio = nil
 		return
 	case 6:
 		r.Timestamp = nil
@@ -213,7 +213,7 @@ func (r *ERA) NullField(i int) {
 		r.Era = nil
 		return
 	case 3:
-		r.NumeroDeEnvio = nil
+		r.CodigoDeEnvio = nil
 		return
 	case 6:
 		r.Timestamp = nil
@@ -249,7 +249,7 @@ func (r ERA) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["NumeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
+	output["codigoDeEnvio"], err = json.Marshal(r.CodigoDeEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -328,20 +328,20 @@ func (r *ERA) UnmarshalJSON(data []byte) error {
 		r.Era = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["NumeroDeEnvio"]; ok {
+		if v, ok := fields["codigoDeEnvio"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroDeEnvio); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeEnvio); err != nil {
 			return err
 		}
 	} else {
-		r.NumeroDeEnvio = NewUnionNullString()
+		r.CodigoDeEnvio = NewUnionNullString()
 
-		r.NumeroDeEnvio = nil
+		r.CodigoDeEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CalculoEra"]; ok {
