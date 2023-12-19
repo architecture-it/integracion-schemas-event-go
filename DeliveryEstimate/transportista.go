@@ -24,7 +24,7 @@ type Transportista struct {
 
 	IdGli *UnionNullString `json:"idGli"`
 
-	SucursalDondeTrabaja SucursalDondeTrabaja `json:"SucursalDondeTrabaja"`
+	SucursalDondeTrabaja SucursalDondeTrabaja `json:"sucursalDondeTrabaja"`
 
 	NumeroDeDocumento *UnionNullString `json:"numeroDeDocumento"`
 
@@ -35,7 +35,7 @@ type Transportista struct {
 	CumplimientoSecuenciaHR *UnionNullDouble `json:"cumplimientoSecuenciaHR"`
 }
 
-const TransportistaAvroCRC64Fingerprint = "\x87!-8\x94-5:"
+const TransportistaAvroCRC64Fingerprint = "\xc9n]\xb4\xfcg\xa6r"
 
 func NewTransportista() Transportista {
 	r := Transportista{}
@@ -116,7 +116,7 @@ func (r Transportista) Serialize(w io.Writer) error {
 }
 
 func (r Transportista) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"esEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"idGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"SucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"codigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"cumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"esEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"idGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"codigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"cumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.Transportista\",\"type\":\"record\"}"
 }
 
 func (r Transportista) SchemaName() string {
@@ -251,7 +251,7 @@ func (r Transportista) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["SucursalDondeTrabaja"], err = json.Marshal(r.SucursalDondeTrabaja)
+	output["sucursalDondeTrabaja"], err = json.Marshal(r.SucursalDondeTrabaja)
 	if err != nil {
 		return nil, err
 	}
@@ -330,7 +330,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 		r.IdGli = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["SucursalDondeTrabaja"]; ok {
+		if v, ok := fields["sucursalDondeTrabaja"]; ok {
 			return v
 		}
 		return nil
@@ -341,7 +341,7 @@ func (r *Transportista) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SucursalDondeTrabaja")
+		return fmt.Errorf("no value specified for sucursalDondeTrabaja")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeDocumento"]; ok {
