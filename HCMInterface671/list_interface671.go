@@ -21,7 +21,7 @@ type ListInterface671 struct {
 	Interfaces []Interface671Data `json:"interfaces"`
 }
 
-const ListInterface671AvroCRC64Fingerprint = "\xa1TB\x7f{\x11\xedd"
+const ListInterface671AvroCRC64Fingerprint = "\xe8\xe1\x95CZ\xf0zb"
 
 func NewListInterface671() ListInterface671 {
 	r := ListInterface671{}
@@ -67,7 +67,7 @@ func (r ListInterface671) Serialize(w io.Writer) error {
 }
 
 func (r ListInterface671) Schema() string {
-	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"FormaDePago\",\"type\":\"string\"},{\"name\":\"CodigoBanco\",\"type\":\"string\"},{\"name\":\"NroCuenta\",\"type\":\"long\"},{\"name\":\"CBU\",\"type\":\"long\"},{\"name\":\"TipoDePago\",\"type\":\"string\"},{\"name\":\"CuentaADebitarEmpresa\",\"type\":\"long\"},{\"name\":\"BranchCode\",\"type\":\"string\"},{\"name\":\"Sucursal\",\"type\":\"string\"},{\"name\":\"Porcentaje\",\"type\":\"int\"},{\"name\":\"Asiento\",\"type\":\"string\"}],\"name\":\"Interface671Data\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMInterface671.Events.Record.ListInterface671\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"FormaDePago\",\"type\":\"string\"},{\"name\":\"CodigoBanco\",\"type\":\"string\"},{\"name\":\"NroCuenta\",\"type\":\"string\"},{\"name\":\"CBU\",\"type\":\"string\"},{\"name\":\"TipoDePago\",\"type\":\"string\"},{\"name\":\"CuentaADebitarEmpresa\",\"type\":\"string\"},{\"name\":\"BranchCode\",\"type\":\"string\"},{\"name\":\"Sucursal\",\"type\":\"string\"},{\"name\":\"Porcentaje\",\"type\":\"string\"},{\"name\":\"Asiento\",\"type\":\"string\"}],\"name\":\"Interface671Data\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMInterface671.Events.Record.ListInterface671\",\"type\":\"record\"}"
 }
 
 func (r ListInterface671) SchemaName() string {

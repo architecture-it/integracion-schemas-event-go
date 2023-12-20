@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type Interface671Data struct {
-	Legajo int64 `json:"Legajo"`
+	Legajo string `json:"Legajo"`
 
 	Estado string `json:"Estado"`
 
@@ -26,24 +26,24 @@ type Interface671Data struct {
 
 	CodigoBanco string `json:"CodigoBanco"`
 
-	NroCuenta int64 `json:"NroCuenta"`
+	NroCuenta string `json:"NroCuenta"`
 
-	CBU int64 `json:"CBU"`
+	CBU string `json:"CBU"`
 
 	TipoDePago string `json:"TipoDePago"`
 
-	CuentaADebitarEmpresa int64 `json:"CuentaADebitarEmpresa"`
+	CuentaADebitarEmpresa string `json:"CuentaADebitarEmpresa"`
 
 	BranchCode string `json:"BranchCode"`
 
 	Sucursal string `json:"Sucursal"`
 
-	Porcentaje int32 `json:"Porcentaje"`
+	Porcentaje string `json:"Porcentaje"`
 
 	Asiento string `json:"Asiento"`
 }
 
-const Interface671DataAvroCRC64Fingerprint = "D\xcd\x191\xb6\xb2\xcdL"
+const Interface671DataAvroCRC64Fingerprint = "\x8d\xd9E\xf8RMl\xd2"
 
 func NewInterface671Data() Interface671Data {
 	r := Interface671Data{}
@@ -75,7 +75,7 @@ func DeserializeInterface671DataFromSchema(r io.Reader, schema string) (Interfac
 
 func writeInterface671Data(r Interface671Data, w io.Writer) error {
 	var err error
-	err = vm.WriteLong(r.Legajo, w)
+	err = vm.WriteString(r.Legajo, w)
 	if err != nil {
 		return err
 	}
@@ -91,11 +91,11 @@ func writeInterface671Data(r Interface671Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.NroCuenta, w)
+	err = vm.WriteString(r.NroCuenta, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.CBU, w)
+	err = vm.WriteString(r.CBU, w)
 	if err != nil {
 		return err
 	}
@@ -103,7 +103,7 @@ func writeInterface671Data(r Interface671Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.CuentaADebitarEmpresa, w)
+	err = vm.WriteString(r.CuentaADebitarEmpresa, w)
 	if err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func writeInterface671Data(r Interface671Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.Porcentaje, w)
+	err = vm.WriteString(r.Porcentaje, w)
 	if err != nil {
 		return err
 	}
@@ -131,7 +131,7 @@ func (r Interface671Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface671Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"FormaDePago\",\"type\":\"string\"},{\"name\":\"CodigoBanco\",\"type\":\"string\"},{\"name\":\"NroCuenta\",\"type\":\"long\"},{\"name\":\"CBU\",\"type\":\"long\"},{\"name\":\"TipoDePago\",\"type\":\"string\"},{\"name\":\"CuentaADebitarEmpresa\",\"type\":\"long\"},{\"name\":\"BranchCode\",\"type\":\"string\"},{\"name\":\"Sucursal\",\"type\":\"string\"},{\"name\":\"Porcentaje\",\"type\":\"int\"},{\"name\":\"Asiento\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface671.Events.Record.Interface671Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"FormaDePago\",\"type\":\"string\"},{\"name\":\"CodigoBanco\",\"type\":\"string\"},{\"name\":\"NroCuenta\",\"type\":\"string\"},{\"name\":\"CBU\",\"type\":\"string\"},{\"name\":\"TipoDePago\",\"type\":\"string\"},{\"name\":\"CuentaADebitarEmpresa\",\"type\":\"string\"},{\"name\":\"BranchCode\",\"type\":\"string\"},{\"name\":\"Sucursal\",\"type\":\"string\"},{\"name\":\"Porcentaje\",\"type\":\"string\"},{\"name\":\"Asiento\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface671.Events.Record.Interface671Data\",\"type\":\"record\"}"
 }
 
 func (r Interface671Data) SchemaName() string {
@@ -150,7 +150,7 @@ func (_ Interface671Data) SetUnionElem(v int64) { panic("Unsupported operation")
 func (r *Interface671Data) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Long{Target: &r.Legajo}
+		w := types.String{Target: &r.Legajo}
 
 		return w
 
@@ -170,12 +170,12 @@ func (r *Interface671Data) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.Long{Target: &r.NroCuenta}
+		w := types.String{Target: &r.NroCuenta}
 
 		return w
 
 	case 5:
-		w := types.Long{Target: &r.CBU}
+		w := types.String{Target: &r.CBU}
 
 		return w
 
@@ -185,7 +185,7 @@ func (r *Interface671Data) Get(i int) types.Field {
 		return w
 
 	case 7:
-		w := types.Long{Target: &r.CuentaADebitarEmpresa}
+		w := types.String{Target: &r.CuentaADebitarEmpresa}
 
 		return w
 
@@ -200,7 +200,7 @@ func (r *Interface671Data) Get(i int) types.Field {
 		return w
 
 	case 10:
-		w := types.Int{Target: &r.Porcentaje}
+		w := types.String{Target: &r.Porcentaje}
 
 		return w
 
