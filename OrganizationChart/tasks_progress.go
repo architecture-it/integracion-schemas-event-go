@@ -22,6 +22,8 @@ type TasksProgress struct {
 
 	PartnerId *UnionNullString `json:"partnerId"`
 
+	Progress *UnionNullInt `json:"progress"`
+
 	OldAmount int32 `json:"oldAmount"`
 
 	OldTotalAmount int32 `json:"oldTotalAmount"`
@@ -31,12 +33,13 @@ type TasksProgress struct {
 	NewTotalAmount int32 `json:"newTotalAmount"`
 }
 
-const TasksProgressAvroCRC64Fingerprint = "iش\xc9I#\xeb<"
+const TasksProgressAvroCRC64Fingerprint = "\xfd\xc0[8A\xc2Y\xd2"
 
 func NewTasksProgress() TasksProgress {
 	r := TasksProgress{}
 	r.TaskId = nil
 	r.PartnerId = nil
+	r.Progress = nil
 	return r
 }
 
@@ -73,6 +76,10 @@ func writeTasksProgress(r TasksProgress, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullInt(r.Progress, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteInt(r.OldAmount, w)
 	if err != nil {
 		return err
@@ -97,7 +104,7 @@ func (r TasksProgress) Serialize(w io.Writer) error {
 }
 
 func (r TasksProgress) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"taskId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"partnerId\",\"type\":[\"null\",\"string\"]},{\"name\":\"oldAmount\",\"type\":\"int\"},{\"name\":\"oldTotalAmount\",\"type\":\"int\"},{\"name\":\"newAmount\",\"type\":\"int\"},{\"name\":\"newTotalAmount\",\"type\":\"int\"}],\"name\":\"Andreani.OrganizationChart.Events.Record.TasksProgress\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"taskId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"partnerId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"progress\",\"type\":[\"null\",\"int\"]},{\"name\":\"oldAmount\",\"type\":\"int\"},{\"name\":\"oldTotalAmount\",\"type\":\"int\"},{\"name\":\"newAmount\",\"type\":\"int\"},{\"name\":\"newTotalAmount\",\"type\":\"int\"}],\"name\":\"Andreani.OrganizationChart.Events.Record.TasksProgress\",\"type\":\"record\"}"
 }
 
 func (r TasksProgress) SchemaName() string {
@@ -124,21 +131,25 @@ func (r *TasksProgress) Get(i int) types.Field {
 
 		return r.PartnerId
 	case 2:
+		r.Progress = NewUnionNullInt()
+
+		return r.Progress
+	case 3:
 		w := types.Int{Target: &r.OldAmount}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.Int{Target: &r.OldTotalAmount}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.Int{Target: &r.NewAmount}
 
 		return w
 
-	case 5:
+	case 6:
 		w := types.Int{Target: &r.NewTotalAmount}
 
 		return w
@@ -155,6 +166,9 @@ func (r *TasksProgress) SetDefault(i int) {
 	case 1:
 		r.PartnerId = nil
 		return
+	case 2:
+		r.Progress = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -166,6 +180,9 @@ func (r *TasksProgress) NullField(i int) {
 		return
 	case 1:
 		r.PartnerId = nil
+		return
+	case 2:
+		r.Progress = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -188,6 +205,10 @@ func (r TasksProgress) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["partnerId"], err = json.Marshal(r.PartnerId)
+	if err != nil {
+		return nil, err
+	}
+	output["progress"], err = json.Marshal(r.Progress)
 	if err != nil {
 		return nil, err
 	}
@@ -248,6 +269,22 @@ func (r *TasksProgress) UnmarshalJSON(data []byte) error {
 		r.PartnerId = NewUnionNullString()
 
 		r.PartnerId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["progress"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Progress); err != nil {
+			return err
+		}
+	} else {
+		r.Progress = NewUnionNullInt()
+
+		r.Progress = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["oldAmount"]; ok {
