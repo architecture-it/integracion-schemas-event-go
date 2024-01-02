@@ -20,7 +20,9 @@ var _ = fmt.Printf
 type NovedadAnalizada struct {
 	NovedadUnificada NovedadUnificada `json:"novedadUnificada"`
 
-	IdCliente string `json:"idCliente"`
+	IdContrato int32 `json:"idContrato"`
+
+	IdCliente int32 `json:"idCliente"`
 
 	NombreDeCliente string `json:"nombreDeCliente"`
 
@@ -31,7 +33,7 @@ type NovedadAnalizada struct {
 	DespachadorDestino *UnionNullString `json:"despachadorDestino"`
 }
 
-const NovedadAnalizadaAvroCRC64Fingerprint = "\xb0\xcfV#\xed\xd9E\xc0"
+const NovedadAnalizadaAvroCRC64Fingerprint = "\xd3\xe0\x89:\x12\xebF\xec"
 
 func NewNovedadAnalizada() NovedadAnalizada {
 	r := NovedadAnalizada{}
@@ -71,7 +73,11 @@ func writeNovedadAnalizada(r NovedadAnalizada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.IdCliente, w)
+	err = vm.WriteInt(r.IdContrato, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteInt(r.IdCliente, w)
 	if err != nil {
 		return err
 	}
@@ -99,7 +105,7 @@ func (r NovedadAnalizada) Serialize(w io.Writer) error {
 }
 
 func (r NovedadAnalizada) Schema() string {
-	return "{\"fields\":[{\"name\":\"novedadUnificada\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Value\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadata\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"NovedadUnificada\",\"type\":\"record\"}},{\"name\":\"idCliente\",\"type\":\"string\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"idModelo\",\"type\":\"int\"},{\"default\":null,\"name\":\"generadorDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"despachadorDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadAnalizada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"novedadUnificada\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Value\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadata\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"NovedadUnificada\",\"type\":\"record\"}},{\"name\":\"idContrato\",\"type\":\"int\"},{\"name\":\"idCliente\",\"type\":\"int\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"idModelo\",\"type\":\"int\"},{\"default\":null,\"name\":\"generadorDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"despachadorDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadAnalizada\",\"type\":\"record\"}"
 }
 
 func (r NovedadAnalizada) SchemaName() string {
@@ -125,25 +131,30 @@ func (r *NovedadAnalizada) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.IdCliente}
+		w := types.Int{Target: &r.IdContrato}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.NombreDeCliente}
+		w := types.Int{Target: &r.IdCliente}
 
 		return w
 
 	case 3:
-		w := types.Int{Target: &r.IdModelo}
+		w := types.String{Target: &r.NombreDeCliente}
 
 		return w
 
 	case 4:
+		w := types.Int{Target: &r.IdModelo}
+
+		return w
+
+	case 5:
 		r.GeneradorDestino = NewUnionNullString()
 
 		return r.GeneradorDestino
-	case 5:
+	case 6:
 		r.DespachadorDestino = NewUnionNullString()
 
 		return r.DespachadorDestino
@@ -153,10 +164,10 @@ func (r *NovedadAnalizada) Get(i int) types.Field {
 
 func (r *NovedadAnalizada) SetDefault(i int) {
 	switch i {
-	case 4:
+	case 5:
 		r.GeneradorDestino = nil
 		return
-	case 5:
+	case 6:
 		r.DespachadorDestino = nil
 		return
 	}
@@ -165,10 +176,10 @@ func (r *NovedadAnalizada) SetDefault(i int) {
 
 func (r *NovedadAnalizada) NullField(i int) {
 	switch i {
-	case 4:
+	case 5:
 		r.GeneradorDestino = nil
 		return
-	case 5:
+	case 6:
 		r.DespachadorDestino = nil
 		return
 	}
@@ -188,6 +199,10 @@ func (r NovedadAnalizada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["novedadUnificada"], err = json.Marshal(r.NovedadUnificada)
+	if err != nil {
+		return nil, err
+	}
+	output["idContrato"], err = json.Marshal(r.IdContrato)
 	if err != nil {
 		return nil, err
 	}
@@ -234,6 +249,20 @@ func (r *NovedadAnalizada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for novedadUnificada")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idContrato"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdContrato); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idContrato")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["idCliente"]; ok {
