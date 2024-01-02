@@ -26,19 +26,19 @@ type NovedadAnalizada struct {
 
 	IdModelo int32 `json:"idModelo"`
 
-	TopicoGenerador *UnionNullString `json:"topicoGenerador"`
+	GeneradorDestino *UnionNullString `json:"generadorDestino"`
 
-	TopicoDespachador *UnionNullString `json:"topicoDespachador"`
+	DespachadorDestino *UnionNullString `json:"despachadorDestino"`
 }
 
-const NovedadAnalizadaAvroCRC64Fingerprint = "\xa6\x1f\vA\xed^\xa8\xfd"
+const NovedadAnalizadaAvroCRC64Fingerprint = "\xb0\xcfV#\xed\xd9E\xc0"
 
 func NewNovedadAnalizada() NovedadAnalizada {
 	r := NovedadAnalizada{}
 	r.NovedadUnificada = NewNovedadUnificada()
 
-	r.TopicoGenerador = nil
-	r.TopicoDespachador = nil
+	r.GeneradorDestino = nil
+	r.DespachadorDestino = nil
 	return r
 }
 
@@ -83,11 +83,11 @@ func writeNovedadAnalizada(r NovedadAnalizada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.TopicoGenerador, w)
+	err = writeUnionNullString(r.GeneradorDestino, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.TopicoDespachador, w)
+	err = writeUnionNullString(r.DespachadorDestino, w)
 	if err != nil {
 		return err
 	}
@@ -99,7 +99,7 @@ func (r NovedadAnalizada) Serialize(w io.Writer) error {
 }
 
 func (r NovedadAnalizada) Schema() string {
-	return "{\"fields\":[{\"name\":\"novedadUnificada\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Value\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadata\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"NovedadUnificada\",\"type\":\"record\"}},{\"name\":\"idCliente\",\"type\":\"string\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"idModelo\",\"type\":\"int\"},{\"default\":null,\"name\":\"topicoGenerador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"topicoDespachador\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadAnalizada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"novedadUnificada\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Value\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadata\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"NovedadUnificada\",\"type\":\"record\"}},{\"name\":\"idCliente\",\"type\":\"string\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"idModelo\",\"type\":\"int\"},{\"default\":null,\"name\":\"generadorDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"despachadorDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadAnalizada\",\"type\":\"record\"}"
 }
 
 func (r NovedadAnalizada) SchemaName() string {
@@ -140,13 +140,13 @@ func (r *NovedadAnalizada) Get(i int) types.Field {
 		return w
 
 	case 4:
-		r.TopicoGenerador = NewUnionNullString()
+		r.GeneradorDestino = NewUnionNullString()
 
-		return r.TopicoGenerador
+		return r.GeneradorDestino
 	case 5:
-		r.TopicoDespachador = NewUnionNullString()
+		r.DespachadorDestino = NewUnionNullString()
 
-		return r.TopicoDespachador
+		return r.DespachadorDestino
 	}
 	panic("Unknown field index")
 }
@@ -154,10 +154,10 @@ func (r *NovedadAnalizada) Get(i int) types.Field {
 func (r *NovedadAnalizada) SetDefault(i int) {
 	switch i {
 	case 4:
-		r.TopicoGenerador = nil
+		r.GeneradorDestino = nil
 		return
 	case 5:
-		r.TopicoDespachador = nil
+		r.DespachadorDestino = nil
 		return
 	}
 	panic("Unknown field index")
@@ -166,10 +166,10 @@ func (r *NovedadAnalizada) SetDefault(i int) {
 func (r *NovedadAnalizada) NullField(i int) {
 	switch i {
 	case 4:
-		r.TopicoGenerador = nil
+		r.GeneradorDestino = nil
 		return
 	case 5:
-		r.TopicoDespachador = nil
+		r.DespachadorDestino = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -203,11 +203,11 @@ func (r NovedadAnalizada) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["topicoGenerador"], err = json.Marshal(r.TopicoGenerador)
+	output["generadorDestino"], err = json.Marshal(r.GeneradorDestino)
 	if err != nil {
 		return nil, err
 	}
-	output["topicoDespachador"], err = json.Marshal(r.TopicoDespachador)
+	output["despachadorDestino"], err = json.Marshal(r.DespachadorDestino)
 	if err != nil {
 		return nil, err
 	}
@@ -278,36 +278,36 @@ func (r *NovedadAnalizada) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for idModelo")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["topicoGenerador"]; ok {
+		if v, ok := fields["generadorDestino"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TopicoGenerador); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.GeneradorDestino); err != nil {
 			return err
 		}
 	} else {
-		r.TopicoGenerador = NewUnionNullString()
+		r.GeneradorDestino = NewUnionNullString()
 
-		r.TopicoGenerador = nil
+		r.GeneradorDestino = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["topicoDespachador"]; ok {
+		if v, ok := fields["despachadorDestino"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TopicoDespachador); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DespachadorDestino); err != nil {
 			return err
 		}
 	} else {
-		r.TopicoDespachador = NewUnionNullString()
+		r.DespachadorDestino = NewUnionNullString()
 
-		r.TopicoDespachador = nil
+		r.DespachadorDestino = nil
 	}
 	return nil
 }
