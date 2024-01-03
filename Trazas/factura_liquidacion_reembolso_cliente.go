@@ -27,17 +27,13 @@ type FacturaLiquidacionReembolsoCliente struct {
 	Fecha string `json:"fecha"`
 
 	Motivo string `json:"motivo"`
-
-	Donde DatosSucursal `json:"donde"`
 }
 
-const FacturaLiquidacionReembolsoClienteAvroCRC64Fingerprint = "\xddsnT;/b,"
+const FacturaLiquidacionReembolsoClienteAvroCRC64Fingerprint = "\xd7(>C\xa8\xeb\xebb"
 
 func NewFacturaLiquidacionReembolsoCliente() FacturaLiquidacionReembolsoCliente {
 	r := FacturaLiquidacionReembolsoCliente{}
 	r.Traza = NewTraza()
-
-	r.Donde = NewDatosSucursal()
 
 	return r
 }
@@ -87,10 +83,6 @@ func writeFacturaLiquidacionReembolsoCliente(r FacturaLiquidacionReembolsoClient
 	if err != nil {
 		return err
 	}
-	err = writeDatosSucursal(r.Donde, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -99,7 +91,7 @@ func (r FacturaLiquidacionReembolsoCliente) Serialize(w io.Writer) error {
 }
 
 func (r FacturaLiquidacionReembolsoCliente) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"factura\",\"type\":\"string\"},{\"name\":\"fecha\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"donde\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"}],\"name\":\"Integracion.Esquemas.Trazas.FacturaLiquidacionReembolsoCliente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"factura\",\"type\":\"string\"},{\"name\":\"fecha\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"}],\"name\":\"Integracion.Esquemas.Trazas.FacturaLiquidacionReembolsoCliente\",\"type\":\"record\"}"
 }
 
 func (r FacturaLiquidacionReembolsoCliente) SchemaName() string {
@@ -141,13 +133,6 @@ func (r *FacturaLiquidacionReembolsoCliente) Get(i int) types.Field {
 
 	case 4:
 		w := types.String{Target: &r.Motivo}
-
-		return w
-
-	case 5:
-		r.Donde = NewDatosSucursal()
-
-		w := types.Record{Target: &r.Donde}
 
 		return w
 
@@ -198,10 +183,6 @@ func (r FacturaLiquidacionReembolsoCliente) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["motivo"], err = json.Marshal(r.Motivo)
-	if err != nil {
-		return nil, err
-	}
-	output["donde"], err = json.Marshal(r.Donde)
 	if err != nil {
 		return nil, err
 	}
@@ -284,20 +265,6 @@ func (r *FacturaLiquidacionReembolsoCliente) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for motivo")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["donde"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Donde); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for donde")
 	}
 	return nil
 }

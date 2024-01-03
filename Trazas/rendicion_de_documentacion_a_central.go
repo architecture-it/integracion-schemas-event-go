@@ -27,17 +27,13 @@ type RendicionDeDocumentacionACentral struct {
 	NumeroDeRendicion string `json:"numeroDeRendicion"`
 
 	Fecha string `json:"fecha"`
-
-	Donde DatosSucursal `json:"donde"`
 }
 
-const RendicionDeDocumentacionACentralAvroCRC64Fingerprint = "\x93v\r\xa6\xd5\x1et\xa9"
+const RendicionDeDocumentacionACentralAvroCRC64Fingerprint = "Z\xe1\xd9<ɻ\xfe,"
 
 func NewRendicionDeDocumentacionACentral() RendicionDeDocumentacionACentral {
 	r := RendicionDeDocumentacionACentral{}
 	r.Traza = NewTraza()
-
-	r.Donde = NewDatosSucursal()
 
 	return r
 }
@@ -87,10 +83,6 @@ func writeRendicionDeDocumentacionACentral(r RendicionDeDocumentacionACentral, w
 	if err != nil {
 		return err
 	}
-	err = writeDatosSucursal(r.Donde, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -99,7 +91,7 @@ func (r RendicionDeDocumentacionACentral) Serialize(w io.Writer) error {
 }
 
 func (r RendicionDeDocumentacionACentral) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"referencia\",\"type\":\"string\"},{\"name\":\"numeroDeRendicion\",\"type\":\"string\"},{\"name\":\"fecha\",\"type\":\"string\"},{\"name\":\"donde\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"}],\"name\":\"Integracion.Esquemas.Trazas.RendicionDeDocumentacionACentral\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"referencia\",\"type\":\"string\"},{\"name\":\"numeroDeRendicion\",\"type\":\"string\"},{\"name\":\"fecha\",\"type\":\"string\"}],\"name\":\"Integracion.Esquemas.Trazas.RendicionDeDocumentacionACentral\",\"type\":\"record\"}"
 }
 
 func (r RendicionDeDocumentacionACentral) SchemaName() string {
@@ -141,13 +133,6 @@ func (r *RendicionDeDocumentacionACentral) Get(i int) types.Field {
 
 	case 4:
 		w := types.String{Target: &r.Fecha}
-
-		return w
-
-	case 5:
-		r.Donde = NewDatosSucursal()
-
-		w := types.Record{Target: &r.Donde}
 
 		return w
 
@@ -198,10 +183,6 @@ func (r RendicionDeDocumentacionACentral) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["fecha"], err = json.Marshal(r.Fecha)
-	if err != nil {
-		return nil, err
-	}
-	output["donde"], err = json.Marshal(r.Donde)
 	if err != nil {
 		return nil, err
 	}
@@ -284,20 +265,6 @@ func (r *RendicionDeDocumentacionACentral) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for fecha")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["donde"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Donde); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for donde")
 	}
 	return nil
 }
