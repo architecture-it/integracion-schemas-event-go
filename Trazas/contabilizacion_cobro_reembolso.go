@@ -24,16 +24,16 @@ type ContabilizacionCobroReembolso struct {
 
 	Fecha string `json:"fecha"`
 
-	ComponenteDeCobro ComponenteDeCobro `json:"componenteDeCobro"`
+	ComponentesDeCobro []ComponenteDeCobro `json:"componentesDeCobro"`
 }
 
-const ContabilizacionCobroReembolsoAvroCRC64Fingerprint = "\xd9\xe7\x146\xeaYv\x90"
+const ContabilizacionCobroReembolsoAvroCRC64Fingerprint = "\xa8\x8aq`@\n\xdf\\"
 
 func NewContabilizacionCobroReembolso() ContabilizacionCobroReembolso {
 	r := ContabilizacionCobroReembolso{}
 	r.Traza = NewTraza()
 
-	r.ComponenteDeCobro = NewComponenteDeCobro()
+	r.ComponentesDeCobro = make([]ComponenteDeCobro, 0)
 
 	return r
 }
@@ -75,7 +75,7 @@ func writeContabilizacionCobroReembolso(r ContabilizacionCobroReembolso, w io.Wr
 	if err != nil {
 		return err
 	}
-	err = writeComponenteDeCobro(r.ComponenteDeCobro, w)
+	err = writeArrayComponenteDeCobro(r.ComponentesDeCobro, w)
 	if err != nil {
 		return err
 	}
@@ -87,7 +87,7 @@ func (r ContabilizacionCobroReembolso) Serialize(w io.Writer) error {
 }
 
 func (r ContabilizacionCobroReembolso) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"fecha\",\"type\":\"string\"},{\"name\":\"componenteDeCobro\",\"type\":{\"fields\":[{\"name\":\"forma\",\"type\":{\"name\":\"FormaDeCobroV2\",\"symbols\":[\"chequeDeTerceros\",\"boletaDeDepositoEnCtaCliente\",\"ajusteDeSaldo\",\"retencionesImpositivas\",\"chequeNominativo\",\"descuentoFinanciero\",\"notaCredito\",\"efectivo\",\"planillaRendicionExcCasa\",\"enviadoEnPManualAnteriormente\",\"ajusteImporteAnterior\",\"notaCreditoPami\",\"notaCreditoAConfirmarDevolucion\",\"enviaDiferenciaEnProximaLiquidacion\",\"pagoEfectivoCobrado\",\"pagoEfectivoChequePropio\",\"descuentoDevolucionMercaderia\",\"comprobanteTransferenciaACliente\",\"impuestoAlCheque\",\"saldoAFavor\",\"agregaPagoOtraFactura\",\"enviadoEnLiquidacionAnterior\",\"cartaCompromisoExcCasa\",\"visaDebitoCredito\",\"autorizacionAdjunta\",\"reciboOficialAndreani\",\"descuentoNotaAdjunta\",\"pagoFacilComprobante\",\"chequeElectronico\",\"mercadoPago\",\"ajustePorPendiente\",\"cbu\",\"cajaUnificadaExcCasa\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"banco\",\"type\":[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"}],\"name\":\"Banco\",\"type\":\"record\"}]},{\"name\":\"monto\",\"type\":\"double\"},{\"default\":null,\"name\":\"numeroDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fecha\",\"type\":[\"null\",\"string\"]}],\"name\":\"ComponenteDeCobro\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}}],\"name\":\"Integracion.Esquemas.Trazas.ContabilizacionCobroReembolso\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"fecha\",\"type\":\"string\"},{\"name\":\"componentesDeCobro\",\"type\":{\"items\":{\"fields\":[{\"name\":\"forma\",\"type\":{\"name\":\"FormaDeCobroV2\",\"symbols\":[\"chequeDeTerceros\",\"boletaDeDepositoEnCtaCliente\",\"ajusteDeSaldo\",\"retencionesImpositivas\",\"chequeNominativo\",\"descuentoFinanciero\",\"notaCredito\",\"efectivo\",\"planillaRendicionExcCasa\",\"enviadoEnPManualAnteriormente\",\"ajusteImporteAnterior\",\"notaCreditoPami\",\"notaCreditoAConfirmarDevolucion\",\"enviaDiferenciaEnProximaLiquidacion\",\"pagoEfectivoCobrado\",\"pagoEfectivoChequePropio\",\"descuentoDevolucionMercaderia\",\"comprobanteTransferenciaACliente\",\"impuestoAlCheque\",\"saldoAFavor\",\"agregaPagoOtraFactura\",\"enviadoEnLiquidacionAnterior\",\"cartaCompromisoExcCasa\",\"visaDebitoCredito\",\"autorizacionAdjunta\",\"reciboOficialAndreani\",\"descuentoNotaAdjunta\",\"pagoFacilComprobante\",\"chequeElectronico\",\"mercadoPago\",\"ajustePorPendiente\",\"cbu\",\"cajaUnificadaExcCasa\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"banco\",\"type\":[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"}],\"name\":\"Banco\",\"type\":\"record\"}]},{\"name\":\"monto\",\"type\":\"double\"},{\"default\":null,\"name\":\"numeroDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fecha\",\"type\":[\"null\",\"string\"]}],\"name\":\"ComponenteDeCobro\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Integracion.Esquemas.Trazas.ContabilizacionCobroReembolso\",\"type\":\"record\"}"
 }
 
 func (r ContabilizacionCobroReembolso) SchemaName() string {
@@ -123,9 +123,9 @@ func (r *ContabilizacionCobroReembolso) Get(i int) types.Field {
 		return w
 
 	case 3:
-		r.ComponenteDeCobro = NewComponenteDeCobro()
+		r.ComponentesDeCobro = make([]ComponenteDeCobro, 0)
 
-		w := types.Record{Target: &r.ComponenteDeCobro}
+		w := ArrayComponenteDeCobroWrapper{Target: &r.ComponentesDeCobro}
 
 		return w
 
@@ -171,7 +171,7 @@ func (r ContabilizacionCobroReembolso) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["componenteDeCobro"], err = json.Marshal(r.ComponenteDeCobro)
+	output["componentesDeCobro"], err = json.Marshal(r.ComponentesDeCobro)
 	if err != nil {
 		return nil, err
 	}
@@ -228,18 +228,18 @@ func (r *ContabilizacionCobroReembolso) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for fecha")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["componenteDeCobro"]; ok {
+		if v, ok := fields["componentesDeCobro"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ComponenteDeCobro); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ComponentesDeCobro); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for componenteDeCobro")
+		return fmt.Errorf("no value specified for componentesDeCobro")
 	}
 	return nil
 }
