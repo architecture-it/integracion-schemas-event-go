@@ -21,7 +21,7 @@ type ListInterface630 struct {
 	Interfaces []Interface630Data `json:"interfaces"`
 }
 
-const ListInterface630AvroCRC64Fingerprint = "I\xb0w+\xfbe>)"
+const ListInterface630AvroCRC64Fingerprint = "\x06\x12\xa1\xcd(\xe1\x93\x00"
 
 func NewListInterface630() ListInterface630 {
 	r := ListInterface630{}
@@ -67,7 +67,7 @@ func (r ListInterface630) Serialize(w io.Writer) error {
 }
 
 func (r ListInterface630) Schema() string {
-	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"TipoDeEstructura\",\"type\":\"string\"},{\"name\":\"Estructura\",\"type\":\"string\"},{\"name\":\"FechaDesde\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaHasta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeExpediente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Interface630Data\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMInterface630.Events.Record.ListInterface630\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"TipoDeEstructura\",\"type\":\"string\"},{\"name\":\"Estructura\",\"type\":\"string\"},{\"name\":\"FechaDesde\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaHasta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeIL\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeExpediente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Interface630Data\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMInterface630.Events.Record.ListInterface630\",\"type\":\"record\"}"
 }
 
 func (r ListInterface630) SchemaName() string {
