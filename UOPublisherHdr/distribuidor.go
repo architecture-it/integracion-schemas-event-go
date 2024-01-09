@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type Distribuidor struct {
+	Patente string `json:"Patente"`
+
 	Dni string `json:"Dni"`
 
 	Nombre *UnionNullString `json:"Nombre"`
@@ -27,7 +29,7 @@ type Distribuidor struct {
 	Movilidad *UnionNullInt `json:"Movilidad"`
 }
 
-const DistribuidorAvroCRC64Fingerprint = "\xdaNB\xd0u\xc1\x0e\x7f"
+const DistribuidorAvroCRC64Fingerprint = "כ^\xa0W\xc8{\xea"
 
 func NewDistribuidor() Distribuidor {
 	r := Distribuidor{}
@@ -62,6 +64,10 @@ func DeserializeDistribuidorFromSchema(r io.Reader, schema string) (Distribuidor
 
 func writeDistribuidor(r Distribuidor, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.Patente, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Dni, w)
 	if err != nil {
 		return err
@@ -86,7 +92,7 @@ func (r Distribuidor) Serialize(w io.Writer) error {
 }
 
 func (r Distribuidor) Schema() string {
-	return "{\"fields\":[{\"name\":\"Dni\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Movilidad\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Distribuidor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Patente\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Movilidad\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Distribuidor\",\"type\":\"record\"}"
 }
 
 func (r Distribuidor) SchemaName() string {
@@ -105,19 +111,24 @@ func (_ Distribuidor) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Distribuidor) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Dni}
+		w := types.String{Target: &r.Patente}
 
 		return w
 
 	case 1:
+		w := types.String{Target: &r.Dni}
+
+		return w
+
+	case 2:
 		r.Nombre = NewUnionNullString()
 
 		return r.Nombre
-	case 2:
+	case 3:
 		r.Apellido = NewUnionNullString()
 
 		return r.Apellido
-	case 3:
+	case 4:
 		r.Movilidad = NewUnionNullInt()
 
 		return r.Movilidad
@@ -127,13 +138,13 @@ func (r *Distribuidor) Get(i int) types.Field {
 
 func (r *Distribuidor) SetDefault(i int) {
 	switch i {
-	case 1:
+	case 2:
 		r.Nombre = nil
 		return
-	case 2:
+	case 3:
 		r.Apellido = nil
 		return
-	case 3:
+	case 4:
 		r.Movilidad = nil
 		return
 	}
@@ -142,13 +153,13 @@ func (r *Distribuidor) SetDefault(i int) {
 
 func (r *Distribuidor) NullField(i int) {
 	switch i {
-	case 1:
+	case 2:
 		r.Nombre = nil
 		return
-	case 2:
+	case 3:
 		r.Apellido = nil
 		return
-	case 3:
+	case 4:
 		r.Movilidad = nil
 		return
 	}
@@ -167,6 +178,10 @@ func (_ Distribuidor) AvroCRC64Fingerprint() []byte {
 func (r Distribuidor) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["Patente"], err = json.Marshal(r.Patente)
+	if err != nil {
+		return nil, err
+	}
 	output["Dni"], err = json.Marshal(r.Dni)
 	if err != nil {
 		return nil, err
@@ -193,6 +208,20 @@ func (r *Distribuidor) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["Patente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Patente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Patente")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Dni"]; ok {
 			return v
