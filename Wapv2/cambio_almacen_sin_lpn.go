@@ -29,9 +29,11 @@ type CambioAlmacenSinLpn struct {
 	AlmacenOrigen *UnionNullString `json:"almacenOrigen"`
 
 	AlmacenDestino *UnionNullString `json:"almacenDestino"`
+
+	Serie *UnionNullString `json:"serie"`
 }
 
-const CambioAlmacenSinLpnAvroCRC64Fingerprint = "!\\L\f\xc4P\xd9F"
+const CambioAlmacenSinLpnAvroCRC64Fingerprint = "\xf4\x82+\x9dI\xef6\xd6"
 
 func NewCambioAlmacenSinLpn() CambioAlmacenSinLpn {
 	r := CambioAlmacenSinLpn{}
@@ -41,6 +43,7 @@ func NewCambioAlmacenSinLpn() CambioAlmacenSinLpn {
 	r.Cantidad = nil
 	r.AlmacenOrigen = nil
 	r.AlmacenDestino = nil
+	r.Serie = nil
 	return r
 }
 
@@ -93,6 +96,10 @@ func writeCambioAlmacenSinLpn(r CambioAlmacenSinLpn, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Serie, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -101,7 +108,7 @@ func (r CambioAlmacenSinLpn) Serialize(w io.Writer) error {
 }
 
 func (r CambioAlmacenSinLpn) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"almacenOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacenDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.CambioAlmacenSinLpn\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"almacenOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacenDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.CambioAlmacenSinLpn\",\"type\":\"record\"}"
 }
 
 func (r CambioAlmacenSinLpn) SchemaName() string {
@@ -143,6 +150,10 @@ func (r *CambioAlmacenSinLpn) Get(i int) types.Field {
 		r.AlmacenDestino = NewUnionNullString()
 
 		return r.AlmacenDestino
+	case 6:
+		r.Serie = NewUnionNullString()
+
+		return r.Serie
 	}
 	panic("Unknown field index")
 }
@@ -167,6 +178,9 @@ func (r *CambioAlmacenSinLpn) SetDefault(i int) {
 	case 5:
 		r.AlmacenDestino = nil
 		return
+	case 6:
+		r.Serie = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -190,6 +204,9 @@ func (r *CambioAlmacenSinLpn) NullField(i int) {
 		return
 	case 5:
 		r.AlmacenDestino = nil
+		return
+	case 6:
+		r.Serie = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -228,6 +245,10 @@ func (r CambioAlmacenSinLpn) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["almacenDestino"], err = json.Marshal(r.AlmacenDestino)
+	if err != nil {
+		return nil, err
+	}
+	output["serie"], err = json.Marshal(r.Serie)
 	if err != nil {
 		return nil, err
 	}
@@ -336,6 +357,22 @@ func (r *CambioAlmacenSinLpn) UnmarshalJSON(data []byte) error {
 		r.AlmacenDestino = NewUnionNullString()
 
 		r.AlmacenDestino = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["serie"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Serie); err != nil {
+			return err
+		}
+	} else {
+		r.Serie = NewUnionNullString()
+
+		r.Serie = nil
 	}
 	return nil
 }
