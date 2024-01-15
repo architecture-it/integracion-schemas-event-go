@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type Interface282Data struct {
-	Legajo int64 `json:"Legajo"`
+	Legajo string `json:"Legajo"`
 
 	FechaAcuerdo string `json:"FechaAcuerdo"`
 
@@ -27,7 +27,7 @@ type Interface282Data struct {
 	ZonaBandaSalarial string `json:"ZonaBandaSalarial"`
 }
 
-const Interface282DataAvroCRC64Fingerprint = "e\x96\x13\x9c\x99\xb9I\xbb"
+const Interface282DataAvroCRC64Fingerprint = "G\xb3<\xb8\xa8MBa"
 
 func NewInterface282Data() Interface282Data {
 	r := Interface282Data{}
@@ -59,7 +59,7 @@ func DeserializeInterface282DataFromSchema(r io.Reader, schema string) (Interfac
 
 func writeInterface282Data(r Interface282Data, w io.Writer) error {
 	var err error
-	err = vm.WriteLong(r.Legajo, w)
+	err = vm.WriteString(r.Legajo, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (r Interface282Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface282Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"FechaAcuerdo\",\"type\":\"string\"},{\"name\":\"SueldoJournal\",\"type\":\"double\"},{\"name\":\"ZonaBandaSalarial\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface282.Events.Record.Interface282Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"FechaAcuerdo\",\"type\":\"string\"},{\"name\":\"SueldoJournal\",\"type\":\"double\"},{\"name\":\"ZonaBandaSalarial\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface282.Events.Record.Interface282Data\",\"type\":\"record\"}"
 }
 
 func (r Interface282Data) SchemaName() string {
@@ -102,7 +102,7 @@ func (_ Interface282Data) SetUnionElem(v int64) { panic("Unsupported operation")
 func (r *Interface282Data) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Long{Target: &r.Legajo}
+		w := types.String{Target: &r.Legajo}
 
 		return w
 
