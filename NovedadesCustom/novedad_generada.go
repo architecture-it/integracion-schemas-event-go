@@ -18,11 +18,15 @@ import (
 var _ = fmt.Printf
 
 type NovedadGenerada struct {
+	IdContrato int32 `json:"idContrato"`
+
+	IdCliente int32 `json:"idCliente"`
+
+	NombreDeCliente string `json:"nombreDeCliente"`
+
 	NumeroDeContratoInterno string `json:"numeroDeContratoInterno"`
 
 	NumeroDeCliente *UnionNullString `json:"numeroDeCliente"`
-
-	NombreDeCliente string `json:"nombreDeCliente"`
 
 	NumeroDeEnvio string `json:"numeroDeEnvio"`
 
@@ -43,7 +47,7 @@ type NovedadGenerada struct {
 	UrlDestino *UnionNullString `json:"urlDestino"`
 }
 
-const NovedadGeneradaAvroCRC64Fingerprint = "p|\xdaqܘ\xe6O"
+const NovedadGeneradaAvroCRC64Fingerprint = "u\x9aL\xb2d\xbd\xb7\x04"
 
 func NewNovedadGenerada() NovedadGenerada {
 	r := NovedadGenerada{}
@@ -79,15 +83,23 @@ func DeserializeNovedadGeneradaFromSchema(r io.Reader, schema string) (NovedadGe
 
 func writeNovedadGenerada(r NovedadGenerada, w io.Writer) error {
 	var err error
+	err = vm.WriteInt(r.IdContrato, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteInt(r.IdCliente, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.NombreDeCliente, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.NumeroDeContratoInterno, w)
 	if err != nil {
 		return err
 	}
 	err = writeUnionNullString(r.NumeroDeCliente, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.NombreDeCliente, w)
 	if err != nil {
 		return err
 	}
@@ -135,7 +147,7 @@ func (r NovedadGenerada) Serialize(w io.Writer) error {
 }
 
 func (r NovedadGenerada) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeroDeCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"codigoCliente1\",\"type\":\"string\"},{\"name\":\"codigoCliente2\",\"type\":\"string\"},{\"name\":\"evento\",\"type\":\"string\"},{\"default\":null,\"name\":\"idMotivo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeIncidencia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"mensajeAEnviar\",\"type\":\"string\"},{\"default\":null,\"name\":\"urlDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadGenerada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idContrato\",\"type\":\"int\"},{\"name\":\"idCliente\",\"type\":\"int\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"numeroDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeroDeCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"codigoCliente1\",\"type\":\"string\"},{\"name\":\"codigoCliente2\",\"type\":\"string\"},{\"name\":\"evento\",\"type\":\"string\"},{\"default\":null,\"name\":\"idMotivo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeIncidencia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"mensajeAEnviar\",\"type\":\"string\"},{\"default\":null,\"name\":\"urlDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadGenerada\",\"type\":\"record\"}"
 }
 
 func (r NovedadGenerada) SchemaName() string {
@@ -154,58 +166,68 @@ func (_ NovedadGenerada) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *NovedadGenerada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.NumeroDeContratoInterno}
+		w := types.Int{Target: &r.IdContrato}
 
 		return w
 
 	case 1:
-		r.NumeroDeCliente = NewUnionNullString()
+		w := types.Int{Target: &r.IdCliente}
 
-		return r.NumeroDeCliente
+		return w
+
 	case 2:
 		w := types.String{Target: &r.NombreDeCliente}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.NumeroDeEnvio}
+		w := types.String{Target: &r.NumeroDeContratoInterno}
 
 		return w
 
 	case 4:
-		w := types.String{Target: &r.CodigoCliente1}
+		r.NumeroDeCliente = NewUnionNullString()
 
-		return w
-
+		return r.NumeroDeCliente
 	case 5:
-		w := types.String{Target: &r.CodigoCliente2}
+		w := types.String{Target: &r.NumeroDeEnvio}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.Evento}
+		w := types.String{Target: &r.CodigoCliente1}
 
 		return w
 
 	case 7:
+		w := types.String{Target: &r.CodigoCliente2}
+
+		return w
+
+	case 8:
+		w := types.String{Target: &r.Evento}
+
+		return w
+
+	case 9:
 		r.IdMotivo = NewUnionNullInt()
 
 		return r.IdMotivo
-	case 8:
+	case 10:
 		r.Motivo = NewUnionNullString()
 
 		return r.Motivo
-	case 9:
+	case 11:
 		w := types.Long{Target: &r.FechaDeIncidencia}
 
 		return w
 
-	case 10:
+	case 12:
 		w := types.String{Target: &r.MensajeAEnviar}
 
 		return w
 
-	case 11:
+	case 13:
 		r.UrlDestino = NewUnionNullString()
 
 		return r.UrlDestino
@@ -215,16 +237,16 @@ func (r *NovedadGenerada) Get(i int) types.Field {
 
 func (r *NovedadGenerada) SetDefault(i int) {
 	switch i {
-	case 1:
+	case 4:
 		r.NumeroDeCliente = nil
 		return
-	case 7:
+	case 9:
 		r.IdMotivo = nil
 		return
-	case 8:
+	case 10:
 		r.Motivo = nil
 		return
-	case 11:
+	case 13:
 		r.UrlDestino = nil
 		return
 	}
@@ -233,16 +255,16 @@ func (r *NovedadGenerada) SetDefault(i int) {
 
 func (r *NovedadGenerada) NullField(i int) {
 	switch i {
-	case 1:
+	case 4:
 		r.NumeroDeCliente = nil
 		return
-	case 7:
+	case 9:
 		r.IdMotivo = nil
 		return
-	case 8:
+	case 10:
 		r.Motivo = nil
 		return
-	case 11:
+	case 13:
 		r.UrlDestino = nil
 		return
 	}
@@ -261,15 +283,23 @@ func (_ NovedadGenerada) AvroCRC64Fingerprint() []byte {
 func (r NovedadGenerada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["idContrato"], err = json.Marshal(r.IdContrato)
+	if err != nil {
+		return nil, err
+	}
+	output["idCliente"], err = json.Marshal(r.IdCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["nombreDeCliente"], err = json.Marshal(r.NombreDeCliente)
+	if err != nil {
+		return nil, err
+	}
 	output["numeroDeContratoInterno"], err = json.Marshal(r.NumeroDeContratoInterno)
 	if err != nil {
 		return nil, err
 	}
 	output["numeroDeCliente"], err = json.Marshal(r.NumeroDeCliente)
-	if err != nil {
-		return nil, err
-	}
-	output["nombreDeCliente"], err = json.Marshal(r.NombreDeCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -320,6 +350,48 @@ func (r *NovedadGenerada) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
+		if v, ok := fields["idContrato"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdContrato); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idContrato")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdCliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idCliente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["nombreDeCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NombreDeCliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for nombreDeCliente")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeContratoInterno"]; ok {
 			return v
 		}
@@ -348,20 +420,6 @@ func (r *NovedadGenerada) UnmarshalJSON(data []byte) error {
 		r.NumeroDeCliente = NewUnionNullString()
 
 		r.NumeroDeCliente = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["nombreDeCliente"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NombreDeCliente); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for nombreDeCliente")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeEnvio"]; ok {
