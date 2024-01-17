@@ -36,7 +36,7 @@ type Envio struct {
 
 	TipoDeServicioId *UnionNullInt `json:"TipoDeServicioId"`
 
-	Contrato *UnionNullString `json:"Contrato"`
+	ContratoId *UnionNullInt `json:"ContratoId"`
 
 	FranjaHoraria *UnionNullString `json:"FranjaHoraria"`
 
@@ -51,13 +51,13 @@ type Envio struct {
 	GeoPos GeoPos `json:"GeoPos"`
 }
 
-const EnvioAvroCRC64Fingerprint = "\x8c\x87\xdc踠\x1e9"
+const EnvioAvroCRC64Fingerprint = "\xd3\x15\xfb\xe9\xea\x19\xa2\xf9"
 
 func NewEnvio() Envio {
 	r := Envio{}
 	r.NumeroHdrOrigen = nil
 	r.TipoDeServicioId = nil
-	r.Contrato = nil
+	r.ContratoId = nil
 	r.FranjaHoraria = nil
 	r.ProximaFase = nil
 	r.DeclarationState = nil
@@ -129,7 +129,7 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Contrato, w)
+	err = writeUnionNullInt(r.ContratoId, w)
 	if err != nil {
 		return err
 	}
@@ -165,7 +165,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"OrdenEscaneo\",\"type\":\"int\"},{\"name\":\"OrdenEntrega\",\"type\":\"int\"},{\"name\":\"Origen\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroHdrOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"TipoDeServicioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FranjaHoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProximaFase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeclarationState\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Componentes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ComponentCode\",\"type\":\"string\"},{\"name\":\"ComponentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"BultoData\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"BultoData\",\"type\":\"record\"}]},{\"name\":\"GeoPos\",\"type\":{\"fields\":[{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"GeoPos\",\"type\":\"record\"}}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"OrdenEscaneo\",\"type\":\"int\"},{\"name\":\"OrdenEntrega\",\"type\":\"int\"},{\"name\":\"Origen\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroHdrOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"TipoDeServicioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ContratoId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"FranjaHoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProximaFase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeclarationState\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Componentes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ComponentCode\",\"type\":\"string\"},{\"name\":\"ComponentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"BultoData\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"BultoData\",\"type\":\"record\"}]},{\"name\":\"GeoPos\",\"type\":{\"fields\":[{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"GeoPos\",\"type\":\"record\"}}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -227,9 +227,9 @@ func (r *Envio) Get(i int) types.Field {
 
 		return r.TipoDeServicioId
 	case 9:
-		r.Contrato = NewUnionNullString()
+		r.ContratoId = NewUnionNullInt()
 
-		return r.Contrato
+		return r.ContratoId
 	case 10:
 		r.FranjaHoraria = NewUnionNullString()
 
@@ -270,7 +270,7 @@ func (r *Envio) SetDefault(i int) {
 		r.TipoDeServicioId = nil
 		return
 	case 9:
-		r.Contrato = nil
+		r.ContratoId = nil
 		return
 	case 10:
 		r.FranjaHoraria = nil
@@ -300,7 +300,7 @@ func (r *Envio) NullField(i int) {
 		r.TipoDeServicioId = nil
 		return
 	case 9:
-		r.Contrato = nil
+		r.ContratoId = nil
 		return
 	case 10:
 		r.FranjaHoraria = nil
@@ -369,7 +369,7 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Contrato"], err = json.Marshal(r.Contrato)
+	output["ContratoId"], err = json.Marshal(r.ContratoId)
 	if err != nil {
 		return nil, err
 	}
@@ -538,20 +538,20 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		r.TipoDeServicioId = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Contrato"]; ok {
+		if v, ok := fields["ContratoId"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContratoId); err != nil {
 			return err
 		}
 	} else {
-		r.Contrato = NewUnionNullString()
+		r.ContratoId = NewUnionNullInt()
 
-		r.Contrato = nil
+		r.ContratoId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["FranjaHoraria"]; ok {

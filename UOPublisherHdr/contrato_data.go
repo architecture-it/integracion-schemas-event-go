@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type ContratoData struct {
+	ContratoId *UnionNullInt `json:"ContratoId"`
+
 	Contrato string `json:"Contrato"`
 
 	Motivos *UnionNullArrayString `json:"Motivos"`
@@ -25,10 +27,11 @@ type ContratoData struct {
 	CondicionDeEntregaId int32 `json:"CondicionDeEntregaId"`
 }
 
-const ContratoDataAvroCRC64Fingerprint = "\x13\xcfK8\xfb\xe5t\x88"
+const ContratoDataAvroCRC64Fingerprint = "\xfaa\x186oْj"
 
 func NewContratoData() ContratoData {
 	r := ContratoData{}
+	r.ContratoId = nil
 	r.Motivos = nil
 	return r
 }
@@ -58,6 +61,10 @@ func DeserializeContratoDataFromSchema(r io.Reader, schema string) (ContratoData
 
 func writeContratoData(r ContratoData, w io.Writer) error {
 	var err error
+	err = writeUnionNullInt(r.ContratoId, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Contrato, w)
 	if err != nil {
 		return err
@@ -78,7 +85,7 @@ func (r ContratoData) Serialize(w io.Writer) error {
 }
 
 func (r ContratoData) Schema() string {
-	return "{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"Motivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"CondicionDeEntregaId\",\"type\":\"int\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.ContratoData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"ContratoId\",\"type\":[\"null\",\"int\"]},{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"Motivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"CondicionDeEntregaId\",\"type\":\"int\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.ContratoData\",\"type\":\"record\"}"
 }
 
 func (r ContratoData) SchemaName() string {
@@ -97,15 +104,19 @@ func (_ ContratoData) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *ContratoData) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.ContratoId = NewUnionNullInt()
+
+		return r.ContratoId
+	case 1:
 		w := types.String{Target: &r.Contrato}
 
 		return w
 
-	case 1:
+	case 2:
 		r.Motivos = NewUnionNullArrayString()
 
 		return r.Motivos
-	case 2:
+	case 3:
 		w := types.Int{Target: &r.CondicionDeEntregaId}
 
 		return w
@@ -116,7 +127,10 @@ func (r *ContratoData) Get(i int) types.Field {
 
 func (r *ContratoData) SetDefault(i int) {
 	switch i {
-	case 1:
+	case 0:
+		r.ContratoId = nil
+		return
+	case 2:
 		r.Motivos = nil
 		return
 	}
@@ -125,7 +139,10 @@ func (r *ContratoData) SetDefault(i int) {
 
 func (r *ContratoData) NullField(i int) {
 	switch i {
-	case 1:
+	case 0:
+		r.ContratoId = nil
+		return
+	case 2:
 		r.Motivos = nil
 		return
 	}
@@ -144,6 +161,10 @@ func (_ ContratoData) AvroCRC64Fingerprint() []byte {
 func (r ContratoData) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["ContratoId"], err = json.Marshal(r.ContratoId)
+	if err != nil {
+		return nil, err
+	}
 	output["Contrato"], err = json.Marshal(r.Contrato)
 	if err != nil {
 		return nil, err
@@ -166,6 +187,22 @@ func (r *ContratoData) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["ContratoId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContratoId); err != nil {
+			return err
+		}
+	} else {
+		r.ContratoId = NewUnionNullInt()
+
+		r.ContratoId = nil
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Contrato"]; ok {
 			return v
