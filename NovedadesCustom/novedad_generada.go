@@ -24,36 +24,42 @@ type NovedadGenerada struct {
 
 	NombreDeCliente string `json:"nombreDeCliente"`
 
-	NumeroDeContratoInterno string `json:"numeroDeContratoInterno"`
-
 	NumeroDeCliente *UnionNullString `json:"numeroDeCliente"`
+
+	NumeroDeContratoInterno string `json:"numeroDeContratoInterno"`
 
 	NumeroDeEnvio string `json:"numeroDeEnvio"`
 
-	CodigoCliente1 string `json:"codigoCliente1"`
-
-	CodigoCliente2 string `json:"codigoCliente2"`
-
 	Evento string `json:"evento"`
-
-	IdMotivo *UnionNullInt `json:"idMotivo"`
 
 	Motivo *UnionNullString `json:"motivo"`
 
+	Submotivo *UnionNullString `json:"submotivo"`
+
+	Remitente *UnionNullString `json:"remitente"`
+
+	CicloDelEnvio *UnionNullString `json:"cicloDelEnvio"`
+
 	FechaDeIncidencia int64 `json:"fechaDeIncidencia"`
+
+	CodigoCliente1 *UnionNullString `json:"codigoCliente1"`
+
+	CodigoCliente2 *UnionNullString `json:"codigoCliente2"`
 
 	MensajeAEnviar string `json:"mensajeAEnviar"`
 
 	UrlDestino *UnionNullString `json:"urlDestino"`
 }
 
-const NovedadGeneradaAvroCRC64Fingerprint = "u\x9aL\xb2d\xbd\xb7\x04"
+const NovedadGeneradaAvroCRC64Fingerprint = "\xc7[g˪=@\xcc"
 
 func NewNovedadGenerada() NovedadGenerada {
 	r := NovedadGenerada{}
 	r.NumeroDeCliente = nil
-	r.IdMotivo = nil
 	r.Motivo = nil
+	r.Submotivo = nil
+	r.Remitente = nil
+	r.CicloDelEnvio = nil
 	r.UrlDestino = nil
 	return r
 }
@@ -95,11 +101,11 @@ func writeNovedadGenerada(r NovedadGenerada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroDeContratoInterno, w)
+	err = writeUnionNullString(r.NumeroDeCliente, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.NumeroDeCliente, w)
+	err = vm.WriteString(r.NumeroDeContratoInterno, w)
 	if err != nil {
 		return err
 	}
@@ -107,19 +113,7 @@ func writeNovedadGenerada(r NovedadGenerada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoCliente1, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.CodigoCliente2, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.Evento, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullInt(r.IdMotivo, w)
 	if err != nil {
 		return err
 	}
@@ -127,7 +121,27 @@ func writeNovedadGenerada(r NovedadGenerada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Submotivo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Remitente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CicloDelEnvio, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteLong(r.FechaDeIncidencia, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoCliente1, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoCliente2, w)
 	if err != nil {
 		return err
 	}
@@ -147,7 +161,7 @@ func (r NovedadGenerada) Serialize(w io.Writer) error {
 }
 
 func (r NovedadGenerada) Schema() string {
-	return "{\"fields\":[{\"name\":\"idContrato\",\"type\":\"int\"},{\"name\":\"idCliente\",\"type\":\"int\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"numeroDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeroDeCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"codigoCliente1\",\"type\":\"string\"},{\"name\":\"codigoCliente2\",\"type\":\"string\"},{\"name\":\"evento\",\"type\":\"string\"},{\"default\":null,\"name\":\"idMotivo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeIncidencia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"mensajeAEnviar\",\"type\":\"string\"},{\"default\":null,\"name\":\"urlDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadGenerada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idContrato\",\"type\":\"int\"},{\"name\":\"idCliente\",\"type\":\"int\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeroDeCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeContratoInterno\",\"type\":\"string\"},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"evento\",\"type\":\"string\"},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"submotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeIncidencia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoCliente1\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoCliente2\",\"type\":[\"null\",\"string\"]},{\"name\":\"mensajeAEnviar\",\"type\":\"string\"},{\"default\":null,\"name\":\"urlDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadGenerada\",\"type\":\"record\"}"
 }
 
 func (r NovedadGenerada) SchemaName() string {
@@ -181,53 +195,59 @@ func (r *NovedadGenerada) Get(i int) types.Field {
 		return w
 
 	case 3:
+		r.NumeroDeCliente = NewUnionNullString()
+
+		return r.NumeroDeCliente
+	case 4:
 		w := types.String{Target: &r.NumeroDeContratoInterno}
 
 		return w
 
-	case 4:
-		r.NumeroDeCliente = NewUnionNullString()
-
-		return r.NumeroDeCliente
 	case 5:
 		w := types.String{Target: &r.NumeroDeEnvio}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.CodigoCliente1}
-
-		return w
-
-	case 7:
-		w := types.String{Target: &r.CodigoCliente2}
-
-		return w
-
-	case 8:
 		w := types.String{Target: &r.Evento}
 
 		return w
 
-	case 9:
-		r.IdMotivo = NewUnionNullInt()
-
-		return r.IdMotivo
-	case 10:
+	case 7:
 		r.Motivo = NewUnionNullString()
 
 		return r.Motivo
+	case 8:
+		r.Submotivo = NewUnionNullString()
+
+		return r.Submotivo
+	case 9:
+		r.Remitente = NewUnionNullString()
+
+		return r.Remitente
+	case 10:
+		r.CicloDelEnvio = NewUnionNullString()
+
+		return r.CicloDelEnvio
 	case 11:
 		w := types.Long{Target: &r.FechaDeIncidencia}
 
 		return w
 
 	case 12:
+		r.CodigoCliente1 = NewUnionNullString()
+
+		return r.CodigoCliente1
+	case 13:
+		r.CodigoCliente2 = NewUnionNullString()
+
+		return r.CodigoCliente2
+	case 14:
 		w := types.String{Target: &r.MensajeAEnviar}
 
 		return w
 
-	case 13:
+	case 15:
 		r.UrlDestino = NewUnionNullString()
 
 		return r.UrlDestino
@@ -237,16 +257,22 @@ func (r *NovedadGenerada) Get(i int) types.Field {
 
 func (r *NovedadGenerada) SetDefault(i int) {
 	switch i {
-	case 4:
+	case 3:
 		r.NumeroDeCliente = nil
 		return
-	case 9:
-		r.IdMotivo = nil
-		return
-	case 10:
+	case 7:
 		r.Motivo = nil
 		return
-	case 13:
+	case 8:
+		r.Submotivo = nil
+		return
+	case 9:
+		r.Remitente = nil
+		return
+	case 10:
+		r.CicloDelEnvio = nil
+		return
+	case 15:
 		r.UrlDestino = nil
 		return
 	}
@@ -255,16 +281,28 @@ func (r *NovedadGenerada) SetDefault(i int) {
 
 func (r *NovedadGenerada) NullField(i int) {
 	switch i {
-	case 4:
+	case 3:
 		r.NumeroDeCliente = nil
 		return
-	case 9:
-		r.IdMotivo = nil
-		return
-	case 10:
+	case 7:
 		r.Motivo = nil
 		return
+	case 8:
+		r.Submotivo = nil
+		return
+	case 9:
+		r.Remitente = nil
+		return
+	case 10:
+		r.CicloDelEnvio = nil
+		return
+	case 12:
+		r.CodigoCliente1 = nil
+		return
 	case 13:
+		r.CodigoCliente2 = nil
+		return
+	case 15:
 		r.UrlDestino = nil
 		return
 	}
@@ -295,15 +333,39 @@ func (r NovedadGenerada) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["numeroDeContratoInterno"], err = json.Marshal(r.NumeroDeContratoInterno)
-	if err != nil {
-		return nil, err
-	}
 	output["numeroDeCliente"], err = json.Marshal(r.NumeroDeCliente)
 	if err != nil {
 		return nil, err
 	}
+	output["numeroDeContratoInterno"], err = json.Marshal(r.NumeroDeContratoInterno)
+	if err != nil {
+		return nil, err
+	}
 	output["numeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
+	if err != nil {
+		return nil, err
+	}
+	output["evento"], err = json.Marshal(r.Evento)
+	if err != nil {
+		return nil, err
+	}
+	output["motivo"], err = json.Marshal(r.Motivo)
+	if err != nil {
+		return nil, err
+	}
+	output["submotivo"], err = json.Marshal(r.Submotivo)
+	if err != nil {
+		return nil, err
+	}
+	output["remitente"], err = json.Marshal(r.Remitente)
+	if err != nil {
+		return nil, err
+	}
+	output["cicloDelEnvio"], err = json.Marshal(r.CicloDelEnvio)
+	if err != nil {
+		return nil, err
+	}
+	output["fechaDeIncidencia"], err = json.Marshal(r.FechaDeIncidencia)
 	if err != nil {
 		return nil, err
 	}
@@ -312,22 +374,6 @@ func (r NovedadGenerada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["codigoCliente2"], err = json.Marshal(r.CodigoCliente2)
-	if err != nil {
-		return nil, err
-	}
-	output["evento"], err = json.Marshal(r.Evento)
-	if err != nil {
-		return nil, err
-	}
-	output["idMotivo"], err = json.Marshal(r.IdMotivo)
-	if err != nil {
-		return nil, err
-	}
-	output["motivo"], err = json.Marshal(r.Motivo)
-	if err != nil {
-		return nil, err
-	}
-	output["fechaDeIncidencia"], err = json.Marshal(r.FechaDeIncidencia)
 	if err != nil {
 		return nil, err
 	}
@@ -392,20 +438,6 @@ func (r *NovedadGenerada) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for nombreDeCliente")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numeroDeContratoInterno"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroDeContratoInterno); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for numeroDeContratoInterno")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeCliente"]; ok {
 			return v
 		}
@@ -422,6 +454,20 @@ func (r *NovedadGenerada) UnmarshalJSON(data []byte) error {
 		r.NumeroDeCliente = nil
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["numeroDeContratoInterno"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeContratoInterno); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for numeroDeContratoInterno")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeEnvio"]; ok {
 			return v
 		}
@@ -434,6 +480,98 @@ func (r *NovedadGenerada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for numeroDeEnvio")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["evento"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Evento); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for evento")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["motivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
+			return err
+		}
+	} else {
+		r.Motivo = NewUnionNullString()
+
+		r.Motivo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["submotivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Submotivo); err != nil {
+			return err
+		}
+	} else {
+		r.Submotivo = NewUnionNullString()
+
+		r.Submotivo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["remitente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Remitente); err != nil {
+			return err
+		}
+	} else {
+		r.Remitente = NewUnionNullString()
+
+		r.Remitente = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cicloDelEnvio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CicloDelEnvio); err != nil {
+			return err
+		}
+	} else {
+		r.CicloDelEnvio = NewUnionNullString()
+
+		r.CicloDelEnvio = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["fechaDeIncidencia"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaDeIncidencia); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for fechaDeIncidencia")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoCliente1"]; ok {
@@ -462,66 +600,6 @@ func (r *NovedadGenerada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for codigoCliente2")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["evento"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Evento); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for evento")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["idMotivo"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IdMotivo); err != nil {
-			return err
-		}
-	} else {
-		r.IdMotivo = NewUnionNullInt()
-
-		r.IdMotivo = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["motivo"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
-			return err
-		}
-	} else {
-		r.Motivo = NewUnionNullString()
-
-		r.Motivo = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["fechaDeIncidencia"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.FechaDeIncidencia); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for fechaDeIncidencia")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["mensajeAEnviar"]; ok {
