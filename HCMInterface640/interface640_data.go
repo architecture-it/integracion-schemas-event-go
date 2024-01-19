@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type Interface640Data struct {
-	Legajo int64 `json:"Legajo"`
+	Legajo string `json:"Legajo"`
 
 	CausaBaja string `json:"CausaBaja"`
 
@@ -39,7 +39,7 @@ type Interface640Data struct {
 	FechaAltaReconocida string `json:"FechaAltaReconocida"`
 }
 
-const Interface640DataAvroCRC64Fingerprint = "1\xe5g\x19\x1a\x7fc\xc3"
+const Interface640DataAvroCRC64Fingerprint = "\xae\xfd\xe9\xb9~\xec;\xe8"
 
 func NewInterface640Data() Interface640Data {
 	r := Interface640Data{}
@@ -71,7 +71,7 @@ func DeserializeInterface640DataFromSchema(r io.Reader, schema string) (Interfac
 
 func writeInterface640Data(r Interface640Data, w io.Writer) error {
 	var err error
-	err = vm.WriteLong(r.Legajo, w)
+	err = vm.WriteString(r.Legajo, w)
 	if err != nil {
 		return err
 	}
@@ -119,7 +119,7 @@ func (r Interface640Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface640Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"CausaBaja\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"AntigPSueldo\",\"type\":\"string\"},{\"name\":\"AntigPVacaciones\",\"type\":\"string\"},{\"name\":\"AntigPIndemnizacion\",\"type\":\"string\"},{\"name\":\"AntigPReal\",\"type\":\"string\"},{\"name\":\"FechaAltaReconocida\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface640.Events.Record.Interface640Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"CausaBaja\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"AntigPSueldo\",\"type\":\"string\"},{\"name\":\"AntigPVacaciones\",\"type\":\"string\"},{\"name\":\"AntigPIndemnizacion\",\"type\":\"string\"},{\"name\":\"AntigPReal\",\"type\":\"string\"},{\"name\":\"FechaAltaReconocida\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface640.Events.Record.Interface640Data\",\"type\":\"record\"}"
 }
 
 func (r Interface640Data) SchemaName() string {
@@ -138,7 +138,7 @@ func (_ Interface640Data) SetUnionElem(v int64) { panic("Unsupported operation")
 func (r *Interface640Data) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Long{Target: &r.Legajo}
+		w := types.String{Target: &r.Legajo}
 
 		return w
 
