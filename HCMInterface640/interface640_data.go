@@ -27,9 +27,19 @@ type Interface640Data struct {
 	FechaBaja string `json:"FechaBaja"`
 
 	Estado string `json:"Estado"`
+
+	AntigPSueldo string `json:"AntigPSueldo"`
+
+	AntigPVacaciones string `json:"AntigPVacaciones"`
+
+	AntigPIndemnizacion string `json:"AntigPIndemnizacion"`
+
+	AntigPReal string `json:"AntigPReal"`
+
+	FechaAltaReconocida string `json:"FechaAltaReconocida"`
 }
 
-const Interface640DataAvroCRC64Fingerprint = "ͨ\x8b\x1a\f\xed%\x86"
+const Interface640DataAvroCRC64Fingerprint = "1\xe5g\x19\x1a\x7fc\xc3"
 
 func NewInterface640Data() Interface640Data {
 	r := Interface640Data{}
@@ -81,6 +91,26 @@ func writeInterface640Data(r Interface640Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.AntigPSueldo, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.AntigPVacaciones, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.AntigPIndemnizacion, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.AntigPReal, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.FechaAltaReconocida, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -89,7 +119,7 @@ func (r Interface640Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface640Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"CausaBaja\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface640.Events.Record.Interface640Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"CausaBaja\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"AntigPSueldo\",\"type\":\"string\"},{\"name\":\"AntigPVacaciones\",\"type\":\"string\"},{\"name\":\"AntigPIndemnizacion\",\"type\":\"string\"},{\"name\":\"AntigPReal\",\"type\":\"string\"},{\"name\":\"FechaAltaReconocida\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface640.Events.Record.Interface640Data\",\"type\":\"record\"}"
 }
 
 func (r Interface640Data) SchemaName() string {
@@ -129,6 +159,31 @@ func (r *Interface640Data) Get(i int) types.Field {
 
 	case 4:
 		w := types.String{Target: &r.Estado}
+
+		return w
+
+	case 5:
+		w := types.String{Target: &r.AntigPSueldo}
+
+		return w
+
+	case 6:
+		w := types.String{Target: &r.AntigPVacaciones}
+
+		return w
+
+	case 7:
+		w := types.String{Target: &r.AntigPIndemnizacion}
+
+		return w
+
+	case 8:
+		w := types.String{Target: &r.AntigPReal}
+
+		return w
+
+	case 9:
+		w := types.String{Target: &r.FechaAltaReconocida}
 
 		return w
 
@@ -177,6 +232,26 @@ func (r Interface640Data) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Estado"], err = json.Marshal(r.Estado)
+	if err != nil {
+		return nil, err
+	}
+	output["AntigPSueldo"], err = json.Marshal(r.AntigPSueldo)
+	if err != nil {
+		return nil, err
+	}
+	output["AntigPVacaciones"], err = json.Marshal(r.AntigPVacaciones)
+	if err != nil {
+		return nil, err
+	}
+	output["AntigPIndemnizacion"], err = json.Marshal(r.AntigPIndemnizacion)
+	if err != nil {
+		return nil, err
+	}
+	output["AntigPReal"], err = json.Marshal(r.AntigPReal)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaAltaReconocida"], err = json.Marshal(r.FechaAltaReconocida)
 	if err != nil {
 		return nil, err
 	}
@@ -259,6 +334,76 @@ func (r *Interface640Data) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Estado")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["AntigPSueldo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AntigPSueldo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for AntigPSueldo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["AntigPVacaciones"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AntigPVacaciones); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for AntigPVacaciones")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["AntigPIndemnizacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AntigPIndemnizacion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for AntigPIndemnizacion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["AntigPReal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AntigPReal); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for AntigPReal")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaAltaReconocida"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaAltaReconocida); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaAltaReconocida")
 	}
 	return nil
 }

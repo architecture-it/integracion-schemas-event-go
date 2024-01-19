@@ -21,7 +21,7 @@ type ListInterface640 struct {
 	Interfaces []Interface640Data `json:"interfaces"`
 }
 
-const ListInterface640AvroCRC64Fingerprint = "_A\xf8\a\\Yy\xbb"
+const ListInterface640AvroCRC64Fingerprint = "9\xaf\x84O[\x99&c"
 
 func NewListInterface640() ListInterface640 {
 	r := ListInterface640{}
@@ -67,7 +67,7 @@ func (r ListInterface640) Serialize(w io.Writer) error {
 }
 
 func (r ListInterface640) Schema() string {
-	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"CausaBaja\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"}],\"name\":\"Interface640Data\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMInterface640.Events.Record.ListInterface640\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Legajo\",\"type\":\"long\"},{\"name\":\"CausaBaja\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"AntigPSueldo\",\"type\":\"string\"},{\"name\":\"AntigPVacaciones\",\"type\":\"string\"},{\"name\":\"AntigPIndemnizacion\",\"type\":\"string\"},{\"name\":\"AntigPReal\",\"type\":\"string\"},{\"name\":\"FechaAltaReconocida\",\"type\":\"string\"}],\"name\":\"Interface640Data\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMInterface640.Events.Record.ListInterface640\",\"type\":\"record\"}"
 }
 
 func (r ListInterface640) SchemaName() string {
