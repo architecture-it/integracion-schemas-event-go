@@ -21,7 +21,7 @@ type ProcesoVueltaVLMSchema struct {
 	NovedadDePedidoDeVLMSolicitada NovedadDePedidoDeVLMSolicitada `json:"NovedadDePedidoDeVLMSolicitada"`
 }
 
-const ProcesoVueltaVLMSchemaAvroCRC64Fingerprint = "\x86\xd2\xf5\xd7\x05FV\x96"
+const ProcesoVueltaVLMSchemaAvroCRC64Fingerprint = "q\x7f\xc1\xb7,\xea\x95p"
 
 func NewProcesoVueltaVLMSchema() ProcesoVueltaVLMSchema {
 	r := ProcesoVueltaVLMSchema{}
@@ -67,7 +67,7 @@ func (r ProcesoVueltaVLMSchema) Serialize(w io.Writer) error {
 }
 
 func (r ProcesoVueltaVLMSchema) Schema() string {
-	return "{\"fields\":[{\"name\":\"NovedadDePedidoDeVLMSolicitada\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"numeroDeOrden\",\"type\":\"string\"},{\"name\":\"vencimiento\",\"type\":\"string\"},{\"name\":\"novedadDePedidoDeVLM\",\"type\":{\"fields\":[{\"name\":\"idTarea\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"numeroContenedorInterno\",\"type\":\"string\"},{\"name\":\"identificadorDeCaja\",\"type\":\"string\"},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"esTareaNueva\",\"type\":\"boolean\"}],\"name\":\"NovedadDePedidoDeVLM\",\"type\":\"record\"}}],\"name\":\"NovedadDePedidoDeVLMSolicitada\",\"namespace\":\"Andreani.PedidosVlmSce.Events.ProcesoVuelta\",\"type\":\"record\"}}],\"name\":\"Andreani.PedidosVlmSce.Events.Record.ProcesoVueltaVLMSchema\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NovedadDePedidoDeVLMSolicitada\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"numeroDeOrden\",\"type\":\"string\"},{\"name\":\"vencimiento\",\"type\":\"string\"},{\"name\":\"novedadDePedidoDeVLM\",\"type\":{\"fields\":[{\"name\":\"idTarea\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"numeroContenedorInterno\",\"type\":\"string\"},{\"name\":\"identificadorDeCaja\",\"type\":\"string\"},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"esTareaNueva\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"NovedadDePedidoDeVLM\",\"type\":\"record\"}}],\"name\":\"NovedadDePedidoDeVLMSolicitada\",\"namespace\":\"Andreani.PedidosVlmSce.Events.ProcesoVuelta\",\"type\":\"record\"}}],\"name\":\"Andreani.PedidosVlmSce.Events.Record.ProcesoVueltaVLMSchema\",\"type\":\"record\"}"
 }
 
 func (r ProcesoVueltaVLMSchema) SchemaName() string {

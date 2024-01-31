@@ -29,12 +29,15 @@ type NovedadDePedidoDeVLM struct {
 	Unidades int32 `json:"unidades"`
 
 	EsTareaNueva bool `json:"esTareaNueva"`
+
+	Series *UnionNullArrayString `json:"series"`
 }
 
-const NovedadDePedidoDeVLMAvroCRC64Fingerprint = "E\x12\nWzz\xa6\xbd"
+const NovedadDePedidoDeVLMAvroCRC64Fingerprint = "I\xdfx(\x0e\xfeė"
 
 func NewNovedadDePedidoDeVLM() NovedadDePedidoDeVLM {
 	r := NovedadDePedidoDeVLM{}
+	r.Series = nil
 	return r
 }
 
@@ -87,6 +90,10 @@ func writeNovedadDePedidoDeVLM(r NovedadDePedidoDeVLM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayString(r.Series, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -95,7 +102,7 @@ func (r NovedadDePedidoDeVLM) Serialize(w io.Writer) error {
 }
 
 func (r NovedadDePedidoDeVLM) Schema() string {
-	return "{\"fields\":[{\"name\":\"idTarea\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"numeroContenedorInterno\",\"type\":\"string\"},{\"name\":\"identificadorDeCaja\",\"type\":\"string\"},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"esTareaNueva\",\"type\":\"boolean\"}],\"name\":\"Andreani.PedidosVlmSce.Events.ProcesoVuelta.NovedadDePedidoDeVLM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idTarea\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"numeroContenedorInterno\",\"type\":\"string\"},{\"name\":\"identificadorDeCaja\",\"type\":\"string\"},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"esTareaNueva\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.PedidosVlmSce.Events.ProcesoVuelta.NovedadDePedidoDeVLM\",\"type\":\"record\"}"
 }
 
 func (r NovedadDePedidoDeVLM) SchemaName() string {
@@ -143,18 +150,28 @@ func (r *NovedadDePedidoDeVLM) Get(i int) types.Field {
 
 		return w
 
+	case 6:
+		r.Series = NewUnionNullArrayString()
+
+		return r.Series
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadDePedidoDeVLM) SetDefault(i int) {
 	switch i {
+	case 6:
+		r.Series = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadDePedidoDeVLM) NullField(i int) {
 	switch i {
+	case 6:
+		r.Series = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -192,6 +209,10 @@ func (r NovedadDePedidoDeVLM) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["esTareaNueva"], err = json.Marshal(r.EsTareaNueva)
+	if err != nil {
+		return nil, err
+	}
+	output["series"], err = json.Marshal(r.Series)
 	if err != nil {
 		return nil, err
 	}
@@ -288,6 +309,22 @@ func (r *NovedadDePedidoDeVLM) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for esTareaNueva")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["series"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Series); err != nil {
+			return err
+		}
+	} else {
+		r.Series = NewUnionNullArrayString()
+
+		r.Series = nil
 	}
 	return nil
 }

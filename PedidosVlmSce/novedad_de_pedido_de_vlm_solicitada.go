@@ -31,7 +31,7 @@ type NovedadDePedidoDeVLMSolicitada struct {
 	NovedadDePedidoDeVLM NovedadDePedidoDeVLM `json:"novedadDePedidoDeVLM"`
 }
 
-const NovedadDePedidoDeVLMSolicitadaAvroCRC64Fingerprint = "\xfc\x9fv\xf1c\x9eN}"
+const NovedadDePedidoDeVLMSolicitadaAvroCRC64Fingerprint = "\x96\xf2\x01\xd9\x18a\x9f+"
 
 func NewNovedadDePedidoDeVLMSolicitada() NovedadDePedidoDeVLMSolicitada {
 	r := NovedadDePedidoDeVLMSolicitada{}
@@ -97,7 +97,7 @@ func (r NovedadDePedidoDeVLMSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r NovedadDePedidoDeVLMSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"timestamp\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"numeroDeOrden\",\"type\":\"string\"},{\"name\":\"vencimiento\",\"type\":\"string\"},{\"name\":\"novedadDePedidoDeVLM\",\"type\":{\"fields\":[{\"name\":\"idTarea\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"numeroContenedorInterno\",\"type\":\"string\"},{\"name\":\"identificadorDeCaja\",\"type\":\"string\"},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"esTareaNueva\",\"type\":\"boolean\"}],\"name\":\"NovedadDePedidoDeVLM\",\"type\":\"record\"}}],\"name\":\"Andreani.PedidosVlmSce.Events.ProcesoVuelta.NovedadDePedidoDeVLMSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"timestamp\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"numeroDeOrden\",\"type\":\"string\"},{\"name\":\"vencimiento\",\"type\":\"string\"},{\"name\":\"novedadDePedidoDeVLM\",\"type\":{\"fields\":[{\"name\":\"idTarea\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"name\":\"numeroContenedorInterno\",\"type\":\"string\"},{\"name\":\"identificadorDeCaja\",\"type\":\"string\"},{\"name\":\"unidades\",\"type\":\"int\"},{\"name\":\"esTareaNueva\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"NovedadDePedidoDeVLM\",\"type\":\"record\"}}],\"name\":\"Andreani.PedidosVlmSce.Events.ProcesoVuelta.NovedadDePedidoDeVLMSolicitada\",\"type\":\"record\"}"
 }
 
 func (r NovedadDePedidoDeVLMSolicitada) SchemaName() string {
