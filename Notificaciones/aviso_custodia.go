@@ -28,13 +28,16 @@ type AvisoCustodia struct {
 
 	FechaIngresoCustodia int64 `json:"fechaIngresoCustodia"`
 
+	FechaVencimientoCustodia *UnionNullString `json:"fechaVencimientoCustodia"`
+
 	SucursalActual Sucursal `json:"sucursalActual"`
 }
 
-const AvisoCustodiaAvroCRC64Fingerprint = ">\xed\xeeF\xf9\xb70\x8b"
+const AvisoCustodiaAvroCRC64Fingerprint = "\x91\xed\xe1\xf0\xf5r\xf4\xaf"
 
 func NewAvisoCustodia() AvisoCustodia {
 	r := AvisoCustodia{}
+	r.FechaVencimientoCustodia = nil
 	r.SucursalActual = NewSucursal()
 
 	return r
@@ -85,6 +88,10 @@ func writeAvisoCustodia(r AvisoCustodia, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.FechaVencimientoCustodia, w)
+	if err != nil {
+		return err
+	}
 	err = writeSucursal(r.SucursalActual, w)
 	if err != nil {
 		return err
@@ -97,7 +104,7 @@ func (r AvisoCustodia) Serialize(w io.Writer) error {
 }
 
 func (r AvisoCustodia) Schema() string {
-	return "{\"fields\":[{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"nombreDestinatario\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaIngresoCustodia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"sucursalActual\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"horarioAtencion\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"}],\"name\":\"Sucursal\",\"type\":\"record\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoCustodia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"nombreDestinatario\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaIngresoCustodia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"fechaVencimientoCustodia\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalActual\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"horarioAtencion\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"}],\"name\":\"Sucursal\",\"type\":\"record\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoCustodia\",\"type\":\"record\"}"
 }
 
 func (r AvisoCustodia) SchemaName() string {
@@ -141,6 +148,10 @@ func (r *AvisoCustodia) Get(i int) types.Field {
 		return w
 
 	case 5:
+		r.FechaVencimientoCustodia = NewUnionNullString()
+
+		return r.FechaVencimientoCustodia
+	case 6:
 		r.SucursalActual = NewSucursal()
 
 		w := types.Record{Target: &r.SucursalActual}
@@ -153,12 +164,18 @@ func (r *AvisoCustodia) Get(i int) types.Field {
 
 func (r *AvisoCustodia) SetDefault(i int) {
 	switch i {
+	case 5:
+		r.FechaVencimientoCustodia = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *AvisoCustodia) NullField(i int) {
 	switch i {
+	case 5:
+		r.FechaVencimientoCustodia = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -192,6 +209,10 @@ func (r AvisoCustodia) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["fechaIngresoCustodia"], err = json.Marshal(r.FechaIngresoCustodia)
+	if err != nil {
+		return nil, err
+	}
+	output["fechaVencimientoCustodia"], err = json.Marshal(r.FechaVencimientoCustodia)
 	if err != nil {
 		return nil, err
 	}
@@ -278,6 +299,22 @@ func (r *AvisoCustodia) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for fechaIngresoCustodia")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["fechaVencimientoCustodia"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaVencimientoCustodia); err != nil {
+			return err
+		}
+	} else {
+		r.FechaVencimientoCustodia = NewUnionNullString()
+
+		r.FechaVencimientoCustodia = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["sucursalActual"]; ok {
