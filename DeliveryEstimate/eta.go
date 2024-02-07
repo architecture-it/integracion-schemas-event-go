@@ -24,16 +24,20 @@ type ETA struct {
 
 	CalculoEta CalculoEta `json:"calculoEta"`
 
+	Transportista Transportista `json:"transportista"`
+
 	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const ETAAvroCRC64Fingerprint = "\r\x16惐7\xb4\xfa"
+const ETAAvroCRC64Fingerprint = "\"\xef\",\x9a\x02N\t"
 
 func NewETA() ETA {
 	r := ETA{}
 	r.Eta = nil
 	r.CodigoDeEnvio = nil
 	r.CalculoEta = NewCalculoEta()
+
+	r.Transportista = NewTransportista()
 
 	r.Cuando = nil
 	return r
@@ -76,6 +80,10 @@ func writeETA(r ETA, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeTransportista(r.Transportista, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullLong(r.Cuando, w)
 	if err != nil {
 		return err
@@ -88,7 +96,7 @@ func (r ETA) Serialize(w io.Writer) error {
 }
 
 func (r ETA) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"eta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"calculoEta\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"hojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"posicion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"bloque\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"fechaVisita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"CalculoEta\",\"type\":\"record\"}},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ETA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"eta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"calculoEta\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"hojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"posicion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"bloque\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"fechaVisita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"CalculoEta\",\"type\":\"record\"}},{\"name\":\"transportista\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"esEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"idGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"codigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"cumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ETA\",\"type\":\"record\"}"
 }
 
 func (r ETA) SchemaName() string {
@@ -122,6 +130,13 @@ func (r *ETA) Get(i int) types.Field {
 		return w
 
 	case 3:
+		r.Transportista = NewTransportista()
+
+		w := types.Record{Target: &r.Transportista}
+
+		return w
+
+	case 4:
 		r.Cuando = NewUnionNullLong()
 
 		return r.Cuando
@@ -137,7 +152,7 @@ func (r *ETA) SetDefault(i int) {
 	case 1:
 		r.CodigoDeEnvio = nil
 		return
-	case 3:
+	case 4:
 		r.Cuando = nil
 		return
 	}
@@ -152,7 +167,7 @@ func (r *ETA) NullField(i int) {
 	case 1:
 		r.CodigoDeEnvio = nil
 		return
-	case 3:
+	case 4:
 		r.Cuando = nil
 		return
 	}
@@ -180,6 +195,10 @@ func (r ETA) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["calculoEta"], err = json.Marshal(r.CalculoEta)
+	if err != nil {
+		return nil, err
+	}
+	output["transportista"], err = json.Marshal(r.Transportista)
 	if err != nil {
 		return nil, err
 	}
@@ -242,6 +261,20 @@ func (r *ETA) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for calculoEta")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["transportista"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Transportista); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for transportista")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cuando"]; ok {
