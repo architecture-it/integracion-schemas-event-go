@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type CondicionesDeEntrega struct {
-	CondicionDeEntregaId int32 `json:"CondicionDeEntregaId"`
+	CondicionDeEntregaId string `json:"CondicionDeEntregaId"`
 
 	Descripcion string `json:"Descripcion"`
 }
 
-const CondicionesDeEntregaAvroCRC64Fingerprint = "c\xf8^\xf4-G@\xd8"
+const CondicionesDeEntregaAvroCRC64Fingerprint = "\x97\xcc:ם\x8c\x95X"
 
 func NewCondicionesDeEntrega() CondicionesDeEntrega {
 	r := CondicionesDeEntrega{}
@@ -55,7 +55,7 @@ func DeserializeCondicionesDeEntregaFromSchema(r io.Reader, schema string) (Cond
 
 func writeCondicionesDeEntrega(r CondicionesDeEntrega, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.CondicionDeEntregaId, w)
+	err = vm.WriteString(r.CondicionDeEntregaId, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func (r CondicionesDeEntrega) Serialize(w io.Writer) error {
 }
 
 func (r CondicionesDeEntrega) Schema() string {
-	return "{\"fields\":[{\"name\":\"CondicionDeEntregaId\",\"type\":\"int\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.CondicionesDeEntrega\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CondicionDeEntregaId\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.CondicionesDeEntrega\",\"type\":\"record\"}"
 }
 
 func (r CondicionesDeEntrega) SchemaName() string {
@@ -90,7 +90,7 @@ func (_ CondicionesDeEntrega) SetUnionElem(v int64) { panic("Unsupported operati
 func (r *CondicionesDeEntrega) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.CondicionDeEntregaId}
+		w := types.String{Target: &r.CondicionDeEntregaId}
 
 		return w
 

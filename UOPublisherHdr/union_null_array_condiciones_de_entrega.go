@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayCondicionesDeEntregaFromSchema(r io.Reader, schema
 }
 
 func (r *UnionNullArrayCondicionesDeEntrega) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"CondicionDeEntregaId\",\"type\":\"int\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"CondicionesDeEntrega\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"CondicionDeEntregaId\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"CondicionesDeEntrega\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayCondicionesDeEntrega) SetBoolean(v bool)   { panic("Unsupported operation") }
