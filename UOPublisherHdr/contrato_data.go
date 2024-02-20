@@ -18,16 +18,14 @@ import (
 var _ = fmt.Printf
 
 type ContratoData struct {
-	ContratoId *UnionNullInt `json:"ContratoId"`
-
-	Contrato string `json:"Contrato"`
+	ContratoId *UnionNullString `json:"ContratoId"`
 
 	Motivos *UnionNullArrayString `json:"Motivos"`
 
-	CondicionDeEntregaId int32 `json:"CondicionDeEntregaId"`
+	CondicionDeEntregaId string `json:"CondicionDeEntregaId"`
 }
 
-const ContratoDataAvroCRC64Fingerprint = "\xfaa\x186oْj"
+const ContratoDataAvroCRC64Fingerprint = "\r$\vF\xf0\xfca "
 
 func NewContratoData() ContratoData {
 	r := ContratoData{}
@@ -61,11 +59,7 @@ func DeserializeContratoDataFromSchema(r io.Reader, schema string) (ContratoData
 
 func writeContratoData(r ContratoData, w io.Writer) error {
 	var err error
-	err = writeUnionNullInt(r.ContratoId, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Contrato, w)
+	err = writeUnionNullString(r.ContratoId, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +67,7 @@ func writeContratoData(r ContratoData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.CondicionDeEntregaId, w)
+	err = vm.WriteString(r.CondicionDeEntregaId, w)
 	if err != nil {
 		return err
 	}
@@ -85,7 +79,7 @@ func (r ContratoData) Serialize(w io.Writer) error {
 }
 
 func (r ContratoData) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"ContratoId\",\"type\":[\"null\",\"int\"]},{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"Motivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"CondicionDeEntregaId\",\"type\":\"int\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.ContratoData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"ContratoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"CondicionDeEntregaId\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.ContratoData\",\"type\":\"record\"}"
 }
 
 func (r ContratoData) SchemaName() string {
@@ -104,20 +98,15 @@ func (_ ContratoData) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *ContratoData) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.ContratoId = NewUnionNullInt()
+		r.ContratoId = NewUnionNullString()
 
 		return r.ContratoId
 	case 1:
-		w := types.String{Target: &r.Contrato}
-
-		return w
-
-	case 2:
 		r.Motivos = NewUnionNullArrayString()
 
 		return r.Motivos
-	case 3:
-		w := types.Int{Target: &r.CondicionDeEntregaId}
+	case 2:
+		w := types.String{Target: &r.CondicionDeEntregaId}
 
 		return w
 
@@ -130,7 +119,7 @@ func (r *ContratoData) SetDefault(i int) {
 	case 0:
 		r.ContratoId = nil
 		return
-	case 2:
+	case 1:
 		r.Motivos = nil
 		return
 	}
@@ -142,7 +131,7 @@ func (r *ContratoData) NullField(i int) {
 	case 0:
 		r.ContratoId = nil
 		return
-	case 2:
+	case 1:
 		r.Motivos = nil
 		return
 	}
@@ -162,10 +151,6 @@ func (r ContratoData) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["ContratoId"], err = json.Marshal(r.ContratoId)
-	if err != nil {
-		return nil, err
-	}
-	output["Contrato"], err = json.Marshal(r.Contrato)
 	if err != nil {
 		return nil, err
 	}
@@ -199,23 +184,9 @@ func (r *ContratoData) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.ContratoId = NewUnionNullInt()
+		r.ContratoId = NewUnionNullString()
 
 		r.ContratoId = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Contrato"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Contrato")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Motivos"]; ok {
