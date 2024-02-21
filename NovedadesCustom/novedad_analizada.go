@@ -30,6 +30,10 @@ type NovedadAnalizada struct {
 
 	SubMovimiento string `json:"subMovimiento"`
 
+	IdMotivo *UnionNullString `json:"idMotivo"`
+
+	IdSubmotivo *UnionNullString `json:"idSubmotivo"`
+
 	CodigoCliente1 *UnionNullString `json:"codigoCliente1"`
 
 	CodigoCliente2 *UnionNullString `json:"codigoCliente2"`
@@ -41,7 +45,7 @@ type NovedadAnalizada struct {
 	DespachadorDestino *UnionNullString `json:"despachadorDestino"`
 }
 
-const NovedadAnalizadaAvroCRC64Fingerprint = "\xb0F6\x10@\xc3b\xc8"
+const NovedadAnalizadaAvroCRC64Fingerprint = "\xe3\xa4D7\x03̋\xa0"
 
 func NewNovedadAnalizada() NovedadAnalizada {
 	r := NovedadAnalizada{}
@@ -101,6 +105,14 @@ func writeNovedadAnalizada(r NovedadAnalizada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.IdMotivo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.IdSubmotivo, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.CodigoCliente1, w)
 	if err != nil {
 		return err
@@ -129,7 +141,7 @@ func (r NovedadAnalizada) Serialize(w io.Writer) error {
 }
 
 func (r NovedadAnalizada) Schema() string {
-	return "{\"fields\":[{\"name\":\"novedadUnificada\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Value\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadata\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"NovedadUnificada\",\"type\":\"record\"}},{\"name\":\"idContrato\",\"type\":\"int\"},{\"name\":\"idCliente\",\"type\":\"int\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"movimiento\",\"type\":\"string\"},{\"name\":\"subMovimiento\",\"type\":\"string\"},{\"name\":\"codigoCliente1\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoCliente2\",\"type\":[\"null\",\"string\"]},{\"name\":\"idModelo\",\"type\":\"int\"},{\"default\":null,\"name\":\"generadorDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"despachadorDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadAnalizada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"novedadUnificada\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Value\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadata\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"NovedadUnificada\",\"type\":\"record\"}},{\"name\":\"idContrato\",\"type\":\"int\"},{\"name\":\"idCliente\",\"type\":\"int\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"movimiento\",\"type\":\"string\"},{\"name\":\"subMovimiento\",\"type\":\"string\"},{\"name\":\"idMotivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"idSubmotivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoCliente1\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoCliente2\",\"type\":[\"null\",\"string\"]},{\"name\":\"idModelo\",\"type\":\"int\"},{\"default\":null,\"name\":\"generadorDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"despachadorDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadAnalizada\",\"type\":\"record\"}"
 }
 
 func (r NovedadAnalizada) SchemaName() string {
@@ -180,23 +192,31 @@ func (r *NovedadAnalizada) Get(i int) types.Field {
 		return w
 
 	case 6:
+		r.IdMotivo = NewUnionNullString()
+
+		return r.IdMotivo
+	case 7:
+		r.IdSubmotivo = NewUnionNullString()
+
+		return r.IdSubmotivo
+	case 8:
 		r.CodigoCliente1 = NewUnionNullString()
 
 		return r.CodigoCliente1
-	case 7:
+	case 9:
 		r.CodigoCliente2 = NewUnionNullString()
 
 		return r.CodigoCliente2
-	case 8:
+	case 10:
 		w := types.Int{Target: &r.IdModelo}
 
 		return w
 
-	case 9:
+	case 11:
 		r.GeneradorDestino = NewUnionNullString()
 
 		return r.GeneradorDestino
-	case 10:
+	case 12:
 		r.DespachadorDestino = NewUnionNullString()
 
 		return r.DespachadorDestino
@@ -206,10 +226,10 @@ func (r *NovedadAnalizada) Get(i int) types.Field {
 
 func (r *NovedadAnalizada) SetDefault(i int) {
 	switch i {
-	case 9:
+	case 11:
 		r.GeneradorDestino = nil
 		return
-	case 10:
+	case 12:
 		r.DespachadorDestino = nil
 		return
 	}
@@ -219,15 +239,21 @@ func (r *NovedadAnalizada) SetDefault(i int) {
 func (r *NovedadAnalizada) NullField(i int) {
 	switch i {
 	case 6:
-		r.CodigoCliente1 = nil
+		r.IdMotivo = nil
 		return
 	case 7:
-		r.CodigoCliente2 = nil
+		r.IdSubmotivo = nil
+		return
+	case 8:
+		r.CodigoCliente1 = nil
 		return
 	case 9:
+		r.CodigoCliente2 = nil
+		return
+	case 11:
 		r.GeneradorDestino = nil
 		return
-	case 10:
+	case 12:
 		r.DespachadorDestino = nil
 		return
 	}
@@ -267,6 +293,14 @@ func (r NovedadAnalizada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["subMovimiento"], err = json.Marshal(r.SubMovimiento)
+	if err != nil {
+		return nil, err
+	}
+	output["idMotivo"], err = json.Marshal(r.IdMotivo)
+	if err != nil {
+		return nil, err
+	}
+	output["idSubmotivo"], err = json.Marshal(r.IdSubmotivo)
 	if err != nil {
 		return nil, err
 	}
@@ -383,6 +417,34 @@ func (r *NovedadAnalizada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for subMovimiento")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idMotivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdMotivo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idMotivo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idSubmotivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdSubmotivo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idSubmotivo")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoCliente1"]; ok {
