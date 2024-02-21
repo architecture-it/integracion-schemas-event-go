@@ -20,7 +20,7 @@ var _ = fmt.Printf
 type InterfaceCECOSData struct {
 	Value string `json:"Value"`
 
-	CausaBaja string `json:"CausaBaja"`
+	TranslatedValue string `json:"TranslatedValue"`
 
 	Description string `json:"Description"`
 
@@ -29,7 +29,7 @@ type InterfaceCECOSData struct {
 	ValueSetCode string `json:"ValueSetCode"`
 }
 
-const InterfaceCECOSDataAvroCRC64Fingerprint = "[\xb5c\x01\xdf\xe3\xe0\xb0"
+const InterfaceCECOSDataAvroCRC64Fingerprint = "\xe7\x9e\xf4;!\xa4E\x86"
 
 func NewInterfaceCECOSData() InterfaceCECOSData {
 	r := InterfaceCECOSData{}
@@ -65,7 +65,7 @@ func writeInterfaceCECOSData(r InterfaceCECOSData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CausaBaja, w)
+	err = vm.WriteString(r.TranslatedValue, w)
 	if err != nil {
 		return err
 	}
@@ -89,7 +89,7 @@ func (r InterfaceCECOSData) Serialize(w io.Writer) error {
 }
 
 func (r InterfaceCECOSData) Schema() string {
-	return "{\"fields\":[{\"name\":\"Value\",\"type\":\"string\"},{\"name\":\"CausaBaja\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"EnabledFlag\",\"type\":\"string\"},{\"name\":\"ValueSetCode\",\"type\":\"string\"}],\"name\":\"Andreani.CECOSInterfaces.Events.Record.InterfaceCECOSData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Value\",\"type\":\"string\"},{\"name\":\"TranslatedValue\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"EnabledFlag\",\"type\":\"string\"},{\"name\":\"ValueSetCode\",\"type\":\"string\"}],\"name\":\"Andreani.CECOSInterfaces.Events.Record.InterfaceCECOSData\",\"type\":\"record\"}"
 }
 
 func (r InterfaceCECOSData) SchemaName() string {
@@ -113,7 +113,7 @@ func (r *InterfaceCECOSData) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.CausaBaja}
+		w := types.String{Target: &r.TranslatedValue}
 
 		return w
 
@@ -164,7 +164,7 @@ func (r InterfaceCECOSData) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["CausaBaja"], err = json.Marshal(r.CausaBaja)
+	output["TranslatedValue"], err = json.Marshal(r.TranslatedValue)
 	if err != nil {
 		return nil, err
 	}
@@ -205,18 +205,18 @@ func (r *InterfaceCECOSData) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Value")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["CausaBaja"]; ok {
+		if v, ok := fields["TranslatedValue"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CausaBaja); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.TranslatedValue); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CausaBaja")
+		return fmt.Errorf("no value specified for TranslatedValue")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Description"]; ok {

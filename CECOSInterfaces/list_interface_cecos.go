@@ -21,7 +21,7 @@ type ListInterfaceCECOS struct {
 	Interfaces []InterfaceCECOSData `json:"interfaces"`
 }
 
-const ListInterfaceCECOSAvroCRC64Fingerprint = "[l\xc8\x1a9\x92f\xa8"
+const ListInterfaceCECOSAvroCRC64Fingerprint = "S\x05\xb2\xa9\x10ө\xab"
 
 func NewListInterfaceCECOS() ListInterfaceCECOS {
 	r := ListInterfaceCECOS{}
@@ -67,7 +67,7 @@ func (r ListInterfaceCECOS) Serialize(w io.Writer) error {
 }
 
 func (r ListInterfaceCECOS) Schema() string {
-	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Value\",\"type\":\"string\"},{\"name\":\"CausaBaja\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"EnabledFlag\",\"type\":\"string\"},{\"name\":\"ValueSetCode\",\"type\":\"string\"}],\"name\":\"InterfaceCECOSData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CECOSInterfaces.Events.Record.ListInterfaceCECOS\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Value\",\"type\":\"string\"},{\"name\":\"TranslatedValue\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"EnabledFlag\",\"type\":\"string\"},{\"name\":\"ValueSetCode\",\"type\":\"string\"}],\"name\":\"InterfaceCECOSData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CECOSInterfaces.Events.Record.ListInterfaceCECOS\",\"type\":\"record\"}"
 }
 
 func (r ListInterfaceCECOS) SchemaName() string {
