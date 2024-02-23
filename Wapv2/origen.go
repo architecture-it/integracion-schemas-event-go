@@ -37,9 +37,11 @@ type Origen struct {
 	Contacto *UnionNullString `json:"contacto"`
 
 	DatosAdicionales *UnionNullListaDePropiedades `json:"datosAdicionales"`
+
+	GLN *UnionNullString `json:"GLN"`
 }
 
-const OrigenAvroCRC64Fingerprint = "\xb0KɊ\xd7v-\xbc"
+const OrigenAvroCRC64Fingerprint = "I5\xef\xa7\x02\x97|\xf6"
 
 func NewOrigen() Origen {
 	r := Origen{}
@@ -53,6 +55,7 @@ func NewOrigen() Origen {
 	r.Departamento = nil
 	r.Contacto = nil
 	r.DatosAdicionales = nil
+	r.GLN = nil
 	return r
 }
 
@@ -121,6 +124,10 @@ func writeOrigen(r Origen, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.GLN, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -129,7 +136,7 @@ func (r Origen) Serialize(w io.Writer) error {
 }
 
 func (r Origen) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"idOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.Origen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"idOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"GLN\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.Origen\",\"type\":\"record\"}"
 }
 
 func (r Origen) SchemaName() string {
@@ -187,6 +194,10 @@ func (r *Origen) Get(i int) types.Field {
 		r.DatosAdicionales = NewUnionNullListaDePropiedades()
 
 		return r.DatosAdicionales
+	case 10:
+		r.GLN = NewUnionNullString()
+
+		return r.GLN
 	}
 	panic("Unknown field index")
 }
@@ -223,6 +234,9 @@ func (r *Origen) SetDefault(i int) {
 	case 9:
 		r.DatosAdicionales = nil
 		return
+	case 10:
+		r.GLN = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -258,6 +272,9 @@ func (r *Origen) NullField(i int) {
 		return
 	case 9:
 		r.DatosAdicionales = nil
+		return
+	case 10:
+		r.GLN = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -312,6 +329,10 @@ func (r Origen) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["datosAdicionales"], err = json.Marshal(r.DatosAdicionales)
+	if err != nil {
+		return nil, err
+	}
+	output["GLN"], err = json.Marshal(r.GLN)
 	if err != nil {
 		return nil, err
 	}
@@ -484,6 +505,22 @@ func (r *Origen) UnmarshalJSON(data []byte) error {
 		r.DatosAdicionales = NewUnionNullListaDePropiedades()
 
 		r.DatosAdicionales = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["GLN"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.GLN); err != nil {
+			return err
+		}
+	} else {
+		r.GLN = NewUnionNullString()
+
+		r.GLN = nil
 	}
 	return nil
 }
