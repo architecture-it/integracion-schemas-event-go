@@ -21,7 +21,7 @@ type EnviosCotizarEvent struct {
 	Envios []Envio `json:"Envios"`
 }
 
-const EnviosCotizarEventAvroCRC64Fingerprint = "\x86\xe6\x01\xedբҶ"
+const EnviosCotizarEventAvroCRC64Fingerprint = "όY\xa8ں\x11\xb8"
 
 func NewEnviosCotizarEvent() EnviosCotizarEvent {
 	r := EnviosCotizarEvent{}
@@ -67,7 +67,7 @@ func (r EnviosCotizarEvent) Serialize(w io.Writer) error {
 }
 
 func (r EnviosCotizarEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"NumeroContrato\",\"type\":\"string\"},{\"name\":\"Cliente\",\"type\":\"string\"},{\"name\":\"CodigoPostalOrigenId\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestino\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"Volumen\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"string\"},{\"name\":\"AltoCm\",\"type\":\"string\"},{\"name\":\"AnchoCm\",\"type\":\"string\"},{\"name\":\"LargoCm\",\"type\":\"string\"},{\"name\":\"TipoDeEnvioId\",\"type\":\"string\"},{\"name\":\"ItemId\",\"type\":\"string\"},{\"name\":\"PesoUnidad\",\"type\":\"string\"}],\"name\":\"Envio\",\"namespace\":\"Andreani.CorporativoBackend.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CorporativoBackend.Events.Record.EnviosCotizarEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"CodigoPostalOrigenId\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestinoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"Volumen\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"string\"},{\"name\":\"AltoCm\",\"type\":\"string\"},{\"name\":\"AnchoCm\",\"type\":\"string\"},{\"name\":\"LargoCm\",\"type\":\"string\"}],\"name\":\"Envio\",\"namespace\":\"Andreani.CorporativoBackend.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CorporativoBackend.Events.Record.EnviosCotizarEvent\",\"type\":\"record\"}"
 }
 
 func (r EnviosCotizarEvent) SchemaName() string {

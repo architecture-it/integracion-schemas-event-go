@@ -20,13 +20,11 @@ var _ = fmt.Printf
 type Envio struct {
 	Id string `json:"Id"`
 
-	NumeroContrato string `json:"NumeroContrato"`
-
-	Cliente string `json:"Cliente"`
+	ContratoId string `json:"ContratoId"`
 
 	CodigoPostalOrigenId string `json:"CodigoPostalOrigenId"`
 
-	CodigoPostalDestino string `json:"CodigoPostalDestino"`
+	CodigoPostalDestinoId string `json:"CodigoPostalDestinoId"`
 
 	Peso string `json:"Peso"`
 
@@ -39,15 +37,9 @@ type Envio struct {
 	AnchoCm string `json:"AnchoCm"`
 
 	LargoCm string `json:"LargoCm"`
-
-	TipoDeEnvioId string `json:"TipoDeEnvioId"`
-
-	ItemId string `json:"ItemId"`
-
-	PesoUnidad string `json:"PesoUnidad"`
 }
 
-const EnvioAvroCRC64Fingerprint = "\x90\xf9J\xaa\xce\xc52\xc7"
+const EnvioAvroCRC64Fingerprint = "vY\xbc\xb2{\x12\xca!"
 
 func NewEnvio() Envio {
 	r := Envio{}
@@ -83,11 +75,7 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroContrato, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Cliente, w)
+	err = vm.WriteString(r.ContratoId, w)
 	if err != nil {
 		return err
 	}
@@ -95,7 +83,7 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoPostalDestino, w)
+	err = vm.WriteString(r.CodigoPostalDestinoId, w)
 	if err != nil {
 		return err
 	}
@@ -123,18 +111,6 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TipoDeEnvioId, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.ItemId, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.PesoUnidad, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -143,7 +119,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"NumeroContrato\",\"type\":\"string\"},{\"name\":\"Cliente\",\"type\":\"string\"},{\"name\":\"CodigoPostalOrigenId\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestino\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"Volumen\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"string\"},{\"name\":\"AltoCm\",\"type\":\"string\"},{\"name\":\"AnchoCm\",\"type\":\"string\"},{\"name\":\"LargoCm\",\"type\":\"string\"},{\"name\":\"TipoDeEnvioId\",\"type\":\"string\"},{\"name\":\"ItemId\",\"type\":\"string\"},{\"name\":\"PesoUnidad\",\"type\":\"string\"}],\"name\":\"Andreani.CorporativoBackend.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"CodigoPostalOrigenId\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestinoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"Volumen\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"string\"},{\"name\":\"AltoCm\",\"type\":\"string\"},{\"name\":\"AnchoCm\",\"type\":\"string\"},{\"name\":\"LargoCm\",\"type\":\"string\"}],\"name\":\"Andreani.CorporativoBackend.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -167,67 +143,47 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.NumeroContrato}
+		w := types.String{Target: &r.ContratoId}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Cliente}
-
-		return w
-
-	case 3:
 		w := types.String{Target: &r.CodigoPostalOrigenId}
 
 		return w
 
-	case 4:
-		w := types.String{Target: &r.CodigoPostalDestino}
+	case 3:
+		w := types.String{Target: &r.CodigoPostalDestinoId}
 
 		return w
 
-	case 5:
+	case 4:
 		w := types.String{Target: &r.Peso}
 
 		return w
 
-	case 6:
+	case 5:
 		w := types.String{Target: &r.Volumen}
 
 		return w
 
-	case 7:
+	case 6:
 		w := types.String{Target: &r.ValorDeclarado}
 
 		return w
 
-	case 8:
+	case 7:
 		w := types.String{Target: &r.AltoCm}
 
 		return w
 
-	case 9:
+	case 8:
 		w := types.String{Target: &r.AnchoCm}
 
 		return w
 
-	case 10:
+	case 9:
 		w := types.String{Target: &r.LargoCm}
-
-		return w
-
-	case 11:
-		w := types.String{Target: &r.TipoDeEnvioId}
-
-		return w
-
-	case 12:
-		w := types.String{Target: &r.ItemId}
-
-		return w
-
-	case 13:
-		w := types.String{Target: &r.PesoUnidad}
 
 		return w
 
@@ -263,11 +219,7 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["NumeroContrato"], err = json.Marshal(r.NumeroContrato)
-	if err != nil {
-		return nil, err
-	}
-	output["Cliente"], err = json.Marshal(r.Cliente)
+	output["ContratoId"], err = json.Marshal(r.ContratoId)
 	if err != nil {
 		return nil, err
 	}
@@ -275,7 +227,7 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["CodigoPostalDestino"], err = json.Marshal(r.CodigoPostalDestino)
+	output["CodigoPostalDestinoId"], err = json.Marshal(r.CodigoPostalDestinoId)
 	if err != nil {
 		return nil, err
 	}
@@ -300,18 +252,6 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["LargoCm"], err = json.Marshal(r.LargoCm)
-	if err != nil {
-		return nil, err
-	}
-	output["TipoDeEnvioId"], err = json.Marshal(r.TipoDeEnvioId)
-	if err != nil {
-		return nil, err
-	}
-	output["ItemId"], err = json.Marshal(r.ItemId)
-	if err != nil {
-		return nil, err
-	}
-	output["PesoUnidad"], err = json.Marshal(r.PesoUnidad)
 	if err != nil {
 		return nil, err
 	}
@@ -340,32 +280,18 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Id")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["NumeroContrato"]; ok {
+		if v, ok := fields["ContratoId"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroContrato); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContratoId); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NumeroContrato")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Cliente"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Cliente); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Cliente")
+		return fmt.Errorf("no value specified for ContratoId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CodigoPostalOrigenId"]; ok {
@@ -382,18 +308,18 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for CodigoPostalOrigenId")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["CodigoPostalDestino"]; ok {
+		if v, ok := fields["CodigoPostalDestinoId"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoPostalDestino); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoPostalDestinoId); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CodigoPostalDestino")
+		return fmt.Errorf("no value specified for CodigoPostalDestinoId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Peso"]; ok {
@@ -478,48 +404,6 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for LargoCm")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["TipoDeEnvioId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TipoDeEnvioId); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for TipoDeEnvioId")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["ItemId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ItemId); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for ItemId")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["PesoUnidad"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PesoUnidad); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for PesoUnidad")
 	}
 	return nil
 }
