@@ -26,20 +26,20 @@ type Envio struct {
 
 	CodigoPostalDestinoId string `json:"CodigoPostalDestinoId"`
 
-	Peso string `json:"Peso"`
+	Peso float32 `json:"Peso"`
 
-	Volumen string `json:"Volumen"`
+	Volumen float32 `json:"Volumen"`
 
-	ValorDeclarado string `json:"ValorDeclarado"`
+	ValorDeclarado float32 `json:"ValorDeclarado"`
 
-	AltoCm string `json:"AltoCm"`
+	AltoCm float32 `json:"AltoCm"`
 
-	AnchoCm string `json:"AnchoCm"`
+	AnchoCm float32 `json:"AnchoCm"`
 
-	LargoCm string `json:"LargoCm"`
+	LargoCm float32 `json:"LargoCm"`
 }
 
-const EnvioAvroCRC64Fingerprint = "vY\xbc\xb2{\x12\xca!"
+const EnvioAvroCRC64Fingerprint = "ߺ\xbf\u008fO\xfdf"
 
 func NewEnvio() Envio {
 	r := Envio{}
@@ -87,27 +87,27 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Peso, w)
+	err = vm.WriteFloat(r.Peso, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Volumen, w)
+	err = vm.WriteFloat(r.Volumen, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ValorDeclarado, w)
+	err = vm.WriteFloat(r.ValorDeclarado, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.AltoCm, w)
+	err = vm.WriteFloat(r.AltoCm, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.AnchoCm, w)
+	err = vm.WriteFloat(r.AnchoCm, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LargoCm, w)
+	err = vm.WriteFloat(r.LargoCm, w)
 	if err != nil {
 		return err
 	}
@@ -119,7 +119,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"CodigoPostalOrigenId\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestinoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"Volumen\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"string\"},{\"name\":\"AltoCm\",\"type\":\"string\"},{\"name\":\"AnchoCm\",\"type\":\"string\"},{\"name\":\"LargoCm\",\"type\":\"string\"}],\"name\":\"Andreani.CorporativoBackend.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"CodigoPostalOrigenId\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestinoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"name\":\"Volumen\",\"type\":\"float\"},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"}],\"name\":\"Andreani.CorporativoBackend.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -158,32 +158,32 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.String{Target: &r.Peso}
+		w := types.Float{Target: &r.Peso}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.Volumen}
+		w := types.Float{Target: &r.Volumen}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.ValorDeclarado}
+		w := types.Float{Target: &r.ValorDeclarado}
 
 		return w
 
 	case 7:
-		w := types.String{Target: &r.AltoCm}
+		w := types.Float{Target: &r.AltoCm}
 
 		return w
 
 	case 8:
-		w := types.String{Target: &r.AnchoCm}
+		w := types.Float{Target: &r.AnchoCm}
 
 		return w
 
 	case 9:
-		w := types.String{Target: &r.LargoCm}
+		w := types.Float{Target: &r.LargoCm}
 
 		return w
 
