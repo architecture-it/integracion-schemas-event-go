@@ -21,12 +21,51 @@ type ArticuloSce struct {
 	Sku string `json:"Sku"`
 
 	Cantidad int32 `json:"Cantidad"`
+
+	Atributo1 *UnionNullString `json:"Atributo1"`
+
+	Atributo2 *UnionNullString `json:"Atributo2"`
+
+	Atributo3 *UnionNullString `json:"Atributo3"`
+
+	Atributo4 *UnionNullString `json:"Atributo4"`
+
+	Atributo5 *UnionNullString `json:"Atributo5"`
+
+	Atributo6 *UnionNullString `json:"Atributo6"`
+
+	Atributo7 *UnionNullString `json:"Atributo7"`
+
+	Atributo8 *UnionNullString `json:"Atributo8"`
+
+	Atributo9 *UnionNullString `json:"Atributo9"`
+
+	Atributo10 *UnionNullString `json:"Atributo10"`
+
+	Atributo11 *UnionNullString `json:"Atributo11"`
+
+	Atributo12 *UnionNullString `json:"Atributo12"`
+
+	Series *UnionNullArrayString `json:"Series"`
 }
 
-const ArticuloSceAvroCRC64Fingerprint = "Ժ\xf7\x9bQZ\xd7H"
+const ArticuloSceAvroCRC64Fingerprint = "|\xcct\xb3\x82\xaaߨ"
 
 func NewArticuloSce() ArticuloSce {
 	r := ArticuloSce{}
+	r.Atributo1 = nil
+	r.Atributo2 = nil
+	r.Atributo3 = nil
+	r.Atributo4 = nil
+	r.Atributo5 = nil
+	r.Atributo6 = nil
+	r.Atributo7 = nil
+	r.Atributo8 = nil
+	r.Atributo9 = nil
+	r.Atributo10 = nil
+	r.Atributo11 = nil
+	r.Atributo12 = nil
+	r.Series = nil
 	return r
 }
 
@@ -63,6 +102,58 @@ func writeArticuloSce(r ArticuloSce, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Atributo1, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo2, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo3, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo4, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo5, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo6, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo7, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo8, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo9, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo10, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo11, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Atributo12, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullArrayString(r.Series, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -71,7 +162,7 @@ func (r ArticuloSce) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloSce) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloSce\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloSce\",\"type\":\"record\"}"
 }
 
 func (r ArticuloSce) SchemaName() string {
@@ -99,18 +190,148 @@ func (r *ArticuloSce) Get(i int) types.Field {
 
 		return w
 
+	case 2:
+		r.Atributo1 = NewUnionNullString()
+
+		return r.Atributo1
+	case 3:
+		r.Atributo2 = NewUnionNullString()
+
+		return r.Atributo2
+	case 4:
+		r.Atributo3 = NewUnionNullString()
+
+		return r.Atributo3
+	case 5:
+		r.Atributo4 = NewUnionNullString()
+
+		return r.Atributo4
+	case 6:
+		r.Atributo5 = NewUnionNullString()
+
+		return r.Atributo5
+	case 7:
+		r.Atributo6 = NewUnionNullString()
+
+		return r.Atributo6
+	case 8:
+		r.Atributo7 = NewUnionNullString()
+
+		return r.Atributo7
+	case 9:
+		r.Atributo8 = NewUnionNullString()
+
+		return r.Atributo8
+	case 10:
+		r.Atributo9 = NewUnionNullString()
+
+		return r.Atributo9
+	case 11:
+		r.Atributo10 = NewUnionNullString()
+
+		return r.Atributo10
+	case 12:
+		r.Atributo11 = NewUnionNullString()
+
+		return r.Atributo11
+	case 13:
+		r.Atributo12 = NewUnionNullString()
+
+		return r.Atributo12
+	case 14:
+		r.Series = NewUnionNullArrayString()
+
+		return r.Series
 	}
 	panic("Unknown field index")
 }
 
 func (r *ArticuloSce) SetDefault(i int) {
 	switch i {
+	case 2:
+		r.Atributo1 = nil
+		return
+	case 3:
+		r.Atributo2 = nil
+		return
+	case 4:
+		r.Atributo3 = nil
+		return
+	case 5:
+		r.Atributo4 = nil
+		return
+	case 6:
+		r.Atributo5 = nil
+		return
+	case 7:
+		r.Atributo6 = nil
+		return
+	case 8:
+		r.Atributo7 = nil
+		return
+	case 9:
+		r.Atributo8 = nil
+		return
+	case 10:
+		r.Atributo9 = nil
+		return
+	case 11:
+		r.Atributo10 = nil
+		return
+	case 12:
+		r.Atributo11 = nil
+		return
+	case 13:
+		r.Atributo12 = nil
+		return
+	case 14:
+		r.Series = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ArticuloSce) NullField(i int) {
 	switch i {
+	case 2:
+		r.Atributo1 = nil
+		return
+	case 3:
+		r.Atributo2 = nil
+		return
+	case 4:
+		r.Atributo3 = nil
+		return
+	case 5:
+		r.Atributo4 = nil
+		return
+	case 6:
+		r.Atributo5 = nil
+		return
+	case 7:
+		r.Atributo6 = nil
+		return
+	case 8:
+		r.Atributo7 = nil
+		return
+	case 9:
+		r.Atributo8 = nil
+		return
+	case 10:
+		r.Atributo9 = nil
+		return
+	case 11:
+		r.Atributo10 = nil
+		return
+	case 12:
+		r.Atributo11 = nil
+		return
+	case 13:
+		r.Atributo12 = nil
+		return
+	case 14:
+		r.Series = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -132,6 +353,58 @@ func (r ArticuloSce) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Cantidad"], err = json.Marshal(r.Cantidad)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo1"], err = json.Marshal(r.Atributo1)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo2"], err = json.Marshal(r.Atributo2)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo3"], err = json.Marshal(r.Atributo3)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo4"], err = json.Marshal(r.Atributo4)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo5"], err = json.Marshal(r.Atributo5)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo6"], err = json.Marshal(r.Atributo6)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo7"], err = json.Marshal(r.Atributo7)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo8"], err = json.Marshal(r.Atributo8)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo9"], err = json.Marshal(r.Atributo9)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo10"], err = json.Marshal(r.Atributo10)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo11"], err = json.Marshal(r.Atributo11)
+	if err != nil {
+		return nil, err
+	}
+	output["Atributo12"], err = json.Marshal(r.Atributo12)
+	if err != nil {
+		return nil, err
+	}
+	output["Series"], err = json.Marshal(r.Series)
 	if err != nil {
 		return nil, err
 	}
@@ -172,6 +445,214 @@ func (r *ArticuloSce) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Cantidad")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo1"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo1); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo1 = NewUnionNullString()
+
+		r.Atributo1 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo2"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo2); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo2 = NewUnionNullString()
+
+		r.Atributo2 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo3"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo3); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo3 = NewUnionNullString()
+
+		r.Atributo3 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo4"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo4); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo4 = NewUnionNullString()
+
+		r.Atributo4 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo5"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo5); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo5 = NewUnionNullString()
+
+		r.Atributo5 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo6"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo6); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo6 = NewUnionNullString()
+
+		r.Atributo6 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo7"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo7); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo7 = NewUnionNullString()
+
+		r.Atributo7 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo8"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo8); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo8 = NewUnionNullString()
+
+		r.Atributo8 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo9"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo9); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo9 = NewUnionNullString()
+
+		r.Atributo9 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo10"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo10); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo10 = NewUnionNullString()
+
+		r.Atributo10 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo11"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo11); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo11 = NewUnionNullString()
+
+		r.Atributo11 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Atributo12"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Atributo12); err != nil {
+			return err
+		}
+	} else {
+		r.Atributo12 = NewUnionNullString()
+
+		r.Atributo12 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Series"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Series); err != nil {
+			return err
+		}
+	} else {
+		r.Series = NewUnionNullArrayString()
+
+		r.Series = nil
 	}
 	return nil
 }
