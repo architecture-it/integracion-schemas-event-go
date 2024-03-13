@@ -24,6 +24,10 @@ type NovedadAnalizada struct {
 
 	IdCliente int32 `json:"idCliente"`
 
+	IdModelo int32 `json:"idModelo"`
+
+	NroCiclo int32 `json:"nroCiclo"`
+
 	NombreDeCliente string `json:"nombreDeCliente"`
 
 	Movimiento *UnionNullString `json:"movimiento"`
@@ -38,14 +42,12 @@ type NovedadAnalizada struct {
 
 	CodigoCliente2 *UnionNullString `json:"codigoCliente2"`
 
-	IdModelo int32 `json:"idModelo"`
-
 	GeneradorDestino *UnionNullString `json:"generadorDestino"`
 
 	DespachadorDestino *UnionNullString `json:"despachadorDestino"`
 }
 
-const NovedadAnalizadaAvroCRC64Fingerprint = "\xf4=\xa3\xdcj\xa7\x13l"
+const NovedadAnalizadaAvroCRC64Fingerprint = "\x16kZ\xac\xa5M\xc2@"
 
 func NewNovedadAnalizada() NovedadAnalizada {
 	r := NovedadAnalizada{}
@@ -93,6 +95,14 @@ func writeNovedadAnalizada(r NovedadAnalizada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.IdModelo, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteInt(r.NroCiclo, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.NombreDeCliente, w)
 	if err != nil {
 		return err
@@ -121,10 +131,6 @@ func writeNovedadAnalizada(r NovedadAnalizada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.IdModelo, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.GeneradorDestino, w)
 	if err != nil {
 		return err
@@ -141,7 +147,7 @@ func (r NovedadAnalizada) Serialize(w io.Writer) error {
 }
 
 func (r NovedadAnalizada) Schema() string {
-	return "{\"fields\":[{\"name\":\"novedadUnificada\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Value\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadata\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"NovedadUnificada\",\"type\":\"record\"}},{\"name\":\"idContrato\",\"type\":\"int\"},{\"name\":\"idCliente\",\"type\":\"int\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"movimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"subMovimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"idMotivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"idSubmotivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoCliente1\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoCliente2\",\"type\":[\"null\",\"string\"]},{\"name\":\"idModelo\",\"type\":\"int\"},{\"default\":null,\"name\":\"generadorDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"despachadorDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadAnalizada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"novedadUnificada\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Value\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadata\",\"namespace\":\"Andreani.NovedadesCustom.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"NovedadUnificada\",\"type\":\"record\"}},{\"name\":\"idContrato\",\"type\":\"int\"},{\"name\":\"idCliente\",\"type\":\"int\"},{\"name\":\"idModelo\",\"type\":\"int\"},{\"name\":\"nroCiclo\",\"type\":\"int\"},{\"name\":\"nombreDeCliente\",\"type\":\"string\"},{\"name\":\"movimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"subMovimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"idMotivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"idSubmotivo\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoCliente1\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoCliente2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"generadorDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"despachadorDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Record.NovedadAnalizada\",\"type\":\"record\"}"
 }
 
 func (r NovedadAnalizada) SchemaName() string {
@@ -177,44 +183,49 @@ func (r *NovedadAnalizada) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.NombreDeCliente}
-
-		return w
-
-	case 4:
-		r.Movimiento = NewUnionNullString()
-
-		return r.Movimiento
-	case 5:
-		r.SubMovimiento = NewUnionNullString()
-
-		return r.SubMovimiento
-	case 6:
-		r.IdMotivo = NewUnionNullString()
-
-		return r.IdMotivo
-	case 7:
-		r.IdSubmotivo = NewUnionNullString()
-
-		return r.IdSubmotivo
-	case 8:
-		r.CodigoCliente1 = NewUnionNullString()
-
-		return r.CodigoCliente1
-	case 9:
-		r.CodigoCliente2 = NewUnionNullString()
-
-		return r.CodigoCliente2
-	case 10:
 		w := types.Int{Target: &r.IdModelo}
 
 		return w
 
+	case 4:
+		w := types.Int{Target: &r.NroCiclo}
+
+		return w
+
+	case 5:
+		w := types.String{Target: &r.NombreDeCliente}
+
+		return w
+
+	case 6:
+		r.Movimiento = NewUnionNullString()
+
+		return r.Movimiento
+	case 7:
+		r.SubMovimiento = NewUnionNullString()
+
+		return r.SubMovimiento
+	case 8:
+		r.IdMotivo = NewUnionNullString()
+
+		return r.IdMotivo
+	case 9:
+		r.IdSubmotivo = NewUnionNullString()
+
+		return r.IdSubmotivo
+	case 10:
+		r.CodigoCliente1 = NewUnionNullString()
+
+		return r.CodigoCliente1
 	case 11:
+		r.CodigoCliente2 = NewUnionNullString()
+
+		return r.CodigoCliente2
+	case 12:
 		r.GeneradorDestino = NewUnionNullString()
 
 		return r.GeneradorDestino
-	case 12:
+	case 13:
 		r.DespachadorDestino = NewUnionNullString()
 
 		return r.DespachadorDestino
@@ -224,10 +235,10 @@ func (r *NovedadAnalizada) Get(i int) types.Field {
 
 func (r *NovedadAnalizada) SetDefault(i int) {
 	switch i {
-	case 11:
+	case 12:
 		r.GeneradorDestino = nil
 		return
-	case 12:
+	case 13:
 		r.DespachadorDestino = nil
 		return
 	}
@@ -236,28 +247,28 @@ func (r *NovedadAnalizada) SetDefault(i int) {
 
 func (r *NovedadAnalizada) NullField(i int) {
 	switch i {
-	case 4:
+	case 6:
 		r.Movimiento = nil
 		return
-	case 5:
+	case 7:
 		r.SubMovimiento = nil
 		return
-	case 6:
+	case 8:
 		r.IdMotivo = nil
 		return
-	case 7:
+	case 9:
 		r.IdSubmotivo = nil
 		return
-	case 8:
+	case 10:
 		r.CodigoCliente1 = nil
 		return
-	case 9:
+	case 11:
 		r.CodigoCliente2 = nil
 		return
-	case 11:
+	case 12:
 		r.GeneradorDestino = nil
 		return
-	case 12:
+	case 13:
 		r.DespachadorDestino = nil
 		return
 	}
@@ -288,6 +299,14 @@ func (r NovedadAnalizada) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["idModelo"], err = json.Marshal(r.IdModelo)
+	if err != nil {
+		return nil, err
+	}
+	output["nroCiclo"], err = json.Marshal(r.NroCiclo)
+	if err != nil {
+		return nil, err
+	}
 	output["nombreDeCliente"], err = json.Marshal(r.NombreDeCliente)
 	if err != nil {
 		return nil, err
@@ -313,10 +332,6 @@ func (r NovedadAnalizada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["codigoCliente2"], err = json.Marshal(r.CodigoCliente2)
-	if err != nil {
-		return nil, err
-	}
-	output["idModelo"], err = json.Marshal(r.IdModelo)
 	if err != nil {
 		return nil, err
 	}
@@ -379,6 +394,34 @@ func (r *NovedadAnalizada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for idCliente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idModelo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdModelo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idModelo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["nroCiclo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NroCiclo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for nroCiclo")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["nombreDeCliente"]; ok {
@@ -477,20 +520,6 @@ func (r *NovedadAnalizada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for codigoCliente2")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["idModelo"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IdModelo); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for idModelo")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["generadorDestino"]; ok {
