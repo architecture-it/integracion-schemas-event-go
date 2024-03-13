@@ -52,10 +52,12 @@ type ArticuloSce struct {
 
 	Atributo12 *UnionNullString `json:"Atributo12"`
 
+	InformaSeriesEnEmpaquetado bool `json:"InformaSeriesEnEmpaquetado"`
+
 	Series *UnionNullArrayString `json:"Series"`
 }
 
-const ArticuloSceAvroCRC64Fingerprint = "\x94\xcb\xf5ѯ\x8a}\xe1"
+const ArticuloSceAvroCRC64Fingerprint = "\xf5\xd6h.˛>\xff"
 
 func NewArticuloSce() ArticuloSce {
 	r := ArticuloSce{}
@@ -168,6 +170,10 @@ func writeArticuloSce(r ArticuloSce, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteBool(r.InformaSeriesEnEmpaquetado, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullArrayString(r.Series, w)
 	if err != nil {
 		return err
@@ -180,7 +186,7 @@ func (r ArticuloSce) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloSce) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"NroLinea\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloSce\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"NroLinea\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaSeriesEnEmpaquetado\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloSce\",\"type\":\"record\"}"
 }
 
 func (r ArticuloSce) SchemaName() string {
@@ -272,6 +278,11 @@ func (r *ArticuloSce) Get(i int) types.Field {
 
 		return r.Atributo12
 	case 17:
+		w := types.Boolean{Target: &r.InformaSeriesEnEmpaquetado}
+
+		return w
+
+	case 18:
 		r.Series = NewUnionNullArrayString()
 
 		return r.Series
@@ -317,7 +328,7 @@ func (r *ArticuloSce) SetDefault(i int) {
 	case 16:
 		r.Atributo12 = nil
 		return
-	case 17:
+	case 18:
 		r.Series = nil
 		return
 	}
@@ -362,7 +373,7 @@ func (r *ArticuloSce) NullField(i int) {
 	case 16:
 		r.Atributo12 = nil
 		return
-	case 17:
+	case 18:
 		r.Series = nil
 		return
 	}
@@ -446,6 +457,10 @@ func (r ArticuloSce) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Atributo12"], err = json.Marshal(r.Atributo12)
+	if err != nil {
+		return nil, err
+	}
+	output["InformaSeriesEnEmpaquetado"], err = json.Marshal(r.InformaSeriesEnEmpaquetado)
 	if err != nil {
 		return nil, err
 	}
@@ -724,6 +739,20 @@ func (r *ArticuloSce) UnmarshalJSON(data []byte) error {
 		r.Atributo12 = NewUnionNullString()
 
 		r.Atributo12 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["InformaSeriesEnEmpaquetado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.InformaSeriesEnEmpaquetado); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for InformaSeriesEnEmpaquetado")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Series"]; ok {
