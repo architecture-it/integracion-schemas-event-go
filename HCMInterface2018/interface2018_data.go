@@ -105,9 +105,13 @@ type Interface2018Data struct {
 	Secretaria string `json:"Secretaria"`
 
 	Comuna string `json:"Comuna"`
+
+	FechaBaja string `json:"FechaBaja"`
+
+	MotivoBaja string `json:"MotivoBaja"`
 }
 
-const Interface2018DataAvroCRC64Fingerprint = "ݶT\x17\x89T\xb1\xfd"
+const Interface2018DataAvroCRC64Fingerprint = "xy\xa43\xdeߕ\xbc"
 
 func NewInterface2018Data() Interface2018Data {
 	r := Interface2018Data{}
@@ -315,6 +319,14 @@ func writeInterface2018Data(r Interface2018Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.FechaBaja, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.MotivoBaja, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -323,7 +335,7 @@ func (r Interface2018Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface2018Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"LegajoDelEmpleado\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Nombres\",\"type\":\"string\"},{\"name\":\"FechaNacimiento\",\"type\":\"string\"},{\"name\":\"PaisDeNacimiento\",\"type\":\"string\"},{\"name\":\"Nacionalidad\",\"type\":\"string\"},{\"name\":\"EstadoCivil\",\"type\":\"string\"},{\"name\":\"Sexo\",\"type\":\"string\"},{\"name\":\"Parentesco\",\"type\":\"string\"},{\"name\":\"Incapacitado\",\"type\":\"string\"},{\"name\":\"FechaDeDiscapacidad\",\"type\":\"string\"},{\"name\":\"TipoDocumento1\",\"type\":\"string\"},{\"name\":\"NroDocumento1\",\"type\":\"string\"},{\"name\":\"ObraSocial\",\"type\":\"string\"},{\"name\":\"PlanOS\",\"type\":\"string\"},{\"name\":\"AvisarAnteEmergencia\",\"type\":\"string\"},{\"name\":\"PagaSalarioFamiliar\",\"type\":\"string\"},{\"name\":\"Ganancias\",\"type\":\"string\"},{\"name\":\"FechaInicioVinculo\",\"type\":\"string\"},{\"name\":\"FechaVto1\",\"type\":\"string\"},{\"name\":\"ItemDDJJ\",\"type\":\"string\"},{\"name\":\"FechaDesdeDDJJ\",\"type\":\"string\"},{\"name\":\"FechaHastaDDJJ\",\"type\":\"string\"},{\"name\":\"TipoDocumento2\",\"type\":\"string\"},{\"name\":\"Documento2\",\"type\":\"string\"},{\"name\":\"Guarderia\",\"type\":\"string\"},{\"name\":\"FechaVto2\",\"type\":\"string\"},{\"name\":\"Adopcion\",\"type\":\"string\"},{\"name\":\"Estudia\",\"type\":\"string\"},{\"name\":\"PeriodoEscolar\",\"type\":\"string\"},{\"name\":\"NivelDeEstudio\",\"type\":\"string\"},{\"name\":\"GradoAnio\",\"type\":\"string\"},{\"name\":\"Anio\",\"type\":\"string\"},{\"name\":\"FechaDeInicio\",\"type\":\"string\"},{\"name\":\"ConstInicial\",\"type\":\"string\"},{\"name\":\"ConstFinal\",\"type\":\"string\"},{\"name\":\"FechaDocumentacion\",\"type\":\"string\"},{\"name\":\"Acta\",\"type\":\"string\"},{\"name\":\"Tomo\",\"type\":\"string\"},{\"name\":\"Folio\",\"type\":\"string\"},{\"name\":\"Tribunal\",\"type\":\"string\"},{\"name\":\"Juzgado\",\"type\":\"string\"},{\"name\":\"Secretaria\",\"type\":\"string\"},{\"name\":\"Comuna\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface2018.Events.Record.Interface2018Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"LegajoDelEmpleado\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Nombres\",\"type\":\"string\"},{\"name\":\"FechaNacimiento\",\"type\":\"string\"},{\"name\":\"PaisDeNacimiento\",\"type\":\"string\"},{\"name\":\"Nacionalidad\",\"type\":\"string\"},{\"name\":\"EstadoCivil\",\"type\":\"string\"},{\"name\":\"Sexo\",\"type\":\"string\"},{\"name\":\"Parentesco\",\"type\":\"string\"},{\"name\":\"Incapacitado\",\"type\":\"string\"},{\"name\":\"FechaDeDiscapacidad\",\"type\":\"string\"},{\"name\":\"TipoDocumento1\",\"type\":\"string\"},{\"name\":\"NroDocumento1\",\"type\":\"string\"},{\"name\":\"ObraSocial\",\"type\":\"string\"},{\"name\":\"PlanOS\",\"type\":\"string\"},{\"name\":\"AvisarAnteEmergencia\",\"type\":\"string\"},{\"name\":\"PagaSalarioFamiliar\",\"type\":\"string\"},{\"name\":\"Ganancias\",\"type\":\"string\"},{\"name\":\"FechaInicioVinculo\",\"type\":\"string\"},{\"name\":\"FechaVto1\",\"type\":\"string\"},{\"name\":\"ItemDDJJ\",\"type\":\"string\"},{\"name\":\"FechaDesdeDDJJ\",\"type\":\"string\"},{\"name\":\"FechaHastaDDJJ\",\"type\":\"string\"},{\"name\":\"TipoDocumento2\",\"type\":\"string\"},{\"name\":\"Documento2\",\"type\":\"string\"},{\"name\":\"Guarderia\",\"type\":\"string\"},{\"name\":\"FechaVto2\",\"type\":\"string\"},{\"name\":\"Adopcion\",\"type\":\"string\"},{\"name\":\"Estudia\",\"type\":\"string\"},{\"name\":\"PeriodoEscolar\",\"type\":\"string\"},{\"name\":\"NivelDeEstudio\",\"type\":\"string\"},{\"name\":\"GradoAnio\",\"type\":\"string\"},{\"name\":\"Anio\",\"type\":\"string\"},{\"name\":\"FechaDeInicio\",\"type\":\"string\"},{\"name\":\"ConstInicial\",\"type\":\"string\"},{\"name\":\"ConstFinal\",\"type\":\"string\"},{\"name\":\"FechaDocumentacion\",\"type\":\"string\"},{\"name\":\"Acta\",\"type\":\"string\"},{\"name\":\"Tomo\",\"type\":\"string\"},{\"name\":\"Folio\",\"type\":\"string\"},{\"name\":\"Tribunal\",\"type\":\"string\"},{\"name\":\"Juzgado\",\"type\":\"string\"},{\"name\":\"Secretaria\",\"type\":\"string\"},{\"name\":\"Comuna\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"MotivoBaja\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface2018.Events.Record.Interface2018Data\",\"type\":\"record\"}"
 }
 
 func (r Interface2018Data) SchemaName() string {
@@ -561,6 +573,16 @@ func (r *Interface2018Data) Get(i int) types.Field {
 
 		return w
 
+	case 44:
+		w := types.String{Target: &r.FechaBaja}
+
+		return w
+
+	case 45:
+		w := types.String{Target: &r.MotivoBaja}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -762,6 +784,14 @@ func (r Interface2018Data) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Comuna"], err = json.Marshal(r.Comuna)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaBaja"], err = json.Marshal(r.FechaBaja)
+	if err != nil {
+		return nil, err
+	}
+	output["MotivoBaja"], err = json.Marshal(r.MotivoBaja)
 	if err != nil {
 		return nil, err
 	}
@@ -1390,6 +1420,34 @@ func (r *Interface2018Data) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Comuna")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaBaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaBaja); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaBaja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["MotivoBaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.MotivoBaja); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for MotivoBaja")
 	}
 	return nil
 }
