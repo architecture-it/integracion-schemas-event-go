@@ -21,14 +21,18 @@ type ListVismaInterfaceError struct {
 	Interface *UnionNullString `json:"Interface"`
 
 	Mensajes []VismaInterfaceErrorData `json:"Mensajes"`
+
+	VismaErrorMessages []VismaErrorMessageData `json:"VismaErrorMessages"`
 }
 
-const ListVismaInterfaceErrorAvroCRC64Fingerprint = "\xfd\xd7\x10*`\xebx."
+const ListVismaInterfaceErrorAvroCRC64Fingerprint = "\xc7\xeb^4\x90s_r"
 
 func NewListVismaInterfaceError() ListVismaInterfaceError {
 	r := ListVismaInterfaceError{}
 	r.Interface = nil
 	r.Mensajes = make([]VismaInterfaceErrorData, 0)
+
+	r.VismaErrorMessages = make([]VismaErrorMessageData, 0)
 
 	return r
 }
@@ -66,6 +70,10 @@ func writeListVismaInterfaceError(r ListVismaInterfaceError, w io.Writer) error 
 	if err != nil {
 		return err
 	}
+	err = writeArrayVismaErrorMessageData(r.VismaErrorMessages, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -74,7 +82,7 @@ func (r ListVismaInterfaceError) Serialize(w io.Writer) error {
 }
 
 func (r ListVismaInterfaceError) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Interface\",\"type\":[\"null\",\"string\"]},{\"name\":\"Mensajes\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Mensaje\",\"type\":[\"null\",\"string\"]}],\"name\":\"VismaInterfaceErrorData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.VismaInterfaceError.Events.Record.ListVismaInterfaceError\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Interface\",\"type\":[\"null\",\"string\"]},{\"name\":\"Mensajes\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Mensaje\",\"type\":[\"null\",\"string\"]}],\"name\":\"VismaInterfaceErrorData\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"VismaErrorMessages\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"EmployeeId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ErrorMessage\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RowCsv\",\"type\":[\"null\",\"string\"]}],\"name\":\"VismaErrorMessageData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.VismaInterfaceError.Events.Record.ListVismaInterfaceError\",\"type\":\"record\"}"
 }
 
 func (r ListVismaInterfaceError) SchemaName() string {
@@ -100,6 +108,13 @@ func (r *ListVismaInterfaceError) Get(i int) types.Field {
 		r.Mensajes = make([]VismaInterfaceErrorData, 0)
 
 		w := ArrayVismaInterfaceErrorDataWrapper{Target: &r.Mensajes}
+
+		return w
+
+	case 2:
+		r.VismaErrorMessages = make([]VismaErrorMessageData, 0)
+
+		w := ArrayVismaErrorMessageDataWrapper{Target: &r.VismaErrorMessages}
 
 		return w
 
@@ -145,6 +160,10 @@ func (r ListVismaInterfaceError) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["VismaErrorMessages"], err = json.Marshal(r.VismaErrorMessages)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -184,6 +203,20 @@ func (r *ListVismaInterfaceError) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Mensajes")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["VismaErrorMessages"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.VismaErrorMessages); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for VismaErrorMessages")
 	}
 	return nil
 }
