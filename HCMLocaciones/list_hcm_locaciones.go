@@ -21,7 +21,7 @@ type ListHCMLocaciones struct {
 	Interfaces []HCMLocacionesData `json:"interfaces"`
 }
 
-const ListHCMLocacionesAvroCRC64Fingerprint = "װ\x86\"\xcc\x1c#J"
+const ListHCMLocacionesAvroCRC64Fingerprint = "y\x17\t\x11\xde\xc3.K"
 
 func NewListHCMLocaciones() ListHCMLocaciones {
 	r := ListHCMLocaciones{}
@@ -67,7 +67,7 @@ func (r ListHCMLocaciones) Serialize(w io.Writer) error {
 }
 
 func (r ListHCMLocaciones) Schema() string {
-	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"LocationCode\",\"type\":\"string\"},{\"name\":\"LocationName\",\"type\":\"string\"},{\"name\":\"AdressLine1\",\"type\":\"string\"},{\"name\":\"AdressLine2\",\"type\":\"string\"},{\"name\":\"PostalCode\",\"type\":\"string\"},{\"name\":\"Region3\",\"type\":\"string\"},{\"name\":\"EffectiveStartDate\",\"type\":\"string\"},{\"name\":\"Country\",\"type\":\"string\"},{\"name\":\"ActiveStatus\",\"type\":\"string\"},{\"name\":\"SetName\",\"type\":\"string\"}],\"name\":\"HCMLocacionesData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMLocaciones.Events.Common.ListHCMLocaciones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"LocationCode\",\"type\":\"string\"},{\"name\":\"LocationName\",\"type\":\"string\"},{\"name\":\"AdressLine1\",\"type\":\"string\"},{\"name\":\"AdressLine2\",\"type\":\"string\"},{\"name\":\"PostalCode\",\"type\":\"string\"},{\"name\":\"Region3\",\"type\":\"string\"},{\"name\":\"EffectiveStartDate\",\"type\":\"string\"},{\"name\":\"Country\",\"type\":\"string\"},{\"name\":\"ActiveStatus\",\"type\":\"string\"},{\"name\":\"SetName\",\"type\":\"string\"},{\"name\":\"InsertTs\",\"type\":\"string\"},{\"name\":\"UpdateTs\",\"type\":\"string\"}],\"name\":\"HCMLocacionesData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMLocaciones.Events.Common.ListHCMLocaciones\",\"type\":\"record\"}"
 }
 
 func (r ListHCMLocaciones) SchemaName() string {
