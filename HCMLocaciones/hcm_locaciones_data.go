@@ -38,12 +38,14 @@ type HCMLocacionesData struct {
 
 	SetName string `json:"SetName"`
 
+	AddlAddressAttribute3 string `json:"AddlAddressAttribute3"`
+
 	InsertTs string `json:"InsertTs"`
 
 	UpdateTs string `json:"UpdateTs"`
 }
 
-const HCMLocacionesDataAvroCRC64Fingerprint = "\xe8\xe2\xb1\x19\xf9\xe6\xaeQ"
+const HCMLocacionesDataAvroCRC64Fingerprint = "\x9c9*9\x95\xb2||"
 
 func NewHCMLocacionesData() HCMLocacionesData {
 	r := HCMLocacionesData{}
@@ -115,6 +117,10 @@ func writeHCMLocacionesData(r HCMLocacionesData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.AddlAddressAttribute3, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.InsertTs, w)
 	if err != nil {
 		return err
@@ -131,7 +137,7 @@ func (r HCMLocacionesData) Serialize(w io.Writer) error {
 }
 
 func (r HCMLocacionesData) Schema() string {
-	return "{\"fields\":[{\"name\":\"LocationCode\",\"type\":\"string\"},{\"name\":\"LocationName\",\"type\":\"string\"},{\"name\":\"AdressLine1\",\"type\":\"string\"},{\"name\":\"AdressLine2\",\"type\":\"string\"},{\"name\":\"PostalCode\",\"type\":\"string\"},{\"name\":\"Region3\",\"type\":\"string\"},{\"name\":\"EffectiveStartDate\",\"type\":\"string\"},{\"name\":\"Country\",\"type\":\"string\"},{\"name\":\"ActiveStatus\",\"type\":\"string\"},{\"name\":\"SetName\",\"type\":\"string\"},{\"name\":\"InsertTs\",\"type\":\"string\"},{\"name\":\"UpdateTs\",\"type\":\"string\"}],\"name\":\"Andreani.HCMLocaciones.Events.Common.HCMLocacionesData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"LocationCode\",\"type\":\"string\"},{\"name\":\"LocationName\",\"type\":\"string\"},{\"name\":\"AdressLine1\",\"type\":\"string\"},{\"name\":\"AdressLine2\",\"type\":\"string\"},{\"name\":\"PostalCode\",\"type\":\"string\"},{\"name\":\"Region3\",\"type\":\"string\"},{\"name\":\"EffectiveStartDate\",\"type\":\"string\"},{\"name\":\"Country\",\"type\":\"string\"},{\"name\":\"ActiveStatus\",\"type\":\"string\"},{\"name\":\"SetName\",\"type\":\"string\"},{\"name\":\"AddlAddressAttribute3\",\"type\":\"string\"},{\"name\":\"InsertTs\",\"type\":\"string\"},{\"name\":\"UpdateTs\",\"type\":\"string\"}],\"name\":\"Andreani.HCMLocaciones.Events.Common.HCMLocacionesData\",\"type\":\"record\"}"
 }
 
 func (r HCMLocacionesData) SchemaName() string {
@@ -200,11 +206,16 @@ func (r *HCMLocacionesData) Get(i int) types.Field {
 		return w
 
 	case 10:
-		w := types.String{Target: &r.InsertTs}
+		w := types.String{Target: &r.AddlAddressAttribute3}
 
 		return w
 
 	case 11:
+		w := types.String{Target: &r.InsertTs}
+
+		return w
+
+	case 12:
 		w := types.String{Target: &r.UpdateTs}
 
 		return w
@@ -274,6 +285,10 @@ func (r HCMLocacionesData) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["SetName"], err = json.Marshal(r.SetName)
+	if err != nil {
+		return nil, err
+	}
+	output["AddlAddressAttribute3"], err = json.Marshal(r.AddlAddressAttribute3)
 	if err != nil {
 		return nil, err
 	}
@@ -434,6 +449,20 @@ func (r *HCMLocacionesData) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for SetName")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["AddlAddressAttribute3"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AddlAddressAttribute3); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for AddlAddressAttribute3")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["InsertTs"]; ok {
