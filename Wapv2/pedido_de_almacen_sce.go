@@ -64,8 +64,6 @@ type PedidoDeAlmacenSCE struct {
 
 	Distribuidor Distribuidor `json:"distribuidor"`
 
-	Admitepickingparcial int32 `json:"admitepickingparcial"`
-
 	LinkImpresionRemito *UnionNullListaDeImpRemito `json:"linkImpresionRemito"`
 
 	CodigosDeTrazaANMAT *UnionNullListaDeCodigosDeTrazaANMAT `json:"codigosDeTrazaANMAT"`
@@ -77,7 +75,7 @@ type PedidoDeAlmacenSCE struct {
 	UrlsDocumentos *UnionNullListaUrlsDocumentos `json:"urlsDocumentos"`
 }
 
-const PedidoDeAlmacenSCEAvroCRC64Fingerprint = "\aG%\xbe3\x10\x97z"
+const PedidoDeAlmacenSCEAvroCRC64Fingerprint = "\xdchZ\xfc\xe9\x1d*\xb4"
 
 func NewPedidoDeAlmacenSCE() PedidoDeAlmacenSCE {
 	r := PedidoDeAlmacenSCE{}
@@ -228,10 +226,6 @@ func writePedidoDeAlmacenSCE(r PedidoDeAlmacenSCE, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.Admitepickingparcial, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullListaDeImpRemito(r.LinkImpresionRemito, w)
 	if err != nil {
 		return err
@@ -260,7 +254,7 @@ func (r PedidoDeAlmacenSCE) Serialize(w io.Writer) error {
 }
 
 func (r PedidoDeAlmacenSCE) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"idDestinatario\",\"type\":\"string\"},{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"almacencliente\",\"type\":\"string\"},{\"name\":\"fechaPedido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"franjahoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechadeexpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechadeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"preciovalorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ordenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estatusOTdeTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"marketPlace\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.ListaDePropiedades\"]},{\"name\":\"listaDetalles\",\"type\":{\"fields\":[{\"name\":\"detallePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.ListaDePropiedades\"]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estatusOTdeAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"diasVencimientoMinimo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}]}],\"name\":\"DetallePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDetalleDePedido\",\"type\":\"record\"}},{\"name\":\"distribuidor\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"etiqueta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Distribuidor\",\"type\":\"record\"}},{\"name\":\"admitepickingparcial\",\"type\":\"int\"},{\"default\":null,\"name\":\"linkImpresionRemito\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"ImpRemito\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeImpRemito\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"codigosDeTrazaANMAT\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigosDeTrazaANMAT\",\"type\":{\"items\":{\"fields\":[{\"name\":\"codigoDeTrazaANMAT\",\"type\":\"int\"}],\"name\":\"CodigosDeTrazaANMAT\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeCodigosDeTrazaANMAT\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"archivos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"File\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeFiles\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"archivoRemito\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"Remito\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeRemitos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"urlsDocumentos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"UrlDocumento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaUrlsDocumentos\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.PedidoDeAlmacenSCE\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"idDestinatario\",\"type\":\"string\"},{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"almacencliente\",\"type\":\"string\"},{\"name\":\"fechaPedido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"franjahoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechadeexpedicionSolicitada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cambioLoteDirigido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechadeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"preciovalorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ordenDeCompra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estatusOTdeTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"marketPlace\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.ListaDePropiedades\"]},{\"name\":\"listaDetalles\",\"type\":{\"fields\":[{\"name\":\"detallePedido\",\"type\":{\"items\":{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"Andreani.Wapv2.Events.Record.ListaDePropiedades\"]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estatusOTdeAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"diasVencimientoMinimo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}]}],\"name\":\"DetallePedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDetalleDePedido\",\"type\":\"record\"}},{\"name\":\"distribuidor\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"etiqueta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Distribuidor\",\"type\":\"record\"}},{\"default\":null,\"name\":\"linkImpresionRemito\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"ImpRemito\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeImpRemito\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"codigosDeTrazaANMAT\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigosDeTrazaANMAT\",\"type\":{\"items\":{\"fields\":[{\"name\":\"codigoDeTrazaANMAT\",\"type\":\"int\"}],\"name\":\"CodigosDeTrazaANMAT\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeCodigosDeTrazaANMAT\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"archivos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"File\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeFiles\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"archivoRemito\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"Remito\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeRemitos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"urlsDocumentos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"UrlDocumento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaUrlsDocumentos\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.PedidoDeAlmacenSCE\",\"type\":\"record\"}"
 }
 
 func (r PedidoDeAlmacenSCE) SchemaName() string {
@@ -384,27 +378,22 @@ func (r *PedidoDeAlmacenSCE) Get(i int) types.Field {
 		return w
 
 	case 23:
-		w := types.Int{Target: &r.Admitepickingparcial}
-
-		return w
-
-	case 24:
 		r.LinkImpresionRemito = NewUnionNullListaDeImpRemito()
 
 		return r.LinkImpresionRemito
-	case 25:
+	case 24:
 		r.CodigosDeTrazaANMAT = NewUnionNullListaDeCodigosDeTrazaANMAT()
 
 		return r.CodigosDeTrazaANMAT
-	case 26:
+	case 25:
 		r.Archivos = NewUnionNullListaDeFiles()
 
 		return r.Archivos
-	case 27:
+	case 26:
 		r.ArchivoRemito = NewUnionNullListaDeRemitos()
 
 		return r.ArchivoRemito
-	case 28:
+	case 27:
 		r.UrlsDocumentos = NewUnionNullListaUrlsDocumentos()
 
 		return r.UrlsDocumentos
@@ -462,19 +451,19 @@ func (r *PedidoDeAlmacenSCE) SetDefault(i int) {
 	case 20:
 		r.Datosadicionales = nil
 		return
-	case 24:
+	case 23:
 		r.LinkImpresionRemito = nil
 		return
-	case 25:
+	case 24:
 		r.CodigosDeTrazaANMAT = nil
 		return
-	case 26:
+	case 25:
 		r.Archivos = nil
 		return
-	case 27:
+	case 26:
 		r.ArchivoRemito = nil
 		return
-	case 28:
+	case 27:
 		r.UrlsDocumentos = nil
 		return
 	}
@@ -531,19 +520,19 @@ func (r *PedidoDeAlmacenSCE) NullField(i int) {
 	case 20:
 		r.Datosadicionales = nil
 		return
-	case 24:
+	case 23:
 		r.LinkImpresionRemito = nil
 		return
-	case 25:
+	case 24:
 		r.CodigosDeTrazaANMAT = nil
 		return
-	case 26:
+	case 25:
 		r.Archivos = nil
 		return
-	case 27:
+	case 26:
 		r.ArchivoRemito = nil
 		return
-	case 28:
+	case 27:
 		r.UrlsDocumentos = nil
 		return
 	}
@@ -651,10 +640,6 @@ func (r PedidoDeAlmacenSCE) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["distribuidor"], err = json.Marshal(r.Distribuidor)
-	if err != nil {
-		return nil, err
-	}
-	output["admitepickingparcial"], err = json.Marshal(r.Admitepickingparcial)
 	if err != nil {
 		return nil, err
 	}
@@ -1041,20 +1026,6 @@ func (r *PedidoDeAlmacenSCE) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for distribuidor")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["admitepickingparcial"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Admitepickingparcial); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for admitepickingparcial")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["linkImpresionRemito"]; ok {
