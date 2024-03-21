@@ -22,9 +22,9 @@ type HCMLocacionesData struct {
 
 	LocationName string `json:"LocationName"`
 
-	AdressLine1 string `json:"AdressLine1"`
+	AddressLine1 string `json:"AddressLine1"`
 
-	AdressLine2 string `json:"AdressLine2"`
+	AddressLine2 string `json:"AddressLine2"`
 
 	PostalCode string `json:"PostalCode"`
 
@@ -45,7 +45,7 @@ type HCMLocacionesData struct {
 	UpdateTs string `json:"UpdateTs"`
 }
 
-const HCMLocacionesDataAvroCRC64Fingerprint = "\x9c9*9\x95\xb2||"
+const HCMLocacionesDataAvroCRC64Fingerprint = "\xa6\x91\x05όX\v\x99"
 
 func NewHCMLocacionesData() HCMLocacionesData {
 	r := HCMLocacionesData{}
@@ -85,11 +85,11 @@ func writeHCMLocacionesData(r HCMLocacionesData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.AdressLine1, w)
+	err = vm.WriteString(r.AddressLine1, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.AdressLine2, w)
+	err = vm.WriteString(r.AddressLine2, w)
 	if err != nil {
 		return err
 	}
@@ -137,7 +137,7 @@ func (r HCMLocacionesData) Serialize(w io.Writer) error {
 }
 
 func (r HCMLocacionesData) Schema() string {
-	return "{\"fields\":[{\"name\":\"LocationCode\",\"type\":\"string\"},{\"name\":\"LocationName\",\"type\":\"string\"},{\"name\":\"AdressLine1\",\"type\":\"string\"},{\"name\":\"AdressLine2\",\"type\":\"string\"},{\"name\":\"PostalCode\",\"type\":\"string\"},{\"name\":\"Region3\",\"type\":\"string\"},{\"name\":\"EffectiveStartDate\",\"type\":\"string\"},{\"name\":\"Country\",\"type\":\"string\"},{\"name\":\"ActiveStatus\",\"type\":\"string\"},{\"name\":\"SetName\",\"type\":\"string\"},{\"name\":\"AddlAddressAttribute3\",\"type\":\"string\"},{\"name\":\"InsertTs\",\"type\":\"string\"},{\"name\":\"UpdateTs\",\"type\":\"string\"}],\"name\":\"Andreani.HCMLocaciones.Events.Common.HCMLocacionesData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"LocationCode\",\"type\":\"string\"},{\"name\":\"LocationName\",\"type\":\"string\"},{\"name\":\"AddressLine1\",\"type\":\"string\"},{\"name\":\"AddressLine2\",\"type\":\"string\"},{\"name\":\"PostalCode\",\"type\":\"string\"},{\"name\":\"Region3\",\"type\":\"string\"},{\"name\":\"EffectiveStartDate\",\"type\":\"string\"},{\"name\":\"Country\",\"type\":\"string\"},{\"name\":\"ActiveStatus\",\"type\":\"string\"},{\"name\":\"SetName\",\"type\":\"string\"},{\"name\":\"AddlAddressAttribute3\",\"type\":\"string\"},{\"name\":\"InsertTs\",\"type\":\"string\"},{\"name\":\"UpdateTs\",\"type\":\"string\"}],\"name\":\"Andreani.HCMLocaciones.Events.Common.HCMLocacionesData\",\"type\":\"record\"}"
 }
 
 func (r HCMLocacionesData) SchemaName() string {
@@ -166,12 +166,12 @@ func (r *HCMLocacionesData) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.AdressLine1}
+		w := types.String{Target: &r.AddressLine1}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.AdressLine2}
+		w := types.String{Target: &r.AddressLine2}
 
 		return w
 
@@ -256,11 +256,11 @@ func (r HCMLocacionesData) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["AdressLine1"], err = json.Marshal(r.AdressLine1)
+	output["AddressLine1"], err = json.Marshal(r.AddressLine1)
 	if err != nil {
 		return nil, err
 	}
-	output["AdressLine2"], err = json.Marshal(r.AdressLine2)
+	output["AddressLine2"], err = json.Marshal(r.AddressLine2)
 	if err != nil {
 		return nil, err
 	}
@@ -339,32 +339,32 @@ func (r *HCMLocacionesData) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for LocationName")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["AdressLine1"]; ok {
+		if v, ok := fields["AddressLine1"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AdressLine1); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.AddressLine1); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for AdressLine1")
+		return fmt.Errorf("no value specified for AddressLine1")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["AdressLine2"]; ok {
+		if v, ok := fields["AddressLine2"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AdressLine2); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.AddressLine2); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for AdressLine2")
+		return fmt.Errorf("no value specified for AddressLine2")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PostalCode"]; ok {

@@ -21,7 +21,7 @@ type ListHCMLocaciones struct {
 	Interfaces []HCMLocacionesData `json:"interfaces"`
 }
 
-const ListHCMLocacionesAvroCRC64Fingerprint = "sy\xd8\x16#\xe11W"
+const ListHCMLocacionesAvroCRC64Fingerprint = "\xecG\xa5ԈE\xbfq"
 
 func NewListHCMLocaciones() ListHCMLocaciones {
 	r := ListHCMLocaciones{}
@@ -67,7 +67,7 @@ func (r ListHCMLocaciones) Serialize(w io.Writer) error {
 }
 
 func (r ListHCMLocaciones) Schema() string {
-	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"LocationCode\",\"type\":\"string\"},{\"name\":\"LocationName\",\"type\":\"string\"},{\"name\":\"AdressLine1\",\"type\":\"string\"},{\"name\":\"AdressLine2\",\"type\":\"string\"},{\"name\":\"PostalCode\",\"type\":\"string\"},{\"name\":\"Region3\",\"type\":\"string\"},{\"name\":\"EffectiveStartDate\",\"type\":\"string\"},{\"name\":\"Country\",\"type\":\"string\"},{\"name\":\"ActiveStatus\",\"type\":\"string\"},{\"name\":\"SetName\",\"type\":\"string\"},{\"name\":\"AddlAddressAttribute3\",\"type\":\"string\"},{\"name\":\"InsertTs\",\"type\":\"string\"},{\"name\":\"UpdateTs\",\"type\":\"string\"}],\"name\":\"HCMLocacionesData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMLocaciones.Events.Common.ListHCMLocaciones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"LocationCode\",\"type\":\"string\"},{\"name\":\"LocationName\",\"type\":\"string\"},{\"name\":\"AddressLine1\",\"type\":\"string\"},{\"name\":\"AddressLine2\",\"type\":\"string\"},{\"name\":\"PostalCode\",\"type\":\"string\"},{\"name\":\"Region3\",\"type\":\"string\"},{\"name\":\"EffectiveStartDate\",\"type\":\"string\"},{\"name\":\"Country\",\"type\":\"string\"},{\"name\":\"ActiveStatus\",\"type\":\"string\"},{\"name\":\"SetName\",\"type\":\"string\"},{\"name\":\"AddlAddressAttribute3\",\"type\":\"string\"},{\"name\":\"InsertTs\",\"type\":\"string\"},{\"name\":\"UpdateTs\",\"type\":\"string\"}],\"name\":\"HCMLocacionesData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMLocaciones.Events.Common.ListHCMLocaciones\",\"type\":\"record\"}"
 }
 
 func (r ListHCMLocaciones) SchemaName() string {
