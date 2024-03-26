@@ -31,7 +31,7 @@ type Cabecera struct {
 	GLNNuevo string `json:"GLNNuevo"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "W\xde<o+\x95)6"
+const CabeceraAvroCRC64Fingerprint = "\a\x92ގ5\x16\x85\b"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -95,11 +95,11 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"GLNOriginal\",\"type\":\"string\"},{\"name\":\"GLNNuevo\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhGLN.Events.CambioCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"GLNOriginal\",\"type\":\"string\"},{\"name\":\"GLNNuevo\",\"type\":\"string\"}],\"name\":\"Andreani.EventosWhGLN.Events.CambioCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
-	return "Andreani.EventoWhGLN.Events.CambioCommon.Cabecera"
+	return "Andreani.EventosWhGLN.Events.CambioCommon.Cabecera"
 }
 
 func (_ Cabecera) SetBoolean(v bool)    { panic("Unsupported operation") }

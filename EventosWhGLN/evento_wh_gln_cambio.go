@@ -23,7 +23,7 @@ type EventoWhGLNCambio struct {
 	Cabecera Cabecera `json:"Cabecera"`
 }
 
-const EventoWhGLNCambioAvroCRC64Fingerprint = "ȶ}D!\xdaJ\x8d"
+const EventoWhGLNCambioAvroCRC64Fingerprint = "o\x16J\xe2=Zl_"
 
 func NewEventoWhGLNCambio() EventoWhGLNCambio {
 	r := EventoWhGLNCambio{}
@@ -75,11 +75,11 @@ func (r EventoWhGLNCambio) Serialize(w io.Writer) error {
 }
 
 func (r EventoWhGLNCambio) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhGLN.Events.CambioCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"GLNOriginal\",\"type\":\"string\"},{\"name\":\"GLNNuevo\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.EventoWhGLN.Events.CambioCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.EventoWhGLN.Events.Record.EventoWhGLNCambio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventosWhGLN.Events.CambioCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"GLNOriginal\",\"type\":\"string\"},{\"name\":\"GLNNuevo\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.EventosWhGLN.Events.CambioCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.EventosWhGLN.Events.Record.EventoWhGLNCambio\",\"type\":\"record\"}"
 }
 
 func (r EventoWhGLNCambio) SchemaName() string {
-	return "Andreani.EventoWhGLN.Events.Record.EventoWhGLNCambio"
+	return "Andreani.EventosWhGLN.Events.Record.EventoWhGLNCambio"
 }
 
 func (_ EventoWhGLNCambio) SetBoolean(v bool)    { panic("Unsupported operation") }
