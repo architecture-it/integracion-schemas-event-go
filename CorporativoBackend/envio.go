@@ -22,10 +22,6 @@ type Envio struct {
 
 	ContratoId string `json:"ContratoId"`
 
-	CodigoPostalOrigenId string `json:"CodigoPostalOrigenId"`
-
-	CodigoPostalDestinoId string `json:"CodigoPostalDestinoId"`
-
 	Peso float32 `json:"Peso"`
 
 	Volumen float32 `json:"Volumen"`
@@ -39,7 +35,7 @@ type Envio struct {
 	LargoCm float32 `json:"LargoCm"`
 }
 
-const EnvioAvroCRC64Fingerprint = "ߺ\xbf\u008fO\xfdf"
+const EnvioAvroCRC64Fingerprint = "\xad\xfb\xed\xd8d\xb1\x0e\x17"
 
 func NewEnvio() Envio {
 	r := Envio{}
@@ -79,14 +75,6 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoPostalOrigenId, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.CodigoPostalDestinoId, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteFloat(r.Peso, w)
 	if err != nil {
 		return err
@@ -119,7 +107,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"CodigoPostalOrigenId\",\"type\":\"string\"},{\"name\":\"CodigoPostalDestinoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"name\":\"Volumen\",\"type\":\"float\"},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"}],\"name\":\"Andreani.CorporativoBackend.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"name\":\"Volumen\",\"type\":\"float\"},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"}],\"name\":\"Andreani.CorporativoBackend.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -148,41 +136,31 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.CodigoPostalOrigenId}
-
-		return w
-
-	case 3:
-		w := types.String{Target: &r.CodigoPostalDestinoId}
-
-		return w
-
-	case 4:
 		w := types.Float{Target: &r.Peso}
 
 		return w
 
-	case 5:
+	case 3:
 		w := types.Float{Target: &r.Volumen}
 
 		return w
 
-	case 6:
+	case 4:
 		w := types.Float{Target: &r.ValorDeclarado}
 
 		return w
 
-	case 7:
+	case 5:
 		w := types.Float{Target: &r.AltoCm}
 
 		return w
 
-	case 8:
+	case 6:
 		w := types.Float{Target: &r.AnchoCm}
 
 		return w
 
-	case 9:
+	case 7:
 		w := types.Float{Target: &r.LargoCm}
 
 		return w
@@ -220,14 +198,6 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ContratoId"], err = json.Marshal(r.ContratoId)
-	if err != nil {
-		return nil, err
-	}
-	output["CodigoPostalOrigenId"], err = json.Marshal(r.CodigoPostalOrigenId)
-	if err != nil {
-		return nil, err
-	}
-	output["CodigoPostalDestinoId"], err = json.Marshal(r.CodigoPostalDestinoId)
 	if err != nil {
 		return nil, err
 	}
@@ -292,34 +262,6 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for ContratoId")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["CodigoPostalOrigenId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoPostalOrigenId); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for CodigoPostalOrigenId")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["CodigoPostalDestinoId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoPostalDestinoId); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for CodigoPostalDestinoId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Peso"]; ok {
