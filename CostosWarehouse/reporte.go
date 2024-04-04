@@ -45,12 +45,15 @@ type Reporte struct {
 	UnidadFinales *UnionNullInt `json:"UnidadFinales"`
 
 	CostoUnitario *UnionNullFloat `json:"CostoUnitario"`
+
+	Opcional *UnionNullString `json:"opcional"`
 }
 
-const ReporteAvroCRC64Fingerprint = "\x88\xf5*r\xfd\xdbH\x0e"
+const ReporteAvroCRC64Fingerprint = "\x15R\r\xe3\x13\x10\xad\xa9"
 
 func NewReporte() Reporte {
 	r := Reporte{}
+	r.Opcional = nil
 	return r
 }
 
@@ -135,6 +138,10 @@ func writeReporte(r Reporte, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Opcional, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -143,7 +150,7 @@ func (r Reporte) Serialize(w io.Writer) error {
 }
 
 func (r Reporte) Schema() string {
-	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Operacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadDeVenta\",\"type\":[\"null\",\"string\"]},{\"name\":\"MacroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"MicroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":[\"null\",\"int\"]},{\"name\":\"UnidadDeMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"Volumetria\",\"type\":[\"null\",\"float\"]},{\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"UnidadFinales\",\"type\":[\"null\",\"int\"]},{\"name\":\"CostoUnitario\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.CostosWarehouse.Events.Common.Reporte\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Operacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"UnidadDeVenta\",\"type\":[\"null\",\"string\"]},{\"name\":\"MacroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"MicroProceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cantidad\",\"type\":[\"null\",\"int\"]},{\"name\":\"UnidadDeMedida\",\"type\":[\"null\",\"string\"]},{\"name\":\"Volumetria\",\"type\":[\"null\",\"float\"]},{\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"UnidadFinales\",\"type\":[\"null\",\"int\"]},{\"name\":\"CostoUnitario\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"opcional\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CostosWarehouse.Events.Common.Reporte\",\"type\":\"record\"}"
 }
 
 func (r Reporte) SchemaName() string {
@@ -217,12 +224,19 @@ func (r *Reporte) Get(i int) types.Field {
 		r.CostoUnitario = NewUnionNullFloat()
 
 		return r.CostoUnitario
+	case 14:
+		r.Opcional = NewUnionNullString()
+
+		return r.Opcional
 	}
 	panic("Unknown field index")
 }
 
 func (r *Reporte) SetDefault(i int) {
 	switch i {
+	case 14:
+		r.Opcional = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -270,6 +284,9 @@ func (r *Reporte) NullField(i int) {
 		return
 	case 13:
 		r.CostoUnitario = nil
+		return
+	case 14:
+		r.Opcional = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -340,6 +357,10 @@ func (r Reporte) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CostoUnitario"], err = json.Marshal(r.CostoUnitario)
+	if err != nil {
+		return nil, err
+	}
+	output["opcional"], err = json.Marshal(r.Opcional)
 	if err != nil {
 		return nil, err
 	}
@@ -548,6 +569,22 @@ func (r *Reporte) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CostoUnitario")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["opcional"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Opcional); err != nil {
+			return err
+		}
+	} else {
+		r.Opcional = NewUnionNullString()
+
+		r.Opcional = nil
 	}
 	return nil
 }
