@@ -18,20 +18,20 @@ import (
 var _ = fmt.Printf
 
 type CalculoEda struct {
-	CodigoPostalSucursalOrigen string `json:"codigoPostalSucursalOrigen"`
+	CodigoPostalSucursalOrigen *UnionNullString `json:"codigoPostalSucursalOrigen"`
 
-	CodigoPostalSucursalDistribucion string `json:"codigoPostalSucursalDistribucion"`
+	CodigoPostalSucursalDistribucion *UnionNullString `json:"codigoPostalSucursalDistribucion"`
 
-	CodigoPostalDestino string `json:"codigoPostalDestino"`
+	CodigoPostalDestino *UnionNullString `json:"codigoPostalDestino"`
 
-	LocalidadDestino string `json:"localidadDestino"`
+	LocalidadDestino *UnionNullString `json:"localidadDestino"`
 
-	LocalidadSucursalDistribucion string `json:"localidadSucursalDistribucion"`
+	LocalidadSucursalDistribucion *UnionNullString `json:"localidadSucursalDistribucion"`
 
-	LocalidadSucursalOrigen string `json:"localidadSucursalOrigen"`
+	LocalidadSucursalOrigen *UnionNullString `json:"localidadSucursalOrigen"`
 }
 
-const CalculoEdaAvroCRC64Fingerprint = "{\xe9\t\x05\xf7\x9d\x9d8"
+const CalculoEdaAvroCRC64Fingerprint = "a\x12\xf6\xc7\x7f\x11\x9e\x89"
 
 func NewCalculoEda() CalculoEda {
 	r := CalculoEda{}
@@ -63,27 +63,27 @@ func DeserializeCalculoEdaFromSchema(r io.Reader, schema string) (CalculoEda, er
 
 func writeCalculoEda(r CalculoEda, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.CodigoPostalSucursalOrigen, w)
+	err = writeUnionNullString(r.CodigoPostalSucursalOrigen, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoPostalSucursalDistribucion, w)
+	err = writeUnionNullString(r.CodigoPostalSucursalDistribucion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoPostalDestino, w)
+	err = writeUnionNullString(r.CodigoPostalDestino, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LocalidadDestino, w)
+	err = writeUnionNullString(r.LocalidadDestino, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LocalidadSucursalDistribucion, w)
+	err = writeUnionNullString(r.LocalidadSucursalDistribucion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LocalidadSucursalOrigen, w)
+	err = writeUnionNullString(r.LocalidadSucursalOrigen, w)
 	if err != nil {
 		return err
 	}
@@ -95,7 +95,7 @@ func (r CalculoEda) Serialize(w io.Writer) error {
 }
 
 func (r CalculoEda) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigoPostalSucursalOrigen\",\"type\":\"string\"},{\"name\":\"codigoPostalSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"codigoPostalDestino\",\"type\":\"string\"},{\"name\":\"localidadDestino\",\"type\":\"string\"},{\"name\":\"localidadSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"localidadSucursalOrigen\",\"type\":\"string\"}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEda\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigoPostalSucursalOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostalSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadSucursalOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEda\",\"type\":\"record\"}"
 }
 
 func (r CalculoEda) SchemaName() string {
@@ -114,35 +114,29 @@ func (_ CalculoEda) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *CalculoEda) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.CodigoPostalSucursalOrigen}
+		r.CodigoPostalSucursalOrigen = NewUnionNullString()
 
-		return w
-
+		return r.CodigoPostalSucursalOrigen
 	case 1:
-		w := types.String{Target: &r.CodigoPostalSucursalDistribucion}
+		r.CodigoPostalSucursalDistribucion = NewUnionNullString()
 
-		return w
-
+		return r.CodigoPostalSucursalDistribucion
 	case 2:
-		w := types.String{Target: &r.CodigoPostalDestino}
+		r.CodigoPostalDestino = NewUnionNullString()
 
-		return w
-
+		return r.CodigoPostalDestino
 	case 3:
-		w := types.String{Target: &r.LocalidadDestino}
+		r.LocalidadDestino = NewUnionNullString()
 
-		return w
-
+		return r.LocalidadDestino
 	case 4:
-		w := types.String{Target: &r.LocalidadSucursalDistribucion}
+		r.LocalidadSucursalDistribucion = NewUnionNullString()
 
-		return w
-
+		return r.LocalidadSucursalDistribucion
 	case 5:
-		w := types.String{Target: &r.LocalidadSucursalOrigen}
+		r.LocalidadSucursalOrigen = NewUnionNullString()
 
-		return w
-
+		return r.LocalidadSucursalOrigen
 	}
 	panic("Unknown field index")
 }
@@ -155,6 +149,24 @@ func (r *CalculoEda) SetDefault(i int) {
 
 func (r *CalculoEda) NullField(i int) {
 	switch i {
+	case 0:
+		r.CodigoPostalSucursalOrigen = nil
+		return
+	case 1:
+		r.CodigoPostalSucursalDistribucion = nil
+		return
+	case 2:
+		r.CodigoPostalDestino = nil
+		return
+	case 3:
+		r.LocalidadDestino = nil
+		return
+	case 4:
+		r.LocalidadSucursalDistribucion = nil
+		return
+	case 5:
+		r.LocalidadSucursalOrigen = nil
+		return
 	}
 	panic("Not a nullable field index")
 }

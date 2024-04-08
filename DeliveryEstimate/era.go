@@ -18,10 +18,6 @@ import (
 var _ = fmt.Printf
 
 type ERA struct {
-	EraRangoInicio *UnionNullLong `json:"eraRangoInicio"`
-
-	EraRangoFin *UnionNullLong `json:"eraRangoFin"`
-
 	Era *UnionNullLong `json:"era"`
 
 	CodigoDeEnvio *UnionNullString `json:"codigoDeEnvio"`
@@ -31,14 +27,16 @@ type ERA struct {
 	Transportista Transportista `json:"transportista"`
 
 	Cuando *UnionNullLong `json:"cuando"`
+
+	Estimacion *UnionNullString `json:"estimacion"`
+
+	EstimacionDescripcion *UnionNullString `json:"estimacionDescripcion"`
 }
 
-const ERAAvroCRC64Fingerprint = "ˈ|7\xa6\x8b\xf0["
+const ERAAvroCRC64Fingerprint = "%\xc2N\xf6\x94\xe1\x96K"
 
 func NewERA() ERA {
 	r := ERA{}
-	r.EraRangoInicio = nil
-	r.EraRangoFin = nil
 	r.Era = nil
 	r.CodigoDeEnvio = nil
 	r.CalculoEra = NewCalculoEra()
@@ -46,6 +44,8 @@ func NewERA() ERA {
 	r.Transportista = NewTransportista()
 
 	r.Cuando = nil
+	r.Estimacion = nil
+	r.EstimacionDescripcion = nil
 	return r
 }
 
@@ -74,14 +74,6 @@ func DeserializeERAFromSchema(r io.Reader, schema string) (ERA, error) {
 
 func writeERA(r ERA, w io.Writer) error {
 	var err error
-	err = writeUnionNullLong(r.EraRangoInicio, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullLong(r.EraRangoFin, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullLong(r.Era, w)
 	if err != nil {
 		return err
@@ -102,6 +94,14 @@ func writeERA(r ERA, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Estimacion, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.EstimacionDescripcion, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -110,7 +110,7 @@ func (r ERA) Serialize(w io.Writer) error {
 }
 
 func (r ERA) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"eraRangoInicio\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"eraRangoFin\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"era\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"calculoEra\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"ordenDeEnvioEnHR\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"numeroHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"geocoordenadas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"recorridoEnSegundos\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"recorridoEnMetros\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"eraAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"CalculoEra\",\"type\":\"record\"}},{\"name\":\"transportista\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"esEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"idGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"codigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"cumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ERA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"era\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"calculoEra\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"ordenDeEnvioEnHR\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"numeroHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"geocoordenadas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"recorridoEnSegundos\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"recorridoEnMetros\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"eraAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"CalculoEra\",\"type\":\"record\"}},{\"name\":\"transportista\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"esEventual\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"idGla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idGli\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalDondeTrabaja\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"codigoAlertran\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"SucursalDondeTrabaja\",\"type\":\"record\"}},{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"cumplimientoSecuenciaHR\",\"type\":[\"null\",\"double\"]}],\"name\":\"Transportista\",\"type\":\"record\"}},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionDescripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.ERA\",\"type\":\"record\"}"
 }
 
 func (r ERA) SchemaName() string {
@@ -129,39 +129,39 @@ func (_ ERA) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *ERA) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.EraRangoInicio = NewUnionNullLong()
-
-		return r.EraRangoInicio
-	case 1:
-		r.EraRangoFin = NewUnionNullLong()
-
-		return r.EraRangoFin
-	case 2:
 		r.Era = NewUnionNullLong()
 
 		return r.Era
-	case 3:
+	case 1:
 		r.CodigoDeEnvio = NewUnionNullString()
 
 		return r.CodigoDeEnvio
-	case 4:
+	case 2:
 		r.CalculoEra = NewCalculoEra()
 
 		w := types.Record{Target: &r.CalculoEra}
 
 		return w
 
-	case 5:
+	case 3:
 		r.Transportista = NewTransportista()
 
 		w := types.Record{Target: &r.Transportista}
 
 		return w
 
-	case 6:
+	case 4:
 		r.Cuando = NewUnionNullLong()
 
 		return r.Cuando
+	case 5:
+		r.Estimacion = NewUnionNullString()
+
+		return r.Estimacion
+	case 6:
+		r.EstimacionDescripcion = NewUnionNullString()
+
+		return r.EstimacionDescripcion
 	}
 	panic("Unknown field index")
 }
@@ -169,19 +169,19 @@ func (r *ERA) Get(i int) types.Field {
 func (r *ERA) SetDefault(i int) {
 	switch i {
 	case 0:
-		r.EraRangoInicio = nil
-		return
-	case 1:
-		r.EraRangoFin = nil
-		return
-	case 2:
 		r.Era = nil
 		return
-	case 3:
+	case 1:
 		r.CodigoDeEnvio = nil
 		return
-	case 6:
+	case 4:
 		r.Cuando = nil
+		return
+	case 5:
+		r.Estimacion = nil
+		return
+	case 6:
+		r.EstimacionDescripcion = nil
 		return
 	}
 	panic("Unknown field index")
@@ -190,19 +190,19 @@ func (r *ERA) SetDefault(i int) {
 func (r *ERA) NullField(i int) {
 	switch i {
 	case 0:
-		r.EraRangoInicio = nil
-		return
-	case 1:
-		r.EraRangoFin = nil
-		return
-	case 2:
 		r.Era = nil
 		return
-	case 3:
+	case 1:
 		r.CodigoDeEnvio = nil
 		return
-	case 6:
+	case 4:
 		r.Cuando = nil
+		return
+	case 5:
+		r.Estimacion = nil
+		return
+	case 6:
+		r.EstimacionDescripcion = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -220,14 +220,6 @@ func (_ ERA) AvroCRC64Fingerprint() []byte {
 func (r ERA) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["eraRangoInicio"], err = json.Marshal(r.EraRangoInicio)
-	if err != nil {
-		return nil, err
-	}
-	output["eraRangoFin"], err = json.Marshal(r.EraRangoFin)
-	if err != nil {
-		return nil, err
-	}
 	output["era"], err = json.Marshal(r.Era)
 	if err != nil {
 		return nil, err
@@ -248,6 +240,14 @@ func (r ERA) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["estimacion"], err = json.Marshal(r.Estimacion)
+	if err != nil {
+		return nil, err
+	}
+	output["estimacionDescripcion"], err = json.Marshal(r.EstimacionDescripcion)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -258,38 +258,6 @@ func (r *ERA) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["eraRangoInicio"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.EraRangoInicio); err != nil {
-			return err
-		}
-	} else {
-		r.EraRangoInicio = NewUnionNullLong()
-
-		r.EraRangoInicio = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["eraRangoFin"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.EraRangoFin); err != nil {
-			return err
-		}
-	} else {
-		r.EraRangoFin = NewUnionNullLong()
-
-		r.EraRangoFin = nil
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["era"]; ok {
 			return v
@@ -365,6 +333,38 @@ func (r *ERA) UnmarshalJSON(data []byte) error {
 		r.Cuando = NewUnionNullLong()
 
 		r.Cuando = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["estimacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Estimacion); err != nil {
+			return err
+		}
+	} else {
+		r.Estimacion = NewUnionNullString()
+
+		r.Estimacion = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["estimacionDescripcion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EstimacionDescripcion); err != nil {
+			return err
+		}
+	} else {
+		r.EstimacionDescripcion = NewUnionNullString()
+
+		r.EstimacionDescripcion = nil
 	}
 	return nil
 }

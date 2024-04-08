@@ -18,29 +18,35 @@ import (
 var _ = fmt.Printf
 
 type EDA struct {
-	DiasHabiles int32 `json:"diasHabiles"`
+	DiasHabiles *UnionNullInt `json:"diasHabiles"`
 
-	Eda int64 `json:"eda"`
+	Eda *UnionNullLong `json:"eda"`
 
-	Sistema string `json:"sistema"`
+	Sistema *UnionNullString `json:"sistema"`
 
-	CodigoDeEnvio string `json:"codigoDeEnvio"`
+	CodigoDeEnvio *UnionNullString `json:"codigoDeEnvio"`
 
-	CodigoDeContratoInterno string `json:"codigoDeContratoInterno"`
+	CodigoDeContratoInterno *UnionNullString `json:"codigoDeContratoInterno"`
 
 	CalculoEda CalculoEda `json:"calculoEda"`
 
-	Cuando int64 `json:"cuando"`
+	Cuando *UnionNullLong `json:"cuando"`
 
-	FechaAlta int64 `json:"fechaAlta"`
+	FechaAlta *UnionNullLong `json:"fechaAlta"`
+
+	Estimacion *UnionNullString `json:"estimacion"`
+
+	EstimacionDescripcion *UnionNullString `json:"estimacionDescripcion"`
 }
 
-const EDAAvroCRC64Fingerprint = "\x9e'\xed%M\xb6\xba\xf6"
+const EDAAvroCRC64Fingerprint = "\xd4\xe2cJn\xb7\xc1,"
 
 func NewEDA() EDA {
 	r := EDA{}
 	r.CalculoEda = NewCalculoEda()
 
+	r.Estimacion = nil
+	r.EstimacionDescripcion = nil
 	return r
 }
 
@@ -69,23 +75,23 @@ func DeserializeEDAFromSchema(r io.Reader, schema string) (EDA, error) {
 
 func writeEDA(r EDA, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.DiasHabiles, w)
+	err = writeUnionNullInt(r.DiasHabiles, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.Eda, w)
+	err = writeUnionNullLong(r.Eda, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Sistema, w)
+	err = writeUnionNullString(r.Sistema, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoDeEnvio, w)
+	err = writeUnionNullString(r.CodigoDeEnvio, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoDeContratoInterno, w)
+	err = writeUnionNullString(r.CodigoDeContratoInterno, w)
 	if err != nil {
 		return err
 	}
@@ -93,11 +99,19 @@ func writeEDA(r EDA, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.Cuando, w)
+	err = writeUnionNullLong(r.Cuando, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.FechaAlta, w)
+	err = writeUnionNullLong(r.FechaAlta, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Estimacion, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.EstimacionDescripcion, w)
 	if err != nil {
 		return err
 	}
@@ -109,7 +123,7 @@ func (r EDA) Serialize(w io.Writer) error {
 }
 
 func (r EDA) Schema() string {
-	return "{\"fields\":[{\"name\":\"diasHabiles\",\"type\":\"int\"},{\"name\":\"eda\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"calculoEda\",\"type\":{\"fields\":[{\"name\":\"codigoPostalSucursalOrigen\",\"type\":\"string\"},{\"name\":\"codigoPostalSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"codigoPostalDestino\",\"type\":\"string\"},{\"name\":\"localidadDestino\",\"type\":\"string\"},{\"name\":\"localidadSucursalDistribucion\",\"type\":\"string\"},{\"name\":\"localidadSucursalOrigen\",\"type\":\"string\"}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaAlta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.EDA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"diasHabiles\",\"type\":[\"null\",\"int\"]},{\"name\":\"eda\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"sistema\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"calculoEda\",\"type\":{\"fields\":[{\"name\":\"codigoPostalSucursalOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostalSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadSucursalOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"fechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionDescripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.EDA\",\"type\":\"record\"}"
 }
 
 func (r EDA) SchemaName() string {
@@ -128,30 +142,25 @@ func (_ EDA) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *EDA) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.DiasHabiles}
+		r.DiasHabiles = NewUnionNullInt()
 
-		return w
-
+		return r.DiasHabiles
 	case 1:
-		w := types.Long{Target: &r.Eda}
+		r.Eda = NewUnionNullLong()
 
-		return w
-
+		return r.Eda
 	case 2:
-		w := types.String{Target: &r.Sistema}
+		r.Sistema = NewUnionNullString()
 
-		return w
-
+		return r.Sistema
 	case 3:
-		w := types.String{Target: &r.CodigoDeEnvio}
+		r.CodigoDeEnvio = NewUnionNullString()
 
-		return w
-
+		return r.CodigoDeEnvio
 	case 4:
-		w := types.String{Target: &r.CodigoDeContratoInterno}
+		r.CodigoDeContratoInterno = NewUnionNullString()
 
-		return w
-
+		return r.CodigoDeContratoInterno
 	case 5:
 		r.CalculoEda = NewCalculoEda()
 
@@ -160,27 +169,66 @@ func (r *EDA) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.Long{Target: &r.Cuando}
+		r.Cuando = NewUnionNullLong()
 
-		return w
-
+		return r.Cuando
 	case 7:
-		w := types.Long{Target: &r.FechaAlta}
+		r.FechaAlta = NewUnionNullLong()
 
-		return w
+		return r.FechaAlta
+	case 8:
+		r.Estimacion = NewUnionNullString()
 
+		return r.Estimacion
+	case 9:
+		r.EstimacionDescripcion = NewUnionNullString()
+
+		return r.EstimacionDescripcion
 	}
 	panic("Unknown field index")
 }
 
 func (r *EDA) SetDefault(i int) {
 	switch i {
+	case 8:
+		r.Estimacion = nil
+		return
+	case 9:
+		r.EstimacionDescripcion = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *EDA) NullField(i int) {
 	switch i {
+	case 0:
+		r.DiasHabiles = nil
+		return
+	case 1:
+		r.Eda = nil
+		return
+	case 2:
+		r.Sistema = nil
+		return
+	case 3:
+		r.CodigoDeEnvio = nil
+		return
+	case 4:
+		r.CodigoDeContratoInterno = nil
+		return
+	case 6:
+		r.Cuando = nil
+		return
+	case 7:
+		r.FechaAlta = nil
+		return
+	case 8:
+		r.Estimacion = nil
+		return
+	case 9:
+		r.EstimacionDescripcion = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -226,6 +274,14 @@ func (r EDA) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["fechaAlta"], err = json.Marshal(r.FechaAlta)
+	if err != nil {
+		return nil, err
+	}
+	output["estimacion"], err = json.Marshal(r.Estimacion)
+	if err != nil {
+		return nil, err
+	}
+	output["estimacionDescripcion"], err = json.Marshal(r.EstimacionDescripcion)
 	if err != nil {
 		return nil, err
 	}
@@ -350,6 +406,38 @@ func (r *EDA) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for fechaAlta")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["estimacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Estimacion); err != nil {
+			return err
+		}
+	} else {
+		r.Estimacion = NewUnionNullString()
+
+		r.Estimacion = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["estimacionDescripcion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EstimacionDescripcion); err != nil {
+			return err
+		}
+	} else {
+		r.EstimacionDescripcion = NewUnionNullString()
+
+		r.EstimacionDescripcion = nil
 	}
 	return nil
 }
