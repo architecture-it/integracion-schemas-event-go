@@ -25,11 +25,9 @@ type DistribucionTransportistaPosition struct {
 	Latitud string `json:"Latitud"`
 
 	Longitud string `json:"Longitud"`
-
-	Dominio string `json:"Dominio"`
 }
 
-const DistribucionTransportistaPositionAvroCRC64Fingerprint = "\x11\xa4\xaegwc\xf7\xe1"
+const DistribucionTransportistaPositionAvroCRC64Fingerprint = "<\xa1\xee\xa3\x1cU\x7f\xba"
 
 func NewDistribucionTransportistaPosition() DistribucionTransportistaPosition {
 	r := DistribucionTransportistaPosition{}
@@ -77,10 +75,6 @@ func writeDistribucionTransportistaPosition(r DistribucionTransportistaPosition,
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Dominio, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -89,7 +83,7 @@ func (r DistribucionTransportistaPosition) Serialize(w io.Writer) error {
 }
 
 func (r DistribucionTransportistaPosition) Schema() string {
-	return "{\"fields\":[{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"Dominio\",\"type\":\"string\"}],\"name\":\"Andreani.ApiPosition.Events.Record.DistribucionTransportistaPosition\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"Andreani.ApiPosition.Events.Record.DistribucionTransportistaPosition\",\"type\":\"record\"}"
 }
 
 func (r DistribucionTransportistaPosition) SchemaName() string {
@@ -124,11 +118,6 @@ func (r *DistribucionTransportistaPosition) Get(i int) types.Field {
 
 	case 3:
 		w := types.String{Target: &r.Longitud}
-
-		return w
-
-	case 4:
-		w := types.String{Target: &r.Dominio}
 
 		return w
 
@@ -175,10 +164,6 @@ func (r DistribucionTransportistaPosition) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Longitud"], err = json.Marshal(r.Longitud)
-	if err != nil {
-		return nil, err
-	}
-	output["Dominio"], err = json.Marshal(r.Dominio)
 	if err != nil {
 		return nil, err
 	}
@@ -247,20 +232,6 @@ func (r *DistribucionTransportistaPosition) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Longitud")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Dominio"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Dominio); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Dominio")
 	}
 	return nil
 }
