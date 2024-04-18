@@ -31,15 +31,18 @@ type InactividadMarketing struct {
 	Segmento string `json:"segmento"`
 
 	Mes int64 `json:"Mes"`
+
+	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const InactividadMarketingAvroCRC64Fingerprint = "\n\xec\x1fq6\x169\x1d"
+const InactividadMarketingAvroCRC64Fingerprint = ",6\x858\xae\xe3\x11\xcb"
 
 func NewInactividadMarketing() InactividadMarketing {
 	r := InactividadMarketing{}
 	r.Nombre = nil
 	r.TelefonoCodigoArea = nil
 	r.TelefonoNumero = nil
+	r.Cuando = nil
 	return r
 }
 
@@ -96,6 +99,10 @@ func writeInactividadMarketing(r InactividadMarketing, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullLong(r.Cuando, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -104,7 +111,7 @@ func (r InactividadMarketing) Serialize(w io.Writer) error {
 }
 
 func (r InactividadMarketing) Schema() string {
-	return "{\"fields\":[{\"name\":\"ClienteId\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"Mes\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.InactividadMarketing\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ClienteId\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"Mes\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.InactividadMarketing\",\"type\":\"record\"}"
 }
 
 func (r InactividadMarketing) SchemaName() string {
@@ -154,6 +161,10 @@ func (r *InactividadMarketing) Get(i int) types.Field {
 
 		return w
 
+	case 7:
+		r.Cuando = NewUnionNullLong()
+
+		return r.Cuando
 	}
 	panic("Unknown field index")
 }
@@ -169,6 +180,9 @@ func (r *InactividadMarketing) SetDefault(i int) {
 	case 4:
 		r.TelefonoNumero = nil
 		return
+	case 7:
+		r.Cuando = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -183,6 +197,9 @@ func (r *InactividadMarketing) NullField(i int) {
 		return
 	case 4:
 		r.TelefonoNumero = nil
+		return
+	case 7:
+		r.Cuando = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -225,6 +242,10 @@ func (r InactividadMarketing) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Mes"], err = json.Marshal(r.Mes)
+	if err != nil {
+		return nil, err
+	}
+	output["cuando"], err = json.Marshal(r.Cuando)
 	if err != nil {
 		return nil, err
 	}
@@ -341,6 +362,22 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Mes")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cuando"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cuando); err != nil {
+			return err
+		}
+	} else {
+		r.Cuando = NewUnionNullLong()
+
+		r.Cuando = nil
 	}
 	return nil
 }
