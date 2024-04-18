@@ -18,24 +18,24 @@ import (
 var _ = fmt.Printf
 
 type InactividadMarketing struct {
-	ClienteId string `json:"ClienteId"`
+	ClienteId string `json:"clienteId"`
 
-	Email string `json:"Email"`
+	Email string `json:"email"`
 
-	Nombre *UnionNullString `json:"Nombre"`
+	Nombre *UnionNullString `json:"nombre"`
 
-	TelefonoCodigoArea *UnionNullString `json:"TelefonoCodigoArea"`
+	TelefonoCodigoArea *UnionNullString `json:"telefonoCodigoArea"`
 
-	TelefonoNumero *UnionNullString `json:"TelefonoNumero"`
+	TelefonoNumero *UnionNullString `json:"telefonoNumero"`
 
 	Segmento string `json:"segmento"`
 
-	Mes int64 `json:"Mes"`
+	Mes int64 `json:"mes"`
 
 	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const InactividadMarketingAvroCRC64Fingerprint = ",6\x858\xae\xe3\x11\xcb"
+const InactividadMarketingAvroCRC64Fingerprint = "#O\xb6\x13U\x0fp\xb4"
 
 func NewInactividadMarketing() InactividadMarketing {
 	r := InactividadMarketing{}
@@ -111,7 +111,7 @@ func (r InactividadMarketing) Serialize(w io.Writer) error {
 }
 
 func (r InactividadMarketing) Schema() string {
-	return "{\"fields\":[{\"name\":\"ClienteId\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"Mes\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.InactividadMarketing\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"clienteId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"mes\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.InactividadMarketing\",\"type\":\"record\"}"
 }
 
 func (r InactividadMarketing) SchemaName() string {
@@ -217,23 +217,23 @@ func (_ InactividadMarketing) AvroCRC64Fingerprint() []byte {
 func (r InactividadMarketing) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["ClienteId"], err = json.Marshal(r.ClienteId)
+	output["clienteId"], err = json.Marshal(r.ClienteId)
 	if err != nil {
 		return nil, err
 	}
-	output["Email"], err = json.Marshal(r.Email)
+	output["email"], err = json.Marshal(r.Email)
 	if err != nil {
 		return nil, err
 	}
-	output["Nombre"], err = json.Marshal(r.Nombre)
+	output["nombre"], err = json.Marshal(r.Nombre)
 	if err != nil {
 		return nil, err
 	}
-	output["TelefonoCodigoArea"], err = json.Marshal(r.TelefonoCodigoArea)
+	output["telefonoCodigoArea"], err = json.Marshal(r.TelefonoCodigoArea)
 	if err != nil {
 		return nil, err
 	}
-	output["TelefonoNumero"], err = json.Marshal(r.TelefonoNumero)
+	output["telefonoNumero"], err = json.Marshal(r.TelefonoNumero)
 	if err != nil {
 		return nil, err
 	}
@@ -241,7 +241,7 @@ func (r InactividadMarketing) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Mes"], err = json.Marshal(r.Mes)
+	output["mes"], err = json.Marshal(r.Mes)
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +260,7 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["ClienteId"]; ok {
+		if v, ok := fields["clienteId"]; ok {
 			return v
 		}
 		return nil
@@ -271,10 +271,10 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ClienteId")
+		return fmt.Errorf("no value specified for clienteId")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Email"]; ok {
+		if v, ok := fields["email"]; ok {
 			return v
 		}
 		return nil
@@ -285,10 +285,10 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Email")
+		return fmt.Errorf("no value specified for email")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Nombre"]; ok {
+		if v, ok := fields["nombre"]; ok {
 			return v
 		}
 		return nil
@@ -304,7 +304,7 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 		r.Nombre = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["TelefonoCodigoArea"]; ok {
+		if v, ok := fields["telefonoCodigoArea"]; ok {
 			return v
 		}
 		return nil
@@ -320,7 +320,7 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 		r.TelefonoCodigoArea = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["TelefonoNumero"]; ok {
+		if v, ok := fields["telefonoNumero"]; ok {
 			return v
 		}
 		return nil
@@ -350,7 +350,7 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for segmento")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Mes"]; ok {
+		if v, ok := fields["mes"]; ok {
 			return v
 		}
 		return nil
@@ -361,7 +361,7 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Mes")
+		return fmt.Errorf("no value specified for mes")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cuando"]; ok {
