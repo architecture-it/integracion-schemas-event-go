@@ -20,15 +20,13 @@ var _ = fmt.Printf
 type BultoData struct {
 	Numero int32 `json:"Numero"`
 
-	Codigos []string `json:"Codigos"`
+	Codigo string `json:"Codigo"`
 }
 
-const BultoDataAvroCRC64Fingerprint = "\x95\xbb A\xec\xda@\xc6"
+const BultoDataAvroCRC64Fingerprint = "\xc9q\x11\xf1\xe6\x967P"
 
 func NewBultoData() BultoData {
 	r := BultoData{}
-	r.Codigos = make([]string, 0)
-
 	return r
 }
 
@@ -61,7 +59,7 @@ func writeBultoData(r BultoData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayString(r.Codigos, w)
+	err = vm.WriteString(r.Codigo, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +71,7 @@ func (r BultoData) Serialize(w io.Writer) error {
 }
 
 func (r BultoData) Schema() string {
-	return "{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.BultoData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.BultoData\",\"type\":\"record\"}"
 }
 
 func (r BultoData) SchemaName() string {
@@ -97,9 +95,7 @@ func (r *BultoData) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.Codigos = make([]string, 0)
-
-		w := ArrayStringWrapper{Target: &r.Codigos}
+		w := types.String{Target: &r.Codigo}
 
 		return w
 
@@ -135,7 +131,7 @@ func (r BultoData) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Codigos"], err = json.Marshal(r.Codigos)
+	output["Codigo"], err = json.Marshal(r.Codigo)
 	if err != nil {
 		return nil, err
 	}
@@ -164,18 +160,18 @@ func (r *BultoData) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Numero")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Codigos"]; ok {
+		if v, ok := fields["Codigo"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Codigos); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Codigo); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Codigos")
+		return fmt.Errorf("no value specified for Codigo")
 	}
 	return nil
 }
