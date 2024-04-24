@@ -22,32 +22,28 @@ type Propietario struct {
 
 	PropietarioDestino string `json:"propietarioDestino"`
 
-	Articulo *UnionNullString `json:"articulo"`
+	ArticuloOrigen string `json:"articuloOrigen"`
 
-	Lote *UnionNullString `json:"lote"`
+	ArticuloDestino string `json:"articuloDestino"`
 
-	Cantidad *UnionNullString `json:"cantidad"`
+	LoteOrigen string `json:"loteOrigen"`
 
-	Almacen *UnionNullString `json:"almacen"`
+	EstadoDeLoteOrigen string `json:"estadoDeLoteOrigen"`
 
-	EstadoDeLote *UnionNullString `json:"estadoDeLote"`
+	AlmacenOrigen *UnionNullString `json:"almacenOrigen"`
 
 	LpnOrigen *UnionNullString `json:"lpnOrigen"`
 
-	LpnDestino *UnionNullString `json:"lpnDestino"`
+	MovimientoTotalStock *UnionNullBool `json:"movimientoTotalStock"`
 }
 
-const PropietarioAvroCRC64Fingerprint = "tʮ\xfdi\xc1\xadk"
+const PropietarioAvroCRC64Fingerprint = "1a\x10I\xf3\xed\xf6^"
 
 func NewPropietario() Propietario {
 	r := Propietario{}
-	r.Articulo = nil
-	r.Lote = nil
-	r.Cantidad = nil
-	r.Almacen = nil
-	r.EstadoDeLote = nil
+	r.AlmacenOrigen = nil
 	r.LpnOrigen = nil
-	r.LpnDestino = nil
+	r.MovimientoTotalStock = nil
 	return r
 }
 
@@ -84,23 +80,23 @@ func writePropietario(r Propietario, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Articulo, w)
+	err = vm.WriteString(r.ArticuloOrigen, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Lote, w)
+	err = vm.WriteString(r.ArticuloDestino, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Cantidad, w)
+	err = vm.WriteString(r.LoteOrigen, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Almacen, w)
+	err = vm.WriteString(r.EstadoDeLoteOrigen, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.EstadoDeLote, w)
+	err = writeUnionNullString(r.AlmacenOrigen, w)
 	if err != nil {
 		return err
 	}
@@ -108,7 +104,7 @@ func writePropietario(r Propietario, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.LpnDestino, w)
+	err = writeUnionNullBool(r.MovimientoTotalStock, w)
 	if err != nil {
 		return err
 	}
@@ -120,7 +116,7 @@ func (r Propietario) Serialize(w io.Writer) error {
 }
 
 func (r Propietario) Schema() string {
-	return "{\"fields\":[{\"name\":\"propietarioOrigen\",\"type\":\"string\"},{\"name\":\"propietarioDestino\",\"type\":\"string\"},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lpnOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lpnDestino\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.Propietario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"propietarioOrigen\",\"type\":\"string\"},{\"name\":\"propietarioDestino\",\"type\":\"string\"},{\"name\":\"articuloOrigen\",\"type\":\"string\"},{\"name\":\"articuloDestino\",\"type\":\"string\"},{\"name\":\"loteOrigen\",\"type\":\"string\"},{\"name\":\"estadoDeLoteOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"almacenOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lpnOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"movimientoTotalStock\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.Wapv2.Events.Record.Propietario\",\"type\":\"record\"}"
 }
 
 func (r Propietario) SchemaName() string {
@@ -149,59 +145,51 @@ func (r *Propietario) Get(i int) types.Field {
 		return w
 
 	case 2:
-		r.Articulo = NewUnionNullString()
+		w := types.String{Target: &r.ArticuloOrigen}
 
-		return r.Articulo
+		return w
+
 	case 3:
-		r.Lote = NewUnionNullString()
+		w := types.String{Target: &r.ArticuloDestino}
 
-		return r.Lote
+		return w
+
 	case 4:
-		r.Cantidad = NewUnionNullString()
+		w := types.String{Target: &r.LoteOrigen}
 
-		return r.Cantidad
+		return w
+
 	case 5:
-		r.Almacen = NewUnionNullString()
+		w := types.String{Target: &r.EstadoDeLoteOrigen}
 
-		return r.Almacen
+		return w
+
 	case 6:
-		r.EstadoDeLote = NewUnionNullString()
+		r.AlmacenOrigen = NewUnionNullString()
 
-		return r.EstadoDeLote
+		return r.AlmacenOrigen
 	case 7:
 		r.LpnOrigen = NewUnionNullString()
 
 		return r.LpnOrigen
 	case 8:
-		r.LpnDestino = NewUnionNullString()
+		r.MovimientoTotalStock = NewUnionNullBool()
 
-		return r.LpnDestino
+		return r.MovimientoTotalStock
 	}
 	panic("Unknown field index")
 }
 
 func (r *Propietario) SetDefault(i int) {
 	switch i {
-	case 2:
-		r.Articulo = nil
-		return
-	case 3:
-		r.Lote = nil
-		return
-	case 4:
-		r.Cantidad = nil
-		return
-	case 5:
-		r.Almacen = nil
-		return
 	case 6:
-		r.EstadoDeLote = nil
+		r.AlmacenOrigen = nil
 		return
 	case 7:
 		r.LpnOrigen = nil
 		return
 	case 8:
-		r.LpnDestino = nil
+		r.MovimientoTotalStock = nil
 		return
 	}
 	panic("Unknown field index")
@@ -209,26 +197,14 @@ func (r *Propietario) SetDefault(i int) {
 
 func (r *Propietario) NullField(i int) {
 	switch i {
-	case 2:
-		r.Articulo = nil
-		return
-	case 3:
-		r.Lote = nil
-		return
-	case 4:
-		r.Cantidad = nil
-		return
-	case 5:
-		r.Almacen = nil
-		return
 	case 6:
-		r.EstadoDeLote = nil
+		r.AlmacenOrigen = nil
 		return
 	case 7:
 		r.LpnOrigen = nil
 		return
 	case 8:
-		r.LpnDestino = nil
+		r.MovimientoTotalStock = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -254,23 +230,23 @@ func (r Propietario) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["articulo"], err = json.Marshal(r.Articulo)
+	output["articuloOrigen"], err = json.Marshal(r.ArticuloOrigen)
 	if err != nil {
 		return nil, err
 	}
-	output["lote"], err = json.Marshal(r.Lote)
+	output["articuloDestino"], err = json.Marshal(r.ArticuloDestino)
 	if err != nil {
 		return nil, err
 	}
-	output["cantidad"], err = json.Marshal(r.Cantidad)
+	output["loteOrigen"], err = json.Marshal(r.LoteOrigen)
 	if err != nil {
 		return nil, err
 	}
-	output["almacen"], err = json.Marshal(r.Almacen)
+	output["estadoDeLoteOrigen"], err = json.Marshal(r.EstadoDeLoteOrigen)
 	if err != nil {
 		return nil, err
 	}
-	output["estadoDeLote"], err = json.Marshal(r.EstadoDeLote)
+	output["almacenOrigen"], err = json.Marshal(r.AlmacenOrigen)
 	if err != nil {
 		return nil, err
 	}
@@ -278,7 +254,7 @@ func (r Propietario) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["lpnDestino"], err = json.Marshal(r.LpnDestino)
+	output["movimientoTotalStock"], err = json.Marshal(r.MovimientoTotalStock)
 	if err != nil {
 		return nil, err
 	}
@@ -321,84 +297,76 @@ func (r *Propietario) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for propietarioDestino")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["articulo"]; ok {
+		if v, ok := fields["articuloOrigen"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Articulo); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ArticuloOrigen); err != nil {
 			return err
 		}
 	} else {
-		r.Articulo = NewUnionNullString()
-
-		r.Articulo = nil
+		return fmt.Errorf("no value specified for articuloOrigen")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["lote"]; ok {
+		if v, ok := fields["articuloDestino"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Lote); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ArticuloDestino); err != nil {
 			return err
 		}
 	} else {
-		r.Lote = NewUnionNullString()
-
-		r.Lote = nil
+		return fmt.Errorf("no value specified for articuloDestino")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cantidad"]; ok {
+		if v, ok := fields["loteOrigen"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Cantidad); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.LoteOrigen); err != nil {
 			return err
 		}
 	} else {
-		r.Cantidad = NewUnionNullString()
-
-		r.Cantidad = nil
+		return fmt.Errorf("no value specified for loteOrigen")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["almacen"]; ok {
+		if v, ok := fields["estadoDeLoteOrigen"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Almacen); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.EstadoDeLoteOrigen); err != nil {
 			return err
 		}
 	} else {
-		r.Almacen = NewUnionNullString()
-
-		r.Almacen = nil
+		return fmt.Errorf("no value specified for estadoDeLoteOrigen")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["estadoDeLote"]; ok {
+		if v, ok := fields["almacenOrigen"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.EstadoDeLote); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.AlmacenOrigen); err != nil {
 			return err
 		}
 	} else {
-		r.EstadoDeLote = NewUnionNullString()
+		r.AlmacenOrigen = NewUnionNullString()
 
-		r.EstadoDeLote = nil
+		r.AlmacenOrigen = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["lpnOrigen"]; ok {
@@ -417,20 +385,20 @@ func (r *Propietario) UnmarshalJSON(data []byte) error {
 		r.LpnOrigen = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["lpnDestino"]; ok {
+		if v, ok := fields["movimientoTotalStock"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.LpnDestino); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.MovimientoTotalStock); err != nil {
 			return err
 		}
 	} else {
-		r.LpnDestino = NewUnionNullString()
+		r.MovimientoTotalStock = NewUnionNullBool()
 
-		r.LpnDestino = nil
+		r.MovimientoTotalStock = nil
 	}
 	return nil
 }
