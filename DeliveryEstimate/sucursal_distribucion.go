@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type SucursalDistribucion struct {
+	Id *UnionNullInt `json:"id"`
+
 	IdSucursal *UnionNullInt `json:"idSucursal"`
 
 	Codigo *UnionNullString `json:"codigo"`
@@ -31,10 +33,11 @@ type SucursalDistribucion struct {
 	CodigoPostal *UnionNullString `json:"codigoPostal"`
 }
 
-const SucursalDistribucionAvroCRC64Fingerprint = "ڭသ\xf0=\xc2"
+const SucursalDistribucionAvroCRC64Fingerprint = "\xc4Rn\rHz\x01\""
 
 func NewSucursalDistribucion() SucursalDistribucion {
 	r := SucursalDistribucion{}
+	r.Id = nil
 	r.IdSucursal = nil
 	r.Codigo = nil
 	r.Descripcion = nil
@@ -69,6 +72,10 @@ func DeserializeSucursalDistribucionFromSchema(r io.Reader, schema string) (Sucu
 
 func writeSucursalDistribucion(r SucursalDistribucion, w io.Writer) error {
 	var err error
+	err = writeUnionNullInt(r.Id, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullInt(r.IdSucursal, w)
 	if err != nil {
 		return err
@@ -101,7 +108,7 @@ func (r SucursalDistribucion) Serialize(w io.Writer) error {
 }
 
 func (r SucursalDistribucion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"idSucursal\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"horarioAtencion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.SucursalDistribucion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"idSucursal\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"horarioAtencion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.SucursalDistribucion\",\"type\":\"record\"}"
 }
 
 func (r SucursalDistribucion) SchemaName() string {
@@ -120,26 +127,30 @@ func (_ SucursalDistribucion) SetUnionElem(v int64) { panic("Unsupported operati
 func (r *SucursalDistribucion) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.Id = NewUnionNullInt()
+
+		return r.Id
+	case 1:
 		r.IdSucursal = NewUnionNullInt()
 
 		return r.IdSucursal
-	case 1:
+	case 2:
 		r.Codigo = NewUnionNullString()
 
 		return r.Codigo
-	case 2:
+	case 3:
 		r.Descripcion = NewUnionNullString()
 
 		return r.Descripcion
-	case 3:
+	case 4:
 		r.Direccion = NewUnionNullString()
 
 		return r.Direccion
-	case 4:
+	case 5:
 		r.HorarioAtencion = NewUnionNullString()
 
 		return r.HorarioAtencion
-	case 5:
+	case 6:
 		r.CodigoPostal = NewUnionNullString()
 
 		return r.CodigoPostal
@@ -150,21 +161,24 @@ func (r *SucursalDistribucion) Get(i int) types.Field {
 func (r *SucursalDistribucion) SetDefault(i int) {
 	switch i {
 	case 0:
-		r.IdSucursal = nil
+		r.Id = nil
 		return
 	case 1:
-		r.Codigo = nil
+		r.IdSucursal = nil
 		return
 	case 2:
-		r.Descripcion = nil
+		r.Codigo = nil
 		return
 	case 3:
-		r.Direccion = nil
+		r.Descripcion = nil
 		return
 	case 4:
-		r.HorarioAtencion = nil
+		r.Direccion = nil
 		return
 	case 5:
+		r.HorarioAtencion = nil
+		return
+	case 6:
 		r.CodigoPostal = nil
 		return
 	}
@@ -174,21 +188,24 @@ func (r *SucursalDistribucion) SetDefault(i int) {
 func (r *SucursalDistribucion) NullField(i int) {
 	switch i {
 	case 0:
-		r.IdSucursal = nil
+		r.Id = nil
 		return
 	case 1:
-		r.Codigo = nil
+		r.IdSucursal = nil
 		return
 	case 2:
-		r.Descripcion = nil
+		r.Codigo = nil
 		return
 	case 3:
-		r.Direccion = nil
+		r.Descripcion = nil
 		return
 	case 4:
-		r.HorarioAtencion = nil
+		r.Direccion = nil
 		return
 	case 5:
+		r.HorarioAtencion = nil
+		return
+	case 6:
 		r.CodigoPostal = nil
 		return
 	}
@@ -207,6 +224,10 @@ func (_ SucursalDistribucion) AvroCRC64Fingerprint() []byte {
 func (r SucursalDistribucion) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["id"], err = json.Marshal(r.Id)
+	if err != nil {
+		return nil, err
+	}
 	output["idSucursal"], err = json.Marshal(r.IdSucursal)
 	if err != nil {
 		return nil, err
@@ -241,6 +262,22 @@ func (r *SucursalDistribucion) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["id"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Id); err != nil {
+			return err
+		}
+	} else {
+		r.Id = NewUnionNullInt()
+
+		r.Id = nil
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["idSucursal"]; ok {
 			return v
