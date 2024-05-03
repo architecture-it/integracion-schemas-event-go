@@ -18,31 +18,44 @@ import (
 var _ = fmt.Printf
 
 type NotificacionesMKT struct {
-	IdModelo int64 `json:"idModelo"`
+	IdModelo *UnionNullLong `json:"idModelo"`
 
-	ClienteId string `json:"clienteId"`
+	ClienteId *UnionNullString `json:"clienteId"`
 
-	Destinatario string `json:"destinatario"`
+	Destinatario *UnionNullString `json:"destinatario"`
 
-	ClienteNombre string `json:"clienteNombre"`
+	ClienteNombre *UnionNullString `json:"clienteNombre"`
 
-	FechaNotificacion int64 `json:"fechaNotificacion"`
+	FechaNotificacion *UnionNullLong `json:"fechaNotificacion"`
 
-	FechaEvento int64 `json:"fechaEvento"`
+	FechaEvento *UnionNullLong `json:"fechaEvento"`
 
-	DestinatarioEstado string `json:"destinatarioEstado"`
+	DestinatarioEstado *UnionNullString `json:"destinatarioEstado"`
 
-	DestinatarioObservacion string `json:"destinatarioObservacion"`
+	DestinatarioObservacion *UnionNullString `json:"destinatarioObservacion"`
 
-	IdEvento int32 `json:"idEvento"`
+	IdEvento *UnionNullInt `json:"idEvento"`
 
-	DestinatarioNotificacion string `json:"destinatarioNotificacion"`
+	IdRegla *UnionNullInt `json:"idRegla"`
+
+	DestinatarioNotificacion *UnionNullString `json:"destinatarioNotificacion"`
 }
 
-const NotificacionesMKTAvroCRC64Fingerprint = "\xae\xd3\xc9C\x86(>\x95"
+const NotificacionesMKTAvroCRC64Fingerprint = "5\xd5x\x9c\xb5\x96ޟ"
 
 func NewNotificacionesMKT() NotificacionesMKT {
 	r := NotificacionesMKT{}
+	r.IdModelo = nil
+	r.ClienteId = nil
+	r.Destinatario = nil
+	r.ClienteNombre = nil
+	r.FechaNotificacion = nil
+	r.FechaEvento = nil
+	r.DestinatarioEstado = nil
+	r.DestinatarioObservacion = nil
+	r.IdEvento = nil
+	r.IdRegla = nil
+	r.DestinatarioNotificacion = nil
 	return r
 }
 
@@ -71,43 +84,47 @@ func DeserializeNotificacionesMKTFromSchema(r io.Reader, schema string) (Notific
 
 func writeNotificacionesMKT(r NotificacionesMKT, w io.Writer) error {
 	var err error
-	err = vm.WriteLong(r.IdModelo, w)
+	err = writeUnionNullLong(r.IdModelo, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ClienteId, w)
+	err = writeUnionNullString(r.ClienteId, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Destinatario, w)
+	err = writeUnionNullString(r.Destinatario, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ClienteNombre, w)
+	err = writeUnionNullString(r.ClienteNombre, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.FechaNotificacion, w)
+	err = writeUnionNullLong(r.FechaNotificacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.FechaEvento, w)
+	err = writeUnionNullLong(r.FechaEvento, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioEstado, w)
+	err = writeUnionNullString(r.DestinatarioEstado, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioObservacion, w)
+	err = writeUnionNullString(r.DestinatarioObservacion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.IdEvento, w)
+	err = writeUnionNullInt(r.IdEvento, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DestinatarioNotificacion, w)
+	err = writeUnionNullInt(r.IdRegla, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.DestinatarioNotificacion, w)
 	if err != nil {
 		return err
 	}
@@ -119,7 +136,7 @@ func (r NotificacionesMKT) Serialize(w io.Writer) error {
 }
 
 func (r NotificacionesMKT) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"clienteId\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"clienteNombre\",\"type\":\"string\"},{\"name\":\"fechaNotificacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaEvento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"destinatarioEstado\",\"type\":\"string\"},{\"name\":\"destinatarioObservacion\",\"type\":\"string\"},{\"name\":\"idEvento\",\"type\":\"int\"},{\"name\":\"destinatarioNotificacion\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.NotificacionesMKT\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"idModelo\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clienteNombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaNotificacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaEvento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"destinatarioEstado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioObservacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idEvento\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"idRegla\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"destinatarioNotificacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.NotificacionesMKT\",\"type\":\"record\"}"
 }
 
 func (r NotificacionesMKT) SchemaName() string {
@@ -138,67 +155,127 @@ func (_ NotificacionesMKT) SetUnionElem(v int64) { panic("Unsupported operation"
 func (r *NotificacionesMKT) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Long{Target: &r.IdModelo}
+		r.IdModelo = NewUnionNullLong()
 
-		return w
-
+		return r.IdModelo
 	case 1:
-		w := types.String{Target: &r.ClienteId}
+		r.ClienteId = NewUnionNullString()
 
-		return w
-
+		return r.ClienteId
 	case 2:
-		w := types.String{Target: &r.Destinatario}
+		r.Destinatario = NewUnionNullString()
 
-		return w
-
+		return r.Destinatario
 	case 3:
-		w := types.String{Target: &r.ClienteNombre}
+		r.ClienteNombre = NewUnionNullString()
 
-		return w
-
+		return r.ClienteNombre
 	case 4:
-		w := types.Long{Target: &r.FechaNotificacion}
+		r.FechaNotificacion = NewUnionNullLong()
 
-		return w
-
+		return r.FechaNotificacion
 	case 5:
-		w := types.Long{Target: &r.FechaEvento}
+		r.FechaEvento = NewUnionNullLong()
 
-		return w
-
+		return r.FechaEvento
 	case 6:
-		w := types.String{Target: &r.DestinatarioEstado}
+		r.DestinatarioEstado = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioEstado
 	case 7:
-		w := types.String{Target: &r.DestinatarioObservacion}
+		r.DestinatarioObservacion = NewUnionNullString()
 
-		return w
-
+		return r.DestinatarioObservacion
 	case 8:
-		w := types.Int{Target: &r.IdEvento}
+		r.IdEvento = NewUnionNullInt()
 
-		return w
-
+		return r.IdEvento
 	case 9:
-		w := types.String{Target: &r.DestinatarioNotificacion}
+		r.IdRegla = NewUnionNullInt()
 
-		return w
+		return r.IdRegla
+	case 10:
+		r.DestinatarioNotificacion = NewUnionNullString()
 
+		return r.DestinatarioNotificacion
 	}
 	panic("Unknown field index")
 }
 
 func (r *NotificacionesMKT) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.IdModelo = nil
+		return
+	case 1:
+		r.ClienteId = nil
+		return
+	case 2:
+		r.Destinatario = nil
+		return
+	case 3:
+		r.ClienteNombre = nil
+		return
+	case 4:
+		r.FechaNotificacion = nil
+		return
+	case 5:
+		r.FechaEvento = nil
+		return
+	case 6:
+		r.DestinatarioEstado = nil
+		return
+	case 7:
+		r.DestinatarioObservacion = nil
+		return
+	case 8:
+		r.IdEvento = nil
+		return
+	case 9:
+		r.IdRegla = nil
+		return
+	case 10:
+		r.DestinatarioNotificacion = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *NotificacionesMKT) NullField(i int) {
 	switch i {
+	case 0:
+		r.IdModelo = nil
+		return
+	case 1:
+		r.ClienteId = nil
+		return
+	case 2:
+		r.Destinatario = nil
+		return
+	case 3:
+		r.ClienteNombre = nil
+		return
+	case 4:
+		r.FechaNotificacion = nil
+		return
+	case 5:
+		r.FechaEvento = nil
+		return
+	case 6:
+		r.DestinatarioEstado = nil
+		return
+	case 7:
+		r.DestinatarioObservacion = nil
+		return
+	case 8:
+		r.IdEvento = nil
+		return
+	case 9:
+		r.IdRegla = nil
+		return
+	case 10:
+		r.DestinatarioNotificacion = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -251,6 +328,10 @@ func (r NotificacionesMKT) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["idRegla"], err = json.Marshal(r.IdRegla)
+	if err != nil {
+		return nil, err
+	}
 	output["destinatarioNotificacion"], err = json.Marshal(r.DestinatarioNotificacion)
 	if err != nil {
 		return nil, err
@@ -277,7 +358,9 @@ func (r *NotificacionesMKT) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for idModelo")
+		r.IdModelo = NewUnionNullLong()
+
+		r.IdModelo = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["clienteId"]; ok {
@@ -291,7 +374,9 @@ func (r *NotificacionesMKT) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for clienteId")
+		r.ClienteId = NewUnionNullString()
+
+		r.ClienteId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatario"]; ok {
@@ -305,7 +390,9 @@ func (r *NotificacionesMKT) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for destinatario")
+		r.Destinatario = NewUnionNullString()
+
+		r.Destinatario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["clienteNombre"]; ok {
@@ -319,7 +406,9 @@ func (r *NotificacionesMKT) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for clienteNombre")
+		r.ClienteNombre = NewUnionNullString()
+
+		r.ClienteNombre = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["fechaNotificacion"]; ok {
@@ -333,7 +422,9 @@ func (r *NotificacionesMKT) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for fechaNotificacion")
+		r.FechaNotificacion = NewUnionNullLong()
+
+		r.FechaNotificacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["fechaEvento"]; ok {
@@ -347,7 +438,9 @@ func (r *NotificacionesMKT) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for fechaEvento")
+		r.FechaEvento = NewUnionNullLong()
+
+		r.FechaEvento = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatarioEstado"]; ok {
@@ -361,7 +454,9 @@ func (r *NotificacionesMKT) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for destinatarioEstado")
+		r.DestinatarioEstado = NewUnionNullString()
+
+		r.DestinatarioEstado = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatarioObservacion"]; ok {
@@ -375,7 +470,9 @@ func (r *NotificacionesMKT) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for destinatarioObservacion")
+		r.DestinatarioObservacion = NewUnionNullString()
+
+		r.DestinatarioObservacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["idEvento"]; ok {
@@ -389,7 +486,25 @@ func (r *NotificacionesMKT) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for idEvento")
+		r.IdEvento = NewUnionNullInt()
+
+		r.IdEvento = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idRegla"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdRegla); err != nil {
+			return err
+		}
+	} else {
+		r.IdRegla = NewUnionNullInt()
+
+		r.IdRegla = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatarioNotificacion"]; ok {
@@ -403,7 +518,9 @@ func (r *NotificacionesMKT) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for destinatarioNotificacion")
+		r.DestinatarioNotificacion = NewUnionNullString()
+
+		r.DestinatarioNotificacion = nil
 	}
 	return nil
 }

@@ -18,9 +18,9 @@ import (
 var _ = fmt.Printf
 
 type InactividadMarketing struct {
-	ClienteId string `json:"clienteId"`
+	ClienteId *UnionNullString `json:"clienteId"`
 
-	Email string `json:"email"`
+	Email *UnionNullString `json:"email"`
 
 	Nombre *UnionNullString `json:"nombre"`
 
@@ -28,20 +28,24 @@ type InactividadMarketing struct {
 
 	TelefonoNumero *UnionNullString `json:"telefonoNumero"`
 
-	Segmento string `json:"segmento"`
+	Segmento *UnionNullString `json:"segmento"`
 
-	Mes int64 `json:"mes"`
+	Mes *UnionNullLong `json:"mes"`
 
 	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const InactividadMarketingAvroCRC64Fingerprint = "#O\xb6\x13U\x0fp\xb4"
+const InactividadMarketingAvroCRC64Fingerprint = "\x1b;5\xdf#\x95,\xf1"
 
 func NewInactividadMarketing() InactividadMarketing {
 	r := InactividadMarketing{}
+	r.ClienteId = nil
+	r.Email = nil
 	r.Nombre = nil
 	r.TelefonoCodigoArea = nil
 	r.TelefonoNumero = nil
+	r.Segmento = nil
+	r.Mes = nil
 	r.Cuando = nil
 	return r
 }
@@ -71,11 +75,11 @@ func DeserializeInactividadMarketingFromSchema(r io.Reader, schema string) (Inac
 
 func writeInactividadMarketing(r InactividadMarketing, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.ClienteId, w)
+	err = writeUnionNullString(r.ClienteId, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Email, w)
+	err = writeUnionNullString(r.Email, w)
 	if err != nil {
 		return err
 	}
@@ -91,11 +95,11 @@ func writeInactividadMarketing(r InactividadMarketing, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Segmento, w)
+	err = writeUnionNullString(r.Segmento, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.Mes, w)
+	err = writeUnionNullLong(r.Mes, w)
 	if err != nil {
 		return err
 	}
@@ -111,7 +115,7 @@ func (r InactividadMarketing) Serialize(w io.Writer) error {
 }
 
 func (r InactividadMarketing) Schema() string {
-	return "{\"fields\":[{\"name\":\"clienteId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"mes\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.InactividadMarketing\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mes\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.InactividadMarketing\",\"type\":\"record\"}"
 }
 
 func (r InactividadMarketing) SchemaName() string {
@@ -130,15 +134,13 @@ func (_ InactividadMarketing) SetUnionElem(v int64) { panic("Unsupported operati
 func (r *InactividadMarketing) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.ClienteId}
+		r.ClienteId = NewUnionNullString()
 
-		return w
-
+		return r.ClienteId
 	case 1:
-		w := types.String{Target: &r.Email}
+		r.Email = NewUnionNullString()
 
-		return w
-
+		return r.Email
 	case 2:
 		r.Nombre = NewUnionNullString()
 
@@ -152,15 +154,13 @@ func (r *InactividadMarketing) Get(i int) types.Field {
 
 		return r.TelefonoNumero
 	case 5:
-		w := types.String{Target: &r.Segmento}
+		r.Segmento = NewUnionNullString()
 
-		return w
-
+		return r.Segmento
 	case 6:
-		w := types.Long{Target: &r.Mes}
+		r.Mes = NewUnionNullLong()
 
-		return w
-
+		return r.Mes
 	case 7:
 		r.Cuando = NewUnionNullLong()
 
@@ -171,6 +171,12 @@ func (r *InactividadMarketing) Get(i int) types.Field {
 
 func (r *InactividadMarketing) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.ClienteId = nil
+		return
+	case 1:
+		r.Email = nil
+		return
 	case 2:
 		r.Nombre = nil
 		return
@@ -179,6 +185,12 @@ func (r *InactividadMarketing) SetDefault(i int) {
 		return
 	case 4:
 		r.TelefonoNumero = nil
+		return
+	case 5:
+		r.Segmento = nil
+		return
+	case 6:
+		r.Mes = nil
 		return
 	case 7:
 		r.Cuando = nil
@@ -189,6 +201,12 @@ func (r *InactividadMarketing) SetDefault(i int) {
 
 func (r *InactividadMarketing) NullField(i int) {
 	switch i {
+	case 0:
+		r.ClienteId = nil
+		return
+	case 1:
+		r.Email = nil
+		return
 	case 2:
 		r.Nombre = nil
 		return
@@ -197,6 +215,12 @@ func (r *InactividadMarketing) NullField(i int) {
 		return
 	case 4:
 		r.TelefonoNumero = nil
+		return
+	case 5:
+		r.Segmento = nil
+		return
+	case 6:
+		r.Mes = nil
 		return
 	case 7:
 		r.Cuando = nil
@@ -271,7 +295,9 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for clienteId")
+		r.ClienteId = NewUnionNullString()
+
+		r.ClienteId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["email"]; ok {
@@ -285,7 +311,9 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for email")
+		r.Email = NewUnionNullString()
+
+		r.Email = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["nombre"]; ok {
@@ -347,7 +375,9 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for segmento")
+		r.Segmento = NewUnionNullString()
+
+		r.Segmento = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["mes"]; ok {
@@ -361,7 +391,9 @@ func (r *InactividadMarketing) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for mes")
+		r.Mes = NewUnionNullLong()
+
+		r.Mes = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cuando"]; ok {
