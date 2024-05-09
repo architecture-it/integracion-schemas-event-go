@@ -22,7 +22,7 @@ type Interface922Data struct {
 
 	Documento string `json:"Documento"`
 
-	TipoDeDocumento string `json:"TipoDeDocumento"`
+	TipoDeDomicilio string `json:"TipoDeDomicilio"`
 
 	Calle string `json:"Calle"`
 
@@ -85,7 +85,7 @@ type Interface922Data struct {
 	NumeroDeTelefono2 string `json:"NumeroDeTelefono2"`
 }
 
-const Interface922DataAvroCRC64Fingerprint = "\x9cy\xffG\xb7\xfdM\r"
+const Interface922DataAvroCRC64Fingerprint = "\xaaw\xd7\xe3Ǵ@\x05"
 
 func NewInterface922Data() Interface922Data {
 	r := Interface922Data{}
@@ -125,7 +125,7 @@ func writeInterface922Data(r Interface922Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TipoDeDocumento, w)
+	err = vm.WriteString(r.TipoDeDomicilio, w)
 	if err != nil {
 		return err
 	}
@@ -257,7 +257,7 @@ func (r Interface922Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface922Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sigla\",\"type\":\"string\"},{\"name\":\"Documento\",\"type\":\"string\"},{\"name\":\"TipoDeDocumento\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Nro\",\"type\":\"string\"},{\"name\":\"Kilometro\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"OficDepto\",\"type\":\"string\"},{\"name\":\"Manzana\",\"type\":\"string\"},{\"name\":\"Cuerpo\",\"type\":\"string\"},{\"name\":\"Torre\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"name\":\"Parcela\",\"type\":\"string\"},{\"name\":\"Bloque\",\"type\":\"string\"},{\"name\":\"Circunscripcion\",\"type\":\"string\"},{\"name\":\"Seccion\",\"type\":\"string\"},{\"name\":\"Casa\",\"type\":\"string\"},{\"name\":\"EntreLasCalles\",\"type\":\"string\"},{\"name\":\"Barrio\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Cpa\",\"type\":\"string\"},{\"name\":\"CodPostal\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Partido\",\"type\":\"string\"},{\"name\":\"Zona\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"TipoDeTelefono1\",\"type\":\"string\"},{\"name\":\"NumeroDeTelefono1\",\"type\":\"string\"},{\"name\":\"TipoDeTelefono2\",\"type\":\"string\"},{\"name\":\"NumeroDeTelefono2\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface922.Events.Record.Interface922Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sigla\",\"type\":\"string\"},{\"name\":\"Documento\",\"type\":\"string\"},{\"name\":\"TipoDeDomicilio\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Nro\",\"type\":\"string\"},{\"name\":\"Kilometro\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"OficDepto\",\"type\":\"string\"},{\"name\":\"Manzana\",\"type\":\"string\"},{\"name\":\"Cuerpo\",\"type\":\"string\"},{\"name\":\"Torre\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"name\":\"Parcela\",\"type\":\"string\"},{\"name\":\"Bloque\",\"type\":\"string\"},{\"name\":\"Circunscripcion\",\"type\":\"string\"},{\"name\":\"Seccion\",\"type\":\"string\"},{\"name\":\"Casa\",\"type\":\"string\"},{\"name\":\"EntreLasCalles\",\"type\":\"string\"},{\"name\":\"Barrio\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Cpa\",\"type\":\"string\"},{\"name\":\"CodPostal\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Partido\",\"type\":\"string\"},{\"name\":\"Zona\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"TipoDeTelefono1\",\"type\":\"string\"},{\"name\":\"NumeroDeTelefono1\",\"type\":\"string\"},{\"name\":\"TipoDeTelefono2\",\"type\":\"string\"},{\"name\":\"NumeroDeTelefono2\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface922.Events.Record.Interface922Data\",\"type\":\"record\"}"
 }
 
 func (r Interface922Data) SchemaName() string {
@@ -286,7 +286,7 @@ func (r *Interface922Data) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.TipoDeDocumento}
+		w := types.String{Target: &r.TipoDeDomicilio}
 
 		return w
 
@@ -476,7 +476,7 @@ func (r Interface922Data) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["TipoDeDocumento"], err = json.Marshal(r.TipoDeDocumento)
+	output["TipoDeDomicilio"], err = json.Marshal(r.TipoDeDomicilio)
 	if err != nil {
 		return nil, err
 	}
@@ -639,18 +639,18 @@ func (r *Interface922Data) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Documento")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["TipoDeDocumento"]; ok {
+		if v, ok := fields["TipoDeDomicilio"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TipoDeDocumento); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoDeDomicilio); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for TipoDeDocumento")
+		return fmt.Errorf("no value specified for TipoDeDomicilio")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Calle"]; ok {
