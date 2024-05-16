@@ -28,7 +28,7 @@ type PendienteDePago struct {
 
 	TelefonoNumero *UnionNullString `json:"telefonoNumero"`
 
-	FechaModificacion *UnionNullLong `json:"fechaModificacion"`
+	FechaModificacion *UnionNullString `json:"fechaModificacion"`
 
 	Cupon *UnionNullString `json:"cupon"`
 
@@ -39,7 +39,7 @@ type PendienteDePago struct {
 	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const PendienteDePagoAvroCRC64Fingerprint = "vt\a\x87\xd3\xc4t\x0e"
+const PendienteDePagoAvroCRC64Fingerprint = "Adr\x06\xf5H>k"
 
 func NewPendienteDePago() PendienteDePago {
 	r := PendienteDePago{}
@@ -101,7 +101,7 @@ func writePendienteDePago(r PendienteDePago, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullLong(r.FechaModificacion, w)
+	err = writeUnionNullString(r.FechaModificacion, w)
 	if err != nil {
 		return err
 	}
@@ -129,7 +129,7 @@ func (r PendienteDePago) Serialize(w io.Writer) error {
 }
 
 func (r PendienteDePago) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaModificacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeEnvios\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.PendienteDePago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaModificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeEnvios\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.PendienteDePago\",\"type\":\"record\"}"
 }
 
 func (r PendienteDePago) SchemaName() string {
@@ -168,7 +168,7 @@ func (r *PendienteDePago) Get(i int) types.Field {
 
 		return r.TelefonoNumero
 	case 5:
-		r.FechaModificacion = NewUnionNullLong()
+		r.FechaModificacion = NewUnionNullString()
 
 		return r.FechaModificacion
 	case 6:
@@ -417,7 +417,7 @@ func (r *PendienteDePago) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.FechaModificacion = NewUnionNullLong()
+		r.FechaModificacion = NewUnionNullString()
 
 		r.FechaModificacion = nil
 	}
