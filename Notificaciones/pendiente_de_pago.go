@@ -34,12 +34,14 @@ type PendienteDePago struct {
 
 	CantidadDeEnvios *UnionNullInt `json:"cantidadDeEnvios"`
 
+	DiasPendientes *UnionNullInt `json:"diasPendientes"`
+
 	TipoDeServicio *UnionNullString `json:"tipoDeServicio"`
 
 	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const PendienteDePagoAvroCRC64Fingerprint = "Adr\x06\xf5H>k"
+const PendienteDePagoAvroCRC64Fingerprint = "\a\xb5\xdcw#\xa1\x01("
 
 func NewPendienteDePago() PendienteDePago {
 	r := PendienteDePago{}
@@ -51,6 +53,7 @@ func NewPendienteDePago() PendienteDePago {
 	r.FechaModificacion = nil
 	r.Cupon = nil
 	r.CantidadDeEnvios = nil
+	r.DiasPendientes = nil
 	r.TipoDeServicio = nil
 	r.Cuando = nil
 	return r
@@ -113,6 +116,10 @@ func writePendienteDePago(r PendienteDePago, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullInt(r.DiasPendientes, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.TipoDeServicio, w)
 	if err != nil {
 		return err
@@ -129,7 +136,7 @@ func (r PendienteDePago) Serialize(w io.Writer) error {
 }
 
 func (r PendienteDePago) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaModificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeEnvios\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.PendienteDePago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaModificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeEnvios\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"diasPendientes\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.PendienteDePago\",\"type\":\"record\"}"
 }
 
 func (r PendienteDePago) SchemaName() string {
@@ -180,10 +187,14 @@ func (r *PendienteDePago) Get(i int) types.Field {
 
 		return r.CantidadDeEnvios
 	case 8:
+		r.DiasPendientes = NewUnionNullInt()
+
+		return r.DiasPendientes
+	case 9:
 		r.TipoDeServicio = NewUnionNullString()
 
 		return r.TipoDeServicio
-	case 9:
+	case 10:
 		r.Cuando = NewUnionNullLong()
 
 		return r.Cuando
@@ -218,9 +229,12 @@ func (r *PendienteDePago) SetDefault(i int) {
 		r.CantidadDeEnvios = nil
 		return
 	case 8:
-		r.TipoDeServicio = nil
+		r.DiasPendientes = nil
 		return
 	case 9:
+		r.TipoDeServicio = nil
+		return
+	case 10:
 		r.Cuando = nil
 		return
 	}
@@ -254,9 +268,12 @@ func (r *PendienteDePago) NullField(i int) {
 		r.CantidadDeEnvios = nil
 		return
 	case 8:
-		r.TipoDeServicio = nil
+		r.DiasPendientes = nil
 		return
 	case 9:
+		r.TipoDeServicio = nil
+		return
+	case 10:
 		r.Cuando = nil
 		return
 	}
@@ -304,6 +321,10 @@ func (r PendienteDePago) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["cantidadDeEnvios"], err = json.Marshal(r.CantidadDeEnvios)
+	if err != nil {
+		return nil, err
+	}
+	output["diasPendientes"], err = json.Marshal(r.DiasPendientes)
 	if err != nil {
 		return nil, err
 	}
@@ -452,6 +473,22 @@ func (r *PendienteDePago) UnmarshalJSON(data []byte) error {
 		r.CantidadDeEnvios = NewUnionNullInt()
 
 		r.CantidadDeEnvios = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["diasPendientes"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DiasPendientes); err != nil {
+			return err
+		}
+	} else {
+		r.DiasPendientes = NewUnionNullInt()
+
+		r.DiasPendientes = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoDeServicio"]; ok {
