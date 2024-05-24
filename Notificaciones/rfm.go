@@ -28,14 +28,14 @@ type RFM struct {
 
 	TelefonoNumero *UnionNullString `json:"telefonoNumero"`
 
-	Segmento *UnionNullString `json:"segmento"`
+	Categoria *UnionNullString `json:"categoria"`
 
 	Mes *UnionNullLong `json:"mes"`
 
 	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const RFMAvroCRC64Fingerprint = "Δ)0\xad\x86.\xd4"
+const RFMAvroCRC64Fingerprint = "l\xa1\x8e\xfa\xf1\xd4Xx"
 
 func NewRFM() RFM {
 	r := RFM{}
@@ -44,7 +44,7 @@ func NewRFM() RFM {
 	r.Nombre = nil
 	r.TelefonoCodigoArea = nil
 	r.TelefonoNumero = nil
-	r.Segmento = nil
+	r.Categoria = nil
 	r.Mes = nil
 	r.Cuando = nil
 	return r
@@ -95,7 +95,7 @@ func writeRFM(r RFM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Segmento, w)
+	err = writeUnionNullString(r.Categoria, w)
 	if err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func (r RFM) Serialize(w io.Writer) error {
 }
 
 func (r RFM) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mes\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.RFM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mes\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.RFM\",\"type\":\"record\"}"
 }
 
 func (r RFM) SchemaName() string {
@@ -154,9 +154,9 @@ func (r *RFM) Get(i int) types.Field {
 
 		return r.TelefonoNumero
 	case 5:
-		r.Segmento = NewUnionNullString()
+		r.Categoria = NewUnionNullString()
 
-		return r.Segmento
+		return r.Categoria
 	case 6:
 		r.Mes = NewUnionNullLong()
 
@@ -187,7 +187,7 @@ func (r *RFM) SetDefault(i int) {
 		r.TelefonoNumero = nil
 		return
 	case 5:
-		r.Segmento = nil
+		r.Categoria = nil
 		return
 	case 6:
 		r.Mes = nil
@@ -217,7 +217,7 @@ func (r *RFM) NullField(i int) {
 		r.TelefonoNumero = nil
 		return
 	case 5:
-		r.Segmento = nil
+		r.Categoria = nil
 		return
 	case 6:
 		r.Mes = nil
@@ -261,7 +261,7 @@ func (r RFM) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["segmento"], err = json.Marshal(r.Segmento)
+	output["categoria"], err = json.Marshal(r.Categoria)
 	if err != nil {
 		return nil, err
 	}
@@ -364,20 +364,20 @@ func (r *RFM) UnmarshalJSON(data []byte) error {
 		r.TelefonoNumero = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["segmento"]; ok {
+		if v, ok := fields["categoria"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Segmento); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Categoria); err != nil {
 			return err
 		}
 	} else {
-		r.Segmento = NewUnionNullString()
+		r.Categoria = NewUnionNullString()
 
-		r.Segmento = nil
+		r.Categoria = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["mes"]; ok {
