@@ -23,13 +23,16 @@ type OrdenDeKitting struct {
 	NumeroOrdenExterna string `json:"numeroOrdenExterna"`
 
 	Articulo *UnionNullArrayArticuloKitting `json:"articulo"`
+
+	ArticuloOrigen *UnionNullArrayArticuloKittingOrigen `json:"articuloOrigen"`
 }
 
-const OrdenDeKittingAvroCRC64Fingerprint = "F\xdbg\r\xb6\x17\x0eo"
+const OrdenDeKittingAvroCRC64Fingerprint = "n\x03\xb6.ߓH\xb4"
 
 func NewOrdenDeKitting() OrdenDeKitting {
 	r := OrdenDeKitting{}
 	r.Articulo = nil
+	r.ArticuloOrigen = nil
 	return r
 }
 
@@ -70,6 +73,10 @@ func writeOrdenDeKitting(r OrdenDeKitting, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayArticuloKittingOrigen(r.ArticuloOrigen, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -78,7 +85,7 @@ func (r OrdenDeKitting) Serialize(w io.Writer) error {
 }
 
 func (r OrdenDeKitting) Schema() string {
-	return "{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.OrdenDeKitting\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"acondi\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"articuloOrigen\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"codigoArticulo\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteProveedor\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKittingOrigen\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.OrdenDeKitting\",\"type\":\"record\"}"
 }
 
 func (r OrdenDeKitting) SchemaName() string {
@@ -110,6 +117,10 @@ func (r *OrdenDeKitting) Get(i int) types.Field {
 		r.Articulo = NewUnionNullArrayArticuloKitting()
 
 		return r.Articulo
+	case 3:
+		r.ArticuloOrigen = NewUnionNullArrayArticuloKittingOrigen()
+
+		return r.ArticuloOrigen
 	}
 	panic("Unknown field index")
 }
@@ -119,6 +130,9 @@ func (r *OrdenDeKitting) SetDefault(i int) {
 	case 2:
 		r.Articulo = nil
 		return
+	case 3:
+		r.ArticuloOrigen = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -127,6 +141,9 @@ func (r *OrdenDeKitting) NullField(i int) {
 	switch i {
 	case 2:
 		r.Articulo = nil
+		return
+	case 3:
+		r.ArticuloOrigen = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -153,6 +170,10 @@ func (r OrdenDeKitting) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["articulo"], err = json.Marshal(r.Articulo)
+	if err != nil {
+		return nil, err
+	}
+	output["articuloOrigen"], err = json.Marshal(r.ArticuloOrigen)
 	if err != nil {
 		return nil, err
 	}
@@ -209,6 +230,22 @@ func (r *OrdenDeKitting) UnmarshalJSON(data []byte) error {
 		r.Articulo = NewUnionNullArrayArticuloKitting()
 
 		r.Articulo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["articuloOrigen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ArticuloOrigen); err != nil {
+			return err
+		}
+	} else {
+		r.ArticuloOrigen = NewUnionNullArrayArticuloKittingOrigen()
+
+		r.ArticuloOrigen = nil
 	}
 	return nil
 }

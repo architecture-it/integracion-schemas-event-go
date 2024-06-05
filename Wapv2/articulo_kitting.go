@@ -31,12 +31,15 @@ type ArticuloKitting struct {
 	LoteAlmacen string `json:"loteAlmacen"`
 
 	LoteEstado string `json:"loteEstado"`
+
+	Acondi *UnionNullArrayString `json:"acondi"`
 }
 
-const ArticuloKittingAvroCRC64Fingerprint = "\x94\xed%\x00\v\xc3,\x9a"
+const ArticuloKittingAvroCRC64Fingerprint = "\xb9\xf4\x1beCdWb"
 
 func NewArticuloKitting() ArticuloKitting {
 	r := ArticuloKitting{}
+	r.Acondi = nil
 	return r
 }
 
@@ -93,6 +96,10 @@ func writeArticuloKitting(r ArticuloKitting, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayString(r.Acondi, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -101,7 +108,7 @@ func (r ArticuloKitting) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloKitting) Schema() string {
-	return "{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloKitting\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"acondi\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloKitting\",\"type\":\"record\"}"
 }
 
 func (r ArticuloKitting) SchemaName() string {
@@ -154,18 +161,28 @@ func (r *ArticuloKitting) Get(i int) types.Field {
 
 		return w
 
+	case 7:
+		r.Acondi = NewUnionNullArrayString()
+
+		return r.Acondi
 	}
 	panic("Unknown field index")
 }
 
 func (r *ArticuloKitting) SetDefault(i int) {
 	switch i {
+	case 7:
+		r.Acondi = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ArticuloKitting) NullField(i int) {
 	switch i {
+	case 7:
+		r.Acondi = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -207,6 +224,10 @@ func (r ArticuloKitting) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["loteEstado"], err = json.Marshal(r.LoteEstado)
+	if err != nil {
+		return nil, err
+	}
+	output["acondi"], err = json.Marshal(r.Acondi)
 	if err != nil {
 		return nil, err
 	}
@@ -317,6 +338,22 @@ func (r *ArticuloKitting) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for loteEstado")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["acondi"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Acondi); err != nil {
+			return err
+		}
+	} else {
+		r.Acondi = NewUnionNullArrayString()
+
+		r.Acondi = nil
 	}
 	return nil
 }
