@@ -33,9 +33,11 @@ type RFM struct {
 	Mes *UnionNullLong `json:"mes"`
 
 	Cuando *UnionNullLong `json:"cuando"`
+
+	Paridad *UnionNullBool `json:"paridad"`
 }
 
-const RFMAvroCRC64Fingerprint = "l\xa1\x8e\xfa\xf1\xd4Xx"
+const RFMAvroCRC64Fingerprint = "]s.\xc0\x84\xf67\xf9"
 
 func NewRFM() RFM {
 	r := RFM{}
@@ -47,6 +49,7 @@ func NewRFM() RFM {
 	r.Categoria = nil
 	r.Mes = nil
 	r.Cuando = nil
+	r.Paridad = nil
 	return r
 }
 
@@ -107,6 +110,10 @@ func writeRFM(r RFM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullBool(r.Paridad, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -115,7 +122,7 @@ func (r RFM) Serialize(w io.Writer) error {
 }
 
 func (r RFM) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mes\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.RFM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mes\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"paridad\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.RFM\",\"type\":\"record\"}"
 }
 
 func (r RFM) SchemaName() string {
@@ -165,6 +172,10 @@ func (r *RFM) Get(i int) types.Field {
 		r.Cuando = NewUnionNullLong()
 
 		return r.Cuando
+	case 8:
+		r.Paridad = NewUnionNullBool()
+
+		return r.Paridad
 	}
 	panic("Unknown field index")
 }
@@ -195,6 +206,9 @@ func (r *RFM) SetDefault(i int) {
 	case 7:
 		r.Cuando = nil
 		return
+	case 8:
+		r.Paridad = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -224,6 +238,9 @@ func (r *RFM) NullField(i int) {
 		return
 	case 7:
 		r.Cuando = nil
+		return
+	case 8:
+		r.Paridad = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -270,6 +287,10 @@ func (r RFM) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["cuando"], err = json.Marshal(r.Cuando)
+	if err != nil {
+		return nil, err
+	}
+	output["paridad"], err = json.Marshal(r.Paridad)
 	if err != nil {
 		return nil, err
 	}
@@ -410,6 +431,22 @@ func (r *RFM) UnmarshalJSON(data []byte) error {
 		r.Cuando = NewUnionNullLong()
 
 		r.Cuando = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["paridad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Paridad); err != nil {
+			return err
+		}
+	} else {
+		r.Paridad = NewUnionNullBool()
+
+		r.Paridad = nil
 	}
 	return nil
 }
