@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayArticuloKittingOrigenFromSchema(r io.Reader, schem
 }
 
 func (r *UnionNullArrayArticuloKittingOrigen) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"codigoArticulo\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteProveedor\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKittingOrigen\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"codigoArticulo\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteProveedor\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKittingOrigen\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayArticuloKittingOrigen) SetBoolean(v bool)   { panic("Unsupported operation") }

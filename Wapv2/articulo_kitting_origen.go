@@ -20,6 +20,8 @@ var _ = fmt.Printf
 type ArticuloKittingOrigen struct {
 	CodigoArticulo string `json:"codigoArticulo"`
 
+	LoteAlmacen string `json:"loteAlmacen"`
+
 	LoteSecundario string `json:"loteSecundario"`
 
 	LoteProveedor string `json:"loteProveedor"`
@@ -27,7 +29,7 @@ type ArticuloKittingOrigen struct {
 	LoteEstado string `json:"loteEstado"`
 }
 
-const ArticuloKittingOrigenAvroCRC64Fingerprint = "U2A\xf8\x8d\x1dƅ"
+const ArticuloKittingOrigenAvroCRC64Fingerprint = "\\eu1\xdc\x16\xa8a"
 
 func NewArticuloKittingOrigen() ArticuloKittingOrigen {
 	r := ArticuloKittingOrigen{}
@@ -63,6 +65,10 @@ func writeArticuloKittingOrigen(r ArticuloKittingOrigen, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.LoteAlmacen, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.LoteSecundario, w)
 	if err != nil {
 		return err
@@ -83,7 +89,7 @@ func (r ArticuloKittingOrigen) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloKittingOrigen) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigoArticulo\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteProveedor\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloKittingOrigen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigoArticulo\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteProveedor\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"Andreani.Wapv2.Events.Record.ArticuloKittingOrigen\",\"type\":\"record\"}"
 }
 
 func (r ArticuloKittingOrigen) SchemaName() string {
@@ -107,16 +113,21 @@ func (r *ArticuloKittingOrigen) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.LoteSecundario}
+		w := types.String{Target: &r.LoteAlmacen}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.LoteProveedor}
+		w := types.String{Target: &r.LoteSecundario}
 
 		return w
 
 	case 3:
+		w := types.String{Target: &r.LoteProveedor}
+
+		return w
+
+	case 4:
 		w := types.String{Target: &r.LoteEstado}
 
 		return w
@@ -150,6 +161,10 @@ func (r ArticuloKittingOrigen) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["codigoArticulo"], err = json.Marshal(r.CodigoArticulo)
+	if err != nil {
+		return nil, err
+	}
+	output["loteAlmacen"], err = json.Marshal(r.LoteAlmacen)
 	if err != nil {
 		return nil, err
 	}
@@ -188,6 +203,20 @@ func (r *ArticuloKittingOrigen) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for codigoArticulo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["loteAlmacen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LoteAlmacen); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for loteAlmacen")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["loteSecundario"]; ok {

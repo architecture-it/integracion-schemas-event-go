@@ -27,7 +27,7 @@ type OrdenDeKitting struct {
 	ArticuloOrigen *UnionNullArrayArticuloKittingOrigen `json:"articuloOrigen"`
 }
 
-const OrdenDeKittingAvroCRC64Fingerprint = "n\x03\xb6.ߓH\xb4"
+const OrdenDeKittingAvroCRC64Fingerprint = "\x94\x1d4\xd4u\x049V"
 
 func NewOrdenDeKitting() OrdenDeKitting {
 	r := OrdenDeKitting{}
@@ -85,7 +85,7 @@ func (r OrdenDeKitting) Serialize(w io.Writer) error {
 }
 
 func (r OrdenDeKitting) Schema() string {
-	return "{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"acondi\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"articuloOrigen\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"codigoArticulo\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteProveedor\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKittingOrigen\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.OrdenDeKitting\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"cantidad\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"loteFabricante\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"acondi\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ArticuloKitting\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"articuloOrigen\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"codigoArticulo\",\"type\":\"string\"},{\"name\":\"loteAlmacen\",\"type\":\"string\"},{\"name\":\"loteSecundario\",\"type\":\"string\"},{\"name\":\"loteProveedor\",\"type\":\"string\"},{\"name\":\"loteEstado\",\"type\":\"string\"}],\"name\":\"ArticuloKittingOrigen\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.OrdenDeKitting\",\"type\":\"record\"}"
 }
 
 func (r OrdenDeKitting) SchemaName() string {
