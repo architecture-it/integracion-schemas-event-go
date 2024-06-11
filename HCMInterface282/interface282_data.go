@@ -22,12 +22,12 @@ type Interface282Data struct {
 
 	FechaAcuerdo string `json:"FechaAcuerdo"`
 
-	SueldoJournal float64 `json:"SueldoJournal"`
+	SueldoJournal string `json:"SueldoJournal"`
 
 	ZonaBandaSalarial string `json:"ZonaBandaSalarial"`
 }
 
-const Interface282DataAvroCRC64Fingerprint = "G\xb3<\xb8\xa8MBa"
+const Interface282DataAvroCRC64Fingerprint = "R\xb8\x18\x88\xbd\x8a\x06\x94"
 
 func NewInterface282Data() Interface282Data {
 	r := Interface282Data{}
@@ -67,7 +67,7 @@ func writeInterface282Data(r Interface282Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteDouble(r.SueldoJournal, w)
+	err = vm.WriteString(r.SueldoJournal, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (r Interface282Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface282Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"FechaAcuerdo\",\"type\":\"string\"},{\"name\":\"SueldoJournal\",\"type\":\"double\"},{\"name\":\"ZonaBandaSalarial\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface282.Events.Record.Interface282Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"FechaAcuerdo\",\"type\":\"string\"},{\"name\":\"SueldoJournal\",\"type\":\"string\"},{\"name\":\"ZonaBandaSalarial\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface282.Events.Record.Interface282Data\",\"type\":\"record\"}"
 }
 
 func (r Interface282Data) SchemaName() string {
@@ -112,7 +112,7 @@ func (r *Interface282Data) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.Double{Target: &r.SueldoJournal}
+		w := types.String{Target: &r.SueldoJournal}
 
 		return w
 
