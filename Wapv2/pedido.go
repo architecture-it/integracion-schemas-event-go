@@ -43,9 +43,11 @@ type Pedido struct {
 	FechaEntrega *UnionNullLong `json:"fechaEntrega"`
 
 	DatosAdicionales *UnionNullListaDePropiedades `json:"datosAdicionales"`
+
+	EstatusOTdeTraza *UnionNullString `json:"estatusOTdeTraza"`
 }
 
-const PedidoAvroCRC64Fingerprint = "8f\xd2]v\x9cN\xa8"
+const PedidoAvroCRC64Fingerprint = "O\xa1\xb5\"\x8d\xe3S\xa0"
 
 func NewPedido() Pedido {
 	r := Pedido{}
@@ -60,6 +62,7 @@ func NewPedido() Pedido {
 	r.Cot = nil
 	r.FechaEntrega = nil
 	r.DatosAdicionales = nil
+	r.EstatusOTdeTraza = nil
 	return r
 }
 
@@ -140,6 +143,10 @@ func writePedido(r Pedido, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.EstatusOTdeTraza, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -148,7 +155,7 @@ func (r Pedido) Serialize(w io.Writer) error {
 }
 
 func (r Pedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urlsDocumentos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"UrlDocumento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaUrlsDocumentos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"documentosBase64\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"documentoBase64\",\"type\":\"string\"}],\"name\":\"Documentos\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDocumentos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"precioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.Wapv2.Events.Record.Pedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urlsDocumentos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"UrlDocumento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaUrlsDocumentos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"documentosBase64\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"documentoBase64\",\"type\":\"string\"}],\"name\":\"Documentos\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDocumentos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"precioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"estatusOTdeTraza\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.Pedido\",\"type\":\"record\"}"
 }
 
 func (r Pedido) SchemaName() string {
@@ -220,6 +227,10 @@ func (r *Pedido) Get(i int) types.Field {
 		r.DatosAdicionales = NewUnionNullListaDePropiedades()
 
 		return r.DatosAdicionales
+	case 13:
+		r.EstatusOTdeTraza = NewUnionNullString()
+
+		return r.EstatusOTdeTraza
 	}
 	panic("Unknown field index")
 }
@@ -259,6 +270,9 @@ func (r *Pedido) SetDefault(i int) {
 	case 12:
 		r.DatosAdicionales = nil
 		return
+	case 13:
+		r.EstatusOTdeTraza = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -297,6 +311,9 @@ func (r *Pedido) NullField(i int) {
 		return
 	case 12:
 		r.DatosAdicionales = nil
+		return
+	case 13:
+		r.EstatusOTdeTraza = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -363,6 +380,10 @@ func (r Pedido) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["datosAdicionales"], err = json.Marshal(r.DatosAdicionales)
+	if err != nil {
+		return nil, err
+	}
+	output["estatusOTdeTraza"], err = json.Marshal(r.EstatusOTdeTraza)
 	if err != nil {
 		return nil, err
 	}
@@ -579,6 +600,22 @@ func (r *Pedido) UnmarshalJSON(data []byte) error {
 		r.DatosAdicionales = NewUnionNullListaDePropiedades()
 
 		r.DatosAdicionales = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["estatusOTdeTraza"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EstatusOTdeTraza); err != nil {
+			return err
+		}
+	} else {
+		r.EstatusOTdeTraza = NewUnionNullString()
+
+		r.EstatusOTdeTraza = nil
 	}
 	return nil
 }
