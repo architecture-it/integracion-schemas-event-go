@@ -27,14 +27,19 @@ type KafkaDemo struct {
 	Me Person `json:"me"`
 
 	Time int64 `json:"time"`
+
+	Mañana int64 `json:"mañana"`
+
+	Name *UnionNullString `json:"name"`
 }
 
-const KafkaDemoAvroCRC64Fingerprint = "涀\xaa[\xe1\v\x1a"
+const KafkaDemoAvroCRC64Fingerprint = "u\xa8\x15\x87\xb7ZY\x95"
 
 func NewKafkaDemo() KafkaDemo {
 	r := KafkaDemo{}
 	r.Me = NewPerson()
 
+	r.Name = nil
 	return r
 }
 
@@ -83,6 +88,14 @@ func writeKafkaDemo(r KafkaDemo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteLong(r.Mañana, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Name, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -91,7 +104,7 @@ func (r KafkaDemo) Serialize(w io.Writer) error {
 }
 
 func (r KafkaDemo) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"titulo\",\"type\":\"string\"},{\"name\":\"didYouUnderstand\",\"type\":\"boolean\"},{\"name\":\"me\",\"type\":{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"name\":\"team\",\"type\":{\"fields\":[{\"name\":\"tl\",\"type\":\"string\"},{\"name\":\"boss\",\"type\":\"string\"},{\"name\":\"members\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Team\",\"type\":\"record\"}}],\"name\":\"Person\",\"namespace\":\"Andreani.KafkaDemo.Events.Record.Common\",\"type\":\"record\"}},{\"name\":\"time\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.KafkaDemo.Events.Record.KafkaDemo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"titulo\",\"type\":\"string\"},{\"name\":\"didYouUnderstand\",\"type\":\"boolean\"},{\"name\":\"me\",\"type\":{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"surname\",\"type\":\"string\"},{\"name\":\"seniority\",\"type\":\"string\"},{\"name\":\"onSite\",\"type\":\"boolean\"},{\"name\":\"team\",\"type\":{\"fields\":[{\"name\":\"tl\",\"type\":\"string\"},{\"name\":\"boss\",\"type\":\"string\"},{\"name\":\"members\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Team\",\"type\":\"record\"}}],\"name\":\"Person\",\"namespace\":\"Andreani.KafkaDemo.Events.Record.Common\",\"type\":\"record\"}},{\"name\":\"time\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"mañana\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"name\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.KafkaDemo.Events.Record.KafkaDemo\",\"type\":\"record\"}"
 }
 
 func (r KafkaDemo) SchemaName() string {
@@ -136,18 +149,33 @@ func (r *KafkaDemo) Get(i int) types.Field {
 
 		return w
 
+	case 5:
+		w := types.Long{Target: &r.Mañana}
+
+		return w
+
+	case 6:
+		r.Name = NewUnionNullString()
+
+		return r.Name
 	}
 	panic("Unknown field index")
 }
 
 func (r *KafkaDemo) SetDefault(i int) {
 	switch i {
+	case 6:
+		r.Name = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *KafkaDemo) NullField(i int) {
 	switch i {
+	case 6:
+		r.Name = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -181,6 +209,14 @@ func (r KafkaDemo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["time"], err = json.Marshal(r.Time)
+	if err != nil {
+		return nil, err
+	}
+	output["mañana"], err = json.Marshal(r.Mañana)
+	if err != nil {
+		return nil, err
+	}
+	output["name"], err = json.Marshal(r.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -263,6 +299,36 @@ func (r *KafkaDemo) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for time")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["mañana"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Mañana); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for mañana")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["name"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Name); err != nil {
+			return err
+		}
+	} else {
+		r.Name = NewUnionNullString()
+
+		r.Name = nil
 	}
 	return nil
 }
