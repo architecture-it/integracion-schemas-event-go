@@ -71,9 +71,11 @@ type ArticuloContenedorPreparacion struct {
 	CodigoValidacionSalidaLote *UnionNullString `json:"CodigoValidacionSalidaLote"`
 
 	UsaDataMatrix *UnionNullBool `json:"UsaDataMatrix"`
+
+	UbicacionOrigen *UnionNullString `json:"UbicacionOrigen"`
 }
 
-const ArticuloContenedorPreparacionAvroCRC64Fingerprint = "\x1d'{\x1a\xa4\b:\x15"
+const ArticuloContenedorPreparacionAvroCRC64Fingerprint = "^\xef+\aD`\x19I"
 
 func NewArticuloContenedorPreparacion() ArticuloContenedorPreparacion {
 	r := ArticuloContenedorPreparacion{}
@@ -99,6 +101,7 @@ func NewArticuloContenedorPreparacion() ArticuloContenedorPreparacion {
 	r.PickDetailKey = nil
 	r.CodigoValidacionSalidaLote = nil
 	r.UsaDataMatrix = nil
+	r.UbicacionOrigen = nil
 	return r
 }
 
@@ -235,6 +238,10 @@ func writeArticuloContenedorPreparacion(r ArticuloContenedorPreparacion, w io.Wr
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.UbicacionOrigen, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -243,7 +250,7 @@ func (r ArticuloContenedorPreparacion) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloContenedorPreparacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UDM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickearTodos\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"ValidaLoteWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FormatoSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieEnSalida\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IngresaSerieEnEmpaquetado\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoValidacionSalidaLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsaDataMatrix\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloContenedorPreparacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UDM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickearTodos\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"ValidaLoteWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FormatoSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieEnSalida\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IngresaSerieEnEmpaquetado\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoValidacionSalidaLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsaDataMatrix\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"UbicacionOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloContenedorPreparacion\",\"type\":\"record\"}"
 }
 
 func (r ArticuloContenedorPreparacion) SchemaName() string {
@@ -374,6 +381,10 @@ func (r *ArticuloContenedorPreparacion) Get(i int) types.Field {
 		r.UsaDataMatrix = NewUnionNullBool()
 
 		return r.UsaDataMatrix
+	case 27:
+		r.UbicacionOrigen = NewUnionNullString()
+
+		return r.UbicacionOrigen
 	}
 	panic("Unknown field index")
 }
@@ -446,6 +457,9 @@ func (r *ArticuloContenedorPreparacion) SetDefault(i int) {
 	case 26:
 		r.UsaDataMatrix = nil
 		return
+	case 27:
+		r.UbicacionOrigen = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -517,6 +531,9 @@ func (r *ArticuloContenedorPreparacion) NullField(i int) {
 		return
 	case 26:
 		r.UsaDataMatrix = nil
+		return
+	case 27:
+		r.UbicacionOrigen = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -641,6 +658,10 @@ func (r ArticuloContenedorPreparacion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["UsaDataMatrix"], err = json.Marshal(r.UsaDataMatrix)
+	if err != nil {
+		return nil, err
+	}
+	output["UbicacionOrigen"], err = json.Marshal(r.UbicacionOrigen)
 	if err != nil {
 		return nil, err
 	}
@@ -1075,6 +1096,22 @@ func (r *ArticuloContenedorPreparacion) UnmarshalJSON(data []byte) error {
 		r.UsaDataMatrix = NewUnionNullBool()
 
 		r.UsaDataMatrix = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["UbicacionOrigen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UbicacionOrigen); err != nil {
+			return err
+		}
+	} else {
+		r.UbicacionOrigen = NewUnionNullString()
+
+		r.UbicacionOrigen = nil
 	}
 	return nil
 }
