@@ -18,11 +18,11 @@ import (
 var _ = fmt.Printf
 
 type AcondicionamientoV2Procesado struct {
-	Estado *UnionNullString `json:"estado"`
+	Estado string `json:"estado"`
 
 	Descripcion *UnionNullString `json:"descripcion"`
 
-	IdTransaccion *UnionNullString `json:"idTransaccion"`
+	IdTransaccion string `json:"idTransaccion"`
 
 	Almacen *UnionNullString `json:"almacen"`
 
@@ -39,13 +39,11 @@ type AcondicionamientoV2Procesado struct {
 	Abastecimiento *UnionNullAbastecimientoAcondi `json:"abastecimiento"`
 }
 
-const AcondicionamientoV2ProcesadoAvroCRC64Fingerprint = "N`ˀ\xb7\x99\xe5L"
+const AcondicionamientoV2ProcesadoAvroCRC64Fingerprint = "\xe6 \xe9[E\x97ny"
 
 func NewAcondicionamientoV2Procesado() AcondicionamientoV2Procesado {
 	r := AcondicionamientoV2Procesado{}
-	r.Estado = nil
 	r.Descripcion = nil
-	r.IdTransaccion = nil
 	r.Almacen = nil
 	r.Instancia = nil
 	r.Propietario = nil
@@ -81,7 +79,7 @@ func DeserializeAcondicionamientoV2ProcesadoFromSchema(r io.Reader, schema strin
 
 func writeAcondicionamientoV2Procesado(r AcondicionamientoV2Procesado, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.Estado, w)
+	err = vm.WriteString(r.Estado, w)
 	if err != nil {
 		return err
 	}
@@ -89,7 +87,7 @@ func writeAcondicionamientoV2Procesado(r AcondicionamientoV2Procesado, w io.Writ
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.IdTransaccion, w)
+	err = vm.WriteString(r.IdTransaccion, w)
 	if err != nil {
 		return err
 	}
@@ -129,7 +127,7 @@ func (r AcondicionamientoV2Procesado) Serialize(w io.Writer) error {
 }
 
 func (r AcondicionamientoV2Procesado) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idTransaccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroOrdenExterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"acondicionamientoEnFrio\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"fechaAcondi\",\"type\":[\"null\",\"string\"]}],\"name\":\"AcondicionamientoEnFrio\",\"namespace\":\"Andreani.ApiAcondicionamientoV2.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"pedido\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"lineas\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"almacenCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"LineaPedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"PedidoAcondi\",\"namespace\":\"Andreani.ApiAcondicionamientoV2.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"abastecimiento\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"lineas\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadPedida\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacenWMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoAcondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"LineaAbastecimiento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"AbastecimientoAcondi\",\"namespace\":\"Andreani.ApiAcondicionamientoV2.Events.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.ApiAcondicionamientoV2.Events.Record.AcondicionamientoV2Procesado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"default\":null,\"name\":\"almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroOrdenExterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"acondicionamientoEnFrio\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"fechaAcondi\",\"type\":[\"null\",\"string\"]}],\"name\":\"AcondicionamientoEnFrio\",\"namespace\":\"Andreani.ApiAcondicionamientoV2.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"pedido\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"lineas\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"almacenCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"LineaPedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"PedidoAcondi\",\"namespace\":\"Andreani.ApiAcondicionamientoV2.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"abastecimiento\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"lineas\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadPedida\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacenWMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoAcondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"LineaAbastecimiento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"AbastecimientoAcondi\",\"namespace\":\"Andreani.ApiAcondicionamientoV2.Events.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.ApiAcondicionamientoV2.Events.Record.AcondicionamientoV2Procesado\",\"type\":\"record\"}"
 }
 
 func (r AcondicionamientoV2Procesado) SchemaName() string {
@@ -148,17 +146,19 @@ func (_ AcondicionamientoV2Procesado) SetUnionElem(v int64) { panic("Unsupported
 func (r *AcondicionamientoV2Procesado) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Estado = NewUnionNullString()
+		w := types.String{Target: &r.Estado}
 
-		return r.Estado
+		return w
+
 	case 1:
 		r.Descripcion = NewUnionNullString()
 
 		return r.Descripcion
 	case 2:
-		r.IdTransaccion = NewUnionNullString()
+		w := types.String{Target: &r.IdTransaccion}
 
-		return r.IdTransaccion
+		return w
+
 	case 3:
 		r.Almacen = NewUnionNullString()
 
@@ -193,14 +193,8 @@ func (r *AcondicionamientoV2Procesado) Get(i int) types.Field {
 
 func (r *AcondicionamientoV2Procesado) SetDefault(i int) {
 	switch i {
-	case 0:
-		r.Estado = nil
-		return
 	case 1:
 		r.Descripcion = nil
-		return
-	case 2:
-		r.IdTransaccion = nil
 		return
 	case 3:
 		r.Almacen = nil
@@ -229,14 +223,8 @@ func (r *AcondicionamientoV2Procesado) SetDefault(i int) {
 
 func (r *AcondicionamientoV2Procesado) NullField(i int) {
 	switch i {
-	case 0:
-		r.Estado = nil
-		return
 	case 1:
 		r.Descripcion = nil
-		return
-	case 2:
-		r.IdTransaccion = nil
 		return
 	case 3:
 		r.Almacen = nil
@@ -339,9 +327,7 @@ func (r *AcondicionamientoV2Procesado) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Estado = NewUnionNullString()
-
-		r.Estado = nil
+		return fmt.Errorf("no value specified for estado")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["descripcion"]; ok {
@@ -371,9 +357,7 @@ func (r *AcondicionamientoV2Procesado) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.IdTransaccion = NewUnionNullString()
-
-		r.IdTransaccion = nil
+		return fmt.Errorf("no value specified for idTransaccion")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["almacen"]; ok {
