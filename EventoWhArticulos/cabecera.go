@@ -100,6 +100,48 @@ type Cabecera struct {
 
 	CodigoPaquete string `json:"CodigoPaquete"`
 
+	DescripcionPaquete string `json:"DescripcionPaquete"`
+
+	CantUnidadMaestra float32 `json:"cantUnidadMaestra"`
+
+	CantPorSubcajas float32 `json:"cantPorSubcajas"`
+
+	CantPorCajas float32 `json:"cantPorCajas"`
+
+	CantPorPallet float32 `json:"cantPorPallet"`
+
+	AlturaUnidad float32 `json:"alturaUnidad"`
+
+	LongitudUnidad float32 `json:"longitudUnidad"`
+
+	AnchoUnidad float32 `json:"anchoUnidad"`
+
+	PesoUnidad float32 `json:"pesoUnidad"`
+
+	AlturaSubcaja float32 `json:"alturaSubcaja"`
+
+	LongSubcaja float32 `json:"longSubcaja"`
+
+	AnchuraSubcaja float32 `json:"anchuraSubcaja"`
+
+	AlturaPorCaja float32 `json:"alturaPorCaja"`
+
+	LongPorCaja float32 `json:"longPorCaja"`
+
+	AnchuraPorCaja float32 `json:"anchuraPorCaja"`
+
+	PesoCaja float32 `json:"pesoCaja"`
+
+	NievelesPorPallet float32 `json:"nievelesPorPallet"`
+
+	CajasPorNivel float32 `json:"cajasPorNivel"`
+
+	AlturaPallet float32 `json:"alturaPallet"`
+
+	LongPallet float32 `json:"longPallet"`
+
+	AnchuraPallet float32 `json:"anchuraPallet"`
+
 	PrecioLinea *UnionNullFloat `json:"PrecioLinea"`
 
 	UbicacionControlCalidad *UnionNullString `json:"UbicacionControlCalidad"`
@@ -143,7 +185,7 @@ type Cabecera struct {
 	ArticulosAlternativos *UnionNullArrayArticulosAlternativos `json:"ArticulosAlternativos"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "=\xa0\x1e\x9b\x10\xc1\xe7\xc2"
+const CabeceraAvroCRC64Fingerprint = "\x9f\x00\x9a\x7f\x92\xbc\xcd\xc2"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -340,6 +382,90 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.DescripcionPaquete, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.CantUnidadMaestra, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.CantPorSubcajas, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.CantPorCajas, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.CantPorPallet, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.AlturaUnidad, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.LongitudUnidad, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.AnchoUnidad, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.PesoUnidad, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.AlturaSubcaja, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.LongSubcaja, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.AnchuraSubcaja, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.AlturaPorCaja, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.LongPorCaja, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.AnchuraPorCaja, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.PesoCaja, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.NievelesPorPallet, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.CajasPorNivel, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.AlturaPallet, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.LongPallet, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.AnchuraPallet, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullFloat(r.PrecioLinea, w)
 	if err != nil {
 		return err
@@ -432,7 +558,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"TipoRotacionABC\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"FinTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"InicioTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"Coleccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Color\",\"type\":[\"null\",\"string\"]},{\"name\":\"Atributos\",\"type\":[\"null\",\"string\"]},{\"name\":\"PrecioAsociadoAlSKU\",\"type\":[\"null\",\"float\"]},{\"name\":\"PaisOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"DigitosMinimosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"DigitosMaximosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"LimiteImpresion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContadorGeneracionSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"name\":\"Pavu\",\"type\":[\"null\",\"string\"]},{\"name\":\"Psicotropico\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temperatura\",\"type\":[\"null\",\"string\"]},{\"name\":\"Serializado\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoValidacionLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDatamatrix\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"PickeaTodos\",\"type\":[\"null\",\"string\"]},{\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraSerie\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlaSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"EventoLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"AltaPorAPI\",\"type\":[\"null\",\"string\"]},{\"name\":\"PropietarioEcommerce\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"SKUOriginalCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReservadoFFC\",\"type\":[\"null\",\"string\"]},{\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesRecepcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Notas\",\"type\":[\"null\",\"string\"]},{\"name\":\"InstruccionesPreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesExpedicion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoPaquete\",\"type\":\"string\"},{\"name\":\"PrecioLinea\",\"type\":[\"null\",\"float\"]},{\"name\":\"UbicacionControlCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoRotacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"TipoValidacionVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"IndicadorVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEntrada\",\"type\":[\"null\",\"int\"]},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"Talle\",\"type\":[\"null\",\"string\"]},{\"name\":\"VolumenCentimetros\",\"type\":\"float\"},{\"name\":\"PesoBrutoKg\",\"type\":\"float\"},{\"name\":\"PesoNetoKg\",\"type\":\"float\"},{\"name\":\"CategoriaStock\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estilo\",\"type\":[\"null\",\"string\"]},{\"name\":\"Tema\",\"type\":[\"null\",\"string\"]},{\"name\":\"ConsumoAntesDeXDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"ConsumoVencimiento\",\"type\":[\"null\",\"int\"]},{\"name\":\"ValidaLoteWOS\",\"type\":[\"null\",\"string\"]},{\"name\":\"ValidaSerieWOS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ArticulosAlternativos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ArticuloAlternativo\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"}],\"name\":\"ArticulosAlternativos\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EventoWhArticulos.Events.EventoArticuloModificacion.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TipoRotacionABC\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"FinTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"InicioTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"Coleccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Color\",\"type\":[\"null\",\"string\"]},{\"name\":\"Atributos\",\"type\":[\"null\",\"string\"]},{\"name\":\"PrecioAsociadoAlSKU\",\"type\":[\"null\",\"float\"]},{\"name\":\"PaisOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"DigitosMinimosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"DigitosMaximosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"LimiteImpresion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContadorGeneracionSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"name\":\"Pavu\",\"type\":[\"null\",\"string\"]},{\"name\":\"Psicotropico\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temperatura\",\"type\":[\"null\",\"string\"]},{\"name\":\"Serializado\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoValidacionLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDatamatrix\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"PickeaTodos\",\"type\":[\"null\",\"string\"]},{\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraSerie\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlaSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"EventoLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"AltaPorAPI\",\"type\":[\"null\",\"string\"]},{\"name\":\"PropietarioEcommerce\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"SKUOriginalCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReservadoFFC\",\"type\":[\"null\",\"string\"]},{\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesRecepcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Notas\",\"type\":[\"null\",\"string\"]},{\"name\":\"InstruccionesPreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesExpedicion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoPaquete\",\"type\":\"string\"},{\"name\":\"DescripcionPaquete\",\"type\":\"string\"},{\"name\":\"cantUnidadMaestra\",\"type\":\"float\"},{\"name\":\"cantPorSubcajas\",\"type\":\"float\"},{\"name\":\"cantPorCajas\",\"type\":\"float\"},{\"name\":\"cantPorPallet\",\"type\":\"float\"},{\"name\":\"alturaUnidad\",\"type\":\"float\"},{\"name\":\"longitudUnidad\",\"type\":\"float\"},{\"name\":\"anchoUnidad\",\"type\":\"float\"},{\"name\":\"pesoUnidad\",\"type\":\"float\"},{\"name\":\"alturaSubcaja\",\"type\":\"float\"},{\"name\":\"longSubcaja\",\"type\":\"float\"},{\"name\":\"anchuraSubcaja\",\"type\":\"float\"},{\"name\":\"alturaPorCaja\",\"type\":\"float\"},{\"name\":\"longPorCaja\",\"type\":\"float\"},{\"name\":\"anchuraPorCaja\",\"type\":\"float\"},{\"name\":\"pesoCaja\",\"type\":\"float\"},{\"name\":\"nievelesPorPallet\",\"type\":\"float\"},{\"name\":\"cajasPorNivel\",\"type\":\"float\"},{\"name\":\"alturaPallet\",\"type\":\"float\"},{\"name\":\"longPallet\",\"type\":\"float\"},{\"name\":\"anchuraPallet\",\"type\":\"float\"},{\"name\":\"PrecioLinea\",\"type\":[\"null\",\"float\"]},{\"name\":\"UbicacionControlCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoRotacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"TipoValidacionVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"IndicadorVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEntrada\",\"type\":[\"null\",\"int\"]},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"Talle\",\"type\":[\"null\",\"string\"]},{\"name\":\"VolumenCentimetros\",\"type\":\"float\"},{\"name\":\"PesoBrutoKg\",\"type\":\"float\"},{\"name\":\"PesoNetoKg\",\"type\":\"float\"},{\"name\":\"CategoriaStock\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estilo\",\"type\":[\"null\",\"string\"]},{\"name\":\"Tema\",\"type\":[\"null\",\"string\"]},{\"name\":\"ConsumoAntesDeXDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"ConsumoVencimiento\",\"type\":[\"null\",\"int\"]},{\"name\":\"ValidaLoteWOS\",\"type\":[\"null\",\"string\"]},{\"name\":\"ValidaSerieWOS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ArticulosAlternativos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ArticuloAlternativo\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"}],\"name\":\"ArticulosAlternativos\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EventoWhArticulos.Events.EventoArticuloModificacion.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -617,90 +743,195 @@ func (r *Cabecera) Get(i int) types.Field {
 		return w
 
 	case 41:
-		r.PrecioLinea = NewUnionNullFloat()
+		w := types.String{Target: &r.DescripcionPaquete}
 
-		return r.PrecioLinea
+		return w
+
 	case 42:
-		r.UbicacionControlCalidad = NewUnionNullString()
+		w := types.Float{Target: &r.CantUnidadMaestra}
 
-		return r.UbicacionControlCalidad
+		return w
+
 	case 43:
-		r.TipoRotacion = NewUnionNullString()
+		w := types.Float{Target: &r.CantPorSubcajas}
 
-		return r.TipoRotacion
+		return w
+
 	case 44:
-		r.Temporada = NewUnionNullString()
+		w := types.Float{Target: &r.CantPorCajas}
 
-		return r.Temporada
+		return w
+
 	case 45:
-		r.VidaUtilEnDias = NewUnionNullInt()
+		w := types.Float{Target: &r.CantPorPallet}
 
-		return r.VidaUtilEnDias
+		return w
+
 	case 46:
-		r.TipoValidacionVidaUtil = NewUnionNullString()
+		w := types.Float{Target: &r.AlturaUnidad}
 
-		return r.TipoValidacionVidaUtil
+		return w
+
 	case 47:
-		r.IndicadorVidaUtil = NewUnionNullString()
+		w := types.Float{Target: &r.LongitudUnidad}
 
-		return r.IndicadorVidaUtil
+		return w
+
 	case 48:
-		r.VidaUtilEntrada = NewUnionNullInt()
+		w := types.Float{Target: &r.AnchoUnidad}
 
-		return r.VidaUtilEntrada
+		return w
+
 	case 49:
-		w := types.String{Target: &r.CodigoArticulo}
+		w := types.Float{Target: &r.PesoUnidad}
 
 		return w
 
 	case 50:
-		r.Talle = NewUnionNullString()
+		w := types.Float{Target: &r.AlturaSubcaja}
 
-		return r.Talle
+		return w
+
 	case 51:
-		w := types.Float{Target: &r.VolumenCentimetros}
+		w := types.Float{Target: &r.LongSubcaja}
 
 		return w
 
 	case 52:
-		w := types.Float{Target: &r.PesoBrutoKg}
+		w := types.Float{Target: &r.AnchuraSubcaja}
 
 		return w
 
 	case 53:
-		w := types.Float{Target: &r.PesoNetoKg}
+		w := types.Float{Target: &r.AlturaPorCaja}
 
 		return w
 
 	case 54:
+		w := types.Float{Target: &r.LongPorCaja}
+
+		return w
+
+	case 55:
+		w := types.Float{Target: &r.AnchuraPorCaja}
+
+		return w
+
+	case 56:
+		w := types.Float{Target: &r.PesoCaja}
+
+		return w
+
+	case 57:
+		w := types.Float{Target: &r.NievelesPorPallet}
+
+		return w
+
+	case 58:
+		w := types.Float{Target: &r.CajasPorNivel}
+
+		return w
+
+	case 59:
+		w := types.Float{Target: &r.AlturaPallet}
+
+		return w
+
+	case 60:
+		w := types.Float{Target: &r.LongPallet}
+
+		return w
+
+	case 61:
+		w := types.Float{Target: &r.AnchuraPallet}
+
+		return w
+
+	case 62:
+		r.PrecioLinea = NewUnionNullFloat()
+
+		return r.PrecioLinea
+	case 63:
+		r.UbicacionControlCalidad = NewUnionNullString()
+
+		return r.UbicacionControlCalidad
+	case 64:
+		r.TipoRotacion = NewUnionNullString()
+
+		return r.TipoRotacion
+	case 65:
+		r.Temporada = NewUnionNullString()
+
+		return r.Temporada
+	case 66:
+		r.VidaUtilEnDias = NewUnionNullInt()
+
+		return r.VidaUtilEnDias
+	case 67:
+		r.TipoValidacionVidaUtil = NewUnionNullString()
+
+		return r.TipoValidacionVidaUtil
+	case 68:
+		r.IndicadorVidaUtil = NewUnionNullString()
+
+		return r.IndicadorVidaUtil
+	case 69:
+		r.VidaUtilEntrada = NewUnionNullInt()
+
+		return r.VidaUtilEntrada
+	case 70:
+		w := types.String{Target: &r.CodigoArticulo}
+
+		return w
+
+	case 71:
+		r.Talle = NewUnionNullString()
+
+		return r.Talle
+	case 72:
+		w := types.Float{Target: &r.VolumenCentimetros}
+
+		return w
+
+	case 73:
+		w := types.Float{Target: &r.PesoBrutoKg}
+
+		return w
+
+	case 74:
+		w := types.Float{Target: &r.PesoNetoKg}
+
+		return w
+
+	case 75:
 		r.CategoriaStock = NewUnionNullString()
 
 		return r.CategoriaStock
-	case 55:
+	case 76:
 		r.Estilo = NewUnionNullString()
 
 		return r.Estilo
-	case 56:
+	case 77:
 		r.Tema = NewUnionNullString()
 
 		return r.Tema
-	case 57:
+	case 78:
 		r.ConsumoAntesDeXDias = NewUnionNullInt()
 
 		return r.ConsumoAntesDeXDias
-	case 58:
+	case 79:
 		r.ConsumoVencimiento = NewUnionNullInt()
 
 		return r.ConsumoVencimiento
-	case 59:
+	case 80:
 		r.ValidaLoteWOS = NewUnionNullString()
 
 		return r.ValidaLoteWOS
-	case 60:
+	case 81:
 		r.ValidaSerieWOS = NewUnionNullString()
 
 		return r.ValidaSerieWOS
-	case 61:
+	case 82:
 		r.ArticulosAlternativos = NewUnionNullArrayArticulosAlternativos()
 
 		return r.ArticulosAlternativos
@@ -710,7 +941,7 @@ func (r *Cabecera) Get(i int) types.Field {
 
 func (r *Cabecera) SetDefault(i int) {
 	switch i {
-	case 61:
+	case 82:
 		r.ArticulosAlternativos = nil
 		return
 	}
@@ -836,55 +1067,55 @@ func (r *Cabecera) NullField(i int) {
 	case 39:
 		r.ControlSeriesExpedicion = nil
 		return
-	case 41:
+	case 62:
 		r.PrecioLinea = nil
 		return
-	case 42:
+	case 63:
 		r.UbicacionControlCalidad = nil
 		return
-	case 43:
+	case 64:
 		r.TipoRotacion = nil
 		return
-	case 44:
+	case 65:
 		r.Temporada = nil
 		return
-	case 45:
+	case 66:
 		r.VidaUtilEnDias = nil
 		return
-	case 46:
+	case 67:
 		r.TipoValidacionVidaUtil = nil
 		return
-	case 47:
+	case 68:
 		r.IndicadorVidaUtil = nil
 		return
-	case 48:
+	case 69:
 		r.VidaUtilEntrada = nil
 		return
-	case 50:
+	case 71:
 		r.Talle = nil
 		return
-	case 54:
+	case 75:
 		r.CategoriaStock = nil
 		return
-	case 55:
+	case 76:
 		r.Estilo = nil
 		return
-	case 56:
+	case 77:
 		r.Tema = nil
 		return
-	case 57:
+	case 78:
 		r.ConsumoAntesDeXDias = nil
 		return
-	case 58:
+	case 79:
 		r.ConsumoVencimiento = nil
 		return
-	case 59:
+	case 80:
 		r.ValidaLoteWOS = nil
 		return
-	case 60:
+	case 81:
 		r.ValidaSerieWOS = nil
 		return
-	case 61:
+	case 82:
 		r.ArticulosAlternativos = nil
 		return
 	}
@@ -1064,6 +1295,90 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CodigoPaquete"], err = json.Marshal(r.CodigoPaquete)
+	if err != nil {
+		return nil, err
+	}
+	output["DescripcionPaquete"], err = json.Marshal(r.DescripcionPaquete)
+	if err != nil {
+		return nil, err
+	}
+	output["cantUnidadMaestra"], err = json.Marshal(r.CantUnidadMaestra)
+	if err != nil {
+		return nil, err
+	}
+	output["cantPorSubcajas"], err = json.Marshal(r.CantPorSubcajas)
+	if err != nil {
+		return nil, err
+	}
+	output["cantPorCajas"], err = json.Marshal(r.CantPorCajas)
+	if err != nil {
+		return nil, err
+	}
+	output["cantPorPallet"], err = json.Marshal(r.CantPorPallet)
+	if err != nil {
+		return nil, err
+	}
+	output["alturaUnidad"], err = json.Marshal(r.AlturaUnidad)
+	if err != nil {
+		return nil, err
+	}
+	output["longitudUnidad"], err = json.Marshal(r.LongitudUnidad)
+	if err != nil {
+		return nil, err
+	}
+	output["anchoUnidad"], err = json.Marshal(r.AnchoUnidad)
+	if err != nil {
+		return nil, err
+	}
+	output["pesoUnidad"], err = json.Marshal(r.PesoUnidad)
+	if err != nil {
+		return nil, err
+	}
+	output["alturaSubcaja"], err = json.Marshal(r.AlturaSubcaja)
+	if err != nil {
+		return nil, err
+	}
+	output["longSubcaja"], err = json.Marshal(r.LongSubcaja)
+	if err != nil {
+		return nil, err
+	}
+	output["anchuraSubcaja"], err = json.Marshal(r.AnchuraSubcaja)
+	if err != nil {
+		return nil, err
+	}
+	output["alturaPorCaja"], err = json.Marshal(r.AlturaPorCaja)
+	if err != nil {
+		return nil, err
+	}
+	output["longPorCaja"], err = json.Marshal(r.LongPorCaja)
+	if err != nil {
+		return nil, err
+	}
+	output["anchuraPorCaja"], err = json.Marshal(r.AnchuraPorCaja)
+	if err != nil {
+		return nil, err
+	}
+	output["pesoCaja"], err = json.Marshal(r.PesoCaja)
+	if err != nil {
+		return nil, err
+	}
+	output["nievelesPorPallet"], err = json.Marshal(r.NievelesPorPallet)
+	if err != nil {
+		return nil, err
+	}
+	output["cajasPorNivel"], err = json.Marshal(r.CajasPorNivel)
+	if err != nil {
+		return nil, err
+	}
+	output["alturaPallet"], err = json.Marshal(r.AlturaPallet)
+	if err != nil {
+		return nil, err
+	}
+	output["longPallet"], err = json.Marshal(r.LongPallet)
+	if err != nil {
+		return nil, err
+	}
+	output["anchuraPallet"], err = json.Marshal(r.AnchuraPallet)
 	if err != nil {
 		return nil, err
 	}
@@ -1734,6 +2049,300 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CodigoPaquete")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DescripcionPaquete"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionPaquete); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for DescripcionPaquete")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cantUnidadMaestra"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantUnidadMaestra); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for cantUnidadMaestra")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cantPorSubcajas"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantPorSubcajas); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for cantPorSubcajas")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cantPorCajas"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantPorCajas); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for cantPorCajas")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cantPorPallet"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantPorPallet); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for cantPorPallet")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["alturaUnidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AlturaUnidad); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for alturaUnidad")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["longitudUnidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LongitudUnidad); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for longitudUnidad")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["anchoUnidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AnchoUnidad); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for anchoUnidad")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["pesoUnidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PesoUnidad); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for pesoUnidad")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["alturaSubcaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AlturaSubcaja); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for alturaSubcaja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["longSubcaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LongSubcaja); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for longSubcaja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["anchuraSubcaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AnchuraSubcaja); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for anchuraSubcaja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["alturaPorCaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AlturaPorCaja); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for alturaPorCaja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["longPorCaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LongPorCaja); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for longPorCaja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["anchuraPorCaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AnchuraPorCaja); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for anchuraPorCaja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["pesoCaja"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PesoCaja); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for pesoCaja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["nievelesPorPallet"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NievelesPorPallet); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for nievelesPorPallet")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cajasPorNivel"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CajasPorNivel); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for cajasPorNivel")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["alturaPallet"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AlturaPallet); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for alturaPallet")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["longPallet"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LongPallet); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for longPallet")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["anchuraPallet"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AnchuraPallet); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for anchuraPallet")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PrecioLinea"]; ok {
