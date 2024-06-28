@@ -98,49 +98,49 @@ type Cabecera struct {
 
 	ControlSeriesExpedicion *UnionNullString `json:"ControlSeriesExpedicion"`
 
-	CodigoPaquete string `json:"CodigoPaquete"`
+	PackCodigoPaquete string `json:"PackCodigoPaquete"`
 
-	DescripcionPaquete string `json:"DescripcionPaquete"`
+	PackDescripcionPaquete string `json:"PackDescripcionPaquete"`
 
-	CantUnidadMaestra float32 `json:"cantUnidadMaestra"`
+	PackCantUnidadMaestra float32 `json:"PackCantUnidadMaestra"`
 
-	CantPorSubcajas float32 `json:"cantPorSubcajas"`
+	PackCantPorSubcajas float32 `json:"PackCantPorSubcajas"`
 
-	CantPorCajas float32 `json:"cantPorCajas"`
+	PackCantPorCajas float32 `json:"PackCantPorCajas"`
 
-	CantPorPallet float32 `json:"cantPorPallet"`
+	PackCantPorPallet float32 `json:"PackCantPorPallet"`
 
-	AlturaUnidad float32 `json:"alturaUnidad"`
+	PackAlturaUnidad float32 `json:"PackAlturaUnidad"`
 
-	LongitudUnidad float32 `json:"longitudUnidad"`
+	PackLongitudUnidad float32 `json:"PackLongitudUnidad"`
 
-	AnchoUnidad float32 `json:"anchoUnidad"`
+	PackAnchoUnidad float32 `json:"PackAnchoUnidad"`
 
-	PesoUnidad float32 `json:"pesoUnidad"`
+	PackPesoUnidad float32 `json:"PackPesoUnidad"`
 
-	AlturaSubcaja float32 `json:"alturaSubcaja"`
+	PackAlturaSubcaja float32 `json:"PackAlturaSubcaja"`
 
-	LongSubcaja float32 `json:"longSubcaja"`
+	PackLongSubcaja float32 `json:"PackLongSubcaja"`
 
-	AnchuraSubcaja float32 `json:"anchuraSubcaja"`
+	PackAnchuraSubcaja float32 `json:"PackAnchuraSubcaja"`
 
-	AlturaPorCaja float32 `json:"alturaPorCaja"`
+	PackAlturaPorCaja float32 `json:"PackAlturaPorCaja"`
 
-	LongPorCaja float32 `json:"longPorCaja"`
+	PackLongPorCaja float32 `json:"PackLongPorCaja"`
 
-	AnchuraPorCaja float32 `json:"anchuraPorCaja"`
+	PackAnchuraPorCaja float32 `json:"PackAnchuraPorCaja"`
 
-	PesoCaja float32 `json:"pesoCaja"`
+	PackPesoCaja float32 `json:"PackPesoCaja"`
 
-	NievelesPorPallet float32 `json:"nievelesPorPallet"`
+	PackNievelesPorPallet float32 `json:"PackNievelesPorPallet"`
 
-	CajasPorNivel float32 `json:"cajasPorNivel"`
+	PackCajasPorNivel float32 `json:"PackCajasPorNivel"`
 
-	AlturaPallet float32 `json:"alturaPallet"`
+	PackAlturaPallet float32 `json:"PackAlturaPallet"`
 
-	LongPallet float32 `json:"longPallet"`
+	PackLongPallet float32 `json:"PackLongPallet"`
 
-	AnchuraPallet float32 `json:"anchuraPallet"`
+	PackAnchuraPallet float32 `json:"PackAnchuraPallet"`
 
 	PrecioLinea *UnionNullFloat `json:"PrecioLinea"`
 
@@ -185,7 +185,7 @@ type Cabecera struct {
 	ArticulosAlternativos *UnionNullArrayArticulosAlternativos `json:"ArticulosAlternativos"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\x9f\x00\x9a\x7f\x92\xbc\xcd\xc2"
+const CabeceraAvroCRC64Fingerprint = "Dx\x0f#\xb4\x96G\x1f"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -378,91 +378,91 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoPaquete, w)
+	err = vm.WriteString(r.PackCodigoPaquete, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DescripcionPaquete, w)
+	err = vm.WriteString(r.PackDescripcionPaquete, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.CantUnidadMaestra, w)
+	err = vm.WriteFloat(r.PackCantUnidadMaestra, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.CantPorSubcajas, w)
+	err = vm.WriteFloat(r.PackCantPorSubcajas, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.CantPorCajas, w)
+	err = vm.WriteFloat(r.PackCantPorCajas, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.CantPorPallet, w)
+	err = vm.WriteFloat(r.PackCantPorPallet, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.AlturaUnidad, w)
+	err = vm.WriteFloat(r.PackAlturaUnidad, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.LongitudUnidad, w)
+	err = vm.WriteFloat(r.PackLongitudUnidad, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.AnchoUnidad, w)
+	err = vm.WriteFloat(r.PackAnchoUnidad, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.PesoUnidad, w)
+	err = vm.WriteFloat(r.PackPesoUnidad, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.AlturaSubcaja, w)
+	err = vm.WriteFloat(r.PackAlturaSubcaja, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.LongSubcaja, w)
+	err = vm.WriteFloat(r.PackLongSubcaja, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.AnchuraSubcaja, w)
+	err = vm.WriteFloat(r.PackAnchuraSubcaja, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.AlturaPorCaja, w)
+	err = vm.WriteFloat(r.PackAlturaPorCaja, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.LongPorCaja, w)
+	err = vm.WriteFloat(r.PackLongPorCaja, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.AnchuraPorCaja, w)
+	err = vm.WriteFloat(r.PackAnchuraPorCaja, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.PesoCaja, w)
+	err = vm.WriteFloat(r.PackPesoCaja, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.NievelesPorPallet, w)
+	err = vm.WriteFloat(r.PackNievelesPorPallet, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.CajasPorNivel, w)
+	err = vm.WriteFloat(r.PackCajasPorNivel, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.AlturaPallet, w)
+	err = vm.WriteFloat(r.PackAlturaPallet, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.LongPallet, w)
+	err = vm.WriteFloat(r.PackLongPallet, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.AnchuraPallet, w)
+	err = vm.WriteFloat(r.PackAnchuraPallet, w)
 	if err != nil {
 		return err
 	}
@@ -558,7 +558,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"TipoRotacionABC\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"FinTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"InicioTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"Coleccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Color\",\"type\":[\"null\",\"string\"]},{\"name\":\"Atributos\",\"type\":[\"null\",\"string\"]},{\"name\":\"PrecioAsociadoAlSKU\",\"type\":[\"null\",\"float\"]},{\"name\":\"PaisOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"DigitosMinimosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"DigitosMaximosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"LimiteImpresion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContadorGeneracionSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"name\":\"Pavu\",\"type\":[\"null\",\"string\"]},{\"name\":\"Psicotropico\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temperatura\",\"type\":[\"null\",\"string\"]},{\"name\":\"Serializado\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoValidacionLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDatamatrix\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"PickeaTodos\",\"type\":[\"null\",\"string\"]},{\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraSerie\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlaSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"EventoLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"AltaPorAPI\",\"type\":[\"null\",\"string\"]},{\"name\":\"PropietarioEcommerce\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"SKUOriginalCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReservadoFFC\",\"type\":[\"null\",\"string\"]},{\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesRecepcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Notas\",\"type\":[\"null\",\"string\"]},{\"name\":\"InstruccionesPreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesExpedicion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoPaquete\",\"type\":\"string\"},{\"name\":\"DescripcionPaquete\",\"type\":\"string\"},{\"name\":\"cantUnidadMaestra\",\"type\":\"float\"},{\"name\":\"cantPorSubcajas\",\"type\":\"float\"},{\"name\":\"cantPorCajas\",\"type\":\"float\"},{\"name\":\"cantPorPallet\",\"type\":\"float\"},{\"name\":\"alturaUnidad\",\"type\":\"float\"},{\"name\":\"longitudUnidad\",\"type\":\"float\"},{\"name\":\"anchoUnidad\",\"type\":\"float\"},{\"name\":\"pesoUnidad\",\"type\":\"float\"},{\"name\":\"alturaSubcaja\",\"type\":\"float\"},{\"name\":\"longSubcaja\",\"type\":\"float\"},{\"name\":\"anchuraSubcaja\",\"type\":\"float\"},{\"name\":\"alturaPorCaja\",\"type\":\"float\"},{\"name\":\"longPorCaja\",\"type\":\"float\"},{\"name\":\"anchuraPorCaja\",\"type\":\"float\"},{\"name\":\"pesoCaja\",\"type\":\"float\"},{\"name\":\"nievelesPorPallet\",\"type\":\"float\"},{\"name\":\"cajasPorNivel\",\"type\":\"float\"},{\"name\":\"alturaPallet\",\"type\":\"float\"},{\"name\":\"longPallet\",\"type\":\"float\"},{\"name\":\"anchuraPallet\",\"type\":\"float\"},{\"name\":\"PrecioLinea\",\"type\":[\"null\",\"float\"]},{\"name\":\"UbicacionControlCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoRotacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"TipoValidacionVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"IndicadorVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEntrada\",\"type\":[\"null\",\"int\"]},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"Talle\",\"type\":[\"null\",\"string\"]},{\"name\":\"VolumenCentimetros\",\"type\":\"float\"},{\"name\":\"PesoBrutoKg\",\"type\":\"float\"},{\"name\":\"PesoNetoKg\",\"type\":\"float\"},{\"name\":\"CategoriaStock\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estilo\",\"type\":[\"null\",\"string\"]},{\"name\":\"Tema\",\"type\":[\"null\",\"string\"]},{\"name\":\"ConsumoAntesDeXDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"ConsumoVencimiento\",\"type\":[\"null\",\"int\"]},{\"name\":\"ValidaLoteWOS\",\"type\":[\"null\",\"string\"]},{\"name\":\"ValidaSerieWOS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ArticulosAlternativos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ArticuloAlternativo\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"}],\"name\":\"ArticulosAlternativos\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EventoWhArticulos.Events.EventoArticuloModificacion.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TipoRotacionABC\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"FinTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"InicioTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"Coleccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Color\",\"type\":[\"null\",\"string\"]},{\"name\":\"Atributos\",\"type\":[\"null\",\"string\"]},{\"name\":\"PrecioAsociadoAlSKU\",\"type\":[\"null\",\"float\"]},{\"name\":\"PaisOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"DigitosMinimosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"DigitosMaximosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"LimiteImpresion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContadorGeneracionSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"name\":\"Pavu\",\"type\":[\"null\",\"string\"]},{\"name\":\"Psicotropico\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temperatura\",\"type\":[\"null\",\"string\"]},{\"name\":\"Serializado\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoValidacionLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDatamatrix\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"PickeaTodos\",\"type\":[\"null\",\"string\"]},{\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraSerie\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlaSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"EventoLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"AltaPorAPI\",\"type\":[\"null\",\"string\"]},{\"name\":\"PropietarioEcommerce\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"SKUOriginalCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReservadoFFC\",\"type\":[\"null\",\"string\"]},{\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesRecepcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Notas\",\"type\":[\"null\",\"string\"]},{\"name\":\"InstruccionesPreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesExpedicion\",\"type\":[\"null\",\"string\"]},{\"name\":\"PackCodigoPaquete\",\"type\":\"string\"},{\"name\":\"PackDescripcionPaquete\",\"type\":\"string\"},{\"name\":\"PackCantUnidadMaestra\",\"type\":\"float\"},{\"name\":\"PackCantPorSubcajas\",\"type\":\"float\"},{\"name\":\"PackCantPorCajas\",\"type\":\"float\"},{\"name\":\"PackCantPorPallet\",\"type\":\"float\"},{\"name\":\"PackAlturaUnidad\",\"type\":\"float\"},{\"name\":\"PackLongitudUnidad\",\"type\":\"float\"},{\"name\":\"PackAnchoUnidad\",\"type\":\"float\"},{\"name\":\"PackPesoUnidad\",\"type\":\"float\"},{\"name\":\"PackAlturaSubcaja\",\"type\":\"float\"},{\"name\":\"PackLongSubcaja\",\"type\":\"float\"},{\"name\":\"PackAnchuraSubcaja\",\"type\":\"float\"},{\"name\":\"PackAlturaPorCaja\",\"type\":\"float\"},{\"name\":\"PackLongPorCaja\",\"type\":\"float\"},{\"name\":\"PackAnchuraPorCaja\",\"type\":\"float\"},{\"name\":\"PackPesoCaja\",\"type\":\"float\"},{\"name\":\"PackNievelesPorPallet\",\"type\":\"float\"},{\"name\":\"PackCajasPorNivel\",\"type\":\"float\"},{\"name\":\"PackAlturaPallet\",\"type\":\"float\"},{\"name\":\"PackLongPallet\",\"type\":\"float\"},{\"name\":\"PackAnchuraPallet\",\"type\":\"float\"},{\"name\":\"PrecioLinea\",\"type\":[\"null\",\"float\"]},{\"name\":\"UbicacionControlCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoRotacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"TipoValidacionVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"IndicadorVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEntrada\",\"type\":[\"null\",\"int\"]},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"Talle\",\"type\":[\"null\",\"string\"]},{\"name\":\"VolumenCentimetros\",\"type\":\"float\"},{\"name\":\"PesoBrutoKg\",\"type\":\"float\"},{\"name\":\"PesoNetoKg\",\"type\":\"float\"},{\"name\":\"CategoriaStock\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estilo\",\"type\":[\"null\",\"string\"]},{\"name\":\"Tema\",\"type\":[\"null\",\"string\"]},{\"name\":\"ConsumoAntesDeXDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"ConsumoVencimiento\",\"type\":[\"null\",\"int\"]},{\"name\":\"ValidaLoteWOS\",\"type\":[\"null\",\"string\"]},{\"name\":\"ValidaSerieWOS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ArticulosAlternativos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ArticuloAlternativo\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"}],\"name\":\"ArticulosAlternativos\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EventoWhArticulos.Events.EventoArticuloModificacion.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -738,112 +738,112 @@ func (r *Cabecera) Get(i int) types.Field {
 
 		return r.ControlSeriesExpedicion
 	case 40:
-		w := types.String{Target: &r.CodigoPaquete}
+		w := types.String{Target: &r.PackCodigoPaquete}
 
 		return w
 
 	case 41:
-		w := types.String{Target: &r.DescripcionPaquete}
+		w := types.String{Target: &r.PackDescripcionPaquete}
 
 		return w
 
 	case 42:
-		w := types.Float{Target: &r.CantUnidadMaestra}
+		w := types.Float{Target: &r.PackCantUnidadMaestra}
 
 		return w
 
 	case 43:
-		w := types.Float{Target: &r.CantPorSubcajas}
+		w := types.Float{Target: &r.PackCantPorSubcajas}
 
 		return w
 
 	case 44:
-		w := types.Float{Target: &r.CantPorCajas}
+		w := types.Float{Target: &r.PackCantPorCajas}
 
 		return w
 
 	case 45:
-		w := types.Float{Target: &r.CantPorPallet}
+		w := types.Float{Target: &r.PackCantPorPallet}
 
 		return w
 
 	case 46:
-		w := types.Float{Target: &r.AlturaUnidad}
+		w := types.Float{Target: &r.PackAlturaUnidad}
 
 		return w
 
 	case 47:
-		w := types.Float{Target: &r.LongitudUnidad}
+		w := types.Float{Target: &r.PackLongitudUnidad}
 
 		return w
 
 	case 48:
-		w := types.Float{Target: &r.AnchoUnidad}
+		w := types.Float{Target: &r.PackAnchoUnidad}
 
 		return w
 
 	case 49:
-		w := types.Float{Target: &r.PesoUnidad}
+		w := types.Float{Target: &r.PackPesoUnidad}
 
 		return w
 
 	case 50:
-		w := types.Float{Target: &r.AlturaSubcaja}
+		w := types.Float{Target: &r.PackAlturaSubcaja}
 
 		return w
 
 	case 51:
-		w := types.Float{Target: &r.LongSubcaja}
+		w := types.Float{Target: &r.PackLongSubcaja}
 
 		return w
 
 	case 52:
-		w := types.Float{Target: &r.AnchuraSubcaja}
+		w := types.Float{Target: &r.PackAnchuraSubcaja}
 
 		return w
 
 	case 53:
-		w := types.Float{Target: &r.AlturaPorCaja}
+		w := types.Float{Target: &r.PackAlturaPorCaja}
 
 		return w
 
 	case 54:
-		w := types.Float{Target: &r.LongPorCaja}
+		w := types.Float{Target: &r.PackLongPorCaja}
 
 		return w
 
 	case 55:
-		w := types.Float{Target: &r.AnchuraPorCaja}
+		w := types.Float{Target: &r.PackAnchuraPorCaja}
 
 		return w
 
 	case 56:
-		w := types.Float{Target: &r.PesoCaja}
+		w := types.Float{Target: &r.PackPesoCaja}
 
 		return w
 
 	case 57:
-		w := types.Float{Target: &r.NievelesPorPallet}
+		w := types.Float{Target: &r.PackNievelesPorPallet}
 
 		return w
 
 	case 58:
-		w := types.Float{Target: &r.CajasPorNivel}
+		w := types.Float{Target: &r.PackCajasPorNivel}
 
 		return w
 
 	case 59:
-		w := types.Float{Target: &r.AlturaPallet}
+		w := types.Float{Target: &r.PackAlturaPallet}
 
 		return w
 
 	case 60:
-		w := types.Float{Target: &r.LongPallet}
+		w := types.Float{Target: &r.PackLongPallet}
 
 		return w
 
 	case 61:
-		w := types.Float{Target: &r.AnchuraPallet}
+		w := types.Float{Target: &r.PackAnchuraPallet}
 
 		return w
 
@@ -1294,91 +1294,91 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["CodigoPaquete"], err = json.Marshal(r.CodigoPaquete)
+	output["PackCodigoPaquete"], err = json.Marshal(r.PackCodigoPaquete)
 	if err != nil {
 		return nil, err
 	}
-	output["DescripcionPaquete"], err = json.Marshal(r.DescripcionPaquete)
+	output["PackDescripcionPaquete"], err = json.Marshal(r.PackDescripcionPaquete)
 	if err != nil {
 		return nil, err
 	}
-	output["cantUnidadMaestra"], err = json.Marshal(r.CantUnidadMaestra)
+	output["PackCantUnidadMaestra"], err = json.Marshal(r.PackCantUnidadMaestra)
 	if err != nil {
 		return nil, err
 	}
-	output["cantPorSubcajas"], err = json.Marshal(r.CantPorSubcajas)
+	output["PackCantPorSubcajas"], err = json.Marshal(r.PackCantPorSubcajas)
 	if err != nil {
 		return nil, err
 	}
-	output["cantPorCajas"], err = json.Marshal(r.CantPorCajas)
+	output["PackCantPorCajas"], err = json.Marshal(r.PackCantPorCajas)
 	if err != nil {
 		return nil, err
 	}
-	output["cantPorPallet"], err = json.Marshal(r.CantPorPallet)
+	output["PackCantPorPallet"], err = json.Marshal(r.PackCantPorPallet)
 	if err != nil {
 		return nil, err
 	}
-	output["alturaUnidad"], err = json.Marshal(r.AlturaUnidad)
+	output["PackAlturaUnidad"], err = json.Marshal(r.PackAlturaUnidad)
 	if err != nil {
 		return nil, err
 	}
-	output["longitudUnidad"], err = json.Marshal(r.LongitudUnidad)
+	output["PackLongitudUnidad"], err = json.Marshal(r.PackLongitudUnidad)
 	if err != nil {
 		return nil, err
 	}
-	output["anchoUnidad"], err = json.Marshal(r.AnchoUnidad)
+	output["PackAnchoUnidad"], err = json.Marshal(r.PackAnchoUnidad)
 	if err != nil {
 		return nil, err
 	}
-	output["pesoUnidad"], err = json.Marshal(r.PesoUnidad)
+	output["PackPesoUnidad"], err = json.Marshal(r.PackPesoUnidad)
 	if err != nil {
 		return nil, err
 	}
-	output["alturaSubcaja"], err = json.Marshal(r.AlturaSubcaja)
+	output["PackAlturaSubcaja"], err = json.Marshal(r.PackAlturaSubcaja)
 	if err != nil {
 		return nil, err
 	}
-	output["longSubcaja"], err = json.Marshal(r.LongSubcaja)
+	output["PackLongSubcaja"], err = json.Marshal(r.PackLongSubcaja)
 	if err != nil {
 		return nil, err
 	}
-	output["anchuraSubcaja"], err = json.Marshal(r.AnchuraSubcaja)
+	output["PackAnchuraSubcaja"], err = json.Marshal(r.PackAnchuraSubcaja)
 	if err != nil {
 		return nil, err
 	}
-	output["alturaPorCaja"], err = json.Marshal(r.AlturaPorCaja)
+	output["PackAlturaPorCaja"], err = json.Marshal(r.PackAlturaPorCaja)
 	if err != nil {
 		return nil, err
 	}
-	output["longPorCaja"], err = json.Marshal(r.LongPorCaja)
+	output["PackLongPorCaja"], err = json.Marshal(r.PackLongPorCaja)
 	if err != nil {
 		return nil, err
 	}
-	output["anchuraPorCaja"], err = json.Marshal(r.AnchuraPorCaja)
+	output["PackAnchuraPorCaja"], err = json.Marshal(r.PackAnchuraPorCaja)
 	if err != nil {
 		return nil, err
 	}
-	output["pesoCaja"], err = json.Marshal(r.PesoCaja)
+	output["PackPesoCaja"], err = json.Marshal(r.PackPesoCaja)
 	if err != nil {
 		return nil, err
 	}
-	output["nievelesPorPallet"], err = json.Marshal(r.NievelesPorPallet)
+	output["PackNievelesPorPallet"], err = json.Marshal(r.PackNievelesPorPallet)
 	if err != nil {
 		return nil, err
 	}
-	output["cajasPorNivel"], err = json.Marshal(r.CajasPorNivel)
+	output["PackCajasPorNivel"], err = json.Marshal(r.PackCajasPorNivel)
 	if err != nil {
 		return nil, err
 	}
-	output["alturaPallet"], err = json.Marshal(r.AlturaPallet)
+	output["PackAlturaPallet"], err = json.Marshal(r.PackAlturaPallet)
 	if err != nil {
 		return nil, err
 	}
-	output["longPallet"], err = json.Marshal(r.LongPallet)
+	output["PackLongPallet"], err = json.Marshal(r.PackLongPallet)
 	if err != nil {
 		return nil, err
 	}
-	output["anchuraPallet"], err = json.Marshal(r.AnchuraPallet)
+	output["PackAnchuraPallet"], err = json.Marshal(r.PackAnchuraPallet)
 	if err != nil {
 		return nil, err
 	}
@@ -2037,312 +2037,312 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for ControlSeriesExpedicion")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["CodigoPaquete"]; ok {
+		if v, ok := fields["PackCodigoPaquete"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoPaquete); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackCodigoPaquete); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CodigoPaquete")
+		return fmt.Errorf("no value specified for PackCodigoPaquete")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["DescripcionPaquete"]; ok {
+		if v, ok := fields["PackDescripcionPaquete"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.DescripcionPaquete); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackDescripcionPaquete); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DescripcionPaquete")
+		return fmt.Errorf("no value specified for PackDescripcionPaquete")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cantUnidadMaestra"]; ok {
+		if v, ok := fields["PackCantUnidadMaestra"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CantUnidadMaestra); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackCantUnidadMaestra); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cantUnidadMaestra")
+		return fmt.Errorf("no value specified for PackCantUnidadMaestra")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cantPorSubcajas"]; ok {
+		if v, ok := fields["PackCantPorSubcajas"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CantPorSubcajas); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackCantPorSubcajas); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cantPorSubcajas")
+		return fmt.Errorf("no value specified for PackCantPorSubcajas")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cantPorCajas"]; ok {
+		if v, ok := fields["PackCantPorCajas"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CantPorCajas); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackCantPorCajas); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cantPorCajas")
+		return fmt.Errorf("no value specified for PackCantPorCajas")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cantPorPallet"]; ok {
+		if v, ok := fields["PackCantPorPallet"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CantPorPallet); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackCantPorPallet); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cantPorPallet")
+		return fmt.Errorf("no value specified for PackCantPorPallet")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["alturaUnidad"]; ok {
+		if v, ok := fields["PackAlturaUnidad"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AlturaUnidad); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackAlturaUnidad); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for alturaUnidad")
+		return fmt.Errorf("no value specified for PackAlturaUnidad")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["longitudUnidad"]; ok {
+		if v, ok := fields["PackLongitudUnidad"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.LongitudUnidad); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackLongitudUnidad); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for longitudUnidad")
+		return fmt.Errorf("no value specified for PackLongitudUnidad")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["anchoUnidad"]; ok {
+		if v, ok := fields["PackAnchoUnidad"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AnchoUnidad); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackAnchoUnidad); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for anchoUnidad")
+		return fmt.Errorf("no value specified for PackAnchoUnidad")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["pesoUnidad"]; ok {
+		if v, ok := fields["PackPesoUnidad"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PesoUnidad); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackPesoUnidad); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for pesoUnidad")
+		return fmt.Errorf("no value specified for PackPesoUnidad")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["alturaSubcaja"]; ok {
+		if v, ok := fields["PackAlturaSubcaja"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AlturaSubcaja); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackAlturaSubcaja); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for alturaSubcaja")
+		return fmt.Errorf("no value specified for PackAlturaSubcaja")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["longSubcaja"]; ok {
+		if v, ok := fields["PackLongSubcaja"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.LongSubcaja); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackLongSubcaja); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for longSubcaja")
+		return fmt.Errorf("no value specified for PackLongSubcaja")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["anchuraSubcaja"]; ok {
+		if v, ok := fields["PackAnchuraSubcaja"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AnchuraSubcaja); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackAnchuraSubcaja); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for anchuraSubcaja")
+		return fmt.Errorf("no value specified for PackAnchuraSubcaja")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["alturaPorCaja"]; ok {
+		if v, ok := fields["PackAlturaPorCaja"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AlturaPorCaja); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackAlturaPorCaja); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for alturaPorCaja")
+		return fmt.Errorf("no value specified for PackAlturaPorCaja")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["longPorCaja"]; ok {
+		if v, ok := fields["PackLongPorCaja"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.LongPorCaja); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackLongPorCaja); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for longPorCaja")
+		return fmt.Errorf("no value specified for PackLongPorCaja")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["anchuraPorCaja"]; ok {
+		if v, ok := fields["PackAnchuraPorCaja"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AnchuraPorCaja); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackAnchuraPorCaja); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for anchuraPorCaja")
+		return fmt.Errorf("no value specified for PackAnchuraPorCaja")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["pesoCaja"]; ok {
+		if v, ok := fields["PackPesoCaja"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PesoCaja); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackPesoCaja); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for pesoCaja")
+		return fmt.Errorf("no value specified for PackPesoCaja")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["nievelesPorPallet"]; ok {
+		if v, ok := fields["PackNievelesPorPallet"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NievelesPorPallet); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackNievelesPorPallet); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nievelesPorPallet")
+		return fmt.Errorf("no value specified for PackNievelesPorPallet")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cajasPorNivel"]; ok {
+		if v, ok := fields["PackCajasPorNivel"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CajasPorNivel); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackCajasPorNivel); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cajasPorNivel")
+		return fmt.Errorf("no value specified for PackCajasPorNivel")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["alturaPallet"]; ok {
+		if v, ok := fields["PackAlturaPallet"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AlturaPallet); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackAlturaPallet); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for alturaPallet")
+		return fmt.Errorf("no value specified for PackAlturaPallet")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["longPallet"]; ok {
+		if v, ok := fields["PackLongPallet"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.LongPallet); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackLongPallet); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for longPallet")
+		return fmt.Errorf("no value specified for PackLongPallet")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["anchuraPallet"]; ok {
+		if v, ok := fields["PackAnchuraPallet"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AnchuraPallet); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PackAnchuraPallet); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for anchuraPallet")
+		return fmt.Errorf("no value specified for PackAnchuraPallet")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PrecioLinea"]; ok {
