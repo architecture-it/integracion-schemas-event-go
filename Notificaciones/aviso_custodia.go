@@ -18,25 +18,30 @@ import (
 var _ = fmt.Printf
 
 type AvisoCustodia struct {
-	Sistema string `json:"sistema"`
+	Sistema *UnionNullString `json:"sistema"`
 
-	CodigoDeEnvio string `json:"codigoDeEnvio"`
+	CodigoDeEnvio *UnionNullString `json:"codigoDeEnvio"`
 
-	NombreDestinatario string `json:"nombreDestinatario"`
+	NombreDestinatario *UnionNullString `json:"nombreDestinatario"`
 
-	Cuando int64 `json:"cuando"`
+	Cuando *UnionNullLong `json:"cuando"`
 
-	FechaIngresoCustodia int64 `json:"fechaIngresoCustodia"`
+	FechaIngresoCustodia *UnionNullLong `json:"fechaIngresoCustodia"`
 
 	FechaVencimientoCustodia *UnionNullString `json:"fechaVencimientoCustodia"`
 
 	SucursalActual Sucursal `json:"sucursalActual"`
 }
 
-const AvisoCustodiaAvroCRC64Fingerprint = "\x91\xed\xe1\xf0\xf5r\xf4\xaf"
+const AvisoCustodiaAvroCRC64Fingerprint = "8\xac\x80\xe1\xe4aN{"
 
 func NewAvisoCustodia() AvisoCustodia {
 	r := AvisoCustodia{}
+	r.Sistema = nil
+	r.CodigoDeEnvio = nil
+	r.NombreDestinatario = nil
+	r.Cuando = nil
+	r.FechaIngresoCustodia = nil
 	r.FechaVencimientoCustodia = nil
 	r.SucursalActual = NewSucursal()
 
@@ -68,23 +73,23 @@ func DeserializeAvisoCustodiaFromSchema(r io.Reader, schema string) (AvisoCustod
 
 func writeAvisoCustodia(r AvisoCustodia, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Sistema, w)
+	err = writeUnionNullString(r.Sistema, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoDeEnvio, w)
+	err = writeUnionNullString(r.CodigoDeEnvio, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NombreDestinatario, w)
+	err = writeUnionNullString(r.NombreDestinatario, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.Cuando, w)
+	err = writeUnionNullLong(r.Cuando, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.FechaIngresoCustodia, w)
+	err = writeUnionNullLong(r.FechaIngresoCustodia, w)
 	if err != nil {
 		return err
 	}
@@ -104,7 +109,7 @@ func (r AvisoCustodia) Serialize(w io.Writer) error {
 }
 
 func (r AvisoCustodia) Schema() string {
-	return "{\"fields\":[{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"nombreDestinatario\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"fechaIngresoCustodia\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"fechaVencimientoCustodia\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalActual\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"horarioAtencion\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"}],\"name\":\"Sucursal\",\"type\":\"record\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoCustodia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"sistema\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaIngresoCustodia\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaVencimientoCustodia\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalActual\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"horarioAtencion\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"}],\"name\":\"Sucursal\",\"type\":\"record\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoCustodia\",\"type\":\"record\"}"
 }
 
 func (r AvisoCustodia) SchemaName() string {
@@ -123,30 +128,25 @@ func (_ AvisoCustodia) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *AvisoCustodia) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Sistema}
+		r.Sistema = NewUnionNullString()
 
-		return w
-
+		return r.Sistema
 	case 1:
-		w := types.String{Target: &r.CodigoDeEnvio}
+		r.CodigoDeEnvio = NewUnionNullString()
 
-		return w
-
+		return r.CodigoDeEnvio
 	case 2:
-		w := types.String{Target: &r.NombreDestinatario}
+		r.NombreDestinatario = NewUnionNullString()
 
-		return w
-
+		return r.NombreDestinatario
 	case 3:
-		w := types.Long{Target: &r.Cuando}
+		r.Cuando = NewUnionNullLong()
 
-		return w
-
+		return r.Cuando
 	case 4:
-		w := types.Long{Target: &r.FechaIngresoCustodia}
+		r.FechaIngresoCustodia = NewUnionNullLong()
 
-		return w
-
+		return r.FechaIngresoCustodia
 	case 5:
 		r.FechaVencimientoCustodia = NewUnionNullString()
 
@@ -164,6 +164,21 @@ func (r *AvisoCustodia) Get(i int) types.Field {
 
 func (r *AvisoCustodia) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Sistema = nil
+		return
+	case 1:
+		r.CodigoDeEnvio = nil
+		return
+	case 2:
+		r.NombreDestinatario = nil
+		return
+	case 3:
+		r.Cuando = nil
+		return
+	case 4:
+		r.FechaIngresoCustodia = nil
+		return
 	case 5:
 		r.FechaVencimientoCustodia = nil
 		return
@@ -173,6 +188,21 @@ func (r *AvisoCustodia) SetDefault(i int) {
 
 func (r *AvisoCustodia) NullField(i int) {
 	switch i {
+	case 0:
+		r.Sistema = nil
+		return
+	case 1:
+		r.CodigoDeEnvio = nil
+		return
+	case 2:
+		r.NombreDestinatario = nil
+		return
+	case 3:
+		r.Cuando = nil
+		return
+	case 4:
+		r.FechaIngresoCustodia = nil
+		return
 	case 5:
 		r.FechaVencimientoCustodia = nil
 		return
@@ -242,7 +272,9 @@ func (r *AvisoCustodia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for sistema")
+		r.Sistema = NewUnionNullString()
+
+		r.Sistema = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoDeEnvio"]; ok {
@@ -256,7 +288,9 @@ func (r *AvisoCustodia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoDeEnvio")
+		r.CodigoDeEnvio = NewUnionNullString()
+
+		r.CodigoDeEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["nombreDestinatario"]; ok {
@@ -270,7 +304,9 @@ func (r *AvisoCustodia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nombreDestinatario")
+		r.NombreDestinatario = NewUnionNullString()
+
+		r.NombreDestinatario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cuando"]; ok {
@@ -284,7 +320,9 @@ func (r *AvisoCustodia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cuando")
+		r.Cuando = NewUnionNullLong()
+
+		r.Cuando = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["fechaIngresoCustodia"]; ok {
@@ -298,7 +336,9 @@ func (r *AvisoCustodia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for fechaIngresoCustodia")
+		r.FechaIngresoCustodia = NewUnionNullLong()
+
+		r.FechaIngresoCustodia = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["fechaVencimientoCustodia"]; ok {
