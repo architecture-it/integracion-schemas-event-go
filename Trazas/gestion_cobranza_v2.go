@@ -27,9 +27,11 @@ type GestionCobranzaV2 struct {
 	Donde DatosSucursal `json:"donde"`
 
 	ComponentesDeCobro []ComponenteDeCobro `json:"componentesDeCobro"`
+
+	ReferenciaDeCliente *UnionNullString `json:"referenciaDeCliente"`
 }
 
-const GestionCobranzaV2AvroCRC64Fingerprint = "塿v\x9b\xd7\xf3\x84"
+const GestionCobranzaV2AvroCRC64Fingerprint = "y'\x0fǜ\b\xdd\xfa"
 
 func NewGestionCobranzaV2() GestionCobranzaV2 {
 	r := GestionCobranzaV2{}
@@ -39,6 +41,7 @@ func NewGestionCobranzaV2() GestionCobranzaV2 {
 
 	r.ComponentesDeCobro = make([]ComponenteDeCobro, 0)
 
+	r.ReferenciaDeCliente = nil
 	return r
 }
 
@@ -87,6 +90,10 @@ func writeGestionCobranzaV2(r GestionCobranzaV2, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ReferenciaDeCliente, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -95,7 +102,7 @@ func (r GestionCobranzaV2) Serialize(w io.Writer) error {
 }
 
 func (r GestionCobranzaV2) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"importe\",\"type\":\"double\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"donde\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"componentesDeCobro\",\"type\":{\"items\":{\"fields\":[{\"name\":\"forma\",\"type\":{\"name\":\"FormaDeCobroV2\",\"symbols\":[\"chequeDeTerceros\",\"boletaDeDepositoEnCtaCliente\",\"ajusteDeSaldo\",\"retencionesImpositivas\",\"chequeNominativo\",\"descuentoFinanciero\",\"notaCredito\",\"efectivo\",\"planillaRendicionExcCasa\",\"enviadoEnPManualAnteriormente\",\"ajusteImporteAnterior\",\"notaCreditoPami\",\"notaCreditoAConfirmarDevolucion\",\"enviaDiferenciaEnProximaLiquidacion\",\"pagoEfectivoCobrado\",\"pagoEfectivoChequePropio\",\"descuentoDevolucionMercaderia\",\"comprobanteTransferenciaACliente\",\"impuestoAlCheque\",\"saldoAFavor\",\"agregaPagoOtraFactura\",\"enviadoEnLiquidacionAnterior\",\"cartaCompromisoExcCasa\",\"visaDebitoCredito\",\"autorizacionAdjunta\",\"reciboOficialAndreani\",\"descuentoNotaAdjunta\",\"pagoFacilComprobante\",\"chequeElectronico\",\"mercadoPago\",\"ajustePorPendiente\",\"cbu\",\"cajaUnificadaExcCasa\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"banco\",\"type\":[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"}],\"name\":\"Banco\",\"type\":\"record\"}]},{\"name\":\"monto\",\"type\":\"double\"},{\"default\":null,\"name\":\"numeroDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fecha\",\"type\":[\"null\",\"string\"]}],\"name\":\"ComponenteDeCobro\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Integracion.Esquemas.Trazas.GestionCobranzaV2\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"importe\",\"type\":\"double\"},{\"name\":\"canal\",\"type\":\"string\"},{\"name\":\"donde\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"componentesDeCobro\",\"type\":{\"items\":{\"fields\":[{\"name\":\"forma\",\"type\":{\"name\":\"FormaDeCobroV2\",\"symbols\":[\"chequeDeTerceros\",\"boletaDeDepositoEnCtaCliente\",\"ajusteDeSaldo\",\"retencionesImpositivas\",\"chequeNominativo\",\"descuentoFinanciero\",\"notaCredito\",\"efectivo\",\"planillaRendicionExcCasa\",\"enviadoEnPManualAnteriormente\",\"ajusteImporteAnterior\",\"notaCreditoPami\",\"notaCreditoAConfirmarDevolucion\",\"enviaDiferenciaEnProximaLiquidacion\",\"pagoEfectivoCobrado\",\"pagoEfectivoChequePropio\",\"descuentoDevolucionMercaderia\",\"comprobanteTransferenciaACliente\",\"impuestoAlCheque\",\"saldoAFavor\",\"agregaPagoOtraFactura\",\"enviadoEnLiquidacionAnterior\",\"cartaCompromisoExcCasa\",\"visaDebitoCredito\",\"autorizacionAdjunta\",\"reciboOficialAndreani\",\"descuentoNotaAdjunta\",\"pagoFacilComprobante\",\"chequeElectronico\",\"mercadoPago\",\"ajustePorPendiente\",\"cbu\",\"cajaUnificadaExcCasa\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"banco\",\"type\":[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"}],\"name\":\"Banco\",\"type\":\"record\"}]},{\"name\":\"monto\",\"type\":\"double\"},{\"default\":null,\"name\":\"numeroDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fecha\",\"type\":[\"null\",\"string\"]}],\"name\":\"ComponenteDeCobro\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"referenciaDeCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Trazas.GestionCobranzaV2\",\"type\":\"record\"}"
 }
 
 func (r GestionCobranzaV2) SchemaName() string {
@@ -144,18 +151,28 @@ func (r *GestionCobranzaV2) Get(i int) types.Field {
 
 		return w
 
+	case 5:
+		r.ReferenciaDeCliente = NewUnionNullString()
+
+		return r.ReferenciaDeCliente
 	}
 	panic("Unknown field index")
 }
 
 func (r *GestionCobranzaV2) SetDefault(i int) {
 	switch i {
+	case 5:
+		r.ReferenciaDeCliente = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *GestionCobranzaV2) NullField(i int) {
 	switch i {
+	case 5:
+		r.ReferenciaDeCliente = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -189,6 +206,10 @@ func (r GestionCobranzaV2) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["componentesDeCobro"], err = json.Marshal(r.ComponentesDeCobro)
+	if err != nil {
+		return nil, err
+	}
+	output["referenciaDeCliente"], err = json.Marshal(r.ReferenciaDeCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -271,6 +292,22 @@ func (r *GestionCobranzaV2) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for componentesDeCobro")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["referenciaDeCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ReferenciaDeCliente); err != nil {
+			return err
+		}
+	} else {
+		r.ReferenciaDeCliente = NewUnionNullString()
+
+		r.ReferenciaDeCliente = nil
 	}
 	return nil
 }
