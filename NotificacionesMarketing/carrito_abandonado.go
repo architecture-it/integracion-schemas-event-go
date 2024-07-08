@@ -39,7 +39,7 @@ type CarritoAbandonado struct {
 	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const CarritoAbandonadoAvroCRC64Fingerprint = "\x17O\xea{\xcdCu\xd4"
+const CarritoAbandonadoAvroCRC64Fingerprint = "n\x99ۣ\xb1T`\x91"
 
 func NewCarritoAbandonado() CarritoAbandonado {
 	r := CarritoAbandonado{}
@@ -129,11 +129,11 @@ func (r CarritoAbandonado) Serialize(w io.Writer) error {
 }
 
 func (r CarritoAbandonado) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaModificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeEnvios\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"diasDeAbandono\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.RHpro.Events.Record.CarritoAbandonado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaModificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeEnvios\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"diasDeAbandono\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.CarritoAbandonado\",\"type\":\"record\"}"
 }
 
 func (r CarritoAbandonado) SchemaName() string {
-	return "Andreani.RHpro.Events.Record.CarritoAbandonado"
+	return "Andreani.NotificacionesMarketing.Events.Record.CarritoAbandonado"
 }
 
 func (_ CarritoAbandonado) SetBoolean(v bool)    { panic("Unsupported operation") }
