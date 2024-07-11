@@ -33,7 +33,7 @@ type AltaFord struct {
 	Detalles []DetalleFord `json:"detalles"`
 }
 
-const AltaFordAvroCRC64Fingerprint = "P\x1a\xeb\x1cWWك"
+const AltaFordAvroCRC64Fingerprint = "\r\xfb3\xb3%L/\xf2"
 
 func NewAltaFord() AltaFord {
 	r := AltaFord{}
@@ -109,7 +109,7 @@ func (r AltaFord) Serialize(w io.Writer) error {
 }
 
 func (r AltaFord) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"internalCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mailDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"long\"]},{\"name\":\"detalles\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"fechaAdmision\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaInsercion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"DetalleFord\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.AltaFord\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"internalCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mailDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"long\"]},{\"name\":\"detalles\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notaDespacho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"fechaAdmision\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaInsercion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"DetalleFord\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.AltaFord\",\"type\":\"record\"}"
 }
 
 func (r AltaFord) SchemaName() string {

@@ -22,6 +22,8 @@ type DetalleFord struct {
 
 	Remito *UnionNullString `json:"remito"`
 
+	NotaDespacho *UnionNullString `json:"notaDespacho"`
+
 	Bultos *UnionNullLong `json:"bultos"`
 
 	FechaAdmision *UnionNullLong `json:"fechaAdmision"`
@@ -29,12 +31,13 @@ type DetalleFord struct {
 	FechaInsercion *UnionNullLong `json:"fechaInsercion"`
 }
 
-const DetalleFordAvroCRC64Fingerprint = "\xe7{x\xf8`\x13\xc9\xc3"
+const DetalleFordAvroCRC64Fingerprint = "ĚW\xdb(\xd3\xfd "
 
 func NewDetalleFord() DetalleFord {
 	r := DetalleFord{}
 	r.CodigoDeEnvio = nil
 	r.Remito = nil
+	r.NotaDespacho = nil
 	r.Bultos = nil
 	r.FechaAdmision = nil
 	r.FechaInsercion = nil
@@ -74,6 +77,10 @@ func writeDetalleFord(r DetalleFord, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.NotaDespacho, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullLong(r.Bultos, w)
 	if err != nil {
 		return err
@@ -94,7 +101,7 @@ func (r DetalleFord) Serialize(w io.Writer) error {
 }
 
 func (r DetalleFord) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"fechaAdmision\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaInsercion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.DetalleFord\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notaDespacho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"fechaAdmision\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaInsercion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.DetalleFord\",\"type\":\"record\"}"
 }
 
 func (r DetalleFord) SchemaName() string {
@@ -121,14 +128,18 @@ func (r *DetalleFord) Get(i int) types.Field {
 
 		return r.Remito
 	case 2:
+		r.NotaDespacho = NewUnionNullString()
+
+		return r.NotaDespacho
+	case 3:
 		r.Bultos = NewUnionNullLong()
 
 		return r.Bultos
-	case 3:
+	case 4:
 		r.FechaAdmision = NewUnionNullLong()
 
 		return r.FechaAdmision
-	case 4:
+	case 5:
 		r.FechaInsercion = NewUnionNullLong()
 
 		return r.FechaInsercion
@@ -145,12 +156,15 @@ func (r *DetalleFord) SetDefault(i int) {
 		r.Remito = nil
 		return
 	case 2:
-		r.Bultos = nil
+		r.NotaDespacho = nil
 		return
 	case 3:
-		r.FechaAdmision = nil
+		r.Bultos = nil
 		return
 	case 4:
+		r.FechaAdmision = nil
+		return
+	case 5:
 		r.FechaInsercion = nil
 		return
 	}
@@ -166,12 +180,15 @@ func (r *DetalleFord) NullField(i int) {
 		r.Remito = nil
 		return
 	case 2:
-		r.Bultos = nil
+		r.NotaDespacho = nil
 		return
 	case 3:
-		r.FechaAdmision = nil
+		r.Bultos = nil
 		return
 	case 4:
+		r.FechaAdmision = nil
+		return
+	case 5:
 		r.FechaInsercion = nil
 		return
 	}
@@ -195,6 +212,10 @@ func (r DetalleFord) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["remito"], err = json.Marshal(r.Remito)
+	if err != nil {
+		return nil, err
+	}
+	output["notaDespacho"], err = json.Marshal(r.NotaDespacho)
 	if err != nil {
 		return nil, err
 	}
@@ -251,6 +272,22 @@ func (r *DetalleFord) UnmarshalJSON(data []byte) error {
 		r.Remito = NewUnionNullString()
 
 		r.Remito = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["notaDespacho"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NotaDespacho); err != nil {
+			return err
+		}
+	} else {
+		r.NotaDespacho = NewUnionNullString()
+
+		r.NotaDespacho = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["bultos"]; ok {
