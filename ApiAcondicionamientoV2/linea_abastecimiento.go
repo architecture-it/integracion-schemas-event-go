@@ -20,11 +20,11 @@ var _ = fmt.Printf
 type LineaAbastecimiento struct {
 	Codigo *UnionNullString `json:"codigo"`
 
-	CantidadPedida *UnionNullString `json:"cantidadPedida"`
+	CantidadPedida float32 `json:"cantidadPedida"`
 
 	AlmacenWMS *UnionNullString `json:"almacenWMS"`
 
-	TipoAcondicionamiento *UnionNullString `json:"tipoAcondicionamiento"`
+	TipoAcondicionamiento []string `json:"tipoAcondicionamiento"`
 
 	LoteDeFabricante *UnionNullString `json:"loteDeFabricante"`
 
@@ -35,14 +35,14 @@ type LineaAbastecimiento struct {
 	EstadoLote *UnionNullString `json:"estadoLote"`
 }
 
-const LineaAbastecimientoAvroCRC64Fingerprint = "\xa7\xe9\xc1\xf3\xea<X\xf0"
+const LineaAbastecimientoAvroCRC64Fingerprint = "\xcc)\"\xbe\x1e\xb07D"
 
 func NewLineaAbastecimiento() LineaAbastecimiento {
 	r := LineaAbastecimiento{}
 	r.Codigo = nil
-	r.CantidadPedida = nil
 	r.AlmacenWMS = nil
-	r.TipoAcondicionamiento = nil
+	r.TipoAcondicionamiento = make([]string, 0)
+
 	r.LoteDeFabricante = nil
 	r.LoteSecundario = nil
 	r.FechaDeVencimiento = nil
@@ -79,7 +79,7 @@ func writeLineaAbastecimiento(r LineaAbastecimiento, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.CantidadPedida, w)
+	err = vm.WriteFloat(r.CantidadPedida, w)
 	if err != nil {
 		return err
 	}
@@ -87,7 +87,7 @@ func writeLineaAbastecimiento(r LineaAbastecimiento, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.TipoAcondicionamiento, w)
+	err = writeArrayString(r.TipoAcondicionamiento, w)
 	if err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func (r LineaAbastecimiento) Serialize(w io.Writer) error {
 }
 
 func (r LineaAbastecimiento) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadPedida\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacenWMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoAcondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.ApiAcondicionamientoV2.Events.Common.LineaAbastecimiento\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"cantidadPedida\",\"type\":\"float\"},{\"default\":null,\"name\":\"almacenWMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoAcondicionamiento\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.ApiAcondicionamientoV2.Events.Common.LineaAbastecimiento\",\"type\":\"record\"}"
 }
 
 func (r LineaAbastecimiento) SchemaName() string {
@@ -138,17 +138,21 @@ func (r *LineaAbastecimiento) Get(i int) types.Field {
 
 		return r.Codigo
 	case 1:
-		r.CantidadPedida = NewUnionNullString()
+		w := types.Float{Target: &r.CantidadPedida}
 
-		return r.CantidadPedida
+		return w
+
 	case 2:
 		r.AlmacenWMS = NewUnionNullString()
 
 		return r.AlmacenWMS
 	case 3:
-		r.TipoAcondicionamiento = NewUnionNullString()
+		r.TipoAcondicionamiento = make([]string, 0)
 
-		return r.TipoAcondicionamiento
+		w := ArrayStringWrapper{Target: &r.TipoAcondicionamiento}
+
+		return w
+
 	case 4:
 		r.LoteDeFabricante = NewUnionNullString()
 
@@ -174,14 +178,8 @@ func (r *LineaAbastecimiento) SetDefault(i int) {
 	case 0:
 		r.Codigo = nil
 		return
-	case 1:
-		r.CantidadPedida = nil
-		return
 	case 2:
 		r.AlmacenWMS = nil
-		return
-	case 3:
-		r.TipoAcondicionamiento = nil
 		return
 	case 4:
 		r.LoteDeFabricante = nil
@@ -204,14 +202,8 @@ func (r *LineaAbastecimiento) NullField(i int) {
 	case 0:
 		r.Codigo = nil
 		return
-	case 1:
-		r.CantidadPedida = nil
-		return
 	case 2:
 		r.AlmacenWMS = nil
-		return
-	case 3:
-		r.TipoAcondicionamiento = nil
 		return
 	case 4:
 		r.LoteDeFabricante = nil
@@ -311,9 +303,7 @@ func (r *LineaAbastecimiento) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.CantidadPedida = NewUnionNullString()
-
-		r.CantidadPedida = nil
+		return fmt.Errorf("no value specified for cantidadPedida")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["almacenWMS"]; ok {
@@ -343,9 +333,7 @@ func (r *LineaAbastecimiento) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.TipoAcondicionamiento = NewUnionNullString()
-
-		r.TipoAcondicionamiento = nil
+		return fmt.Errorf("no value specified for tipoAcondicionamiento")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["loteDeFabricante"]; ok {

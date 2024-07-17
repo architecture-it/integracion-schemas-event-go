@@ -23,7 +23,7 @@ type AbastecimientoAcondi struct {
 	Lineas []LineaAbastecimiento `json:"lineas"`
 }
 
-const AbastecimientoAcondiAvroCRC64Fingerprint = "\x16BJ\xbdA@\xa6\xea"
+const AbastecimientoAcondiAvroCRC64Fingerprint = "2\x8f\xab\x8f\xb5\xe1H\xb8"
 
 func NewAbastecimientoAcondi() AbastecimientoAcondi {
 	r := AbastecimientoAcondi{}
@@ -74,7 +74,7 @@ func (r AbastecimientoAcondi) Serialize(w io.Writer) error {
 }
 
 func (r AbastecimientoAcondi) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"lineas\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadPedida\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacenWMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoAcondicionamiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"LineaAbastecimiento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.ApiAcondicionamientoV2.Events.Common.AbastecimientoAcondi\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"lineas\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"cantidadPedida\",\"type\":\"float\"},{\"default\":null,\"name\":\"almacenWMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoAcondicionamiento\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"LineaAbastecimiento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.ApiAcondicionamientoV2.Events.Common.AbastecimientoAcondi\",\"type\":\"record\"}"
 }
 
 func (r AbastecimientoAcondi) SchemaName() string {

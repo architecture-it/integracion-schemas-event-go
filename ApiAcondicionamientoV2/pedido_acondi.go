@@ -23,7 +23,7 @@ type PedidoAcondi struct {
 	Lineas []LineaPedido `json:"lineas"`
 }
 
-const PedidoAcondiAvroCRC64Fingerprint = "\x93\xba\x7f\x95\x97\x7f\x19\xf2"
+const PedidoAcondiAvroCRC64Fingerprint = "\xdez\xc1ٰ݇c"
 
 func NewPedidoAcondi() PedidoAcondi {
 	r := PedidoAcondi{}
@@ -74,7 +74,7 @@ func (r PedidoAcondi) Serialize(w io.Writer) error {
 }
 
 func (r PedidoAcondi) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"lineas\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"almacenCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"LineaPedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.ApiAcondicionamientoV2.Events.Common.PedidoAcondi\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"name\":\"lineas\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"almacenCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"cantidad\",\"type\":\"float\"},{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoLote\",\"type\":[\"null\",\"string\"]}],\"name\":\"LineaPedido\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.ApiAcondicionamientoV2.Events.Common.PedidoAcondi\",\"type\":\"record\"}"
 }
 
 func (r PedidoAcondi) SchemaName() string {
