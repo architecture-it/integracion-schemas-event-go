@@ -71,16 +71,12 @@ type Solicitud struct {
 	OrigenProvincia string `json:"OrigenProvincia"`
 
 	IdTransportista int32 `json:"IdTransportista"`
-
-	Detalle []Linea `json:"Detalle"`
 }
 
-const SolicitudAvroCRC64Fingerprint = "\xc6\xcb7\xc8\\Q\xf9\x9a"
+const SolicitudAvroCRC64Fingerprint = "\x9bH\x16\x10;7\xb9\x8f"
 
 func NewSolicitud() Solicitud {
 	r := Solicitud{}
-	r.Detalle = make([]Linea, 0)
-
 	return r
 }
 
@@ -217,10 +213,6 @@ func writeSolicitud(r Solicitud, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayLinea(r.Detalle, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -229,7 +221,7 @@ func (r Solicitud) Serialize(w io.Writer) error {
 }
 
 func (r Solicitud) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"IdPropietario\",\"type\":\"int\"},{\"name\":\"NombrePropietario\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"CodComprobante\",\"type\":\"string\"},{\"name\":\"CentroEmisorComprobante\",\"type\":\"int\"},{\"name\":\"NumeroComprobante\",\"type\":\"int\"},{\"name\":\"ImporteComprobante\",\"type\":{\"logicalType\":\"decimal\",\"precision\":12,\"scale\":2,\"type\":\"bytes\"}},{\"name\":\"DestinatarioCUIT\",\"type\":\"string\"},{\"name\":\"DestinatarioRazonSocial\",\"type\":\"string\"},{\"name\":\"DestinatarioCalle\",\"type\":\"string\"},{\"name\":\"DestinatarioNumero\",\"type\":\"string\"},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":\"string\"},{\"name\":\"DestinatarioLocalidad\",\"type\":\"string\"},{\"name\":\"DestinatarioProvincia\",\"type\":\"string\"},{\"name\":\"OrigenCUIT\",\"type\":\"string\"},{\"name\":\"OrigenRazonSocial\",\"type\":\"string\"},{\"name\":\"OrigenCalle\",\"type\":\"string\"},{\"name\":\"OrigenNumero\",\"type\":\"string\"},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCodigoPostal\",\"type\":\"string\"},{\"name\":\"OrigenLocalidad\",\"type\":\"string\"},{\"name\":\"OrigenProvincia\",\"type\":\"string\"},{\"name\":\"IdTransportista\",\"type\":\"int\"},{\"name\":\"Detalle\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"int\"},{\"name\":\"CodigoDeProducto\",\"type\":\"string\"},{\"name\":\"DescripcionDeProducto\",\"type\":\"string\"},{\"name\":\"CodigoUOM\",\"type\":\"string\"},{\"name\":\"DescripcionUO\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"}],\"name\":\"Linea\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.GeneracionCot.Events.Record.Solicitud\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"IdPropietario\",\"type\":\"int\"},{\"name\":\"NombrePropietario\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"CodComprobante\",\"type\":\"string\"},{\"name\":\"CentroEmisorComprobante\",\"type\":\"int\"},{\"name\":\"NumeroComprobante\",\"type\":\"int\"},{\"name\":\"ImporteComprobante\",\"type\":{\"logicalType\":\"decimal\",\"precision\":12,\"scale\":2,\"type\":\"bytes\"}},{\"name\":\"DestinatarioCUIT\",\"type\":\"string\"},{\"name\":\"DestinatarioRazonSocial\",\"type\":\"string\"},{\"name\":\"DestinatarioCalle\",\"type\":\"string\"},{\"name\":\"DestinatarioNumero\",\"type\":\"string\"},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":\"string\"},{\"name\":\"DestinatarioLocalidad\",\"type\":\"string\"},{\"name\":\"DestinatarioProvincia\",\"type\":\"string\"},{\"name\":\"OrigenCUIT\",\"type\":\"string\"},{\"name\":\"OrigenRazonSocial\",\"type\":\"string\"},{\"name\":\"OrigenCalle\",\"type\":\"string\"},{\"name\":\"OrigenNumero\",\"type\":\"string\"},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCodigoPostal\",\"type\":\"string\"},{\"name\":\"OrigenLocalidad\",\"type\":\"string\"},{\"name\":\"OrigenProvincia\",\"type\":\"string\"},{\"name\":\"IdTransportista\",\"type\":\"int\"}],\"name\":\"Andreani.GeneracionCot.Events.Record.Solicitud\",\"type\":\"record\"}"
 }
 
 func (r Solicitud) SchemaName() string {
@@ -378,13 +370,6 @@ func (r *Solicitud) Get(i int) types.Field {
 
 		return w
 
-	case 27:
-		r.Detalle = make([]Linea, 0)
-
-		w := ArrayLineaWrapper{Target: &r.Detalle}
-
-		return w
-
 	}
 	panic("Unknown field index")
 }
@@ -530,10 +515,6 @@ func (r Solicitud) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["IdTransportista"], err = json.Marshal(r.IdTransportista)
-	if err != nil {
-		return nil, err
-	}
-	output["Detalle"], err = json.Marshal(r.Detalle)
 	if err != nil {
 		return nil, err
 	}
@@ -924,20 +905,6 @@ func (r *Solicitud) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for IdTransportista")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Detalle"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Detalle); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Detalle")
 	}
 	return nil
 }
