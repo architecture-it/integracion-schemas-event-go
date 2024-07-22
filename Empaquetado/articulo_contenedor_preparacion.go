@@ -30,6 +30,10 @@ type ArticuloContenedorPreparacion struct {
 
 	CantidadPickeada int32 `json:"CantidadPickeada"`
 
+	Mesa *UnionNullString `json:"Mesa"`
+
+	Calle *UnionNullString `json:"Calle"`
+
 	Lote *UnionNullString `json:"Lote"`
 
 	Serie *UnionNullString `json:"Serie"`
@@ -75,11 +79,13 @@ type ArticuloContenedorPreparacion struct {
 	UbicacionOrigen *UnionNullString `json:"UbicacionOrigen"`
 }
 
-const ArticuloContenedorPreparacionAvroCRC64Fingerprint = "^\xef+\aD`\x19I"
+const ArticuloContenedorPreparacionAvroCRC64Fingerprint = "\xd8h\x92\x9b\xe3\xc6\xfdb"
 
 func NewArticuloContenedorPreparacion() ArticuloContenedorPreparacion {
 	r := ArticuloContenedorPreparacion{}
 	r.Ean = nil
+	r.Mesa = nil
+	r.Calle = nil
 	r.Lote = nil
 	r.Serie = nil
 	r.Zona = nil
@@ -151,6 +157,14 @@ func writeArticuloContenedorPreparacion(r ArticuloContenedorPreparacion, w io.Wr
 		return err
 	}
 	err = vm.WriteInt(r.CantidadPickeada, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Mesa, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Calle, w)
 	if err != nil {
 		return err
 	}
@@ -250,7 +264,7 @@ func (r ArticuloContenedorPreparacion) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloContenedorPreparacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UDM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickearTodos\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"ValidaLoteWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FormatoSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieEnSalida\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IngresaSerieEnEmpaquetado\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoValidacionSalidaLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsaDataMatrix\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"UbicacionOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloContenedorPreparacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UDM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickearTodos\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"ValidaLoteWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FormatoSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieEnSalida\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IngresaSerieEnEmpaquetado\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoValidacionSalidaLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsaDataMatrix\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"UbicacionOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloContenedorPreparacion\",\"type\":\"record\"}"
 }
 
 func (r ArticuloContenedorPreparacion) SchemaName() string {
@@ -298,90 +312,98 @@ func (r *ArticuloContenedorPreparacion) Get(i int) types.Field {
 		return w
 
 	case 6:
+		r.Mesa = NewUnionNullString()
+
+		return r.Mesa
+	case 7:
+		r.Calle = NewUnionNullString()
+
+		return r.Calle
+	case 8:
 		r.Lote = NewUnionNullString()
 
 		return r.Lote
-	case 7:
+	case 9:
 		r.Serie = NewUnionNullString()
 
 		return r.Serie
-	case 8:
+	case 10:
 		r.Zona = NewUnionNullString()
 
 		return r.Zona
-	case 9:
+	case 11:
 		r.CodigoZona = NewUnionNullString()
 
 		return r.CodigoZona
-	case 10:
+	case 12:
 		r.DescripcionZona = NewUnionNullString()
 
 		return r.DescripcionZona
-	case 11:
+	case 13:
 		r.Longitud = NewUnionNullFloat()
 
 		return r.Longitud
-	case 12:
+	case 14:
 		r.Altura = NewUnionNullFloat()
 
 		return r.Altura
-	case 13:
+	case 15:
 		r.Ancho = NewUnionNullFloat()
 
 		return r.Ancho
-	case 14:
+	case 16:
 		r.Peso = NewUnionNullFloat()
 
 		return r.Peso
-	case 15:
+	case 17:
 		r.InstruccionesEmbalaje = NewUnionNullString()
 
 		return r.InstruccionesEmbalaje
-	case 16:
+	case 18:
 		r.UDM = NewUnionNullString()
 
 		return r.UDM
-	case 17:
+	case 19:
 		r.PickearTodos = NewUnionNullBool()
 
 		return r.PickearTodos
-	case 18:
+	case 20:
 		r.ValidaLoteWos = NewUnionNullString()
 
 		return r.ValidaLoteWos
-	case 19:
+	case 21:
 		r.ValidaSerieWos = NewUnionNullString()
 
 		return r.ValidaSerieWos
-	case 20:
+	case 22:
 		r.FormatoSerie = NewUnionNullString()
 
 		return r.FormatoSerie
-	case 21:
+	case 23:
 		r.ValidaSerieEnSalida = NewUnionNullBool()
 
 		return r.ValidaSerieEnSalida
-	case 22:
+	case 24:
 		r.IngresaSerieEnEmpaquetado = NewUnionNullBool()
 
 		return r.IngresaSerieEnEmpaquetado
-	case 23:
+	case 25:
 		r.SerieDirigida = NewUnionNullString()
 
 		return r.SerieDirigida
-	case 24:
+	case 26:
 		r.PickDetailKey = NewUnionNullString()
 
 		return r.PickDetailKey
-	case 25:
+	case 27:
 		r.CodigoValidacionSalidaLote = NewUnionNullString()
 
 		return r.CodigoValidacionSalidaLote
-	case 26:
+	case 28:
 		r.UsaDataMatrix = NewUnionNullBool()
 
 		return r.UsaDataMatrix
-	case 27:
+	case 29:
 		r.UbicacionOrigen = NewUnionNullString()
 
 		return r.UbicacionOrigen
@@ -395,69 +417,75 @@ func (r *ArticuloContenedorPreparacion) SetDefault(i int) {
 		r.Ean = nil
 		return
 	case 6:
-		r.Lote = nil
+		r.Mesa = nil
 		return
 	case 7:
-		r.Serie = nil
+		r.Calle = nil
 		return
 	case 8:
-		r.Zona = nil
+		r.Lote = nil
 		return
 	case 9:
-		r.CodigoZona = nil
+		r.Serie = nil
 		return
 	case 10:
-		r.DescripcionZona = nil
+		r.Zona = nil
 		return
 	case 11:
-		r.Longitud = nil
+		r.CodigoZona = nil
 		return
 	case 12:
-		r.Altura = nil
+		r.DescripcionZona = nil
 		return
 	case 13:
-		r.Ancho = nil
+		r.Longitud = nil
 		return
 	case 14:
-		r.Peso = nil
+		r.Altura = nil
 		return
 	case 15:
-		r.InstruccionesEmbalaje = nil
+		r.Ancho = nil
 		return
 	case 16:
-		r.UDM = nil
+		r.Peso = nil
 		return
 	case 17:
-		r.PickearTodos = nil
+		r.InstruccionesEmbalaje = nil
 		return
 	case 18:
-		r.ValidaLoteWos = nil
+		r.UDM = nil
 		return
 	case 19:
-		r.ValidaSerieWos = nil
+		r.PickearTodos = nil
 		return
 	case 20:
-		r.FormatoSerie = nil
+		r.ValidaLoteWos = nil
 		return
 	case 21:
-		r.ValidaSerieEnSalida = nil
+		r.ValidaSerieWos = nil
 		return
 	case 22:
-		r.IngresaSerieEnEmpaquetado = nil
+		r.FormatoSerie = nil
 		return
 	case 23:
-		r.SerieDirigida = nil
+		r.ValidaSerieEnSalida = nil
 		return
 	case 24:
-		r.PickDetailKey = nil
+		r.IngresaSerieEnEmpaquetado = nil
 		return
 	case 25:
-		r.CodigoValidacionSalidaLote = nil
+		r.SerieDirigida = nil
 		return
 	case 26:
-		r.UsaDataMatrix = nil
+		r.PickDetailKey = nil
 		return
 	case 27:
+		r.CodigoValidacionSalidaLote = nil
+		return
+	case 28:
+		r.UsaDataMatrix = nil
+		return
+	case 29:
 		r.UbicacionOrigen = nil
 		return
 	}
@@ -470,69 +498,75 @@ func (r *ArticuloContenedorPreparacion) NullField(i int) {
 		r.Ean = nil
 		return
 	case 6:
-		r.Lote = nil
+		r.Mesa = nil
 		return
 	case 7:
-		r.Serie = nil
+		r.Calle = nil
 		return
 	case 8:
-		r.Zona = nil
+		r.Lote = nil
 		return
 	case 9:
-		r.CodigoZona = nil
+		r.Serie = nil
 		return
 	case 10:
-		r.DescripcionZona = nil
+		r.Zona = nil
 		return
 	case 11:
-		r.Longitud = nil
+		r.CodigoZona = nil
 		return
 	case 12:
-		r.Altura = nil
+		r.DescripcionZona = nil
 		return
 	case 13:
-		r.Ancho = nil
+		r.Longitud = nil
 		return
 	case 14:
-		r.Peso = nil
+		r.Altura = nil
 		return
 	case 15:
-		r.InstruccionesEmbalaje = nil
+		r.Ancho = nil
 		return
 	case 16:
-		r.UDM = nil
+		r.Peso = nil
 		return
 	case 17:
-		r.PickearTodos = nil
+		r.InstruccionesEmbalaje = nil
 		return
 	case 18:
-		r.ValidaLoteWos = nil
+		r.UDM = nil
 		return
 	case 19:
-		r.ValidaSerieWos = nil
+		r.PickearTodos = nil
 		return
 	case 20:
-		r.FormatoSerie = nil
+		r.ValidaLoteWos = nil
 		return
 	case 21:
-		r.ValidaSerieEnSalida = nil
+		r.ValidaSerieWos = nil
 		return
 	case 22:
-		r.IngresaSerieEnEmpaquetado = nil
+		r.FormatoSerie = nil
 		return
 	case 23:
-		r.SerieDirigida = nil
+		r.ValidaSerieEnSalida = nil
 		return
 	case 24:
-		r.PickDetailKey = nil
+		r.IngresaSerieEnEmpaquetado = nil
 		return
 	case 25:
-		r.CodigoValidacionSalidaLote = nil
+		r.SerieDirigida = nil
 		return
 	case 26:
-		r.UsaDataMatrix = nil
+		r.PickDetailKey = nil
 		return
 	case 27:
+		r.CodigoValidacionSalidaLote = nil
+		return
+	case 28:
+		r.UsaDataMatrix = nil
+		return
+	case 29:
 		r.UbicacionOrigen = nil
 		return
 	}
@@ -574,6 +608,14 @@ func (r ArticuloContenedorPreparacion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CantidadPickeada"], err = json.Marshal(r.CantidadPickeada)
+	if err != nil {
+		return nil, err
+	}
+	output["Mesa"], err = json.Marshal(r.Mesa)
+	if err != nil {
+		return nil, err
+	}
+	output["Calle"], err = json.Marshal(r.Calle)
 	if err != nil {
 		return nil, err
 	}
@@ -760,6 +802,38 @@ func (r *ArticuloContenedorPreparacion) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CantidadPickeada")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Mesa"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Mesa); err != nil {
+			return err
+		}
+	} else {
+		r.Mesa = NewUnionNullString()
+
+		r.Mesa = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Calle"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Calle); err != nil {
+			return err
+		}
+	} else {
+		r.Calle = NewUnionNullString()
+
+		r.Calle = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Lote"]; ok {
