@@ -21,7 +21,7 @@ type Solicitud struct {
 	Id int32 `json:"Id"`
 }
 
-const SolicitudAvroCRC64Fingerprint = "\x10\xe3nc[עO"
+const SolicitudAvroCRC64Fingerprint = "\xd9:\x13I\a\xe0%9"
 
 func NewSolicitud() Solicitud {
 	r := Solicitud{}
@@ -65,11 +65,11 @@ func (r Solicitud) Serialize(w io.Writer) error {
 }
 
 func (r Solicitud) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"}],\"name\":\"Andreani.GeneracionCot.Events.Record.Solicitud\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"}],\"name\":\"Andreani.GeneracionCOT.Events.Record.Solicitud\",\"type\":\"record\"}"
 }
 
 func (r Solicitud) SchemaName() string {
-	return "Andreani.GeneracionCot.Events.Record.Solicitud"
+	return "Andreani.GeneracionCOT.Events.Record.Solicitud"
 }
 
 func (_ Solicitud) SetBoolean(v bool)    { panic("Unsupported operation") }
