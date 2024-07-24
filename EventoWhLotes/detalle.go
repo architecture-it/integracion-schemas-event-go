@@ -51,11 +51,9 @@ type Detalle struct {
 	FechaCreacion int64 `json:"FechaCreacion"`
 
 	Cantidad *UnionNullString `json:"Cantidad"`
-
-	IdInterno *UnionNullString `json:"IdInterno"`
 }
 
-const DetalleAvroCRC64Fingerprint = "k\xde3\xf5\xfes\x8f\x9a"
+const DetalleAvroCRC64Fingerprint = "\x914\xd1\xc8\x16\x89\b\xd7"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -64,7 +62,6 @@ func NewDetalle() Detalle {
 	r.EntregaAntesDe = nil
 	r.ConsumoAntesDe = nil
 	r.Cantidad = nil
-	r.IdInterno = nil
 	return r
 }
 
@@ -161,10 +158,6 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.IdInterno, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -173,7 +166,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLoteDestino\",\"type\":\"string\"},{\"name\":\"EstadoLoteOrigen\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaCreacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"Cantidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdInterno\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhLotes.Events.EstadoLoteCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLoteDestino\",\"type\":\"string\"},{\"name\":\"EstadoLoteOrigen\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"FechaCreacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"Cantidad\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhLotes.Events.EstadoLoteCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -271,10 +264,6 @@ func (r *Detalle) Get(i int) types.Field {
 		r.Cantidad = NewUnionNullString()
 
 		return r.Cantidad
-	case 17:
-		r.IdInterno = NewUnionNullString()
-
-		return r.IdInterno
 	}
 	panic("Unknown field index")
 }
@@ -296,9 +285,6 @@ func (r *Detalle) SetDefault(i int) {
 	case 16:
 		r.Cantidad = nil
 		return
-	case 17:
-		r.IdInterno = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -319,9 +305,6 @@ func (r *Detalle) NullField(i int) {
 		return
 	case 16:
 		r.Cantidad = nil
-		return
-	case 17:
-		r.IdInterno = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -404,10 +387,6 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Cantidad"], err = json.Marshal(r.Cantidad)
-	if err != nil {
-		return nil, err
-	}
-	output["IdInterno"], err = json.Marshal(r.IdInterno)
 	if err != nil {
 		return nil, err
 	}
@@ -668,22 +647,6 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		r.Cantidad = NewUnionNullString()
 
 		r.Cantidad = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["IdInterno"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IdInterno); err != nil {
-			return err
-		}
-	} else {
-		r.IdInterno = NewUnionNullString()
-
-		r.IdInterno = nil
 	}
 	return nil
 }
