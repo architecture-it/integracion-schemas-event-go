@@ -20,6 +20,8 @@ var _ = fmt.Printf
 type CarritoAbandonado struct {
 	UsuarioId *UnionNullString `json:"usuarioId"`
 
+	ClienteId *UnionNullString `json:"clienteId"`
+
 	Email *UnionNullString `json:"email"`
 
 	Nombre *UnionNullString `json:"nombre"`
@@ -39,11 +41,12 @@ type CarritoAbandonado struct {
 	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const CarritoAbandonadoAvroCRC64Fingerprint = "n\x99ۣ\xb1T`\x91"
+const CarritoAbandonadoAvroCRC64Fingerprint = "\x00\x03\xdbY[#R8"
 
 func NewCarritoAbandonado() CarritoAbandonado {
 	r := CarritoAbandonado{}
 	r.UsuarioId = nil
+	r.ClienteId = nil
 	r.Email = nil
 	r.Nombre = nil
 	r.Telefono = nil
@@ -82,6 +85,10 @@ func DeserializeCarritoAbandonadoFromSchema(r io.Reader, schema string) (Carrito
 func writeCarritoAbandonado(r CarritoAbandonado, w io.Writer) error {
 	var err error
 	err = writeUnionNullString(r.UsuarioId, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ClienteId, w)
 	if err != nil {
 		return err
 	}
@@ -129,7 +136,7 @@ func (r CarritoAbandonado) Serialize(w io.Writer) error {
 }
 
 func (r CarritoAbandonado) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaModificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeEnvios\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"diasDeAbandono\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.CarritoAbandonado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaModificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeEnvios\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"diasDeAbandono\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.CarritoAbandonado\",\"type\":\"record\"}"
 }
 
 func (r CarritoAbandonado) SchemaName() string {
@@ -152,38 +159,42 @@ func (r *CarritoAbandonado) Get(i int) types.Field {
 
 		return r.UsuarioId
 	case 1:
+		r.ClienteId = NewUnionNullString()
+
+		return r.ClienteId
+	case 2:
 		r.Email = NewUnionNullString()
 
 		return r.Email
-	case 2:
+	case 3:
 		r.Nombre = NewUnionNullString()
 
 		return r.Nombre
-	case 3:
+	case 4:
 		r.Telefono = NewUnionNullString()
 
 		return r.Telefono
-	case 4:
+	case 5:
 		r.FechaModificacion = NewUnionNullString()
 
 		return r.FechaModificacion
-	case 5:
+	case 6:
 		r.Cupon = NewUnionNullString()
 
 		return r.Cupon
-	case 6:
+	case 7:
 		r.CantidadDeEnvios = NewUnionNullInt()
 
 		return r.CantidadDeEnvios
-	case 7:
+	case 8:
 		r.DiasDeAbandono = NewUnionNullInt()
 
 		return r.DiasDeAbandono
-	case 8:
+	case 9:
 		r.TipoDeServicio = NewUnionNullString()
 
 		return r.TipoDeServicio
-	case 9:
+	case 10:
 		r.Cuando = NewUnionNullLong()
 
 		return r.Cuando
@@ -197,30 +208,33 @@ func (r *CarritoAbandonado) SetDefault(i int) {
 		r.UsuarioId = nil
 		return
 	case 1:
-		r.Email = nil
+		r.ClienteId = nil
 		return
 	case 2:
-		r.Nombre = nil
+		r.Email = nil
 		return
 	case 3:
-		r.Telefono = nil
+		r.Nombre = nil
 		return
 	case 4:
-		r.FechaModificacion = nil
+		r.Telefono = nil
 		return
 	case 5:
-		r.Cupon = nil
+		r.FechaModificacion = nil
 		return
 	case 6:
-		r.CantidadDeEnvios = nil
+		r.Cupon = nil
 		return
 	case 7:
-		r.DiasDeAbandono = nil
+		r.CantidadDeEnvios = nil
 		return
 	case 8:
-		r.TipoDeServicio = nil
+		r.DiasDeAbandono = nil
 		return
 	case 9:
+		r.TipoDeServicio = nil
+		return
+	case 10:
 		r.Cuando = nil
 		return
 	}
@@ -233,30 +247,33 @@ func (r *CarritoAbandonado) NullField(i int) {
 		r.UsuarioId = nil
 		return
 	case 1:
-		r.Email = nil
+		r.ClienteId = nil
 		return
 	case 2:
-		r.Nombre = nil
+		r.Email = nil
 		return
 	case 3:
-		r.Telefono = nil
+		r.Nombre = nil
 		return
 	case 4:
-		r.FechaModificacion = nil
+		r.Telefono = nil
 		return
 	case 5:
-		r.Cupon = nil
+		r.FechaModificacion = nil
 		return
 	case 6:
-		r.CantidadDeEnvios = nil
+		r.Cupon = nil
 		return
 	case 7:
-		r.DiasDeAbandono = nil
+		r.CantidadDeEnvios = nil
 		return
 	case 8:
-		r.TipoDeServicio = nil
+		r.DiasDeAbandono = nil
 		return
 	case 9:
+		r.TipoDeServicio = nil
+		return
+	case 10:
 		r.Cuando = nil
 		return
 	}
@@ -276,6 +293,10 @@ func (r CarritoAbandonado) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["usuarioId"], err = json.Marshal(r.UsuarioId)
+	if err != nil {
+		return nil, err
+	}
+	output["clienteId"], err = json.Marshal(r.ClienteId)
 	if err != nil {
 		return nil, err
 	}
@@ -340,6 +361,22 @@ func (r *CarritoAbandonado) UnmarshalJSON(data []byte) error {
 		r.UsuarioId = NewUnionNullString()
 
 		r.UsuarioId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["clienteId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ClienteId); err != nil {
+			return err
+		}
+	} else {
+		r.ClienteId = NewUnionNullString()
+
+		r.ClienteId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["email"]; ok {
