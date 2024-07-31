@@ -26,12 +26,12 @@ type Linea struct {
 
 	CodigoUOM string `json:"CodigoUOM"`
 
-	DescripcionUO string `json:"DescripcionUO"`
+	DescripcionUOM string `json:"DescripcionUOM"`
 
 	Cantidad int32 `json:"Cantidad"`
 }
 
-const LineaAvroCRC64Fingerprint = "#K]@\xf2\xa4\xe2\x8b"
+const LineaAvroCRC64Fingerprint = "\xbbnVBqc\x90m"
 
 func NewLinea() Linea {
 	r := Linea{}
@@ -79,7 +79,7 @@ func writeLinea(r Linea, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DescripcionUO, w)
+	err = vm.WriteString(r.DescripcionUOM, w)
 	if err != nil {
 		return err
 	}
@@ -95,7 +95,7 @@ func (r Linea) Serialize(w io.Writer) error {
 }
 
 func (r Linea) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"int\"},{\"name\":\"CodigoDeProducto\",\"type\":\"string\"},{\"name\":\"DescripcionDeProducto\",\"type\":\"string\"},{\"name\":\"CodigoUOM\",\"type\":\"string\"},{\"name\":\"DescripcionUO\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"}],\"name\":\"Andreani.GeneracionCOT.Events.Record.Linea\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"int\"},{\"name\":\"CodigoDeProducto\",\"type\":\"string\"},{\"name\":\"DescripcionDeProducto\",\"type\":\"string\"},{\"name\":\"CodigoUOM\",\"type\":\"string\"},{\"name\":\"DescripcionUOM\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"}],\"name\":\"Andreani.GeneracionCOT.Events.Record.Linea\",\"type\":\"record\"}"
 }
 
 func (r Linea) SchemaName() string {
@@ -134,7 +134,7 @@ func (r *Linea) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.String{Target: &r.DescripcionUO}
+		w := types.String{Target: &r.DescripcionUOM}
 
 		return w
 
@@ -187,7 +187,7 @@ func (r Linea) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["DescripcionUO"], err = json.Marshal(r.DescripcionUO)
+	output["DescripcionUOM"], err = json.Marshal(r.DescripcionUOM)
 	if err != nil {
 		return nil, err
 	}
@@ -262,18 +262,18 @@ func (r *Linea) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for CodigoUOM")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["DescripcionUO"]; ok {
+		if v, ok := fields["DescripcionUOM"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.DescripcionUO); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionUOM); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DescripcionUO")
+		return fmt.Errorf("no value specified for DescripcionUOM")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Cantidad"]; ok {
