@@ -46,6 +46,12 @@ type PedidoEmpaquetar struct {
 
 	ValePsicotropico *UnionNullString `json:"ValePsicotropico"`
 
+	CiudadDestino *UnionNullString `json:"CiudadDestino"`
+
+	ProvinciaDestino *UnionNullString `json:"ProvinciaDestino"`
+
+	CodigoPostalDestino *UnionNullString `json:"CodigoPostalDestino"`
+
 	ContenedoresDePreparacion []ContenedorPreparacion `json:"ContenedoresDePreparacion"`
 
 	ContenedoresEmbalajeDeAlmacen []ContenedorEmbalaje `json:"ContenedoresEmbalajeDeAlmacen"`
@@ -55,7 +61,7 @@ type PedidoEmpaquetar struct {
 	ValidacionAtributosLote []ValidacionAtributosDeLote `json:"ValidacionAtributosLote"`
 }
 
-const PedidoEmpaquetarAvroCRC64Fingerprint = "Q\x1c\xb7\xb5.{1\xc3"
+const PedidoEmpaquetarAvroCRC64Fingerprint = "\xa8t\xe2ΪE\xfb\xce"
 
 func NewPedidoEmpaquetar() PedidoEmpaquetar {
 	r := PedidoEmpaquetar{}
@@ -72,6 +78,9 @@ func NewPedidoEmpaquetar() PedidoEmpaquetar {
 	r.DescripcionErrorTraza = nil
 	r.DescripcionErrorAcondi = nil
 	r.ValePsicotropico = nil
+	r.CiudadDestino = nil
+	r.ProvinciaDestino = nil
+	r.CodigoPostalDestino = nil
 	r.ContenedoresDePreparacion = make([]ContenedorPreparacion, 0)
 
 	r.ContenedoresEmbalajeDeAlmacen = make([]ContenedorEmbalaje, 0)
@@ -164,6 +173,18 @@ func writePedidoEmpaquetar(r PedidoEmpaquetar, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.CiudadDestino, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ProvinciaDestino, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoPostalDestino, w)
+	if err != nil {
+		return err
+	}
 	err = writeArrayContenedorPreparacion(r.ContenedoresDePreparacion, w)
 	if err != nil {
 		return err
@@ -188,7 +209,7 @@ func (r PedidoEmpaquetar) Serialize(w io.Writer) error {
 }
 
 func (r PedidoEmpaquetar) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"}},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaExpedicion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"MarcaEspecial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionErrorTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionErrorAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValePsicotropico\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContenedoresDePreparacion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UDM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickearTodos\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"ValidaLoteWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FormatoSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieEnSalida\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IngresaSerieEnEmpaquetado\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoValidacionSalidaLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsaDataMatrix\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"UbicacionOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"ArticuloContenedorPreparacion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ContenedorPreparacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"ContenedoresEmbalajeDeAlmacen\",\"type\":{\"items\":{\"fields\":[{\"name\":\"ContenedorId\",\"type\":\"string\"},{\"name\":\"ContenedorDescripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Longuitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"EsRetornable\",\"type\":\"boolean\"}],\"name\":\"ContenedorEmbalaje\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"AtributosLote\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]}],\"name\":\"AtributosDeLote\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"ValidacionAtributosLote\",\"type\":{\"items\":{\"fields\":[{\"name\":\"CodigoValidacionSalidaLote\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Atributo1Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo2Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo3Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo4Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo5Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo6Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo7Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo8Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo9Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo10Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo11Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo12Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo1Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo2Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo3Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo4Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo5Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo6Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo7Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo8Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo9Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo10Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo11Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo12Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo1Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo2Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo3Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo4Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo5Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo6Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo7Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo8Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo9Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo10Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo11Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo12Choose\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"ValidacionAtributosDeLote\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Record.PedidoEmpaquetar\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"}},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaExpedicion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"MarcaEspecial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionEstadoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionErrorTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionErrorAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValePsicotropico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CiudadDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProvinciaDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoPostalDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContenedoresDePreparacion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Articulos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroLineaPedido\",\"type\":\"string\"},{\"name\":\"CantidadPedido\",\"type\":\"int\"},{\"name\":\"CantidadPickeada\",\"type\":\"int\"},{\"default\":null,\"name\":\"Mesa\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionZona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"InstruccionesEmbalaje\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UDM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickearTodos\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"ValidaLoteWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FormatoSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieEnSalida\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"IngresaSerieEnEmpaquetado\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoValidacionSalidaLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsaDataMatrix\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"UbicacionOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"ArticuloContenedorPreparacion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ContenedorPreparacion\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"ContenedoresEmbalajeDeAlmacen\",\"type\":{\"items\":{\"fields\":[{\"name\":\"ContenedorId\",\"type\":\"string\"},{\"name\":\"ContenedorDescripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Longuitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"EsRetornable\",\"type\":\"boolean\"}],\"name\":\"ContenedorEmbalaje\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"AtributosLote\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]}],\"name\":\"AtributosDeLote\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"ValidacionAtributosLote\",\"type\":{\"items\":{\"fields\":[{\"name\":\"CodigoValidacionSalidaLote\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Atributo1Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo2Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo3Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo4Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo5Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo6Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo7Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo8Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo9Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo10Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo11Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo12Display\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo1Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo2Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo3Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo4Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo5Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo6Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo7Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo8Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo9Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo10Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo11Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo12Required\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo1Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo2Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo3Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo4Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo5Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo6Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo7Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo8Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo9Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo10Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo11Choose\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Atributo12Choose\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"ValidacionAtributosDeLote\",\"namespace\":\"Andreani.Empaquetado.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Record.PedidoEmpaquetar\",\"type\":\"record\"}"
 }
 
 func (r PedidoEmpaquetar) SchemaName() string {
@@ -268,27 +289,39 @@ func (r *PedidoEmpaquetar) Get(i int) types.Field {
 
 		return r.ValePsicotropico
 	case 14:
+		r.CiudadDestino = NewUnionNullString()
+
+		return r.CiudadDestino
+	case 15:
+		r.ProvinciaDestino = NewUnionNullString()
+
+		return r.ProvinciaDestino
+	case 16:
+		r.CodigoPostalDestino = NewUnionNullString()
+
+		return r.CodigoPostalDestino
+	case 17:
 		r.ContenedoresDePreparacion = make([]ContenedorPreparacion, 0)
 
 		w := ArrayContenedorPreparacionWrapper{Target: &r.ContenedoresDePreparacion}
 
 		return w
 
-	case 15:
+	case 18:
 		r.ContenedoresEmbalajeDeAlmacen = make([]ContenedorEmbalaje, 0)
 
 		w := ArrayContenedorEmbalajeWrapper{Target: &r.ContenedoresEmbalajeDeAlmacen}
 
 		return w
 
-	case 16:
+	case 19:
 		r.AtributosLote = make([]AtributosDeLote, 0)
 
 		w := ArrayAtributosDeLoteWrapper{Target: &r.AtributosLote}
 
 		return w
 
-	case 17:
+	case 20:
 		r.ValidacionAtributosLote = make([]ValidacionAtributosDeLote, 0)
 
 		w := ArrayValidacionAtributosDeLoteWrapper{Target: &r.ValidacionAtributosLote}
@@ -334,6 +367,15 @@ func (r *PedidoEmpaquetar) SetDefault(i int) {
 	case 13:
 		r.ValePsicotropico = nil
 		return
+	case 14:
+		r.CiudadDestino = nil
+		return
+	case 15:
+		r.ProvinciaDestino = nil
+		return
+	case 16:
+		r.CodigoPostalDestino = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -372,6 +414,15 @@ func (r *PedidoEmpaquetar) NullField(i int) {
 		return
 	case 13:
 		r.ValePsicotropico = nil
+		return
+	case 14:
+		r.CiudadDestino = nil
+		return
+	case 15:
+		r.ProvinciaDestino = nil
+		return
+	case 16:
+		r.CodigoPostalDestino = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -442,6 +493,18 @@ func (r PedidoEmpaquetar) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ValePsicotropico"], err = json.Marshal(r.ValePsicotropico)
+	if err != nil {
+		return nil, err
+	}
+	output["CiudadDestino"], err = json.Marshal(r.CiudadDestino)
+	if err != nil {
+		return nil, err
+	}
+	output["ProvinciaDestino"], err = json.Marshal(r.ProvinciaDestino)
+	if err != nil {
+		return nil, err
+	}
+	output["CodigoPostalDestino"], err = json.Marshal(r.CodigoPostalDestino)
 	if err != nil {
 		return nil, err
 	}
@@ -688,6 +751,54 @@ func (r *PedidoEmpaquetar) UnmarshalJSON(data []byte) error {
 		r.ValePsicotropico = NewUnionNullString()
 
 		r.ValePsicotropico = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CiudadDestino"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CiudadDestino); err != nil {
+			return err
+		}
+	} else {
+		r.CiudadDestino = NewUnionNullString()
+
+		r.CiudadDestino = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ProvinciaDestino"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ProvinciaDestino); err != nil {
+			return err
+		}
+	} else {
+		r.ProvinciaDestino = NewUnionNullString()
+
+		r.ProvinciaDestino = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodigoPostalDestino"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoPostalDestino); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoPostalDestino = NewUnionNullString()
+
+		r.CodigoPostalDestino = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ContenedoresDePreparacion"]; ok {
