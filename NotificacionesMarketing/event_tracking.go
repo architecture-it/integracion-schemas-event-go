@@ -20,16 +20,15 @@ var _ = fmt.Printf
 type EventTracking struct {
 	UsuarioLoginId *UnionNullString `json:"usuarioLoginId"`
 
-	Estado []string `json:"estado"`
+	Estado *UnionNullArrayString `json:"estado"`
 }
 
-const EventTrackingAvroCRC64Fingerprint = "B\xeb\xa9\xd6RDx\xcd"
+const EventTrackingAvroCRC64Fingerprint = "\xd1 ֤\x02\xe0\x1e\xbe"
 
 func NewEventTracking() EventTracking {
 	r := EventTracking{}
 	r.UsuarioLoginId = nil
-	r.Estado = make([]string, 0)
-
+	r.Estado = nil
 	return r
 }
 
@@ -62,7 +61,7 @@ func writeEventTracking(r EventTracking, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayString(r.Estado, w)
+	err = writeUnionNullArrayString(r.Estado, w)
 	if err != nil {
 		return err
 	}
@@ -74,7 +73,7 @@ func (r EventTracking) Serialize(w io.Writer) error {
 }
 
 func (r EventTracking) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioLoginId\",\"type\":[\"null\",\"string\"]},{\"name\":\"estado\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.EventTracking\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioLoginId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.EventTracking\",\"type\":\"record\"}"
 }
 
 func (r EventTracking) SchemaName() string {
@@ -97,12 +96,9 @@ func (r *EventTracking) Get(i int) types.Field {
 
 		return r.UsuarioLoginId
 	case 1:
-		r.Estado = make([]string, 0)
+		r.Estado = NewUnionNullArrayString()
 
-		w := ArrayStringWrapper{Target: &r.Estado}
-
-		return w
-
+		return r.Estado
 	}
 	panic("Unknown field index")
 }
@@ -112,6 +108,9 @@ func (r *EventTracking) SetDefault(i int) {
 	case 0:
 		r.UsuarioLoginId = nil
 		return
+	case 1:
+		r.Estado = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -120,6 +119,9 @@ func (r *EventTracking) NullField(i int) {
 	switch i {
 	case 0:
 		r.UsuarioLoginId = nil
+		return
+	case 1:
+		r.Estado = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -183,7 +185,9 @@ func (r *EventTracking) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for estado")
+		r.Estado = NewUnionNullArrayString()
+
+		r.Estado = nil
 	}
 	return nil
 }
