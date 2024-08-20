@@ -82,6 +82,8 @@ func NewIncidencia() Incidencia {
 	r.IdMotivoExterno = nil
 	r.Detalle = nil
 	r.IdTareaTraslado = nil
+	r.MotivoIncidencia = nil
+	r.MotivoResolucion = nil
 	return r
 }
 
@@ -198,7 +200,7 @@ func (r Incidencia) Serialize(w io.Writer) error {
 }
 
 func (r Incidencia) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"}},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ReferenciaWh\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Prioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LecturaArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SkuArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroSerieArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AlmacenDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Detalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdTareaTraslado\",\"type\":[\"null\",\"string\"]},{\"name\":\"MotivoIncidencia\",\"type\":[\"null\",\"string\"]},{\"name\":\"MotivoResolucion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.Incidencia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"}},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ReferenciaWh\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Prioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LecturaArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SkuArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroSerieArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AlmacenDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Detalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdTareaTraslado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MotivoIncidencia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MotivoResolucion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.Incidencia\",\"type\":\"record\"}"
 }
 
 func (r Incidencia) SchemaName() string {
@@ -355,6 +357,12 @@ func (r *Incidencia) SetDefault(i int) {
 		return
 	case 17:
 		r.IdTareaTraslado = nil
+		return
+	case 18:
+		r.MotivoIncidencia = nil
+		return
+	case 19:
+		r.MotivoResolucion = nil
 		return
 	}
 	panic("Unknown field index")
@@ -823,7 +831,9 @@ func (r *Incidencia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for MotivoIncidencia")
+		r.MotivoIncidencia = NewUnionNullString()
+
+		r.MotivoIncidencia = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["MotivoResolucion"]; ok {
@@ -837,7 +847,9 @@ func (r *Incidencia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for MotivoResolucion")
+		r.MotivoResolucion = NewUnionNullString()
+
+		r.MotivoResolucion = nil
 	}
 	return nil
 }
