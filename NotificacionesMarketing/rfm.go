@@ -20,7 +20,7 @@ var _ = fmt.Printf
 type RFM struct {
 	ClienteId *UnionNullString `json:"clienteId"`
 
-	Email *UnionNullString `json:"email"`
+	UsuarioLoginId *UnionNullString `json:"UsuarioLoginId"`
 
 	TelefonoCodigoArea *UnionNullString `json:"telefonoCodigoArea"`
 
@@ -31,12 +31,11 @@ type RFM struct {
 	UsuarioClienteId *UnionNullInt `json:"usuarioClienteId"`
 }
 
-const RFMAvroCRC64Fingerprint = "IH:t\x05\xa7\x850"
+const RFMAvroCRC64Fingerprint = "\x02\xb4p\xa4\x9309\xe6"
 
 func NewRFM() RFM {
 	r := RFM{}
 	r.ClienteId = nil
-	r.Email = nil
 	r.TelefonoCodigoArea = nil
 	r.TelefonoNumero = nil
 	r.Cuit = nil
@@ -73,7 +72,7 @@ func writeRFM(r RFM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Email, w)
+	err = writeUnionNullString(r.UsuarioLoginId, w)
 	if err != nil {
 		return err
 	}
@@ -101,7 +100,7 @@ func (r RFM) Serialize(w io.Writer) error {
 }
 
 func (r RFM) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuarioClienteId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.RFM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"name\":\"UsuarioLoginId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuarioClienteId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.RFM\",\"type\":\"record\"}"
 }
 
 func (r RFM) SchemaName() string {
@@ -124,9 +123,9 @@ func (r *RFM) Get(i int) types.Field {
 
 		return r.ClienteId
 	case 1:
-		r.Email = NewUnionNullString()
+		r.UsuarioLoginId = NewUnionNullString()
 
-		return r.Email
+		return r.UsuarioLoginId
 	case 2:
 		r.TelefonoCodigoArea = NewUnionNullString()
 
@@ -152,9 +151,6 @@ func (r *RFM) SetDefault(i int) {
 	case 0:
 		r.ClienteId = nil
 		return
-	case 1:
-		r.Email = nil
-		return
 	case 2:
 		r.TelefonoCodigoArea = nil
 		return
@@ -177,7 +173,7 @@ func (r *RFM) NullField(i int) {
 		r.ClienteId = nil
 		return
 	case 1:
-		r.Email = nil
+		r.UsuarioLoginId = nil
 		return
 	case 2:
 		r.TelefonoCodigoArea = nil
@@ -211,7 +207,7 @@ func (r RFM) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["email"], err = json.Marshal(r.Email)
+	output["UsuarioLoginId"], err = json.Marshal(r.UsuarioLoginId)
 	if err != nil {
 		return nil, err
 	}
@@ -258,20 +254,18 @@ func (r *RFM) UnmarshalJSON(data []byte) error {
 		r.ClienteId = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["email"]; ok {
+		if v, ok := fields["UsuarioLoginId"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Email); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.UsuarioLoginId); err != nil {
 			return err
 		}
 	} else {
-		r.Email = NewUnionNullString()
-
-		r.Email = nil
+		return fmt.Errorf("no value specified for UsuarioLoginId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["telefonoCodigoArea"]; ok {
