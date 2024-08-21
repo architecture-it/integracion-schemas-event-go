@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type EventTracking struct {
-	UsuarioLoginId *UnionNullString `json:"usuarioLoginId"`
+	UsuarioLoginId *UnionNullString `json:"UsuarioLoginId"`
 
-	Estado *UnionNullArrayString `json:"estado"`
+	Estado *UnionNullString `json:"Estado"`
 }
 
-const EventTrackingAvroCRC64Fingerprint = "\xd1 ֤\x02\xe0\x1e\xbe"
+const EventTrackingAvroCRC64Fingerprint = "\xa2\xc8RQU\xbf\xf7d"
 
 func NewEventTracking() EventTracking {
 	r := EventTracking{}
@@ -61,7 +61,7 @@ func writeEventTracking(r EventTracking, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullArrayString(r.Estado, w)
+	err = writeUnionNullString(r.Estado, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func (r EventTracking) Serialize(w io.Writer) error {
 }
 
 func (r EventTracking) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioLoginId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.EventTracking\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"UsuarioLoginId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.EventTracking\",\"type\":\"record\"}"
 }
 
 func (r EventTracking) SchemaName() string {
@@ -96,7 +96,7 @@ func (r *EventTracking) Get(i int) types.Field {
 
 		return r.UsuarioLoginId
 	case 1:
-		r.Estado = NewUnionNullArrayString()
+		r.Estado = NewUnionNullString()
 
 		return r.Estado
 	}
@@ -139,11 +139,11 @@ func (_ EventTracking) AvroCRC64Fingerprint() []byte {
 func (r EventTracking) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["usuarioLoginId"], err = json.Marshal(r.UsuarioLoginId)
+	output["UsuarioLoginId"], err = json.Marshal(r.UsuarioLoginId)
 	if err != nil {
 		return nil, err
 	}
-	output["estado"], err = json.Marshal(r.Estado)
+	output["Estado"], err = json.Marshal(r.Estado)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func (r *EventTracking) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["usuarioLoginId"]; ok {
+		if v, ok := fields["UsuarioLoginId"]; ok {
 			return v
 		}
 		return nil
@@ -174,7 +174,7 @@ func (r *EventTracking) UnmarshalJSON(data []byte) error {
 		r.UsuarioLoginId = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["estado"]; ok {
+		if v, ok := fields["Estado"]; ok {
 			return v
 		}
 		return nil
@@ -185,7 +185,7 @@ func (r *EventTracking) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Estado = NewUnionNullArrayString()
+		r.Estado = NewUnionNullString()
 
 		r.Estado = nil
 	}

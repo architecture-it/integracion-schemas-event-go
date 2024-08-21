@@ -20,6 +20,8 @@ var _ = fmt.Printf
 type MaestroCliente struct {
 	ClienteId *UnionNullString `json:"clienteId"`
 
+	UsuarioLoginId *UnionNullString `json:"UsuarioLoginId"`
+
 	Email *UnionNullString `json:"email"`
 
 	Nombre *UnionNullString `json:"nombre"`
@@ -83,7 +85,7 @@ type MaestroCliente struct {
 	ValidoHasta *UnionNullLong `json:"validoHasta"`
 }
 
-const MaestroClienteAvroCRC64Fingerprint = "h\xd8\xcd\xf8\xc5sg\x82"
+const MaestroClienteAvroCRC64Fingerprint = "\x05\xc8S\xe2i\xf0\xb7\x88"
 
 func NewMaestroCliente() MaestroCliente {
 	r := MaestroCliente{}
@@ -148,6 +150,10 @@ func DeserializeMaestroClienteFromSchema(r io.Reader, schema string) (MaestroCli
 func writeMaestroCliente(r MaestroCliente, w io.Writer) error {
 	var err error
 	err = writeUnionNullString(r.ClienteId, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.UsuarioLoginId, w)
 	if err != nil {
 		return err
 	}
@@ -283,7 +289,7 @@ func (r MaestroCliente) Serialize(w io.Writer) error {
 }
 
 func (r MaestroCliente) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoContratoSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionContratoSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoContratoTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"plazoDeEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoServicioCodigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"habilitado\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"retiro\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"fechaHabilitado\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"validoDesde\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"validoHasta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.MaestroCliente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"name\":\"UsuarioLoginId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoContratoSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionContratoSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoContratoTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"plazoDeEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoServicioCodigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"habilitado\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"retiro\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"fechaHabilitado\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"validoDesde\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"validoHasta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.MaestroCliente\",\"type\":\"record\"}"
 }
 
 func (r MaestroCliente) SchemaName() string {
@@ -306,126 +312,130 @@ func (r *MaestroCliente) Get(i int) types.Field {
 
 		return r.ClienteId
 	case 1:
+		r.UsuarioLoginId = NewUnionNullString()
+
+		return r.UsuarioLoginId
+	case 2:
 		r.Email = NewUnionNullString()
 
 		return r.Email
-	case 2:
+	case 3:
 		r.Nombre = NewUnionNullString()
 
 		return r.Nombre
-	case 3:
+	case 4:
 		r.TelefonoCodigoArea = NewUnionNullString()
 
 		return r.TelefonoCodigoArea
-	case 4:
+	case 5:
 		r.TelefonoNumero = NewUnionNullString()
 
 		return r.TelefonoNumero
-	case 5:
+	case 6:
 		r.Categoria = NewUnionNullString()
 
 		return r.Categoria
-	case 6:
+	case 7:
 		r.Cuando = NewUnionNullLong()
 
 		return r.Cuando
-	case 7:
+	case 8:
 		r.Paridad = NewUnionNullBool()
 
 		return r.Paridad
-	case 8:
+	case 9:
 		r.Canal = NewUnionNullString()
 
 		return r.Canal
-	case 9:
+	case 10:
 		r.CodigoContratoSAP = NewUnionNullString()
 
 		return r.CodigoContratoSAP
-	case 10:
+	case 11:
 		r.DescripcionContratoSAP = NewUnionNullString()
 
 		return r.DescripcionContratoSAP
-	case 11:
+	case 12:
 		r.CodigoSolicitanteSAP = NewUnionNullString()
 
 		return r.CodigoSolicitanteSAP
-	case 12:
+	case 13:
 		r.DescripcionSolicitanteSAP = NewUnionNullString()
 
 		return r.DescripcionSolicitanteSAP
-	case 13:
+	case 14:
 		r.CodigoDestinatario = NewUnionNullString()
 
 		return r.CodigoDestinatario
-	case 14:
+	case 15:
 		r.DescripcionDestinatario = NewUnionNullString()
 
 		return r.DescripcionDestinatario
-	case 15:
+	case 16:
 		r.NombreFantasiaDestinatario = NewUnionNullString()
 
 		return r.NombreFantasiaDestinatario
-	case 16:
+	case 17:
 		r.CodigoContratoTMS = NewUnionNullString()
 
 		return r.CodigoContratoTMS
-	case 17:
+	case 18:
 		r.CodigoClienteTMS = NewUnionNullString()
 
 		return r.CodigoClienteTMS
-	case 18:
+	case 19:
 		r.DescripcionTMS = NewUnionNullString()
 
 		return r.DescripcionTMS
-	case 19:
+	case 20:
 		r.ClienteFacturacion = NewUnionNullString()
 
 		return r.ClienteFacturacion
-	case 20:
+	case 21:
 		r.Segmento = NewUnionNullString()
 
 		return r.Segmento
-	case 21:
+	case 22:
 		r.Cuit = NewUnionNullString()
 
 		return r.Cuit
-	case 22:
+	case 23:
 		r.PlazoDeEntrega = NewUnionNullString()
 
 		return r.PlazoDeEntrega
-	case 23:
+	case 24:
 		r.TipoEntrega = NewUnionNullString()
 
 		return r.TipoEntrega
-	case 24:
+	case 25:
 		r.TipoServicio = NewUnionNullString()
 
 		return r.TipoServicio
-	case 25:
+	case 26:
 		r.TipoServicioCodigo = NewUnionNullString()
 
 		return r.TipoServicioCodigo
-	case 26:
+	case 27:
 		r.SucursalRendicion = NewUnionNullString()
 
 		return r.SucursalRendicion
-	case 27:
+	case 28:
 		r.Habilitado = NewUnionNullInt()
 
 		return r.Habilitado
-	case 28:
+	case 29:
 		r.Retiro = NewUnionNullBool()
 
 		return r.Retiro
-	case 29:
+	case 30:
 		r.FechaHabilitado = NewUnionNullLong()
 
 		return r.FechaHabilitado
-	case 30:
+	case 31:
 		r.ValidoDesde = NewUnionNullLong()
 
 		return r.ValidoDesde
-	case 31:
+	case 32:
 		r.ValidoHasta = NewUnionNullLong()
 
 		return r.ValidoHasta
@@ -438,97 +448,97 @@ func (r *MaestroCliente) SetDefault(i int) {
 	case 0:
 		r.ClienteId = nil
 		return
-	case 1:
+	case 2:
 		r.Email = nil
 		return
-	case 2:
+	case 3:
 		r.Nombre = nil
 		return
-	case 3:
+	case 4:
 		r.TelefonoCodigoArea = nil
 		return
-	case 4:
+	case 5:
 		r.TelefonoNumero = nil
 		return
-	case 5:
+	case 6:
 		r.Categoria = nil
 		return
-	case 6:
+	case 7:
 		r.Cuando = nil
 		return
-	case 7:
+	case 8:
 		r.Paridad = nil
 		return
-	case 8:
+	case 9:
 		r.Canal = nil
 		return
-	case 9:
+	case 10:
 		r.CodigoContratoSAP = nil
 		return
-	case 10:
+	case 11:
 		r.DescripcionContratoSAP = nil
 		return
-	case 11:
+	case 12:
 		r.CodigoSolicitanteSAP = nil
 		return
-	case 12:
+	case 13:
 		r.DescripcionSolicitanteSAP = nil
 		return
-	case 13:
+	case 14:
 		r.CodigoDestinatario = nil
 		return
-	case 14:
+	case 15:
 		r.DescripcionDestinatario = nil
 		return
-	case 15:
+	case 16:
 		r.NombreFantasiaDestinatario = nil
 		return
-	case 16:
+	case 17:
 		r.CodigoContratoTMS = nil
 		return
-	case 17:
+	case 18:
 		r.CodigoClienteTMS = nil
 		return
-	case 18:
+	case 19:
 		r.DescripcionTMS = nil
 		return
-	case 19:
+	case 20:
 		r.ClienteFacturacion = nil
 		return
-	case 20:
+	case 21:
 		r.Segmento = nil
 		return
-	case 21:
+	case 22:
 		r.Cuit = nil
 		return
-	case 22:
+	case 23:
 		r.PlazoDeEntrega = nil
 		return
-	case 23:
+	case 24:
 		r.TipoEntrega = nil
 		return
-	case 24:
+	case 25:
 		r.TipoServicio = nil
 		return
-	case 25:
+	case 26:
 		r.TipoServicioCodigo = nil
 		return
-	case 26:
+	case 27:
 		r.SucursalRendicion = nil
 		return
-	case 27:
+	case 28:
 		r.Habilitado = nil
 		return
-	case 28:
+	case 29:
 		r.Retiro = nil
 		return
-	case 29:
+	case 30:
 		r.FechaHabilitado = nil
 		return
-	case 30:
+	case 31:
 		r.ValidoDesde = nil
 		return
-	case 31:
+	case 32:
 		r.ValidoHasta = nil
 		return
 	}
@@ -541,96 +551,99 @@ func (r *MaestroCliente) NullField(i int) {
 		r.ClienteId = nil
 		return
 	case 1:
-		r.Email = nil
+		r.UsuarioLoginId = nil
 		return
 	case 2:
-		r.Nombre = nil
+		r.Email = nil
 		return
 	case 3:
-		r.TelefonoCodigoArea = nil
+		r.Nombre = nil
 		return
 	case 4:
-		r.TelefonoNumero = nil
+		r.TelefonoCodigoArea = nil
 		return
 	case 5:
-		r.Categoria = nil
+		r.TelefonoNumero = nil
 		return
 	case 6:
-		r.Cuando = nil
+		r.Categoria = nil
 		return
 	case 7:
-		r.Paridad = nil
+		r.Cuando = nil
 		return
 	case 8:
-		r.Canal = nil
+		r.Paridad = nil
 		return
 	case 9:
-		r.CodigoContratoSAP = nil
+		r.Canal = nil
 		return
 	case 10:
-		r.DescripcionContratoSAP = nil
+		r.CodigoContratoSAP = nil
 		return
 	case 11:
-		r.CodigoSolicitanteSAP = nil
+		r.DescripcionContratoSAP = nil
 		return
 	case 12:
-		r.DescripcionSolicitanteSAP = nil
+		r.CodigoSolicitanteSAP = nil
 		return
 	case 13:
-		r.CodigoDestinatario = nil
+		r.DescripcionSolicitanteSAP = nil
 		return
 	case 14:
-		r.DescripcionDestinatario = nil
+		r.CodigoDestinatario = nil
 		return
 	case 15:
-		r.NombreFantasiaDestinatario = nil
+		r.DescripcionDestinatario = nil
 		return
 	case 16:
-		r.CodigoContratoTMS = nil
+		r.NombreFantasiaDestinatario = nil
 		return
 	case 17:
-		r.CodigoClienteTMS = nil
+		r.CodigoContratoTMS = nil
 		return
 	case 18:
-		r.DescripcionTMS = nil
+		r.CodigoClienteTMS = nil
 		return
 	case 19:
-		r.ClienteFacturacion = nil
+		r.DescripcionTMS = nil
 		return
 	case 20:
-		r.Segmento = nil
+		r.ClienteFacturacion = nil
 		return
 	case 21:
-		r.Cuit = nil
+		r.Segmento = nil
 		return
 	case 22:
-		r.PlazoDeEntrega = nil
+		r.Cuit = nil
 		return
 	case 23:
-		r.TipoEntrega = nil
+		r.PlazoDeEntrega = nil
 		return
 	case 24:
-		r.TipoServicio = nil
+		r.TipoEntrega = nil
 		return
 	case 25:
-		r.TipoServicioCodigo = nil
+		r.TipoServicio = nil
 		return
 	case 26:
-		r.SucursalRendicion = nil
+		r.TipoServicioCodigo = nil
 		return
 	case 27:
-		r.Habilitado = nil
+		r.SucursalRendicion = nil
 		return
 	case 28:
-		r.Retiro = nil
+		r.Habilitado = nil
 		return
 	case 29:
-		r.FechaHabilitado = nil
+		r.Retiro = nil
 		return
 	case 30:
-		r.ValidoDesde = nil
+		r.FechaHabilitado = nil
 		return
 	case 31:
+		r.ValidoDesde = nil
+		return
+	case 32:
 		r.ValidoHasta = nil
 		return
 	}
@@ -650,6 +663,10 @@ func (r MaestroCliente) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["clienteId"], err = json.Marshal(r.ClienteId)
+	if err != nil {
+		return nil, err
+	}
+	output["UsuarioLoginId"], err = json.Marshal(r.UsuarioLoginId)
 	if err != nil {
 		return nil, err
 	}
@@ -802,6 +819,20 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.ClienteId = NewUnionNullString()
 
 		r.ClienteId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["UsuarioLoginId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UsuarioLoginId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for UsuarioLoginId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["email"]; ok {
