@@ -90,6 +90,7 @@ const MaestroClienteAvroCRC64Fingerprint = "\x05\xc8S\xe2i\xf0\xb7\x88"
 func NewMaestroCliente() MaestroCliente {
 	r := MaestroCliente{}
 	r.ClienteId = nil
+	r.UsuarioLoginId = nil
 	r.Email = nil
 	r.Nombre = nil
 	r.TelefonoCodigoArea = nil
@@ -289,7 +290,7 @@ func (r MaestroCliente) Serialize(w io.Writer) error {
 }
 
 func (r MaestroCliente) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"name\":\"UsuarioLoginId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoContratoSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionContratoSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoContratoTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"plazoDeEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoServicioCodigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"habilitado\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"retiro\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"fechaHabilitado\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"validoDesde\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"validoHasta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.MaestroCliente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioLoginId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoContratoSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionContratoSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoContratoTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"plazoDeEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoServicioCodigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"habilitado\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"retiro\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"fechaHabilitado\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"validoDesde\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"validoHasta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.MaestroCliente\",\"type\":\"record\"}"
 }
 
 func (r MaestroCliente) SchemaName() string {
@@ -447,6 +448,9 @@ func (r *MaestroCliente) SetDefault(i int) {
 	switch i {
 	case 0:
 		r.ClienteId = nil
+		return
+	case 1:
+		r.UsuarioLoginId = nil
 		return
 	case 2:
 		r.Email = nil
@@ -832,7 +836,9 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for UsuarioLoginId")
+		r.UsuarioLoginId = NewUnionNullString()
+
+		r.UsuarioLoginId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["email"]; ok {

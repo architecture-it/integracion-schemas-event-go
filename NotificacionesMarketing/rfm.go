@@ -22,6 +22,8 @@ type RFM struct {
 
 	UsuarioLoginId *UnionNullString `json:"UsuarioLoginId"`
 
+	Nombre *UnionNullString `json:"nombre"`
+
 	TelefonoCodigoArea *UnionNullString `json:"telefonoCodigoArea"`
 
 	TelefonoNumero *UnionNullString `json:"telefonoNumero"`
@@ -29,17 +31,22 @@ type RFM struct {
 	Cuit *UnionNullString `json:"cuit"`
 
 	UsuarioClienteId *UnionNullInt `json:"usuarioClienteId"`
+
+	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const RFMAvroCRC64Fingerprint = "\x02\xb4p\xa4\x9309\xe6"
+const RFMAvroCRC64Fingerprint = "goiw\t\xa7d7"
 
 func NewRFM() RFM {
 	r := RFM{}
 	r.ClienteId = nil
+	r.UsuarioLoginId = nil
+	r.Nombre = nil
 	r.TelefonoCodigoArea = nil
 	r.TelefonoNumero = nil
 	r.Cuit = nil
 	r.UsuarioClienteId = nil
+	r.Cuando = nil
 	return r
 }
 
@@ -76,6 +83,10 @@ func writeRFM(r RFM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Nombre, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.TelefonoCodigoArea, w)
 	if err != nil {
 		return err
@@ -92,6 +103,10 @@ func writeRFM(r RFM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullLong(r.Cuando, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -100,7 +115,7 @@ func (r RFM) Serialize(w io.Writer) error {
 }
 
 func (r RFM) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"name\":\"UsuarioLoginId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuarioClienteId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.RFM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioLoginId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuarioClienteId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.RFM\",\"type\":\"record\"}"
 }
 
 func (r RFM) SchemaName() string {
@@ -127,21 +142,29 @@ func (r *RFM) Get(i int) types.Field {
 
 		return r.UsuarioLoginId
 	case 2:
+		r.Nombre = NewUnionNullString()
+
+		return r.Nombre
+	case 3:
 		r.TelefonoCodigoArea = NewUnionNullString()
 
 		return r.TelefonoCodigoArea
-	case 3:
+	case 4:
 		r.TelefonoNumero = NewUnionNullString()
 
 		return r.TelefonoNumero
-	case 4:
+	case 5:
 		r.Cuit = NewUnionNullString()
 
 		return r.Cuit
-	case 5:
+	case 6:
 		r.UsuarioClienteId = NewUnionNullInt()
 
 		return r.UsuarioClienteId
+	case 7:
+		r.Cuando = NewUnionNullLong()
+
+		return r.Cuando
 	}
 	panic("Unknown field index")
 }
@@ -151,17 +174,26 @@ func (r *RFM) SetDefault(i int) {
 	case 0:
 		r.ClienteId = nil
 		return
+	case 1:
+		r.UsuarioLoginId = nil
+		return
 	case 2:
-		r.TelefonoCodigoArea = nil
+		r.Nombre = nil
 		return
 	case 3:
-		r.TelefonoNumero = nil
+		r.TelefonoCodigoArea = nil
 		return
 	case 4:
-		r.Cuit = nil
+		r.TelefonoNumero = nil
 		return
 	case 5:
+		r.Cuit = nil
+		return
+	case 6:
 		r.UsuarioClienteId = nil
+		return
+	case 7:
+		r.Cuando = nil
 		return
 	}
 	panic("Unknown field index")
@@ -176,16 +208,22 @@ func (r *RFM) NullField(i int) {
 		r.UsuarioLoginId = nil
 		return
 	case 2:
-		r.TelefonoCodigoArea = nil
+		r.Nombre = nil
 		return
 	case 3:
-		r.TelefonoNumero = nil
+		r.TelefonoCodigoArea = nil
 		return
 	case 4:
-		r.Cuit = nil
+		r.TelefonoNumero = nil
 		return
 	case 5:
+		r.Cuit = nil
+		return
+	case 6:
 		r.UsuarioClienteId = nil
+		return
+	case 7:
+		r.Cuando = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -211,6 +249,10 @@ func (r RFM) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["nombre"], err = json.Marshal(r.Nombre)
+	if err != nil {
+		return nil, err
+	}
 	output["telefonoCodigoArea"], err = json.Marshal(r.TelefonoCodigoArea)
 	if err != nil {
 		return nil, err
@@ -224,6 +266,10 @@ func (r RFM) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["usuarioClienteId"], err = json.Marshal(r.UsuarioClienteId)
+	if err != nil {
+		return nil, err
+	}
+	output["cuando"], err = json.Marshal(r.Cuando)
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +311,25 @@ func (r *RFM) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for UsuarioLoginId")
+		r.UsuarioLoginId = NewUnionNullString()
+
+		r.UsuarioLoginId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["nombre"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Nombre); err != nil {
+			return err
+		}
+	} else {
+		r.Nombre = NewUnionNullString()
+
+		r.Nombre = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["telefonoCodigoArea"]; ok {
@@ -330,6 +394,22 @@ func (r *RFM) UnmarshalJSON(data []byte) error {
 		r.UsuarioClienteId = NewUnionNullInt()
 
 		r.UsuarioClienteId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cuando"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cuando); err != nil {
+			return err
+		}
+	} else {
+		r.Cuando = NewUnionNullLong()
+
+		r.Cuando = nil
 	}
 	return nil
 }
