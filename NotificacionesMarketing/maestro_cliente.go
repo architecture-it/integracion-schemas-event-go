@@ -18,76 +18,76 @@ import (
 var _ = fmt.Printf
 
 type MaestroCliente struct {
-	ClienteId *UnionNullString `json:"clienteId"`
+	ClienteId *UnionNullString `json:"ClienteId"`
 
-	UsuarioId *UnionNullString `json:"usuarioId"`
+	UsuarioId *UnionNullString `json:"UsuarioId"`
 
-	Nombre *UnionNullString `json:"nombre"`
+	Nombre *UnionNullString `json:"Nombre"`
 
-	TelefonoCodigoArea *UnionNullString `json:"telefonoCodigoArea"`
+	TelefonoCodigoArea *UnionNullString `json:"TelefonoCodigoArea"`
 
-	TelefonoNumero *UnionNullString `json:"telefonoNumero"`
+	TelefonoNumero *UnionNullString `json:"TelefonoNumero"`
 
-	Categoria *UnionNullString `json:"categoria"`
+	Categoria *UnionNullString `json:"Categoria"`
 
-	Cuando *UnionNullLong `json:"cuando"`
+	Cuando *UnionNullLong `json:"Cuando"`
 
-	Paridad *UnionNullBool `json:"paridad"`
+	Paridad *UnionNullBool `json:"Paridad"`
 
-	CodigoSolicitanteSAP *UnionNullString `json:"codigoSolicitanteSAP"`
+	CodigoSolicitanteSAP *UnionNullString `json:"CodigoSolicitanteSAP"`
 
-	DescripcionSolicitanteSAP *UnionNullString `json:"descripcionSolicitanteSAP"`
+	DescripcionSolicitanteSAP *UnionNullString `json:"DescripcionSolicitanteSAP"`
 
-	DireccionSolicitanteSAP *UnionNullString `json:"direccionSolicitanteSAP"`
+	DireccionSolicitanteSAP *UnionNullString `json:"DireccionSolicitanteSAP"`
 
-	PisoSolicitanteSAP *UnionNullString `json:"pisoSolicitanteSAP"`
+	PisoSolicitanteSAP *UnionNullString `json:"PisoSolicitanteSAP"`
 
-	DtoSolicitanteSAP *UnionNullString `json:"dtoSolicitanteSAP"`
+	DtoSolicitanteSAP *UnionNullString `json:"DtoSolicitanteSAP"`
 
-	CodigoPostalSolicitanteSAP *UnionNullString `json:"codigoPostalSolicitanteSAP"`
+	CodigoPostalSolicitanteSAP *UnionNullString `json:"CodigoPostalSolicitanteSAP"`
 
-	LocalidadSolicitanteSAP *UnionNullString `json:"localidadSolicitanteSAP"`
+	LocalidadSolicitanteSAP *UnionNullString `json:"LocalidadSolicitanteSAP"`
 
-	ProvinciaSolicitanteSAP *UnionNullString `json:"provinciaSolicitanteSAP"`
+	ProvinciaSolicitanteSAP *UnionNullString `json:"ProvinciaSolicitanteSAP"`
 
-	PaisSolicitanteSAP *UnionNullString `json:"paisSolicitanteSAP"`
+	PaisSolicitanteSAP *UnionNullString `json:"PaisSolicitanteSAP"`
 
-	CodigoDestinatario *UnionNullString `json:"codigoDestinatario"`
+	CodigoDestinatario *UnionNullString `json:"CodigoDestinatario"`
 
-	DescripcionDestinatario *UnionNullString `json:"descripcionDestinatario"`
+	DescripcionDestinatario *UnionNullString `json:"DescripcionDestinatario"`
 
-	NombreFantasiaDestinatario *UnionNullString `json:"nombreFantasiaDestinatario"`
+	NombreFantasiaDestinatario *UnionNullString `json:"NombreFantasiaDestinatario"`
 
-	CodigoClienteTMS *UnionNullString `json:"codigoClienteTMS"`
+	CodigoClienteTMS *UnionNullString `json:"CodigoClienteTMS"`
 
-	DescripcionTMS *UnionNullString `json:"descripcionTMS"`
+	DescripcionTMS *UnionNullString `json:"DescripcionTMS"`
 
-	Cuit *UnionNullString `json:"cuit"`
+	Cuit *UnionNullString `json:"Cuit"`
 
-	ClienteFacturacion *UnionNullString `json:"clienteFacturacion"`
+	ClienteFacturacion *UnionNullString `json:"ClienteFacturacion"`
 
-	Segmento *UnionNullString `json:"segmento"`
+	Segmento *UnionNullString `json:"Segmento"`
 
-	NombreFantasia *UnionNullString `json:"nombreFantasia"`
+	NombreFantasia *UnionNullString `json:"NombreFantasia"`
 
-	Mail *UnionNullString `json:"mail"`
+	Mail *UnionNullString `json:"Mail"`
 
-	TieneTN *UnionNullBool `json:"tieneTN"`
+	TieneTN *UnionNullBool `json:"TieneTN"`
 
-	TieneCC *UnionNullBool `json:"tieneCC"`
+	TieneCC *UnionNullBool `json:"TieneCC"`
 
-	FechaAlta *UnionNullLong `json:"fechaAlta"`
+	FechaAlta *UnionNullLong `json:"FechaAlta"`
 
-	Rubro *UnionNullString `json:"rubro"`
+	Rubro *UnionNullString `json:"Rubro"`
 
-	TipoDeFactura *UnionNullString `json:"tipoDeFactura"`
+	TipoDeFactura *UnionNullString `json:"TipoDeFactura"`
 
-	CanalDeVenta *UnionNullString `json:"canalDeVenta"`
+	CanalDeVenta *UnionNullString `json:"CanalDeVenta"`
 
-	TipoCliente *UnionNullString `json:"tipoCliente"`
+	TipoCliente *UnionNullString `json:"TipoCliente"`
 }
 
-const MaestroClienteAvroCRC64Fingerprint = "*\xa3`\x9b\x1c\x86z\xa6"
+const MaestroClienteAvroCRC64Fingerprint = "\xb9{\xadU=\x00\x8a\x92"
 
 func NewMaestroCliente() MaestroCliente {
 	r := MaestroCliente{}
@@ -297,7 +297,7 @@ func (r MaestroCliente) Serialize(w io.Writer) error {
 }
 
 func (r MaestroCliente) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"codigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"direccionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pisoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"dtoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidadSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provinciaSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"paisSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tieneTN\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"tieneCC\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"fechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"rubro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeFactura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canalDeVenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.MaestroCliente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"ClienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"CodigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PisoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DtoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoPostalSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LocalidadSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProvinciaSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PaisSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ClienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneTN\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TieneCC\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"FechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeFactura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CanalDeVenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.MaestroCliente\",\"type\":\"record\"}"
 }
 
 func (r MaestroCliente) SchemaName() string {
@@ -683,139 +683,139 @@ func (_ MaestroCliente) AvroCRC64Fingerprint() []byte {
 func (r MaestroCliente) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["clienteId"], err = json.Marshal(r.ClienteId)
+	output["ClienteId"], err = json.Marshal(r.ClienteId)
 	if err != nil {
 		return nil, err
 	}
-	output["usuarioId"], err = json.Marshal(r.UsuarioId)
+	output["UsuarioId"], err = json.Marshal(r.UsuarioId)
 	if err != nil {
 		return nil, err
 	}
-	output["nombre"], err = json.Marshal(r.Nombre)
+	output["Nombre"], err = json.Marshal(r.Nombre)
 	if err != nil {
 		return nil, err
 	}
-	output["telefonoCodigoArea"], err = json.Marshal(r.TelefonoCodigoArea)
+	output["TelefonoCodigoArea"], err = json.Marshal(r.TelefonoCodigoArea)
 	if err != nil {
 		return nil, err
 	}
-	output["telefonoNumero"], err = json.Marshal(r.TelefonoNumero)
+	output["TelefonoNumero"], err = json.Marshal(r.TelefonoNumero)
 	if err != nil {
 		return nil, err
 	}
-	output["categoria"], err = json.Marshal(r.Categoria)
+	output["Categoria"], err = json.Marshal(r.Categoria)
 	if err != nil {
 		return nil, err
 	}
-	output["cuando"], err = json.Marshal(r.Cuando)
+	output["Cuando"], err = json.Marshal(r.Cuando)
 	if err != nil {
 		return nil, err
 	}
-	output["paridad"], err = json.Marshal(r.Paridad)
+	output["Paridad"], err = json.Marshal(r.Paridad)
 	if err != nil {
 		return nil, err
 	}
-	output["codigoSolicitanteSAP"], err = json.Marshal(r.CodigoSolicitanteSAP)
+	output["CodigoSolicitanteSAP"], err = json.Marshal(r.CodigoSolicitanteSAP)
 	if err != nil {
 		return nil, err
 	}
-	output["descripcionSolicitanteSAP"], err = json.Marshal(r.DescripcionSolicitanteSAP)
+	output["DescripcionSolicitanteSAP"], err = json.Marshal(r.DescripcionSolicitanteSAP)
 	if err != nil {
 		return nil, err
 	}
-	output["direccionSolicitanteSAP"], err = json.Marshal(r.DireccionSolicitanteSAP)
+	output["DireccionSolicitanteSAP"], err = json.Marshal(r.DireccionSolicitanteSAP)
 	if err != nil {
 		return nil, err
 	}
-	output["pisoSolicitanteSAP"], err = json.Marshal(r.PisoSolicitanteSAP)
+	output["PisoSolicitanteSAP"], err = json.Marshal(r.PisoSolicitanteSAP)
 	if err != nil {
 		return nil, err
 	}
-	output["dtoSolicitanteSAP"], err = json.Marshal(r.DtoSolicitanteSAP)
+	output["DtoSolicitanteSAP"], err = json.Marshal(r.DtoSolicitanteSAP)
 	if err != nil {
 		return nil, err
 	}
-	output["codigoPostalSolicitanteSAP"], err = json.Marshal(r.CodigoPostalSolicitanteSAP)
+	output["CodigoPostalSolicitanteSAP"], err = json.Marshal(r.CodigoPostalSolicitanteSAP)
 	if err != nil {
 		return nil, err
 	}
-	output["localidadSolicitanteSAP"], err = json.Marshal(r.LocalidadSolicitanteSAP)
+	output["LocalidadSolicitanteSAP"], err = json.Marshal(r.LocalidadSolicitanteSAP)
 	if err != nil {
 		return nil, err
 	}
-	output["provinciaSolicitanteSAP"], err = json.Marshal(r.ProvinciaSolicitanteSAP)
+	output["ProvinciaSolicitanteSAP"], err = json.Marshal(r.ProvinciaSolicitanteSAP)
 	if err != nil {
 		return nil, err
 	}
-	output["paisSolicitanteSAP"], err = json.Marshal(r.PaisSolicitanteSAP)
+	output["PaisSolicitanteSAP"], err = json.Marshal(r.PaisSolicitanteSAP)
 	if err != nil {
 		return nil, err
 	}
-	output["codigoDestinatario"], err = json.Marshal(r.CodigoDestinatario)
+	output["CodigoDestinatario"], err = json.Marshal(r.CodigoDestinatario)
 	if err != nil {
 		return nil, err
 	}
-	output["descripcionDestinatario"], err = json.Marshal(r.DescripcionDestinatario)
+	output["DescripcionDestinatario"], err = json.Marshal(r.DescripcionDestinatario)
 	if err != nil {
 		return nil, err
 	}
-	output["nombreFantasiaDestinatario"], err = json.Marshal(r.NombreFantasiaDestinatario)
+	output["NombreFantasiaDestinatario"], err = json.Marshal(r.NombreFantasiaDestinatario)
 	if err != nil {
 		return nil, err
 	}
-	output["codigoClienteTMS"], err = json.Marshal(r.CodigoClienteTMS)
+	output["CodigoClienteTMS"], err = json.Marshal(r.CodigoClienteTMS)
 	if err != nil {
 		return nil, err
 	}
-	output["descripcionTMS"], err = json.Marshal(r.DescripcionTMS)
+	output["DescripcionTMS"], err = json.Marshal(r.DescripcionTMS)
 	if err != nil {
 		return nil, err
 	}
-	output["cuit"], err = json.Marshal(r.Cuit)
+	output["Cuit"], err = json.Marshal(r.Cuit)
 	if err != nil {
 		return nil, err
 	}
-	output["clienteFacturacion"], err = json.Marshal(r.ClienteFacturacion)
+	output["ClienteFacturacion"], err = json.Marshal(r.ClienteFacturacion)
 	if err != nil {
 		return nil, err
 	}
-	output["segmento"], err = json.Marshal(r.Segmento)
+	output["Segmento"], err = json.Marshal(r.Segmento)
 	if err != nil {
 		return nil, err
 	}
-	output["nombreFantasia"], err = json.Marshal(r.NombreFantasia)
+	output["NombreFantasia"], err = json.Marshal(r.NombreFantasia)
 	if err != nil {
 		return nil, err
 	}
-	output["mail"], err = json.Marshal(r.Mail)
+	output["Mail"], err = json.Marshal(r.Mail)
 	if err != nil {
 		return nil, err
 	}
-	output["tieneTN"], err = json.Marshal(r.TieneTN)
+	output["TieneTN"], err = json.Marshal(r.TieneTN)
 	if err != nil {
 		return nil, err
 	}
-	output["tieneCC"], err = json.Marshal(r.TieneCC)
+	output["TieneCC"], err = json.Marshal(r.TieneCC)
 	if err != nil {
 		return nil, err
 	}
-	output["fechaAlta"], err = json.Marshal(r.FechaAlta)
+	output["FechaAlta"], err = json.Marshal(r.FechaAlta)
 	if err != nil {
 		return nil, err
 	}
-	output["rubro"], err = json.Marshal(r.Rubro)
+	output["Rubro"], err = json.Marshal(r.Rubro)
 	if err != nil {
 		return nil, err
 	}
-	output["tipoDeFactura"], err = json.Marshal(r.TipoDeFactura)
+	output["TipoDeFactura"], err = json.Marshal(r.TipoDeFactura)
 	if err != nil {
 		return nil, err
 	}
-	output["canalDeVenta"], err = json.Marshal(r.CanalDeVenta)
+	output["CanalDeVenta"], err = json.Marshal(r.CanalDeVenta)
 	if err != nil {
 		return nil, err
 	}
-	output["tipoCliente"], err = json.Marshal(r.TipoCliente)
+	output["TipoCliente"], err = json.Marshal(r.TipoCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -830,7 +830,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["clienteId"]; ok {
+		if v, ok := fields["ClienteId"]; ok {
 			return v
 		}
 		return nil
@@ -846,7 +846,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.ClienteId = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["usuarioId"]; ok {
+		if v, ok := fields["UsuarioId"]; ok {
 			return v
 		}
 		return nil
@@ -862,7 +862,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.UsuarioId = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["nombre"]; ok {
+		if v, ok := fields["Nombre"]; ok {
 			return v
 		}
 		return nil
@@ -878,7 +878,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.Nombre = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["telefonoCodigoArea"]; ok {
+		if v, ok := fields["TelefonoCodigoArea"]; ok {
 			return v
 		}
 		return nil
@@ -894,7 +894,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.TelefonoCodigoArea = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["telefonoNumero"]; ok {
+		if v, ok := fields["TelefonoNumero"]; ok {
 			return v
 		}
 		return nil
@@ -910,7 +910,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.TelefonoNumero = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["categoria"]; ok {
+		if v, ok := fields["Categoria"]; ok {
 			return v
 		}
 		return nil
@@ -926,7 +926,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.Categoria = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cuando"]; ok {
+		if v, ok := fields["Cuando"]; ok {
 			return v
 		}
 		return nil
@@ -942,7 +942,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.Cuando = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["paridad"]; ok {
+		if v, ok := fields["Paridad"]; ok {
 			return v
 		}
 		return nil
@@ -958,7 +958,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.Paridad = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigoSolicitanteSAP"]; ok {
+		if v, ok := fields["CodigoSolicitanteSAP"]; ok {
 			return v
 		}
 		return nil
@@ -974,7 +974,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.CodigoSolicitanteSAP = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["descripcionSolicitanteSAP"]; ok {
+		if v, ok := fields["DescripcionSolicitanteSAP"]; ok {
 			return v
 		}
 		return nil
@@ -990,7 +990,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.DescripcionSolicitanteSAP = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["direccionSolicitanteSAP"]; ok {
+		if v, ok := fields["DireccionSolicitanteSAP"]; ok {
 			return v
 		}
 		return nil
@@ -1006,7 +1006,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.DireccionSolicitanteSAP = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["pisoSolicitanteSAP"]; ok {
+		if v, ok := fields["PisoSolicitanteSAP"]; ok {
 			return v
 		}
 		return nil
@@ -1022,7 +1022,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.PisoSolicitanteSAP = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["dtoSolicitanteSAP"]; ok {
+		if v, ok := fields["DtoSolicitanteSAP"]; ok {
 			return v
 		}
 		return nil
@@ -1038,7 +1038,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.DtoSolicitanteSAP = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigoPostalSolicitanteSAP"]; ok {
+		if v, ok := fields["CodigoPostalSolicitanteSAP"]; ok {
 			return v
 		}
 		return nil
@@ -1054,7 +1054,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.CodigoPostalSolicitanteSAP = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["localidadSolicitanteSAP"]; ok {
+		if v, ok := fields["LocalidadSolicitanteSAP"]; ok {
 			return v
 		}
 		return nil
@@ -1070,7 +1070,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.LocalidadSolicitanteSAP = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["provinciaSolicitanteSAP"]; ok {
+		if v, ok := fields["ProvinciaSolicitanteSAP"]; ok {
 			return v
 		}
 		return nil
@@ -1086,7 +1086,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.ProvinciaSolicitanteSAP = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["paisSolicitanteSAP"]; ok {
+		if v, ok := fields["PaisSolicitanteSAP"]; ok {
 			return v
 		}
 		return nil
@@ -1102,7 +1102,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.PaisSolicitanteSAP = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigoDestinatario"]; ok {
+		if v, ok := fields["CodigoDestinatario"]; ok {
 			return v
 		}
 		return nil
@@ -1118,7 +1118,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.CodigoDestinatario = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["descripcionDestinatario"]; ok {
+		if v, ok := fields["DescripcionDestinatario"]; ok {
 			return v
 		}
 		return nil
@@ -1134,7 +1134,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.DescripcionDestinatario = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["nombreFantasiaDestinatario"]; ok {
+		if v, ok := fields["NombreFantasiaDestinatario"]; ok {
 			return v
 		}
 		return nil
@@ -1150,7 +1150,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.NombreFantasiaDestinatario = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigoClienteTMS"]; ok {
+		if v, ok := fields["CodigoClienteTMS"]; ok {
 			return v
 		}
 		return nil
@@ -1166,7 +1166,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.CodigoClienteTMS = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["descripcionTMS"]; ok {
+		if v, ok := fields["DescripcionTMS"]; ok {
 			return v
 		}
 		return nil
@@ -1182,7 +1182,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.DescripcionTMS = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cuit"]; ok {
+		if v, ok := fields["Cuit"]; ok {
 			return v
 		}
 		return nil
@@ -1198,7 +1198,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.Cuit = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["clienteFacturacion"]; ok {
+		if v, ok := fields["ClienteFacturacion"]; ok {
 			return v
 		}
 		return nil
@@ -1214,7 +1214,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.ClienteFacturacion = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["segmento"]; ok {
+		if v, ok := fields["Segmento"]; ok {
 			return v
 		}
 		return nil
@@ -1230,7 +1230,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.Segmento = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["nombreFantasia"]; ok {
+		if v, ok := fields["NombreFantasia"]; ok {
 			return v
 		}
 		return nil
@@ -1246,7 +1246,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.NombreFantasia = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["mail"]; ok {
+		if v, ok := fields["Mail"]; ok {
 			return v
 		}
 		return nil
@@ -1262,7 +1262,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.Mail = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tieneTN"]; ok {
+		if v, ok := fields["TieneTN"]; ok {
 			return v
 		}
 		return nil
@@ -1278,7 +1278,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.TieneTN = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tieneCC"]; ok {
+		if v, ok := fields["TieneCC"]; ok {
 			return v
 		}
 		return nil
@@ -1294,7 +1294,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.TieneCC = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["fechaAlta"]; ok {
+		if v, ok := fields["FechaAlta"]; ok {
 			return v
 		}
 		return nil
@@ -1310,7 +1310,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.FechaAlta = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["rubro"]; ok {
+		if v, ok := fields["Rubro"]; ok {
 			return v
 		}
 		return nil
@@ -1326,7 +1326,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.Rubro = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tipoDeFactura"]; ok {
+		if v, ok := fields["TipoDeFactura"]; ok {
 			return v
 		}
 		return nil
@@ -1342,7 +1342,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.TipoDeFactura = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["canalDeVenta"]; ok {
+		if v, ok := fields["CanalDeVenta"]; ok {
 			return v
 		}
 		return nil
@@ -1358,7 +1358,7 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.CanalDeVenta = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tipoCliente"]; ok {
+		if v, ok := fields["TipoCliente"]; ok {
 			return v
 		}
 		return nil
