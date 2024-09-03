@@ -22,23 +22,22 @@ type EndShipment struct {
 
 	DateEnd string `json:"DateEnd"`
 
-	Motive *UnionNullString `json:"motive"`
+	CurrentState CurrentState `json:"CurrentState"`
 
-	SubMotive *UnionNullString `json:"SubMotive"`
+	Motive string `json:"Motive"`
+
+	SubMotive string `json:"SubMotive"`
 
 	GrouperShipments *UnionNullInt `json:"GrouperShipments"`
-
-	CurrentStatee *UnionNullArrayCurrentState `json:"CurrentStatee"`
 }
 
-const EndShipmentAvroCRC64Fingerprint = "\xa3\xf8y\x83\xe2\\D\xd9"
+const EndShipmentAvroCRC64Fingerprint = "\xe1\x80\x1b\x1f\xa6PJe"
 
 func NewEndShipment() EndShipment {
 	r := EndShipment{}
-	r.Motive = nil
-	r.SubMotive = nil
+	r.CurrentState = NewCurrentState()
+
 	r.GrouperShipments = nil
-	r.CurrentStatee = nil
 	return r
 }
 
@@ -75,19 +74,19 @@ func writeEndShipment(r EndShipment, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Motive, w)
+	err = writeCurrentState(r.CurrentState, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.SubMotive, w)
+	err = vm.WriteString(r.Motive, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.SubMotive, w)
 	if err != nil {
 		return err
 	}
 	err = writeUnionNullInt(r.GrouperShipments, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullArrayCurrentState(r.CurrentStatee, w)
 	if err != nil {
 		return err
 	}
@@ -99,7 +98,7 @@ func (r EndShipment) Serialize(w io.Writer) error {
 }
 
 func (r EndShipment) Schema() string {
-	return "{\"fields\":[{\"name\":\"Shipment\",\"type\":\"string\"},{\"name\":\"DateEnd\",\"type\":\"string\"},{\"default\":null,\"name\":\"motive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GrouperShipments\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CurrentStatee\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"CycleName\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"},{\"default\":null,\"name\":\"NextState\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"CurrentState\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.DMS.Events.Record.EndShipment\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Shipment\",\"type\":\"string\"},{\"name\":\"DateEnd\",\"type\":\"string\"},{\"name\":\"CurrentState\",\"type\":{\"fields\":[{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"CycleName\",\"type\":\"string\"},{\"name\":\"type\",\"type\":\"string\"},{\"default\":null,\"name\":\"NextState\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"CurrentState\",\"type\":\"record\"}},{\"name\":\"Motive\",\"type\":\"string\"},{\"name\":\"SubMotive\",\"type\":\"string\"},{\"default\":null,\"name\":\"GrouperShipments\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.DMS.Events.Record.EndShipment\",\"type\":\"record\"}"
 }
 
 func (r EndShipment) SchemaName() string {
@@ -128,38 +127,34 @@ func (r *EndShipment) Get(i int) types.Field {
 		return w
 
 	case 2:
-		r.Motive = NewUnionNullString()
+		r.CurrentState = NewCurrentState()
 
-		return r.Motive
+		w := types.Record{Target: &r.CurrentState}
+
+		return w
+
 	case 3:
-		r.SubMotive = NewUnionNullString()
+		w := types.String{Target: &r.Motive}
 
-		return r.SubMotive
+		return w
+
 	case 4:
+		w := types.String{Target: &r.SubMotive}
+
+		return w
+
+	case 5:
 		r.GrouperShipments = NewUnionNullInt()
 
 		return r.GrouperShipments
-	case 5:
-		r.CurrentStatee = NewUnionNullArrayCurrentState()
-
-		return r.CurrentStatee
 	}
 	panic("Unknown field index")
 }
 
 func (r *EndShipment) SetDefault(i int) {
 	switch i {
-	case 2:
-		r.Motive = nil
-		return
-	case 3:
-		r.SubMotive = nil
-		return
-	case 4:
-		r.GrouperShipments = nil
-		return
 	case 5:
-		r.CurrentStatee = nil
+		r.GrouperShipments = nil
 		return
 	}
 	panic("Unknown field index")
@@ -167,17 +162,8 @@ func (r *EndShipment) SetDefault(i int) {
 
 func (r *EndShipment) NullField(i int) {
 	switch i {
-	case 2:
-		r.Motive = nil
-		return
-	case 3:
-		r.SubMotive = nil
-		return
-	case 4:
-		r.GrouperShipments = nil
-		return
 	case 5:
-		r.CurrentStatee = nil
+		r.GrouperShipments = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -203,7 +189,11 @@ func (r EndShipment) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["motive"], err = json.Marshal(r.Motive)
+	output["CurrentState"], err = json.Marshal(r.CurrentState)
+	if err != nil {
+		return nil, err
+	}
+	output["Motive"], err = json.Marshal(r.Motive)
 	if err != nil {
 		return nil, err
 	}
@@ -212,10 +202,6 @@ func (r EndShipment) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["GrouperShipments"], err = json.Marshal(r.GrouperShipments)
-	if err != nil {
-		return nil, err
-	}
-	output["CurrentStatee"], err = json.Marshal(r.CurrentStatee)
 	if err != nil {
 		return nil, err
 	}
@@ -258,7 +244,21 @@ func (r *EndShipment) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for DateEnd")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["motive"]; ok {
+		if v, ok := fields["CurrentState"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CurrentState); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CurrentState")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Motive"]; ok {
 			return v
 		}
 		return nil
@@ -269,9 +269,7 @@ func (r *EndShipment) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Motive = NewUnionNullString()
-
-		r.Motive = nil
+		return fmt.Errorf("no value specified for Motive")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SubMotive"]; ok {
@@ -285,9 +283,7 @@ func (r *EndShipment) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.SubMotive = NewUnionNullString()
-
-		r.SubMotive = nil
+		return fmt.Errorf("no value specified for SubMotive")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["GrouperShipments"]; ok {
@@ -304,22 +300,6 @@ func (r *EndShipment) UnmarshalJSON(data []byte) error {
 		r.GrouperShipments = NewUnionNullInt()
 
 		r.GrouperShipments = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["CurrentStatee"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CurrentStatee); err != nil {
-			return err
-		}
-	} else {
-		r.CurrentStatee = NewUnionNullArrayCurrentState()
-
-		r.CurrentStatee = nil
 	}
 	return nil
 }
