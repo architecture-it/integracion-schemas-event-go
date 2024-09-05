@@ -35,9 +35,11 @@ type CalculoEra struct {
 	EraAnterior *UnionNullLong `json:"eraAnterior"`
 
 	FechaCreacionHojaDeRuta *UnionNullLong `json:"fechaCreacionHojaDeRuta"`
+
+	NumeroContenedor *UnionNullString `json:"numeroContenedor"`
 }
 
-const CalculoEraAvroCRC64Fingerprint = "\xe3\x7f\x8d\xc1\xf5\xd4\xcan"
+const CalculoEraAvroCRC64Fingerprint = "\x00\x8bG\xbb\x15\x05UQ"
 
 func NewCalculoEra() CalculoEra {
 	r := CalculoEra{}
@@ -50,6 +52,7 @@ func NewCalculoEra() CalculoEra {
 	r.DemoraSalidaSucursalEnMinutos = nil
 	r.EraAnterior = nil
 	r.FechaCreacionHojaDeRuta = nil
+	r.NumeroContenedor = nil
 	return r
 }
 
@@ -114,6 +117,10 @@ func writeCalculoEra(r CalculoEra, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.NumeroContenedor, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -122,7 +129,7 @@ func (r CalculoEra) Serialize(w io.Writer) error {
 }
 
 func (r CalculoEra) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"ordenDeEnvioEnHR\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"numeroHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"geocoordenadas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"recorridoEnSegundos\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"recorridoEnMetros\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"eraAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEra\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"ordenDeEnvioEnHR\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"numeroHojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"geocoordenadas\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"recorridoEnSegundos\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"recorridoEnMetros\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"demoraEnDomicilioEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"demoraSalidaSucursalEnMinutos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"eraAnterior\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"numeroContenedor\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEra\",\"type\":\"record\"}"
 }
 
 func (r CalculoEra) SchemaName() string {
@@ -176,6 +183,10 @@ func (r *CalculoEra) Get(i int) types.Field {
 		r.FechaCreacionHojaDeRuta = NewUnionNullLong()
 
 		return r.FechaCreacionHojaDeRuta
+	case 9:
+		r.NumeroContenedor = NewUnionNullString()
+
+		return r.NumeroContenedor
 	}
 	panic("Unknown field index")
 }
@@ -209,6 +220,9 @@ func (r *CalculoEra) SetDefault(i int) {
 	case 8:
 		r.FechaCreacionHojaDeRuta = nil
 		return
+	case 9:
+		r.NumeroContenedor = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -241,6 +255,9 @@ func (r *CalculoEra) NullField(i int) {
 		return
 	case 8:
 		r.FechaCreacionHojaDeRuta = nil
+		return
+	case 9:
+		r.NumeroContenedor = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -291,6 +308,10 @@ func (r CalculoEra) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["fechaCreacionHojaDeRuta"], err = json.Marshal(r.FechaCreacionHojaDeRuta)
+	if err != nil {
+		return nil, err
+	}
+	output["numeroContenedor"], err = json.Marshal(r.NumeroContenedor)
 	if err != nil {
 		return nil, err
 	}
@@ -447,6 +468,22 @@ func (r *CalculoEra) UnmarshalJSON(data []byte) error {
 		r.FechaCreacionHojaDeRuta = NewUnionNullLong()
 
 		r.FechaCreacionHojaDeRuta = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroContenedor"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroContenedor); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroContenedor = NewUnionNullString()
+
+		r.NumeroContenedor = nil
 	}
 	return nil
 }

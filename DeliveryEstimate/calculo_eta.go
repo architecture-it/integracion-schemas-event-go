@@ -27,9 +27,11 @@ type CalculoEta struct {
 	Bloque *UnionNullInt `json:"bloque"`
 
 	FechaVisita *UnionNullLong `json:"fechaVisita"`
+
+	NumeroContenedor *UnionNullString `json:"numeroContenedor"`
 }
 
-const CalculoEtaAvroCRC64Fingerprint = "tb#\xe3\xd7\xf6\xe8\xa9"
+const CalculoEtaAvroCRC64Fingerprint = "4\xef\x15\xa0\x92\xb1\xea\xb9"
 
 func NewCalculoEta() CalculoEta {
 	r := CalculoEta{}
@@ -38,6 +40,7 @@ func NewCalculoEta() CalculoEta {
 	r.Posicion = nil
 	r.Bloque = nil
 	r.FechaVisita = nil
+	r.NumeroContenedor = nil
 	return r
 }
 
@@ -86,6 +89,10 @@ func writeCalculoEta(r CalculoEta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.NumeroContenedor, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -94,7 +101,7 @@ func (r CalculoEta) Serialize(w io.Writer) error {
 }
 
 func (r CalculoEta) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"hojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"posicion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"bloque\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"fechaVisita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"hojaDeRuta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaCreacionHojaDeRuta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"posicion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"bloque\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"fechaVisita\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"numeroContenedor\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEta\",\"type\":\"record\"}"
 }
 
 func (r CalculoEta) SchemaName() string {
@@ -132,6 +139,10 @@ func (r *CalculoEta) Get(i int) types.Field {
 		r.FechaVisita = NewUnionNullLong()
 
 		return r.FechaVisita
+	case 5:
+		r.NumeroContenedor = NewUnionNullString()
+
+		return r.NumeroContenedor
 	}
 	panic("Unknown field index")
 }
@@ -153,6 +164,9 @@ func (r *CalculoEta) SetDefault(i int) {
 	case 4:
 		r.FechaVisita = nil
 		return
+	case 5:
+		r.NumeroContenedor = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -173,6 +187,9 @@ func (r *CalculoEta) NullField(i int) {
 		return
 	case 4:
 		r.FechaVisita = nil
+		return
+	case 5:
+		r.NumeroContenedor = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -207,6 +224,10 @@ func (r CalculoEta) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["fechaVisita"], err = json.Marshal(r.FechaVisita)
+	if err != nil {
+		return nil, err
+	}
+	output["numeroContenedor"], err = json.Marshal(r.NumeroContenedor)
 	if err != nil {
 		return nil, err
 	}
@@ -299,6 +320,22 @@ func (r *CalculoEta) UnmarshalJSON(data []byte) error {
 		r.FechaVisita = NewUnionNullLong()
 
 		r.FechaVisita = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroContenedor"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroContenedor); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroContenedor = NewUnionNullString()
+
+		r.NumeroContenedor = nil
 	}
 	return nil
 }
