@@ -17,7 +17,7 @@ import (
 
 var _ = fmt.Printf
 
-type Pagos struct {
+type Pago struct {
 	TipoPago string `json:"tipoPago"`
 
 	ImporteCobrado float64 `json:"importeCobrado"`
@@ -27,15 +27,15 @@ type Pagos struct {
 	Detalles *UnionNullDetallePago `json:"detalles"`
 }
 
-const PagosAvroCRC64Fingerprint = "\xe1p\xb7\xca\xdbf\xa0\xa7"
+const PagoAvroCRC64Fingerprint = "\xbdc\x8e`X\xb1\"j"
 
-func NewPagos() Pagos {
-	r := Pagos{}
+func NewPago() Pago {
+	r := Pago{}
 	return r
 }
 
-func DeserializePagos(r io.Reader) (Pagos, error) {
-	t := NewPagos()
+func DeserializePago(r io.Reader) (Pago, error) {
+	t := NewPago()
 	deser, err := compiler.CompileSchemaBytes([]byte(t.Schema()), []byte(t.Schema()))
 	if err != nil {
 		return t, err
@@ -45,8 +45,8 @@ func DeserializePagos(r io.Reader) (Pagos, error) {
 	return t, err
 }
 
-func DeserializePagosFromSchema(r io.Reader, schema string) (Pagos, error) {
-	t := NewPagos()
+func DeserializePagoFromSchema(r io.Reader, schema string) (Pago, error) {
+	t := NewPago()
 
 	deser, err := compiler.CompileSchemaBytes([]byte(schema), []byte(t.Schema()))
 	if err != nil {
@@ -57,7 +57,7 @@ func DeserializePagosFromSchema(r io.Reader, schema string) (Pagos, error) {
 	return t, err
 }
 
-func writePagos(r Pagos, w io.Writer) error {
+func writePago(r Pago, w io.Writer) error {
 	var err error
 	err = vm.WriteString(r.TipoPago, w)
 	if err != nil {
@@ -78,28 +78,28 @@ func writePagos(r Pagos, w io.Writer) error {
 	return err
 }
 
-func (r Pagos) Serialize(w io.Writer) error {
-	return writePagos(r, w)
+func (r Pago) Serialize(w io.Writer) error {
+	return writePago(r, w)
 }
 
-func (r Pagos) Schema() string {
-	return "{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"importeCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Pagos\",\"type\":\"record\"}"
+func (r Pago) Schema() string {
+	return "{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"importeCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Pago\",\"type\":\"record\"}"
 }
 
-func (r Pagos) SchemaName() string {
-	return "Andreani.MobileOperacionesProducer.Events.Record.Pagos"
+func (r Pago) SchemaName() string {
+	return "Andreani.MobileOperacionesProducer.Events.Record.Pago"
 }
 
-func (_ Pagos) SetBoolean(v bool)    { panic("Unsupported operation") }
-func (_ Pagos) SetInt(v int32)       { panic("Unsupported operation") }
-func (_ Pagos) SetLong(v int64)      { panic("Unsupported operation") }
-func (_ Pagos) SetFloat(v float32)   { panic("Unsupported operation") }
-func (_ Pagos) SetDouble(v float64)  { panic("Unsupported operation") }
-func (_ Pagos) SetBytes(v []byte)    { panic("Unsupported operation") }
-func (_ Pagos) SetString(v string)   { panic("Unsupported operation") }
-func (_ Pagos) SetUnionElem(v int64) { panic("Unsupported operation") }
+func (_ Pago) SetBoolean(v bool)    { panic("Unsupported operation") }
+func (_ Pago) SetInt(v int32)       { panic("Unsupported operation") }
+func (_ Pago) SetLong(v int64)      { panic("Unsupported operation") }
+func (_ Pago) SetFloat(v float32)   { panic("Unsupported operation") }
+func (_ Pago) SetDouble(v float64)  { panic("Unsupported operation") }
+func (_ Pago) SetBytes(v []byte)    { panic("Unsupported operation") }
+func (_ Pago) SetString(v string)   { panic("Unsupported operation") }
+func (_ Pago) SetUnionElem(v int64) { panic("Unsupported operation") }
 
-func (r *Pagos) Get(i int) types.Field {
+func (r *Pago) Get(i int) types.Field {
 	switch i {
 	case 0:
 		w := types.String{Target: &r.TipoPago}
@@ -124,13 +124,13 @@ func (r *Pagos) Get(i int) types.Field {
 	panic("Unknown field index")
 }
 
-func (r *Pagos) SetDefault(i int) {
+func (r *Pago) SetDefault(i int) {
 	switch i {
 	}
 	panic("Unknown field index")
 }
 
-func (r *Pagos) NullField(i int) {
+func (r *Pago) NullField(i int) {
 	switch i {
 	case 3:
 		r.Detalles = nil
@@ -139,16 +139,16 @@ func (r *Pagos) NullField(i int) {
 	panic("Not a nullable field index")
 }
 
-func (_ Pagos) AppendMap(key string) types.Field { panic("Unsupported operation") }
-func (_ Pagos) AppendArray() types.Field         { panic("Unsupported operation") }
-func (_ Pagos) HintSize(int)                     { panic("Unsupported operation") }
-func (_ Pagos) Finalize()                        {}
+func (_ Pago) AppendMap(key string) types.Field { panic("Unsupported operation") }
+func (_ Pago) AppendArray() types.Field         { panic("Unsupported operation") }
+func (_ Pago) HintSize(int)                     { panic("Unsupported operation") }
+func (_ Pago) Finalize()                        {}
 
-func (_ Pagos) AvroCRC64Fingerprint() []byte {
-	return []byte(PagosAvroCRC64Fingerprint)
+func (_ Pago) AvroCRC64Fingerprint() []byte {
+	return []byte(PagoAvroCRC64Fingerprint)
 }
 
-func (r Pagos) MarshalJSON() ([]byte, error) {
+func (r Pago) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["tipoPago"], err = json.Marshal(r.TipoPago)
@@ -170,7 +170,7 @@ func (r Pagos) MarshalJSON() ([]byte, error) {
 	return json.Marshal(output)
 }
 
-func (r *Pagos) UnmarshalJSON(data []byte) error {
+func (r *Pago) UnmarshalJSON(data []byte) error {
 	var fields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &fields); err != nil {
 		return err
