@@ -23,15 +23,18 @@ type GeoCoordenada struct {
 	Longitud *UnionNullDouble `json:"longitud"`
 
 	Elevacion *UnionNullDouble `json:"elevacion"`
+
+	Poligono *UnionNullInt `json:"poligono"`
 }
 
-const GeoCoordenadaAvroCRC64Fingerprint = "3\xe0\x8bz\x93'\xe3\xa0"
+const GeoCoordenadaAvroCRC64Fingerprint = "\x8et<\xb1r\x06\x8a\xcf"
 
 func NewGeoCoordenada() GeoCoordenada {
 	r := GeoCoordenada{}
 	r.Latitud = nil
 	r.Longitud = nil
 	r.Elevacion = nil
+	r.Poligono = nil
 	return r
 }
 
@@ -72,6 +75,10 @@ func writeGeoCoordenada(r GeoCoordenada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullInt(r.Poligono, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -80,7 +87,7 @@ func (r GeoCoordenada) Serialize(w io.Writer) error {
 }
 
 func (r GeoCoordenada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"elevacion\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.GeoCoordenada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"elevacion\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"poligono\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.GeoCoordenada\",\"type\":\"record\"}"
 }
 
 func (r GeoCoordenada) SchemaName() string {
@@ -110,6 +117,10 @@ func (r *GeoCoordenada) Get(i int) types.Field {
 		r.Elevacion = NewUnionNullDouble()
 
 		return r.Elevacion
+	case 3:
+		r.Poligono = NewUnionNullInt()
+
+		return r.Poligono
 	}
 	panic("Unknown field index")
 }
@@ -125,6 +136,9 @@ func (r *GeoCoordenada) SetDefault(i int) {
 	case 2:
 		r.Elevacion = nil
 		return
+	case 3:
+		r.Poligono = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -139,6 +153,9 @@ func (r *GeoCoordenada) NullField(i int) {
 		return
 	case 2:
 		r.Elevacion = nil
+		return
+	case 3:
+		r.Poligono = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -165,6 +182,10 @@ func (r GeoCoordenada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["elevacion"], err = json.Marshal(r.Elevacion)
+	if err != nil {
+		return nil, err
+	}
+	output["poligono"], err = json.Marshal(r.Poligono)
 	if err != nil {
 		return nil, err
 	}
@@ -225,6 +246,22 @@ func (r *GeoCoordenada) UnmarshalJSON(data []byte) error {
 		r.Elevacion = NewUnionNullDouble()
 
 		r.Elevacion = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["poligono"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Poligono); err != nil {
+			return err
+		}
+	} else {
+		r.Poligono = NewUnionNullInt()
+
+		r.Poligono = nil
 	}
 	return nil
 }

@@ -39,9 +39,13 @@ type DetalleDePaquete struct {
 	NumeroDeBulto *UnionNullInt `json:"numeroDeBulto"`
 
 	ValorDeclarado *UnionNullDouble `json:"valorDeclarado"`
+
+	EAN *UnionNullString `json:"EAN"`
+
+	Componentes *UnionNullComponentes `json:"componentes"`
 }
 
-const DetalleDePaqueteAvroCRC64Fingerprint = "\xbbkޛ\x96\xec\x81\xf3"
+const DetalleDePaqueteAvroCRC64Fingerprint = "D\xef\xedDE*\xf9\x8c"
 
 func NewDetalleDePaquete() DetalleDePaquete {
 	r := DetalleDePaquete{}
@@ -56,6 +60,8 @@ func NewDetalleDePaquete() DetalleDePaquete {
 	r.ValorDeclaradoConImpuesto = nil
 	r.NumeroDeBulto = nil
 	r.ValorDeclarado = nil
+	r.EAN = nil
+	r.Componentes = nil
 	return r
 }
 
@@ -128,6 +134,14 @@ func writeDetalleDePaquete(r DetalleDePaquete, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.EAN, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullComponentes(r.Componentes, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -136,7 +150,7 @@ func (r DetalleDePaquete) Serialize(w io.Writer) error {
 }
 
 func (r DetalleDePaquete) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.DetalleDePaquete\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"numerosComponentesHijos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]}],\"name\":\"Componentes\",\"type\":\"record\"}]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.DetalleDePaquete\",\"type\":\"record\"}"
 }
 
 func (r DetalleDePaquete) SchemaName() string {
@@ -198,6 +212,14 @@ func (r *DetalleDePaquete) Get(i int) types.Field {
 		r.ValorDeclarado = NewUnionNullDouble()
 
 		return r.ValorDeclarado
+	case 11:
+		r.EAN = NewUnionNullString()
+
+		return r.EAN
+	case 12:
+		r.Componentes = NewUnionNullComponentes()
+
+		return r.Componentes
 	}
 	panic("Unknown field index")
 }
@@ -237,6 +259,12 @@ func (r *DetalleDePaquete) SetDefault(i int) {
 	case 10:
 		r.ValorDeclarado = nil
 		return
+	case 11:
+		r.EAN = nil
+		return
+	case 12:
+		r.Componentes = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -275,6 +303,12 @@ func (r *DetalleDePaquete) NullField(i int) {
 		return
 	case 10:
 		r.ValorDeclarado = nil
+		return
+	case 11:
+		r.EAN = nil
+		return
+	case 12:
+		r.Componentes = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -333,6 +367,14 @@ func (r DetalleDePaquete) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["valorDeclarado"], err = json.Marshal(r.ValorDeclarado)
+	if err != nil {
+		return nil, err
+	}
+	output["EAN"], err = json.Marshal(r.EAN)
+	if err != nil {
+		return nil, err
+	}
+	output["componentes"], err = json.Marshal(r.Componentes)
 	if err != nil {
 		return nil, err
 	}
@@ -521,6 +563,38 @@ func (r *DetalleDePaquete) UnmarshalJSON(data []byte) error {
 		r.ValorDeclarado = NewUnionNullDouble()
 
 		r.ValorDeclarado = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EAN"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EAN); err != nil {
+			return err
+		}
+	} else {
+		r.EAN = NewUnionNullString()
+
+		r.EAN = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["componentes"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Componentes); err != nil {
+			return err
+		}
+	} else {
+		r.Componentes = NewUnionNullComponentes()
+
+		r.Componentes = nil
 	}
 	return nil
 }

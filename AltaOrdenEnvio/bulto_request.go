@@ -36,16 +36,22 @@ type BultoRequest struct {
 
 	Descripcion *UnionNullString `json:"Descripcion"`
 
+	EAN *UnionNullString `json:"EAN"`
+
+	Componentes *UnionNullComponentes `json:"componentes"`
+
 	Referencias *UnionNullArrayMetadato `json:"Referencias"`
 
 	NumeroDeEnvio *UnionNullString `json:"NumeroDeEnvio"`
 }
 
-const BultoRequestAvroCRC64Fingerprint = "Jl\xc0P\x8d\xe8\x10\x88"
+const BultoRequestAvroCRC64Fingerprint = "H\xf7E\xa3\x99\x04\xf8?"
 
 func NewBultoRequest() BultoRequest {
 	r := BultoRequest{}
 	r.Descripcion = nil
+	r.EAN = nil
+	r.Componentes = nil
 	r.Referencias = nil
 	r.NumeroDeEnvio = nil
 	return r
@@ -112,6 +118,14 @@ func writeBultoRequest(r BultoRequest, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.EAN, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullComponentes(r.Componentes, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullArrayMetadato(r.Referencias, w)
 	if err != nil {
 		return err
@@ -128,7 +142,7 @@ func (r BultoRequest) Serialize(w io.Writer) error {
 }
 
 func (r BultoRequest) Schema() string {
-	return "{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.BultoRequest\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"numerosComponentesHijos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.BultoRequest\",\"type\":\"record\"}"
 }
 
 func (r BultoRequest) SchemaName() string {
@@ -191,10 +205,18 @@ func (r *BultoRequest) Get(i int) types.Field {
 
 		return r.Descripcion
 	case 9:
+		r.EAN = NewUnionNullString()
+
+		return r.EAN
+	case 10:
+		r.Componentes = NewUnionNullComponentes()
+
+		return r.Componentes
+	case 11:
 		r.Referencias = NewUnionNullArrayMetadato()
 
 		return r.Referencias
-	case 10:
+	case 12:
 		r.NumeroDeEnvio = NewUnionNullString()
 
 		return r.NumeroDeEnvio
@@ -208,9 +230,15 @@ func (r *BultoRequest) SetDefault(i int) {
 		r.Descripcion = nil
 		return
 	case 9:
-		r.Referencias = nil
+		r.EAN = nil
 		return
 	case 10:
+		r.Componentes = nil
+		return
+	case 11:
+		r.Referencias = nil
+		return
+	case 12:
 		r.NumeroDeEnvio = nil
 		return
 	}
@@ -223,9 +251,15 @@ func (r *BultoRequest) NullField(i int) {
 		r.Descripcion = nil
 		return
 	case 9:
-		r.Referencias = nil
+		r.EAN = nil
 		return
 	case 10:
+		r.Componentes = nil
+		return
+	case 11:
+		r.Referencias = nil
+		return
+	case 12:
 		r.NumeroDeEnvio = nil
 		return
 	}
@@ -277,6 +311,14 @@ func (r BultoRequest) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Descripcion"], err = json.Marshal(r.Descripcion)
+	if err != nil {
+		return nil, err
+	}
+	output["EAN"], err = json.Marshal(r.EAN)
+	if err != nil {
+		return nil, err
+	}
+	output["componentes"], err = json.Marshal(r.Componentes)
 	if err != nil {
 		return nil, err
 	}
@@ -425,6 +467,38 @@ func (r *BultoRequest) UnmarshalJSON(data []byte) error {
 		r.Descripcion = NewUnionNullString()
 
 		r.Descripcion = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EAN"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EAN); err != nil {
+			return err
+		}
+	} else {
+		r.EAN = NewUnionNullString()
+
+		r.EAN = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["componentes"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Componentes); err != nil {
+			return err
+		}
+	} else {
+		r.Componentes = NewUnionNullComponentes()
+
+		r.Componentes = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Referencias"]; ok {

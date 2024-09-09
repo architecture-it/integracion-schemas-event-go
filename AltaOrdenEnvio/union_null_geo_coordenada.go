@@ -84,7 +84,7 @@ func DeserializeUnionNullGeoCoordenadaFromSchema(r io.Reader, schema string) (*U
 }
 
 func (r *UnionNullGeoCoordenada) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"elevacion\",\"type\":[\"null\",\"double\"]}],\"name\":\"GeoCoordenada\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"elevacion\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"poligono\",\"type\":[\"null\",\"int\"]}],\"name\":\"GeoCoordenada\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullGeoCoordenada) SetBoolean(v bool)   { panic("Unsupported operation") }
