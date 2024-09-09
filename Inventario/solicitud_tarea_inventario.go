@@ -27,9 +27,11 @@ type SolicitudTareaInventario struct {
 	SistemaOrigen *UnionNullString `json:"SistemaOrigen"`
 
 	Destinatario *UnionNullString `json:"Destinatario"`
+
+	Incidencia *UnionNullString `json:"Incidencia"`
 }
 
-const SolicitudTareaInventarioAvroCRC64Fingerprint = "\f\xedO\xfeu?m\xb2"
+const SolicitudTareaInventarioAvroCRC64Fingerprint = "\x87M\xa8\xb9\xd2\x02\xe8\t"
 
 func NewSolicitudTareaInventario() SolicitudTareaInventario {
 	r := SolicitudTareaInventario{}
@@ -38,6 +40,7 @@ func NewSolicitudTareaInventario() SolicitudTareaInventario {
 	r.Ubicacion = nil
 	r.SistemaOrigen = nil
 	r.Destinatario = nil
+	r.Incidencia = nil
 	return r
 }
 
@@ -86,6 +89,10 @@ func writeSolicitudTareaInventario(r SolicitudTareaInventario, w io.Writer) erro
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Incidencia, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -94,7 +101,7 @@ func (r SolicitudTareaInventario) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudTareaInventario) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Sku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ubicacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SistemaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Inventario.Events.Record.SolicitudTareaInventario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Sku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ubicacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SistemaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Incidencia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Inventario.Events.Record.SolicitudTareaInventario\",\"type\":\"record\"}"
 }
 
 func (r SolicitudTareaInventario) SchemaName() string {
@@ -132,6 +139,10 @@ func (r *SolicitudTareaInventario) Get(i int) types.Field {
 		r.Destinatario = NewUnionNullString()
 
 		return r.Destinatario
+	case 5:
+		r.Incidencia = NewUnionNullString()
+
+		return r.Incidencia
 	}
 	panic("Unknown field index")
 }
@@ -153,6 +164,9 @@ func (r *SolicitudTareaInventario) SetDefault(i int) {
 	case 4:
 		r.Destinatario = nil
 		return
+	case 5:
+		r.Incidencia = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -173,6 +187,9 @@ func (r *SolicitudTareaInventario) NullField(i int) {
 		return
 	case 4:
 		r.Destinatario = nil
+		return
+	case 5:
+		r.Incidencia = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -207,6 +224,10 @@ func (r SolicitudTareaInventario) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Destinatario"], err = json.Marshal(r.Destinatario)
+	if err != nil {
+		return nil, err
+	}
+	output["Incidencia"], err = json.Marshal(r.Incidencia)
 	if err != nil {
 		return nil, err
 	}
@@ -299,6 +320,22 @@ func (r *SolicitudTareaInventario) UnmarshalJSON(data []byte) error {
 		r.Destinatario = NewUnionNullString()
 
 		r.Destinatario = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Incidencia"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Incidencia); err != nil {
+			return err
+		}
+	} else {
+		r.Incidencia = NewUnionNullString()
+
+		r.Incidencia = nil
 	}
 	return nil
 }
