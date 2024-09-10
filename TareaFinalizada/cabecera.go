@@ -20,8 +20,6 @@ var _ = fmt.Printf
 type Cabecera struct {
 	NumeroInternoWMS string `json:"NumeroInternoWMS"`
 
-	LPN string `json:"LPN"`
-
 	Remito string `json:"Remito"`
 
 	Propietario string `json:"Propietario"`
@@ -33,7 +31,7 @@ type Cabecera struct {
 	IdTipo int32 `json:"IdTipo"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "{`\xbc(?Į`"
+const CabeceraAvroCRC64Fingerprint = " ?\xe7\v-\xb6\xfcw"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
@@ -69,10 +67,6 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LPN, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.Remito, w)
 	if err != nil {
 		return err
@@ -101,7 +95,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroInternoWMS\",\"type\":\"string\"},{\"name\":\"LPN\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"IdTipo\",\"type\":\"int\"}],\"name\":\"Andreani.TareaFinalizada.Events.Common.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NumeroInternoWMS\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"IdTipo\",\"type\":\"int\"}],\"name\":\"Andreani.TareaFinalizada.Events.Common.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -125,31 +119,26 @@ func (r *Cabecera) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.LPN}
-
-		return w
-
-	case 2:
 		w := types.String{Target: &r.Remito}
 
 		return w
 
-	case 3:
+	case 2:
 		w := types.String{Target: &r.Propietario}
 
 		return w
 
-	case 4:
+	case 3:
 		w := types.String{Target: &r.Almacen}
 
 		return w
 
-	case 5:
+	case 4:
 		w := types.String{Target: &r.Instancia}
 
 		return w
 
-	case 6:
+	case 5:
 		w := types.Int{Target: &r.IdTipo}
 
 		return w
@@ -183,10 +172,6 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["NumeroInternoWMS"], err = json.Marshal(r.NumeroInternoWMS)
-	if err != nil {
-		return nil, err
-	}
-	output["LPN"], err = json.Marshal(r.LPN)
 	if err != nil {
 		return nil, err
 	}
@@ -233,20 +218,6 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for NumeroInternoWMS")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["LPN"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.LPN); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for LPN")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Remito"]; ok {

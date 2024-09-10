@@ -23,7 +23,7 @@ type EventoTareaFinalizada struct {
 	Detalles []Detalle `json:"Detalles"`
 }
 
-const EventoTareaFinalizadaAvroCRC64Fingerprint = "\xe3\x05\xcdgg\xf2Ǘ"
+const EventoTareaFinalizadaAvroCRC64Fingerprint = "\x90\x97\x14\x1b\x83\x99\xc6*"
 
 func NewEventoTareaFinalizada() EventoTareaFinalizada {
 	r := EventoTareaFinalizada{}
@@ -75,7 +75,7 @@ func (r EventoTareaFinalizada) Serialize(w io.Writer) error {
 }
 
 func (r EventoTareaFinalizada) Schema() string {
-	return "{\"fields\":[{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"NumeroInternoWMS\",\"type\":\"string\"},{\"name\":\"LPN\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"IdTipo\",\"type\":\"int\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.TareaFinalizada.Events.Common\",\"type\":\"record\"}},{\"name\":\"Detalles\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroLinea\",\"type\":\"string\"}],\"name\":\"Detalle\",\"namespace\":\"Andreani.TareaFinalizada.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.TareaFinalizada.Events.Record.EventoTareaFinalizada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"NumeroInternoWMS\",\"type\":\"string\"},{\"name\":\"Remito\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"IdTipo\",\"type\":\"int\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.TareaFinalizada.Events.Common\",\"type\":\"record\"}},{\"name\":\"Detalles\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroLinea\",\"type\":\"string\"},{\"name\":\"LPN\",\"type\":\"string\"}],\"name\":\"Detalle\",\"namespace\":\"Andreani.TareaFinalizada.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.TareaFinalizada.Events.Record.EventoTareaFinalizada\",\"type\":\"record\"}"
 }
 
 func (r EventoTareaFinalizada) SchemaName() string {

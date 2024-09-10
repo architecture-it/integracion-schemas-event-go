@@ -19,9 +19,11 @@ var _ = fmt.Printf
 
 type Detalle struct {
 	NumeroLinea string `json:"NumeroLinea"`
+
+	LPN string `json:"LPN"`
 }
 
-const DetalleAvroCRC64Fingerprint = "M\xf6\xe1p\xf0\x89]0"
+const DetalleAvroCRC64Fingerprint = "\x1d\x7f\x90\xf3C\xf3\x8d\x96"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -57,6 +59,10 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.LPN, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -65,7 +71,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroLinea\",\"type\":\"string\"}],\"name\":\"Andreani.TareaFinalizada.Events.Common.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NumeroLinea\",\"type\":\"string\"},{\"name\":\"LPN\",\"type\":\"string\"}],\"name\":\"Andreani.TareaFinalizada.Events.Common.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -85,6 +91,11 @@ func (r *Detalle) Get(i int) types.Field {
 	switch i {
 	case 0:
 		w := types.String{Target: &r.NumeroLinea}
+
+		return w
+
+	case 1:
+		w := types.String{Target: &r.LPN}
 
 		return w
 
@@ -120,6 +131,10 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["LPN"], err = json.Marshal(r.LPN)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -143,6 +158,20 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for NumeroLinea")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["LPN"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LPN); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for LPN")
 	}
 	return nil
 }
