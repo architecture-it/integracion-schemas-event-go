@@ -52,21 +52,9 @@ type Interface2018Data struct {
 
 	PagaSalarioFamiliar string `json:"PagaSalarioFamiliar"`
 
-	Ganancias string `json:"Ganancias"`
-
 	FechaInicioVinculo string `json:"FechaInicioVinculo"`
 
 	FechaVto1 string `json:"FechaVto1"`
-
-	ItemDDJJ string `json:"ItemDDJJ"`
-
-	FechaDesdeDDJJ string `json:"FechaDesdeDDJJ"`
-
-	FechaHastaDDJJ string `json:"FechaHastaDDJJ"`
-
-	TipoDocumento2 string `json:"TipoDocumento2"`
-
-	Documento2 string `json:"Documento2"`
 
 	Guarderia string `json:"Guarderia"`
 
@@ -76,42 +64,18 @@ type Interface2018Data struct {
 
 	Estudia string `json:"Estudia"`
 
-	PeriodoEscolar string `json:"PeriodoEscolar"`
-
 	NivelDeEstudio string `json:"NivelDeEstudio"`
-
-	GradoAnio string `json:"GradoAnio"`
-
-	Anio string `json:"Anio"`
-
-	FechaDeInicio string `json:"FechaDeInicio"`
-
-	ConstInicial string `json:"ConstInicial"`
-
-	ConstFinal string `json:"ConstFinal"`
-
-	FechaDocumentacion string `json:"FechaDocumentacion"`
-
-	Acta string `json:"Acta"`
-
-	Tomo string `json:"Tomo"`
-
-	Folio string `json:"Folio"`
-
-	Tribunal string `json:"Tribunal"`
-
-	Juzgado string `json:"Juzgado"`
-
-	Secretaria string `json:"Secretaria"`
-
-	Comuna string `json:"Comuna"`
 
 	FechaBaja string `json:"FechaBaja"`
 
 	MotivoBaja string `json:"MotivoBaja"`
+
+	BeneficiarioSeguroVida string `json:"BeneficiarioSeguroVida"`
+
+	EntregoCertificado string `json:"EntregoCertificado"`
 }
 
-const Interface2018DataAvroCRC64Fingerprint = "xy\xa43\xdeߕ\xbc"
+const Interface2018DataAvroCRC64Fingerprint = "\xba\x94\x91\u0094\"#O"
 
 func NewInterface2018Data() Interface2018Data {
 	r := Interface2018Data{}
@@ -211,35 +175,11 @@ func writeInterface2018Data(r Interface2018Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Ganancias, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.FechaInicioVinculo, w)
 	if err != nil {
 		return err
 	}
 	err = vm.WriteString(r.FechaVto1, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.ItemDDJJ, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.FechaDesdeDDJJ, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.FechaHastaDDJJ, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.TipoDocumento2, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Documento2, w)
 	if err != nil {
 		return err
 	}
@@ -259,63 +199,7 @@ func writeInterface2018Data(r Interface2018Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PeriodoEscolar, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.NivelDeEstudio, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.GradoAnio, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Anio, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.FechaDeInicio, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.ConstInicial, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.ConstFinal, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.FechaDocumentacion, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Acta, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Tomo, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Folio, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Tribunal, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Juzgado, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Secretaria, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Comuna, w)
 	if err != nil {
 		return err
 	}
@@ -327,6 +211,14 @@ func writeInterface2018Data(r Interface2018Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.BeneficiarioSeguroVida, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.EntregoCertificado, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -335,7 +227,7 @@ func (r Interface2018Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface2018Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"LegajoDelEmpleado\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Nombres\",\"type\":\"string\"},{\"name\":\"FechaNacimiento\",\"type\":\"string\"},{\"name\":\"PaisDeNacimiento\",\"type\":\"string\"},{\"name\":\"Nacionalidad\",\"type\":\"string\"},{\"name\":\"EstadoCivil\",\"type\":\"string\"},{\"name\":\"Sexo\",\"type\":\"string\"},{\"name\":\"Parentesco\",\"type\":\"string\"},{\"name\":\"Incapacitado\",\"type\":\"string\"},{\"name\":\"FechaDeDiscapacidad\",\"type\":\"string\"},{\"name\":\"TipoDocumento1\",\"type\":\"string\"},{\"name\":\"NroDocumento1\",\"type\":\"string\"},{\"name\":\"ObraSocial\",\"type\":\"string\"},{\"name\":\"PlanOS\",\"type\":\"string\"},{\"name\":\"AvisarAnteEmergencia\",\"type\":\"string\"},{\"name\":\"PagaSalarioFamiliar\",\"type\":\"string\"},{\"name\":\"Ganancias\",\"type\":\"string\"},{\"name\":\"FechaInicioVinculo\",\"type\":\"string\"},{\"name\":\"FechaVto1\",\"type\":\"string\"},{\"name\":\"ItemDDJJ\",\"type\":\"string\"},{\"name\":\"FechaDesdeDDJJ\",\"type\":\"string\"},{\"name\":\"FechaHastaDDJJ\",\"type\":\"string\"},{\"name\":\"TipoDocumento2\",\"type\":\"string\"},{\"name\":\"Documento2\",\"type\":\"string\"},{\"name\":\"Guarderia\",\"type\":\"string\"},{\"name\":\"FechaVto2\",\"type\":\"string\"},{\"name\":\"Adopcion\",\"type\":\"string\"},{\"name\":\"Estudia\",\"type\":\"string\"},{\"name\":\"PeriodoEscolar\",\"type\":\"string\"},{\"name\":\"NivelDeEstudio\",\"type\":\"string\"},{\"name\":\"GradoAnio\",\"type\":\"string\"},{\"name\":\"Anio\",\"type\":\"string\"},{\"name\":\"FechaDeInicio\",\"type\":\"string\"},{\"name\":\"ConstInicial\",\"type\":\"string\"},{\"name\":\"ConstFinal\",\"type\":\"string\"},{\"name\":\"FechaDocumentacion\",\"type\":\"string\"},{\"name\":\"Acta\",\"type\":\"string\"},{\"name\":\"Tomo\",\"type\":\"string\"},{\"name\":\"Folio\",\"type\":\"string\"},{\"name\":\"Tribunal\",\"type\":\"string\"},{\"name\":\"Juzgado\",\"type\":\"string\"},{\"name\":\"Secretaria\",\"type\":\"string\"},{\"name\":\"Comuna\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"MotivoBaja\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface2018.Events.Record.Interface2018Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"LegajoDelEmpleado\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Nombres\",\"type\":\"string\"},{\"name\":\"FechaNacimiento\",\"type\":\"string\"},{\"name\":\"PaisDeNacimiento\",\"type\":\"string\"},{\"name\":\"Nacionalidad\",\"type\":\"string\"},{\"name\":\"EstadoCivil\",\"type\":\"string\"},{\"name\":\"Sexo\",\"type\":\"string\"},{\"name\":\"Parentesco\",\"type\":\"string\"},{\"name\":\"Incapacitado\",\"type\":\"string\"},{\"name\":\"FechaDeDiscapacidad\",\"type\":\"string\"},{\"name\":\"TipoDocumento1\",\"type\":\"string\"},{\"name\":\"NroDocumento1\",\"type\":\"string\"},{\"name\":\"ObraSocial\",\"type\":\"string\"},{\"name\":\"PlanOS\",\"type\":\"string\"},{\"name\":\"AvisarAnteEmergencia\",\"type\":\"string\"},{\"name\":\"PagaSalarioFamiliar\",\"type\":\"string\"},{\"name\":\"FechaInicioVinculo\",\"type\":\"string\"},{\"name\":\"FechaVto1\",\"type\":\"string\"},{\"name\":\"Guarderia\",\"type\":\"string\"},{\"name\":\"FechaVto2\",\"type\":\"string\"},{\"name\":\"Adopcion\",\"type\":\"string\"},{\"name\":\"Estudia\",\"type\":\"string\"},{\"name\":\"NivelDeEstudio\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"MotivoBaja\",\"type\":\"string\"},{\"name\":\"BeneficiarioSeguroVida\",\"type\":\"string\"},{\"name\":\"EntregoCertificado\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface2018.Events.Record.Interface2018Data\",\"type\":\"record\"}"
 }
 
 func (r Interface2018Data) SchemaName() string {
@@ -439,147 +331,57 @@ func (r *Interface2018Data) Get(i int) types.Field {
 		return w
 
 	case 17:
-		w := types.String{Target: &r.Ganancias}
-
-		return w
-
-	case 18:
 		w := types.String{Target: &r.FechaInicioVinculo}
 
 		return w
 
-	case 19:
+	case 18:
 		w := types.String{Target: &r.FechaVto1}
 
 		return w
 
-	case 20:
-		w := types.String{Target: &r.ItemDDJJ}
-
-		return w
-
-	case 21:
-		w := types.String{Target: &r.FechaDesdeDDJJ}
-
-		return w
-
-	case 22:
-		w := types.String{Target: &r.FechaHastaDDJJ}
-
-		return w
-
-	case 23:
-		w := types.String{Target: &r.TipoDocumento2}
-
-		return w
-
-	case 24:
-		w := types.String{Target: &r.Documento2}
-
-		return w
-
-	case 25:
+	case 19:
 		w := types.String{Target: &r.Guarderia}
 
 		return w
 
-	case 26:
+	case 20:
 		w := types.String{Target: &r.FechaVto2}
 
 		return w
 
-	case 27:
+	case 21:
 		w := types.String{Target: &r.Adopcion}
 
 		return w
 
-	case 28:
+	case 22:
 		w := types.String{Target: &r.Estudia}
 
 		return w
 
-	case 29:
-		w := types.String{Target: &r.PeriodoEscolar}
-
-		return w
-
-	case 30:
+	case 23:
 		w := types.String{Target: &r.NivelDeEstudio}
 
 		return w
 
-	case 31:
-		w := types.String{Target: &r.GradoAnio}
-
-		return w
-
-	case 32:
-		w := types.String{Target: &r.Anio}
-
-		return w
-
-	case 33:
-		w := types.String{Target: &r.FechaDeInicio}
-
-		return w
-
-	case 34:
-		w := types.String{Target: &r.ConstInicial}
-
-		return w
-
-	case 35:
-		w := types.String{Target: &r.ConstFinal}
-
-		return w
-
-	case 36:
-		w := types.String{Target: &r.FechaDocumentacion}
-
-		return w
-
-	case 37:
-		w := types.String{Target: &r.Acta}
-
-		return w
-
-	case 38:
-		w := types.String{Target: &r.Tomo}
-
-		return w
-
-	case 39:
-		w := types.String{Target: &r.Folio}
-
-		return w
-
-	case 40:
-		w := types.String{Target: &r.Tribunal}
-
-		return w
-
-	case 41:
-		w := types.String{Target: &r.Juzgado}
-
-		return w
-
-	case 42:
-		w := types.String{Target: &r.Secretaria}
-
-		return w
-
-	case 43:
-		w := types.String{Target: &r.Comuna}
-
-		return w
-
-	case 44:
+	case 24:
 		w := types.String{Target: &r.FechaBaja}
 
 		return w
 
-	case 45:
+	case 25:
 		w := types.String{Target: &r.MotivoBaja}
+
+		return w
+
+	case 26:
+		w := types.String{Target: &r.BeneficiarioSeguroVida}
+
+		return w
+
+	case 27:
+		w := types.String{Target: &r.EntregoCertificado}
 
 		return w
 
@@ -679,35 +481,11 @@ func (r Interface2018Data) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Ganancias"], err = json.Marshal(r.Ganancias)
-	if err != nil {
-		return nil, err
-	}
 	output["FechaInicioVinculo"], err = json.Marshal(r.FechaInicioVinculo)
 	if err != nil {
 		return nil, err
 	}
 	output["FechaVto1"], err = json.Marshal(r.FechaVto1)
-	if err != nil {
-		return nil, err
-	}
-	output["ItemDDJJ"], err = json.Marshal(r.ItemDDJJ)
-	if err != nil {
-		return nil, err
-	}
-	output["FechaDesdeDDJJ"], err = json.Marshal(r.FechaDesdeDDJJ)
-	if err != nil {
-		return nil, err
-	}
-	output["FechaHastaDDJJ"], err = json.Marshal(r.FechaHastaDDJJ)
-	if err != nil {
-		return nil, err
-	}
-	output["TipoDocumento2"], err = json.Marshal(r.TipoDocumento2)
-	if err != nil {
-		return nil, err
-	}
-	output["Documento2"], err = json.Marshal(r.Documento2)
 	if err != nil {
 		return nil, err
 	}
@@ -727,63 +505,7 @@ func (r Interface2018Data) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["PeriodoEscolar"], err = json.Marshal(r.PeriodoEscolar)
-	if err != nil {
-		return nil, err
-	}
 	output["NivelDeEstudio"], err = json.Marshal(r.NivelDeEstudio)
-	if err != nil {
-		return nil, err
-	}
-	output["GradoAnio"], err = json.Marshal(r.GradoAnio)
-	if err != nil {
-		return nil, err
-	}
-	output["Anio"], err = json.Marshal(r.Anio)
-	if err != nil {
-		return nil, err
-	}
-	output["FechaDeInicio"], err = json.Marshal(r.FechaDeInicio)
-	if err != nil {
-		return nil, err
-	}
-	output["ConstInicial"], err = json.Marshal(r.ConstInicial)
-	if err != nil {
-		return nil, err
-	}
-	output["ConstFinal"], err = json.Marshal(r.ConstFinal)
-	if err != nil {
-		return nil, err
-	}
-	output["FechaDocumentacion"], err = json.Marshal(r.FechaDocumentacion)
-	if err != nil {
-		return nil, err
-	}
-	output["Acta"], err = json.Marshal(r.Acta)
-	if err != nil {
-		return nil, err
-	}
-	output["Tomo"], err = json.Marshal(r.Tomo)
-	if err != nil {
-		return nil, err
-	}
-	output["Folio"], err = json.Marshal(r.Folio)
-	if err != nil {
-		return nil, err
-	}
-	output["Tribunal"], err = json.Marshal(r.Tribunal)
-	if err != nil {
-		return nil, err
-	}
-	output["Juzgado"], err = json.Marshal(r.Juzgado)
-	if err != nil {
-		return nil, err
-	}
-	output["Secretaria"], err = json.Marshal(r.Secretaria)
-	if err != nil {
-		return nil, err
-	}
-	output["Comuna"], err = json.Marshal(r.Comuna)
 	if err != nil {
 		return nil, err
 	}
@@ -792,6 +514,14 @@ func (r Interface2018Data) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["MotivoBaja"], err = json.Marshal(r.MotivoBaja)
+	if err != nil {
+		return nil, err
+	}
+	output["BeneficiarioSeguroVida"], err = json.Marshal(r.BeneficiarioSeguroVida)
+	if err != nil {
+		return nil, err
+	}
+	output["EntregoCertificado"], err = json.Marshal(r.EntregoCertificado)
 	if err != nil {
 		return nil, err
 	}
@@ -1044,20 +774,6 @@ func (r *Interface2018Data) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for PagaSalarioFamiliar")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Ganancias"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Ganancias); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Ganancias")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["FechaInicioVinculo"]; ok {
 			return v
 		}
@@ -1084,76 +800,6 @@ func (r *Interface2018Data) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for FechaVto1")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["ItemDDJJ"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ItemDDJJ); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for ItemDDJJ")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["FechaDesdeDDJJ"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.FechaDesdeDDJJ); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for FechaDesdeDDJJ")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["FechaHastaDDJJ"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.FechaHastaDDJJ); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for FechaHastaDDJJ")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["TipoDocumento2"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TipoDocumento2); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for TipoDocumento2")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Documento2"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Documento2); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Documento2")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Guarderia"]; ok {
@@ -1212,20 +858,6 @@ func (r *Interface2018Data) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Estudia")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["PeriodoEscolar"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PeriodoEscolar); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for PeriodoEscolar")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["NivelDeEstudio"]; ok {
 			return v
 		}
@@ -1238,188 +870,6 @@ func (r *Interface2018Data) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for NivelDeEstudio")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["GradoAnio"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.GradoAnio); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for GradoAnio")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Anio"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Anio); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Anio")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["FechaDeInicio"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.FechaDeInicio); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for FechaDeInicio")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["ConstInicial"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ConstInicial); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for ConstInicial")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["ConstFinal"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ConstFinal); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for ConstFinal")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["FechaDocumentacion"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.FechaDocumentacion); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for FechaDocumentacion")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Acta"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Acta); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Acta")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Tomo"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Tomo); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Tomo")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Folio"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Folio); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Folio")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Tribunal"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Tribunal); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Tribunal")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Juzgado"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Juzgado); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Juzgado")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Secretaria"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Secretaria); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Secretaria")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Comuna"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Comuna); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Comuna")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["FechaBaja"]; ok {
@@ -1448,6 +898,34 @@ func (r *Interface2018Data) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for MotivoBaja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["BeneficiarioSeguroVida"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.BeneficiarioSeguroVida); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for BeneficiarioSeguroVida")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EntregoCertificado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EntregoCertificado); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EntregoCertificado")
 	}
 	return nil
 }
