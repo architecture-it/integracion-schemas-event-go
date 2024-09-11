@@ -18,22 +18,24 @@ import (
 var _ = fmt.Printf
 
 type AppDistribucionRetiroDeValoresRetirado struct {
-	GrupoId string `json:"grupoId"`
-
 	Pagos []Pago `json:"pagos"`
 
 	FechaGeneracion string `json:"fechaGeneracion"`
 
 	Envios []Envio `json:"envios"`
+
+	Usuario Usuario `json:"usuario"`
 }
 
-const AppDistribucionRetiroDeValoresRetiradoAvroCRC64Fingerprint = "+.\xebGBݛ\x82"
+const AppDistribucionRetiroDeValoresRetiradoAvroCRC64Fingerprint = "*Bh\xe1\tf\xe6D"
 
 func NewAppDistribucionRetiroDeValoresRetirado() AppDistribucionRetiroDeValoresRetirado {
 	r := AppDistribucionRetiroDeValoresRetirado{}
 	r.Pagos = make([]Pago, 0)
 
 	r.Envios = make([]Envio, 0)
+
+	r.Usuario = NewUsuario()
 
 	return r
 }
@@ -63,10 +65,6 @@ func DeserializeAppDistribucionRetiroDeValoresRetiradoFromSchema(r io.Reader, sc
 
 func writeAppDistribucionRetiroDeValoresRetirado(r AppDistribucionRetiroDeValoresRetirado, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.GrupoId, w)
-	if err != nil {
-		return err
-	}
 	err = writeArrayPago(r.Pagos, w)
 	if err != nil {
 		return err
@@ -79,6 +77,10 @@ func writeAppDistribucionRetiroDeValoresRetirado(r AppDistribucionRetiroDeValore
 	if err != nil {
 		return err
 	}
+	err = writeUsuario(r.Usuario, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -87,7 +89,7 @@ func (r AppDistribucionRetiroDeValoresRetirado) Serialize(w io.Writer) error {
 }
 
 func (r AppDistribucionRetiroDeValoresRetirado) Schema() string {
-	return "{\"fields\":[{\"name\":\"grupoId\",\"type\":\"string\"},{\"name\":\"pagos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"importeCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Pago\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaGeneracion\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"tareaId\",\"type\":\"int\"}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.AppDistribucionRetiroDeValoresRetirado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"pagos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"importeCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Pago\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaGeneracion\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"tareaId\",\"type\":\"int\"}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"username\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"}],\"name\":\"Usuario\",\"type\":\"record\"}}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.AppDistribucionRetiroDeValoresRetirado\",\"type\":\"record\"}"
 }
 
 func (r AppDistribucionRetiroDeValoresRetirado) SchemaName() string {
@@ -106,26 +108,28 @@ func (_ AppDistribucionRetiroDeValoresRetirado) SetUnionElem(v int64) { panic("U
 func (r *AppDistribucionRetiroDeValoresRetirado) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.GrupoId}
-
-		return w
-
-	case 1:
 		r.Pagos = make([]Pago, 0)
 
 		w := ArrayPagoWrapper{Target: &r.Pagos}
 
 		return w
 
-	case 2:
+	case 1:
 		w := types.String{Target: &r.FechaGeneracion}
 
 		return w
 
-	case 3:
+	case 2:
 		r.Envios = make([]Envio, 0)
 
 		w := ArrayEnvioWrapper{Target: &r.Envios}
+
+		return w
+
+	case 3:
+		r.Usuario = NewUsuario()
+
+		w := types.Record{Target: &r.Usuario}
 
 		return w
 
@@ -161,10 +165,6 @@ func (_ AppDistribucionRetiroDeValoresRetirado) AvroCRC64Fingerprint() []byte {
 func (r AppDistribucionRetiroDeValoresRetirado) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["grupoId"], err = json.Marshal(r.GrupoId)
-	if err != nil {
-		return nil, err
-	}
 	output["pagos"], err = json.Marshal(r.Pagos)
 	if err != nil {
 		return nil, err
@@ -174,6 +174,10 @@ func (r AppDistribucionRetiroDeValoresRetirado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["envios"], err = json.Marshal(r.Envios)
+	if err != nil {
+		return nil, err
+	}
+	output["usuario"], err = json.Marshal(r.Usuario)
 	if err != nil {
 		return nil, err
 	}
@@ -187,20 +191,6 @@ func (r *AppDistribucionRetiroDeValoresRetirado) UnmarshalJSON(data []byte) erro
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["grupoId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.GrupoId); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for grupoId")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["pagos"]; ok {
 			return v
@@ -242,6 +232,20 @@ func (r *AppDistribucionRetiroDeValoresRetirado) UnmarshalJSON(data []byte) erro
 		}
 	} else {
 		return fmt.Errorf("no value specified for envios")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["usuario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Usuario); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for usuario")
 	}
 	return nil
 }
