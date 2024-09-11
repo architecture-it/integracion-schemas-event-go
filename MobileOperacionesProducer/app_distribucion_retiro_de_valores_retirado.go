@@ -24,16 +24,16 @@ type AppDistribucionRetiroDeValoresRetirado struct {
 
 	FechaGeneracion string `json:"fechaGeneracion"`
 
-	Envios []string `json:"envios"`
+	Envios []Envio `json:"envios"`
 }
 
-const AppDistribucionRetiroDeValoresRetiradoAvroCRC64Fingerprint = "b\xa8\x85Ŏ\x83\x90\n"
+const AppDistribucionRetiroDeValoresRetiradoAvroCRC64Fingerprint = "+.\xebGBݛ\x82"
 
 func NewAppDistribucionRetiroDeValoresRetirado() AppDistribucionRetiroDeValoresRetirado {
 	r := AppDistribucionRetiroDeValoresRetirado{}
 	r.Pagos = make([]Pago, 0)
 
-	r.Envios = make([]string, 0)
+	r.Envios = make([]Envio, 0)
 
 	return r
 }
@@ -75,7 +75,7 @@ func writeAppDistribucionRetiroDeValoresRetirado(r AppDistribucionRetiroDeValore
 	if err != nil {
 		return err
 	}
-	err = writeArrayString(r.Envios, w)
+	err = writeArrayEnvio(r.Envios, w)
 	if err != nil {
 		return err
 	}
@@ -87,7 +87,7 @@ func (r AppDistribucionRetiroDeValoresRetirado) Serialize(w io.Writer) error {
 }
 
 func (r AppDistribucionRetiroDeValoresRetirado) Schema() string {
-	return "{\"fields\":[{\"name\":\"grupoId\",\"type\":\"string\"},{\"name\":\"pagos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"importeCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Pago\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaGeneracion\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.AppDistribucionRetiroDeValoresRetirado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"grupoId\",\"type\":\"string\"},{\"name\":\"pagos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"importeCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Pago\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaGeneracion\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"tareaId\",\"type\":\"int\"}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.AppDistribucionRetiroDeValoresRetirado\",\"type\":\"record\"}"
 }
 
 func (r AppDistribucionRetiroDeValoresRetirado) SchemaName() string {
@@ -123,9 +123,9 @@ func (r *AppDistribucionRetiroDeValoresRetirado) Get(i int) types.Field {
 		return w
 
 	case 3:
-		r.Envios = make([]string, 0)
+		r.Envios = make([]Envio, 0)
 
-		w := ArrayStringWrapper{Target: &r.Envios}
+		w := ArrayEnvioWrapper{Target: &r.Envios}
 
 		return w
 
