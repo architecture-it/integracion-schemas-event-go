@@ -26,6 +26,10 @@ type Solicitud struct {
 
 	Numero string `json:"Numero"`
 
+	Fecha int64 `json:"Fecha"`
+
+	FechaSalidaTransporte int64 `json:"FechaSalidaTransporte"`
+
 	CodComprobante string `json:"CodComprobante"`
 
 	CentroEmisorComprobante int32 `json:"CentroEmisorComprobante"`
@@ -46,6 +50,8 @@ type Solicitud struct {
 
 	DestinatarioDepartamento *UnionNullString `json:"DestinatarioDepartamento"`
 
+	DestinatarioBarrio *UnionNullString `json:"DestinatarioBarrio"`
+
 	DestinatarioCodigoPostal string `json:"DestinatarioCodigoPostal"`
 
 	DestinatarioLocalidad string `json:"DestinatarioLocalidad"`
@@ -64,6 +70,8 @@ type Solicitud struct {
 
 	OrigenDepartamento *UnionNullString `json:"OrigenDepartamento"`
 
+	OrigenBarrio *UnionNullString `json:"OrigenBarrio"`
+
 	OrigenCodigoPostal string `json:"OrigenCodigoPostal"`
 
 	OrigenLocalidad string `json:"OrigenLocalidad"`
@@ -72,10 +80,22 @@ type Solicitud struct {
 
 	IdTransportista int32 `json:"IdTransportista"`
 
+	RecorridoTipo *UnionNullString `json:"RecorridoTipo"`
+
+	RecorridoLocalidad *UnionNullString `json:"RecorridoLocalidad"`
+
+	RecorridoCalle *UnionNullString `json:"RecorridoCalle"`
+
+	RecorridoRuta *UnionNullString `json:"RecorridoRuta"`
+
+	PatenteVehiculo *UnionNullString `json:"PatenteVehiculo"`
+
+	PatenteAcoplado *UnionNullString `json:"PatenteAcoplado"`
+
 	Detalle []Linea `json:"detalle"`
 }
 
-const SolicitudAvroCRC64Fingerprint = "\x14Vz\xa8\xed\xf7\xd4["
+const SolicitudAvroCRC64Fingerprint = "^\b\xe6\xe5\x15s\xd1\xe1"
 
 func NewSolicitud() Solicitud {
 	r := Solicitud{}
@@ -125,6 +145,14 @@ func writeSolicitud(r Solicitud, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteLong(r.Fecha, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteLong(r.FechaSalidaTransporte, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.CodComprobante, w)
 	if err != nil {
 		return err
@@ -165,6 +193,10 @@ func writeSolicitud(r Solicitud, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.DestinatarioBarrio, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.DestinatarioCodigoPostal, w)
 	if err != nil {
 		return err
@@ -201,6 +233,10 @@ func writeSolicitud(r Solicitud, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.OrigenBarrio, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.OrigenCodigoPostal, w)
 	if err != nil {
 		return err
@@ -217,6 +253,30 @@ func writeSolicitud(r Solicitud, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.RecorridoTipo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.RecorridoLocalidad, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.RecorridoCalle, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.RecorridoRuta, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.PatenteVehiculo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.PatenteAcoplado, w)
+	if err != nil {
+		return err
+	}
 	err = writeArrayLinea(r.Detalle, w)
 	if err != nil {
 		return err
@@ -229,7 +289,7 @@ func (r Solicitud) Serialize(w io.Writer) error {
 }
 
 func (r Solicitud) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"IdPropietario\",\"type\":\"int\"},{\"name\":\"NombrePropietario\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"CodComprobante\",\"type\":\"string\"},{\"name\":\"CentroEmisorComprobante\",\"type\":\"int\"},{\"name\":\"NumeroComprobante\",\"type\":\"int\"},{\"name\":\"ImporteComprobante\",\"type\":{\"logicalType\":\"decimal\",\"precision\":12,\"scale\":2,\"type\":\"bytes\"}},{\"name\":\"DestinatarioCUIT\",\"type\":\"string\"},{\"name\":\"DestinatarioRazonSocial\",\"type\":\"string\"},{\"name\":\"DestinatarioCalle\",\"type\":\"string\"},{\"name\":\"DestinatarioNumero\",\"type\":\"string\"},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":\"string\"},{\"name\":\"DestinatarioLocalidad\",\"type\":\"string\"},{\"name\":\"DestinatarioProvincia\",\"type\":\"string\"},{\"name\":\"OrigenCUIT\",\"type\":\"string\"},{\"name\":\"OrigenRazonSocial\",\"type\":\"string\"},{\"name\":\"OrigenCalle\",\"type\":\"string\"},{\"name\":\"OrigenNumero\",\"type\":\"string\"},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCodigoPostal\",\"type\":\"string\"},{\"name\":\"OrigenLocalidad\",\"type\":\"string\"},{\"name\":\"OrigenProvincia\",\"type\":\"string\"},{\"name\":\"IdTransportista\",\"type\":\"int\"},{\"name\":\"detalle\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"int\"},{\"name\":\"CodigoDeProducto\",\"type\":\"string\"},{\"name\":\"DescripcionDeProducto\",\"type\":\"string\"},{\"name\":\"CodigoUOM\",\"type\":\"string\"},{\"name\":\"DescripcionUOM\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"}],\"name\":\"Linea\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.GeneracionCOT.Events.Record.Solicitud\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"IdPropietario\",\"type\":\"int\"},{\"name\":\"NombrePropietario\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaSalidaTransporte\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodComprobante\",\"type\":\"string\"},{\"name\":\"CentroEmisorComprobante\",\"type\":\"int\"},{\"name\":\"NumeroComprobante\",\"type\":\"int\"},{\"name\":\"ImporteComprobante\",\"type\":{\"logicalType\":\"decimal\",\"precision\":12,\"scale\":2,\"type\":\"bytes\"}},{\"name\":\"DestinatarioCUIT\",\"type\":\"string\"},{\"name\":\"DestinatarioRazonSocial\",\"type\":\"string\"},{\"name\":\"DestinatarioCalle\",\"type\":\"string\"},{\"name\":\"DestinatarioNumero\",\"type\":\"string\"},{\"name\":\"DestinatarioPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioBarrio\",\"type\":[\"null\",\"string\"]},{\"name\":\"DestinatarioCodigoPostal\",\"type\":\"string\"},{\"name\":\"DestinatarioLocalidad\",\"type\":\"string\"},{\"name\":\"DestinatarioProvincia\",\"type\":\"string\"},{\"name\":\"OrigenCUIT\",\"type\":\"string\"},{\"name\":\"OrigenRazonSocial\",\"type\":\"string\"},{\"name\":\"OrigenCalle\",\"type\":\"string\"},{\"name\":\"OrigenNumero\",\"type\":\"string\"},{\"name\":\"OrigenPiso\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenDepartamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenBarrio\",\"type\":[\"null\",\"string\"]},{\"name\":\"OrigenCodigoPostal\",\"type\":\"string\"},{\"name\":\"OrigenLocalidad\",\"type\":\"string\"},{\"name\":\"OrigenProvincia\",\"type\":\"string\"},{\"name\":\"IdTransportista\",\"type\":\"int\"},{\"name\":\"RecorridoTipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"RecorridoLocalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"RecorridoCalle\",\"type\":[\"null\",\"string\"]},{\"name\":\"RecorridoRuta\",\"type\":[\"null\",\"string\"]},{\"name\":\"PatenteVehiculo\",\"type\":[\"null\",\"string\"]},{\"name\":\"PatenteAcoplado\",\"type\":[\"null\",\"string\"]},{\"name\":\"detalle\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"int\"},{\"name\":\"CodigoDeProducto\",\"type\":\"string\"},{\"name\":\"DescripcionDeProducto\",\"type\":\"string\"},{\"name\":\"CodigoUOM\",\"type\":\"string\"},{\"name\":\"DescripcionUOM\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"}],\"name\":\"Linea\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.GeneracionCOT.Events.Record.Solicitud\",\"type\":\"record\"}"
 }
 
 func (r Solicitud) SchemaName() string {
@@ -268,117 +328,159 @@ func (r *Solicitud) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.String{Target: &r.CodComprobante}
+		w := types.Long{Target: &r.Fecha}
 
 		return w
 
 	case 5:
-		w := types.Int{Target: &r.CentroEmisorComprobante}
+		w := types.Long{Target: &r.FechaSalidaTransporte}
 
 		return w
 
 	case 6:
-		w := types.Int{Target: &r.NumeroComprobante}
+		w := types.String{Target: &r.CodComprobante}
 
 		return w
 
 	case 7:
-		w := BytesWrapper{Target: &r.ImporteComprobante}
+		w := types.Int{Target: &r.CentroEmisorComprobante}
 
 		return w
 
 	case 8:
-		w := types.String{Target: &r.DestinatarioCUIT}
+		w := types.Int{Target: &r.NumeroComprobante}
 
 		return w
 
 	case 9:
-		w := types.String{Target: &r.DestinatarioRazonSocial}
+		w := BytesWrapper{Target: &r.ImporteComprobante}
 
 		return w
 
 	case 10:
-		w := types.String{Target: &r.DestinatarioCalle}
+		w := types.String{Target: &r.DestinatarioCUIT}
 
 		return w
 
 	case 11:
-		w := types.String{Target: &r.DestinatarioNumero}
+		w := types.String{Target: &r.DestinatarioRazonSocial}
 
 		return w
 
 	case 12:
+		w := types.String{Target: &r.DestinatarioCalle}
+
+		return w
+
+	case 13:
+		w := types.String{Target: &r.DestinatarioNumero}
+
+		return w
+
+	case 14:
 		r.DestinatarioPiso = NewUnionNullString()
 
 		return r.DestinatarioPiso
-	case 13:
+	case 15:
 		r.DestinatarioDepartamento = NewUnionNullString()
 
 		return r.DestinatarioDepartamento
-	case 14:
+	case 16:
+		r.DestinatarioBarrio = NewUnionNullString()
+
+		return r.DestinatarioBarrio
+	case 17:
 		w := types.String{Target: &r.DestinatarioCodigoPostal}
 
 		return w
 
-	case 15:
+	case 18:
 		w := types.String{Target: &r.DestinatarioLocalidad}
 
 		return w
 
-	case 16:
+	case 19:
 		w := types.String{Target: &r.DestinatarioProvincia}
 
 		return w
 
-	case 17:
+	case 20:
 		w := types.String{Target: &r.OrigenCUIT}
 
 		return w
 
-	case 18:
+	case 21:
 		w := types.String{Target: &r.OrigenRazonSocial}
 
 		return w
 
-	case 19:
+	case 22:
 		w := types.String{Target: &r.OrigenCalle}
 
 		return w
 
-	case 20:
+	case 23:
 		w := types.String{Target: &r.OrigenNumero}
 
 		return w
 
-	case 21:
+	case 24:
 		r.OrigenPiso = NewUnionNullString()
 
 		return r.OrigenPiso
-	case 22:
+	case 25:
 		r.OrigenDepartamento = NewUnionNullString()
 
 		return r.OrigenDepartamento
-	case 23:
+	case 26:
+		r.OrigenBarrio = NewUnionNullString()
+
+		return r.OrigenBarrio
+	case 27:
 		w := types.String{Target: &r.OrigenCodigoPostal}
 
 		return w
 
-	case 24:
+	case 28:
 		w := types.String{Target: &r.OrigenLocalidad}
 
 		return w
 
-	case 25:
+	case 29:
 		w := types.String{Target: &r.OrigenProvincia}
 
 		return w
 
-	case 26:
+	case 30:
 		w := types.Int{Target: &r.IdTransportista}
 
 		return w
 
-	case 27:
+	case 31:
+		r.RecorridoTipo = NewUnionNullString()
+
+		return r.RecorridoTipo
+	case 32:
+		r.RecorridoLocalidad = NewUnionNullString()
+
+		return r.RecorridoLocalidad
+	case 33:
+		r.RecorridoCalle = NewUnionNullString()
+
+		return r.RecorridoCalle
+	case 34:
+		r.RecorridoRuta = NewUnionNullString()
+
+		return r.RecorridoRuta
+	case 35:
+		r.PatenteVehiculo = NewUnionNullString()
+
+		return r.PatenteVehiculo
+	case 36:
+		r.PatenteAcoplado = NewUnionNullString()
+
+		return r.PatenteAcoplado
+	case 37:
 		r.Detalle = make([]Linea, 0)
 
 		w := ArrayLineaWrapper{Target: &r.Detalle}
@@ -397,17 +499,41 @@ func (r *Solicitud) SetDefault(i int) {
 
 func (r *Solicitud) NullField(i int) {
 	switch i {
-	case 12:
+	case 14:
 		r.DestinatarioPiso = nil
 		return
-	case 13:
+	case 15:
 		r.DestinatarioDepartamento = nil
 		return
-	case 21:
+	case 16:
+		r.DestinatarioBarrio = nil
+		return
+	case 24:
 		r.OrigenPiso = nil
 		return
-	case 22:
+	case 25:
 		r.OrigenDepartamento = nil
+		return
+	case 26:
+		r.OrigenBarrio = nil
+		return
+	case 31:
+		r.RecorridoTipo = nil
+		return
+	case 32:
+		r.RecorridoLocalidad = nil
+		return
+	case 33:
+		r.RecorridoCalle = nil
+		return
+	case 34:
+		r.RecorridoRuta = nil
+		return
+	case 35:
+		r.PatenteVehiculo = nil
+		return
+	case 36:
+		r.PatenteAcoplado = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -438,6 +564,14 @@ func (r Solicitud) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Numero"], err = json.Marshal(r.Numero)
+	if err != nil {
+		return nil, err
+	}
+	output["Fecha"], err = json.Marshal(r.Fecha)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaSalidaTransporte"], err = json.Marshal(r.FechaSalidaTransporte)
 	if err != nil {
 		return nil, err
 	}
@@ -481,6 +615,10 @@ func (r Solicitud) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["DestinatarioBarrio"], err = json.Marshal(r.DestinatarioBarrio)
+	if err != nil {
+		return nil, err
+	}
 	output["DestinatarioCodigoPostal"], err = json.Marshal(r.DestinatarioCodigoPostal)
 	if err != nil {
 		return nil, err
@@ -517,6 +655,10 @@ func (r Solicitud) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["OrigenBarrio"], err = json.Marshal(r.OrigenBarrio)
+	if err != nil {
+		return nil, err
+	}
 	output["OrigenCodigoPostal"], err = json.Marshal(r.OrigenCodigoPostal)
 	if err != nil {
 		return nil, err
@@ -530,6 +672,30 @@ func (r Solicitud) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["IdTransportista"], err = json.Marshal(r.IdTransportista)
+	if err != nil {
+		return nil, err
+	}
+	output["RecorridoTipo"], err = json.Marshal(r.RecorridoTipo)
+	if err != nil {
+		return nil, err
+	}
+	output["RecorridoLocalidad"], err = json.Marshal(r.RecorridoLocalidad)
+	if err != nil {
+		return nil, err
+	}
+	output["RecorridoCalle"], err = json.Marshal(r.RecorridoCalle)
+	if err != nil {
+		return nil, err
+	}
+	output["RecorridoRuta"], err = json.Marshal(r.RecorridoRuta)
+	if err != nil {
+		return nil, err
+	}
+	output["PatenteVehiculo"], err = json.Marshal(r.PatenteVehiculo)
+	if err != nil {
+		return nil, err
+	}
+	output["PatenteAcoplado"], err = json.Marshal(r.PatenteAcoplado)
 	if err != nil {
 		return nil, err
 	}
@@ -602,6 +768,34 @@ func (r *Solicitud) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Numero")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Fecha"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Fecha); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Fecha")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaSalidaTransporte"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaSalidaTransporte); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaSalidaTransporte")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CodComprobante"]; ok {
@@ -744,6 +938,20 @@ func (r *Solicitud) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for DestinatarioDepartamento")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["DestinatarioBarrio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DestinatarioBarrio); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for DestinatarioBarrio")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["DestinatarioCodigoPostal"]; ok {
 			return v
 		}
@@ -870,6 +1078,20 @@ func (r *Solicitud) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for OrigenDepartamento")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["OrigenBarrio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OrigenBarrio); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for OrigenBarrio")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["OrigenCodigoPostal"]; ok {
 			return v
 		}
@@ -924,6 +1146,90 @@ func (r *Solicitud) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for IdTransportista")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["RecorridoTipo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RecorridoTipo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for RecorridoTipo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["RecorridoLocalidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RecorridoLocalidad); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for RecorridoLocalidad")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["RecorridoCalle"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RecorridoCalle); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for RecorridoCalle")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["RecorridoRuta"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RecorridoRuta); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for RecorridoRuta")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PatenteVehiculo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PatenteVehiculo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for PatenteVehiculo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PatenteAcoplado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PatenteAcoplado); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for PatenteAcoplado")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["detalle"]; ok {
