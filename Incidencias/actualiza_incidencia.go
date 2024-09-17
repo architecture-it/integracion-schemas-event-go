@@ -27,9 +27,11 @@ type ActualizaIncidencia struct {
 	TiempoAuditor *UnionNullString `json:"TiempoAuditor"`
 
 	IdIncidencia *UnionNullInt `json:"IdIncidencia"`
+
+	IdentificadorExterno *UnionNullString `json:"IdentificadorExterno"`
 }
 
-const ActualizaIncidenciaAvroCRC64Fingerprint = "4m\xc0c9M\xbe\x1c"
+const ActualizaIncidenciaAvroCRC64Fingerprint = "\b\xf23-t\x89\x91\xe3"
 
 func NewActualizaIncidencia() ActualizaIncidencia {
 	r := ActualizaIncidencia{}
@@ -38,6 +40,7 @@ func NewActualizaIncidencia() ActualizaIncidencia {
 	r.IdMotivoCancelacion = nil
 	r.TiempoAuditor = nil
 	r.IdIncidencia = nil
+	r.IdentificadorExterno = nil
 	return r
 }
 
@@ -86,6 +89,10 @@ func writeActualizaIncidencia(r ActualizaIncidencia, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.IdentificadorExterno, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -94,7 +101,7 @@ func (r ActualizaIncidencia) Serialize(w io.Writer) error {
 }
 
 func (r ActualizaIncidencia) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"IdMotivoResolucion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ObservacionesAuditor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoCancelacion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoAuditor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdIncidencia\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.Incidencias.Events.Record.ActualizaIncidencia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdMotivoResolucion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ObservacionesAuditor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoCancelacion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoAuditor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdIncidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.ActualizaIncidencia\",\"type\":\"record\"}"
 }
 
 func (r ActualizaIncidencia) SchemaName() string {
@@ -132,6 +139,10 @@ func (r *ActualizaIncidencia) Get(i int) types.Field {
 		r.IdIncidencia = NewUnionNullInt()
 
 		return r.IdIncidencia
+	case 5:
+		r.IdentificadorExterno = NewUnionNullString()
+
+		return r.IdentificadorExterno
 	}
 	panic("Unknown field index")
 }
@@ -153,6 +164,9 @@ func (r *ActualizaIncidencia) SetDefault(i int) {
 	case 4:
 		r.IdIncidencia = nil
 		return
+	case 5:
+		r.IdentificadorExterno = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -173,6 +187,9 @@ func (r *ActualizaIncidencia) NullField(i int) {
 		return
 	case 4:
 		r.IdIncidencia = nil
+		return
+	case 5:
+		r.IdentificadorExterno = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -207,6 +224,10 @@ func (r ActualizaIncidencia) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["IdIncidencia"], err = json.Marshal(r.IdIncidencia)
+	if err != nil {
+		return nil, err
+	}
+	output["IdentificadorExterno"], err = json.Marshal(r.IdentificadorExterno)
 	if err != nil {
 		return nil, err
 	}
@@ -299,6 +320,22 @@ func (r *ActualizaIncidencia) UnmarshalJSON(data []byte) error {
 		r.IdIncidencia = NewUnionNullInt()
 
 		r.IdIncidencia = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdentificadorExterno"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdentificadorExterno); err != nil {
+			return err
+		}
+	} else {
+		r.IdentificadorExterno = NewUnionNullString()
+
+		r.IdentificadorExterno = nil
 	}
 	return nil
 }
