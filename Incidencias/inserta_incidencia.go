@@ -40,20 +40,16 @@ type InsertaIncidencia struct {
 
 	Parametros *UnionNullArrayParametro `json:"Parametros"`
 
-	Origen *UnionNullString `json:"Origen"`
-
 	Instancia *UnionNullString `json:"Instancia"`
 
 	Almacen *UnionNullString `json:"Almacen"`
-
-	EstadoDescripcion *UnionNullString `json:"EstadoDescripcion"`
 
 	IdProceso *UnionNullInt `json:"IdProceso"`
 
 	IdentificadorExterno *UnionNullString `json:"IdentificadorExterno"`
 }
 
-const InsertaIncidenciaAvroCRC64Fingerprint = "\x8eT\xf3Դ\x8b\xa0\xbd"
+const InsertaIncidenciaAvroCRC64Fingerprint = "\xa3|\x9a\x18\xa4箷"
 
 func NewInsertaIncidencia() InsertaIncidencia {
 	r := InsertaIncidencia{}
@@ -68,10 +64,8 @@ func NewInsertaIncidencia() InsertaIncidencia {
 	r.Archivos = nil
 	r.Fotos = nil
 	r.Parametros = nil
-	r.Origen = nil
 	r.Instancia = nil
 	r.Almacen = nil
-	r.EstadoDescripcion = nil
 	r.IdProceso = nil
 	r.IdentificadorExterno = nil
 	return r
@@ -146,19 +140,11 @@ func writeInsertaIncidencia(r InsertaIncidencia, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Origen, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.Instancia, w)
 	if err != nil {
 		return err
 	}
 	err = writeUnionNullString(r.Almacen, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.EstadoDescripcion, w)
 	if err != nil {
 		return err
 	}
@@ -178,7 +164,7 @@ func (r InsertaIncidencia) Serialize(w io.Writer) error {
 }
 
 func (r InsertaIncidencia) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"IdOrigen\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdPrioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Denunciante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdOperacion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoPorPropietario\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdFuenteEvidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Archivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Fotos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Parametros\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"IdParametro\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Parametro\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdProceso\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.InsertaIncidencia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdOrigen\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdPrioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Denunciante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdOperacion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoPorPropietario\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdFuenteEvidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Archivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Fotos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Parametros\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"IdParametro\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Parametro\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdProceso\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.InsertaIncidencia\",\"type\":\"record\"}"
 }
 
 func (r InsertaIncidencia) SchemaName() string {
@@ -241,26 +227,18 @@ func (r *InsertaIncidencia) Get(i int) types.Field {
 
 		return r.Parametros
 	case 11:
-		r.Origen = NewUnionNullString()
-
-		return r.Origen
-	case 12:
 		r.Instancia = NewUnionNullString()
 
 		return r.Instancia
-	case 13:
+	case 12:
 		r.Almacen = NewUnionNullString()
 
 		return r.Almacen
-	case 14:
-		r.EstadoDescripcion = NewUnionNullString()
-
-		return r.EstadoDescripcion
-	case 15:
+	case 13:
 		r.IdProceso = NewUnionNullInt()
 
 		return r.IdProceso
-	case 16:
+	case 14:
 		r.IdentificadorExterno = NewUnionNullString()
 
 		return r.IdentificadorExterno
@@ -304,21 +282,15 @@ func (r *InsertaIncidencia) SetDefault(i int) {
 		r.Parametros = nil
 		return
 	case 11:
-		r.Origen = nil
-		return
-	case 12:
 		r.Instancia = nil
 		return
-	case 13:
+	case 12:
 		r.Almacen = nil
 		return
-	case 14:
-		r.EstadoDescripcion = nil
-		return
-	case 15:
+	case 13:
 		r.IdProceso = nil
 		return
-	case 16:
+	case 14:
 		r.IdentificadorExterno = nil
 		return
 	}
@@ -361,21 +333,15 @@ func (r *InsertaIncidencia) NullField(i int) {
 		r.Parametros = nil
 		return
 	case 11:
-		r.Origen = nil
-		return
-	case 12:
 		r.Instancia = nil
 		return
-	case 13:
+	case 12:
 		r.Almacen = nil
 		return
-	case 14:
-		r.EstadoDescripcion = nil
-		return
-	case 15:
+	case 13:
 		r.IdProceso = nil
 		return
-	case 16:
+	case 14:
 		r.IdentificadorExterno = nil
 		return
 	}
@@ -438,19 +404,11 @@ func (r InsertaIncidencia) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Origen"], err = json.Marshal(r.Origen)
-	if err != nil {
-		return nil, err
-	}
 	output["Instancia"], err = json.Marshal(r.Instancia)
 	if err != nil {
 		return nil, err
 	}
 	output["Almacen"], err = json.Marshal(r.Almacen)
-	if err != nil {
-		return nil, err
-	}
-	output["EstadoDescripcion"], err = json.Marshal(r.EstadoDescripcion)
 	if err != nil {
 		return nil, err
 	}
@@ -649,22 +607,6 @@ func (r *InsertaIncidencia) UnmarshalJSON(data []byte) error {
 		r.Parametros = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Origen"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Origen); err != nil {
-			return err
-		}
-	} else {
-		r.Origen = NewUnionNullString()
-
-		r.Origen = nil
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["Instancia"]; ok {
 			return v
 		}
@@ -695,22 +637,6 @@ func (r *InsertaIncidencia) UnmarshalJSON(data []byte) error {
 		r.Almacen = NewUnionNullString()
 
 		r.Almacen = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["EstadoDescripcion"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.EstadoDescripcion); err != nil {
-			return err
-		}
-	} else {
-		r.EstadoDescripcion = NewUnionNullString()
-
-		r.EstadoDescripcion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IdProceso"]; ok {
