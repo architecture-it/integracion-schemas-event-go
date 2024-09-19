@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type Componentes struct {
-	NumeroAgrupador *UnionNullInt `json:"numeroAgrupador"`
+	NumeroAgrupador *UnionNullString `json:"numeroAgrupador"`
 
 	ComponentesHijos *UnionNullArrayComponenteHijo `json:"componentesHijos"`
 }
 
-const ComponentesAvroCRC64Fingerprint = "\xc5vժ\xdb\xf2\xa1\x14"
+const ComponentesAvroCRC64Fingerprint = "{\xe3\f\x9c9\xc4\x13u"
 
 func NewComponentes() Componentes {
 	r := Componentes{}
@@ -57,7 +57,7 @@ func DeserializeComponentesFromSchema(r io.Reader, schema string) (Componentes, 
 
 func writeComponentes(r Componentes, w io.Writer) error {
 	var err error
-	err = writeUnionNullInt(r.NumeroAgrupador, w)
+	err = writeUnionNullString(r.NumeroAgrupador, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func (r Componentes) Serialize(w io.Writer) error {
 }
 
 func (r Componentes) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.Componentes\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.Componentes\",\"type\":\"record\"}"
 }
 
 func (r Componentes) SchemaName() string {
@@ -92,7 +92,7 @@ func (_ Componentes) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Componentes) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.NumeroAgrupador = NewUnionNullInt()
+		r.NumeroAgrupador = NewUnionNullString()
 
 		return r.NumeroAgrupador
 	case 1:
@@ -169,7 +169,7 @@ func (r *Componentes) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.NumeroAgrupador = NewUnionNullInt()
+		r.NumeroAgrupador = NewUnionNullString()
 
 		r.NumeroAgrupador = nil
 	}
