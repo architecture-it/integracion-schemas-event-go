@@ -84,7 +84,7 @@ func DeserializeUnionNullComponentesFromSchema(r io.Reader, schema string) (*Uni
 }
 
 func (r *UnionNullComponentes) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"numerosComponentesHijos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullComponentes) SetBoolean(v bool)   { panic("Unsupported operation") }

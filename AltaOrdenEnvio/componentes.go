@@ -20,18 +20,15 @@ var _ = fmt.Printf
 type Componentes struct {
 	NumeroAgrupador *UnionNullInt `json:"numeroAgrupador"`
 
-	NumerosComponentesHijos *UnionNullArrayString `json:"numerosComponentesHijos"`
-
-	Referencias *UnionNullListaDePropiedades `json:"referencias"`
+	ComponentesHijos *UnionNullArrayComponenteHijo `json:"componentesHijos"`
 }
 
-const ComponentesAvroCRC64Fingerprint = "\x8d\x98UE\rw\xc2\x1b"
+const ComponentesAvroCRC64Fingerprint = "\xc5vժ\xdb\xf2\xa1\x14"
 
 func NewComponentes() Componentes {
 	r := Componentes{}
 	r.NumeroAgrupador = nil
-	r.NumerosComponentesHijos = nil
-	r.Referencias = nil
+	r.ComponentesHijos = nil
 	return r
 }
 
@@ -64,11 +61,7 @@ func writeComponentes(r Componentes, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullArrayString(r.NumerosComponentesHijos, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullListaDePropiedades(r.Referencias, w)
+	err = writeUnionNullArrayComponenteHijo(r.ComponentesHijos, w)
 	if err != nil {
 		return err
 	}
@@ -80,7 +73,7 @@ func (r Componentes) Serialize(w io.Writer) error {
 }
 
 func (r Componentes) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"numerosComponentesHijos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.Componentes\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.Componentes\",\"type\":\"record\"}"
 }
 
 func (r Componentes) SchemaName() string {
@@ -103,13 +96,9 @@ func (r *Componentes) Get(i int) types.Field {
 
 		return r.NumeroAgrupador
 	case 1:
-		r.NumerosComponentesHijos = NewUnionNullArrayString()
+		r.ComponentesHijos = NewUnionNullArrayComponenteHijo()
 
-		return r.NumerosComponentesHijos
-	case 2:
-		r.Referencias = NewUnionNullListaDePropiedades()
-
-		return r.Referencias
+		return r.ComponentesHijos
 	}
 	panic("Unknown field index")
 }
@@ -120,10 +109,7 @@ func (r *Componentes) SetDefault(i int) {
 		r.NumeroAgrupador = nil
 		return
 	case 1:
-		r.NumerosComponentesHijos = nil
-		return
-	case 2:
-		r.Referencias = nil
+		r.ComponentesHijos = nil
 		return
 	}
 	panic("Unknown field index")
@@ -135,10 +121,7 @@ func (r *Componentes) NullField(i int) {
 		r.NumeroAgrupador = nil
 		return
 	case 1:
-		r.NumerosComponentesHijos = nil
-		return
-	case 2:
-		r.Referencias = nil
+		r.ComponentesHijos = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -160,11 +143,7 @@ func (r Componentes) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["numerosComponentesHijos"], err = json.Marshal(r.NumerosComponentesHijos)
-	if err != nil {
-		return nil, err
-	}
-	output["referencias"], err = json.Marshal(r.Referencias)
+	output["componentesHijos"], err = json.Marshal(r.ComponentesHijos)
 	if err != nil {
 		return nil, err
 	}
@@ -195,36 +174,20 @@ func (r *Componentes) UnmarshalJSON(data []byte) error {
 		r.NumeroAgrupador = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numerosComponentesHijos"]; ok {
+		if v, ok := fields["componentesHijos"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumerosComponentesHijos); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ComponentesHijos); err != nil {
 			return err
 		}
 	} else {
-		r.NumerosComponentesHijos = NewUnionNullArrayString()
+		r.ComponentesHijos = NewUnionNullArrayComponenteHijo()
 
-		r.NumerosComponentesHijos = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["referencias"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Referencias); err != nil {
-			return err
-		}
-	} else {
-		r.Referencias = NewUnionNullListaDePropiedades()
-
-		r.Referencias = nil
+		r.ComponentesHijos = nil
 	}
 	return nil
 }
