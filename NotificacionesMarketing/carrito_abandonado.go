@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type CarritoAbandonado struct {
-	UsuarioId *UnionNullString `json:"usuarioId"`
+	UsuarioId *UnionNullString `json:"UsuarioId"`
 
 	ClienteId *UnionNullString `json:"clienteId"`
 
@@ -41,7 +41,7 @@ type CarritoAbandonado struct {
 	Cuando *UnionNullLong `json:"cuando"`
 }
 
-const CarritoAbandonadoAvroCRC64Fingerprint = "\x00\x03\xdbY[#R8"
+const CarritoAbandonadoAvroCRC64Fingerprint = "\xbd\x06s'\xe4\x04u~"
 
 func NewCarritoAbandonado() CarritoAbandonado {
 	r := CarritoAbandonado{}
@@ -136,7 +136,7 @@ func (r CarritoAbandonado) Serialize(w io.Writer) error {
 }
 
 func (r CarritoAbandonado) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaModificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeEnvios\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"diasDeAbandono\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.CarritoAbandonado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaModificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeEnvios\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"diasDeAbandono\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.CarritoAbandonado\",\"type\":\"record\"}"
 }
 
 func (r CarritoAbandonado) SchemaName() string {
@@ -292,7 +292,7 @@ func (_ CarritoAbandonado) AvroCRC64Fingerprint() []byte {
 func (r CarritoAbandonado) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["usuarioId"], err = json.Marshal(r.UsuarioId)
+	output["UsuarioId"], err = json.Marshal(r.UsuarioId)
 	if err != nil {
 		return nil, err
 	}
@@ -347,7 +347,7 @@ func (r *CarritoAbandonado) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["usuarioId"]; ok {
+		if v, ok := fields["UsuarioId"]; ok {
 			return v
 		}
 		return nil
