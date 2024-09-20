@@ -18,14 +18,14 @@ import (
 var _ = fmt.Printf
 
 type Error struct {
-	TipoError *UnionNullString `json:"tipoError"`
+	TipoError *UnionNullString `json:"TipoError"`
 
-	Codigo int32 `json:"codigo"`
+	Codigo int32 `json:"Codigo"`
 
-	Descripcion string `json:"descripcion"`
+	Descripcion string `json:"Descripcion"`
 }
 
-const ErrorAvroCRC64Fingerprint = "!\xb7X\x14\xb0\xf9>\x99"
+const ErrorAvroCRC64Fingerprint = "\xea\x81\xfd\x96\xb7U:\xde"
 
 func NewError() Error {
 	r := Error{}
@@ -77,7 +77,7 @@ func (r Error) Serialize(w io.Writer) error {
 }
 
 func (r Error) Schema() string {
-	return "{\"fields\":[{\"name\":\"tipoError\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigo\",\"type\":\"int\"},{\"name\":\"descripcion\",\"type\":\"string\"}],\"name\":\"Andreani.GeneracionCOT.Events.Record.Error\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TipoError\",\"type\":[\"null\",\"string\"]},{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"Andreani.GeneracionCOT.Events.Record.Error\",\"type\":\"record\"}"
 }
 
 func (r Error) SchemaName() string {
@@ -140,15 +140,15 @@ func (_ Error) AvroCRC64Fingerprint() []byte {
 func (r Error) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["tipoError"], err = json.Marshal(r.TipoError)
+	output["TipoError"], err = json.Marshal(r.TipoError)
 	if err != nil {
 		return nil, err
 	}
-	output["codigo"], err = json.Marshal(r.Codigo)
+	output["Codigo"], err = json.Marshal(r.Codigo)
 	if err != nil {
 		return nil, err
 	}
-	output["descripcion"], err = json.Marshal(r.Descripcion)
+	output["Descripcion"], err = json.Marshal(r.Descripcion)
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +163,7 @@ func (r *Error) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["tipoError"]; ok {
+		if v, ok := fields["TipoError"]; ok {
 			return v
 		}
 		return nil
@@ -174,10 +174,10 @@ func (r *Error) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipoError")
+		return fmt.Errorf("no value specified for TipoError")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigo"]; ok {
+		if v, ok := fields["Codigo"]; ok {
 			return v
 		}
 		return nil
@@ -188,10 +188,10 @@ func (r *Error) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigo")
+		return fmt.Errorf("no value specified for Codigo")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["descripcion"]; ok {
+		if v, ok := fields["Descripcion"]; ok {
 			return v
 		}
 		return nil
@@ -202,7 +202,7 @@ func (r *Error) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for descripcion")
+		return fmt.Errorf("no value specified for Descripcion")
 	}
 	return nil
 }

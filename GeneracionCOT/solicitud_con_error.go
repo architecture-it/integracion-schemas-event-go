@@ -18,24 +18,26 @@ import (
 var _ = fmt.Printf
 
 type SolicitudConError struct {
-	FechaHora int64 `json:"fechaHora"`
+	Id int32 `json:"Id"`
 
-	Cuit string `json:"cuit"`
+	FechaHora int64 `json:"FechaHora"`
 
-	NumeroComprobante int32 `json:"numeroComprobante"`
+	Cuit string `json:"Cuit"`
 
-	NombreArchivo string `json:"nombreArchivo"`
+	NumeroComprobante int32 `json:"NumeroComprobante"`
 
-	CodigoIntegridad string `json:"codigoIntegridad"`
+	NombreArchivo string `json:"NombreArchivo"`
 
-	NumeroUnico string `json:"numeroUnico"`
+	CodigoIntegridad string `json:"CodigoIntegridad"`
 
-	Procesado string `json:"procesado"`
+	NumeroUnico string `json:"NumeroUnico"`
 
-	Errores []Error `json:"errores"`
+	Procesado string `json:"Procesado"`
+
+	Errores []Error `json:"Errores"`
 }
 
-const SolicitudConErrorAvroCRC64Fingerprint = "\xb4\xd6'\xd7\xcc\xff\x89\x8b"
+const SolicitudConErrorAvroCRC64Fingerprint = ")s\xe91\x12\xac_y"
 
 func NewSolicitudConError() SolicitudConError {
 	r := SolicitudConError{}
@@ -69,6 +71,10 @@ func DeserializeSolicitudConErrorFromSchema(r io.Reader, schema string) (Solicit
 
 func writeSolicitudConError(r SolicitudConError, w io.Writer) error {
 	var err error
+	err = vm.WriteInt(r.Id, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteLong(r.FechaHora, w)
 	if err != nil {
 		return err
@@ -109,7 +115,7 @@ func (r SolicitudConError) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudConError) Schema() string {
-	return "{\"fields\":[{\"name\":\"fechaHora\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"cuit\",\"type\":\"string\"},{\"name\":\"numeroComprobante\",\"type\":\"int\"},{\"name\":\"nombreArchivo\",\"type\":\"string\"},{\"name\":\"codigoIntegridad\",\"type\":\"string\"},{\"name\":\"numeroUnico\",\"type\":\"string\"},{\"name\":\"procesado\",\"type\":\"string\"},{\"name\":\"errores\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoError\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigo\",\"type\":\"int\"},{\"name\":\"descripcion\",\"type\":\"string\"}],\"name\":\"Error\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.GeneracionCOT.Events.Record.SolicitudConError\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"FechaHora\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Cuit\",\"type\":\"string\"},{\"name\":\"NumeroComprobante\",\"type\":\"int\"},{\"name\":\"NombreArchivo\",\"type\":\"string\"},{\"name\":\"CodigoIntegridad\",\"type\":\"string\"},{\"name\":\"NumeroUnico\",\"type\":\"string\"},{\"name\":\"Procesado\",\"type\":\"string\"},{\"name\":\"Errores\",\"type\":{\"items\":{\"fields\":[{\"name\":\"TipoError\",\"type\":[\"null\",\"string\"]},{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"Error\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.GeneracionCOT.Events.Record.SolicitudConError\",\"type\":\"record\"}"
 }
 
 func (r SolicitudConError) SchemaName() string {
@@ -128,41 +134,46 @@ func (_ SolicitudConError) SetUnionElem(v int64) { panic("Unsupported operation"
 func (r *SolicitudConError) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Long{Target: &r.FechaHora}
+		w := types.Int{Target: &r.Id}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Cuit}
+		w := types.Long{Target: &r.FechaHora}
 
 		return w
 
 	case 2:
-		w := types.Int{Target: &r.NumeroComprobante}
+		w := types.String{Target: &r.Cuit}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.NombreArchivo}
+		w := types.Int{Target: &r.NumeroComprobante}
 
 		return w
 
 	case 4:
-		w := types.String{Target: &r.CodigoIntegridad}
+		w := types.String{Target: &r.NombreArchivo}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.NumeroUnico}
+		w := types.String{Target: &r.CodigoIntegridad}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.Procesado}
+		w := types.String{Target: &r.NumeroUnico}
 
 		return w
 
 	case 7:
+		w := types.String{Target: &r.Procesado}
+
+		return w
+
+	case 8:
 		r.Errores = make([]Error, 0)
 
 		w := ArrayErrorWrapper{Target: &r.Errores}
@@ -197,35 +208,39 @@ func (_ SolicitudConError) AvroCRC64Fingerprint() []byte {
 func (r SolicitudConError) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["fechaHora"], err = json.Marshal(r.FechaHora)
+	output["Id"], err = json.Marshal(r.Id)
 	if err != nil {
 		return nil, err
 	}
-	output["cuit"], err = json.Marshal(r.Cuit)
+	output["FechaHora"], err = json.Marshal(r.FechaHora)
 	if err != nil {
 		return nil, err
 	}
-	output["numeroComprobante"], err = json.Marshal(r.NumeroComprobante)
+	output["Cuit"], err = json.Marshal(r.Cuit)
 	if err != nil {
 		return nil, err
 	}
-	output["nombreArchivo"], err = json.Marshal(r.NombreArchivo)
+	output["NumeroComprobante"], err = json.Marshal(r.NumeroComprobante)
 	if err != nil {
 		return nil, err
 	}
-	output["codigoIntegridad"], err = json.Marshal(r.CodigoIntegridad)
+	output["NombreArchivo"], err = json.Marshal(r.NombreArchivo)
 	if err != nil {
 		return nil, err
 	}
-	output["numeroUnico"], err = json.Marshal(r.NumeroUnico)
+	output["CodigoIntegridad"], err = json.Marshal(r.CodigoIntegridad)
 	if err != nil {
 		return nil, err
 	}
-	output["procesado"], err = json.Marshal(r.Procesado)
+	output["NumeroUnico"], err = json.Marshal(r.NumeroUnico)
 	if err != nil {
 		return nil, err
 	}
-	output["errores"], err = json.Marshal(r.Errores)
+	output["Procesado"], err = json.Marshal(r.Procesado)
+	if err != nil {
+		return nil, err
+	}
+	output["Errores"], err = json.Marshal(r.Errores)
 	if err != nil {
 		return nil, err
 	}
@@ -240,7 +255,21 @@ func (r *SolicitudConError) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["fechaHora"]; ok {
+		if v, ok := fields["Id"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Id); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Id")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaHora"]; ok {
 			return v
 		}
 		return nil
@@ -251,10 +280,10 @@ func (r *SolicitudConError) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for fechaHora")
+		return fmt.Errorf("no value specified for FechaHora")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cuit"]; ok {
+		if v, ok := fields["Cuit"]; ok {
 			return v
 		}
 		return nil
@@ -265,10 +294,10 @@ func (r *SolicitudConError) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cuit")
+		return fmt.Errorf("no value specified for Cuit")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numeroComprobante"]; ok {
+		if v, ok := fields["NumeroComprobante"]; ok {
 			return v
 		}
 		return nil
@@ -279,10 +308,10 @@ func (r *SolicitudConError) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroComprobante")
+		return fmt.Errorf("no value specified for NumeroComprobante")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["nombreArchivo"]; ok {
+		if v, ok := fields["NombreArchivo"]; ok {
 			return v
 		}
 		return nil
@@ -293,10 +322,10 @@ func (r *SolicitudConError) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nombreArchivo")
+		return fmt.Errorf("no value specified for NombreArchivo")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigoIntegridad"]; ok {
+		if v, ok := fields["CodigoIntegridad"]; ok {
 			return v
 		}
 		return nil
@@ -307,10 +336,10 @@ func (r *SolicitudConError) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoIntegridad")
+		return fmt.Errorf("no value specified for CodigoIntegridad")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numeroUnico"]; ok {
+		if v, ok := fields["NumeroUnico"]; ok {
 			return v
 		}
 		return nil
@@ -321,10 +350,10 @@ func (r *SolicitudConError) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroUnico")
+		return fmt.Errorf("no value specified for NumeroUnico")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["procesado"]; ok {
+		if v, ok := fields["Procesado"]; ok {
 			return v
 		}
 		return nil
@@ -335,10 +364,10 @@ func (r *SolicitudConError) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for procesado")
+		return fmt.Errorf("no value specified for Procesado")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["errores"]; ok {
+		if v, ok := fields["Errores"]; ok {
 			return v
 		}
 		return nil
@@ -349,7 +378,7 @@ func (r *SolicitudConError) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for errores")
+		return fmt.Errorf("no value specified for Errores")
 	}
 	return nil
 }
