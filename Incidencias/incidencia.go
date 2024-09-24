@@ -59,9 +59,11 @@ type Incidencia struct {
 	MotivoResolucion *UnionNullString `json:"MotivoResolucion"`
 
 	IdentificadorExterno *UnionNullString `json:"IdentificadorExterno"`
+
+	IdUnidadOperativa *UnionNullString `json:"IdUnidadOperativa"`
 }
 
-const IncidenciaAvroCRC64Fingerprint = "\xadF\xbfnG[\xf9\xd7"
+const IncidenciaAvroCRC64Fingerprint = "\xb0R}\f-|\x1e\xa5"
 
 func NewIncidencia() Incidencia {
 	r := Incidencia{}
@@ -87,6 +89,7 @@ func NewIncidencia() Incidencia {
 	r.MotivoIncidencia = nil
 	r.MotivoResolucion = nil
 	r.IdentificadorExterno = nil
+	r.IdUnidadOperativa = nil
 	return r
 }
 
@@ -199,6 +202,10 @@ func writeIncidencia(r Incidencia, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.IdUnidadOperativa, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -207,7 +214,7 @@ func (r Incidencia) Serialize(w io.Writer) error {
 }
 
 func (r Incidencia) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"}},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ReferenciaWh\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Prioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LecturaArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SkuArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroSerieArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AlmacenDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Detalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdTareaTraslado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MotivoIncidencia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MotivoResolucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.Incidencia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"}},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ReferenciaWh\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Prioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LecturaArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SkuArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroSerieArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AlmacenDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Detalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdTareaTraslado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MotivoIncidencia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MotivoResolucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdUnidadOperativa\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.Incidencia\",\"type\":\"record\"}"
 }
 
 func (r Incidencia) SchemaName() string {
@@ -312,6 +319,10 @@ func (r *Incidencia) Get(i int) types.Field {
 		r.IdentificadorExterno = NewUnionNullString()
 
 		return r.IdentificadorExterno
+	case 21:
+		r.IdUnidadOperativa = NewUnionNullString()
+
+		return r.IdUnidadOperativa
 	}
 	panic("Unknown field index")
 }
@@ -378,6 +389,9 @@ func (r *Incidencia) SetDefault(i int) {
 	case 20:
 		r.IdentificadorExterno = nil
 		return
+	case 21:
+		r.IdUnidadOperativa = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -443,6 +457,9 @@ func (r *Incidencia) NullField(i int) {
 		return
 	case 20:
 		r.IdentificadorExterno = nil
+		return
+	case 21:
+		r.IdUnidadOperativa = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -541,6 +558,10 @@ func (r Incidencia) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["IdentificadorExterno"], err = json.Marshal(r.IdentificadorExterno)
+	if err != nil {
+		return nil, err
+	}
+	output["IdUnidadOperativa"], err = json.Marshal(r.IdUnidadOperativa)
 	if err != nil {
 		return nil, err
 	}
@@ -887,6 +908,22 @@ func (r *Incidencia) UnmarshalJSON(data []byte) error {
 		r.IdentificadorExterno = NewUnionNullString()
 
 		r.IdentificadorExterno = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdUnidadOperativa"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdUnidadOperativa); err != nil {
+			return err
+		}
+	} else {
+		r.IdUnidadOperativa = NewUnionNullString()
+
+		r.IdUnidadOperativa = nil
 	}
 	return nil
 }
