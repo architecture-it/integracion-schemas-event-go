@@ -18,20 +18,18 @@ import (
 var _ = fmt.Printf
 
 type VtexSucursalesCreationNotificationEvent struct {
-	SucursalesIds []int32 `json:"SucursalesIds"`
-
 	User UserInfo `json:"User"`
 
-	CarrierType CarrierType `json:"CarrierType"`
+	CarrierSucursalesList []CarrierSucursales `json:"CarrierSucursalesList"`
 }
 
-const VtexSucursalesCreationNotificationEventAvroCRC64Fingerprint = "\xfc=\xc1\xed!\xa7E\x00"
+const VtexSucursalesCreationNotificationEventAvroCRC64Fingerprint = "\xe1\x9evs:\xd8\x065"
 
 func NewVtexSucursalesCreationNotificationEvent() VtexSucursalesCreationNotificationEvent {
 	r := VtexSucursalesCreationNotificationEvent{}
-	r.SucursalesIds = make([]int32, 0)
-
 	r.User = NewUserInfo()
+
+	r.CarrierSucursalesList = make([]CarrierSucursales, 0)
 
 	return r
 }
@@ -61,15 +59,11 @@ func DeserializeVtexSucursalesCreationNotificationEventFromSchema(r io.Reader, s
 
 func writeVtexSucursalesCreationNotificationEvent(r VtexSucursalesCreationNotificationEvent, w io.Writer) error {
 	var err error
-	err = writeArrayInt(r.SucursalesIds, w)
-	if err != nil {
-		return err
-	}
 	err = writeUserInfo(r.User, w)
 	if err != nil {
 		return err
 	}
-	err = writeCarrierType(r.CarrierType, w)
+	err = writeArrayCarrierSucursales(r.CarrierSucursalesList, w)
 	if err != nil {
 		return err
 	}
@@ -81,7 +75,7 @@ func (r VtexSucursalesCreationNotificationEvent) Serialize(w io.Writer) error {
 }
 
 func (r VtexSucursalesCreationNotificationEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"SucursalesIds\",\"type\":{\"items\":\"int\",\"type\":\"array\"}},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"UserInfo\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding\",\"type\":\"record\"}},{\"name\":\"CarrierType\",\"type\":{\"name\":\"CarrierType\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesCreationNotification\",\"symbols\":[\"AndreaniSucursal\",\"AndreaniBigger\"],\"type\":\"enum\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesCreationNotificationEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"UserInfo\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding\",\"type\":\"record\"}},{\"name\":\"CarrierSucursalesList\",\"type\":{\"items\":{\"fields\":[{\"name\":\"CarrierType\",\"type\":{\"name\":\"CarrierType\",\"symbols\":[\"AndreaniSucursal\",\"AndreaniBigger\"],\"type\":\"enum\"}},{\"name\":\"SucursalesIds\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"CarrierSucursales\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesCreationNotification\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesCreationNotificationEvent\",\"type\":\"record\"}"
 }
 
 func (r VtexSucursalesCreationNotificationEvent) SchemaName() string {
@@ -102,21 +96,16 @@ func (_ VtexSucursalesCreationNotificationEvent) SetUnionElem(v int64) {
 func (r *VtexSucursalesCreationNotificationEvent) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.SucursalesIds = make([]int32, 0)
-
-		w := ArrayIntWrapper{Target: &r.SucursalesIds}
-
-		return w
-
-	case 1:
 		r.User = NewUserInfo()
 
 		w := types.Record{Target: &r.User}
 
 		return w
 
-	case 2:
-		w := CarrierTypeWrapper{Target: &r.CarrierType}
+	case 1:
+		r.CarrierSucursalesList = make([]CarrierSucursales, 0)
+
+		w := ArrayCarrierSucursalesWrapper{Target: &r.CarrierSucursalesList}
 
 		return w
 
@@ -152,15 +141,11 @@ func (_ VtexSucursalesCreationNotificationEvent) AvroCRC64Fingerprint() []byte {
 func (r VtexSucursalesCreationNotificationEvent) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["SucursalesIds"], err = json.Marshal(r.SucursalesIds)
-	if err != nil {
-		return nil, err
-	}
 	output["User"], err = json.Marshal(r.User)
 	if err != nil {
 		return nil, err
 	}
-	output["CarrierType"], err = json.Marshal(r.CarrierType)
+	output["CarrierSucursalesList"], err = json.Marshal(r.CarrierSucursalesList)
 	if err != nil {
 		return nil, err
 	}
@@ -174,20 +159,6 @@ func (r *VtexSucursalesCreationNotificationEvent) UnmarshalJSON(data []byte) err
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["SucursalesIds"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.SucursalesIds); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for SucursalesIds")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["User"]; ok {
 			return v
@@ -203,18 +174,18 @@ func (r *VtexSucursalesCreationNotificationEvent) UnmarshalJSON(data []byte) err
 		return fmt.Errorf("no value specified for User")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["CarrierType"]; ok {
+		if v, ok := fields["CarrierSucursalesList"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CarrierType); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CarrierSucursalesList); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CarrierType")
+		return fmt.Errorf("no value specified for CarrierSucursalesList")
 	}
 	return nil
 }

@@ -20,14 +20,16 @@ var _ = fmt.Printf
 type VtexSucursalesUpdateEvent struct {
 	User UserInfo `json:"User"`
 
-	CarrierType CarrierType `json:"CarrierType"`
+	CarrierType []CarrierType `json:"CarrierType"`
 }
 
-const VtexSucursalesUpdateEventAvroCRC64Fingerprint = "\x1cʻ\xf2=\xdf\xdcP"
+const VtexSucursalesUpdateEventAvroCRC64Fingerprint = "\xbaE@\xc84\xde<\xcd"
 
 func NewVtexSucursalesUpdateEvent() VtexSucursalesUpdateEvent {
 	r := VtexSucursalesUpdateEvent{}
 	r.User = NewUserInfo()
+
+	r.CarrierType = make([]CarrierType, 0)
 
 	return r
 }
@@ -61,7 +63,7 @@ func writeVtexSucursalesUpdateEvent(r VtexSucursalesUpdateEvent, w io.Writer) er
 	if err != nil {
 		return err
 	}
-	err = writeCarrierType(r.CarrierType, w)
+	err = writeArrayCarrierType(r.CarrierType, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +75,7 @@ func (r VtexSucursalesUpdateEvent) Serialize(w io.Writer) error {
 }
 
 func (r VtexSucursalesUpdateEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"UserInfo\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding\",\"type\":\"record\"}},{\"name\":\"CarrierType\",\"type\":{\"name\":\"CarrierType\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesCreationNotification\",\"symbols\":[\"AndreaniSucursal\",\"AndreaniBigger\"],\"type\":\"enum\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesUpdateEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"UserInfo\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding\",\"type\":\"record\"}},{\"name\":\"CarrierType\",\"type\":{\"items\":{\"name\":\"CarrierType\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesCreationNotification\",\"symbols\":[\"AndreaniSucursal\",\"AndreaniBigger\"],\"type\":\"enum\"},\"type\":\"array\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesUpdateEvent\",\"type\":\"record\"}"
 }
 
 func (r VtexSucursalesUpdateEvent) SchemaName() string {
@@ -99,7 +101,9 @@ func (r *VtexSucursalesUpdateEvent) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := CarrierTypeWrapper{Target: &r.CarrierType}
+		r.CarrierType = make([]CarrierType, 0)
+
+		w := ArrayCarrierTypeWrapper{Target: &r.CarrierType}
 
 		return w
 
