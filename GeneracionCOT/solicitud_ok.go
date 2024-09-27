@@ -35,9 +35,11 @@ type SolicitudOk struct {
 	Procesado string `json:"Procesado"`
 
 	Cot string `json:"Cot"`
+
+	FechaDeCot int64 `json:"FechaDeCot"`
 }
 
-const SolicitudOkAvroCRC64Fingerprint = "\xb0\xfd\xe7\xfa0dB\x88"
+const SolicitudOkAvroCRC64Fingerprint = "`\xad\xe3\x163\xc6Х"
 
 func NewSolicitudOk() SolicitudOk {
 	r := SolicitudOk{}
@@ -105,6 +107,10 @@ func writeSolicitudOk(r SolicitudOk, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteLong(r.FechaDeCot, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -113,7 +119,7 @@ func (r SolicitudOk) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudOk) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"FechaHora\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Cuit\",\"type\":\"string\"},{\"name\":\"NumeroComprobante\",\"type\":\"int\"},{\"name\":\"NombreArchivo\",\"type\":\"string\"},{\"name\":\"CodigoIntegridad\",\"type\":\"string\"},{\"name\":\"NumeroUnico\",\"type\":\"string\"},{\"name\":\"Procesado\",\"type\":\"string\"},{\"name\":\"Cot\",\"type\":\"string\"}],\"name\":\"Andreani.GeneracionCOT.Events.Record.SolicitudOk\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"FechaHora\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Cuit\",\"type\":\"string\"},{\"name\":\"NumeroComprobante\",\"type\":\"int\"},{\"name\":\"NombreArchivo\",\"type\":\"string\"},{\"name\":\"CodigoIntegridad\",\"type\":\"string\"},{\"name\":\"NumeroUnico\",\"type\":\"string\"},{\"name\":\"Procesado\",\"type\":\"string\"},{\"name\":\"Cot\",\"type\":\"string\"},{\"name\":\"FechaDeCot\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.GeneracionCOT.Events.Record.SolicitudOk\",\"type\":\"record\"}"
 }
 
 func (r SolicitudOk) SchemaName() string {
@@ -173,6 +179,11 @@ func (r *SolicitudOk) Get(i int) types.Field {
 
 	case 8:
 		w := types.String{Target: &r.Cot}
+
+		return w
+
+	case 9:
+		w := types.Long{Target: &r.FechaDeCot}
 
 		return w
 
@@ -237,6 +248,10 @@ func (r SolicitudOk) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Cot"], err = json.Marshal(r.Cot)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaDeCot"], err = json.Marshal(r.FechaDeCot)
 	if err != nil {
 		return nil, err
 	}
@@ -375,6 +390,20 @@ func (r *SolicitudOk) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Cot")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaDeCot"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaDeCot); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaDeCot")
 	}
 	return nil
 }
