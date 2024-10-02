@@ -24,6 +24,8 @@ type MaestroCliente struct {
 
 	Nombre *UnionNullString `json:"Nombre"`
 
+	TelefonoRepetido *UnionNullBool `json:"TelefonoRepetido"`
+
 	TelefonoCodigoArea *UnionNullString `json:"TelefonoCodigoArea"`
 
 	TelefonoNumero *UnionNullString `json:"TelefonoNumero"`
@@ -87,13 +89,14 @@ type MaestroCliente struct {
 	TipoCliente *UnionNullString `json:"TipoCliente"`
 }
 
-const MaestroClienteAvroCRC64Fingerprint = "\xb9{\xadU=\x00\x8a\x92"
+const MaestroClienteAvroCRC64Fingerprint = "\x91\x1f\xf7\x15t\xff\xd2H"
 
 func NewMaestroCliente() MaestroCliente {
 	r := MaestroCliente{}
 	r.ClienteId = nil
 	r.UsuarioId = nil
 	r.Nombre = nil
+	r.TelefonoRepetido = nil
 	r.TelefonoCodigoArea = nil
 	r.TelefonoNumero = nil
 	r.Categoria = nil
@@ -162,6 +165,10 @@ func writeMaestroCliente(r MaestroCliente, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullString(r.Nombre, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullBool(r.TelefonoRepetido, w)
 	if err != nil {
 		return err
 	}
@@ -297,7 +304,7 @@ func (r MaestroCliente) Serialize(w io.Writer) error {
 }
 
 func (r MaestroCliente) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"ClienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"CodigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PisoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DtoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoPostalSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LocalidadSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProvinciaSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PaisSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ClienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneTN\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TieneCC\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"FechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeFactura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CanalDeVenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.MaestroCliente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"ClienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoRepetido\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TelefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"CodigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PisoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DtoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoPostalSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LocalidadSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProvinciaSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PaisSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ClienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneTN\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TieneCC\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"FechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeFactura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CanalDeVenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.MaestroCliente\",\"type\":\"record\"}"
 }
 
 func (r MaestroCliente) SchemaName() string {
@@ -328,126 +335,130 @@ func (r *MaestroCliente) Get(i int) types.Field {
 
 		return r.Nombre
 	case 3:
+		r.TelefonoRepetido = NewUnionNullBool()
+
+		return r.TelefonoRepetido
+	case 4:
 		r.TelefonoCodigoArea = NewUnionNullString()
 
 		return r.TelefonoCodigoArea
-	case 4:
+	case 5:
 		r.TelefonoNumero = NewUnionNullString()
 
 		return r.TelefonoNumero
-	case 5:
+	case 6:
 		r.Categoria = NewUnionNullString()
 
 		return r.Categoria
-	case 6:
+	case 7:
 		r.Cuando = NewUnionNullLong()
 
 		return r.Cuando
-	case 7:
+	case 8:
 		r.Paridad = NewUnionNullBool()
 
 		return r.Paridad
-	case 8:
+	case 9:
 		r.CodigoSolicitanteSAP = NewUnionNullString()
 
 		return r.CodigoSolicitanteSAP
-	case 9:
+	case 10:
 		r.DescripcionSolicitanteSAP = NewUnionNullString()
 
 		return r.DescripcionSolicitanteSAP
-	case 10:
+	case 11:
 		r.DireccionSolicitanteSAP = NewUnionNullString()
 
 		return r.DireccionSolicitanteSAP
-	case 11:
+	case 12:
 		r.PisoSolicitanteSAP = NewUnionNullString()
 
 		return r.PisoSolicitanteSAP
-	case 12:
+	case 13:
 		r.DtoSolicitanteSAP = NewUnionNullString()
 
 		return r.DtoSolicitanteSAP
-	case 13:
+	case 14:
 		r.CodigoPostalSolicitanteSAP = NewUnionNullString()
 
 		return r.CodigoPostalSolicitanteSAP
-	case 14:
+	case 15:
 		r.LocalidadSolicitanteSAP = NewUnionNullString()
 
 		return r.LocalidadSolicitanteSAP
-	case 15:
+	case 16:
 		r.ProvinciaSolicitanteSAP = NewUnionNullString()
 
 		return r.ProvinciaSolicitanteSAP
-	case 16:
+	case 17:
 		r.PaisSolicitanteSAP = NewUnionNullString()
 
 		return r.PaisSolicitanteSAP
-	case 17:
+	case 18:
 		r.CodigoDestinatario = NewUnionNullString()
 
 		return r.CodigoDestinatario
-	case 18:
+	case 19:
 		r.DescripcionDestinatario = NewUnionNullString()
 
 		return r.DescripcionDestinatario
-	case 19:
+	case 20:
 		r.NombreFantasiaDestinatario = NewUnionNullString()
 
 		return r.NombreFantasiaDestinatario
-	case 20:
+	case 21:
 		r.CodigoClienteTMS = NewUnionNullString()
 
 		return r.CodigoClienteTMS
-	case 21:
+	case 22:
 		r.DescripcionTMS = NewUnionNullString()
 
 		return r.DescripcionTMS
-	case 22:
+	case 23:
 		r.Cuit = NewUnionNullString()
 
 		return r.Cuit
-	case 23:
+	case 24:
 		r.ClienteFacturacion = NewUnionNullString()
 
 		return r.ClienteFacturacion
-	case 24:
+	case 25:
 		r.Segmento = NewUnionNullString()
 
 		return r.Segmento
-	case 25:
+	case 26:
 		r.NombreFantasia = NewUnionNullString()
 
 		return r.NombreFantasia
-	case 26:
+	case 27:
 		r.Mail = NewUnionNullString()
 
 		return r.Mail
-	case 27:
+	case 28:
 		r.TieneTN = NewUnionNullBool()
 
 		return r.TieneTN
-	case 28:
+	case 29:
 		r.TieneCC = NewUnionNullBool()
 
 		return r.TieneCC
-	case 29:
+	case 30:
 		r.FechaAlta = NewUnionNullLong()
 
 		return r.FechaAlta
-	case 30:
+	case 31:
 		r.Rubro = NewUnionNullString()
 
 		return r.Rubro
-	case 31:
+	case 32:
 		r.TipoDeFactura = NewUnionNullString()
 
 		return r.TipoDeFactura
-	case 32:
+	case 33:
 		r.CanalDeVenta = NewUnionNullString()
 
 		return r.CanalDeVenta
-	case 33:
+	case 34:
 		r.TipoCliente = NewUnionNullString()
 
 		return r.TipoCliente
@@ -467,96 +478,99 @@ func (r *MaestroCliente) SetDefault(i int) {
 		r.Nombre = nil
 		return
 	case 3:
-		r.TelefonoCodigoArea = nil
+		r.TelefonoRepetido = nil
 		return
 	case 4:
-		r.TelefonoNumero = nil
+		r.TelefonoCodigoArea = nil
 		return
 	case 5:
-		r.Categoria = nil
+		r.TelefonoNumero = nil
 		return
 	case 6:
-		r.Cuando = nil
+		r.Categoria = nil
 		return
 	case 7:
-		r.Paridad = nil
+		r.Cuando = nil
 		return
 	case 8:
-		r.CodigoSolicitanteSAP = nil
+		r.Paridad = nil
 		return
 	case 9:
-		r.DescripcionSolicitanteSAP = nil
+		r.CodigoSolicitanteSAP = nil
 		return
 	case 10:
-		r.DireccionSolicitanteSAP = nil
+		r.DescripcionSolicitanteSAP = nil
 		return
 	case 11:
-		r.PisoSolicitanteSAP = nil
+		r.DireccionSolicitanteSAP = nil
 		return
 	case 12:
-		r.DtoSolicitanteSAP = nil
+		r.PisoSolicitanteSAP = nil
 		return
 	case 13:
-		r.CodigoPostalSolicitanteSAP = nil
+		r.DtoSolicitanteSAP = nil
 		return
 	case 14:
-		r.LocalidadSolicitanteSAP = nil
+		r.CodigoPostalSolicitanteSAP = nil
 		return
 	case 15:
-		r.ProvinciaSolicitanteSAP = nil
+		r.LocalidadSolicitanteSAP = nil
 		return
 	case 16:
-		r.PaisSolicitanteSAP = nil
+		r.ProvinciaSolicitanteSAP = nil
 		return
 	case 17:
-		r.CodigoDestinatario = nil
+		r.PaisSolicitanteSAP = nil
 		return
 	case 18:
-		r.DescripcionDestinatario = nil
+		r.CodigoDestinatario = nil
 		return
 	case 19:
-		r.NombreFantasiaDestinatario = nil
+		r.DescripcionDestinatario = nil
 		return
 	case 20:
-		r.CodigoClienteTMS = nil
+		r.NombreFantasiaDestinatario = nil
 		return
 	case 21:
-		r.DescripcionTMS = nil
+		r.CodigoClienteTMS = nil
 		return
 	case 22:
-		r.Cuit = nil
+		r.DescripcionTMS = nil
 		return
 	case 23:
-		r.ClienteFacturacion = nil
+		r.Cuit = nil
 		return
 	case 24:
-		r.Segmento = nil
+		r.ClienteFacturacion = nil
 		return
 	case 25:
-		r.NombreFantasia = nil
+		r.Segmento = nil
 		return
 	case 26:
-		r.Mail = nil
+		r.NombreFantasia = nil
 		return
 	case 27:
-		r.TieneTN = nil
+		r.Mail = nil
 		return
 	case 28:
-		r.TieneCC = nil
+		r.TieneTN = nil
 		return
 	case 29:
-		r.FechaAlta = nil
+		r.TieneCC = nil
 		return
 	case 30:
-		r.Rubro = nil
+		r.FechaAlta = nil
 		return
 	case 31:
-		r.TipoDeFactura = nil
+		r.Rubro = nil
 		return
 	case 32:
-		r.CanalDeVenta = nil
+		r.TipoDeFactura = nil
 		return
 	case 33:
+		r.CanalDeVenta = nil
+		return
+	case 34:
 		r.TipoCliente = nil
 		return
 	}
@@ -575,96 +589,99 @@ func (r *MaestroCliente) NullField(i int) {
 		r.Nombre = nil
 		return
 	case 3:
-		r.TelefonoCodigoArea = nil
+		r.TelefonoRepetido = nil
 		return
 	case 4:
-		r.TelefonoNumero = nil
+		r.TelefonoCodigoArea = nil
 		return
 	case 5:
-		r.Categoria = nil
+		r.TelefonoNumero = nil
 		return
 	case 6:
-		r.Cuando = nil
+		r.Categoria = nil
 		return
 	case 7:
-		r.Paridad = nil
+		r.Cuando = nil
 		return
 	case 8:
-		r.CodigoSolicitanteSAP = nil
+		r.Paridad = nil
 		return
 	case 9:
-		r.DescripcionSolicitanteSAP = nil
+		r.CodigoSolicitanteSAP = nil
 		return
 	case 10:
-		r.DireccionSolicitanteSAP = nil
+		r.DescripcionSolicitanteSAP = nil
 		return
 	case 11:
-		r.PisoSolicitanteSAP = nil
+		r.DireccionSolicitanteSAP = nil
 		return
 	case 12:
-		r.DtoSolicitanteSAP = nil
+		r.PisoSolicitanteSAP = nil
 		return
 	case 13:
-		r.CodigoPostalSolicitanteSAP = nil
+		r.DtoSolicitanteSAP = nil
 		return
 	case 14:
-		r.LocalidadSolicitanteSAP = nil
+		r.CodigoPostalSolicitanteSAP = nil
 		return
 	case 15:
-		r.ProvinciaSolicitanteSAP = nil
+		r.LocalidadSolicitanteSAP = nil
 		return
 	case 16:
-		r.PaisSolicitanteSAP = nil
+		r.ProvinciaSolicitanteSAP = nil
 		return
 	case 17:
-		r.CodigoDestinatario = nil
+		r.PaisSolicitanteSAP = nil
 		return
 	case 18:
-		r.DescripcionDestinatario = nil
+		r.CodigoDestinatario = nil
 		return
 	case 19:
-		r.NombreFantasiaDestinatario = nil
+		r.DescripcionDestinatario = nil
 		return
 	case 20:
-		r.CodigoClienteTMS = nil
+		r.NombreFantasiaDestinatario = nil
 		return
 	case 21:
-		r.DescripcionTMS = nil
+		r.CodigoClienteTMS = nil
 		return
 	case 22:
-		r.Cuit = nil
+		r.DescripcionTMS = nil
 		return
 	case 23:
-		r.ClienteFacturacion = nil
+		r.Cuit = nil
 		return
 	case 24:
-		r.Segmento = nil
+		r.ClienteFacturacion = nil
 		return
 	case 25:
-		r.NombreFantasia = nil
+		r.Segmento = nil
 		return
 	case 26:
-		r.Mail = nil
+		r.NombreFantasia = nil
 		return
 	case 27:
-		r.TieneTN = nil
+		r.Mail = nil
 		return
 	case 28:
-		r.TieneCC = nil
+		r.TieneTN = nil
 		return
 	case 29:
-		r.FechaAlta = nil
+		r.TieneCC = nil
 		return
 	case 30:
-		r.Rubro = nil
+		r.FechaAlta = nil
 		return
 	case 31:
-		r.TipoDeFactura = nil
+		r.Rubro = nil
 		return
 	case 32:
-		r.CanalDeVenta = nil
+		r.TipoDeFactura = nil
 		return
 	case 33:
+		r.CanalDeVenta = nil
+		return
+	case 34:
 		r.TipoCliente = nil
 		return
 	}
@@ -692,6 +709,10 @@ func (r MaestroCliente) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Nombre"], err = json.Marshal(r.Nombre)
+	if err != nil {
+		return nil, err
+	}
+	output["TelefonoRepetido"], err = json.Marshal(r.TelefonoRepetido)
 	if err != nil {
 		return nil, err
 	}
@@ -876,6 +897,22 @@ func (r *MaestroCliente) UnmarshalJSON(data []byte) error {
 		r.Nombre = NewUnionNullString()
 
 		r.Nombre = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TelefonoRepetido"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TelefonoRepetido); err != nil {
+			return err
+		}
+	} else {
+		r.TelefonoRepetido = NewUnionNullBool()
+
+		r.TelefonoRepetido = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TelefonoCodigoArea"]; ok {
