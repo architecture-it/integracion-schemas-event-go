@@ -49,9 +49,11 @@ type Envio struct {
 	BultoData *UnionNullArrayBultoData `json:"BultoData"`
 
 	GeoPos GeoPos `json:"GeoPos"`
+
+	RetiroDeValor *UnionNullArrayRetiroDeValor `json:"RetiroDeValor"`
 }
 
-const EnvioAvroCRC64Fingerprint = "\xf2\x8d&\xc0֨\xf6\x7f"
+const EnvioAvroCRC64Fingerprint = "\x8c|YMp\xfc\xe1i"
 
 func NewEnvio() Envio {
 	r := Envio{}
@@ -65,6 +67,7 @@ func NewEnvio() Envio {
 	r.BultoData = nil
 	r.GeoPos = NewGeoPos()
 
+	r.RetiroDeValor = nil
 	return r
 }
 
@@ -157,6 +160,10 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayRetiroDeValor(r.RetiroDeValor, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -165,7 +172,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"OrdenEscaneo\",\"type\":\"int\"},{\"name\":\"OrdenEntrega\",\"type\":\"int\"},{\"name\":\"Origen\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroHdrOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"TipoDeServicioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ContratoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FranjaHoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProximaFase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeclarationState\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Componentes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ComponentCode\",\"type\":\"string\"},{\"name\":\"ComponentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"BultoData\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"}],\"name\":\"BultoData\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"GeoPos\",\"type\":{\"fields\":[{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"GeoPos\",\"type\":\"record\"}}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"OrdenEscaneo\",\"type\":\"int\"},{\"name\":\"OrdenEntrega\",\"type\":\"int\"},{\"name\":\"Origen\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroHdrOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"TipoDeServicioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ContratoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FranjaHoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProximaFase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeclarationState\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Componentes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ComponentCode\",\"type\":\"string\"},{\"name\":\"ComponentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"BultoData\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"}],\"name\":\"BultoData\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"GeoPos\",\"type\":{\"fields\":[{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"GeoPos\",\"type\":\"record\"}},{\"default\":null,\"name\":\"RetiroDeValor\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Monto\",\"type\":\"double\"},{\"name\":\"PagoExacto\",\"type\":\"boolean\"}],\"name\":\"RetiroDeValor\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -257,6 +264,10 @@ func (r *Envio) Get(i int) types.Field {
 
 		return w
 
+	case 16:
+		r.RetiroDeValor = NewUnionNullArrayRetiroDeValor()
+
+		return r.RetiroDeValor
 	}
 	panic("Unknown field index")
 }
@@ -287,6 +298,9 @@ func (r *Envio) SetDefault(i int) {
 	case 14:
 		r.BultoData = nil
 		return
+	case 16:
+		r.RetiroDeValor = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -316,6 +330,9 @@ func (r *Envio) NullField(i int) {
 		return
 	case 14:
 		r.BultoData = nil
+		return
+	case 16:
+		r.RetiroDeValor = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -394,6 +411,10 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["GeoPos"], err = json.Marshal(r.GeoPos)
+	if err != nil {
+		return nil, err
+	}
+	output["RetiroDeValor"], err = json.Marshal(r.RetiroDeValor)
 	if err != nil {
 		return nil, err
 	}
@@ -646,6 +667,22 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for GeoPos")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["RetiroDeValor"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RetiroDeValor); err != nil {
+			return err
+		}
+	} else {
+		r.RetiroDeValor = NewUnionNullArrayRetiroDeValor()
+
+		r.RetiroDeValor = nil
 	}
 	return nil
 }

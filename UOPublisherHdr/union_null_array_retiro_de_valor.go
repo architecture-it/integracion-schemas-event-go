@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayRetiroDeValorFromSchema(r io.Reader, schema string
 }
 
 func (r *UnionNullArrayRetiroDeValor) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"Monto\",\"type\":\"double\"},{\"name\":\"PagoExacto\",\"type\":\"boolean\"}],\"name\":\"RetiroDeValor\",\"namespace\":\"Andreani.UOPublisherHdr.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"Monto\",\"type\":\"double\"},{\"name\":\"PagoExacto\",\"type\":\"boolean\"}],\"name\":\"RetiroDeValor\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayRetiroDeValor) SetBoolean(v bool)   { panic("Unsupported operation") }
