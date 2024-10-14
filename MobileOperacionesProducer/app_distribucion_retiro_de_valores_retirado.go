@@ -27,7 +27,7 @@ type AppDistribucionRetiroDeValoresRetirado struct {
 	Usuario Usuario `json:"usuario"`
 }
 
-const AppDistribucionRetiroDeValoresRetiradoAvroCRC64Fingerprint = "*Bh\xe1\tf\xe6D"
+const AppDistribucionRetiroDeValoresRetiradoAvroCRC64Fingerprint = "*B\xdf\a\xd6\xf3\xc3W"
 
 func NewAppDistribucionRetiroDeValoresRetirado() AppDistribucionRetiroDeValoresRetirado {
 	r := AppDistribucionRetiroDeValoresRetirado{}
@@ -89,7 +89,7 @@ func (r AppDistribucionRetiroDeValoresRetirado) Serialize(w io.Writer) error {
 }
 
 func (r AppDistribucionRetiroDeValoresRetirado) Schema() string {
-	return "{\"fields\":[{\"name\":\"pagos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"importeCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Pago\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaGeneracion\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"tareaId\",\"type\":\"int\"}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"username\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"}],\"name\":\"Usuario\",\"type\":\"record\"}}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.AppDistribucionRetiroDeValoresRetirado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"pagos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"montoCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Pago\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaGeneracion\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"unidadOperativa\",\"type\":\"int\"},{\"name\":\"tareaId\",\"type\":\"int\"},{\"name\":\"montoSolicitado\",\"type\":\"double\"}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"username\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"}],\"name\":\"Usuario\",\"type\":\"record\"}}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.AppDistribucionRetiroDeValoresRetirado\",\"type\":\"record\"}"
 }
 
 func (r AppDistribucionRetiroDeValoresRetirado) SchemaName() string {

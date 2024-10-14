@@ -20,14 +20,14 @@ var _ = fmt.Printf
 type Pago struct {
 	TipoPago string `json:"tipoPago"`
 
-	ImporteCobrado float64 `json:"importeCobrado"`
+	MontoCobrado float64 `json:"montoCobrado"`
 
 	Comprobante string `json:"comprobante"`
 
 	Detalles *UnionNullDetallePago `json:"detalles"`
 }
 
-const PagoAvroCRC64Fingerprint = "\xbdc\x8e`X\xb1\"j"
+const PagoAvroCRC64Fingerprint = "\xb9\xd9ۙp\x960\xe4"
 
 func NewPago() Pago {
 	r := Pago{}
@@ -63,7 +63,7 @@ func writePago(r Pago, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteDouble(r.ImporteCobrado, w)
+	err = vm.WriteDouble(r.MontoCobrado, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (r Pago) Serialize(w io.Writer) error {
 }
 
 func (r Pago) Schema() string {
-	return "{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"importeCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Pago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"montoCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Pago\",\"type\":\"record\"}"
 }
 
 func (r Pago) SchemaName() string {
@@ -107,7 +107,7 @@ func (r *Pago) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.Double{Target: &r.ImporteCobrado}
+		w := types.Double{Target: &r.MontoCobrado}
 
 		return w
 
@@ -155,7 +155,7 @@ func (r Pago) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["importeCobrado"], err = json.Marshal(r.ImporteCobrado)
+	output["montoCobrado"], err = json.Marshal(r.MontoCobrado)
 	if err != nil {
 		return nil, err
 	}
@@ -192,18 +192,18 @@ func (r *Pago) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for tipoPago")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["importeCobrado"]; ok {
+		if v, ok := fields["montoCobrado"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ImporteCobrado); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.MontoCobrado); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for importeCobrado")
+		return fmt.Errorf("no value specified for montoCobrado")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["comprobante"]; ok {

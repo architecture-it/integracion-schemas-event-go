@@ -20,10 +20,14 @@ var _ = fmt.Printf
 type Envio struct {
 	NumeroSeguimiento string `json:"numeroSeguimiento"`
 
+	UnidadOperativa int32 `json:"unidadOperativa"`
+
 	TareaId int32 `json:"tareaId"`
+
+	MontoSolicitado float64 `json:"montoSolicitado"`
 }
 
-const EnvioAvroCRC64Fingerprint = "\x1fџbE\"\xb0\xcc"
+const EnvioAvroCRC64Fingerprint = "2\xdd`\x1a\xcf*0\xdf"
 
 func NewEnvio() Envio {
 	r := Envio{}
@@ -59,7 +63,15 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.UnidadOperativa, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteInt(r.TareaId, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteDouble(r.MontoSolicitado, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +83,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"tareaId\",\"type\":\"int\"}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"unidadOperativa\",\"type\":\"int\"},{\"name\":\"tareaId\",\"type\":\"int\"},{\"name\":\"montoSolicitado\",\"type\":\"double\"}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -95,7 +107,17 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 1:
+		w := types.Int{Target: &r.UnidadOperativa}
+
+		return w
+
+	case 2:
 		w := types.Int{Target: &r.TareaId}
+
+		return w
+
+	case 3:
+		w := types.Double{Target: &r.MontoSolicitado}
 
 		return w
 
@@ -131,7 +153,15 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["unidadOperativa"], err = json.Marshal(r.UnidadOperativa)
+	if err != nil {
+		return nil, err
+	}
 	output["tareaId"], err = json.Marshal(r.TareaId)
+	if err != nil {
+		return nil, err
+	}
+	output["montoSolicitado"], err = json.Marshal(r.MontoSolicitado)
 	if err != nil {
 		return nil, err
 	}
@@ -160,6 +190,20 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for numeroSeguimiento")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["unidadOperativa"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UnidadOperativa); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for unidadOperativa")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["tareaId"]; ok {
 			return v
 		}
@@ -172,6 +216,20 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for tareaId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["montoSolicitado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.MontoSolicitado); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for montoSolicitado")
 	}
 	return nil
 }
