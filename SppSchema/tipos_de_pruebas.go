@@ -20,18 +20,18 @@ type TiposDePruebas int32
 
 const (
 	TiposDePruebasALSA TiposDePruebas = 0
-	TiposDePruebasDMS  TiposDePruebas = 1
-	TiposDePruebasCASA TiposDePruebas = 2
+	TiposDePruebasCASA TiposDePruebas = 1
+	TiposDePruebasDMS  TiposDePruebas = 2
 )
 
 func (e TiposDePruebas) String() string {
 	switch e {
 	case TiposDePruebasALSA:
 		return "ALSA"
-	case TiposDePruebasDMS:
-		return "DMS"
 	case TiposDePruebasCASA:
 		return "CASA"
+	case TiposDePruebasDMS:
+		return "DMS"
 	}
 	return "unknown"
 }
@@ -44,10 +44,10 @@ func NewTiposDePruebasValue(raw string) (r TiposDePruebas, err error) {
 	switch raw {
 	case "ALSA":
 		return TiposDePruebasALSA, nil
-	case "DMS":
-		return TiposDePruebasDMS, nil
 	case "CASA":
 		return TiposDePruebasCASA, nil
+	case "DMS":
+		return TiposDePruebasDMS, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for TiposDePruebas: '%s'", raw)

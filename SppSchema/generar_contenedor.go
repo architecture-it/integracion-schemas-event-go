@@ -39,7 +39,7 @@ type GenerarContenedor struct {
 	NroPrecinto *UnionNullString `json:"NroPrecinto"`
 }
 
-const GenerarContenedorAvroCRC64Fingerprint = ";\vym\x01\xb6 o"
+const GenerarContenedorAvroCRC64Fingerprint = "\xe6f\x94\x88m.\xcd\xd7"
 
 func NewGenerarContenedor() GenerarContenedor {
 	r := GenerarContenedor{}
@@ -125,7 +125,7 @@ func (r GenerarContenedor) Serialize(w io.Writer) error {
 }
 
 func (r GenerarContenedor) Schema() string {
-	return "{\"fields\":[{\"name\":\"contenedor\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":[\"null\",{\"fields\":[{\"name\":\"objetos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ListaDeObjetos\",\"type\":\"record\"}]},{\"name\":\"fechaProcesamiento\",\"type\":\"string\"},{\"name\":\"sistemaOrigen\",\"type\":\"string\"},{\"name\":\"sorter\",\"type\":\"string\"},{\"name\":\"sucursalOrigen\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}},{\"name\":\"sucursalDestino\",\"type\":\"Andreani.SppSchema.Events.DatosSucursal\"},{\"name\":\"medioDeExpedicion\",\"type\":{\"name\":\"TiposDePruebas\",\"symbols\":[\"ALSA\",\"DMS\",\"CASA\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"TipoContenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPrecinto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppSchema.Events.GenerarContenedor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contenedor\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":[\"null\",{\"fields\":[{\"name\":\"objetos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ListaDeObjetos\",\"type\":\"record\"}]},{\"name\":\"fechaProcesamiento\",\"type\":\"string\"},{\"name\":\"sistemaOrigen\",\"type\":\"string\"},{\"name\":\"sorter\",\"type\":\"string\"},{\"name\":\"sucursalOrigen\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}},{\"name\":\"sucursalDestino\",\"type\":\"Andreani.SppSchema.Events.DatosSucursal\"},{\"name\":\"medioDeExpedicion\",\"type\":{\"name\":\"TiposDePruebas\",\"symbols\":[\"ALSA\",\"CASA\",\"DMS\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"TipoContenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPrecinto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppSchema.Events.GenerarContenedor\",\"type\":\"record\"}"
 }
 
 func (r GenerarContenedor) SchemaName() string {
