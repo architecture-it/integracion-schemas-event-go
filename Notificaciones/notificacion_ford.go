@@ -32,10 +32,14 @@ type NotificacionFord struct {
 
 	CodigoPostalDestino *UnionNullLong `json:"codigoPostalDestino"`
 
+	Eda *UnionNullString `json:"eda"`
+
+	Concesionario MaestroConcesionario `json:"concesionario"`
+
 	Detalles []DetalleFord `json:"detalles"`
 }
 
-const NotificacionFordAvroCRC64Fingerprint = "\xe2\x11\x16\xc4\xec5@m"
+const NotificacionFordAvroCRC64Fingerprint = "Fv\xc3F\xb2\x85\x9eC"
 
 func NewNotificacionFord() NotificacionFord {
 	r := NotificacionFord{}
@@ -46,6 +50,9 @@ func NewNotificacionFord() NotificacionFord {
 	r.MailDestino = nil
 	r.NombreDestinatario = nil
 	r.CodigoPostalDestino = nil
+	r.Eda = nil
+	r.Concesionario = NewMaestroConcesionario()
+
 	r.Detalles = make([]DetalleFord, 0)
 
 	return r
@@ -104,6 +111,14 @@ func writeNotificacionFord(r NotificacionFord, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Eda, w)
+	if err != nil {
+		return err
+	}
+	err = writeMaestroConcesionario(r.Concesionario, w)
+	if err != nil {
+		return err
+	}
 	err = writeArrayDetalleFord(r.Detalles, w)
 	if err != nil {
 		return err
@@ -116,7 +131,7 @@ func (r NotificacionFord) Serialize(w io.Writer) error {
 }
 
 func (r NotificacionFord) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"internalCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mailDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"long\"]},{\"name\":\"detalles\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notaDespacho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"fechaAdmision\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaInsercion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"DetalleFord\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.NotificacionFord\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"internalCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mailDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"eda\",\"type\":[\"null\",\"string\"]},{\"name\":\"concesionario\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"id_concesionario\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"razon_social\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cp_origen\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"cp_destino\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"codigo_cliente\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"sla\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"corte_horario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_6\",\"type\":[\"null\",\"string\"]}],\"name\":\"MaestroConcesionario\",\"type\":\"record\"}},{\"name\":\"detalles\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notaDespacho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"fechaAdmision\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaInsercion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"DetalleFord\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.NotificacionFord\",\"type\":\"record\"}"
 }
 
 func (r NotificacionFord) SchemaName() string {
@@ -163,6 +178,17 @@ func (r *NotificacionFord) Get(i int) types.Field {
 
 		return r.CodigoPostalDestino
 	case 7:
+		r.Eda = NewUnionNullString()
+
+		return r.Eda
+	case 8:
+		r.Concesionario = NewMaestroConcesionario()
+
+		w := types.Record{Target: &r.Concesionario}
+
+		return w
+
+	case 9:
 		r.Detalles = make([]DetalleFord, 0)
 
 		w := ArrayDetalleFordWrapper{Target: &r.Detalles}
@@ -196,6 +222,9 @@ func (r *NotificacionFord) SetDefault(i int) {
 	case 6:
 		r.CodigoPostalDestino = nil
 		return
+	case 7:
+		r.Eda = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -222,6 +251,9 @@ func (r *NotificacionFord) NullField(i int) {
 		return
 	case 6:
 		r.CodigoPostalDestino = nil
+		return
+	case 7:
+		r.Eda = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -264,6 +296,14 @@ func (r NotificacionFord) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["codigoPostalDestino"], err = json.Marshal(r.CodigoPostalDestino)
+	if err != nil {
+		return nil, err
+	}
+	output["eda"], err = json.Marshal(r.Eda)
+	if err != nil {
+		return nil, err
+	}
+	output["concesionario"], err = json.Marshal(r.Concesionario)
 	if err != nil {
 		return nil, err
 	}
@@ -392,6 +432,36 @@ func (r *NotificacionFord) UnmarshalJSON(data []byte) error {
 		r.CodigoPostalDestino = NewUnionNullLong()
 
 		r.CodigoPostalDestino = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["eda"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Eda); err != nil {
+			return err
+		}
+	} else {
+		r.Eda = NewUnionNullString()
+
+		r.Eda = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["concesionario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Concesionario); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for concesionario")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["detalles"]; ok {
