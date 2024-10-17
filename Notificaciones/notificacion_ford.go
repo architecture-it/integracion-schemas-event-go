@@ -34,12 +34,12 @@ type NotificacionFord struct {
 
 	Eda *UnionNullString `json:"eda"`
 
-	Concesionario MaestroConcesionario `json:"concesionario"`
+	Concesionario *UnionNullMaestroConcesionario `json:"concesionario"`
 
 	Detalles []DetalleFord `json:"detalles"`
 }
 
-const NotificacionFordAvroCRC64Fingerprint = "Fv\xc3F\xb2\x85\x9eC"
+const NotificacionFordAvroCRC64Fingerprint = "\x187\x81ݷ\xd5\xc8\xdc"
 
 func NewNotificacionFord() NotificacionFord {
 	r := NotificacionFord{}
@@ -51,8 +51,6 @@ func NewNotificacionFord() NotificacionFord {
 	r.NombreDestinatario = nil
 	r.CodigoPostalDestino = nil
 	r.Eda = nil
-	r.Concesionario = NewMaestroConcesionario()
-
 	r.Detalles = make([]DetalleFord, 0)
 
 	return r
@@ -115,7 +113,7 @@ func writeNotificacionFord(r NotificacionFord, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeMaestroConcesionario(r.Concesionario, w)
+	err = writeUnionNullMaestroConcesionario(r.Concesionario, w)
 	if err != nil {
 		return err
 	}
@@ -131,7 +129,7 @@ func (r NotificacionFord) Serialize(w io.Writer) error {
 }
 
 func (r NotificacionFord) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"internalCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mailDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"eda\",\"type\":[\"null\",\"string\"]},{\"name\":\"concesionario\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"id_concesionario\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"razon_social\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cp_origen\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"cp_destino\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"codigo_cliente\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"sla\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"corte_horario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_6\",\"type\":[\"null\",\"string\"]}],\"name\":\"MaestroConcesionario\",\"type\":\"record\"}},{\"name\":\"detalles\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notaDespacho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"fechaAdmision\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaInsercion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"DetalleFord\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.NotificacionFord\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"internalCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mailDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"eda\",\"type\":[\"null\",\"string\"]},{\"name\":\"concesionario\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id_concesionario\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"razon_social\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cp_origen\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"cp_destino\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"codigo_cliente\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"sla\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"corte_horario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email_6\",\"type\":[\"null\",\"string\"]}],\"name\":\"MaestroConcesionario\",\"type\":\"record\"}]},{\"name\":\"detalles\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"notaDespacho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"fechaAdmision\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaInsercion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"DetalleFord\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.NotificacionFord\",\"type\":\"record\"}"
 }
 
 func (r NotificacionFord) SchemaName() string {
@@ -182,12 +180,9 @@ func (r *NotificacionFord) Get(i int) types.Field {
 
 		return r.Eda
 	case 8:
-		r.Concesionario = NewMaestroConcesionario()
+		r.Concesionario = NewUnionNullMaestroConcesionario()
 
-		w := types.Record{Target: &r.Concesionario}
-
-		return w
-
+		return r.Concesionario
 	case 9:
 		r.Detalles = make([]DetalleFord, 0)
 
@@ -254,6 +249,9 @@ func (r *NotificacionFord) NullField(i int) {
 		return
 	case 7:
 		r.Eda = nil
+		return
+	case 8:
+		r.Concesionario = nil
 		return
 	}
 	panic("Not a nullable field index")
