@@ -20,10 +20,10 @@ var _ = fmt.Printf
 type NotificacionQR struct {
 	OrdenId string `json:"ordenId"`
 
-	Status string `json:"status"`
+	Status *UnionNullString `json:"status"`
 }
 
-const NotificacionQRAvroCRC64Fingerprint = ",\fI\x0e\xa8\xa6{\xb4"
+const NotificacionQRAvroCRC64Fingerprint = "\xd8l\xd5\x16G\xaa\xad\xa5"
 
 func NewNotificacionQR() NotificacionQR {
 	r := NotificacionQR{}
@@ -59,7 +59,7 @@ func writeNotificacionQR(r NotificacionQR, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Status, w)
+	err = writeUnionNullString(r.Status, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +71,7 @@ func (r NotificacionQR) Serialize(w io.Writer) error {
 }
 
 func (r NotificacionQR) Schema() string {
-	return "{\"fields\":[{\"name\":\"ordenId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"}],\"name\":\"Andreani.Flex.Events.Record.NotificacionQR\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ordenId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Flex.Events.Record.NotificacionQR\",\"type\":\"record\"}"
 }
 
 func (r NotificacionQR) SchemaName() string {
@@ -95,10 +95,9 @@ func (r *NotificacionQR) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Status}
+		r.Status = NewUnionNullString()
 
-		return w
-
+		return r.Status
 	}
 	panic("Unknown field index")
 }
@@ -111,6 +110,9 @@ func (r *NotificacionQR) SetDefault(i int) {
 
 func (r *NotificacionQR) NullField(i int) {
 	switch i {
+	case 1:
+		r.Status = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
