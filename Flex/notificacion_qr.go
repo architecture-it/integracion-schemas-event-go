@@ -21,9 +21,11 @@ type NotificacionQR struct {
 	OrdenId string `json:"ordenId"`
 
 	Status *UnionNullString `json:"status"`
+
+	SubStatus *UnionNullString `json:"subStatus"`
 }
 
-const NotificacionQRAvroCRC64Fingerprint = "\xd8l\xd5\x16G\xaa\xad\xa5"
+const NotificacionQRAvroCRC64Fingerprint = "\xc0\xbb\xf6\x84\x7f\x1e\xca\xc0"
 
 func NewNotificacionQR() NotificacionQR {
 	r := NotificacionQR{}
@@ -63,6 +65,10 @@ func writeNotificacionQR(r NotificacionQR, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.SubStatus, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -71,7 +77,7 @@ func (r NotificacionQR) Serialize(w io.Writer) error {
 }
 
 func (r NotificacionQR) Schema() string {
-	return "{\"fields\":[{\"name\":\"ordenId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Flex.Events.Record.NotificacionQR\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ordenId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":[\"null\",\"string\"]},{\"name\":\"subStatus\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Flex.Events.Record.NotificacionQR\",\"type\":\"record\"}"
 }
 
 func (r NotificacionQR) SchemaName() string {
@@ -98,6 +104,10 @@ func (r *NotificacionQR) Get(i int) types.Field {
 		r.Status = NewUnionNullString()
 
 		return r.Status
+	case 2:
+		r.SubStatus = NewUnionNullString()
+
+		return r.SubStatus
 	}
 	panic("Unknown field index")
 }
@@ -112,6 +122,9 @@ func (r *NotificacionQR) NullField(i int) {
 	switch i {
 	case 1:
 		r.Status = nil
+		return
+	case 2:
+		r.SubStatus = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -134,6 +147,10 @@ func (r NotificacionQR) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["status"], err = json.Marshal(r.Status)
+	if err != nil {
+		return nil, err
+	}
+	output["subStatus"], err = json.Marshal(r.SubStatus)
 	if err != nil {
 		return nil, err
 	}
@@ -174,6 +191,20 @@ func (r *NotificacionQR) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for status")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["subStatus"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SubStatus); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for subStatus")
 	}
 	return nil
 }
