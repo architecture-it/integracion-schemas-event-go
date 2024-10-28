@@ -24,10 +24,10 @@ type Envio struct {
 
 	TareaId int32 `json:"tareaId"`
 
-	MontoSolicitado float64 `json:"montoSolicitado"`
+	MontoSolicitado string `json:"montoSolicitado"`
 }
 
-const EnvioAvroCRC64Fingerprint = "2\xdd`\x1a\xcf*0\xdf"
+const EnvioAvroCRC64Fingerprint = "K\xf4\x96D\xed\x9f\xe9\xf1"
 
 func NewEnvio() Envio {
 	r := Envio{}
@@ -71,7 +71,7 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteDouble(r.MontoSolicitado, w)
+	err = vm.WriteString(r.MontoSolicitado, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"unidadOperativa\",\"type\":\"int\"},{\"name\":\"tareaId\",\"type\":\"int\"},{\"name\":\"montoSolicitado\",\"type\":\"double\"}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"unidadOperativa\",\"type\":\"int\"},{\"name\":\"tareaId\",\"type\":\"int\"},{\"name\":\"montoSolicitado\",\"type\":\"string\"}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -117,7 +117,7 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.Double{Target: &r.MontoSolicitado}
+		w := types.String{Target: &r.MontoSolicitado}
 
 		return w
 

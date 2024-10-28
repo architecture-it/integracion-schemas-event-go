@@ -20,14 +20,14 @@ var _ = fmt.Printf
 type Pago struct {
 	TipoPago string `json:"tipoPago"`
 
-	MontoCobrado float64 `json:"montoCobrado"`
+	MontoCobrado string `json:"montoCobrado"`
 
 	Comprobante string `json:"comprobante"`
 
 	Detalles *UnionNullDetallePago `json:"detalles"`
 }
 
-const PagoAvroCRC64Fingerprint = "\xb9\xd9ۙp\x960\xe4"
+const PagoAvroCRC64Fingerprint = "\x8fԫ\x836k*\x0e"
 
 func NewPago() Pago {
 	r := Pago{}
@@ -63,7 +63,7 @@ func writePago(r Pago, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteDouble(r.MontoCobrado, w)
+	err = vm.WriteString(r.MontoCobrado, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (r Pago) Serialize(w io.Writer) error {
 }
 
 func (r Pago) Schema() string {
-	return "{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"montoCobrado\",\"type\":\"double\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Pago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"montoCobrado\",\"type\":\"string\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Pago\",\"type\":\"record\"}"
 }
 
 func (r Pago) SchemaName() string {
@@ -107,7 +107,7 @@ func (r *Pago) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.Double{Target: &r.MontoCobrado}
+		w := types.String{Target: &r.MontoCobrado}
 
 		return w
 
