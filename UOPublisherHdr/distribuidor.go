@@ -27,19 +27,15 @@ type Distribuidor struct {
 	Apellido *UnionNullString `json:"Apellido"`
 
 	Movilidad *UnionNullInt `json:"Movilidad"`
-
-	Referencias []DistribuidorReferencia `json:"Referencias"`
 }
 
-const DistribuidorAvroCRC64Fingerprint = "\xcbJo\x04F\xbc\x95`"
+const DistribuidorAvroCRC64Fingerprint = "כ^\xa0W\xc8{\xea"
 
 func NewDistribuidor() Distribuidor {
 	r := Distribuidor{}
 	r.Nombre = nil
 	r.Apellido = nil
 	r.Movilidad = nil
-	r.Referencias = make([]DistribuidorReferencia, 0)
-
 	return r
 }
 
@@ -88,10 +84,6 @@ func writeDistribuidor(r Distribuidor, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayDistribuidorReferencia(r.Referencias, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -100,7 +92,7 @@ func (r Distribuidor) Serialize(w io.Writer) error {
 }
 
 func (r Distribuidor) Schema() string {
-	return "{\"fields\":[{\"name\":\"Patente\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Movilidad\",\"type\":[\"null\",\"int\"]},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Origen\",\"type\":\"string\"},{\"name\":\"Sucursal\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Codigo\",\"type\":\"string\"}],\"name\":\"DistribuidorReferencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Distribuidor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Patente\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Movilidad\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Distribuidor\",\"type\":\"record\"}"
 }
 
 func (r Distribuidor) SchemaName() string {
@@ -140,13 +132,6 @@ func (r *Distribuidor) Get(i int) types.Field {
 		r.Movilidad = NewUnionNullInt()
 
 		return r.Movilidad
-	case 5:
-		r.Referencias = make([]DistribuidorReferencia, 0)
-
-		w := ArrayDistribuidorReferenciaWrapper{Target: &r.Referencias}
-
-		return w
-
 	}
 	panic("Unknown field index")
 }
@@ -210,10 +195,6 @@ func (r Distribuidor) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Movilidad"], err = json.Marshal(r.Movilidad)
-	if err != nil {
-		return nil, err
-	}
-	output["Referencias"], err = json.Marshal(r.Referencias)
 	if err != nil {
 		return nil, err
 	}
@@ -302,20 +283,6 @@ func (r *Distribuidor) UnmarshalJSON(data []byte) error {
 		r.Movilidad = NewUnionNullInt()
 
 		r.Movilidad = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Referencias"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Referencias); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Referencias")
 	}
 	return nil
 }
