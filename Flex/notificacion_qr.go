@@ -18,14 +18,14 @@ import (
 var _ = fmt.Printf
 
 type NotificacionQR struct {
-	OrdenId string `json:"ordenId"`
+	ShipmentId string `json:"shipmentId"`
 
 	Status *UnionNullString `json:"status"`
 
 	SubStatus *UnionNullString `json:"subStatus"`
 }
 
-const NotificacionQRAvroCRC64Fingerprint = "\xc0\xbb\xf6\x84\x7f\x1e\xca\xc0"
+const NotificacionQRAvroCRC64Fingerprint = "\xf8\x84M\ahD\xc8\x1a"
 
 func NewNotificacionQR() NotificacionQR {
 	r := NotificacionQR{}
@@ -57,7 +57,7 @@ func DeserializeNotificacionQRFromSchema(r io.Reader, schema string) (Notificaci
 
 func writeNotificacionQR(r NotificacionQR, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.OrdenId, w)
+	err = vm.WriteString(r.ShipmentId, w)
 	if err != nil {
 		return err
 	}
@@ -77,7 +77,7 @@ func (r NotificacionQR) Serialize(w io.Writer) error {
 }
 
 func (r NotificacionQR) Schema() string {
-	return "{\"fields\":[{\"name\":\"ordenId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":[\"null\",\"string\"]},{\"name\":\"subStatus\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Flex.Events.Record.NotificacionQR\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"shipmentId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":[\"null\",\"string\"]},{\"name\":\"subStatus\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Flex.Events.Record.NotificacionQR\",\"type\":\"record\"}"
 }
 
 func (r NotificacionQR) SchemaName() string {
@@ -96,7 +96,7 @@ func (_ NotificacionQR) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *NotificacionQR) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.OrdenId}
+		w := types.String{Target: &r.ShipmentId}
 
 		return w
 
@@ -142,7 +142,7 @@ func (_ NotificacionQR) AvroCRC64Fingerprint() []byte {
 func (r NotificacionQR) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["ordenId"], err = json.Marshal(r.OrdenId)
+	output["shipmentId"], err = json.Marshal(r.ShipmentId)
 	if err != nil {
 		return nil, err
 	}
@@ -165,18 +165,18 @@ func (r *NotificacionQR) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["ordenId"]; ok {
+		if v, ok := fields["shipmentId"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.OrdenId); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ShipmentId); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ordenId")
+		return fmt.Errorf("no value specified for shipmentId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["status"]; ok {
