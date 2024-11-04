@@ -49,7 +49,7 @@ type Series struct {
 	NumeroLineaAsn *UnionNullString `json:"NumeroLineaAsn"`
 }
 
-const SeriesAvroCRC64Fingerprint = "\x82\x93i\x97Z\xf5\xe0\xdd"
+const SeriesAvroCRC64Fingerprint = "\xe2\x7f\xe4\xcc\xed\xa92%"
 
 func NewSeries() Series {
 	r := Series{}
@@ -164,11 +164,11 @@ func (r Series) Serialize(w io.Writer) error {
 }
 
 func (r Series) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"SKU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroSerieCorto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EtiquetaContenedora\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GTIN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecepcionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroLineaAsn\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionCompletadoCommon.Series\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"SKU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroSerie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroSerieCorto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EtiquetaContenedora\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GTIN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IOTHER10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RecepcionWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroLineaAsn\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhRecepcion.Events.RecepcionEliminadaCommon.Series\",\"type\":\"record\"}"
 }
 
 func (r Series) SchemaName() string {
-	return "Andreani.EventoWhRecepcion.Events.RecepcionCompletadoCommon.Series"
+	return "Andreani.EventoWhRecepcion.Events.RecepcionEliminadaCommon.Series"
 }
 
 func (_ Series) SetBoolean(v bool)    { panic("Unsupported operation") }
