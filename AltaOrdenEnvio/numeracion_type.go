@@ -22,6 +22,7 @@ const (
 	NumeracionTypeB2B             NumeracionType = 0
 	NumeracionTypeB2C             NumeracionType = 1
 	NumeracionTypeAgrupadorBultos NumeracionType = 2
+	NumeracionTypeDMS             NumeracionType = 3
 )
 
 func (e NumeracionType) String() string {
@@ -32,6 +33,8 @@ func (e NumeracionType) String() string {
 		return "B2C"
 	case NumeracionTypeAgrupadorBultos:
 		return "AgrupadorBultos"
+	case NumeracionTypeDMS:
+		return "DMS"
 	}
 	return "unknown"
 }
@@ -48,6 +51,8 @@ func NewNumeracionTypeValue(raw string) (r NumeracionType, err error) {
 		return NumeracionTypeB2C, nil
 	case "AgrupadorBultos":
 		return NumeracionTypeAgrupadorBultos, nil
+	case "DMS":
+		return NumeracionTypeDMS, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for NumeracionType: '%s'", raw)
