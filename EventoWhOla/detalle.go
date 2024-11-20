@@ -159,12 +159,60 @@ type Detalle struct {
 	ValidaSerieWos string `json:"ValidaSerieWos"`
 
 	OCDFLAG string `json:"OCDFLAG"`
+
+	ValidadCantidadWosMaq float32 `json:"ValidadCantidadWosMaq"`
+
+	DESCR string `json:"DESCR"`
+
+	ALTSKU string `json:"ALTSKU"`
+
+	SERIALKEY int32 `json:"SERIALKEY"`
+
+	STDCUBE float32 `json:"STDCUBE"`
+
+	SNUM_MASK string `json:"SNUM_MASK"`
+
+	EXT_UDF_LKUP1 string `json:"EXT_UDF_LKUP1"`
+
+	EXT_UDF_LKUP7 string `json:"EXT_UDF_LKUP7"`
+
+	EXT_UDF_LKUP4 string `json:"EXT_UDF_LKUP4"`
+
+	EXT_UDF_LKUP2 string `json:"EXT_UDF_LKUP2"`
+
+	EXT_UDF_LKUP3 string `json:"EXT_UDF_LKUP3"`
+
+	ORDERDATE *UnionNullLong `json:"ORDERDATE"`
+
+	O_EXT_UDF_STR6 string `json:"O_EXT_UDF_STR6"`
+
+	EXTERNORDERKEY string `json:"EXTERNORDERKEY"`
+
+	O_EXT_UDF_LKUP1 string `json:"O_EXT_UDF_LKUP1"`
+
+	O_EXT_UDF_LKUP2 string `json:"O_EXT_UDF_LKUP2"`
+
+	PRIORITY string `json:"PRIORITY"`
+
+	C_ZIP string `json:"C_ZIP"`
+
+	C_COMPANY string `json:"C_COMPANY"`
+
+	EXTERNALORDERKEY2 string `json:"EXTERNALORDERKEY2"`
+
+	EXT_UDF_STR11 string `json:"EXT_UDF_STR11"`
+
+	SUSR5 string `json:"SUSR5"`
+
+	EDITDATE *UnionNullLong `json:"EDITDATE"`
 }
 
-const DetalleAvroCRC64Fingerprint = ")\xcd\xf0\r/k\xff\x88"
+const DetalleAvroCRC64Fingerprint = "\xcc\x1d\xbf>\x1a\x93\x9ao"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
+	r.ORDERDATE = nil
+	r.EDITDATE = nil
 	return r
 }
 
@@ -477,6 +525,98 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteFloat(r.ValidadCantidadWosMaq, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.DESCR, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.ALTSKU, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteInt(r.SERIALKEY, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.STDCUBE, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.SNUM_MASK, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.EXT_UDF_LKUP1, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.EXT_UDF_LKUP7, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.EXT_UDF_LKUP4, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.EXT_UDF_LKUP2, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.EXT_UDF_LKUP3, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.ORDERDATE, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.O_EXT_UDF_STR6, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.EXTERNORDERKEY, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.O_EXT_UDF_LKUP1, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.O_EXT_UDF_LKUP2, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.PRIORITY, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.C_ZIP, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.C_COMPANY, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.EXTERNALORDERKEY2, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.EXT_UDF_STR11, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.SUSR5, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.EDITDATE, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -485,7 +625,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"TaskDetailKey\",\"type\":\"string\"},{\"name\":\"TaskType\",\"type\":\"string\"},{\"name\":\"StorerKey\",\"type\":\"string\"},{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Lot\",\"type\":\"string\"},{\"name\":\"UOM\",\"type\":\"string\"},{\"name\":\"UOMQty\",\"type\":\"int\"},{\"name\":\"Qty\",\"type\":\"int\"},{\"name\":\"FromLoc\",\"type\":\"string\"},{\"name\":\"LogicalFromLoc\",\"type\":\"string\"},{\"name\":\"FromID\",\"type\":\"string\"},{\"name\":\"ToLoc\",\"type\":\"string\"},{\"name\":\"LogicalToLoc\",\"type\":\"string\"},{\"name\":\"ToID\",\"type\":\"string\"},{\"name\":\"CaseID\",\"type\":\"string\"},{\"name\":\"PickMethod\",\"type\":\"string\"},{\"name\":\"Status\",\"type\":\"string\"},{\"name\":\"StatusMsg\",\"type\":\"string\"},{\"name\":\"Priority\",\"type\":\"string\"},{\"name\":\"SourcePriority\",\"type\":\"string\"},{\"name\":\"HoldKey\",\"type\":\"string\"},{\"name\":\"UserKey\",\"type\":\"string\"},{\"name\":\"UserPosition\",\"type\":\"string\"},{\"name\":\"UserKeyOverride\",\"type\":\"string\"},{\"name\":\"StartTime\",\"type\":\"string\"},{\"name\":\"EndTime\",\"type\":\"string\"},{\"name\":\"SourceType\",\"type\":\"string\"},{\"name\":\"SourceKey\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"OrderKey\",\"type\":\"string\"},{\"name\":\"OrderLineNumber\",\"type\":\"string\"},{\"name\":\"ListKey\",\"type\":\"string\"},{\"name\":\"WaveKey\",\"type\":\"string\"},{\"name\":\"ReasonKey\",\"type\":\"string\"},{\"name\":\"Message01\",\"type\":\"string\"},{\"name\":\"Message02\",\"type\":\"string\"},{\"name\":\"Message03\",\"type\":\"string\"},{\"name\":\"Door\",\"type\":\"string\"},{\"name\":\"Route\",\"type\":\"string\"},{\"name\":\"Stop\",\"type\":\"string\"},{\"name\":\"PutawayZone\",\"type\":\"string\"},{\"name\":\"Altsku\",\"type\":\"string\"},{\"name\":\"EXT_UDF_STR1\",\"type\":\"string\"},{\"name\":\"EXT_UDF_LKUP5\",\"type\":\"string\"},{\"name\":\"LOTTABLE01\",\"type\":\"string\"},{\"name\":\"LOTTABLE02\",\"type\":\"string\"},{\"name\":\"LOTTABLE03\",\"type\":\"string\"},{\"name\":\"LOTTABLE04\",\"type\":\"string\"},{\"name\":\"LOTTABLE05\",\"type\":\"string\"},{\"name\":\"LOTTABLE06\",\"type\":\"string\"},{\"name\":\"LOTTABLE07\",\"type\":\"string\"},{\"name\":\"LOTTABLE08\",\"type\":\"string\"},{\"name\":\"LOTTABLE09\",\"type\":\"string\"},{\"name\":\"LOTTABLE10\",\"type\":\"string\"},{\"name\":\"LOTTABLE11\",\"type\":\"string\"},{\"name\":\"LOTTABLE12\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR1\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR2\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR3\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR4\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR5\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR6\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR7\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR8\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR9\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR10\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR11\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR12\",\"type\":\"string\"},{\"name\":\"ValidaLoteWos\",\"type\":\"string\"},{\"name\":\"ValidaSerieWos\",\"type\":\"string\"},{\"name\":\"OCDFLAG\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhOla.Events.LanzadaWosPickingCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TaskDetailKey\",\"type\":\"string\"},{\"name\":\"TaskType\",\"type\":\"string\"},{\"name\":\"StorerKey\",\"type\":\"string\"},{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Lot\",\"type\":\"string\"},{\"name\":\"UOM\",\"type\":\"string\"},{\"name\":\"UOMQty\",\"type\":\"int\"},{\"name\":\"Qty\",\"type\":\"int\"},{\"name\":\"FromLoc\",\"type\":\"string\"},{\"name\":\"LogicalFromLoc\",\"type\":\"string\"},{\"name\":\"FromID\",\"type\":\"string\"},{\"name\":\"ToLoc\",\"type\":\"string\"},{\"name\":\"LogicalToLoc\",\"type\":\"string\"},{\"name\":\"ToID\",\"type\":\"string\"},{\"name\":\"CaseID\",\"type\":\"string\"},{\"name\":\"PickMethod\",\"type\":\"string\"},{\"name\":\"Status\",\"type\":\"string\"},{\"name\":\"StatusMsg\",\"type\":\"string\"},{\"name\":\"Priority\",\"type\":\"string\"},{\"name\":\"SourcePriority\",\"type\":\"string\"},{\"name\":\"HoldKey\",\"type\":\"string\"},{\"name\":\"UserKey\",\"type\":\"string\"},{\"name\":\"UserPosition\",\"type\":\"string\"},{\"name\":\"UserKeyOverride\",\"type\":\"string\"},{\"name\":\"StartTime\",\"type\":\"string\"},{\"name\":\"EndTime\",\"type\":\"string\"},{\"name\":\"SourceType\",\"type\":\"string\"},{\"name\":\"SourceKey\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"OrderKey\",\"type\":\"string\"},{\"name\":\"OrderLineNumber\",\"type\":\"string\"},{\"name\":\"ListKey\",\"type\":\"string\"},{\"name\":\"WaveKey\",\"type\":\"string\"},{\"name\":\"ReasonKey\",\"type\":\"string\"},{\"name\":\"Message01\",\"type\":\"string\"},{\"name\":\"Message02\",\"type\":\"string\"},{\"name\":\"Message03\",\"type\":\"string\"},{\"name\":\"Door\",\"type\":\"string\"},{\"name\":\"Route\",\"type\":\"string\"},{\"name\":\"Stop\",\"type\":\"string\"},{\"name\":\"PutawayZone\",\"type\":\"string\"},{\"name\":\"Altsku\",\"type\":\"string\"},{\"name\":\"EXT_UDF_STR1\",\"type\":\"string\"},{\"name\":\"EXT_UDF_LKUP5\",\"type\":\"string\"},{\"name\":\"LOTTABLE01\",\"type\":\"string\"},{\"name\":\"LOTTABLE02\",\"type\":\"string\"},{\"name\":\"LOTTABLE03\",\"type\":\"string\"},{\"name\":\"LOTTABLE04\",\"type\":\"string\"},{\"name\":\"LOTTABLE05\",\"type\":\"string\"},{\"name\":\"LOTTABLE06\",\"type\":\"string\"},{\"name\":\"LOTTABLE07\",\"type\":\"string\"},{\"name\":\"LOTTABLE08\",\"type\":\"string\"},{\"name\":\"LOTTABLE09\",\"type\":\"string\"},{\"name\":\"LOTTABLE10\",\"type\":\"string\"},{\"name\":\"LOTTABLE11\",\"type\":\"string\"},{\"name\":\"LOTTABLE12\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR1\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR2\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR3\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR4\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR5\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR6\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR7\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR8\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR9\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR10\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR11\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR12\",\"type\":\"string\"},{\"name\":\"ValidaLoteWos\",\"type\":\"string\"},{\"name\":\"ValidaSerieWos\",\"type\":\"string\"},{\"name\":\"OCDFLAG\",\"type\":\"string\"},{\"name\":\"ValidadCantidadWosMaq\",\"type\":\"float\"},{\"name\":\"DESCR\",\"type\":\"string\"},{\"name\":\"ALTSKU\",\"type\":\"string\"},{\"name\":\"SERIALKEY\",\"type\":\"int\"},{\"name\":\"STDCUBE\",\"type\":\"float\"},{\"name\":\"SNUM_MASK\",\"type\":\"string\"},{\"name\":\"EXT_UDF_LKUP1\",\"type\":\"string\"},{\"name\":\"EXT_UDF_LKUP7\",\"type\":\"string\"},{\"name\":\"EXT_UDF_LKUP4\",\"type\":\"string\"},{\"name\":\"EXT_UDF_LKUP2\",\"type\":\"string\"},{\"name\":\"EXT_UDF_LKUP3\",\"type\":\"string\"},{\"default\":null,\"name\":\"ORDERDATE\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"O_EXT_UDF_STR6\",\"type\":\"string\"},{\"name\":\"EXTERNORDERKEY\",\"type\":\"string\"},{\"name\":\"O_EXT_UDF_LKUP1\",\"type\":\"string\"},{\"name\":\"O_EXT_UDF_LKUP2\",\"type\":\"string\"},{\"name\":\"PRIORITY\",\"type\":\"string\"},{\"name\":\"C_ZIP\",\"type\":\"string\"},{\"name\":\"C_COMPANY\",\"type\":\"string\"},{\"name\":\"EXTERNALORDERKEY2\",\"type\":\"string\"},{\"name\":\"EXT_UDF_STR11\",\"type\":\"string\"},{\"name\":\"SUSR5\",\"type\":\"string\"},{\"default\":null,\"name\":\"EDITDATE\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhOla.Events.LanzadaWosPickingCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -858,18 +998,143 @@ func (r *Detalle) Get(i int) types.Field {
 
 		return w
 
+	case 71:
+		w := types.Float{Target: &r.ValidadCantidadWosMaq}
+
+		return w
+
+	case 72:
+		w := types.String{Target: &r.DESCR}
+
+		return w
+
+	case 73:
+		w := types.String{Target: &r.ALTSKU}
+
+		return w
+
+	case 74:
+		w := types.Int{Target: &r.SERIALKEY}
+
+		return w
+
+	case 75:
+		w := types.Float{Target: &r.STDCUBE}
+
+		return w
+
+	case 76:
+		w := types.String{Target: &r.SNUM_MASK}
+
+		return w
+
+	case 77:
+		w := types.String{Target: &r.EXT_UDF_LKUP1}
+
+		return w
+
+	case 78:
+		w := types.String{Target: &r.EXT_UDF_LKUP7}
+
+		return w
+
+	case 79:
+		w := types.String{Target: &r.EXT_UDF_LKUP4}
+
+		return w
+
+	case 80:
+		w := types.String{Target: &r.EXT_UDF_LKUP2}
+
+		return w
+
+	case 81:
+		w := types.String{Target: &r.EXT_UDF_LKUP3}
+
+		return w
+
+	case 82:
+		r.ORDERDATE = NewUnionNullLong()
+
+		return r.ORDERDATE
+	case 83:
+		w := types.String{Target: &r.O_EXT_UDF_STR6}
+
+		return w
+
+	case 84:
+		w := types.String{Target: &r.EXTERNORDERKEY}
+
+		return w
+
+	case 85:
+		w := types.String{Target: &r.O_EXT_UDF_LKUP1}
+
+		return w
+
+	case 86:
+		w := types.String{Target: &r.O_EXT_UDF_LKUP2}
+
+		return w
+
+	case 87:
+		w := types.String{Target: &r.PRIORITY}
+
+		return w
+
+	case 88:
+		w := types.String{Target: &r.C_ZIP}
+
+		return w
+
+	case 89:
+		w := types.String{Target: &r.C_COMPANY}
+
+		return w
+
+	case 90:
+		w := types.String{Target: &r.EXTERNALORDERKEY2}
+
+		return w
+
+	case 91:
+		w := types.String{Target: &r.EXT_UDF_STR11}
+
+		return w
+
+	case 92:
+		w := types.String{Target: &r.SUSR5}
+
+		return w
+
+	case 93:
+		r.EDITDATE = NewUnionNullLong()
+
+		return r.EDITDATE
 	}
 	panic("Unknown field index")
 }
 
 func (r *Detalle) SetDefault(i int) {
 	switch i {
+	case 82:
+		r.ORDERDATE = nil
+		return
+	case 93:
+		r.EDITDATE = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Detalle) NullField(i int) {
 	switch i {
+	case 82:
+		r.ORDERDATE = nil
+		return
+	case 93:
+		r.EDITDATE = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -1167,6 +1432,98 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["OCDFLAG"], err = json.Marshal(r.OCDFLAG)
+	if err != nil {
+		return nil, err
+	}
+	output["ValidadCantidadWosMaq"], err = json.Marshal(r.ValidadCantidadWosMaq)
+	if err != nil {
+		return nil, err
+	}
+	output["DESCR"], err = json.Marshal(r.DESCR)
+	if err != nil {
+		return nil, err
+	}
+	output["ALTSKU"], err = json.Marshal(r.ALTSKU)
+	if err != nil {
+		return nil, err
+	}
+	output["SERIALKEY"], err = json.Marshal(r.SERIALKEY)
+	if err != nil {
+		return nil, err
+	}
+	output["STDCUBE"], err = json.Marshal(r.STDCUBE)
+	if err != nil {
+		return nil, err
+	}
+	output["SNUM_MASK"], err = json.Marshal(r.SNUM_MASK)
+	if err != nil {
+		return nil, err
+	}
+	output["EXT_UDF_LKUP1"], err = json.Marshal(r.EXT_UDF_LKUP1)
+	if err != nil {
+		return nil, err
+	}
+	output["EXT_UDF_LKUP7"], err = json.Marshal(r.EXT_UDF_LKUP7)
+	if err != nil {
+		return nil, err
+	}
+	output["EXT_UDF_LKUP4"], err = json.Marshal(r.EXT_UDF_LKUP4)
+	if err != nil {
+		return nil, err
+	}
+	output["EXT_UDF_LKUP2"], err = json.Marshal(r.EXT_UDF_LKUP2)
+	if err != nil {
+		return nil, err
+	}
+	output["EXT_UDF_LKUP3"], err = json.Marshal(r.EXT_UDF_LKUP3)
+	if err != nil {
+		return nil, err
+	}
+	output["ORDERDATE"], err = json.Marshal(r.ORDERDATE)
+	if err != nil {
+		return nil, err
+	}
+	output["O_EXT_UDF_STR6"], err = json.Marshal(r.O_EXT_UDF_STR6)
+	if err != nil {
+		return nil, err
+	}
+	output["EXTERNORDERKEY"], err = json.Marshal(r.EXTERNORDERKEY)
+	if err != nil {
+		return nil, err
+	}
+	output["O_EXT_UDF_LKUP1"], err = json.Marshal(r.O_EXT_UDF_LKUP1)
+	if err != nil {
+		return nil, err
+	}
+	output["O_EXT_UDF_LKUP2"], err = json.Marshal(r.O_EXT_UDF_LKUP2)
+	if err != nil {
+		return nil, err
+	}
+	output["PRIORITY"], err = json.Marshal(r.PRIORITY)
+	if err != nil {
+		return nil, err
+	}
+	output["C_ZIP"], err = json.Marshal(r.C_ZIP)
+	if err != nil {
+		return nil, err
+	}
+	output["C_COMPANY"], err = json.Marshal(r.C_COMPANY)
+	if err != nil {
+		return nil, err
+	}
+	output["EXTERNALORDERKEY2"], err = json.Marshal(r.EXTERNALORDERKEY2)
+	if err != nil {
+		return nil, err
+	}
+	output["EXT_UDF_STR11"], err = json.Marshal(r.EXT_UDF_STR11)
+	if err != nil {
+		return nil, err
+	}
+	output["SUSR5"], err = json.Marshal(r.SUSR5)
+	if err != nil {
+		return nil, err
+	}
+	output["EDITDATE"], err = json.Marshal(r.EDITDATE)
 	if err != nil {
 		return nil, err
 	}
@@ -2173,6 +2530,332 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for OCDFLAG")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ValidadCantidadWosMaq"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ValidadCantidadWosMaq); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for ValidadCantidadWosMaq")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DESCR"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DESCR); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for DESCR")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ALTSKU"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ALTSKU); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for ALTSKU")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["SERIALKEY"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SERIALKEY); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for SERIALKEY")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["STDCUBE"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.STDCUBE); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for STDCUBE")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["SNUM_MASK"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SNUM_MASK); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for SNUM_MASK")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EXT_UDF_LKUP1"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EXT_UDF_LKUP1); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EXT_UDF_LKUP1")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EXT_UDF_LKUP7"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EXT_UDF_LKUP7); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EXT_UDF_LKUP7")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EXT_UDF_LKUP4"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EXT_UDF_LKUP4); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EXT_UDF_LKUP4")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EXT_UDF_LKUP2"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EXT_UDF_LKUP2); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EXT_UDF_LKUP2")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EXT_UDF_LKUP3"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EXT_UDF_LKUP3); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EXT_UDF_LKUP3")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ORDERDATE"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ORDERDATE); err != nil {
+			return err
+		}
+	} else {
+		r.ORDERDATE = NewUnionNullLong()
+
+		r.ORDERDATE = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["O_EXT_UDF_STR6"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.O_EXT_UDF_STR6); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for O_EXT_UDF_STR6")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EXTERNORDERKEY"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EXTERNORDERKEY); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EXTERNORDERKEY")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["O_EXT_UDF_LKUP1"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.O_EXT_UDF_LKUP1); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for O_EXT_UDF_LKUP1")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["O_EXT_UDF_LKUP2"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.O_EXT_UDF_LKUP2); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for O_EXT_UDF_LKUP2")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PRIORITY"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PRIORITY); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for PRIORITY")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["C_ZIP"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.C_ZIP); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for C_ZIP")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["C_COMPANY"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.C_COMPANY); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for C_COMPANY")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EXTERNALORDERKEY2"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EXTERNALORDERKEY2); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EXTERNALORDERKEY2")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EXT_UDF_STR11"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EXT_UDF_STR11); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for EXT_UDF_STR11")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["SUSR5"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SUSR5); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for SUSR5")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["EDITDATE"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EDITDATE); err != nil {
+			return err
+		}
+	} else {
+		r.EDITDATE = NewUnionNullLong()
+
+		r.EDITDATE = nil
 	}
 	return nil
 }
