@@ -20,13 +20,14 @@ var _ = fmt.Printf
 type Cabecera struct {
 	Ola string `json:"Ola"`
 
-	Descripcion string `json:"Descripcion"`
+	Descripcion *UnionNullString `json:"Descripcion"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "\xd3\x1b\xd07\xe8\xb0jR"
+const CabeceraAvroCRC64Fingerprint = "Ǎf{۞\xd9)"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
+	r.Descripcion = nil
 	return r
 }
 
@@ -59,7 +60,7 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Descripcion, w)
+	err = writeUnionNullString(r.Descripcion, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +72,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ola\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhOla.Events.LanzadaWosPickingCommon.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ola\",\"type\":\"string\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhOla.Events.LanzadaWosPickingCommon.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -95,22 +96,27 @@ func (r *Cabecera) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Descripcion}
+		r.Descripcion = NewUnionNullString()
 
-		return w
-
+		return r.Descripcion
 	}
 	panic("Unknown field index")
 }
 
 func (r *Cabecera) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.Descripcion = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Cabecera) NullField(i int) {
 	switch i {
+	case 1:
+		r.Descripcion = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -171,7 +177,9 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Descripcion")
+		r.Descripcion = NewUnionNullString()
+
+		r.Descripcion = nil
 	}
 	return nil
 }

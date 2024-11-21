@@ -18,147 +18,147 @@ import (
 var _ = fmt.Printf
 
 type Detalle struct {
-	TaskDetailKey string `json:"TaskDetailKey"`
+	TaskDetailKey *UnionNullString `json:"TaskDetailKey"`
 
-	TaskType string `json:"TaskType"`
+	TaskType *UnionNullString `json:"TaskType"`
 
-	StorerKey string `json:"StorerKey"`
+	StorerKey *UnionNullString `json:"StorerKey"`
 
-	Sku string `json:"Sku"`
+	Sku *UnionNullString `json:"Sku"`
 
-	Lot string `json:"Lot"`
+	Lot *UnionNullString `json:"Lot"`
 
-	UOM string `json:"UOM"`
+	UOM *UnionNullString `json:"UOM"`
 
-	UOMQty int32 `json:"UOMQty"`
+	UOMQty *UnionNullInt `json:"UOMQty"`
 
-	Qty int32 `json:"Qty"`
+	Qty *UnionNullInt `json:"Qty"`
 
-	FromLoc string `json:"FromLoc"`
+	FromLoc *UnionNullString `json:"FromLoc"`
 
-	LogicalFromLoc string `json:"LogicalFromLoc"`
+	LogicalFromLoc *UnionNullString `json:"LogicalFromLoc"`
 
-	FromID string `json:"FromID"`
+	FromID *UnionNullString `json:"FromID"`
 
-	ToLoc string `json:"ToLoc"`
+	ToLoc *UnionNullString `json:"ToLoc"`
 
-	LogicalToLoc string `json:"LogicalToLoc"`
+	LogicalToLoc *UnionNullString `json:"LogicalToLoc"`
 
-	ToID string `json:"ToID"`
+	ToID *UnionNullString `json:"ToID"`
 
-	CaseID string `json:"CaseID"`
+	CaseID *UnionNullString `json:"CaseID"`
 
-	PickMethod string `json:"PickMethod"`
+	PickMethod *UnionNullString `json:"PickMethod"`
 
-	Status string `json:"Status"`
+	Status *UnionNullString `json:"Status"`
 
-	StatusMsg string `json:"StatusMsg"`
+	StatusMsg *UnionNullString `json:"StatusMsg"`
 
-	Priority string `json:"Priority"`
+	Priority *UnionNullString `json:"Priority"`
 
-	SourcePriority string `json:"SourcePriority"`
+	SourcePriority *UnionNullString `json:"SourcePriority"`
 
-	HoldKey string `json:"HoldKey"`
+	HoldKey *UnionNullString `json:"HoldKey"`
 
-	UserKey string `json:"UserKey"`
+	UserKey *UnionNullString `json:"UserKey"`
 
-	UserPosition string `json:"UserPosition"`
+	UserPosition *UnionNullString `json:"UserPosition"`
 
-	UserKeyOverride string `json:"UserKeyOverride"`
+	UserKeyOverride *UnionNullString `json:"UserKeyOverride"`
 
-	StartTime string `json:"StartTime"`
+	StartTime *UnionNullString `json:"StartTime"`
 
-	EndTime string `json:"EndTime"`
+	EndTime *UnionNullString `json:"EndTime"`
 
-	SourceType string `json:"SourceType"`
+	SourceType *UnionNullString `json:"SourceType"`
 
-	SourceKey string `json:"SourceKey"`
+	SourceKey *UnionNullString `json:"SourceKey"`
 
-	PickDetailKey string `json:"PickDetailKey"`
+	PickDetailKey *UnionNullString `json:"PickDetailKey"`
 
-	OrderKey string `json:"OrderKey"`
+	OrderKey *UnionNullString `json:"OrderKey"`
 
-	OrderLineNumber string `json:"OrderLineNumber"`
+	OrderLineNumber *UnionNullString `json:"OrderLineNumber"`
 
-	ListKey string `json:"ListKey"`
+	ListKey *UnionNullString `json:"ListKey"`
 
-	WaveKey string `json:"WaveKey"`
+	WaveKey *UnionNullString `json:"WaveKey"`
 
-	ReasonKey string `json:"ReasonKey"`
+	ReasonKey *UnionNullString `json:"ReasonKey"`
 
-	Message01 string `json:"Message01"`
+	Message01 *UnionNullString `json:"Message01"`
 
-	Message02 string `json:"Message02"`
+	Message02 *UnionNullString `json:"Message02"`
 
-	Message03 string `json:"Message03"`
+	Message03 *UnionNullString `json:"Message03"`
 
-	Door string `json:"Door"`
+	Door *UnionNullString `json:"Door"`
 
-	Route string `json:"Route"`
+	Route *UnionNullString `json:"Route"`
 
-	Stop string `json:"Stop"`
+	Stop *UnionNullString `json:"Stop"`
 
-	PutawayZone string `json:"PutawayZone"`
+	PutawayZone *UnionNullString `json:"PutawayZone"`
 
-	Altsku string `json:"Altsku"`
+	Altsku *UnionNullString `json:"Altsku"`
 
-	EXT_UDF_STR1 string `json:"EXT_UDF_STR1"`
+	EXT_UDF_STR1 *UnionNullString `json:"EXT_UDF_STR1"`
 
-	EXT_UDF_LKUP5 string `json:"EXT_UDF_LKUP5"`
+	EXT_UDF_LKUP5 *UnionNullString `json:"EXT_UDF_LKUP5"`
 
-	LOTTABLE01 string `json:"LOTTABLE01"`
+	LOTTABLE01 *UnionNullString `json:"LOTTABLE01"`
 
-	LOTTABLE02 string `json:"LOTTABLE02"`
+	LOTTABLE02 *UnionNullString `json:"LOTTABLE02"`
 
-	LOTTABLE03 string `json:"LOTTABLE03"`
+	LOTTABLE03 *UnionNullString `json:"LOTTABLE03"`
 
-	LOTTABLE04 string `json:"LOTTABLE04"`
+	LOTTABLE04 *UnionNullString `json:"LOTTABLE04"`
 
-	LOTTABLE05 string `json:"LOTTABLE05"`
+	LOTTABLE05 *UnionNullString `json:"LOTTABLE05"`
 
-	LOTTABLE06 string `json:"LOTTABLE06"`
+	LOTTABLE06 *UnionNullString `json:"LOTTABLE06"`
 
-	LOTTABLE07 string `json:"LOTTABLE07"`
+	LOTTABLE07 *UnionNullString `json:"LOTTABLE07"`
 
-	LOTTABLE08 string `json:"LOTTABLE08"`
+	LOTTABLE08 *UnionNullString `json:"LOTTABLE08"`
 
-	LOTTABLE09 string `json:"LOTTABLE09"`
+	LOTTABLE09 *UnionNullString `json:"LOTTABLE09"`
 
-	LOTTABLE10 string `json:"LOTTABLE10"`
+	LOTTABLE10 *UnionNullString `json:"LOTTABLE10"`
 
-	LOTTABLE11 string `json:"LOTTABLE11"`
+	LOTTABLE11 *UnionNullString `json:"LOTTABLE11"`
 
-	LOTTABLE12 string `json:"LOTTABLE12"`
+	LOTTABLE12 *UnionNullString `json:"LOTTABLE12"`
 
-	CKEXT_UDF_STR1 string `json:"CKEXT_UDF_STR1"`
+	CKEXT_UDF_STR1 *UnionNullString `json:"CKEXT_UDF_STR1"`
 
-	CKEXT_UDF_STR2 string `json:"CKEXT_UDF_STR2"`
+	CKEXT_UDF_STR2 *UnionNullString `json:"CKEXT_UDF_STR2"`
 
-	CKEXT_UDF_STR3 string `json:"CKEXT_UDF_STR3"`
+	CKEXT_UDF_STR3 *UnionNullString `json:"CKEXT_UDF_STR3"`
 
-	CKEXT_UDF_STR4 string `json:"CKEXT_UDF_STR4"`
+	CKEXT_UDF_STR4 *UnionNullString `json:"CKEXT_UDF_STR4"`
 
-	CKEXT_UDF_STR5 string `json:"CKEXT_UDF_STR5"`
+	CKEXT_UDF_STR5 *UnionNullString `json:"CKEXT_UDF_STR5"`
 
-	CKEXT_UDF_STR6 string `json:"CKEXT_UDF_STR6"`
+	CKEXT_UDF_STR6 *UnionNullString `json:"CKEXT_UDF_STR6"`
 
-	CKEXT_UDF_STR7 string `json:"CKEXT_UDF_STR7"`
+	CKEXT_UDF_STR7 *UnionNullString `json:"CKEXT_UDF_STR7"`
 
-	CKEXT_UDF_STR8 string `json:"CKEXT_UDF_STR8"`
+	CKEXT_UDF_STR8 *UnionNullString `json:"CKEXT_UDF_STR8"`
 
-	CKEXT_UDF_STR9 string `json:"CKEXT_UDF_STR9"`
+	CKEXT_UDF_STR9 *UnionNullString `json:"CKEXT_UDF_STR9"`
 
-	CKEXT_UDF_STR10 string `json:"CKEXT_UDF_STR10"`
+	CKEXT_UDF_STR10 *UnionNullString `json:"CKEXT_UDF_STR10"`
 
-	CKEXT_UDF_STR11 string `json:"CKEXT_UDF_STR11"`
+	CKEXT_UDF_STR11 *UnionNullString `json:"CKEXT_UDF_STR11"`
 
-	CKEXT_UDF_STR12 string `json:"CKEXT_UDF_STR12"`
+	CKEXT_UDF_STR12 *UnionNullString `json:"CKEXT_UDF_STR12"`
 
-	ValidaLoteWos string `json:"ValidaLoteWos"`
+	ValidaLoteWos *UnionNullString `json:"ValidaLoteWos"`
 
-	ValidaSerieWos string `json:"ValidaSerieWos"`
+	ValidaSerieWos *UnionNullString `json:"ValidaSerieWos"`
 
-	OCDFLAG string `json:"OCDFLAG"`
+	OCDFLAG *UnionNullString `json:"OCDFLAG"`
 
 	ValidadCantidadWosMaq *UnionNullFloat `json:"ValidadCantidadWosMaq"`
 
@@ -207,10 +207,81 @@ type Detalle struct {
 	EDITDATE *UnionNullLong `json:"EDITDATE"`
 }
 
-const DetalleAvroCRC64Fingerprint = "n\xc7\x13`\xb6I\x81\xbe"
+const DetalleAvroCRC64Fingerprint = " \x8f=\x03\\я\xaf"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
+	r.TaskDetailKey = nil
+	r.TaskType = nil
+	r.StorerKey = nil
+	r.Sku = nil
+	r.Lot = nil
+	r.UOM = nil
+	r.UOMQty = nil
+	r.Qty = nil
+	r.FromLoc = nil
+	r.LogicalFromLoc = nil
+	r.FromID = nil
+	r.ToLoc = nil
+	r.LogicalToLoc = nil
+	r.ToID = nil
+	r.CaseID = nil
+	r.PickMethod = nil
+	r.Status = nil
+	r.StatusMsg = nil
+	r.Priority = nil
+	r.SourcePriority = nil
+	r.HoldKey = nil
+	r.UserKey = nil
+	r.UserPosition = nil
+	r.UserKeyOverride = nil
+	r.StartTime = nil
+	r.EndTime = nil
+	r.SourceType = nil
+	r.SourceKey = nil
+	r.PickDetailKey = nil
+	r.OrderKey = nil
+	r.OrderLineNumber = nil
+	r.ListKey = nil
+	r.WaveKey = nil
+	r.ReasonKey = nil
+	r.Message01 = nil
+	r.Message02 = nil
+	r.Message03 = nil
+	r.Door = nil
+	r.Route = nil
+	r.Stop = nil
+	r.PutawayZone = nil
+	r.Altsku = nil
+	r.EXT_UDF_STR1 = nil
+	r.EXT_UDF_LKUP5 = nil
+	r.LOTTABLE01 = nil
+	r.LOTTABLE02 = nil
+	r.LOTTABLE03 = nil
+	r.LOTTABLE04 = nil
+	r.LOTTABLE05 = nil
+	r.LOTTABLE06 = nil
+	r.LOTTABLE07 = nil
+	r.LOTTABLE08 = nil
+	r.LOTTABLE09 = nil
+	r.LOTTABLE10 = nil
+	r.LOTTABLE11 = nil
+	r.LOTTABLE12 = nil
+	r.CKEXT_UDF_STR1 = nil
+	r.CKEXT_UDF_STR2 = nil
+	r.CKEXT_UDF_STR3 = nil
+	r.CKEXT_UDF_STR4 = nil
+	r.CKEXT_UDF_STR5 = nil
+	r.CKEXT_UDF_STR6 = nil
+	r.CKEXT_UDF_STR7 = nil
+	r.CKEXT_UDF_STR8 = nil
+	r.CKEXT_UDF_STR9 = nil
+	r.CKEXT_UDF_STR10 = nil
+	r.CKEXT_UDF_STR11 = nil
+	r.CKEXT_UDF_STR12 = nil
+	r.ValidaLoteWos = nil
+	r.ValidaSerieWos = nil
+	r.OCDFLAG = nil
 	r.ValidadCantidadWosMaq = nil
 	r.DESCR = nil
 	r.ALTSKU = nil
@@ -262,287 +333,287 @@ func DeserializeDetalleFromSchema(r io.Reader, schema string) (Detalle, error) {
 
 func writeDetalle(r Detalle, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.TaskDetailKey, w)
+	err = writeUnionNullString(r.TaskDetailKey, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TaskType, w)
+	err = writeUnionNullString(r.TaskType, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.StorerKey, w)
+	err = writeUnionNullString(r.StorerKey, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Sku, w)
+	err = writeUnionNullString(r.Sku, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Lot, w)
+	err = writeUnionNullString(r.Lot, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.UOM, w)
+	err = writeUnionNullString(r.UOM, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.UOMQty, w)
+	err = writeUnionNullInt(r.UOMQty, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.Qty, w)
+	err = writeUnionNullInt(r.Qty, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FromLoc, w)
+	err = writeUnionNullString(r.FromLoc, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LogicalFromLoc, w)
+	err = writeUnionNullString(r.LogicalFromLoc, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FromID, w)
+	err = writeUnionNullString(r.FromID, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ToLoc, w)
+	err = writeUnionNullString(r.ToLoc, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LogicalToLoc, w)
+	err = writeUnionNullString(r.LogicalToLoc, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ToID, w)
+	err = writeUnionNullString(r.ToID, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CaseID, w)
+	err = writeUnionNullString(r.CaseID, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PickMethod, w)
+	err = writeUnionNullString(r.PickMethod, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Status, w)
+	err = writeUnionNullString(r.Status, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.StatusMsg, w)
+	err = writeUnionNullString(r.StatusMsg, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Priority, w)
+	err = writeUnionNullString(r.Priority, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SourcePriority, w)
+	err = writeUnionNullString(r.SourcePriority, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.HoldKey, w)
+	err = writeUnionNullString(r.HoldKey, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.UserKey, w)
+	err = writeUnionNullString(r.UserKey, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.UserPosition, w)
+	err = writeUnionNullString(r.UserPosition, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.UserKeyOverride, w)
+	err = writeUnionNullString(r.UserKeyOverride, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.StartTime, w)
+	err = writeUnionNullString(r.StartTime, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.EndTime, w)
+	err = writeUnionNullString(r.EndTime, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SourceType, w)
+	err = writeUnionNullString(r.SourceType, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SourceKey, w)
+	err = writeUnionNullString(r.SourceKey, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PickDetailKey, w)
+	err = writeUnionNullString(r.PickDetailKey, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.OrderKey, w)
+	err = writeUnionNullString(r.OrderKey, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.OrderLineNumber, w)
+	err = writeUnionNullString(r.OrderLineNumber, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ListKey, w)
+	err = writeUnionNullString(r.ListKey, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.WaveKey, w)
+	err = writeUnionNullString(r.WaveKey, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ReasonKey, w)
+	err = writeUnionNullString(r.ReasonKey, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Message01, w)
+	err = writeUnionNullString(r.Message01, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Message02, w)
+	err = writeUnionNullString(r.Message02, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Message03, w)
+	err = writeUnionNullString(r.Message03, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Door, w)
+	err = writeUnionNullString(r.Door, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Route, w)
+	err = writeUnionNullString(r.Route, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Stop, w)
+	err = writeUnionNullString(r.Stop, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PutawayZone, w)
+	err = writeUnionNullString(r.PutawayZone, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Altsku, w)
+	err = writeUnionNullString(r.Altsku, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.EXT_UDF_STR1, w)
+	err = writeUnionNullString(r.EXT_UDF_STR1, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.EXT_UDF_LKUP5, w)
+	err = writeUnionNullString(r.EXT_UDF_LKUP5, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE01, w)
+	err = writeUnionNullString(r.LOTTABLE01, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE02, w)
+	err = writeUnionNullString(r.LOTTABLE02, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE03, w)
+	err = writeUnionNullString(r.LOTTABLE03, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE04, w)
+	err = writeUnionNullString(r.LOTTABLE04, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE05, w)
+	err = writeUnionNullString(r.LOTTABLE05, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE06, w)
+	err = writeUnionNullString(r.LOTTABLE06, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE07, w)
+	err = writeUnionNullString(r.LOTTABLE07, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE08, w)
+	err = writeUnionNullString(r.LOTTABLE08, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE09, w)
+	err = writeUnionNullString(r.LOTTABLE09, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE10, w)
+	err = writeUnionNullString(r.LOTTABLE10, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE11, w)
+	err = writeUnionNullString(r.LOTTABLE11, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.LOTTABLE12, w)
+	err = writeUnionNullString(r.LOTTABLE12, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR1, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR1, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR2, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR2, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR3, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR3, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR4, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR4, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR5, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR5, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR6, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR6, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR7, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR7, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR8, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR8, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR9, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR9, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR10, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR10, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR11, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR11, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CKEXT_UDF_STR12, w)
+	err = writeUnionNullString(r.CKEXT_UDF_STR12, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ValidaLoteWos, w)
+	err = writeUnionNullString(r.ValidaLoteWos, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ValidaSerieWos, w)
+	err = writeUnionNullString(r.ValidaSerieWos, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.OCDFLAG, w)
+	err = writeUnionNullString(r.OCDFLAG, w)
 	if err != nil {
 		return err
 	}
@@ -646,7 +717,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"name\":\"TaskDetailKey\",\"type\":\"string\"},{\"name\":\"TaskType\",\"type\":\"string\"},{\"name\":\"StorerKey\",\"type\":\"string\"},{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Lot\",\"type\":\"string\"},{\"name\":\"UOM\",\"type\":\"string\"},{\"name\":\"UOMQty\",\"type\":\"int\"},{\"name\":\"Qty\",\"type\":\"int\"},{\"name\":\"FromLoc\",\"type\":\"string\"},{\"name\":\"LogicalFromLoc\",\"type\":\"string\"},{\"name\":\"FromID\",\"type\":\"string\"},{\"name\":\"ToLoc\",\"type\":\"string\"},{\"name\":\"LogicalToLoc\",\"type\":\"string\"},{\"name\":\"ToID\",\"type\":\"string\"},{\"name\":\"CaseID\",\"type\":\"string\"},{\"name\":\"PickMethod\",\"type\":\"string\"},{\"name\":\"Status\",\"type\":\"string\"},{\"name\":\"StatusMsg\",\"type\":\"string\"},{\"name\":\"Priority\",\"type\":\"string\"},{\"name\":\"SourcePriority\",\"type\":\"string\"},{\"name\":\"HoldKey\",\"type\":\"string\"},{\"name\":\"UserKey\",\"type\":\"string\"},{\"name\":\"UserPosition\",\"type\":\"string\"},{\"name\":\"UserKeyOverride\",\"type\":\"string\"},{\"name\":\"StartTime\",\"type\":\"string\"},{\"name\":\"EndTime\",\"type\":\"string\"},{\"name\":\"SourceType\",\"type\":\"string\"},{\"name\":\"SourceKey\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"OrderKey\",\"type\":\"string\"},{\"name\":\"OrderLineNumber\",\"type\":\"string\"},{\"name\":\"ListKey\",\"type\":\"string\"},{\"name\":\"WaveKey\",\"type\":\"string\"},{\"name\":\"ReasonKey\",\"type\":\"string\"},{\"name\":\"Message01\",\"type\":\"string\"},{\"name\":\"Message02\",\"type\":\"string\"},{\"name\":\"Message03\",\"type\":\"string\"},{\"name\":\"Door\",\"type\":\"string\"},{\"name\":\"Route\",\"type\":\"string\"},{\"name\":\"Stop\",\"type\":\"string\"},{\"name\":\"PutawayZone\",\"type\":\"string\"},{\"name\":\"Altsku\",\"type\":\"string\"},{\"name\":\"EXT_UDF_STR1\",\"type\":\"string\"},{\"name\":\"EXT_UDF_LKUP5\",\"type\":\"string\"},{\"name\":\"LOTTABLE01\",\"type\":\"string\"},{\"name\":\"LOTTABLE02\",\"type\":\"string\"},{\"name\":\"LOTTABLE03\",\"type\":\"string\"},{\"name\":\"LOTTABLE04\",\"type\":\"string\"},{\"name\":\"LOTTABLE05\",\"type\":\"string\"},{\"name\":\"LOTTABLE06\",\"type\":\"string\"},{\"name\":\"LOTTABLE07\",\"type\":\"string\"},{\"name\":\"LOTTABLE08\",\"type\":\"string\"},{\"name\":\"LOTTABLE09\",\"type\":\"string\"},{\"name\":\"LOTTABLE10\",\"type\":\"string\"},{\"name\":\"LOTTABLE11\",\"type\":\"string\"},{\"name\":\"LOTTABLE12\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR1\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR2\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR3\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR4\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR5\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR6\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR7\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR8\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR9\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR10\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR11\",\"type\":\"string\"},{\"name\":\"CKEXT_UDF_STR12\",\"type\":\"string\"},{\"name\":\"ValidaLoteWos\",\"type\":\"string\"},{\"name\":\"ValidaSerieWos\",\"type\":\"string\"},{\"name\":\"OCDFLAG\",\"type\":\"string\"},{\"default\":null,\"name\":\"ValidadCantidadWosMaq\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"DESCR\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ALTSKU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SERIALKEY\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"STDCUBE\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"SNUM_MASK\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ORDERDATE\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"O_EXT_UDF_STR6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXTERNORDERKEY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"O_EXT_UDF_LKUP1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"O_EXT_UDF_LKUP2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PRIORITY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"C_ZIP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"C_COMPANY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXTERNALORDERKEY2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_STR11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SUSR5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EDITDATE\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhOla.Events.LanzadaWosPickingCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"TaskDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TaskType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StorerKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Sku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Lot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UOM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UOMQty\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Qty\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"FromLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LogicalFromLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FromID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ToLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LogicalToLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ToID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CaseID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickMethod\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Status\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StatusMsg\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Priority\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SourcePriority\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"HoldKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserPosition\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserKeyOverride\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StartTime\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EndTime\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SourceType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SourceKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrderKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrderLineNumber\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ListKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"WaveKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReasonKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Message01\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Message02\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Message03\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Door\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Route\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Stop\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PutawayZone\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Altsku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_STR1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE01\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE02\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE03\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE04\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE05\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE06\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE07\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE08\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE09\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE12\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR12\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaLoteWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OCDFLAG\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidadCantidadWosMaq\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"DESCR\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ALTSKU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SERIALKEY\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"STDCUBE\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"SNUM_MASK\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ORDERDATE\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"O_EXT_UDF_STR6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXTERNORDERKEY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"O_EXT_UDF_LKUP1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"O_EXT_UDF_LKUP2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PRIORITY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"C_ZIP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"C_COMPANY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXTERNALORDERKEY2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_STR11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SUSR5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EDITDATE\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhOla.Events.LanzadaWosPickingCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -665,360 +736,289 @@ func (_ Detalle) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Detalle) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.TaskDetailKey}
+		r.TaskDetailKey = NewUnionNullString()
 
-		return w
-
+		return r.TaskDetailKey
 	case 1:
-		w := types.String{Target: &r.TaskType}
+		r.TaskType = NewUnionNullString()
 
-		return w
-
+		return r.TaskType
 	case 2:
-		w := types.String{Target: &r.StorerKey}
+		r.StorerKey = NewUnionNullString()
 
-		return w
-
+		return r.StorerKey
 	case 3:
-		w := types.String{Target: &r.Sku}
+		r.Sku = NewUnionNullString()
 
-		return w
-
+		return r.Sku
 	case 4:
-		w := types.String{Target: &r.Lot}
+		r.Lot = NewUnionNullString()
 
-		return w
-
+		return r.Lot
 	case 5:
-		w := types.String{Target: &r.UOM}
+		r.UOM = NewUnionNullString()
 
-		return w
-
+		return r.UOM
 	case 6:
-		w := types.Int{Target: &r.UOMQty}
+		r.UOMQty = NewUnionNullInt()
 
-		return w
-
+		return r.UOMQty
 	case 7:
-		w := types.Int{Target: &r.Qty}
+		r.Qty = NewUnionNullInt()
 
-		return w
-
+		return r.Qty
 	case 8:
-		w := types.String{Target: &r.FromLoc}
+		r.FromLoc = NewUnionNullString()
 
-		return w
-
+		return r.FromLoc
 	case 9:
-		w := types.String{Target: &r.LogicalFromLoc}
+		r.LogicalFromLoc = NewUnionNullString()
 
-		return w
-
+		return r.LogicalFromLoc
 	case 10:
-		w := types.String{Target: &r.FromID}
+		r.FromID = NewUnionNullString()
 
-		return w
-
+		return r.FromID
 	case 11:
-		w := types.String{Target: &r.ToLoc}
+		r.ToLoc = NewUnionNullString()
 
-		return w
-
+		return r.ToLoc
 	case 12:
-		w := types.String{Target: &r.LogicalToLoc}
+		r.LogicalToLoc = NewUnionNullString()
 
-		return w
-
+		return r.LogicalToLoc
 	case 13:
-		w := types.String{Target: &r.ToID}
+		r.ToID = NewUnionNullString()
 
-		return w
-
+		return r.ToID
 	case 14:
-		w := types.String{Target: &r.CaseID}
+		r.CaseID = NewUnionNullString()
 
-		return w
-
+		return r.CaseID
 	case 15:
-		w := types.String{Target: &r.PickMethod}
+		r.PickMethod = NewUnionNullString()
 
-		return w
-
+		return r.PickMethod
 	case 16:
-		w := types.String{Target: &r.Status}
+		r.Status = NewUnionNullString()
 
-		return w
-
+		return r.Status
 	case 17:
-		w := types.String{Target: &r.StatusMsg}
+		r.StatusMsg = NewUnionNullString()
 
-		return w
-
+		return r.StatusMsg
 	case 18:
-		w := types.String{Target: &r.Priority}
+		r.Priority = NewUnionNullString()
 
-		return w
-
+		return r.Priority
 	case 19:
-		w := types.String{Target: &r.SourcePriority}
+		r.SourcePriority = NewUnionNullString()
 
-		return w
-
+		return r.SourcePriority
 	case 20:
-		w := types.String{Target: &r.HoldKey}
+		r.HoldKey = NewUnionNullString()
 
-		return w
-
+		return r.HoldKey
 	case 21:
-		w := types.String{Target: &r.UserKey}
+		r.UserKey = NewUnionNullString()
 
-		return w
-
+		return r.UserKey
 	case 22:
-		w := types.String{Target: &r.UserPosition}
+		r.UserPosition = NewUnionNullString()
 
-		return w
-
+		return r.UserPosition
 	case 23:
-		w := types.String{Target: &r.UserKeyOverride}
+		r.UserKeyOverride = NewUnionNullString()
 
-		return w
-
+		return r.UserKeyOverride
 	case 24:
-		w := types.String{Target: &r.StartTime}
+		r.StartTime = NewUnionNullString()
 
-		return w
-
+		return r.StartTime
 	case 25:
-		w := types.String{Target: &r.EndTime}
+		r.EndTime = NewUnionNullString()
 
-		return w
-
+		return r.EndTime
 	case 26:
-		w := types.String{Target: &r.SourceType}
+		r.SourceType = NewUnionNullString()
 
-		return w
-
+		return r.SourceType
 	case 27:
-		w := types.String{Target: &r.SourceKey}
+		r.SourceKey = NewUnionNullString()
 
-		return w
-
+		return r.SourceKey
 	case 28:
-		w := types.String{Target: &r.PickDetailKey}
+		r.PickDetailKey = NewUnionNullString()
 
-		return w
-
+		return r.PickDetailKey
 	case 29:
-		w := types.String{Target: &r.OrderKey}
+		r.OrderKey = NewUnionNullString()
 
-		return w
-
+		return r.OrderKey
 	case 30:
-		w := types.String{Target: &r.OrderLineNumber}
+		r.OrderLineNumber = NewUnionNullString()
 
-		return w
-
+		return r.OrderLineNumber
 	case 31:
-		w := types.String{Target: &r.ListKey}
+		r.ListKey = NewUnionNullString()
 
-		return w
-
+		return r.ListKey
 	case 32:
-		w := types.String{Target: &r.WaveKey}
+		r.WaveKey = NewUnionNullString()
 
-		return w
-
+		return r.WaveKey
 	case 33:
-		w := types.String{Target: &r.ReasonKey}
+		r.ReasonKey = NewUnionNullString()
 
-		return w
-
+		return r.ReasonKey
 	case 34:
-		w := types.String{Target: &r.Message01}
+		r.Message01 = NewUnionNullString()
 
-		return w
-
+		return r.Message01
 	case 35:
-		w := types.String{Target: &r.Message02}
+		r.Message02 = NewUnionNullString()
 
-		return w
-
+		return r.Message02
 	case 36:
-		w := types.String{Target: &r.Message03}
+		r.Message03 = NewUnionNullString()
 
-		return w
-
+		return r.Message03
 	case 37:
-		w := types.String{Target: &r.Door}
+		r.Door = NewUnionNullString()
 
-		return w
-
+		return r.Door
 	case 38:
-		w := types.String{Target: &r.Route}
+		r.Route = NewUnionNullString()
 
-		return w
-
+		return r.Route
 	case 39:
-		w := types.String{Target: &r.Stop}
+		r.Stop = NewUnionNullString()
 
-		return w
-
+		return r.Stop
 	case 40:
-		w := types.String{Target: &r.PutawayZone}
+		r.PutawayZone = NewUnionNullString()
 
-		return w
-
+		return r.PutawayZone
 	case 41:
-		w := types.String{Target: &r.Altsku}
+		r.Altsku = NewUnionNullString()
 
-		return w
-
+		return r.Altsku
 	case 42:
-		w := types.String{Target: &r.EXT_UDF_STR1}
+		r.EXT_UDF_STR1 = NewUnionNullString()
 
-		return w
-
+		return r.EXT_UDF_STR1
 	case 43:
-		w := types.String{Target: &r.EXT_UDF_LKUP5}
+		r.EXT_UDF_LKUP5 = NewUnionNullString()
 
-		return w
-
+		return r.EXT_UDF_LKUP5
 	case 44:
-		w := types.String{Target: &r.LOTTABLE01}
+		r.LOTTABLE01 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE01
 	case 45:
-		w := types.String{Target: &r.LOTTABLE02}
+		r.LOTTABLE02 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE02
 	case 46:
-		w := types.String{Target: &r.LOTTABLE03}
+		r.LOTTABLE03 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE03
 	case 47:
-		w := types.String{Target: &r.LOTTABLE04}
+		r.LOTTABLE04 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE04
 	case 48:
-		w := types.String{Target: &r.LOTTABLE05}
+		r.LOTTABLE05 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE05
 	case 49:
-		w := types.String{Target: &r.LOTTABLE06}
+		r.LOTTABLE06 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE06
 	case 50:
-		w := types.String{Target: &r.LOTTABLE07}
+		r.LOTTABLE07 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE07
 	case 51:
-		w := types.String{Target: &r.LOTTABLE08}
+		r.LOTTABLE08 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE08
 	case 52:
-		w := types.String{Target: &r.LOTTABLE09}
+		r.LOTTABLE09 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE09
 	case 53:
-		w := types.String{Target: &r.LOTTABLE10}
+		r.LOTTABLE10 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE10
 	case 54:
-		w := types.String{Target: &r.LOTTABLE11}
+		r.LOTTABLE11 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE11
 	case 55:
-		w := types.String{Target: &r.LOTTABLE12}
+		r.LOTTABLE12 = NewUnionNullString()
 
-		return w
-
+		return r.LOTTABLE12
 	case 56:
-		w := types.String{Target: &r.CKEXT_UDF_STR1}
+		r.CKEXT_UDF_STR1 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR1
 	case 57:
-		w := types.String{Target: &r.CKEXT_UDF_STR2}
+		r.CKEXT_UDF_STR2 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR2
 	case 58:
-		w := types.String{Target: &r.CKEXT_UDF_STR3}
+		r.CKEXT_UDF_STR3 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR3
 	case 59:
-		w := types.String{Target: &r.CKEXT_UDF_STR4}
+		r.CKEXT_UDF_STR4 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR4
 	case 60:
-		w := types.String{Target: &r.CKEXT_UDF_STR5}
+		r.CKEXT_UDF_STR5 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR5
 	case 61:
-		w := types.String{Target: &r.CKEXT_UDF_STR6}
+		r.CKEXT_UDF_STR6 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR6
 	case 62:
-		w := types.String{Target: &r.CKEXT_UDF_STR7}
+		r.CKEXT_UDF_STR7 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR7
 	case 63:
-		w := types.String{Target: &r.CKEXT_UDF_STR8}
+		r.CKEXT_UDF_STR8 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR8
 	case 64:
-		w := types.String{Target: &r.CKEXT_UDF_STR9}
+		r.CKEXT_UDF_STR9 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR9
 	case 65:
-		w := types.String{Target: &r.CKEXT_UDF_STR10}
+		r.CKEXT_UDF_STR10 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR10
 	case 66:
-		w := types.String{Target: &r.CKEXT_UDF_STR11}
+		r.CKEXT_UDF_STR11 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR11
 	case 67:
-		w := types.String{Target: &r.CKEXT_UDF_STR12}
+		r.CKEXT_UDF_STR12 = NewUnionNullString()
 
-		return w
-
+		return r.CKEXT_UDF_STR12
 	case 68:
-		w := types.String{Target: &r.ValidaLoteWos}
+		r.ValidaLoteWos = NewUnionNullString()
 
-		return w
-
+		return r.ValidaLoteWos
 	case 69:
-		w := types.String{Target: &r.ValidaSerieWos}
+		r.ValidaSerieWos = NewUnionNullString()
 
-		return w
-
+		return r.ValidaSerieWos
 	case 70:
-		w := types.String{Target: &r.OCDFLAG}
+		r.OCDFLAG = NewUnionNullString()
 
-		return w
-
+		return r.OCDFLAG
 	case 71:
 		r.ValidadCantidadWosMaq = NewUnionNullFloat()
 
@@ -1117,6 +1117,219 @@ func (r *Detalle) Get(i int) types.Field {
 
 func (r *Detalle) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.TaskDetailKey = nil
+		return
+	case 1:
+		r.TaskType = nil
+		return
+	case 2:
+		r.StorerKey = nil
+		return
+	case 3:
+		r.Sku = nil
+		return
+	case 4:
+		r.Lot = nil
+		return
+	case 5:
+		r.UOM = nil
+		return
+	case 6:
+		r.UOMQty = nil
+		return
+	case 7:
+		r.Qty = nil
+		return
+	case 8:
+		r.FromLoc = nil
+		return
+	case 9:
+		r.LogicalFromLoc = nil
+		return
+	case 10:
+		r.FromID = nil
+		return
+	case 11:
+		r.ToLoc = nil
+		return
+	case 12:
+		r.LogicalToLoc = nil
+		return
+	case 13:
+		r.ToID = nil
+		return
+	case 14:
+		r.CaseID = nil
+		return
+	case 15:
+		r.PickMethod = nil
+		return
+	case 16:
+		r.Status = nil
+		return
+	case 17:
+		r.StatusMsg = nil
+		return
+	case 18:
+		r.Priority = nil
+		return
+	case 19:
+		r.SourcePriority = nil
+		return
+	case 20:
+		r.HoldKey = nil
+		return
+	case 21:
+		r.UserKey = nil
+		return
+	case 22:
+		r.UserPosition = nil
+		return
+	case 23:
+		r.UserKeyOverride = nil
+		return
+	case 24:
+		r.StartTime = nil
+		return
+	case 25:
+		r.EndTime = nil
+		return
+	case 26:
+		r.SourceType = nil
+		return
+	case 27:
+		r.SourceKey = nil
+		return
+	case 28:
+		r.PickDetailKey = nil
+		return
+	case 29:
+		r.OrderKey = nil
+		return
+	case 30:
+		r.OrderLineNumber = nil
+		return
+	case 31:
+		r.ListKey = nil
+		return
+	case 32:
+		r.WaveKey = nil
+		return
+	case 33:
+		r.ReasonKey = nil
+		return
+	case 34:
+		r.Message01 = nil
+		return
+	case 35:
+		r.Message02 = nil
+		return
+	case 36:
+		r.Message03 = nil
+		return
+	case 37:
+		r.Door = nil
+		return
+	case 38:
+		r.Route = nil
+		return
+	case 39:
+		r.Stop = nil
+		return
+	case 40:
+		r.PutawayZone = nil
+		return
+	case 41:
+		r.Altsku = nil
+		return
+	case 42:
+		r.EXT_UDF_STR1 = nil
+		return
+	case 43:
+		r.EXT_UDF_LKUP5 = nil
+		return
+	case 44:
+		r.LOTTABLE01 = nil
+		return
+	case 45:
+		r.LOTTABLE02 = nil
+		return
+	case 46:
+		r.LOTTABLE03 = nil
+		return
+	case 47:
+		r.LOTTABLE04 = nil
+		return
+	case 48:
+		r.LOTTABLE05 = nil
+		return
+	case 49:
+		r.LOTTABLE06 = nil
+		return
+	case 50:
+		r.LOTTABLE07 = nil
+		return
+	case 51:
+		r.LOTTABLE08 = nil
+		return
+	case 52:
+		r.LOTTABLE09 = nil
+		return
+	case 53:
+		r.LOTTABLE10 = nil
+		return
+	case 54:
+		r.LOTTABLE11 = nil
+		return
+	case 55:
+		r.LOTTABLE12 = nil
+		return
+	case 56:
+		r.CKEXT_UDF_STR1 = nil
+		return
+	case 57:
+		r.CKEXT_UDF_STR2 = nil
+		return
+	case 58:
+		r.CKEXT_UDF_STR3 = nil
+		return
+	case 59:
+		r.CKEXT_UDF_STR4 = nil
+		return
+	case 60:
+		r.CKEXT_UDF_STR5 = nil
+		return
+	case 61:
+		r.CKEXT_UDF_STR6 = nil
+		return
+	case 62:
+		r.CKEXT_UDF_STR7 = nil
+		return
+	case 63:
+		r.CKEXT_UDF_STR8 = nil
+		return
+	case 64:
+		r.CKEXT_UDF_STR9 = nil
+		return
+	case 65:
+		r.CKEXT_UDF_STR10 = nil
+		return
+	case 66:
+		r.CKEXT_UDF_STR11 = nil
+		return
+	case 67:
+		r.CKEXT_UDF_STR12 = nil
+		return
+	case 68:
+		r.ValidaLoteWos = nil
+		return
+	case 69:
+		r.ValidaSerieWos = nil
+		return
+	case 70:
+		r.OCDFLAG = nil
+		return
 	case 71:
 		r.ValidadCantidadWosMaq = nil
 		return
@@ -1192,6 +1405,219 @@ func (r *Detalle) SetDefault(i int) {
 
 func (r *Detalle) NullField(i int) {
 	switch i {
+	case 0:
+		r.TaskDetailKey = nil
+		return
+	case 1:
+		r.TaskType = nil
+		return
+	case 2:
+		r.StorerKey = nil
+		return
+	case 3:
+		r.Sku = nil
+		return
+	case 4:
+		r.Lot = nil
+		return
+	case 5:
+		r.UOM = nil
+		return
+	case 6:
+		r.UOMQty = nil
+		return
+	case 7:
+		r.Qty = nil
+		return
+	case 8:
+		r.FromLoc = nil
+		return
+	case 9:
+		r.LogicalFromLoc = nil
+		return
+	case 10:
+		r.FromID = nil
+		return
+	case 11:
+		r.ToLoc = nil
+		return
+	case 12:
+		r.LogicalToLoc = nil
+		return
+	case 13:
+		r.ToID = nil
+		return
+	case 14:
+		r.CaseID = nil
+		return
+	case 15:
+		r.PickMethod = nil
+		return
+	case 16:
+		r.Status = nil
+		return
+	case 17:
+		r.StatusMsg = nil
+		return
+	case 18:
+		r.Priority = nil
+		return
+	case 19:
+		r.SourcePriority = nil
+		return
+	case 20:
+		r.HoldKey = nil
+		return
+	case 21:
+		r.UserKey = nil
+		return
+	case 22:
+		r.UserPosition = nil
+		return
+	case 23:
+		r.UserKeyOverride = nil
+		return
+	case 24:
+		r.StartTime = nil
+		return
+	case 25:
+		r.EndTime = nil
+		return
+	case 26:
+		r.SourceType = nil
+		return
+	case 27:
+		r.SourceKey = nil
+		return
+	case 28:
+		r.PickDetailKey = nil
+		return
+	case 29:
+		r.OrderKey = nil
+		return
+	case 30:
+		r.OrderLineNumber = nil
+		return
+	case 31:
+		r.ListKey = nil
+		return
+	case 32:
+		r.WaveKey = nil
+		return
+	case 33:
+		r.ReasonKey = nil
+		return
+	case 34:
+		r.Message01 = nil
+		return
+	case 35:
+		r.Message02 = nil
+		return
+	case 36:
+		r.Message03 = nil
+		return
+	case 37:
+		r.Door = nil
+		return
+	case 38:
+		r.Route = nil
+		return
+	case 39:
+		r.Stop = nil
+		return
+	case 40:
+		r.PutawayZone = nil
+		return
+	case 41:
+		r.Altsku = nil
+		return
+	case 42:
+		r.EXT_UDF_STR1 = nil
+		return
+	case 43:
+		r.EXT_UDF_LKUP5 = nil
+		return
+	case 44:
+		r.LOTTABLE01 = nil
+		return
+	case 45:
+		r.LOTTABLE02 = nil
+		return
+	case 46:
+		r.LOTTABLE03 = nil
+		return
+	case 47:
+		r.LOTTABLE04 = nil
+		return
+	case 48:
+		r.LOTTABLE05 = nil
+		return
+	case 49:
+		r.LOTTABLE06 = nil
+		return
+	case 50:
+		r.LOTTABLE07 = nil
+		return
+	case 51:
+		r.LOTTABLE08 = nil
+		return
+	case 52:
+		r.LOTTABLE09 = nil
+		return
+	case 53:
+		r.LOTTABLE10 = nil
+		return
+	case 54:
+		r.LOTTABLE11 = nil
+		return
+	case 55:
+		r.LOTTABLE12 = nil
+		return
+	case 56:
+		r.CKEXT_UDF_STR1 = nil
+		return
+	case 57:
+		r.CKEXT_UDF_STR2 = nil
+		return
+	case 58:
+		r.CKEXT_UDF_STR3 = nil
+		return
+	case 59:
+		r.CKEXT_UDF_STR4 = nil
+		return
+	case 60:
+		r.CKEXT_UDF_STR5 = nil
+		return
+	case 61:
+		r.CKEXT_UDF_STR6 = nil
+		return
+	case 62:
+		r.CKEXT_UDF_STR7 = nil
+		return
+	case 63:
+		r.CKEXT_UDF_STR8 = nil
+		return
+	case 64:
+		r.CKEXT_UDF_STR9 = nil
+		return
+	case 65:
+		r.CKEXT_UDF_STR10 = nil
+		return
+	case 66:
+		r.CKEXT_UDF_STR11 = nil
+		return
+	case 67:
+		r.CKEXT_UDF_STR12 = nil
+		return
+	case 68:
+		r.ValidaLoteWos = nil
+		return
+	case 69:
+		r.ValidaSerieWos = nil
+		return
+	case 70:
+		r.OCDFLAG = nil
+		return
 	case 71:
 		r.ValidadCantidadWosMaq = nil
 		return
@@ -1675,7 +2101,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for TaskDetailKey")
+		r.TaskDetailKey = NewUnionNullString()
+
+		r.TaskDetailKey = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TaskType"]; ok {
@@ -1689,7 +2117,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for TaskType")
+		r.TaskType = NewUnionNullString()
+
+		r.TaskType = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["StorerKey"]; ok {
@@ -1703,7 +2133,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for StorerKey")
+		r.StorerKey = NewUnionNullString()
+
+		r.StorerKey = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Sku"]; ok {
@@ -1717,7 +2149,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Sku")
+		r.Sku = NewUnionNullString()
+
+		r.Sku = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Lot"]; ok {
@@ -1731,7 +2165,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Lot")
+		r.Lot = NewUnionNullString()
+
+		r.Lot = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UOM"]; ok {
@@ -1745,7 +2181,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for UOM")
+		r.UOM = NewUnionNullString()
+
+		r.UOM = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UOMQty"]; ok {
@@ -1759,7 +2197,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for UOMQty")
+		r.UOMQty = NewUnionNullInt()
+
+		r.UOMQty = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Qty"]; ok {
@@ -1773,7 +2213,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Qty")
+		r.Qty = NewUnionNullInt()
+
+		r.Qty = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["FromLoc"]; ok {
@@ -1787,7 +2229,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FromLoc")
+		r.FromLoc = NewUnionNullString()
+
+		r.FromLoc = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LogicalFromLoc"]; ok {
@@ -1801,7 +2245,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LogicalFromLoc")
+		r.LogicalFromLoc = NewUnionNullString()
+
+		r.LogicalFromLoc = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["FromID"]; ok {
@@ -1815,7 +2261,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for FromID")
+		r.FromID = NewUnionNullString()
+
+		r.FromID = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ToLoc"]; ok {
@@ -1829,7 +2277,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ToLoc")
+		r.ToLoc = NewUnionNullString()
+
+		r.ToLoc = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LogicalToLoc"]; ok {
@@ -1843,7 +2293,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LogicalToLoc")
+		r.LogicalToLoc = NewUnionNullString()
+
+		r.LogicalToLoc = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ToID"]; ok {
@@ -1857,7 +2309,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ToID")
+		r.ToID = NewUnionNullString()
+
+		r.ToID = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CaseID"]; ok {
@@ -1871,7 +2325,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CaseID")
+		r.CaseID = NewUnionNullString()
+
+		r.CaseID = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PickMethod"]; ok {
@@ -1885,7 +2341,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for PickMethod")
+		r.PickMethod = NewUnionNullString()
+
+		r.PickMethod = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Status"]; ok {
@@ -1899,7 +2357,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Status")
+		r.Status = NewUnionNullString()
+
+		r.Status = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["StatusMsg"]; ok {
@@ -1913,7 +2373,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for StatusMsg")
+		r.StatusMsg = NewUnionNullString()
+
+		r.StatusMsg = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Priority"]; ok {
@@ -1927,7 +2389,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Priority")
+		r.Priority = NewUnionNullString()
+
+		r.Priority = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SourcePriority"]; ok {
@@ -1941,7 +2405,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SourcePriority")
+		r.SourcePriority = NewUnionNullString()
+
+		r.SourcePriority = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["HoldKey"]; ok {
@@ -1955,7 +2421,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for HoldKey")
+		r.HoldKey = NewUnionNullString()
+
+		r.HoldKey = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UserKey"]; ok {
@@ -1969,7 +2437,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for UserKey")
+		r.UserKey = NewUnionNullString()
+
+		r.UserKey = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UserPosition"]; ok {
@@ -1983,7 +2453,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for UserPosition")
+		r.UserPosition = NewUnionNullString()
+
+		r.UserPosition = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UserKeyOverride"]; ok {
@@ -1997,7 +2469,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for UserKeyOverride")
+		r.UserKeyOverride = NewUnionNullString()
+
+		r.UserKeyOverride = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["StartTime"]; ok {
@@ -2011,7 +2485,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for StartTime")
+		r.StartTime = NewUnionNullString()
+
+		r.StartTime = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EndTime"]; ok {
@@ -2025,7 +2501,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EndTime")
+		r.EndTime = NewUnionNullString()
+
+		r.EndTime = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SourceType"]; ok {
@@ -2039,7 +2517,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SourceType")
+		r.SourceType = NewUnionNullString()
+
+		r.SourceType = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SourceKey"]; ok {
@@ -2053,7 +2533,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SourceKey")
+		r.SourceKey = NewUnionNullString()
+
+		r.SourceKey = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PickDetailKey"]; ok {
@@ -2067,7 +2549,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for PickDetailKey")
+		r.PickDetailKey = NewUnionNullString()
+
+		r.PickDetailKey = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["OrderKey"]; ok {
@@ -2081,7 +2565,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for OrderKey")
+		r.OrderKey = NewUnionNullString()
+
+		r.OrderKey = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["OrderLineNumber"]; ok {
@@ -2095,7 +2581,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for OrderLineNumber")
+		r.OrderLineNumber = NewUnionNullString()
+
+		r.OrderLineNumber = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ListKey"]; ok {
@@ -2109,7 +2597,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ListKey")
+		r.ListKey = NewUnionNullString()
+
+		r.ListKey = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["WaveKey"]; ok {
@@ -2123,7 +2613,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for WaveKey")
+		r.WaveKey = NewUnionNullString()
+
+		r.WaveKey = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ReasonKey"]; ok {
@@ -2137,7 +2629,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ReasonKey")
+		r.ReasonKey = NewUnionNullString()
+
+		r.ReasonKey = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Message01"]; ok {
@@ -2151,7 +2645,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Message01")
+		r.Message01 = NewUnionNullString()
+
+		r.Message01 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Message02"]; ok {
@@ -2165,7 +2661,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Message02")
+		r.Message02 = NewUnionNullString()
+
+		r.Message02 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Message03"]; ok {
@@ -2179,7 +2677,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Message03")
+		r.Message03 = NewUnionNullString()
+
+		r.Message03 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Door"]; ok {
@@ -2193,7 +2693,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Door")
+		r.Door = NewUnionNullString()
+
+		r.Door = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Route"]; ok {
@@ -2207,7 +2709,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Route")
+		r.Route = NewUnionNullString()
+
+		r.Route = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Stop"]; ok {
@@ -2221,7 +2725,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Stop")
+		r.Stop = NewUnionNullString()
+
+		r.Stop = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PutawayZone"]; ok {
@@ -2235,7 +2741,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for PutawayZone")
+		r.PutawayZone = NewUnionNullString()
+
+		r.PutawayZone = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Altsku"]; ok {
@@ -2249,7 +2757,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Altsku")
+		r.Altsku = NewUnionNullString()
+
+		r.Altsku = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EXT_UDF_STR1"]; ok {
@@ -2263,7 +2773,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EXT_UDF_STR1")
+		r.EXT_UDF_STR1 = NewUnionNullString()
+
+		r.EXT_UDF_STR1 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EXT_UDF_LKUP5"]; ok {
@@ -2277,7 +2789,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for EXT_UDF_LKUP5")
+		r.EXT_UDF_LKUP5 = NewUnionNullString()
+
+		r.EXT_UDF_LKUP5 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE01"]; ok {
@@ -2291,7 +2805,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE01")
+		r.LOTTABLE01 = NewUnionNullString()
+
+		r.LOTTABLE01 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE02"]; ok {
@@ -2305,7 +2821,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE02")
+		r.LOTTABLE02 = NewUnionNullString()
+
+		r.LOTTABLE02 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE03"]; ok {
@@ -2319,7 +2837,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE03")
+		r.LOTTABLE03 = NewUnionNullString()
+
+		r.LOTTABLE03 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE04"]; ok {
@@ -2333,7 +2853,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE04")
+		r.LOTTABLE04 = NewUnionNullString()
+
+		r.LOTTABLE04 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE05"]; ok {
@@ -2347,7 +2869,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE05")
+		r.LOTTABLE05 = NewUnionNullString()
+
+		r.LOTTABLE05 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE06"]; ok {
@@ -2361,7 +2885,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE06")
+		r.LOTTABLE06 = NewUnionNullString()
+
+		r.LOTTABLE06 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE07"]; ok {
@@ -2375,7 +2901,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE07")
+		r.LOTTABLE07 = NewUnionNullString()
+
+		r.LOTTABLE07 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE08"]; ok {
@@ -2389,7 +2917,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE08")
+		r.LOTTABLE08 = NewUnionNullString()
+
+		r.LOTTABLE08 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE09"]; ok {
@@ -2403,7 +2933,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE09")
+		r.LOTTABLE09 = NewUnionNullString()
+
+		r.LOTTABLE09 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE10"]; ok {
@@ -2417,7 +2949,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE10")
+		r.LOTTABLE10 = NewUnionNullString()
+
+		r.LOTTABLE10 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE11"]; ok {
@@ -2431,7 +2965,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE11")
+		r.LOTTABLE11 = NewUnionNullString()
+
+		r.LOTTABLE11 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["LOTTABLE12"]; ok {
@@ -2445,7 +2981,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for LOTTABLE12")
+		r.LOTTABLE12 = NewUnionNullString()
+
+		r.LOTTABLE12 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR1"]; ok {
@@ -2459,7 +2997,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR1")
+		r.CKEXT_UDF_STR1 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR1 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR2"]; ok {
@@ -2473,7 +3013,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR2")
+		r.CKEXT_UDF_STR2 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR2 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR3"]; ok {
@@ -2487,7 +3029,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR3")
+		r.CKEXT_UDF_STR3 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR3 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR4"]; ok {
@@ -2501,7 +3045,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR4")
+		r.CKEXT_UDF_STR4 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR4 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR5"]; ok {
@@ -2515,7 +3061,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR5")
+		r.CKEXT_UDF_STR5 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR5 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR6"]; ok {
@@ -2529,7 +3077,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR6")
+		r.CKEXT_UDF_STR6 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR6 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR7"]; ok {
@@ -2543,7 +3093,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR7")
+		r.CKEXT_UDF_STR7 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR7 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR8"]; ok {
@@ -2557,7 +3109,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR8")
+		r.CKEXT_UDF_STR8 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR8 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR9"]; ok {
@@ -2571,7 +3125,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR9")
+		r.CKEXT_UDF_STR9 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR9 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR10"]; ok {
@@ -2585,7 +3141,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR10")
+		r.CKEXT_UDF_STR10 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR10 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR11"]; ok {
@@ -2599,7 +3157,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR11")
+		r.CKEXT_UDF_STR11 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR11 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CKEXT_UDF_STR12"]; ok {
@@ -2613,7 +3173,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CKEXT_UDF_STR12")
+		r.CKEXT_UDF_STR12 = NewUnionNullString()
+
+		r.CKEXT_UDF_STR12 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ValidaLoteWos"]; ok {
@@ -2627,7 +3189,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ValidaLoteWos")
+		r.ValidaLoteWos = NewUnionNullString()
+
+		r.ValidaLoteWos = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ValidaSerieWos"]; ok {
@@ -2641,7 +3205,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ValidaSerieWos")
+		r.ValidaSerieWos = NewUnionNullString()
+
+		r.ValidaSerieWos = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["OCDFLAG"]; ok {
@@ -2655,7 +3221,9 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for OCDFLAG")
+		r.OCDFLAG = NewUnionNullString()
+
+		r.OCDFLAG = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ValidadCantidadWosMaq"]; ok {
