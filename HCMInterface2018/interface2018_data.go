@@ -42,6 +42,8 @@ type Interface2018Data struct {
 
 	TipoDocumento1 string `json:"TipoDocumento1"`
 
+	CodPaisTipoDocumento string `json:"CodPaisTipoDocumento"`
+
 	NroDocumento1 string `json:"NroDocumento1"`
 
 	ObraSocial string `json:"ObraSocial"`
@@ -75,7 +77,7 @@ type Interface2018Data struct {
 	EntregoCertificado string `json:"EntregoCertificado"`
 }
 
-const Interface2018DataAvroCRC64Fingerprint = "\xba\x94\x91\u0094\"#O"
+const Interface2018DataAvroCRC64Fingerprint = "$}$\xe6`h\x06\x1c"
 
 func NewInterface2018Data() Interface2018Data {
 	r := Interface2018Data{}
@@ -155,6 +157,10 @@ func writeInterface2018Data(r Interface2018Data, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.CodPaisTipoDocumento, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.NroDocumento1, w)
 	if err != nil {
 		return err
@@ -227,7 +233,7 @@ func (r Interface2018Data) Serialize(w io.Writer) error {
 }
 
 func (r Interface2018Data) Schema() string {
-	return "{\"fields\":[{\"name\":\"LegajoDelEmpleado\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Nombres\",\"type\":\"string\"},{\"name\":\"FechaNacimiento\",\"type\":\"string\"},{\"name\":\"PaisDeNacimiento\",\"type\":\"string\"},{\"name\":\"Nacionalidad\",\"type\":\"string\"},{\"name\":\"EstadoCivil\",\"type\":\"string\"},{\"name\":\"Sexo\",\"type\":\"string\"},{\"name\":\"Parentesco\",\"type\":\"string\"},{\"name\":\"Incapacitado\",\"type\":\"string\"},{\"name\":\"FechaDeDiscapacidad\",\"type\":\"string\"},{\"name\":\"TipoDocumento1\",\"type\":\"string\"},{\"name\":\"NroDocumento1\",\"type\":\"string\"},{\"name\":\"ObraSocial\",\"type\":\"string\"},{\"name\":\"PlanOS\",\"type\":\"string\"},{\"name\":\"AvisarAnteEmergencia\",\"type\":\"string\"},{\"name\":\"PagaSalarioFamiliar\",\"type\":\"string\"},{\"name\":\"FechaInicioVinculo\",\"type\":\"string\"},{\"name\":\"FechaVto1\",\"type\":\"string\"},{\"name\":\"Guarderia\",\"type\":\"string\"},{\"name\":\"FechaVto2\",\"type\":\"string\"},{\"name\":\"Adopcion\",\"type\":\"string\"},{\"name\":\"Estudia\",\"type\":\"string\"},{\"name\":\"NivelDeEstudio\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"MotivoBaja\",\"type\":\"string\"},{\"name\":\"BeneficiarioSeguroVida\",\"type\":\"string\"},{\"name\":\"EntregoCertificado\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface2018.Events.Record.Interface2018Data\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"LegajoDelEmpleado\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Nombres\",\"type\":\"string\"},{\"name\":\"FechaNacimiento\",\"type\":\"string\"},{\"name\":\"PaisDeNacimiento\",\"type\":\"string\"},{\"name\":\"Nacionalidad\",\"type\":\"string\"},{\"name\":\"EstadoCivil\",\"type\":\"string\"},{\"name\":\"Sexo\",\"type\":\"string\"},{\"name\":\"Parentesco\",\"type\":\"string\"},{\"name\":\"Incapacitado\",\"type\":\"string\"},{\"name\":\"FechaDeDiscapacidad\",\"type\":\"string\"},{\"name\":\"TipoDocumento1\",\"type\":\"string\"},{\"name\":\"CodPaisTipoDocumento\",\"type\":\"string\"},{\"name\":\"NroDocumento1\",\"type\":\"string\"},{\"name\":\"ObraSocial\",\"type\":\"string\"},{\"name\":\"PlanOS\",\"type\":\"string\"},{\"name\":\"AvisarAnteEmergencia\",\"type\":\"string\"},{\"name\":\"PagaSalarioFamiliar\",\"type\":\"string\"},{\"name\":\"FechaInicioVinculo\",\"type\":\"string\"},{\"name\":\"FechaVto1\",\"type\":\"string\"},{\"name\":\"Guarderia\",\"type\":\"string\"},{\"name\":\"FechaVto2\",\"type\":\"string\"},{\"name\":\"Adopcion\",\"type\":\"string\"},{\"name\":\"Estudia\",\"type\":\"string\"},{\"name\":\"NivelDeEstudio\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"MotivoBaja\",\"type\":\"string\"},{\"name\":\"BeneficiarioSeguroVida\",\"type\":\"string\"},{\"name\":\"EntregoCertificado\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface2018.Events.Record.Interface2018Data\",\"type\":\"record\"}"
 }
 
 func (r Interface2018Data) SchemaName() string {
@@ -306,81 +312,86 @@ func (r *Interface2018Data) Get(i int) types.Field {
 		return w
 
 	case 12:
-		w := types.String{Target: &r.NroDocumento1}
+		w := types.String{Target: &r.CodPaisTipoDocumento}
 
 		return w
 
 	case 13:
-		w := types.String{Target: &r.ObraSocial}
+		w := types.String{Target: &r.NroDocumento1}
 
 		return w
 
 	case 14:
-		w := types.String{Target: &r.PlanOS}
+		w := types.String{Target: &r.ObraSocial}
 
 		return w
 
 	case 15:
-		w := types.String{Target: &r.AvisarAnteEmergencia}
+		w := types.String{Target: &r.PlanOS}
 
 		return w
 
 	case 16:
-		w := types.String{Target: &r.PagaSalarioFamiliar}
+		w := types.String{Target: &r.AvisarAnteEmergencia}
 
 		return w
 
 	case 17:
-		w := types.String{Target: &r.FechaInicioVinculo}
+		w := types.String{Target: &r.PagaSalarioFamiliar}
 
 		return w
 
 	case 18:
-		w := types.String{Target: &r.FechaVto1}
+		w := types.String{Target: &r.FechaInicioVinculo}
 
 		return w
 
 	case 19:
-		w := types.String{Target: &r.Guarderia}
+		w := types.String{Target: &r.FechaVto1}
 
 		return w
 
 	case 20:
-		w := types.String{Target: &r.FechaVto2}
+		w := types.String{Target: &r.Guarderia}
 
 		return w
 
 	case 21:
-		w := types.String{Target: &r.Adopcion}
+		w := types.String{Target: &r.FechaVto2}
 
 		return w
 
 	case 22:
-		w := types.String{Target: &r.Estudia}
+		w := types.String{Target: &r.Adopcion}
 
 		return w
 
 	case 23:
-		w := types.String{Target: &r.NivelDeEstudio}
+		w := types.String{Target: &r.Estudia}
 
 		return w
 
 	case 24:
-		w := types.String{Target: &r.FechaBaja}
+		w := types.String{Target: &r.NivelDeEstudio}
 
 		return w
 
 	case 25:
-		w := types.String{Target: &r.MotivoBaja}
+		w := types.String{Target: &r.FechaBaja}
 
 		return w
 
 	case 26:
-		w := types.String{Target: &r.BeneficiarioSeguroVida}
+		w := types.String{Target: &r.MotivoBaja}
 
 		return w
 
 	case 27:
+		w := types.String{Target: &r.BeneficiarioSeguroVida}
+
+		return w
+
+	case 28:
 		w := types.String{Target: &r.EntregoCertificado}
 
 		return w
@@ -458,6 +469,10 @@ func (r Interface2018Data) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["TipoDocumento1"], err = json.Marshal(r.TipoDocumento1)
+	if err != nil {
+		return nil, err
+	}
+	output["CodPaisTipoDocumento"], err = json.Marshal(r.CodPaisTipoDocumento)
 	if err != nil {
 		return nil, err
 	}
@@ -702,6 +717,20 @@ func (r *Interface2018Data) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for TipoDocumento1")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CodPaisTipoDocumento"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodPaisTipoDocumento); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CodPaisTipoDocumento")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NroDocumento1"]; ok {
