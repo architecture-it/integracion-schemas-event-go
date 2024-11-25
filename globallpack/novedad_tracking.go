@@ -18,8 +18,6 @@ import (
 var _ = fmt.Printf
 
 type NovedadTracking struct {
-	Sistema string `json:"Sistema"`
-
 	NroEnvio *UnionNullString `json:"NroEnvio"`
 
 	FechaTracking int64 `json:"FechaTracking"`
@@ -35,7 +33,7 @@ type NovedadTracking struct {
 	GuiaHija *UnionNullString `json:"GuiaHija"`
 }
 
-const NovedadTrackingAvroCRC64Fingerprint = "\xb8t\xf9\v\xb0\xb7\x1bF"
+const NovedadTrackingAvroCRC64Fingerprint = "\xf0\x83\x10\x14s\xf7\x14\xd1"
 
 func NewNovedadTracking() NovedadTracking {
 	r := NovedadTracking{}
@@ -71,10 +69,6 @@ func DeserializeNovedadTrackingFromSchema(r io.Reader, schema string) (NovedadTr
 
 func writeNovedadTracking(r NovedadTracking, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Sistema, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.NroEnvio, w)
 	if err != nil {
 		return err
@@ -111,11 +105,11 @@ func (r NovedadTracking) Serialize(w io.Writer) error {
 }
 
 func (r NovedadTracking) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sistema\",\"type\":\"string\"},{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EnviosAGP.Events.Record.NovedadTracking\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EnviosAGP.Events.Common.NovedadTracking\",\"type\":\"record\"}"
 }
 
 func (r NovedadTracking) SchemaName() string {
-	return "Andreani.EnviosAGP.Events.Record.NovedadTracking"
+	return "Andreani.EnviosAGP.Events.Common.NovedadTracking"
 }
 
 func (_ NovedadTracking) SetBoolean(v bool)    { panic("Unsupported operation") }
@@ -130,38 +124,33 @@ func (_ NovedadTracking) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *NovedadTracking) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Sistema}
-
-		return w
-
-	case 1:
 		r.NroEnvio = NewUnionNullString()
 
 		return r.NroEnvio
-	case 2:
+	case 1:
 		w := types.Long{Target: &r.FechaTracking}
 
 		return w
 
-	case 3:
+	case 2:
 		w := types.Long{Target: &r.FechaRecibido}
 
 		return w
 
-	case 4:
+	case 3:
 		w := types.String{Target: &r.Estado}
 
 		return w
 
-	case 5:
+	case 4:
 		r.Observacion = NewUnionNullString()
 
 		return r.Observacion
-	case 6:
+	case 5:
 		r.Guia = NewUnionNullString()
 
 		return r.Guia
-	case 7:
+	case 6:
 		r.GuiaHija = NewUnionNullString()
 
 		return r.GuiaHija
@@ -171,16 +160,16 @@ func (r *NovedadTracking) Get(i int) types.Field {
 
 func (r *NovedadTracking) SetDefault(i int) {
 	switch i {
-	case 1:
+	case 0:
 		r.NroEnvio = nil
 		return
-	case 5:
+	case 4:
 		r.Observacion = nil
 		return
-	case 6:
+	case 5:
 		r.Guia = nil
 		return
-	case 7:
+	case 6:
 		r.GuiaHija = nil
 		return
 	}
@@ -189,16 +178,16 @@ func (r *NovedadTracking) SetDefault(i int) {
 
 func (r *NovedadTracking) NullField(i int) {
 	switch i {
-	case 1:
+	case 0:
 		r.NroEnvio = nil
 		return
-	case 5:
+	case 4:
 		r.Observacion = nil
 		return
-	case 6:
+	case 5:
 		r.Guia = nil
 		return
-	case 7:
+	case 6:
 		r.GuiaHija = nil
 		return
 	}
@@ -217,10 +206,6 @@ func (_ NovedadTracking) AvroCRC64Fingerprint() []byte {
 func (r NovedadTracking) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Sistema"], err = json.Marshal(r.Sistema)
-	if err != nil {
-		return nil, err
-	}
 	output["NroEnvio"], err = json.Marshal(r.NroEnvio)
 	if err != nil {
 		return nil, err
@@ -259,20 +244,6 @@ func (r *NovedadTracking) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["Sistema"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Sistema); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Sistema")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NroEnvio"]; ok {
 			return v
