@@ -29,12 +29,18 @@ type NovedadEAM struct {
 	NuevoEstadoEam string `json:"NuevoEstadoEam"`
 
 	Detalle string `json:"Detalle"`
+
+	Grupo *UnionNullString `json:"Grupo"`
+
+	IdGrupo *UnionNullInt `json:"IdGrupo"`
 }
 
-const NovedadEAMAvroCRC64Fingerprint = "\x0e\xee\xe8\xf4\xed\x19w_"
+const NovedadEAMAvroCRC64Fingerprint = "c\xbd\\]\xb1\x80\xe4@"
 
 func NewNovedadEAM() NovedadEAM {
 	r := NovedadEAM{}
+	r.Grupo = nil
+	r.IdGrupo = nil
 	return r
 }
 
@@ -87,6 +93,14 @@ func writeNovedadEAM(r NovedadEAM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Grupo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullInt(r.IdGrupo, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -95,7 +109,7 @@ func (r NovedadEAM) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEAM) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"IdMda\",\"type\":\"int\"},{\"name\":\"IdEam\",\"type\":\"int\"},{\"name\":\"NuevoEstadoMda\",\"type\":\"string\"},{\"name\":\"NuevoEstadoEam\",\"type\":\"string\"},{\"name\":\"Detalle\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Record.NovedadEAM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"IdMda\",\"type\":\"int\"},{\"name\":\"IdEam\",\"type\":\"int\"},{\"name\":\"NuevoEstadoMda\",\"type\":\"string\"},{\"name\":\"NuevoEstadoEam\",\"type\":\"string\"},{\"name\":\"Detalle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Grupo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdGrupo\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.EAM.Events.Record.NovedadEAM\",\"type\":\"record\"}"
 }
 
 func (r NovedadEAM) SchemaName() string {
@@ -143,18 +157,38 @@ func (r *NovedadEAM) Get(i int) types.Field {
 
 		return w
 
+	case 6:
+		r.Grupo = NewUnionNullString()
+
+		return r.Grupo
+	case 7:
+		r.IdGrupo = NewUnionNullInt()
+
+		return r.IdGrupo
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadEAM) SetDefault(i int) {
 	switch i {
+	case 6:
+		r.Grupo = nil
+		return
+	case 7:
+		r.IdGrupo = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadEAM) NullField(i int) {
 	switch i {
+	case 6:
+		r.Grupo = nil
+		return
+	case 7:
+		r.IdGrupo = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -192,6 +226,14 @@ func (r NovedadEAM) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Detalle"], err = json.Marshal(r.Detalle)
+	if err != nil {
+		return nil, err
+	}
+	output["Grupo"], err = json.Marshal(r.Grupo)
+	if err != nil {
+		return nil, err
+	}
+	output["IdGrupo"], err = json.Marshal(r.IdGrupo)
 	if err != nil {
 		return nil, err
 	}
@@ -288,6 +330,38 @@ func (r *NovedadEAM) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Detalle")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Grupo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Grupo); err != nil {
+			return err
+		}
+	} else {
+		r.Grupo = NewUnionNullString()
+
+		r.Grupo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdGrupo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdGrupo); err != nil {
+			return err
+		}
+	} else {
+		r.IdGrupo = NewUnionNullInt()
+
+		r.IdGrupo = nil
 	}
 	return nil
 }
