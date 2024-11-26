@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type Characteristics struct {
-	Id int32 `json:"Id"`
+	Id int32 `json:"id"`
 
-	Value string `json:"Value"`
+	Value string `json:"value"`
 }
 
-const CharacteristicsAvroCRC64Fingerprint = "X\xfdۺ\xe2Ym\xa5"
+const CharacteristicsAvroCRC64Fingerprint = "\x83\xc3\a/>\xf2+\xfd"
 
 func NewCharacteristics() Characteristics {
 	r := Characteristics{}
@@ -71,11 +71,11 @@ func (r Characteristics) Serialize(w io.Writer) error {
 }
 
 func (r Characteristics) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Value\",\"type\":\"string\"}],\"name\":\"Andreani.OperativeUnit.Events.Record.Characteristics\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"andreani.operativeunit.events.record.Characteristics\",\"type\":\"record\"}"
 }
 
 func (r Characteristics) SchemaName() string {
-	return "Andreani.OperativeUnit.Events.Record.Characteristics"
+	return "andreani.operativeunit.events.record.Characteristics"
 }
 
 func (_ Characteristics) SetBoolean(v bool)    { panic("Unsupported operation") }
@@ -127,11 +127,11 @@ func (_ Characteristics) AvroCRC64Fingerprint() []byte {
 func (r Characteristics) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Id"], err = json.Marshal(r.Id)
+	output["id"], err = json.Marshal(r.Id)
 	if err != nil {
 		return nil, err
 	}
-	output["Value"], err = json.Marshal(r.Value)
+	output["value"], err = json.Marshal(r.Value)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +146,7 @@ func (r *Characteristics) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["Id"]; ok {
+		if v, ok := fields["id"]; ok {
 			return v
 		}
 		return nil
@@ -157,10 +157,10 @@ func (r *Characteristics) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Id")
+		return fmt.Errorf("no value specified for id")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Value"]; ok {
+		if v, ok := fields["value"]; ok {
 			return v
 		}
 		return nil
@@ -171,7 +171,7 @@ func (r *Characteristics) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Value")
+		return fmt.Errorf("no value specified for value")
 	}
 	return nil
 }
