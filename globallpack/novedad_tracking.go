@@ -33,7 +33,7 @@ type NovedadTracking struct {
 	GuiaHija *UnionNullString `json:"GuiaHija"`
 }
 
-const NovedadTrackingAvroCRC64Fingerprint = "\x16j\"\xef/\xa4\x9cQ"
+const NovedadTrackingAvroCRC64Fingerprint = "\xc5\x0fB\x0e\xf3\xa7\xb3\xd7"
 
 func NewNovedadTracking() NovedadTracking {
 	r := NovedadTracking{}
@@ -105,11 +105,11 @@ func (r NovedadTracking) Serialize(w io.Writer) error {
 }
 
 func (r NovedadTracking) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EnviosAGP.Events.Common.NovedadTracking\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Globallpack.Events.Common.NovedadTracking\",\"type\":\"record\"}"
 }
 
 func (r NovedadTracking) SchemaName() string {
-	return "Andreani.EnviosAGP.Events.Common.NovedadTracking"
+	return "Andreani.Globallpack.Events.Common.NovedadTracking"
 }
 
 func (_ NovedadTracking) SetBoolean(v bool)    { panic("Unsupported operation") }
