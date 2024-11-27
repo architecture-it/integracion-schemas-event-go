@@ -23,7 +23,7 @@ type EnvioListoParaAduana struct {
 	Guia string `json:"Guia"`
 }
 
-const EnvioListoParaAduanaAvroCRC64Fingerprint = "\x80ɱs\a\x9b\xc8\xf7"
+const EnvioListoParaAduanaAvroCRC64Fingerprint = "U\x9b0^ţ\xc7T"
 
 func NewEnvioListoParaAduana() EnvioListoParaAduana {
 	r := EnvioListoParaAduana{}
@@ -71,11 +71,11 @@ func (r EnvioListoParaAduana) Serialize(w io.Writer) error {
 }
 
 func (r EnvioListoParaAduana) Schema() string {
-	return "{\"fields\":[{\"name\":\"NroEnvio\",\"type\":\"string\"},{\"name\":\"Guia\",\"type\":\"string\"}],\"name\":\"Andreani.EnviosAGP.Events.Record.EnvioListoParaAduana\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NroEnvio\",\"type\":\"string\"},{\"name\":\"Guia\",\"type\":\"string\"}],\"name\":\"Andreani.Globallpack.Events.Record.EnvioListoParaAduana\",\"type\":\"record\"}"
 }
 
 func (r EnvioListoParaAduana) SchemaName() string {
-	return "Andreani.EnviosAGP.Events.Record.EnvioListoParaAduana"
+	return "Andreani.Globallpack.Events.Record.EnvioListoParaAduana"
 }
 
 func (_ EnvioListoParaAduana) SetBoolean(v bool)    { panic("Unsupported operation") }
