@@ -24,7 +24,7 @@ type NovedadTracking struct {
 
 	FechaRecibido int64 `json:"FechaRecibido"`
 
-	Estado string `json:"estado"`
+	Estado string `json:"Estado"`
 
 	Observacion *UnionNullString `json:"Observacion"`
 
@@ -33,7 +33,7 @@ type NovedadTracking struct {
 	GuiaHija *UnionNullString `json:"GuiaHija"`
 }
 
-const NovedadTrackingAvroCRC64Fingerprint = "\xf0\x83\x10\x14s\xf7\x14\xd1"
+const NovedadTrackingAvroCRC64Fingerprint = "\x16j\"\xef/\xa4\x9cQ"
 
 func NewNovedadTracking() NovedadTracking {
 	r := NovedadTracking{}
@@ -105,7 +105,7 @@ func (r NovedadTracking) Serialize(w io.Writer) error {
 }
 
 func (r NovedadTracking) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EnviosAGP.Events.Common.NovedadTracking\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EnviosAGP.Events.Common.NovedadTracking\",\"type\":\"record\"}"
 }
 
 func (r NovedadTracking) SchemaName() string {
@@ -218,7 +218,7 @@ func (r NovedadTracking) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["estado"], err = json.Marshal(r.Estado)
+	output["Estado"], err = json.Marshal(r.Estado)
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +289,7 @@ func (r *NovedadTracking) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for FechaRecibido")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["estado"]; ok {
+		if v, ok := fields["Estado"]; ok {
 			return v
 		}
 		return nil
@@ -300,7 +300,7 @@ func (r *NovedadTracking) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for estado")
+		return fmt.Errorf("no value specified for Estado")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Observacion"]; ok {
