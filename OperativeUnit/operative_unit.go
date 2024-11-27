@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type OperativeUnit struct {
+	Id string `json:"id"`
+
 	Name string `json:"name"`
 
 	Code string `json:"code"`
@@ -141,7 +143,7 @@ type OperativeUnit struct {
 	ListOperativeUnitContracts []string `json:"listOperativeUnitContracts"`
 }
 
-const OperativeUnitAvroCRC64Fingerprint = "\x9dS|)\xa3r\xa3\xd2"
+const OperativeUnitAvroCRC64Fingerprint = "\xb2\xa6\x93\x86H\xfe\xad\xe4"
 
 func NewOperativeUnit() OperativeUnit {
 	r := OperativeUnit{}
@@ -183,6 +185,10 @@ func DeserializeOperativeUnitFromSchema(r io.Reader, schema string) (OperativeUn
 
 func writeOperativeUnit(r OperativeUnit, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.Id, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Name, w)
 	if err != nil {
 		return err
@@ -435,7 +441,7 @@ func (r OperativeUnit) Serialize(w io.Writer) error {
 }
 
 func (r OperativeUnit) Schema() string {
-	return "{\"fields\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"numberCode\",\"type\":\"int\"},{\"name\":\"digitize\",\"type\":\"boolean\"},{\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"name\":\"isFrontier\",\"type\":\"boolean\"},{\"name\":\"isActive\",\"type\":\"boolean\"},{\"name\":\"creationPending\",\"type\":\"boolean\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"numberAddress\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"neighborhood\",\"type\":[\"null\",\"string\"]},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"taxJurisdiction\",\"type\":\"string\"},{\"name\":\"latitude\",\"type\":\"string\"},{\"name\":\"longitude\",\"type\":\"string\"},{\"name\":\"geoSpatialPolygon\",\"type\":[\"null\",\"long\"]},{\"name\":\"customerServiceSchedule\",\"type\":[\"null\",\"string\"]},{\"name\":\"operationServiceSchedule\",\"type\":[\"null\",\"string\"]},{\"name\":\"allowsCustomerClient\",\"type\":\"boolean\"},{\"name\":\"allowsCentralizedReturn\",\"type\":\"boolean\"},{\"name\":\"allowsCashSale\",\"type\":\"int\"},{\"name\":\"allowsImprest\",\"type\":\"int\"},{\"name\":\"allowsChargeRecipient\",\"type\":\"int\"},{\"name\":\"allowsSaleSerializedProducts\",\"type\":\"int\"},{\"name\":\"costCenter\",\"type\":[\"null\",\"string\"]},{\"name\":\"allowsCustody\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustody\",\"type\":[\"null\",\"long\"]},{\"name\":\"allowsCustomerStock\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"positionsForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersTotal\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersIndoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersOutdoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersCommercialAttention\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParking\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForUnits\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForCustomers\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForEmployees\",\"type\":[\"null\",\"long\"]},{\"name\":\"urlFrontPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"frontPictureDateTime\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlInsidePicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"insidePictureDateTime\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlDepositPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"depositPictureDateTime\",\"type\":[\"null\",\"string\"]},{\"name\":\"users\",\"type\":\"string\"},{\"name\":\"stamp\",\"type\":\"string\"},{\"name\":\"startDate\",\"type\":\"string\"},{\"name\":\"dniResponsible\",\"type\":\"string\"},{\"name\":\"idNetworkOwner\",\"type\":\"string\"},{\"name\":\"idRegion\",\"type\":\"string\"},{\"name\":\"contractsState\",\"type\":\"int\"},{\"name\":\"listContracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"listDocksString\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"listDocksGuid\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"operativeUnitTMSRelationship\",\"type\":{\"fields\":[{\"name\":\"idIntegra\",\"type\":[\"null\",\"long\"]},{\"name\":\"numberIntegra\",\"type\":[\"null\",\"string\"]},{\"name\":\"idAlertran\",\"type\":[\"null\",\"string\"]},{\"name\":\"defaultTms\",\"type\":[\"null\",\"string\"]}],\"name\":\"OperativeUnitTMSRelationship\",\"type\":\"record\"}},{\"name\":\"enableDate\",\"type\":\"string\"},{\"name\":\"enableState\",\"type\":\"string\"},{\"name\":\"listOperativeUnitContracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"numberCode\",\"type\":\"int\"},{\"name\":\"digitize\",\"type\":\"boolean\"},{\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"name\":\"isFrontier\",\"type\":\"boolean\"},{\"name\":\"isActive\",\"type\":\"boolean\"},{\"name\":\"creationPending\",\"type\":\"boolean\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"numberAddress\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"neighborhood\",\"type\":[\"null\",\"string\"]},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"taxJurisdiction\",\"type\":\"string\"},{\"name\":\"latitude\",\"type\":\"string\"},{\"name\":\"longitude\",\"type\":\"string\"},{\"name\":\"geoSpatialPolygon\",\"type\":[\"null\",\"long\"]},{\"name\":\"customerServiceSchedule\",\"type\":[\"null\",\"string\"]},{\"name\":\"operationServiceSchedule\",\"type\":[\"null\",\"string\"]},{\"name\":\"allowsCustomerClient\",\"type\":\"boolean\"},{\"name\":\"allowsCentralizedReturn\",\"type\":\"boolean\"},{\"name\":\"allowsCashSale\",\"type\":\"int\"},{\"name\":\"allowsImprest\",\"type\":\"int\"},{\"name\":\"allowsChargeRecipient\",\"type\":\"int\"},{\"name\":\"allowsSaleSerializedProducts\",\"type\":\"int\"},{\"name\":\"costCenter\",\"type\":[\"null\",\"string\"]},{\"name\":\"allowsCustody\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustody\",\"type\":[\"null\",\"long\"]},{\"name\":\"allowsCustomerStock\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"positionsForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersTotal\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersIndoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersOutdoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersCommercialAttention\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParking\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForUnits\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForCustomers\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForEmployees\",\"type\":[\"null\",\"long\"]},{\"name\":\"urlFrontPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"frontPictureDateTime\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlInsidePicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"insidePictureDateTime\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlDepositPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"depositPictureDateTime\",\"type\":[\"null\",\"string\"]},{\"name\":\"users\",\"type\":\"string\"},{\"name\":\"stamp\",\"type\":\"string\"},{\"name\":\"startDate\",\"type\":\"string\"},{\"name\":\"dniResponsible\",\"type\":\"string\"},{\"name\":\"idNetworkOwner\",\"type\":\"string\"},{\"name\":\"idRegion\",\"type\":\"string\"},{\"name\":\"contractsState\",\"type\":\"int\"},{\"name\":\"listContracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"listDocksString\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"listDocksGuid\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"operativeUnitTMSRelationship\",\"type\":{\"fields\":[{\"name\":\"idIntegra\",\"type\":[\"null\",\"long\"]},{\"name\":\"numberIntegra\",\"type\":[\"null\",\"string\"]},{\"name\":\"idAlertran\",\"type\":[\"null\",\"string\"]},{\"name\":\"defaultTms\",\"type\":[\"null\",\"string\"]}],\"name\":\"OperativeUnitTMSRelationship\",\"type\":\"record\"}},{\"name\":\"enableDate\",\"type\":\"string\"},{\"name\":\"enableState\",\"type\":\"string\"},{\"name\":\"listOperativeUnitContracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
 }
 
 func (r OperativeUnit) SchemaName() string {
@@ -454,291 +460,296 @@ func (_ OperativeUnit) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *OperativeUnit) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Name}
+		w := types.String{Target: &r.Id}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Code}
+		w := types.String{Target: &r.Name}
 
 		return w
 
 	case 2:
-		w := types.Int{Target: &r.NumberCode}
+		w := types.String{Target: &r.Code}
 
 		return w
 
 	case 3:
-		w := types.Boolean{Target: &r.Digitize}
+		w := types.Int{Target: &r.NumberCode}
 
 		return w
 
 	case 4:
+		w := types.Boolean{Target: &r.Digitize}
+
+		return w
+
+	case 5:
 		r.Email = NewUnionNullString()
 
 		return r.Email
-	case 5:
+	case 6:
 		w := types.Boolean{Target: &r.IsFrontier}
 
 		return w
 
-	case 6:
+	case 7:
 		w := types.Boolean{Target: &r.IsActive}
 
 		return w
 
-	case 7:
+	case 8:
 		w := types.Boolean{Target: &r.CreationPending}
 
 		return w
 
-	case 8:
+	case 9:
 		w := types.String{Target: &r.Address}
 
 		return w
 
-	case 9:
+	case 10:
 		w := types.String{Target: &r.NumberAddress}
 
 		return w
 
-	case 10:
+	case 11:
 		w := types.String{Target: &r.PostalCode}
 
 		return w
 
-	case 11:
+	case 12:
 		w := types.String{Target: &r.City}
 
 		return w
 
-	case 12:
+	case 13:
 		r.Neighborhood = NewUnionNullString()
 
 		return r.Neighborhood
-	case 13:
+	case 14:
 		w := types.String{Target: &r.State}
 
 		return w
 
-	case 14:
+	case 15:
 		w := types.String{Target: &r.Country}
 
 		return w
 
-	case 15:
+	case 16:
 		w := types.String{Target: &r.TaxJurisdiction}
 
 		return w
 
-	case 16:
+	case 17:
 		w := types.String{Target: &r.Latitude}
 
 		return w
 
-	case 17:
+	case 18:
 		w := types.String{Target: &r.Longitude}
 
 		return w
 
-	case 18:
+	case 19:
 		r.GeoSpatialPolygon = NewUnionNullLong()
 
 		return r.GeoSpatialPolygon
-	case 19:
+	case 20:
 		r.CustomerServiceSchedule = NewUnionNullString()
 
 		return r.CustomerServiceSchedule
-	case 20:
+	case 21:
 		r.OperationServiceSchedule = NewUnionNullString()
 
 		return r.OperationServiceSchedule
-	case 21:
+	case 22:
 		w := types.Boolean{Target: &r.AllowsCustomerClient}
 
 		return w
 
-	case 22:
+	case 23:
 		w := types.Boolean{Target: &r.AllowsCentralizedReturn}
 
 		return w
 
-	case 23:
+	case 24:
 		w := types.Int{Target: &r.AllowsCashSale}
 
 		return w
 
-	case 24:
+	case 25:
 		w := types.Int{Target: &r.AllowsImprest}
 
 		return w
 
-	case 25:
+	case 26:
 		w := types.Int{Target: &r.AllowsChargeRecipient}
 
 		return w
 
-	case 26:
+	case 27:
 		w := types.Int{Target: &r.AllowsSaleSerializedProducts}
 
 		return w
 
-	case 27:
+	case 28:
 		r.CostCenter = NewUnionNullString()
 
 		return r.CostCenter
-	case 28:
+	case 29:
 		w := types.Boolean{Target: &r.AllowsCustody}
 
 		return w
 
-	case 29:
+	case 30:
 		r.AvailableSquareMetersForCustody = NewUnionNullLong()
 
 		return r.AvailableSquareMetersForCustody
-	case 30:
+	case 31:
 		w := types.Boolean{Target: &r.AllowsCustomerStock}
 
 		return w
 
-	case 31:
+	case 32:
 		r.AvailableSquareMetersForCustomerStock = NewUnionNullLong()
 
 		return r.AvailableSquareMetersForCustomerStock
-	case 32:
+	case 33:
 		r.PositionsForCustomerStock = NewUnionNullLong()
 
 		return r.PositionsForCustomerStock
-	case 33:
+	case 34:
 		r.SquareMetersTotal = NewUnionNullLong()
 
 		return r.SquareMetersTotal
-	case 34:
+	case 35:
 		r.SquareMetersIndoor = NewUnionNullLong()
 
 		return r.SquareMetersIndoor
-	case 35:
+	case 36:
 		r.SquareMetersOutdoor = NewUnionNullLong()
 
 		return r.SquareMetersOutdoor
-	case 36:
+	case 37:
 		r.SquareMetersCommercialAttention = NewUnionNullLong()
 
 		return r.SquareMetersCommercialAttention
-	case 37:
+	case 38:
 		r.SquareMetersParking = NewUnionNullLong()
 
 		return r.SquareMetersParking
-	case 38:
+	case 39:
 		r.SquareMetersParkingForUnits = NewUnionNullLong()
 
 		return r.SquareMetersParkingForUnits
-	case 39:
+	case 40:
 		r.SquareMetersParkingForCustomers = NewUnionNullLong()
 
 		return r.SquareMetersParkingForCustomers
-	case 40:
+	case 41:
 		r.SquareMetersParkingForEmployees = NewUnionNullLong()
 
 		return r.SquareMetersParkingForEmployees
-	case 41:
+	case 42:
 		r.UrlFrontPicture = NewUnionNullString()
 
 		return r.UrlFrontPicture
-	case 42:
+	case 43:
 		r.FrontPictureDateTime = NewUnionNullString()
 
 		return r.FrontPictureDateTime
-	case 43:
+	case 44:
 		r.UrlInsidePicture = NewUnionNullString()
 
 		return r.UrlInsidePicture
-	case 44:
+	case 45:
 		r.InsidePictureDateTime = NewUnionNullString()
 
 		return r.InsidePictureDateTime
-	case 45:
+	case 46:
 		r.UrlDepositPicture = NewUnionNullString()
 
 		return r.UrlDepositPicture
-	case 46:
+	case 47:
 		r.DepositPictureDateTime = NewUnionNullString()
 
 		return r.DepositPictureDateTime
-	case 47:
+	case 48:
 		w := types.String{Target: &r.Users}
 
 		return w
 
-	case 48:
+	case 49:
 		w := types.String{Target: &r.Stamp}
 
 		return w
 
-	case 49:
+	case 50:
 		w := types.String{Target: &r.StartDate}
 
 		return w
 
-	case 50:
+	case 51:
 		w := types.String{Target: &r.DniResponsible}
 
 		return w
 
-	case 51:
+	case 52:
 		w := types.String{Target: &r.IdNetworkOwner}
 
 		return w
 
-	case 52:
+	case 53:
 		w := types.String{Target: &r.IdRegion}
 
 		return w
 
-	case 53:
+	case 54:
 		w := types.Int{Target: &r.ContractsState}
 
 		return w
 
-	case 54:
+	case 55:
 		r.ListContracts = make([]string, 0)
 
 		w := ArrayStringWrapper{Target: &r.ListContracts}
 
 		return w
 
-	case 55:
+	case 56:
 		r.ListDocksString = make([]string, 0)
 
 		w := ArrayStringWrapper{Target: &r.ListDocksString}
 
 		return w
 
-	case 56:
+	case 57:
 		r.ListDocksGuid = make([]string, 0)
 
 		w := ArrayStringWrapper{Target: &r.ListDocksGuid}
 
 		return w
 
-	case 57:
+	case 58:
 		r.OperativeUnitTMSRelationship = NewOperativeUnitTMSRelationship()
 
 		w := types.Record{Target: &r.OperativeUnitTMSRelationship}
 
 		return w
 
-	case 58:
+	case 59:
 		w := types.String{Target: &r.EnableDate}
 
 		return w
 
-	case 59:
+	case 60:
 		w := types.String{Target: &r.EnableState}
 
 		return w
 
-	case 60:
+	case 61:
 		r.ListOperativeUnitContracts = make([]string, 0)
 
 		w := ArrayStringWrapper{Target: &r.ListOperativeUnitContracts}
@@ -757,73 +768,73 @@ func (r *OperativeUnit) SetDefault(i int) {
 
 func (r *OperativeUnit) NullField(i int) {
 	switch i {
-	case 4:
+	case 5:
 		r.Email = nil
 		return
-	case 12:
+	case 13:
 		r.Neighborhood = nil
 		return
-	case 18:
+	case 19:
 		r.GeoSpatialPolygon = nil
 		return
-	case 19:
+	case 20:
 		r.CustomerServiceSchedule = nil
 		return
-	case 20:
+	case 21:
 		r.OperationServiceSchedule = nil
 		return
-	case 27:
+	case 28:
 		r.CostCenter = nil
 		return
-	case 29:
+	case 30:
 		r.AvailableSquareMetersForCustody = nil
 		return
-	case 31:
+	case 32:
 		r.AvailableSquareMetersForCustomerStock = nil
 		return
-	case 32:
+	case 33:
 		r.PositionsForCustomerStock = nil
 		return
-	case 33:
+	case 34:
 		r.SquareMetersTotal = nil
 		return
-	case 34:
+	case 35:
 		r.SquareMetersIndoor = nil
 		return
-	case 35:
+	case 36:
 		r.SquareMetersOutdoor = nil
 		return
-	case 36:
+	case 37:
 		r.SquareMetersCommercialAttention = nil
 		return
-	case 37:
+	case 38:
 		r.SquareMetersParking = nil
 		return
-	case 38:
+	case 39:
 		r.SquareMetersParkingForUnits = nil
 		return
-	case 39:
+	case 40:
 		r.SquareMetersParkingForCustomers = nil
 		return
-	case 40:
+	case 41:
 		r.SquareMetersParkingForEmployees = nil
 		return
-	case 41:
+	case 42:
 		r.UrlFrontPicture = nil
 		return
-	case 42:
+	case 43:
 		r.FrontPictureDateTime = nil
 		return
-	case 43:
+	case 44:
 		r.UrlInsidePicture = nil
 		return
-	case 44:
+	case 45:
 		r.InsidePictureDateTime = nil
 		return
-	case 45:
+	case 46:
 		r.UrlDepositPicture = nil
 		return
-	case 46:
+	case 47:
 		r.DepositPictureDateTime = nil
 		return
 	}
@@ -842,6 +853,10 @@ func (_ OperativeUnit) AvroCRC64Fingerprint() []byte {
 func (r OperativeUnit) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["id"], err = json.Marshal(r.Id)
+	if err != nil {
+		return nil, err
+	}
 	output["name"], err = json.Marshal(r.Name)
 	if err != nil {
 		return nil, err
@@ -1096,6 +1111,20 @@ func (r *OperativeUnit) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["id"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Id); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for id")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["name"]; ok {
 			return v
