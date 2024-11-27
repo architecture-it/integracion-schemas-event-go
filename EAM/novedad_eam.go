@@ -39,8 +39,6 @@ const NovedadEAMAvroCRC64Fingerprint = "c\xbd\\]\xb1\x80\xe4@"
 
 func NewNovedadEAM() NovedadEAM {
 	r := NovedadEAM{}
-	r.Grupo = nil
-	r.IdGrupo = nil
 	return r
 }
 
@@ -109,7 +107,7 @@ func (r NovedadEAM) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEAM) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"IdMda\",\"type\":\"int\"},{\"name\":\"IdEam\",\"type\":\"int\"},{\"name\":\"NuevoEstadoMda\",\"type\":\"string\"},{\"name\":\"NuevoEstadoEam\",\"type\":\"string\"},{\"name\":\"Detalle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Grupo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdGrupo\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.EAM.Events.Record.NovedadEAM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"IdMda\",\"type\":\"int\"},{\"name\":\"IdEam\",\"type\":\"int\"},{\"name\":\"NuevoEstadoMda\",\"type\":\"string\"},{\"name\":\"NuevoEstadoEam\",\"type\":\"string\"},{\"name\":\"Detalle\",\"type\":\"string\"},{\"name\":\"Grupo\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdGrupo\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.EAM.Events.Record.NovedadEAM\",\"type\":\"record\"}"
 }
 
 func (r NovedadEAM) SchemaName() string {
@@ -171,12 +169,6 @@ func (r *NovedadEAM) Get(i int) types.Field {
 
 func (r *NovedadEAM) SetDefault(i int) {
 	switch i {
-	case 6:
-		r.Grupo = nil
-		return
-	case 7:
-		r.IdGrupo = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -343,9 +335,7 @@ func (r *NovedadEAM) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Grupo = NewUnionNullString()
-
-		r.Grupo = nil
+		return fmt.Errorf("no value specified for Grupo")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IdGrupo"]; ok {
@@ -359,9 +349,7 @@ func (r *NovedadEAM) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.IdGrupo = NewUnionNullInt()
-
-		r.IdGrupo = nil
+		return fmt.Errorf("no value specified for IdGrupo")
 	}
 	return nil
 }
