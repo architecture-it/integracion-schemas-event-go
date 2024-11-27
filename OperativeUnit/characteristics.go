@@ -23,7 +23,7 @@ type Characteristics struct {
 	Value string `json:"value"`
 }
 
-const CharacteristicsAvroCRC64Fingerprint = "\x83\xc3\a/>\xf2+\xfd"
+const CharacteristicsAvroCRC64Fingerprint = "\xf4\xb1Ȑ\xb9A\x85\x1b"
 
 func NewCharacteristics() Characteristics {
 	r := Characteristics{}
@@ -71,11 +71,11 @@ func (r Characteristics) Serialize(w io.Writer) error {
 }
 
 func (r Characteristics) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"andreani.operativeunit.events.record.Characteristics\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Andreani.OperativeUnit.Events.Record.Characteristics\",\"type\":\"record\"}"
 }
 
 func (r Characteristics) SchemaName() string {
-	return "andreani.operativeunit.events.record.Characteristics"
+	return "Andreani.OperativeUnit.Events.Record.Characteristics"
 }
 
 func (_ Characteristics) SetBoolean(v bool)    { panic("Unsupported operation") }
