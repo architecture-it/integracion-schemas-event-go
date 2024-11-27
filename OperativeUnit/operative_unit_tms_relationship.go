@@ -18,16 +18,16 @@ import (
 var _ = fmt.Printf
 
 type OperativeUnitTMSRelationship struct {
-	IdIntegra *UnionNullLong `json:"idIntegra"`
+	IdIntegra int64 `json:"idIntegra"`
 
-	NumberIntegra *UnionNullString `json:"numberIntegra"`
+	NumberIntegra string `json:"numberIntegra"`
 
-	IdAlertran *UnionNullString `json:"idAlertran"`
+	IdAlertran string `json:"idAlertran"`
 
-	DefaultTms *UnionNullString `json:"defaultTms"`
+	DefaultTMS string `json:"defaultTMS"`
 }
 
-const OperativeUnitTMSRelationshipAvroCRC64Fingerprint = "\xbe\x05\xceƾ\x97Oo"
+const OperativeUnitTMSRelationshipAvroCRC64Fingerprint = "v;OD\xbfH\xe9\b"
 
 func NewOperativeUnitTMSRelationship() OperativeUnitTMSRelationship {
 	r := OperativeUnitTMSRelationship{}
@@ -59,19 +59,19 @@ func DeserializeOperativeUnitTMSRelationshipFromSchema(r io.Reader, schema strin
 
 func writeOperativeUnitTMSRelationship(r OperativeUnitTMSRelationship, w io.Writer) error {
 	var err error
-	err = writeUnionNullLong(r.IdIntegra, w)
+	err = vm.WriteLong(r.IdIntegra, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.NumberIntegra, w)
+	err = vm.WriteString(r.NumberIntegra, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.IdAlertran, w)
+	err = vm.WriteString(r.IdAlertran, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.DefaultTms, w)
+	err = vm.WriteString(r.DefaultTMS, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (r OperativeUnitTMSRelationship) Serialize(w io.Writer) error {
 }
 
 func (r OperativeUnitTMSRelationship) Schema() string {
-	return "{\"fields\":[{\"name\":\"idIntegra\",\"type\":[\"null\",\"long\"]},{\"name\":\"numberIntegra\",\"type\":[\"null\",\"string\"]},{\"name\":\"idAlertran\",\"type\":[\"null\",\"string\"]},{\"name\":\"defaultTms\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnitTMSRelationship\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idIntegra\",\"type\":\"long\"},{\"name\":\"numberIntegra\",\"type\":\"string\"},{\"name\":\"idAlertran\",\"type\":\"string\"},{\"name\":\"defaultTMS\",\"type\":\"string\"}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnitTMSRelationship\",\"type\":\"record\"}"
 }
 
 func (r OperativeUnitTMSRelationship) SchemaName() string {
@@ -102,21 +102,25 @@ func (_ OperativeUnitTMSRelationship) SetUnionElem(v int64) { panic("Unsupported
 func (r *OperativeUnitTMSRelationship) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.IdIntegra = NewUnionNullLong()
+		w := types.Long{Target: &r.IdIntegra}
 
-		return r.IdIntegra
+		return w
+
 	case 1:
-		r.NumberIntegra = NewUnionNullString()
+		w := types.String{Target: &r.NumberIntegra}
 
-		return r.NumberIntegra
+		return w
+
 	case 2:
-		r.IdAlertran = NewUnionNullString()
+		w := types.String{Target: &r.IdAlertran}
 
-		return r.IdAlertran
+		return w
+
 	case 3:
-		r.DefaultTms = NewUnionNullString()
+		w := types.String{Target: &r.DefaultTMS}
 
-		return r.DefaultTms
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -129,18 +133,6 @@ func (r *OperativeUnitTMSRelationship) SetDefault(i int) {
 
 func (r *OperativeUnitTMSRelationship) NullField(i int) {
 	switch i {
-	case 0:
-		r.IdIntegra = nil
-		return
-	case 1:
-		r.NumberIntegra = nil
-		return
-	case 2:
-		r.IdAlertran = nil
-		return
-	case 3:
-		r.DefaultTms = nil
-		return
 	}
 	panic("Not a nullable field index")
 }
@@ -171,7 +163,7 @@ func (r OperativeUnitTMSRelationship) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["defaultTms"], err = json.Marshal(r.DefaultTms)
+	output["defaultTMS"], err = json.Marshal(r.DefaultTMS)
 	if err != nil {
 		return nil, err
 	}
@@ -228,18 +220,18 @@ func (r *OperativeUnitTMSRelationship) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for idAlertran")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["defaultTms"]; ok {
+		if v, ok := fields["defaultTMS"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.DefaultTms); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DefaultTMS); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for defaultTms")
+		return fmt.Errorf("no value specified for defaultTMS")
 	}
 	return nil
 }
