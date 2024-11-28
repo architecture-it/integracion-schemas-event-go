@@ -24,10 +24,10 @@ type OperativeUnitTMSRelationship struct {
 
 	IdAlertran string `json:"idAlertran"`
 
-	DefaultTMS string `json:"defaultTMS"`
+	DefaultTMS *UnionNullString `json:"defaultTMS"`
 }
 
-const OperativeUnitTMSRelationshipAvroCRC64Fingerprint = "v;OD\xbfH\xe9\b"
+const OperativeUnitTMSRelationshipAvroCRC64Fingerprint = "\t\xaf\xdb\xea\xda\am/"
 
 func NewOperativeUnitTMSRelationship() OperativeUnitTMSRelationship {
 	r := OperativeUnitTMSRelationship{}
@@ -71,7 +71,7 @@ func writeOperativeUnitTMSRelationship(r OperativeUnitTMSRelationship, w io.Writ
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DefaultTMS, w)
+	err = writeUnionNullString(r.DefaultTMS, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (r OperativeUnitTMSRelationship) Serialize(w io.Writer) error {
 }
 
 func (r OperativeUnitTMSRelationship) Schema() string {
-	return "{\"fields\":[{\"name\":\"idIntegra\",\"type\":\"long\"},{\"name\":\"numberIntegra\",\"type\":\"string\"},{\"name\":\"idAlertran\",\"type\":\"string\"},{\"name\":\"defaultTMS\",\"type\":\"string\"}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnitTMSRelationship\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idIntegra\",\"type\":\"long\"},{\"name\":\"numberIntegra\",\"type\":\"string\"},{\"name\":\"idAlertran\",\"type\":\"string\"},{\"name\":\"defaultTMS\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnitTMSRelationship\",\"type\":\"record\"}"
 }
 
 func (r OperativeUnitTMSRelationship) SchemaName() string {
@@ -117,10 +117,9 @@ func (r *OperativeUnitTMSRelationship) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.DefaultTMS}
+		r.DefaultTMS = NewUnionNullString()
 
-		return w
-
+		return r.DefaultTMS
 	}
 	panic("Unknown field index")
 }
@@ -133,6 +132,9 @@ func (r *OperativeUnitTMSRelationship) SetDefault(i int) {
 
 func (r *OperativeUnitTMSRelationship) NullField(i int) {
 	switch i {
+	case 3:
+		r.DefaultTMS = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
