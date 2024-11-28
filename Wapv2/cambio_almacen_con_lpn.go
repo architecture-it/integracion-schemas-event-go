@@ -24,6 +24,8 @@ type CambioAlmacenConLpn struct {
 
 	Lote *UnionNullString `json:"lote"`
 
+	LoteSecundario *UnionNullString `json:"loteSecundario"`
+
 	LpnId *UnionNullString `json:"lpnId"`
 
 	Cantidad *UnionNullInt `json:"cantidad"`
@@ -35,13 +37,14 @@ type CambioAlmacenConLpn struct {
 	OrdenExterna *UnionNullString `json:"ordenExterna"`
 }
 
-const CambioAlmacenConLpnAvroCRC64Fingerprint = "\xe2D:P\x90\xfd\x10\xac"
+const CambioAlmacenConLpnAvroCRC64Fingerprint = "\xf7cGt\xf2\xf2\xe9\xc8"
 
 func NewCambioAlmacenConLpn() CambioAlmacenConLpn {
 	r := CambioAlmacenConLpn{}
 	r.Propietario = nil
 	r.Articulo = nil
 	r.Lote = nil
+	r.LoteSecundario = nil
 	r.LpnId = nil
 	r.Cantidad = nil
 	r.AlmacenOrigen = nil
@@ -87,6 +90,10 @@ func writeCambioAlmacenConLpn(r CambioAlmacenConLpn, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.LoteSecundario, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.LpnId, w)
 	if err != nil {
 		return err
@@ -115,7 +122,7 @@ func (r CambioAlmacenConLpn) Serialize(w io.Writer) error {
 }
 
 func (r CambioAlmacenConLpn) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lpnId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"almacenOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacenDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ordenExterna\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.CambioAlmacenConLpn\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"lpnId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"almacenOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"almacenDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ordenExterna\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.CambioAlmacenConLpn\",\"type\":\"record\"}"
 }
 
 func (r CambioAlmacenConLpn) SchemaName() string {
@@ -146,22 +153,26 @@ func (r *CambioAlmacenConLpn) Get(i int) types.Field {
 
 		return r.Lote
 	case 3:
+		r.LoteSecundario = NewUnionNullString()
+
+		return r.LoteSecundario
+	case 4:
 		r.LpnId = NewUnionNullString()
 
 		return r.LpnId
-	case 4:
+	case 5:
 		r.Cantidad = NewUnionNullInt()
 
 		return r.Cantidad
-	case 5:
+	case 6:
 		r.AlmacenOrigen = NewUnionNullString()
 
 		return r.AlmacenOrigen
-	case 6:
+	case 7:
 		r.AlmacenDestino = NewUnionNullString()
 
 		return r.AlmacenDestino
-	case 7:
+	case 8:
 		r.OrdenExterna = NewUnionNullString()
 
 		return r.OrdenExterna
@@ -181,18 +192,21 @@ func (r *CambioAlmacenConLpn) SetDefault(i int) {
 		r.Lote = nil
 		return
 	case 3:
-		r.LpnId = nil
+		r.LoteSecundario = nil
 		return
 	case 4:
-		r.Cantidad = nil
+		r.LpnId = nil
 		return
 	case 5:
-		r.AlmacenOrigen = nil
+		r.Cantidad = nil
 		return
 	case 6:
-		r.AlmacenDestino = nil
+		r.AlmacenOrigen = nil
 		return
 	case 7:
+		r.AlmacenDestino = nil
+		return
+	case 8:
 		r.OrdenExterna = nil
 		return
 	}
@@ -211,18 +225,21 @@ func (r *CambioAlmacenConLpn) NullField(i int) {
 		r.Lote = nil
 		return
 	case 3:
-		r.LpnId = nil
+		r.LoteSecundario = nil
 		return
 	case 4:
-		r.Cantidad = nil
+		r.LpnId = nil
 		return
 	case 5:
-		r.AlmacenOrigen = nil
+		r.Cantidad = nil
 		return
 	case 6:
-		r.AlmacenDestino = nil
+		r.AlmacenOrigen = nil
 		return
 	case 7:
+		r.AlmacenDestino = nil
+		return
+	case 8:
 		r.OrdenExterna = nil
 		return
 	}
@@ -250,6 +267,10 @@ func (r CambioAlmacenConLpn) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["lote"], err = json.Marshal(r.Lote)
+	if err != nil {
+		return nil, err
+	}
+	output["loteSecundario"], err = json.Marshal(r.LoteSecundario)
 	if err != nil {
 		return nil, err
 	}
@@ -330,6 +351,22 @@ func (r *CambioAlmacenConLpn) UnmarshalJSON(data []byte) error {
 		r.Lote = NewUnionNullString()
 
 		r.Lote = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["loteSecundario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LoteSecundario); err != nil {
+			return err
+		}
+	} else {
+		r.LoteSecundario = NewUnionNullString()
+
+		r.LoteSecundario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["lpnId"]; ok {
