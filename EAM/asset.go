@@ -18,20 +18,32 @@ import (
 var _ = fmt.Printf
 
 type Asset struct {
-	Id int32 `json:"Id"`
+	Id int32 `json:"id"`
 
-	Inventario string `json:"Inventario"`
+	Tipo_objeto string `json:"tipo_objeto"`
 
-	Categoria string `json:"Categoria"`
+	Descripcion string `json:"descripcion"`
 
-	Planta string `json:"Planta"`
+	Codigo_costo string `json:"codigo_costo"`
 
-	Descripcion string `json:"Descripcion"`
+	Estado string `json:"estado"`
+
+	Fecha_alta string `json:"fecha_alta"`
+
+	Organizacion string `json:"organizacion"`
+
+	Fabricante string `json:"fabricante"`
+
+	Modelo string `json:"modelo"`
+
+	Nro_serie string `json:"nro_serie"`
+
+	Propietario string `json:"propietario"`
 
 	FueraDeServicio bool `json:"fueraDeServicio"`
 }
 
-const AssetAvroCRC64Fingerprint = "\xac\xe3+\x8eq\xfb(\xe8"
+const AssetAvroCRC64Fingerprint = "\xc9mw$#\xa2\xd1\x0e"
 
 func NewAsset() Asset {
 	r := Asset{}
@@ -67,19 +79,43 @@ func writeAsset(r Asset, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Inventario, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Categoria, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Planta, w)
+	err = vm.WriteString(r.Tipo_objeto, w)
 	if err != nil {
 		return err
 	}
 	err = vm.WriteString(r.Descripcion, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Codigo_costo, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Estado, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Fecha_alta, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Organizacion, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Fabricante, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Modelo, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Nro_serie, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Propietario, w)
 	if err != nil {
 		return err
 	}
@@ -95,7 +131,7 @@ func (r Asset) Serialize(w io.Writer) error {
 }
 
 func (r Asset) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Inventario\",\"type\":\"string\"},{\"name\":\"Categoria\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
 }
 
 func (r Asset) SchemaName() string {
@@ -119,26 +155,56 @@ func (r *Asset) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Inventario}
+		w := types.String{Target: &r.Tipo_objeto}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Categoria}
-
-		return w
-
-	case 3:
-		w := types.String{Target: &r.Planta}
-
-		return w
-
-	case 4:
 		w := types.String{Target: &r.Descripcion}
 
 		return w
 
+	case 3:
+		w := types.String{Target: &r.Codigo_costo}
+
+		return w
+
+	case 4:
+		w := types.String{Target: &r.Estado}
+
+		return w
+
 	case 5:
+		w := types.String{Target: &r.Fecha_alta}
+
+		return w
+
+	case 6:
+		w := types.String{Target: &r.Organizacion}
+
+		return w
+
+	case 7:
+		w := types.String{Target: &r.Fabricante}
+
+		return w
+
+	case 8:
+		w := types.String{Target: &r.Modelo}
+
+		return w
+
+	case 9:
+		w := types.String{Target: &r.Nro_serie}
+
+		return w
+
+	case 10:
+		w := types.String{Target: &r.Propietario}
+
+		return w
+
+	case 11:
 		w := types.Boolean{Target: &r.FueraDeServicio}
 
 		return w
@@ -171,23 +237,47 @@ func (_ Asset) AvroCRC64Fingerprint() []byte {
 func (r Asset) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Id"], err = json.Marshal(r.Id)
+	output["id"], err = json.Marshal(r.Id)
 	if err != nil {
 		return nil, err
 	}
-	output["Inventario"], err = json.Marshal(r.Inventario)
+	output["tipo_objeto"], err = json.Marshal(r.Tipo_objeto)
 	if err != nil {
 		return nil, err
 	}
-	output["Categoria"], err = json.Marshal(r.Categoria)
+	output["descripcion"], err = json.Marshal(r.Descripcion)
 	if err != nil {
 		return nil, err
 	}
-	output["Planta"], err = json.Marshal(r.Planta)
+	output["codigo_costo"], err = json.Marshal(r.Codigo_costo)
 	if err != nil {
 		return nil, err
 	}
-	output["Descripcion"], err = json.Marshal(r.Descripcion)
+	output["estado"], err = json.Marshal(r.Estado)
+	if err != nil {
+		return nil, err
+	}
+	output["fecha_alta"], err = json.Marshal(r.Fecha_alta)
+	if err != nil {
+		return nil, err
+	}
+	output["organizacion"], err = json.Marshal(r.Organizacion)
+	if err != nil {
+		return nil, err
+	}
+	output["fabricante"], err = json.Marshal(r.Fabricante)
+	if err != nil {
+		return nil, err
+	}
+	output["modelo"], err = json.Marshal(r.Modelo)
+	if err != nil {
+		return nil, err
+	}
+	output["nro_serie"], err = json.Marshal(r.Nro_serie)
+	if err != nil {
+		return nil, err
+	}
+	output["propietario"], err = json.Marshal(r.Propietario)
 	if err != nil {
 		return nil, err
 	}
@@ -206,7 +296,7 @@ func (r *Asset) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["Id"]; ok {
+		if v, ok := fields["id"]; ok {
 			return v
 		}
 		return nil
@@ -217,52 +307,24 @@ func (r *Asset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Id")
+		return fmt.Errorf("no value specified for id")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Inventario"]; ok {
+		if v, ok := fields["tipo_objeto"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Inventario); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Tipo_objeto); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Inventario")
+		return fmt.Errorf("no value specified for tipo_objeto")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Categoria"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Categoria); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Categoria")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Planta"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Planta); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Planta")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Descripcion"]; ok {
+		if v, ok := fields["descripcion"]; ok {
 			return v
 		}
 		return nil
@@ -273,7 +335,119 @@ func (r *Asset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Descripcion")
+		return fmt.Errorf("no value specified for descripcion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigo_costo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Codigo_costo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for codigo_costo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["estado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Estado); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for estado")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["fecha_alta"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Fecha_alta); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for fecha_alta")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["organizacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Organizacion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for organizacion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["fabricante"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Fabricante); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for fabricante")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["modelo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Modelo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for modelo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["nro_serie"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Nro_serie); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for nro_serie")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["propietario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Propietario); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for propietario")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["fueraDeServicio"]; ok {

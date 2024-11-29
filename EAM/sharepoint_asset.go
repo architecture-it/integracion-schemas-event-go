@@ -21,7 +21,7 @@ type SharepointAsset struct {
 	Asset Asset `json:"Asset"`
 }
 
-const SharepointAssetAvroCRC64Fingerprint = "\xfdᚁ\xdeҠ\xa9"
+const SharepointAssetAvroCRC64Fingerprint = "\xb9\xf8\xc3U\xb6 \xf5\xe3"
 
 func NewSharepointAsset() SharepointAsset {
 	r := SharepointAsset{}
@@ -67,7 +67,7 @@ func (r SharepointAsset) Serialize(w io.Writer) error {
 }
 
 func (r SharepointAsset) Schema() string {
-	return "{\"fields\":[{\"name\":\"Asset\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Inventario\",\"type\":\"string\"},{\"name\":\"Categoria\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"}],\"name\":\"Asset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.SharepointAsset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Asset\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"}],\"name\":\"Asset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.SharepointAsset\",\"type\":\"record\"}"
 }
 
 func (r SharepointAsset) SchemaName() string {
