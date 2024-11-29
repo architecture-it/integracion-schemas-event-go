@@ -18,14 +18,14 @@ import (
 var _ = fmt.Printf
 
 type SharepointAsset struct {
-	SharepointAsset SharepointAsset `json:"SharepointAsset"`
+	Asset Asset `json:"Asset"`
 }
 
-const SharepointAssetAvroCRC64Fingerprint = "DJ\x89߅\xa6}\xc2"
+const SharepointAssetAvroCRC64Fingerprint = "\xfdᚁ\xdeҠ\xa9"
 
 func NewSharepointAsset() SharepointAsset {
 	r := SharepointAsset{}
-	r.SharepointAsset = NewSharepointAsset()
+	r.Asset = NewAsset()
 
 	return r
 }
@@ -55,7 +55,7 @@ func DeserializeSharepointAssetFromSchema(r io.Reader, schema string) (Sharepoin
 
 func writeSharepointAsset(r SharepointAsset, w io.Writer) error {
 	var err error
-	err = writeSharepointAsset(r.SharepointAsset, w)
+	err = writeAsset(r.Asset, w)
 	if err != nil {
 		return err
 	}
@@ -67,7 +67,7 @@ func (r SharepointAsset) Serialize(w io.Writer) error {
 }
 
 func (r SharepointAsset) Schema() string {
-	return "{\"fields\":[{\"name\":\"SharepointAsset\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Inventario\",\"type\":\"string\"},{\"name\":\"Categoria\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"}],\"name\":\"SharepointAsset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.SharepointAsset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Asset\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Inventario\",\"type\":\"string\"},{\"name\":\"Categoria\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"}],\"name\":\"Asset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.SharepointAsset\",\"type\":\"record\"}"
 }
 
 func (r SharepointAsset) SchemaName() string {
@@ -86,9 +86,9 @@ func (_ SharepointAsset) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *SharepointAsset) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.SharepointAsset = NewSharepointAsset()
+		r.Asset = NewAsset()
 
-		w := types.Record{Target: &r.SharepointAsset}
+		w := types.Record{Target: &r.Asset}
 
 		return w
 
@@ -120,7 +120,7 @@ func (_ SharepointAsset) AvroCRC64Fingerprint() []byte {
 func (r SharepointAsset) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["SharepointAsset"], err = json.Marshal(r.SharepointAsset)
+	output["Asset"], err = json.Marshal(r.Asset)
 	if err != nil {
 		return nil, err
 	}
@@ -135,18 +135,18 @@ func (r *SharepointAsset) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["SharepointAsset"]; ok {
+		if v, ok := fields["Asset"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.SharepointAsset); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Asset); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SharepointAsset")
+		return fmt.Errorf("no value specified for Asset")
 	}
 	return nil
 }
