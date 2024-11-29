@@ -24,6 +24,8 @@ type Asset struct {
 
 	Descripcion string `json:"descripcion"`
 
+	Clase string `json:"clase"`
+
 	Codigo_costo string `json:"codigo_costo"`
 
 	Estado string `json:"estado"`
@@ -43,7 +45,7 @@ type Asset struct {
 	FueraDeServicio bool `json:"fueraDeServicio"`
 }
 
-const AssetAvroCRC64Fingerprint = "\xc9mw$#\xa2\xd1\x0e"
+const AssetAvroCRC64Fingerprint = "\x87\x1c\xf0 2Z\"\x02"
 
 func NewAsset() Asset {
 	r := Asset{}
@@ -84,6 +86,10 @@ func writeAsset(r Asset, w io.Writer) error {
 		return err
 	}
 	err = vm.WriteString(r.Descripcion, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Clase, w)
 	if err != nil {
 		return err
 	}
@@ -131,7 +137,7 @@ func (r Asset) Serialize(w io.Writer) error {
 }
 
 func (r Asset) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
 }
 
 func (r Asset) SchemaName() string {
@@ -165,46 +171,51 @@ func (r *Asset) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.Codigo_costo}
+		w := types.String{Target: &r.Clase}
 
 		return w
 
 	case 4:
-		w := types.String{Target: &r.Estado}
+		w := types.String{Target: &r.Codigo_costo}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.Fecha_alta}
+		w := types.String{Target: &r.Estado}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.Organizacion}
+		w := types.String{Target: &r.Fecha_alta}
 
 		return w
 
 	case 7:
-		w := types.String{Target: &r.Fabricante}
+		w := types.String{Target: &r.Organizacion}
 
 		return w
 
 	case 8:
-		w := types.String{Target: &r.Modelo}
+		w := types.String{Target: &r.Fabricante}
 
 		return w
 
 	case 9:
-		w := types.String{Target: &r.Nro_serie}
+		w := types.String{Target: &r.Modelo}
 
 		return w
 
 	case 10:
-		w := types.String{Target: &r.Propietario}
+		w := types.String{Target: &r.Nro_serie}
 
 		return w
 
 	case 11:
+		w := types.String{Target: &r.Propietario}
+
+		return w
+
+	case 12:
 		w := types.Boolean{Target: &r.FueraDeServicio}
 
 		return w
@@ -246,6 +257,10 @@ func (r Asset) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["descripcion"], err = json.Marshal(r.Descripcion)
+	if err != nil {
+		return nil, err
+	}
+	output["clase"], err = json.Marshal(r.Clase)
 	if err != nil {
 		return nil, err
 	}
@@ -336,6 +351,20 @@ func (r *Asset) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for descripcion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["clase"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Clase); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for clase")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigo_costo"]; ok {
