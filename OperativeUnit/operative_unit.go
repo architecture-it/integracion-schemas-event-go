@@ -25,9 +25,33 @@ type OperativeUnit struct {
 	Code string `json:"code"`
 
 	NumberCode int32 `json:"numberCode"`
+
+	City string `json:"city"`
+
+	State string `json:"state"`
+
+	Users string `json:"users"`
+
+	Address string `json:"address"`
+
+	Country string `json:"country"`
+
+	Latitude string `json:"latitude"`
+
+	Longitude string `json:"longitude"`
+
+	CostCenter string `json:"costCenter"`
+
+	PostalCode string `json:"postalCode"`
+
+	NumberAddress string `json:"numberAddress"`
+
+	DniResponsible string `json:"dniResponsible"`
+
+	TaxJurisdiction string `json:"taxJurisdiction"`
 }
 
-const OperativeUnitAvroCRC64Fingerprint = "\xc1Ѭ\x1b\xc0\xfa}\xe4"
+const OperativeUnitAvroCRC64Fingerprint = ".[H\xe8I\x87x\x8f"
 
 func NewOperativeUnit() OperativeUnit {
 	r := OperativeUnit{}
@@ -75,6 +99,54 @@ func writeOperativeUnit(r OperativeUnit, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.City, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.State, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Users, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Address, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Country, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Latitude, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Longitude, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.CostCenter, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.PostalCode, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.NumberAddress, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.DniResponsible, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.TaxJurisdiction, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -83,7 +155,7 @@ func (r OperativeUnit) Serialize(w io.Writer) error {
 }
 
 func (r OperativeUnit) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"numberCode\",\"type\":\"int\"}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"numberCode\",\"type\":\"int\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"users\",\"type\":\"string\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"latitude\",\"type\":\"string\"},{\"name\":\"longitude\",\"type\":\"string\"},{\"name\":\"costCenter\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"},{\"name\":\"numberAddress\",\"type\":\"string\"},{\"name\":\"dniResponsible\",\"type\":\"string\"},{\"name\":\"taxJurisdiction\",\"type\":\"string\"}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
 }
 
 func (r OperativeUnit) SchemaName() string {
@@ -118,6 +190,66 @@ func (r *OperativeUnit) Get(i int) types.Field {
 
 	case 3:
 		w := types.Int{Target: &r.NumberCode}
+
+		return w
+
+	case 4:
+		w := types.String{Target: &r.City}
+
+		return w
+
+	case 5:
+		w := types.String{Target: &r.State}
+
+		return w
+
+	case 6:
+		w := types.String{Target: &r.Users}
+
+		return w
+
+	case 7:
+		w := types.String{Target: &r.Address}
+
+		return w
+
+	case 8:
+		w := types.String{Target: &r.Country}
+
+		return w
+
+	case 9:
+		w := types.String{Target: &r.Latitude}
+
+		return w
+
+	case 10:
+		w := types.String{Target: &r.Longitude}
+
+		return w
+
+	case 11:
+		w := types.String{Target: &r.CostCenter}
+
+		return w
+
+	case 12:
+		w := types.String{Target: &r.PostalCode}
+
+		return w
+
+	case 13:
+		w := types.String{Target: &r.NumberAddress}
+
+		return w
+
+	case 14:
+		w := types.String{Target: &r.DniResponsible}
+
+		return w
+
+	case 15:
+		w := types.String{Target: &r.TaxJurisdiction}
 
 		return w
 
@@ -162,6 +294,54 @@ func (r OperativeUnit) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numberCode"], err = json.Marshal(r.NumberCode)
+	if err != nil {
+		return nil, err
+	}
+	output["city"], err = json.Marshal(r.City)
+	if err != nil {
+		return nil, err
+	}
+	output["state"], err = json.Marshal(r.State)
+	if err != nil {
+		return nil, err
+	}
+	output["users"], err = json.Marshal(r.Users)
+	if err != nil {
+		return nil, err
+	}
+	output["address"], err = json.Marshal(r.Address)
+	if err != nil {
+		return nil, err
+	}
+	output["country"], err = json.Marshal(r.Country)
+	if err != nil {
+		return nil, err
+	}
+	output["latitude"], err = json.Marshal(r.Latitude)
+	if err != nil {
+		return nil, err
+	}
+	output["longitude"], err = json.Marshal(r.Longitude)
+	if err != nil {
+		return nil, err
+	}
+	output["costCenter"], err = json.Marshal(r.CostCenter)
+	if err != nil {
+		return nil, err
+	}
+	output["postalCode"], err = json.Marshal(r.PostalCode)
+	if err != nil {
+		return nil, err
+	}
+	output["numberAddress"], err = json.Marshal(r.NumberAddress)
+	if err != nil {
+		return nil, err
+	}
+	output["dniResponsible"], err = json.Marshal(r.DniResponsible)
+	if err != nil {
+		return nil, err
+	}
+	output["taxJurisdiction"], err = json.Marshal(r.TaxJurisdiction)
 	if err != nil {
 		return nil, err
 	}
@@ -230,6 +410,174 @@ func (r *OperativeUnit) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for numberCode")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["city"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.City); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for city")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["state"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.State); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for state")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["users"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Users); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for users")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["address"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Address); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for address")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["country"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Country); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for country")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["latitude"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Latitude); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for latitude")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["longitude"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Longitude); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for longitude")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["costCenter"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CostCenter); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for costCenter")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["postalCode"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PostalCode); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for postalCode")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["numberAddress"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumberAddress); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for numberAddress")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["dniResponsible"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DniResponsible); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for dniResponsible")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["taxJurisdiction"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TaxJurisdiction); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for taxJurisdiction")
 	}
 	return nil
 }
