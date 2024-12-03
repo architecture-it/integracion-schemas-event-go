@@ -31,9 +31,13 @@ type NovedadTracking struct {
 	Guia *UnionNullString `json:"Guia"`
 
 	GuiaHija *UnionNullString `json:"GuiaHija"`
+
+	Motivo *UnionNullString `json:"Motivo"`
+
+	SubMotivo *UnionNullString `json:"SubMotivo"`
 }
 
-const NovedadTrackingAvroCRC64Fingerprint = "\xc5\x0fB\x0e\xf3\xa7\xb3\xd7"
+const NovedadTrackingAvroCRC64Fingerprint = "\xc9薪\xd1?q\x12"
 
 func NewNovedadTracking() NovedadTracking {
 	r := NovedadTracking{}
@@ -41,6 +45,8 @@ func NewNovedadTracking() NovedadTracking {
 	r.Observacion = nil
 	r.Guia = nil
 	r.GuiaHija = nil
+	r.Motivo = nil
+	r.SubMotivo = nil
 	return r
 }
 
@@ -97,6 +103,14 @@ func writeNovedadTracking(r NovedadTracking, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Motivo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.SubMotivo, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -105,7 +119,7 @@ func (r NovedadTracking) Serialize(w io.Writer) error {
 }
 
 func (r NovedadTracking) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Globallpack.Events.Common.NovedadTracking\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Globallpack.Events.Common.NovedadTracking\",\"type\":\"record\"}"
 }
 
 func (r NovedadTracking) SchemaName() string {
@@ -154,6 +168,14 @@ func (r *NovedadTracking) Get(i int) types.Field {
 		r.GuiaHija = NewUnionNullString()
 
 		return r.GuiaHija
+	case 7:
+		r.Motivo = NewUnionNullString()
+
+		return r.Motivo
+	case 8:
+		r.SubMotivo = NewUnionNullString()
+
+		return r.SubMotivo
 	}
 	panic("Unknown field index")
 }
@@ -172,6 +194,12 @@ func (r *NovedadTracking) SetDefault(i int) {
 	case 6:
 		r.GuiaHija = nil
 		return
+	case 7:
+		r.Motivo = nil
+		return
+	case 8:
+		r.SubMotivo = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -189,6 +217,12 @@ func (r *NovedadTracking) NullField(i int) {
 		return
 	case 6:
 		r.GuiaHija = nil
+		return
+	case 7:
+		r.Motivo = nil
+		return
+	case 8:
+		r.SubMotivo = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -231,6 +265,14 @@ func (r NovedadTracking) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["GuiaHija"], err = json.Marshal(r.GuiaHija)
+	if err != nil {
+		return nil, err
+	}
+	output["Motivo"], err = json.Marshal(r.Motivo)
+	if err != nil {
+		return nil, err
+	}
+	output["SubMotivo"], err = json.Marshal(r.SubMotivo)
 	if err != nil {
 		return nil, err
 	}
@@ -349,6 +391,38 @@ func (r *NovedadTracking) UnmarshalJSON(data []byte) error {
 		r.GuiaHija = NewUnionNullString()
 
 		r.GuiaHija = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Motivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
+			return err
+		}
+	} else {
+		r.Motivo = NewUnionNullString()
+
+		r.Motivo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["SubMotivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SubMotivo); err != nil {
+			return err
+		}
+	} else {
+		r.SubMotivo = NewUnionNullString()
+
+		r.SubMotivo = nil
 	}
 	return nil
 }
