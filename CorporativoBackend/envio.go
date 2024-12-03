@@ -24,7 +24,7 @@ type Envio struct {
 
 	Peso float32 `json:"Peso"`
 
-	Volumen float32 `json:"Volumen"`
+	Volumen *UnionNullFloat `json:"Volumen"`
 
 	ValorDeclarado float32 `json:"ValorDeclarado"`
 
@@ -33,12 +33,15 @@ type Envio struct {
 	AnchoCm float32 `json:"AnchoCm"`
 
 	LargoCm float32 `json:"LargoCm"`
+
+	CantidadBultos int32 `json:"CantidadBultos"`
 }
 
-const EnvioAvroCRC64Fingerprint = "\xad\xfb\xed\xd8d\xb1\x0e\x17"
+const EnvioAvroCRC64Fingerprint = "n\xd5\a\xf1mG\xc5\xfe"
 
 func NewEnvio() Envio {
 	r := Envio{}
+	r.Volumen = nil
 	return r
 }
 
@@ -79,7 +82,7 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.Volumen, w)
+	err = writeUnionNullFloat(r.Volumen, w)
 	if err != nil {
 		return err
 	}
@@ -99,6 +102,10 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.CantidadBultos, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -107,7 +114,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"name\":\"Volumen\",\"type\":\"float\"},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"}],\"name\":\"Andreani.CorporativoBackend.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"default\":null,\"name\":\"Volumen\",\"type\":[\"null\",\"float\"]},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"CantidadBultos\",\"type\":\"int\"}],\"name\":\"Andreani.CorporativoBackend.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -141,10 +148,9 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.Float{Target: &r.Volumen}
+		r.Volumen = NewUnionNullFloat()
 
-		return w
-
+		return r.Volumen
 	case 4:
 		w := types.Float{Target: &r.ValorDeclarado}
 
@@ -165,18 +171,29 @@ func (r *Envio) Get(i int) types.Field {
 
 		return w
 
+	case 8:
+		w := types.Int{Target: &r.CantidadBultos}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
 
 func (r *Envio) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.Volumen = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Envio) NullField(i int) {
 	switch i {
+	case 3:
+		r.Volumen = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -222,6 +239,10 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["LargoCm"], err = json.Marshal(r.LargoCm)
+	if err != nil {
+		return nil, err
+	}
+	output["CantidadBultos"], err = json.Marshal(r.CantidadBultos)
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +310,9 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Volumen")
+		r.Volumen = NewUnionNullFloat()
+
+		r.Volumen = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ValorDeclarado"]; ok {
@@ -346,6 +369,20 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for LargoCm")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CantidadBultos"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantidadBultos); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CantidadBultos")
 	}
 	return nil
 }

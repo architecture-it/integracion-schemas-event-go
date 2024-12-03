@@ -21,7 +21,7 @@ type EnviosCotizarEvent struct {
 	Envios []Envio `json:"Envios"`
 }
 
-const EnviosCotizarEventAvroCRC64Fingerprint = "\x9e\bp\x15\xc9%\xe0 "
+const EnviosCotizarEventAvroCRC64Fingerprint = "\xc5\x1aM\xe6\x1b\xaau\xa5"
 
 func NewEnviosCotizarEvent() EnviosCotizarEvent {
 	r := EnviosCotizarEvent{}
@@ -67,7 +67,7 @@ func (r EnviosCotizarEvent) Serialize(w io.Writer) error {
 }
 
 func (r EnviosCotizarEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"name\":\"Volumen\",\"type\":\"float\"},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"}],\"name\":\"Envio\",\"namespace\":\"Andreani.CorporativoBackend.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CorporativoBackend.Events.Record.EnviosCotizarEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"default\":null,\"name\":\"Volumen\",\"type\":[\"null\",\"float\"]},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"CantidadBultos\",\"type\":\"int\"}],\"name\":\"Envio\",\"namespace\":\"Andreani.CorporativoBackend.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CorporativoBackend.Events.Record.EnviosCotizarEvent\",\"type\":\"record\"}"
 }
 
 func (r EnviosCotizarEvent) SchemaName() string {
