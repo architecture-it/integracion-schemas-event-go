@@ -41,6 +41,7 @@ const EnvioAvroCRC64Fingerprint = "O\x04\x0eҬ\xa0\xf3\x05"
 
 func NewEnvio() Envio {
 	r := Envio{}
+	r.CantidadBultos = 1
 	return r
 }
 
@@ -113,7 +114,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"name\":\"Volumen\",\"type\":\"float\"},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"CantidadBultos\",\"type\":\"int\"}],\"name\":\"Andreani.CorporativoBackend.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"name\":\"Volumen\",\"type\":\"float\"},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"default\":1,\"name\":\"CantidadBultos\",\"type\":\"int\"}],\"name\":\"Andreani.CorporativoBackend.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -182,6 +183,9 @@ func (r *Envio) Get(i int) types.Field {
 
 func (r *Envio) SetDefault(i int) {
 	switch i {
+	case 8:
+		r.CantidadBultos = 1
+		return
 	}
 	panic("Unknown field index")
 }
@@ -374,7 +378,7 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for CantidadBultos")
+		r.CantidadBultos = 1
 	}
 	return nil
 }

@@ -67,7 +67,7 @@ func (r EnviosCotizarEvent) Serialize(w io.Writer) error {
 }
 
 func (r EnviosCotizarEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"name\":\"Volumen\",\"type\":\"float\"},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"CantidadBultos\",\"type\":\"int\"}],\"name\":\"Envio\",\"namespace\":\"Andreani.CorporativoBackend.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CorporativoBackend.Events.Record.EnviosCotizarEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"ContratoId\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"float\"},{\"name\":\"Volumen\",\"type\":\"float\"},{\"name\":\"ValorDeclarado\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"default\":1,\"name\":\"CantidadBultos\",\"type\":\"int\"}],\"name\":\"Envio\",\"namespace\":\"Andreani.CorporativoBackend.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CorporativoBackend.Events.Record.EnviosCotizarEvent\",\"type\":\"record\"}"
 }
 
 func (r EnviosCotizarEvent) SchemaName() string {
