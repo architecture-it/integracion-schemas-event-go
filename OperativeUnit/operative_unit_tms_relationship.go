@@ -18,16 +18,16 @@ import (
 var _ = fmt.Printf
 
 type OperativeUnitTMSRelationship struct {
-	IdIntegra int64 `json:"idIntegra"`
+	IdIntegra *UnionNullLong `json:"idIntegra"`
 
-	IdAlertran string `json:"idAlertran"`
+	IdAlertran *UnionNullString `json:"idAlertran"`
 
-	DefaultTMS string `json:"defaultTMS"`
+	DefaultTMS *UnionNullString `json:"defaultTMS"`
 
-	NumberIntegra string `json:"numberIntegra"`
+	NumberIntegra *UnionNullString `json:"numberIntegra"`
 }
 
-const OperativeUnitTMSRelationshipAvroCRC64Fingerprint = "߰vR}Ŝ\xf1"
+const OperativeUnitTMSRelationshipAvroCRC64Fingerprint = "\xec\xd3W\xb1ڨRM"
 
 func NewOperativeUnitTMSRelationship() OperativeUnitTMSRelationship {
 	r := OperativeUnitTMSRelationship{}
@@ -59,19 +59,19 @@ func DeserializeOperativeUnitTMSRelationshipFromSchema(r io.Reader, schema strin
 
 func writeOperativeUnitTMSRelationship(r OperativeUnitTMSRelationship, w io.Writer) error {
 	var err error
-	err = vm.WriteLong(r.IdIntegra, w)
+	err = writeUnionNullLong(r.IdIntegra, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.IdAlertran, w)
+	err = writeUnionNullString(r.IdAlertran, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DefaultTMS, w)
+	err = writeUnionNullString(r.DefaultTMS, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumberIntegra, w)
+	err = writeUnionNullString(r.NumberIntegra, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (r OperativeUnitTMSRelationship) Serialize(w io.Writer) error {
 }
 
 func (r OperativeUnitTMSRelationship) Schema() string {
-	return "{\"fields\":[{\"name\":\"idIntegra\",\"type\":\"long\"},{\"name\":\"idAlertran\",\"type\":\"string\"},{\"name\":\"defaultTMS\",\"type\":\"string\"},{\"name\":\"numberIntegra\",\"type\":\"string\"}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnitTMSRelationship\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idIntegra\",\"type\":[\"null\",\"long\"]},{\"name\":\"idAlertran\",\"type\":[\"null\",\"string\"]},{\"name\":\"defaultTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"numberIntegra\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnitTMSRelationship\",\"type\":\"record\"}"
 }
 
 func (r OperativeUnitTMSRelationship) SchemaName() string {
@@ -102,25 +102,21 @@ func (_ OperativeUnitTMSRelationship) SetUnionElem(v int64) { panic("Unsupported
 func (r *OperativeUnitTMSRelationship) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Long{Target: &r.IdIntegra}
+		r.IdIntegra = NewUnionNullLong()
 
-		return w
-
+		return r.IdIntegra
 	case 1:
-		w := types.String{Target: &r.IdAlertran}
+		r.IdAlertran = NewUnionNullString()
 
-		return w
-
+		return r.IdAlertran
 	case 2:
-		w := types.String{Target: &r.DefaultTMS}
+		r.DefaultTMS = NewUnionNullString()
 
-		return w
-
+		return r.DefaultTMS
 	case 3:
-		w := types.String{Target: &r.NumberIntegra}
+		r.NumberIntegra = NewUnionNullString()
 
-		return w
-
+		return r.NumberIntegra
 	}
 	panic("Unknown field index")
 }
@@ -133,6 +129,18 @@ func (r *OperativeUnitTMSRelationship) SetDefault(i int) {
 
 func (r *OperativeUnitTMSRelationship) NullField(i int) {
 	switch i {
+	case 0:
+		r.IdIntegra = nil
+		return
+	case 1:
+		r.IdAlertran = nil
+		return
+	case 2:
+		r.DefaultTMS = nil
+		return
+	case 3:
+		r.NumberIntegra = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
