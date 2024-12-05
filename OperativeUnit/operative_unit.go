@@ -130,7 +130,7 @@ type OperativeUnit struct {
 
 	ContractsState int64 `json:"contractsState"`
 
-	ListOperativeUnitContracts []string `json:"listOperativeUnitContracts"`
+	ListOperativeUnitContracts *UnionNullArrayString `json:"listOperativeUnitContracts"`
 
 	ListDocks []string `json:"listDocks"`
 
@@ -139,12 +139,10 @@ type OperativeUnit struct {
 	OperativeUnitTMSRelationship OperativeUnitTMSRelationship `json:"operativeUnitTMSRelationship"`
 }
 
-const OperativeUnitAvroCRC64Fingerprint = "\"\x11\x18\x83L\v\x02R"
+const OperativeUnitAvroCRC64Fingerprint = "\x9d\a\xf4R>\x98\x91\x1a"
 
 func NewOperativeUnit() OperativeUnit {
 	r := OperativeUnit{}
-	r.ListOperativeUnitContracts = make([]string, 0)
-
 	r.ListDocks = make([]string, 0)
 
 	r.ListCharacteristics = make([]Characteristics, 0)
@@ -403,7 +401,7 @@ func writeOperativeUnit(r OperativeUnit, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayString(r.ListOperativeUnitContracts, w)
+	err = writeUnionNullArrayString(r.ListOperativeUnitContracts, w)
 	if err != nil {
 		return err
 	}
@@ -427,7 +425,7 @@ func (r OperativeUnit) Serialize(w io.Writer) error {
 }
 
 func (r OperativeUnit) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"numberCode\",\"type\":\"int\"},{\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"name\":\"isFrontier\",\"type\":\"boolean\"},{\"name\":\"isActive\",\"type\":\"boolean\"},{\"name\":\"creationPending\",\"type\":\"boolean\"},{\"name\":\"digitize\",\"type\":\"boolean\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"numberAddress\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"neighborhood\",\"type\":[\"null\",\"string\"]},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"taxJurisdiction\",\"type\":\"string\"},{\"name\":\"latitude\",\"type\":\"string\"},{\"name\":\"longitude\",\"type\":\"string\"},{\"name\":\"geospatialPolygon\",\"type\":[\"null\",\"long\"]},{\"name\":\"customerServiceSchedule\",\"type\":[\"null\",\"string\"]},{\"name\":\"operationServiceSchedule\",\"type\":[\"null\",\"string\"]},{\"name\":\"allowsCustomerClient\",\"type\":\"boolean\"},{\"name\":\"allowsCentralizedReturn\",\"type\":\"boolean\"},{\"name\":\"allowsCashSale\",\"type\":\"long\"},{\"name\":\"allowsImprest\",\"type\":\"long\"},{\"name\":\"allowsChargeRecipient\",\"type\":\"long\"},{\"name\":\"allowsSaleSerializedProducts\",\"type\":\"long\"},{\"name\":\"costCenter\",\"type\":\"string\"},{\"name\":\"allowsCustody\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustody\",\"type\":[\"null\",\"long\"]},{\"name\":\"allowsCustomerStock\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"positionsForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersTotal\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersIndoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersOutdoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersCommercialAttention\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForUnits\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForCustomers\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForEmployees\",\"type\":[\"null\",\"long\"]},{\"name\":\"urlFrontPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlInsidePicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"insidePictureDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"urlDepositPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"frontPictureDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"depositPictureDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"users\",\"type\":\"string\"},{\"name\":\"stamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"enableDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"enableState\",\"type\":[\"null\",\"string\"]},{\"name\":\"startDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"DniResponsible\",\"type\":\"string\"},{\"name\":\"idNetworkOwner\",\"type\":\"string\"},{\"name\":\"idRegion\",\"type\":\"string\"},{\"name\":\"contractsState\",\"type\":\"long\"},{\"name\":\"listOperativeUnitContracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"listDocks\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"listCharacteristics\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Value\",\"type\":\"string\"}],\"name\":\"Characteristics\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"operativeUnitTMSRelationship\",\"type\":{\"fields\":[{\"name\":\"idIntegra\",\"type\":[\"null\",\"long\"]},{\"name\":\"idAlertran\",\"type\":[\"null\",\"string\"]},{\"name\":\"defaultTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"numberIntegra\",\"type\":[\"null\",\"string\"]}],\"name\":\"OperativeUnitTMSRelationship\",\"type\":\"record\"}}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"numberCode\",\"type\":\"int\"},{\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"name\":\"isFrontier\",\"type\":\"boolean\"},{\"name\":\"isActive\",\"type\":\"boolean\"},{\"name\":\"creationPending\",\"type\":\"boolean\"},{\"name\":\"digitize\",\"type\":\"boolean\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"numberAddress\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"neighborhood\",\"type\":[\"null\",\"string\"]},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"taxJurisdiction\",\"type\":\"string\"},{\"name\":\"latitude\",\"type\":\"string\"},{\"name\":\"longitude\",\"type\":\"string\"},{\"name\":\"geospatialPolygon\",\"type\":[\"null\",\"long\"]},{\"name\":\"customerServiceSchedule\",\"type\":[\"null\",\"string\"]},{\"name\":\"operationServiceSchedule\",\"type\":[\"null\",\"string\"]},{\"name\":\"allowsCustomerClient\",\"type\":\"boolean\"},{\"name\":\"allowsCentralizedReturn\",\"type\":\"boolean\"},{\"name\":\"allowsCashSale\",\"type\":\"long\"},{\"name\":\"allowsImprest\",\"type\":\"long\"},{\"name\":\"allowsChargeRecipient\",\"type\":\"long\"},{\"name\":\"allowsSaleSerializedProducts\",\"type\":\"long\"},{\"name\":\"costCenter\",\"type\":\"string\"},{\"name\":\"allowsCustody\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustody\",\"type\":[\"null\",\"long\"]},{\"name\":\"allowsCustomerStock\",\"type\":\"boolean\"},{\"name\":\"availableSquareMetersForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"positionsForCustomerStock\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersTotal\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersIndoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersOutdoor\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersCommercialAttention\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForUnits\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForCustomers\",\"type\":[\"null\",\"long\"]},{\"name\":\"squareMetersParkingForEmployees\",\"type\":[\"null\",\"long\"]},{\"name\":\"urlFrontPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"urlInsidePicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"insidePictureDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"urlDepositPicture\",\"type\":[\"null\",\"string\"]},{\"name\":\"frontPictureDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"depositPictureDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"users\",\"type\":\"string\"},{\"name\":\"stamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"enableDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"enableState\",\"type\":[\"null\",\"string\"]},{\"name\":\"startDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"DniResponsible\",\"type\":\"string\"},{\"name\":\"idNetworkOwner\",\"type\":\"string\"},{\"name\":\"idRegion\",\"type\":\"string\"},{\"name\":\"contractsState\",\"type\":\"long\"},{\"name\":\"listOperativeUnitContracts\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"listDocks\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"listCharacteristics\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Value\",\"type\":\"string\"}],\"name\":\"Characteristics\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"operativeUnitTMSRelationship\",\"type\":{\"fields\":[{\"name\":\"idIntegra\",\"type\":[\"null\",\"long\"]},{\"name\":\"idAlertran\",\"type\":[\"null\",\"string\"]},{\"name\":\"defaultTMS\",\"type\":[\"null\",\"string\"]},{\"name\":\"numberIntegra\",\"type\":[\"null\",\"string\"]}],\"name\":\"OperativeUnitTMSRelationship\",\"type\":\"record\"}}],\"name\":\"Andreani.OperativeUnit.Events.Record.OperativeUnit\",\"type\":\"record\"}"
 }
 
 func (r OperativeUnit) SchemaName() string {
@@ -702,12 +700,9 @@ func (r *OperativeUnit) Get(i int) types.Field {
 		return w
 
 	case 56:
-		r.ListOperativeUnitContracts = make([]string, 0)
+		r.ListOperativeUnitContracts = NewUnionNullArrayString()
 
-		w := ArrayStringWrapper{Target: &r.ListOperativeUnitContracts}
-
-		return w
-
+		return r.ListOperativeUnitContracts
 	case 57:
 		r.ListDocks = make([]string, 0)
 
@@ -812,6 +807,9 @@ func (r *OperativeUnit) NullField(i int) {
 		return
 	case 51:
 		r.StartDate = nil
+		return
+	case 56:
+		r.ListOperativeUnitContracts = nil
 		return
 	}
 	panic("Not a nullable field index")
