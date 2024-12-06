@@ -20,13 +20,16 @@ var _ = fmt.Printf
 type NovedadInformada struct {
 	Sistema string `json:"Sistema"`
 
+	TipoSistema *UnionNullString `json:"TipoSistema"`
+
 	Novedades []NovedadTracking `json:"Novedades"`
 }
 
-const NovedadInformadaAvroCRC64Fingerprint = "\xe4\\\x1a&\xf9\x9c\xeb\x96"
+const NovedadInformadaAvroCRC64Fingerprint = "\xa2\x98\xa4\xb9C\xcc\xfe2"
 
 func NewNovedadInformada() NovedadInformada {
 	r := NovedadInformada{}
+	r.TipoSistema = nil
 	r.Novedades = make([]NovedadTracking, 0)
 
 	return r
@@ -61,6 +64,10 @@ func writeNovedadInformada(r NovedadInformada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.TipoSistema, w)
+	if err != nil {
+		return err
+	}
 	err = writeArrayNovedadTracking(r.Novedades, w)
 	if err != nil {
 		return err
@@ -73,7 +80,7 @@ func (r NovedadInformada) Serialize(w io.Writer) error {
 }
 
 func (r NovedadInformada) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sistema\",\"type\":\"string\"},{\"name\":\"Novedades\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadTracking\",\"namespace\":\"Andreani.Globallpack.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Globallpack.Events.Record.NovedadInformada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sistema\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoSistema\",\"type\":[\"null\",\"string\"]},{\"name\":\"Novedades\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadTracking\",\"namespace\":\"Andreani.Globallpack.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Globallpack.Events.Record.NovedadInformada\",\"type\":\"record\"}"
 }
 
 func (r NovedadInformada) SchemaName() string {
@@ -97,6 +104,10 @@ func (r *NovedadInformada) Get(i int) types.Field {
 		return w
 
 	case 1:
+		r.TipoSistema = NewUnionNullString()
+
+		return r.TipoSistema
+	case 2:
 		r.Novedades = make([]NovedadTracking, 0)
 
 		w := ArrayNovedadTrackingWrapper{Target: &r.Novedades}
@@ -109,12 +120,18 @@ func (r *NovedadInformada) Get(i int) types.Field {
 
 func (r *NovedadInformada) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.TipoSistema = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *NovedadInformada) NullField(i int) {
 	switch i {
+	case 1:
+		r.TipoSistema = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -132,6 +149,10 @@ func (r NovedadInformada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["Sistema"], err = json.Marshal(r.Sistema)
+	if err != nil {
+		return nil, err
+	}
+	output["TipoSistema"], err = json.Marshal(r.TipoSistema)
 	if err != nil {
 		return nil, err
 	}
@@ -162,6 +183,22 @@ func (r *NovedadInformada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Sistema")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TipoSistema"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoSistema); err != nil {
+			return err
+		}
+	} else {
+		r.TipoSistema = NewUnionNullString()
+
+		r.TipoSistema = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Novedades"]; ok {
