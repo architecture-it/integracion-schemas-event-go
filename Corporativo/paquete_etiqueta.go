@@ -35,9 +35,11 @@ type PaqueteEtiqueta struct {
 	TotalDeBultos *UnionNullInt `json:"TotalDeBultos"`
 
 	NumeroDePaquete *UnionNullString `json:"NumeroDePaquete"`
+
+	Volumen *UnionNullString `json:"Volumen"`
 }
 
-const PaqueteEtiquetaAvroCRC64Fingerprint = "DĎ\xa3\x00\x86L\x9c"
+const PaqueteEtiquetaAvroCRC64Fingerprint = "\xae\xdb\xf5,\x99\x96P\x7f"
 
 func NewPaqueteEtiqueta() PaqueteEtiqueta {
 	r := PaqueteEtiqueta{}
@@ -50,6 +52,7 @@ func NewPaqueteEtiqueta() PaqueteEtiqueta {
 	r.NumeroDeBulto = nil
 	r.TotalDeBultos = nil
 	r.NumeroDePaquete = nil
+	r.Volumen = nil
 	return r
 }
 
@@ -114,6 +117,10 @@ func writePaqueteEtiqueta(r PaqueteEtiqueta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Volumen, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -122,7 +129,7 @@ func (r PaqueteEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r PaqueteEtiqueta) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Item\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"ItemEtiqueta\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Alto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Largo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TotalDeBultos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroDePaquete\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Corporativo.Events.Record.PaqueteEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Item\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"ItemEtiqueta\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Alto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Largo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TotalDeBultos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroDePaquete\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Volumen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Corporativo.Events.Record.PaqueteEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r PaqueteEtiqueta) SchemaName() string {
@@ -176,6 +183,10 @@ func (r *PaqueteEtiqueta) Get(i int) types.Field {
 		r.NumeroDePaquete = NewUnionNullString()
 
 		return r.NumeroDePaquete
+	case 9:
+		r.Volumen = NewUnionNullString()
+
+		return r.Volumen
 	}
 	panic("Unknown field index")
 }
@@ -209,6 +220,9 @@ func (r *PaqueteEtiqueta) SetDefault(i int) {
 	case 8:
 		r.NumeroDePaquete = nil
 		return
+	case 9:
+		r.Volumen = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -241,6 +255,9 @@ func (r *PaqueteEtiqueta) NullField(i int) {
 		return
 	case 8:
 		r.NumeroDePaquete = nil
+		return
+	case 9:
+		r.Volumen = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -291,6 +308,10 @@ func (r PaqueteEtiqueta) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["NumeroDePaquete"], err = json.Marshal(r.NumeroDePaquete)
+	if err != nil {
+		return nil, err
+	}
+	output["Volumen"], err = json.Marshal(r.Volumen)
 	if err != nil {
 		return nil, err
 	}
@@ -447,6 +468,22 @@ func (r *PaqueteEtiqueta) UnmarshalJSON(data []byte) error {
 		r.NumeroDePaquete = NewUnionNullString()
 
 		r.NumeroDePaquete = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Volumen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Volumen); err != nil {
+			return err
+		}
+	} else {
+		r.Volumen = NewUnionNullString()
+
+		r.Volumen = nil
 	}
 	return nil
 }
