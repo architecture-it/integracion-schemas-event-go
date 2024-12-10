@@ -23,7 +23,7 @@ type TipoDeEnvioEtiqueta struct {
 	RemitoFactura string `json:"RemitoFactura"`
 }
 
-const TipoDeEnvioEtiquetaAvroCRC64Fingerprint = ".\xdc_\x17\xcb\x1cl^"
+const TipoDeEnvioEtiquetaAvroCRC64Fingerprint = ",v\xfc\xbd\xa2\x10\x92\a"
 
 func NewTipoDeEnvioEtiqueta() TipoDeEnvioEtiqueta {
 	r := TipoDeEnvioEtiqueta{}
@@ -71,11 +71,11 @@ func (r TipoDeEnvioEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r TipoDeEnvioEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"RemitoFactura\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.TipoDeEnvioEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"RemitoFactura\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.TipoDeEnvioEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r TipoDeEnvioEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.TipoDeEnvioEtiqueta"
+	return "Andreani.Corporativo.Events.Record.TipoDeEnvioEtiqueta"
 }
 
 func (_ TipoDeEnvioEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

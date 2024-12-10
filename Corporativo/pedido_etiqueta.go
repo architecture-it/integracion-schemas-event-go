@@ -21,7 +21,7 @@ type PedidoEtiqueta struct {
 	Usuario UsuarioEtiqueta `json:"Usuario"`
 }
 
-const PedidoEtiquetaAvroCRC64Fingerprint = "-~\x96\x01v*:\x83"
+const PedidoEtiquetaAvroCRC64Fingerprint = "\xb3GI\a\xfd\xd4\xd5!"
 
 func NewPedidoEtiqueta() PedidoEtiqueta {
 	r := PedidoEtiqueta{}
@@ -67,11 +67,11 @@ func (r PedidoEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r PedidoEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Usuario\",\"type\":{\"fields\":[{\"name\":\"Cliente\",\"type\":{\"fields\":[{\"name\":\"CodigoAndreani\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Logo\",\"type\":\"string\"}],\"name\":\"ClienteEtiqueta\",\"type\":\"record\"}}],\"name\":\"UsuarioEtiqueta\",\"type\":\"record\"}}],\"name\":\"Corporativo.Events.Record.PedidoEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Usuario\",\"type\":{\"fields\":[{\"name\":\"Cliente\",\"type\":{\"fields\":[{\"name\":\"CodigoAndreani\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Logo\",\"type\":\"string\"}],\"name\":\"ClienteEtiqueta\",\"type\":\"record\"}}],\"name\":\"UsuarioEtiqueta\",\"type\":\"record\"}}],\"name\":\"Andreani.Corporativo.Events.Record.PedidoEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r PedidoEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.PedidoEtiqueta"
+	return "Andreani.Corporativo.Events.Record.PedidoEtiqueta"
 }
 
 func (_ PedidoEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

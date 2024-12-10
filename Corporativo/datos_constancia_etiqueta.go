@@ -47,7 +47,7 @@ type DatosConstanciaEtiqueta struct {
 	CodigoZonaReparto string `json:"CodigoZonaReparto"`
 }
 
-const DatosConstanciaEtiquetaAvroCRC64Fingerprint = "\xd1N\xa0c\xdd\xfd\x86f"
+const DatosConstanciaEtiquetaAvroCRC64Fingerprint = "\xf6vU\x16\x81\xa7ے"
 
 func NewDatosConstanciaEtiqueta() DatosConstanciaEtiqueta {
 	r := DatosConstanciaEtiqueta{}
@@ -143,11 +143,11 @@ func (r DatosConstanciaEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DatosConstanciaEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.DatosConstanciaEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DatosConstanciaEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DatosConstanciaEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.DatosConstanciaEtiqueta"
+	return "Andreani.Corporativo.Events.Record.DatosConstanciaEtiqueta"
 }
 
 func (_ DatosConstanciaEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

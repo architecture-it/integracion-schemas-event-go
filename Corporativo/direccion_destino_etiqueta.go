@@ -41,7 +41,7 @@ type DireccionDestinoEtiqueta struct {
 	ObservacionesAdicionales string `json:"ObservacionesAdicionales"`
 }
 
-const DireccionDestinoEtiquetaAvroCRC64Fingerprint = "\x13\xca\n\xe37(މ"
+const DireccionDestinoEtiquetaAvroCRC64Fingerprint = "daZ\r\x0e^C,"
 
 func NewDireccionDestinoEtiqueta() DireccionDestinoEtiqueta {
 	r := DireccionDestinoEtiqueta{}
@@ -125,11 +125,11 @@ func (r DireccionDestinoEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DireccionDestinoEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"ObservacionesAdicionales\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.DireccionDestinoEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"ObservacionesAdicionales\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DireccionDestinoEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DireccionDestinoEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.DireccionDestinoEtiqueta"
+	return "Andreani.Corporativo.Events.Record.DireccionDestinoEtiqueta"
 }
 
 func (_ DireccionDestinoEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

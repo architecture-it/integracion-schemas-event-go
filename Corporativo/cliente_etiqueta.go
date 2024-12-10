@@ -25,7 +25,7 @@ type ClienteEtiqueta struct {
 	Logo string `json:"Logo"`
 }
 
-const ClienteEtiquetaAvroCRC64Fingerprint = "/ƳYRaR\x1d"
+const ClienteEtiquetaAvroCRC64Fingerprint = "h\x81\x100~#\xde\xff"
 
 func NewClienteEtiqueta() ClienteEtiqueta {
 	r := ClienteEtiqueta{}
@@ -77,11 +77,11 @@ func (r ClienteEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r ClienteEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoAndreani\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Logo\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.ClienteEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoAndreani\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Logo\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.ClienteEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r ClienteEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.ClienteEtiqueta"
+	return "Andreani.Corporativo.Events.Record.ClienteEtiqueta"
 }
 
 func (_ ClienteEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

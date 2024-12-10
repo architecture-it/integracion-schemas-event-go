@@ -31,7 +31,7 @@ type RemitenteEtiqueta struct {
 	Direccion DireccionRemitenteEtiqueta `json:"Direccion"`
 }
 
-const RemitenteEtiquetaAvroCRC64Fingerprint = "\x04i\x9e\x8aA\xba\xce;"
+const RemitenteEtiquetaAvroCRC64Fingerprint = "\xf6\x9d\xd5ǥ\x1al\x96"
 
 func NewRemitenteEtiqueta() RemitenteEtiqueta {
 	r := RemitenteEtiqueta{}
@@ -97,11 +97,11 @@ func (r RemitenteEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r RemitenteEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"DireccionRemitenteEtiqueta\",\"type\":\"record\"}}],\"name\":\"Corporativo.Events.Record.RemitenteEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"DireccionRemitenteEtiqueta\",\"type\":\"record\"}}],\"name\":\"Andreani.Corporativo.Events.Record.RemitenteEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r RemitenteEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.RemitenteEtiqueta"
+	return "Andreani.Corporativo.Events.Record.RemitenteEtiqueta"
 }
 
 func (_ RemitenteEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

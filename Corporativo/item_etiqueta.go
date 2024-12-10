@@ -21,7 +21,7 @@ type ItemEtiqueta struct {
 	Nombre string `json:"Nombre"`
 }
 
-const ItemEtiquetaAvroCRC64Fingerprint = "ᗵ\xcbRT\x1bB"
+const ItemEtiquetaAvroCRC64Fingerprint = "v\xb0\xc4i\x1cX\x1f\xf3"
 
 func NewItemEtiqueta() ItemEtiqueta {
 	r := ItemEtiqueta{}
@@ -65,11 +65,11 @@ func (r ItemEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r ItemEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.ItemEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.ItemEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r ItemEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.ItemEtiqueta"
+	return "Andreani.Corporativo.Events.Record.ItemEtiqueta"
 }
 
 func (_ ItemEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

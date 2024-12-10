@@ -39,7 +39,7 @@ type SucursalEtiqueta struct {
 	Longitud float64 `json:"Longitud"`
 }
 
-const SucursalEtiquetaAvroCRC64Fingerprint = "I\xa2`\x89\xb0#\x96\xd5"
+const SucursalEtiquetaAvroCRC64Fingerprint = "\x17/\x04ќ\x8e\xde\xe1"
 
 func NewSucursalEtiqueta() SucursalEtiqueta {
 	r := SucursalEtiqueta{}
@@ -121,11 +121,11 @@ func (r SucursalEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r SucursalEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"DireccionSucursalEtiqueta\",\"type\":\"record\"}},{\"name\":\"SeHaceAtencionAlCliente\",\"type\":\"boolean\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"JsonTelefonos\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"double\"},{\"name\":\"Longitud\",\"type\":\"double\"}],\"name\":\"Corporativo.Events.Record.SucursalEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"DireccionSucursalEtiqueta\",\"type\":\"record\"}},{\"name\":\"SeHaceAtencionAlCliente\",\"type\":\"boolean\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"JsonTelefonos\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"double\"},{\"name\":\"Longitud\",\"type\":\"double\"}],\"name\":\"Andreani.Corporativo.Events.Record.SucursalEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r SucursalEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.SucursalEtiqueta"
+	return "Andreani.Corporativo.Events.Record.SucursalEtiqueta"
 }
 
 func (_ SucursalEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

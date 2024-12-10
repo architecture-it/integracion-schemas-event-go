@@ -29,7 +29,7 @@ type DestinatarioEtiqueta struct {
 	Email string `json:"Email"`
 }
 
-const DestinatarioEtiquetaAvroCRC64Fingerprint = "\x82\xadX\xd5\xe9H\xd8\x1e"
+const DestinatarioEtiquetaAvroCRC64Fingerprint = "\xf5\tr\x99\xa4\x8ef5"
 
 func NewDestinatarioEtiqueta() DestinatarioEtiqueta {
 	r := DestinatarioEtiqueta{}
@@ -89,11 +89,11 @@ func (r DestinatarioEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DestinatarioEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.DestinatarioEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DestinatarioEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DestinatarioEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.DestinatarioEtiqueta"
+	return "Andreani.Corporativo.Events.Record.DestinatarioEtiqueta"
 }
 
 func (_ DestinatarioEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

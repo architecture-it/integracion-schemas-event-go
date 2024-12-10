@@ -33,7 +33,7 @@ type OrigenEtiqueta struct {
 	SucursalId string `json:"SucursalId"`
 }
 
-const OrigenEtiquetaAvroCRC64Fingerprint = "{\xfd\x02\\\xbd\xc0\xe1\x9e"
+const OrigenEtiquetaAvroCRC64Fingerprint = "\xd2\xc7\x7f\x91\x9c\xf5S\xf9"
 
 func NewOrigenEtiqueta() OrigenEtiqueta {
 	r := OrigenEtiqueta{}
@@ -101,11 +101,11 @@ func (r OrigenEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r OrigenEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"SucursalId\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.OrigenEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"SucursalId\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.OrigenEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r OrigenEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.OrigenEtiqueta"
+	return "Andreani.Corporativo.Events.Record.OrigenEtiqueta"
 }
 
 func (_ OrigenEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

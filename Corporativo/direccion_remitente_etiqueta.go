@@ -39,7 +39,7 @@ type DireccionRemitenteEtiqueta struct {
 	Longitud string `json:"Longitud"`
 }
 
-const DireccionRemitenteEtiquetaAvroCRC64Fingerprint = "\xc4\x1d\x00\x19\x1aL\x1d\x80"
+const DireccionRemitenteEtiquetaAvroCRC64Fingerprint = "\x8d\x83\x914\x97\x02\xaf\x86"
 
 func NewDireccionRemitenteEtiqueta() DireccionRemitenteEtiqueta {
 	r := DireccionRemitenteEtiqueta{}
@@ -119,11 +119,11 @@ func (r DireccionRemitenteEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DireccionRemitenteEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.DireccionRemitenteEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DireccionRemitenteEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DireccionRemitenteEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.DireccionRemitenteEtiqueta"
+	return "Andreani.Corporativo.Events.Record.DireccionRemitenteEtiqueta"
 }
 
 func (_ DireccionRemitenteEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

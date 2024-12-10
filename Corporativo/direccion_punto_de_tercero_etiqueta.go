@@ -33,7 +33,7 @@ type DireccionPuntoDeTerceroEtiqueta struct {
 	CodigoPostal string `json:"CodigoPostal"`
 }
 
-const DireccionPuntoDeTerceroEtiquetaAvroCRC64Fingerprint = "ײ\x8f\x83E\xe2}_"
+const DireccionPuntoDeTerceroEtiquetaAvroCRC64Fingerprint = "{\x19\xe7w\xe2aZ\xfc"
 
 func NewDireccionPuntoDeTerceroEtiqueta() DireccionPuntoDeTerceroEtiqueta {
 	r := DireccionPuntoDeTerceroEtiqueta{}
@@ -101,11 +101,11 @@ func (r DireccionPuntoDeTerceroEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DireccionPuntoDeTerceroEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.DireccionPuntoDeTerceroEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DireccionPuntoDeTerceroEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DireccionPuntoDeTerceroEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.DireccionPuntoDeTerceroEtiqueta"
+	return "Andreani.Corporativo.Events.Record.DireccionPuntoDeTerceroEtiqueta"
 }
 
 func (_ DireccionPuntoDeTerceroEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

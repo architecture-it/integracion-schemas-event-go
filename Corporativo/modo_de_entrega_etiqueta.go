@@ -21,7 +21,7 @@ type ModoDeEntregaEtiqueta struct {
 	Nombre string `json:"Nombre"`
 }
 
-const ModoDeEntregaEtiquetaAvroCRC64Fingerprint = "\xa1\x80G\xb6nZ\x87\xd5"
+const ModoDeEntregaEtiquetaAvroCRC64Fingerprint = "\xf5\x86N)}\xb4\x03\x82"
 
 func NewModoDeEntregaEtiqueta() ModoDeEntregaEtiqueta {
 	r := ModoDeEntregaEtiqueta{}
@@ -65,11 +65,11 @@ func (r ModoDeEntregaEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r ModoDeEntregaEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.ModoDeEntregaEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.ModoDeEntregaEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r ModoDeEntregaEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.ModoDeEntregaEtiqueta"
+	return "Andreani.Corporativo.Events.Record.ModoDeEntregaEtiqueta"
 }
 
 func (_ ModoDeEntregaEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

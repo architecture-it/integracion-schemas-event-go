@@ -37,7 +37,7 @@ type PaqueteEtiqueta struct {
 	NumeroDePaquete *UnionNullString `json:"NumeroDePaquete"`
 }
 
-const PaqueteEtiquetaAvroCRC64Fingerprint = "\r\xdc~Oh\xbe\xe0)"
+const PaqueteEtiquetaAvroCRC64Fingerprint = "DĎ\xa3\x00\x86L\x9c"
 
 func NewPaqueteEtiqueta() PaqueteEtiqueta {
 	r := PaqueteEtiqueta{}
@@ -122,11 +122,11 @@ func (r PaqueteEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r PaqueteEtiqueta) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Item\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"ItemEtiqueta\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Alto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Largo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TotalDeBultos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroDePaquete\",\"type\":[\"null\",\"string\"]}],\"name\":\"Corporativo.Events.Record.PaqueteEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Item\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"ItemEtiqueta\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Alto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Largo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TotalDeBultos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroDePaquete\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Corporativo.Events.Record.PaqueteEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r PaqueteEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.PaqueteEtiqueta"
+	return "Andreani.Corporativo.Events.Record.PaqueteEtiqueta"
 }
 
 func (_ PaqueteEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }

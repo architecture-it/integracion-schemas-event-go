@@ -33,7 +33,7 @@ type DireccionSucursalEtiqueta struct {
 	CodigoPostal string `json:"CodigoPostal"`
 }
 
-const DireccionSucursalEtiquetaAvroCRC64Fingerprint = "\xf2\v\xe7\xecE\x00x\xe2"
+const DireccionSucursalEtiquetaAvroCRC64Fingerprint = "C%\xd0\xd3&\xe1B\x1c"
 
 func NewDireccionSucursalEtiqueta() DireccionSucursalEtiqueta {
 	r := DireccionSucursalEtiqueta{}
@@ -101,11 +101,11 @@ func (r DireccionSucursalEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DireccionSucursalEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"Corporativo.Events.Record.DireccionSucursalEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DireccionSucursalEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DireccionSucursalEtiqueta) SchemaName() string {
-	return "Corporativo.Events.Record.DireccionSucursalEtiqueta"
+	return "Andreani.Corporativo.Events.Record.DireccionSucursalEtiqueta"
 }
 
 func (_ DireccionSucursalEtiqueta) SetBoolean(v bool)    { panic("Unsupported operation") }
