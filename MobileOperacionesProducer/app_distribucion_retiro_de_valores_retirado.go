@@ -25,9 +25,11 @@ type AppDistribucionRetiroDeValoresRetirado struct {
 	Envios []Envio `json:"envios"`
 
 	Usuario Usuario `json:"usuario"`
+
+	EsRectificacion *UnionNullBool `json:"esRectificacion"`
 }
 
-const AppDistribucionRetiroDeValoresRetiradoAvroCRC64Fingerprint = "3SXU\xa6s\xa1\x8a"
+const AppDistribucionRetiroDeValoresRetiradoAvroCRC64Fingerprint = "\xe3\xea\xee\x84*)\xa5\a"
 
 func NewAppDistribucionRetiroDeValoresRetirado() AppDistribucionRetiroDeValoresRetirado {
 	r := AppDistribucionRetiroDeValoresRetirado{}
@@ -81,6 +83,10 @@ func writeAppDistribucionRetiroDeValoresRetirado(r AppDistribucionRetiroDeValore
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullBool(r.EsRectificacion, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -89,7 +95,7 @@ func (r AppDistribucionRetiroDeValoresRetirado) Serialize(w io.Writer) error {
 }
 
 func (r AppDistribucionRetiroDeValoresRetirado) Schema() string {
-	return "{\"fields\":[{\"name\":\"pagos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"montoCobrado\",\"type\":\"string\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Pago\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaGeneracion\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"unidadOperativa\",\"type\":\"int\"},{\"name\":\"tareaId\",\"type\":\"int\"},{\"name\":\"montoSolicitado\",\"type\":\"string\"}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"username\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"}],\"name\":\"Usuario\",\"type\":\"record\"}}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.AppDistribucionRetiroDeValoresRetirado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"pagos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"montoCobrado\",\"type\":\"string\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Pago\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaGeneracion\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroSeguimiento\",\"type\":\"string\"},{\"name\":\"unidadOperativa\",\"type\":\"int\"},{\"name\":\"tareaId\",\"type\":\"int\"},{\"name\":\"montoSolicitado\",\"type\":\"string\"}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"username\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"}],\"name\":\"Usuario\",\"type\":\"record\"}},{\"name\":\"esRectificacion\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.AppDistribucionRetiroDeValoresRetirado\",\"type\":\"record\"}"
 }
 
 func (r AppDistribucionRetiroDeValoresRetirado) SchemaName() string {
@@ -133,6 +139,10 @@ func (r *AppDistribucionRetiroDeValoresRetirado) Get(i int) types.Field {
 
 		return w
 
+	case 4:
+		r.EsRectificacion = NewUnionNullBool()
+
+		return r.EsRectificacion
 	}
 	panic("Unknown field index")
 }
@@ -145,6 +155,9 @@ func (r *AppDistribucionRetiroDeValoresRetirado) SetDefault(i int) {
 
 func (r *AppDistribucionRetiroDeValoresRetirado) NullField(i int) {
 	switch i {
+	case 4:
+		r.EsRectificacion = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -178,6 +191,10 @@ func (r AppDistribucionRetiroDeValoresRetirado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["usuario"], err = json.Marshal(r.Usuario)
+	if err != nil {
+		return nil, err
+	}
+	output["esRectificacion"], err = json.Marshal(r.EsRectificacion)
 	if err != nil {
 		return nil, err
 	}
@@ -246,6 +263,20 @@ func (r *AppDistribucionRetiroDeValoresRetirado) UnmarshalJSON(data []byte) erro
 		}
 	} else {
 		return fmt.Errorf("no value specified for usuario")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["esRectificacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EsRectificacion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for esRectificacion")
 	}
 	return nil
 }
