@@ -21,7 +21,7 @@ type WosMaquinistaEstadoTareaMv struct {
 	CambioEstadoTareaMv CambioEstadoTareaMv `json:"CambioEstadoTareaMv"`
 }
 
-const WosMaquinistaEstadoTareaMvAvroCRC64Fingerprint = "\xd9\xf9[\xe1\x16ɏ]"
+const WosMaquinistaEstadoTareaMvAvroCRC64Fingerprint = ")Ś(\xfd\xfci\xb5"
 
 func NewWosMaquinistaEstadoTareaMv() WosMaquinistaEstadoTareaMv {
 	r := WosMaquinistaEstadoTareaMv{}
@@ -67,7 +67,7 @@ func (r WosMaquinistaEstadoTareaMv) Serialize(w io.Writer) error {
 }
 
 func (r WosMaquinistaEstadoTareaMv) Schema() string {
-	return "{\"fields\":[{\"name\":\"CambioEstadoTareaMv\",\"type\":{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"TareaMvIdExterno\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"EstadoId\",\"type\":\"int\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TiempoReal\",\"type\":[\"null\",\"int\"]}],\"name\":\"CambioEstadoTareaMv\",\"namespace\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.WosMaquinista.Events.Record.WosMaquinistaEstadoTareaMv\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CambioEstadoTareaMv\",\"type\":{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"CambioEstadoTareaMv\",\"namespace\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.WosMaquinista.Events.Record.WosMaquinistaEstadoTareaMv\",\"type\":\"record\"}"
 }
 
 func (r WosMaquinistaEstadoTareaMv) SchemaName() string {

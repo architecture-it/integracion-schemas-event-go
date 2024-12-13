@@ -20,28 +20,16 @@ var _ = fmt.Printf
 type CambioEstadoTareaMv struct {
 	TareaMvId int32 `json:"TareaMvId"`
 
-	TareaMvIdExterno string `json:"TareaMvIdExterno"`
+	TipoEstadoTareaMvId int32 `json:"TipoEstadoTareaMvId"`
 
-	PlantaOperacionId int32 `json:"PlantaOperacionId"`
-
-	EstadoId int32 `json:"EstadoId"`
-
-	Fecha int64 `json:"Fecha"`
-
-	UsuarioId *UnionNullInt `json:"UsuarioId"`
-
-	Usuario *UnionNullString `json:"Usuario"`
-
-	TiempoReal *UnionNullInt `json:"TiempoReal"`
+	Observacion *UnionNullString `json:"Observacion"`
 }
 
-const CambioEstadoTareaMvAvroCRC64Fingerprint = "\x89#֙&\xe7\x05\f"
+const CambioEstadoTareaMvAvroCRC64Fingerprint = "B\xc5\x12\x9bsTg\""
 
 func NewCambioEstadoTareaMv() CambioEstadoTareaMv {
 	r := CambioEstadoTareaMv{}
-	r.UsuarioId = nil
-	r.Usuario = nil
-	r.TiempoReal = nil
+	r.Observacion = nil
 	return r
 }
 
@@ -74,31 +62,11 @@ func writeCambioEstadoTareaMv(r CambioEstadoTareaMv, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TareaMvIdExterno, w)
+	err = vm.WriteInt(r.TipoEstadoTareaMvId, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.PlantaOperacionId, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteInt(r.EstadoId, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteLong(r.Fecha, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullInt(r.UsuarioId, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Usuario, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullInt(r.TiempoReal, w)
+	err = writeUnionNullString(r.Observacion, w)
 	if err != nil {
 		return err
 	}
@@ -110,7 +78,7 @@ func (r CambioEstadoTareaMv) Serialize(w io.Writer) error {
 }
 
 func (r CambioEstadoTareaMv) Schema() string {
-	return "{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"TareaMvIdExterno\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"EstadoId\",\"type\":\"int\"},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TiempoReal\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon.CambioEstadoTareaMv\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon.CambioEstadoTareaMv\",\"type\":\"record\"}"
 }
 
 func (r CambioEstadoTareaMv) SchemaName() string {
@@ -134,51 +102,22 @@ func (r *CambioEstadoTareaMv) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.TareaMvIdExterno}
+		w := types.Int{Target: &r.TipoEstadoTareaMvId}
 
 		return w
 
 	case 2:
-		w := types.Int{Target: &r.PlantaOperacionId}
+		r.Observacion = NewUnionNullString()
 
-		return w
-
-	case 3:
-		w := types.Int{Target: &r.EstadoId}
-
-		return w
-
-	case 4:
-		w := types.Long{Target: &r.Fecha}
-
-		return w
-
-	case 5:
-		r.UsuarioId = NewUnionNullInt()
-
-		return r.UsuarioId
-	case 6:
-		r.Usuario = NewUnionNullString()
-
-		return r.Usuario
-	case 7:
-		r.TiempoReal = NewUnionNullInt()
-
-		return r.TiempoReal
+		return r.Observacion
 	}
 	panic("Unknown field index")
 }
 
 func (r *CambioEstadoTareaMv) SetDefault(i int) {
 	switch i {
-	case 5:
-		r.UsuarioId = nil
-		return
-	case 6:
-		r.Usuario = nil
-		return
-	case 7:
-		r.TiempoReal = nil
+	case 2:
+		r.Observacion = nil
 		return
 	}
 	panic("Unknown field index")
@@ -186,14 +125,8 @@ func (r *CambioEstadoTareaMv) SetDefault(i int) {
 
 func (r *CambioEstadoTareaMv) NullField(i int) {
 	switch i {
-	case 5:
-		r.UsuarioId = nil
-		return
-	case 6:
-		r.Usuario = nil
-		return
-	case 7:
-		r.TiempoReal = nil
+	case 2:
+		r.Observacion = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -215,31 +148,11 @@ func (r CambioEstadoTareaMv) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["TareaMvIdExterno"], err = json.Marshal(r.TareaMvIdExterno)
+	output["TipoEstadoTareaMvId"], err = json.Marshal(r.TipoEstadoTareaMvId)
 	if err != nil {
 		return nil, err
 	}
-	output["PlantaOperacionId"], err = json.Marshal(r.PlantaOperacionId)
-	if err != nil {
-		return nil, err
-	}
-	output["EstadoId"], err = json.Marshal(r.EstadoId)
-	if err != nil {
-		return nil, err
-	}
-	output["Fecha"], err = json.Marshal(r.Fecha)
-	if err != nil {
-		return nil, err
-	}
-	output["UsuarioId"], err = json.Marshal(r.UsuarioId)
-	if err != nil {
-		return nil, err
-	}
-	output["Usuario"], err = json.Marshal(r.Usuario)
-	if err != nil {
-		return nil, err
-	}
-	output["TiempoReal"], err = json.Marshal(r.TiempoReal)
+	output["Observacion"], err = json.Marshal(r.Observacion)
 	if err != nil {
 		return nil, err
 	}
@@ -268,108 +181,34 @@ func (r *CambioEstadoTareaMv) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for TareaMvId")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["TareaMvIdExterno"]; ok {
+		if v, ok := fields["TipoEstadoTareaMvId"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TareaMvIdExterno); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoEstadoTareaMvId); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for TareaMvIdExterno")
+		return fmt.Errorf("no value specified for TipoEstadoTareaMvId")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["PlantaOperacionId"]; ok {
+		if v, ok := fields["Observacion"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PlantaOperacionId); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Observacion); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for PlantaOperacionId")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["EstadoId"]; ok {
-			return v
-		}
-		return nil
-	}()
+		r.Observacion = NewUnionNullString()
 
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.EstadoId); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for EstadoId")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Fecha"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Fecha); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Fecha")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["UsuarioId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.UsuarioId); err != nil {
-			return err
-		}
-	} else {
-		r.UsuarioId = NewUnionNullInt()
-
-		r.UsuarioId = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Usuario"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Usuario); err != nil {
-			return err
-		}
-	} else {
-		r.Usuario = NewUnionNullString()
-
-		r.Usuario = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["TiempoReal"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TiempoReal); err != nil {
-			return err
-		}
-	} else {
-		r.TiempoReal = NewUnionNullInt()
-
-		r.TiempoReal = nil
+		r.Observacion = nil
 	}
 	return nil
 }
