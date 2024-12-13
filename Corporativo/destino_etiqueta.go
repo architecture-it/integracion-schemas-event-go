@@ -18,23 +18,20 @@ import (
 var _ = fmt.Printf
 
 type DestinoEtiqueta struct {
-	Sucursal SucursalEtiqueta `json:"Sucursal"`
+	Sucursal *UnionNullSucursalEtiqueta `json:"Sucursal"`
 
-	PuntoDeTercero PuntoDeTerceroEtiqueta `json:"PuntoDeTercero"`
+	PuntoDeTercero *UnionNullPuntoDeTerceroEtiqueta `json:"PuntoDeTercero"`
 
-	DireccionDestino DireccionDestinoEtiqueta `json:"DireccionDestino"`
+	DireccionDestino *UnionNullDireccionDestinoEtiqueta `json:"DireccionDestino"`
 }
 
-const DestinoEtiquetaAvroCRC64Fingerprint = ".5\xb3\xfc\\u\xbeL"
+const DestinoEtiquetaAvroCRC64Fingerprint = "\x15wb\xd8֪ͭ"
 
 func NewDestinoEtiqueta() DestinoEtiqueta {
 	r := DestinoEtiqueta{}
-	r.Sucursal = NewSucursalEtiqueta()
-
-	r.PuntoDeTercero = NewPuntoDeTerceroEtiqueta()
-
-	r.DireccionDestino = NewDireccionDestinoEtiqueta()
-
+	r.Sucursal = nil
+	r.PuntoDeTercero = nil
+	r.DireccionDestino = nil
 	return r
 }
 
@@ -63,15 +60,15 @@ func DeserializeDestinoEtiquetaFromSchema(r io.Reader, schema string) (DestinoEt
 
 func writeDestinoEtiqueta(r DestinoEtiqueta, w io.Writer) error {
 	var err error
-	err = writeSucursalEtiqueta(r.Sucursal, w)
+	err = writeUnionNullSucursalEtiqueta(r.Sucursal, w)
 	if err != nil {
 		return err
 	}
-	err = writePuntoDeTerceroEtiqueta(r.PuntoDeTercero, w)
+	err = writeUnionNullPuntoDeTerceroEtiqueta(r.PuntoDeTercero, w)
 	if err != nil {
 		return err
 	}
-	err = writeDireccionDestinoEtiqueta(r.DireccionDestino, w)
+	err = writeUnionNullDireccionDestinoEtiqueta(r.DireccionDestino, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +80,7 @@ func (r DestinoEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DestinoEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sucursal\",\"type\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"DireccionSucursalEtiqueta\",\"type\":\"record\"}},{\"name\":\"SeHaceAtencionAlCliente\",\"type\":\"boolean\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"JsonTelefonos\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"double\"},{\"name\":\"Longitud\",\"type\":\"double\"}],\"name\":\"SucursalEtiqueta\",\"type\":\"record\"}},{\"name\":\"PuntoDeTercero\",\"type\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"DireccionPuntoDeTerceroEtiqueta\",\"type\":\"record\"}},{\"name\":\"SeHaceAtencionAlCliente\",\"type\":\"boolean\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"JsonTelefonos\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"double\"},{\"name\":\"Longitud\",\"type\":\"double\"}],\"name\":\"PuntoDeTerceroEtiqueta\",\"type\":\"record\"}},{\"name\":\"DireccionDestino\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"ObservacionesAdicionales\",\"type\":\"string\"}],\"name\":\"DireccionDestinoEtiqueta\",\"type\":\"record\"}}],\"name\":\"Andreani.Corporativo.Events.Record.DestinoEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Sucursal\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"DireccionSucursalEtiqueta\",\"type\":\"record\"}},{\"name\":\"SeHaceAtencionAlCliente\",\"type\":\"boolean\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"JsonTelefonos\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"double\"},{\"name\":\"Longitud\",\"type\":\"double\"}],\"name\":\"SucursalEtiqueta\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"PuntoDeTercero\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"DireccionPuntoDeTerceroEtiqueta\",\"type\":\"record\"}},{\"name\":\"SeHaceAtencionAlCliente\",\"type\":\"boolean\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"JsonTelefonos\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"double\"},{\"name\":\"Longitud\",\"type\":\"double\"}],\"name\":\"PuntoDeTerceroEtiqueta\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"ObservacionesAdicionales\",\"type\":\"string\"}],\"name\":\"DireccionDestinoEtiqueta\",\"type\":\"record\"}]}],\"name\":\"Andreani.Corporativo.Events.Record.DestinoEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DestinoEtiqueta) SchemaName() string {
@@ -102,38 +99,47 @@ func (_ DestinoEtiqueta) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *DestinoEtiqueta) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Sucursal = NewSucursalEtiqueta()
+		r.Sucursal = NewUnionNullSucursalEtiqueta()
 
-		w := types.Record{Target: &r.Sucursal}
-
-		return w
-
+		return r.Sucursal
 	case 1:
-		r.PuntoDeTercero = NewPuntoDeTerceroEtiqueta()
+		r.PuntoDeTercero = NewUnionNullPuntoDeTerceroEtiqueta()
 
-		w := types.Record{Target: &r.PuntoDeTercero}
-
-		return w
-
+		return r.PuntoDeTercero
 	case 2:
-		r.DireccionDestino = NewDireccionDestinoEtiqueta()
+		r.DireccionDestino = NewUnionNullDireccionDestinoEtiqueta()
 
-		w := types.Record{Target: &r.DireccionDestino}
-
-		return w
-
+		return r.DireccionDestino
 	}
 	panic("Unknown field index")
 }
 
 func (r *DestinoEtiqueta) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Sucursal = nil
+		return
+	case 1:
+		r.PuntoDeTercero = nil
+		return
+	case 2:
+		r.DireccionDestino = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *DestinoEtiqueta) NullField(i int) {
 	switch i {
+	case 0:
+		r.Sucursal = nil
+		return
+	case 1:
+		r.PuntoDeTercero = nil
+		return
+	case 2:
+		r.DireccionDestino = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -184,7 +190,9 @@ func (r *DestinoEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Sucursal")
+		r.Sucursal = NewUnionNullSucursalEtiqueta()
+
+		r.Sucursal = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PuntoDeTercero"]; ok {
@@ -198,7 +206,9 @@ func (r *DestinoEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for PuntoDeTercero")
+		r.PuntoDeTercero = NewUnionNullPuntoDeTerceroEtiqueta()
+
+		r.PuntoDeTercero = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DireccionDestino"]; ok {
@@ -212,7 +222,9 @@ func (r *DestinoEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DireccionDestino")
+		r.DireccionDestino = NewUnionNullDireccionDestinoEtiqueta()
+
+		r.DireccionDestino = nil
 	}
 	return nil
 }
