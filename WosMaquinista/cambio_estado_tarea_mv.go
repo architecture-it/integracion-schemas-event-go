@@ -20,12 +20,14 @@ var _ = fmt.Printf
 type CambioEstadoTareaMv struct {
 	TareaMvId int32 `json:"TareaMvId"`
 
+	HojaDeRutaMvId int32 `json:"HojaDeRutaMvId"`
+
 	TipoEstadoTareaMvId int32 `json:"TipoEstadoTareaMvId"`
 
 	Observacion *UnionNullString `json:"Observacion"`
 }
 
-const CambioEstadoTareaMvAvroCRC64Fingerprint = "B\xc5\x12\x9bsTg\""
+const CambioEstadoTareaMvAvroCRC64Fingerprint = "\xd6\xfa\xc0\xbaQ\x19I\xcc"
 
 func NewCambioEstadoTareaMv() CambioEstadoTareaMv {
 	r := CambioEstadoTareaMv{}
@@ -62,6 +64,10 @@ func writeCambioEstadoTareaMv(r CambioEstadoTareaMv, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.HojaDeRutaMvId, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteInt(r.TipoEstadoTareaMvId, w)
 	if err != nil {
 		return err
@@ -78,7 +84,7 @@ func (r CambioEstadoTareaMv) Serialize(w io.Writer) error {
 }
 
 func (r CambioEstadoTareaMv) Schema() string {
-	return "{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon.CambioEstadoTareaMv\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"HojaDeRutaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon.CambioEstadoTareaMv\",\"type\":\"record\"}"
 }
 
 func (r CambioEstadoTareaMv) SchemaName() string {
@@ -102,11 +108,16 @@ func (r *CambioEstadoTareaMv) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.Int{Target: &r.TipoEstadoTareaMvId}
+		w := types.Int{Target: &r.HojaDeRutaMvId}
 
 		return w
 
 	case 2:
+		w := types.Int{Target: &r.TipoEstadoTareaMvId}
+
+		return w
+
+	case 3:
 		r.Observacion = NewUnionNullString()
 
 		return r.Observacion
@@ -116,7 +127,7 @@ func (r *CambioEstadoTareaMv) Get(i int) types.Field {
 
 func (r *CambioEstadoTareaMv) SetDefault(i int) {
 	switch i {
-	case 2:
+	case 3:
 		r.Observacion = nil
 		return
 	}
@@ -125,7 +136,7 @@ func (r *CambioEstadoTareaMv) SetDefault(i int) {
 
 func (r *CambioEstadoTareaMv) NullField(i int) {
 	switch i {
-	case 2:
+	case 3:
 		r.Observacion = nil
 		return
 	}
@@ -145,6 +156,10 @@ func (r CambioEstadoTareaMv) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["TareaMvId"], err = json.Marshal(r.TareaMvId)
+	if err != nil {
+		return nil, err
+	}
+	output["HojaDeRutaMvId"], err = json.Marshal(r.HojaDeRutaMvId)
 	if err != nil {
 		return nil, err
 	}
@@ -179,6 +194,20 @@ func (r *CambioEstadoTareaMv) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for TareaMvId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["HojaDeRutaMvId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.HojaDeRutaMvId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for HojaDeRutaMvId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TipoEstadoTareaMvId"]; ok {
