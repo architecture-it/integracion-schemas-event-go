@@ -30,7 +30,7 @@ type EnvioEtiqueta struct {
 
 	Tipo string `json:"Tipo"`
 
-	RemitoFactura string `json:"RemitoFactura"`
+	RemitoFactura *UnionNullString `json:"RemitoFactura"`
 
 	Canal string `json:"Canal"`
 
@@ -57,10 +57,11 @@ type EnvioEtiqueta struct {
 	Paquetes []PaqueteEtiqueta `json:"Paquetes"`
 }
 
-const EnvioEtiquetaAvroCRC64Fingerprint = "\xcd\xed\xe7\xafs\x88\x9c\x9b"
+const EnvioEtiquetaAvroCRC64Fingerprint = "\xf4\xb1Ϙ`\x97i\xbb"
 
 func NewEnvioEtiqueta() EnvioEtiqueta {
 	r := EnvioEtiqueta{}
+	r.RemitoFactura = nil
 	r.TipoDeEnvio = NewTipoDeEnvioEtiqueta()
 
 	r.ModoDeEntrega = NewModoDeEntregaEtiqueta()
@@ -131,7 +132,7 @@ func writeEnvioEtiqueta(r EnvioEtiqueta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.RemitoFactura, w)
+	err = writeUnionNullString(r.RemitoFactura, w)
 	if err != nil {
 		return err
 	}
@@ -191,7 +192,7 @@ func (r EnvioEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r EnvioEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"EnvioId\",\"type\":\"string\"},{\"name\":\"UsuarioLoginId\",\"type\":\"string\"},{\"name\":\"NumeroSeguimiento\",\"type\":\"string\"},{\"name\":\"NumeroInterno\",\"type\":\"string\"},{\"name\":\"NumeroContrato\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"RemitoFactura\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"PesoTotal\",\"type\":\"string\"},{\"name\":\"Template\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"RemitoFactura\",\"type\":\"string\"}],\"name\":\"TipoDeEnvioEtiqueta\",\"type\":\"record\"}},{\"name\":\"ModoDeEntrega\",\"type\":{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"ModoDeEntregaEtiqueta\",\"type\":\"record\"}},{\"name\":\"Pedido\",\"type\":{\"fields\":[{\"name\":\"Usuario\",\"type\":{\"fields\":[{\"name\":\"Cliente\",\"type\":{\"fields\":[{\"name\":\"CodigoAndreani\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Logo\",\"type\":\"string\"}],\"name\":\"ClienteEtiqueta\",\"type\":\"record\"}}],\"name\":\"UsuarioEtiqueta\",\"type\":\"record\"}}],\"name\":\"PedidoEtiqueta\",\"type\":\"record\"}},{\"name\":\"Destino\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionDestinoEtiqueta\",\"type\":\"record\"}]}],\"name\":\"DestinoEtiqueta\",\"type\":\"record\"}},{\"name\":\"Destinatario\",\"type\":{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"}],\"name\":\"DestinatarioEtiqueta\",\"type\":\"record\"}},{\"name\":\"Origen\",\"type\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"SucursalId\",\"type\":\"string\"}],\"name\":\"OrigenEtiqueta\",\"type\":\"record\"}},{\"name\":\"Remitente\",\"type\":{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"DireccionRemitenteEtiqueta\",\"type\":\"record\"}}],\"name\":\"RemitenteEtiqueta\",\"type\":\"record\"}},{\"name\":\"DatosConstancia\",\"type\":{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"}],\"name\":\"DatosConstanciaEtiqueta\",\"type\":\"record\"}},{\"name\":\"Paquetes\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Item\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"ItemEtiqueta\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Alto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Largo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TotalDeBultos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroDePaquete\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Volumen\",\"type\":[\"null\",\"string\"]}],\"name\":\"PaqueteEtiqueta\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Corporativo.Events.Record.EnvioEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"EnvioId\",\"type\":\"string\"},{\"name\":\"UsuarioLoginId\",\"type\":\"string\"},{\"name\":\"NumeroSeguimiento\",\"type\":\"string\"},{\"name\":\"NumeroInterno\",\"type\":\"string\"},{\"name\":\"NumeroContrato\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"default\":null,\"name\":\"RemitoFactura\",\"type\":[\"null\",\"string\"]},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"PesoTotal\",\"type\":\"string\"},{\"name\":\"Template\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"RemitoFactura\",\"type\":\"string\"}],\"name\":\"TipoDeEnvioEtiqueta\",\"type\":\"record\"}},{\"name\":\"ModoDeEntrega\",\"type\":{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"ModoDeEntregaEtiqueta\",\"type\":\"record\"}},{\"name\":\"Pedido\",\"type\":{\"fields\":[{\"name\":\"Usuario\",\"type\":{\"fields\":[{\"name\":\"Cliente\",\"type\":{\"fields\":[{\"name\":\"CodigoAndreani\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Logo\",\"type\":\"string\"}],\"name\":\"ClienteEtiqueta\",\"type\":\"record\"}}],\"name\":\"UsuarioEtiqueta\",\"type\":\"record\"}}],\"name\":\"PedidoEtiqueta\",\"type\":\"record\"}},{\"name\":\"Destino\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionDestinoEtiqueta\",\"type\":\"record\"}]}],\"name\":\"DestinoEtiqueta\",\"type\":\"record\"}},{\"name\":\"Destinatario\",\"type\":{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"}],\"name\":\"DestinatarioEtiqueta\",\"type\":\"record\"}},{\"name\":\"Origen\",\"type\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"SucursalId\",\"type\":\"string\"}],\"name\":\"OrigenEtiqueta\",\"type\":\"record\"}},{\"name\":\"Remitente\",\"type\":{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionRemitenteEtiqueta\",\"type\":\"record\"}}],\"name\":\"RemitenteEtiqueta\",\"type\":\"record\"}},{\"name\":\"DatosConstancia\",\"type\":{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"}],\"name\":\"DatosConstanciaEtiqueta\",\"type\":\"record\"}},{\"name\":\"Paquetes\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Item\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"}],\"name\":\"ItemEtiqueta\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Alto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Largo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TotalDeBultos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"NumeroDePaquete\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Volumen\",\"type\":[\"null\",\"string\"]}],\"name\":\"PaqueteEtiqueta\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Corporativo.Events.Record.EnvioEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r EnvioEtiqueta) SchemaName() string {
@@ -240,10 +241,9 @@ func (r *EnvioEtiqueta) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.String{Target: &r.RemitoFactura}
+		r.RemitoFactura = NewUnionNullString()
 
-		return w
-
+		return r.RemitoFactura
 	case 7:
 		w := types.String{Target: &r.Canal}
 
@@ -328,12 +328,18 @@ func (r *EnvioEtiqueta) Get(i int) types.Field {
 
 func (r *EnvioEtiqueta) SetDefault(i int) {
 	switch i {
+	case 6:
+		r.RemitoFactura = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *EnvioEtiqueta) NullField(i int) {
 	switch i {
+	case 6:
+		r.RemitoFactura = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -532,7 +538,9 @@ func (r *EnvioEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for RemitoFactura")
+		r.RemitoFactura = NewUnionNullString()
+
+		r.RemitoFactura = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Canal"]; ok {

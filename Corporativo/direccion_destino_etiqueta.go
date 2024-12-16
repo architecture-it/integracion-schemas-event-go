@@ -34,20 +34,22 @@ type DireccionDestinoEtiqueta struct {
 
 	DatosAdicionales *UnionNullString `json:"DatosAdicionales"`
 
-	Latitud string `json:"Latitud"`
+	Latitud *UnionNullString `json:"Latitud"`
 
-	Longitud string `json:"Longitud"`
+	Longitud *UnionNullString `json:"Longitud"`
 
 	ObservacionesAdicionales *UnionNullString `json:"ObservacionesAdicionales"`
 }
 
-const DireccionDestinoEtiquetaAvroCRC64Fingerprint = "\x93\x0fZc\f-\xb7\xda"
+const DireccionDestinoEtiquetaAvroCRC64Fingerprint = "\xa59\x043Xs\xa1C"
 
 func NewDireccionDestinoEtiqueta() DireccionDestinoEtiqueta {
 	r := DireccionDestinoEtiqueta{}
 	r.Piso = nil
 	r.Unidad = nil
 	r.DatosAdicionales = nil
+	r.Latitud = nil
+	r.Longitud = nil
 	r.ObservacionesAdicionales = nil
 	return r
 }
@@ -109,11 +111,11 @@ func writeDireccionDestinoEtiqueta(r DireccionDestinoEtiqueta, w io.Writer) erro
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Latitud, w)
+	err = writeUnionNullString(r.Latitud, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Longitud, w)
+	err = writeUnionNullString(r.Longitud, w)
 	if err != nil {
 		return err
 	}
@@ -129,7 +131,7 @@ func (r DireccionDestinoEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DireccionDestinoEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Corporativo.Events.Record.DireccionDestinoEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Corporativo.Events.Record.DireccionDestinoEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DireccionDestinoEtiqueta) SchemaName() string {
@@ -185,15 +187,13 @@ func (r *DireccionDestinoEtiqueta) Get(i int) types.Field {
 
 		return r.DatosAdicionales
 	case 8:
-		w := types.String{Target: &r.Latitud}
+		r.Latitud = NewUnionNullString()
 
-		return w
-
+		return r.Latitud
 	case 9:
-		w := types.String{Target: &r.Longitud}
+		r.Longitud = NewUnionNullString()
 
-		return w
-
+		return r.Longitud
 	case 10:
 		r.ObservacionesAdicionales = NewUnionNullString()
 
@@ -213,6 +213,12 @@ func (r *DireccionDestinoEtiqueta) SetDefault(i int) {
 	case 7:
 		r.DatosAdicionales = nil
 		return
+	case 8:
+		r.Latitud = nil
+		return
+	case 9:
+		r.Longitud = nil
+		return
 	case 10:
 		r.ObservacionesAdicionales = nil
 		return
@@ -230,6 +236,12 @@ func (r *DireccionDestinoEtiqueta) NullField(i int) {
 		return
 	case 7:
 		r.DatosAdicionales = nil
+		return
+	case 8:
+		r.Latitud = nil
+		return
+	case 9:
+		r.Longitud = nil
 		return
 	case 10:
 		r.ObservacionesAdicionales = nil
@@ -434,7 +446,9 @@ func (r *DireccionDestinoEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Latitud")
+		r.Latitud = NewUnionNullString()
+
+		r.Latitud = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Longitud"]; ok {
@@ -448,7 +462,9 @@ func (r *DireccionDestinoEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Longitud")
+		r.Longitud = NewUnionNullString()
+
+		r.Longitud = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ObservacionesAdicionales"]; ok {

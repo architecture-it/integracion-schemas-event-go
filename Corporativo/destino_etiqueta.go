@@ -21,7 +21,7 @@ type DestinoEtiqueta struct {
 	DireccionDestino *UnionNullDireccionDestinoEtiqueta `json:"DireccionDestino"`
 }
 
-const DestinoEtiquetaAvroCRC64Fingerprint = "\xa8,3MʘyL"
+const DestinoEtiquetaAvroCRC64Fingerprint = "C\x88h\xae\xe7\x9b\\\xc6"
 
 func NewDestinoEtiqueta() DestinoEtiqueta {
 	r := DestinoEtiqueta{}
@@ -66,7 +66,7 @@ func (r DestinoEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DestinoEtiqueta) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionDestinoEtiqueta\",\"type\":\"record\"}]}],\"name\":\"Andreani.Corporativo.Events.Record.DestinoEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionDestinoEtiqueta\",\"type\":\"record\"}]}],\"name\":\"Andreani.Corporativo.Events.Record.DestinoEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DestinoEtiqueta) SchemaName() string {

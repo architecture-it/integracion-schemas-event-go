@@ -22,7 +22,7 @@ type RemitenteEtiqueta struct {
 
 	Apellido string `json:"Apellido"`
 
-	Telefono string `json:"Telefono"`
+	Telefono *UnionNullString `json:"Telefono"`
 
 	DNI string `json:"DNI"`
 
@@ -31,10 +31,11 @@ type RemitenteEtiqueta struct {
 	Direccion DireccionRemitenteEtiqueta `json:"Direccion"`
 }
 
-const RemitenteEtiquetaAvroCRC64Fingerprint = "\x8f\x8f,\x1e\fZ\x1a\xdf"
+const RemitenteEtiquetaAvroCRC64Fingerprint = "\xb6T\x16[R1z\x06"
 
 func NewRemitenteEtiqueta() RemitenteEtiqueta {
 	r := RemitenteEtiqueta{}
+	r.Telefono = nil
 	r.Direccion = NewDireccionRemitenteEtiqueta()
 
 	return r
@@ -73,7 +74,7 @@ func writeRemitenteEtiqueta(r RemitenteEtiqueta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Telefono, w)
+	err = writeUnionNullString(r.Telefono, w)
 	if err != nil {
 		return err
 	}
@@ -97,7 +98,7 @@ func (r RemitenteEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r RemitenteEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"DireccionRemitenteEtiqueta\",\"type\":\"record\"}}],\"name\":\"Andreani.Corporativo.Events.Record.RemitenteEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionRemitenteEtiqueta\",\"type\":\"record\"}}],\"name\":\"Andreani.Corporativo.Events.Record.RemitenteEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r RemitenteEtiqueta) SchemaName() string {
@@ -126,10 +127,9 @@ func (r *RemitenteEtiqueta) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Telefono}
+		r.Telefono = NewUnionNullString()
 
-		return w
-
+		return r.Telefono
 	case 3:
 		w := types.String{Target: &r.DNI}
 
@@ -153,12 +153,18 @@ func (r *RemitenteEtiqueta) Get(i int) types.Field {
 
 func (r *RemitenteEtiqueta) SetDefault(i int) {
 	switch i {
+	case 2:
+		r.Telefono = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *RemitenteEtiqueta) NullField(i int) {
 	switch i {
+	case 2:
+		r.Telefono = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -249,7 +255,9 @@ func (r *RemitenteEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Telefono")
+		r.Telefono = NewUnionNullString()
+
+		r.Telefono = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DNI"]; ok {

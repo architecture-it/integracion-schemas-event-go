@@ -34,18 +34,20 @@ type DireccionRemitenteEtiqueta struct {
 
 	DatosAdicionales *UnionNullString `json:"DatosAdicionales"`
 
-	Latitud string `json:"Latitud"`
+	Latitud *UnionNullString `json:"Latitud"`
 
-	Longitud string `json:"Longitud"`
+	Longitud *UnionNullString `json:"Longitud"`
 }
 
-const DireccionRemitenteEtiquetaAvroCRC64Fingerprint = "\xc3\"\x8a\xf9\xf3\x19\xb75"
+const DireccionRemitenteEtiquetaAvroCRC64Fingerprint = "\xaa~S\x96|&\x82\x87"
 
 func NewDireccionRemitenteEtiqueta() DireccionRemitenteEtiqueta {
 	r := DireccionRemitenteEtiqueta{}
 	r.Piso = nil
 	r.Unidad = nil
 	r.DatosAdicionales = nil
+	r.Latitud = nil
+	r.Longitud = nil
 	return r
 }
 
@@ -106,11 +108,11 @@ func writeDireccionRemitenteEtiqueta(r DireccionRemitenteEtiqueta, w io.Writer) 
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Latitud, w)
+	err = writeUnionNullString(r.Latitud, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Longitud, w)
+	err = writeUnionNullString(r.Longitud, w)
 	if err != nil {
 		return err
 	}
@@ -122,7 +124,7 @@ func (r DireccionRemitenteEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DireccionRemitenteEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DireccionRemitenteEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Corporativo.Events.Record.DireccionRemitenteEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DireccionRemitenteEtiqueta) SchemaName() string {
@@ -178,15 +180,13 @@ func (r *DireccionRemitenteEtiqueta) Get(i int) types.Field {
 
 		return r.DatosAdicionales
 	case 8:
-		w := types.String{Target: &r.Latitud}
+		r.Latitud = NewUnionNullString()
 
-		return w
-
+		return r.Latitud
 	case 9:
-		w := types.String{Target: &r.Longitud}
+		r.Longitud = NewUnionNullString()
 
-		return w
-
+		return r.Longitud
 	}
 	panic("Unknown field index")
 }
@@ -202,6 +202,12 @@ func (r *DireccionRemitenteEtiqueta) SetDefault(i int) {
 	case 7:
 		r.DatosAdicionales = nil
 		return
+	case 8:
+		r.Latitud = nil
+		return
+	case 9:
+		r.Longitud = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -216,6 +222,12 @@ func (r *DireccionRemitenteEtiqueta) NullField(i int) {
 		return
 	case 7:
 		r.DatosAdicionales = nil
+		return
+	case 8:
+		r.Latitud = nil
+		return
+	case 9:
+		r.Longitud = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -413,7 +425,9 @@ func (r *DireccionRemitenteEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Latitud")
+		r.Latitud = NewUnionNullString()
+
+		r.Latitud = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Longitud"]; ok {
@@ -427,7 +441,9 @@ func (r *DireccionRemitenteEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Longitud")
+		r.Longitud = NewUnionNullString()
+
+		r.Longitud = nil
 	}
 	return nil
 }
