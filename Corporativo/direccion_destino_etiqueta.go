@@ -22,9 +22,9 @@ type DireccionDestinoEtiqueta struct {
 
 	Numero string `json:"Numero"`
 
-	Piso string `json:"Piso"`
+	Piso *UnionNullString `json:"Piso"`
 
-	Unidad string `json:"Unidad"`
+	Unidad *UnionNullString `json:"Unidad"`
 
 	Localidad string `json:"Localidad"`
 
@@ -32,19 +32,23 @@ type DireccionDestinoEtiqueta struct {
 
 	Provincia string `json:"Provincia"`
 
-	DatosAdicionales string `json:"DatosAdicionales"`
+	DatosAdicionales *UnionNullString `json:"DatosAdicionales"`
 
 	Latitud string `json:"Latitud"`
 
 	Longitud string `json:"Longitud"`
 
-	ObservacionesAdicionales string `json:"ObservacionesAdicionales"`
+	ObservacionesAdicionales *UnionNullString `json:"ObservacionesAdicionales"`
 }
 
-const DireccionDestinoEtiquetaAvroCRC64Fingerprint = "daZ\r\x0e^C,"
+const DireccionDestinoEtiquetaAvroCRC64Fingerprint = "\x93\x0fZc\f-\xb7\xda"
 
 func NewDireccionDestinoEtiqueta() DireccionDestinoEtiqueta {
 	r := DireccionDestinoEtiqueta{}
+	r.Piso = nil
+	r.Unidad = nil
+	r.DatosAdicionales = nil
+	r.ObservacionesAdicionales = nil
 	return r
 }
 
@@ -81,11 +85,11 @@ func writeDireccionDestinoEtiqueta(r DireccionDestinoEtiqueta, w io.Writer) erro
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Piso, w)
+	err = writeUnionNullString(r.Piso, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Unidad, w)
+	err = writeUnionNullString(r.Unidad, w)
 	if err != nil {
 		return err
 	}
@@ -101,7 +105,7 @@ func writeDireccionDestinoEtiqueta(r DireccionDestinoEtiqueta, w io.Writer) erro
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.DatosAdicionales, w)
+	err = writeUnionNullString(r.DatosAdicionales, w)
 	if err != nil {
 		return err
 	}
@@ -113,7 +117,7 @@ func writeDireccionDestinoEtiqueta(r DireccionDestinoEtiqueta, w io.Writer) erro
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ObservacionesAdicionales, w)
+	err = writeUnionNullString(r.ObservacionesAdicionales, w)
 	if err != nil {
 		return err
 	}
@@ -125,7 +129,7 @@ func (r DireccionDestinoEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DireccionDestinoEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"ObservacionesAdicionales\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DireccionDestinoEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"DatosAdicionales\",\"type\":[\"null\",\"string\"]},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Corporativo.Events.Record.DireccionDestinoEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DireccionDestinoEtiqueta) SchemaName() string {
@@ -154,15 +158,13 @@ func (r *DireccionDestinoEtiqueta) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Piso}
+		r.Piso = NewUnionNullString()
 
-		return w
-
+		return r.Piso
 	case 3:
-		w := types.String{Target: &r.Unidad}
+		r.Unidad = NewUnionNullString()
 
-		return w
-
+		return r.Unidad
 	case 4:
 		w := types.String{Target: &r.Localidad}
 
@@ -179,10 +181,9 @@ func (r *DireccionDestinoEtiqueta) Get(i int) types.Field {
 		return w
 
 	case 7:
-		w := types.String{Target: &r.DatosAdicionales}
+		r.DatosAdicionales = NewUnionNullString()
 
-		return w
-
+		return r.DatosAdicionales
 	case 8:
 		w := types.String{Target: &r.Latitud}
 
@@ -194,22 +195,45 @@ func (r *DireccionDestinoEtiqueta) Get(i int) types.Field {
 		return w
 
 	case 10:
-		w := types.String{Target: &r.ObservacionesAdicionales}
+		r.ObservacionesAdicionales = NewUnionNullString()
 
-		return w
-
+		return r.ObservacionesAdicionales
 	}
 	panic("Unknown field index")
 }
 
 func (r *DireccionDestinoEtiqueta) SetDefault(i int) {
 	switch i {
+	case 2:
+		r.Piso = nil
+		return
+	case 3:
+		r.Unidad = nil
+		return
+	case 7:
+		r.DatosAdicionales = nil
+		return
+	case 10:
+		r.ObservacionesAdicionales = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *DireccionDestinoEtiqueta) NullField(i int) {
 	switch i {
+	case 2:
+		r.Piso = nil
+		return
+	case 3:
+		r.Unidad = nil
+		return
+	case 7:
+		r.DatosAdicionales = nil
+		return
+	case 10:
+		r.ObservacionesAdicionales = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -320,7 +344,9 @@ func (r *DireccionDestinoEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Piso")
+		r.Piso = NewUnionNullString()
+
+		r.Piso = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Unidad"]; ok {
@@ -334,7 +360,9 @@ func (r *DireccionDestinoEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Unidad")
+		r.Unidad = NewUnionNullString()
+
+		r.Unidad = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Localidad"]; ok {
@@ -390,7 +418,9 @@ func (r *DireccionDestinoEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DatosAdicionales")
+		r.DatosAdicionales = NewUnionNullString()
+
+		r.DatosAdicionales = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Latitud"]; ok {
@@ -432,7 +462,9 @@ func (r *DireccionDestinoEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ObservacionesAdicionales")
+		r.ObservacionesAdicionales = NewUnionNullString()
+
+		r.ObservacionesAdicionales = nil
 	}
 	return nil
 }
