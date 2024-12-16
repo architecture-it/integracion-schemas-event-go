@@ -18,19 +18,13 @@ import (
 var _ = fmt.Printf
 
 type DestinoEtiqueta struct {
-	Sucursal *UnionNullSucursalEtiqueta `json:"Sucursal"`
-
-	PuntoDeTercero *UnionNullPuntoDeTerceroEtiqueta `json:"PuntoDeTercero"`
-
 	DireccionDestino *UnionNullDireccionDestinoEtiqueta `json:"DireccionDestino"`
 }
 
-const DestinoEtiquetaAvroCRC64Fingerprint = "\x15wb\xd8֪ͭ"
+const DestinoEtiquetaAvroCRC64Fingerprint = "KzÍ\xbc3\x11\x9a"
 
 func NewDestinoEtiqueta() DestinoEtiqueta {
 	r := DestinoEtiqueta{}
-	r.Sucursal = nil
-	r.PuntoDeTercero = nil
 	r.DireccionDestino = nil
 	return r
 }
@@ -60,14 +54,6 @@ func DeserializeDestinoEtiquetaFromSchema(r io.Reader, schema string) (DestinoEt
 
 func writeDestinoEtiqueta(r DestinoEtiqueta, w io.Writer) error {
 	var err error
-	err = writeUnionNullSucursalEtiqueta(r.Sucursal, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullPuntoDeTerceroEtiqueta(r.PuntoDeTercero, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullDireccionDestinoEtiqueta(r.DireccionDestino, w)
 	if err != nil {
 		return err
@@ -80,7 +66,7 @@ func (r DestinoEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DestinoEtiqueta) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Sucursal\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"DireccionSucursalEtiqueta\",\"type\":\"record\"}},{\"name\":\"SeHaceAtencionAlCliente\",\"type\":\"boolean\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"JsonTelefonos\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"double\"},{\"name\":\"Longitud\",\"type\":\"double\"}],\"name\":\"SucursalEtiqueta\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"PuntoDeTercero\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"string\"},{\"name\":\"Direccion\",\"type\":{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"}],\"name\":\"DireccionPuntoDeTerceroEtiqueta\",\"type\":\"record\"}},{\"name\":\"SeHaceAtencionAlCliente\",\"type\":\"boolean\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"JsonTelefonos\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"double\"},{\"name\":\"Longitud\",\"type\":\"double\"}],\"name\":\"PuntoDeTerceroEtiqueta\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"ObservacionesAdicionales\",\"type\":\"string\"}],\"name\":\"DireccionDestinoEtiqueta\",\"type\":\"record\"}]}],\"name\":\"Andreani.Corporativo.Events.Record.DestinoEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Piso\",\"type\":\"string\"},{\"name\":\"Unidad\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"name\":\"DatosAdicionales\",\"type\":\"string\"},{\"name\":\"Latitud\",\"type\":\"string\"},{\"name\":\"Longitud\",\"type\":\"string\"},{\"name\":\"ObservacionesAdicionales\",\"type\":\"string\"}],\"name\":\"DireccionDestinoEtiqueta\",\"type\":\"record\"}]}],\"name\":\"Andreani.Corporativo.Events.Record.DestinoEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DestinoEtiqueta) SchemaName() string {
@@ -99,14 +85,6 @@ func (_ DestinoEtiqueta) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *DestinoEtiqueta) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Sucursal = NewUnionNullSucursalEtiqueta()
-
-		return r.Sucursal
-	case 1:
-		r.PuntoDeTercero = NewUnionNullPuntoDeTerceroEtiqueta()
-
-		return r.PuntoDeTercero
-	case 2:
 		r.DireccionDestino = NewUnionNullDireccionDestinoEtiqueta()
 
 		return r.DireccionDestino
@@ -117,12 +95,6 @@ func (r *DestinoEtiqueta) Get(i int) types.Field {
 func (r *DestinoEtiqueta) SetDefault(i int) {
 	switch i {
 	case 0:
-		r.Sucursal = nil
-		return
-	case 1:
-		r.PuntoDeTercero = nil
-		return
-	case 2:
 		r.DireccionDestino = nil
 		return
 	}
@@ -132,12 +104,6 @@ func (r *DestinoEtiqueta) SetDefault(i int) {
 func (r *DestinoEtiqueta) NullField(i int) {
 	switch i {
 	case 0:
-		r.Sucursal = nil
-		return
-	case 1:
-		r.PuntoDeTercero = nil
-		return
-	case 2:
 		r.DireccionDestino = nil
 		return
 	}
@@ -156,14 +122,6 @@ func (_ DestinoEtiqueta) AvroCRC64Fingerprint() []byte {
 func (r DestinoEtiqueta) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Sucursal"], err = json.Marshal(r.Sucursal)
-	if err != nil {
-		return nil, err
-	}
-	output["PuntoDeTercero"], err = json.Marshal(r.PuntoDeTercero)
-	if err != nil {
-		return nil, err
-	}
 	output["DireccionDestino"], err = json.Marshal(r.DireccionDestino)
 	if err != nil {
 		return nil, err
@@ -178,38 +136,6 @@ func (r *DestinoEtiqueta) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["Sucursal"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Sucursal); err != nil {
-			return err
-		}
-	} else {
-		r.Sucursal = NewUnionNullSucursalEtiqueta()
-
-		r.Sucursal = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["PuntoDeTercero"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PuntoDeTercero); err != nil {
-			return err
-		}
-	} else {
-		r.PuntoDeTercero = NewUnionNullPuntoDeTerceroEtiqueta()
-
-		r.PuntoDeTercero = nil
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DireccionDestino"]; ok {
 			return v
