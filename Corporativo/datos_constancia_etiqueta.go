@@ -30,27 +30,33 @@ type DatosConstanciaEtiqueta struct {
 
 	SucursalDistribucionId string `json:"SucursalDistribucionId"`
 
-	SucursalRendicion string `json:"SucursalRendicion"`
+	SucursalRendicion *UnionNullString `json:"SucursalRendicion"`
 
-	SucursalRendicionNomenclatura string `json:"SucursalRendicionNomenclatura"`
+	SucursalRendicionNomenclatura *UnionNullString `json:"SucursalRendicionNomenclatura"`
 
-	SucursalRendicionDescripcion string `json:"SucursalRendicionDescripcion"`
+	SucursalRendicionDescripcion *UnionNullString `json:"SucursalRendicionDescripcion"`
 
-	SucursalRendicionId string `json:"SucursalRendicionId"`
+	SucursalRendicionId *UnionNullString `json:"SucursalRendicionId"`
 
 	CodigoSucursalCabecera string `json:"CodigoSucursalCabecera"`
 
-	SucursalAbastecedoraDescripcion string `json:"SucursalAbastecedoraDescripcion"`
+	SucursalAbastecedoraDescripcion *UnionNullString `json:"SucursalAbastecedoraDescripcion"`
 
-	SucursalAbastecedoraId string `json:"SucursalAbastecedoraId"`
+	SucursalAbastecedoraId *UnionNullString `json:"SucursalAbastecedoraId"`
 
 	CodigoZonaReparto string `json:"CodigoZonaReparto"`
 }
 
-const DatosConstanciaEtiquetaAvroCRC64Fingerprint = "\xf6vU\x16\x81\xa7ے"
+const DatosConstanciaEtiquetaAvroCRC64Fingerprint = "{9~da8\x8a\x03"
 
 func NewDatosConstanciaEtiqueta() DatosConstanciaEtiqueta {
 	r := DatosConstanciaEtiqueta{}
+	r.SucursalRendicion = nil
+	r.SucursalRendicionNomenclatura = nil
+	r.SucursalRendicionDescripcion = nil
+	r.SucursalRendicionId = nil
+	r.SucursalAbastecedoraDescripcion = nil
+	r.SucursalAbastecedoraId = nil
 	return r
 }
 
@@ -103,19 +109,19 @@ func writeDatosConstanciaEtiqueta(r DatosConstanciaEtiqueta, w io.Writer) error 
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SucursalRendicion, w)
+	err = writeUnionNullString(r.SucursalRendicion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SucursalRendicionNomenclatura, w)
+	err = writeUnionNullString(r.SucursalRendicionNomenclatura, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SucursalRendicionDescripcion, w)
+	err = writeUnionNullString(r.SucursalRendicionDescripcion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SucursalRendicionId, w)
+	err = writeUnionNullString(r.SucursalRendicionId, w)
 	if err != nil {
 		return err
 	}
@@ -123,11 +129,11 @@ func writeDatosConstanciaEtiqueta(r DatosConstanciaEtiqueta, w io.Writer) error 
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SucursalAbastecedoraDescripcion, w)
+	err = writeUnionNullString(r.SucursalAbastecedoraDescripcion, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SucursalAbastecedoraId, w)
+	err = writeUnionNullString(r.SucursalAbastecedoraId, w)
 	if err != nil {
 		return err
 	}
@@ -143,7 +149,7 @@ func (r DatosConstanciaEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DatosConstanciaEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DatosConstanciaEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalRendicionNomenclatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalRendicionDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalRendicionId\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAbastecedoraId\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DatosConstanciaEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DatosConstanciaEtiqueta) SchemaName() string {
@@ -192,40 +198,34 @@ func (r *DatosConstanciaEtiqueta) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.String{Target: &r.SucursalRendicion}
+		r.SucursalRendicion = NewUnionNullString()
 
-		return w
-
+		return r.SucursalRendicion
 	case 7:
-		w := types.String{Target: &r.SucursalRendicionNomenclatura}
+		r.SucursalRendicionNomenclatura = NewUnionNullString()
 
-		return w
-
+		return r.SucursalRendicionNomenclatura
 	case 8:
-		w := types.String{Target: &r.SucursalRendicionDescripcion}
+		r.SucursalRendicionDescripcion = NewUnionNullString()
 
-		return w
-
+		return r.SucursalRendicionDescripcion
 	case 9:
-		w := types.String{Target: &r.SucursalRendicionId}
+		r.SucursalRendicionId = NewUnionNullString()
 
-		return w
-
+		return r.SucursalRendicionId
 	case 10:
 		w := types.String{Target: &r.CodigoSucursalCabecera}
 
 		return w
 
 	case 11:
-		w := types.String{Target: &r.SucursalAbastecedoraDescripcion}
+		r.SucursalAbastecedoraDescripcion = NewUnionNullString()
 
-		return w
-
+		return r.SucursalAbastecedoraDescripcion
 	case 12:
-		w := types.String{Target: &r.SucursalAbastecedoraId}
+		r.SucursalAbastecedoraId = NewUnionNullString()
 
-		return w
-
+		return r.SucursalAbastecedoraId
 	case 13:
 		w := types.String{Target: &r.CodigoZonaReparto}
 
@@ -237,12 +237,48 @@ func (r *DatosConstanciaEtiqueta) Get(i int) types.Field {
 
 func (r *DatosConstanciaEtiqueta) SetDefault(i int) {
 	switch i {
+	case 6:
+		r.SucursalRendicion = nil
+		return
+	case 7:
+		r.SucursalRendicionNomenclatura = nil
+		return
+	case 8:
+		r.SucursalRendicionDescripcion = nil
+		return
+	case 9:
+		r.SucursalRendicionId = nil
+		return
+	case 11:
+		r.SucursalAbastecedoraDescripcion = nil
+		return
+	case 12:
+		r.SucursalAbastecedoraId = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *DatosConstanciaEtiqueta) NullField(i int) {
 	switch i {
+	case 6:
+		r.SucursalRendicion = nil
+		return
+	case 7:
+		r.SucursalRendicionNomenclatura = nil
+		return
+	case 8:
+		r.SucursalRendicionDescripcion = nil
+		return
+	case 9:
+		r.SucursalRendicionId = nil
+		return
+	case 11:
+		r.SucursalAbastecedoraDescripcion = nil
+		return
+	case 12:
+		r.SucursalAbastecedoraId = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -421,7 +457,9 @@ func (r *DatosConstanciaEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SucursalRendicion")
+		r.SucursalRendicion = NewUnionNullString()
+
+		r.SucursalRendicion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SucursalRendicionNomenclatura"]; ok {
@@ -435,7 +473,9 @@ func (r *DatosConstanciaEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SucursalRendicionNomenclatura")
+		r.SucursalRendicionNomenclatura = NewUnionNullString()
+
+		r.SucursalRendicionNomenclatura = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SucursalRendicionDescripcion"]; ok {
@@ -449,7 +489,9 @@ func (r *DatosConstanciaEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SucursalRendicionDescripcion")
+		r.SucursalRendicionDescripcion = NewUnionNullString()
+
+		r.SucursalRendicionDescripcion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SucursalRendicionId"]; ok {
@@ -463,7 +505,9 @@ func (r *DatosConstanciaEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SucursalRendicionId")
+		r.SucursalRendicionId = NewUnionNullString()
+
+		r.SucursalRendicionId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CodigoSucursalCabecera"]; ok {
@@ -491,7 +535,9 @@ func (r *DatosConstanciaEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SucursalAbastecedoraDescripcion")
+		r.SucursalAbastecedoraDescripcion = NewUnionNullString()
+
+		r.SucursalAbastecedoraDescripcion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SucursalAbastecedoraId"]; ok {
@@ -505,7 +551,9 @@ func (r *DatosConstanciaEtiqueta) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for SucursalAbastecedoraId")
+		r.SucursalAbastecedoraId = NewUnionNullString()
+
+		r.SucursalAbastecedoraId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CodigoZonaReparto"]; ok {
