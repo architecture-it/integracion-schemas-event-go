@@ -18,15 +18,17 @@ import (
 var _ = fmt.Printf
 
 type CalidadCertificadaPreenvio struct {
-	NumeroEnvio string `json:"NumeroEnvio"`
-
 	IpImpresora string `json:"IpImpresora"`
+
+	Detalle DetallePreenvio `json:"detalle"`
 }
 
-const CalidadCertificadaPreenvioAvroCRC64Fingerprint = "\xc0\xa1=\xc0\xa9\xca\x13_"
+const CalidadCertificadaPreenvioAvroCRC64Fingerprint = "\xa4D\xfam\x8b\xf6,\xa2"
 
 func NewCalidadCertificadaPreenvio() CalidadCertificadaPreenvio {
 	r := CalidadCertificadaPreenvio{}
+	r.Detalle = NewDetallePreenvio()
+
 	return r
 }
 
@@ -55,11 +57,11 @@ func DeserializeCalidadCertificadaPreenvioFromSchema(r io.Reader, schema string)
 
 func writeCalidadCertificadaPreenvio(r CalidadCertificadaPreenvio, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.NumeroEnvio, w)
+	err = vm.WriteString(r.IpImpresora, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.IpImpresora, w)
+	err = writeDetallePreenvio(r.Detalle, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +73,7 @@ func (r CalidadCertificadaPreenvio) Serialize(w io.Writer) error {
 }
 
 func (r CalidadCertificadaPreenvio) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroEnvio\",\"type\":\"string\"},{\"name\":\"IpImpresora\",\"type\":\"string\"}],\"name\":\"Andreani.CalidadCertificada.Events.Record.CalidadCertificadaPreenvio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IpImpresora\",\"type\":\"string\"},{\"name\":\"detalle\",\"type\":{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"IdPedido\",\"type\":\"string\"},{\"name\":\"ValorACobrar\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":{\"fields\":[{\"name\":\"Postal\",\"type\":{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"ComponenteDeDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Postal\",\"type\":\"record\"}}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"Destino\",\"type\":\"Andreani.CalidadCertificada.Events.Record.Direccion\"},{\"name\":\"Remitente\",\"type\":{\"fields\":[{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"DocumentoTipo\",\"type\":\"string\"},{\"name\":\"DocumentoNumero\",\"type\":\"string\"},{\"name\":\"Telefonos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"int\"},{\"name\":\"Numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Persona\",\"type\":\"record\"}},{\"name\":\"Destinatario\",\"type\":{\"items\":\"Andreani.CalidadCertificada.Events.Record.Persona\",\"type\":\"array\"}},{\"name\":\"Remito\",\"type\":{\"fields\":[{\"name\":\"NumeroRemito\",\"type\":\"string\"}],\"name\":\"Remito\",\"type\":\"record\"}},{\"name\":\"Bultos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Bulto\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"DetallePreenvio\",\"type\":\"record\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.CalidadCertificadaPreenvio\",\"type\":\"record\"}"
 }
 
 func (r CalidadCertificadaPreenvio) SchemaName() string {
@@ -90,12 +92,14 @@ func (_ CalidadCertificadaPreenvio) SetUnionElem(v int64) { panic("Unsupported o
 func (r *CalidadCertificadaPreenvio) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.NumeroEnvio}
+		w := types.String{Target: &r.IpImpresora}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.IpImpresora}
+		r.Detalle = NewDetallePreenvio()
+
+		w := types.Record{Target: &r.Detalle}
 
 		return w
 
@@ -127,11 +131,11 @@ func (_ CalidadCertificadaPreenvio) AvroCRC64Fingerprint() []byte {
 func (r CalidadCertificadaPreenvio) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["NumeroEnvio"], err = json.Marshal(r.NumeroEnvio)
+	output["IpImpresora"], err = json.Marshal(r.IpImpresora)
 	if err != nil {
 		return nil, err
 	}
-	output["IpImpresora"], err = json.Marshal(r.IpImpresora)
+	output["detalle"], err = json.Marshal(r.Detalle)
 	if err != nil {
 		return nil, err
 	}
@@ -146,20 +150,6 @@ func (r *CalidadCertificadaPreenvio) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["NumeroEnvio"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroEnvio); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for NumeroEnvio")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["IpImpresora"]; ok {
 			return v
 		}
@@ -172,6 +162,20 @@ func (r *CalidadCertificadaPreenvio) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for IpImpresora")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["detalle"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Detalle); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for detalle")
 	}
 	return nil
 }
