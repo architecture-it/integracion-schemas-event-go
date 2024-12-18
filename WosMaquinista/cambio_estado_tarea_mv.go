@@ -24,12 +24,16 @@ type CambioEstadoTareaMv struct {
 
 	TipoEstadoTareaMvId int32 `json:"TipoEstadoTareaMvId"`
 
+	TareaMvIdSce string `json:"TareaMvIdSce"`
+
+	PlantaOperacionId int32 `json:"PlantaOperacionId"`
+
 	Observacion *UnionNullString `json:"Observacion"`
 
 	Usuario *UnionNullString `json:"Usuario"`
 }
 
-const CambioEstadoTareaMvAvroCRC64Fingerprint = "\xee\x13\x02)\xab!F\x1c"
+const CambioEstadoTareaMvAvroCRC64Fingerprint = "\xab6\xe1\xb8WNZm"
 
 func NewCambioEstadoTareaMv() CambioEstadoTareaMv {
 	r := CambioEstadoTareaMv{}
@@ -75,6 +79,14 @@ func writeCambioEstadoTareaMv(r CambioEstadoTareaMv, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.TareaMvIdSce, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteInt(r.PlantaOperacionId, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Observacion, w)
 	if err != nil {
 		return err
@@ -91,7 +103,7 @@ func (r CambioEstadoTareaMv) Serialize(w io.Writer) error {
 }
 
 func (r CambioEstadoTareaMv) Schema() string {
-	return "{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"HojaDeRutaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon.CambioEstadoTareaMv\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"HojaDeRutaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"name\":\"TareaMvIdSce\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon.CambioEstadoTareaMv\",\"type\":\"record\"}"
 }
 
 func (r CambioEstadoTareaMv) SchemaName() string {
@@ -125,10 +137,20 @@ func (r *CambioEstadoTareaMv) Get(i int) types.Field {
 		return w
 
 	case 3:
+		w := types.String{Target: &r.TareaMvIdSce}
+
+		return w
+
+	case 4:
+		w := types.Int{Target: &r.PlantaOperacionId}
+
+		return w
+
+	case 5:
 		r.Observacion = NewUnionNullString()
 
 		return r.Observacion
-	case 4:
+	case 6:
 		r.Usuario = NewUnionNullString()
 
 		return r.Usuario
@@ -138,10 +160,10 @@ func (r *CambioEstadoTareaMv) Get(i int) types.Field {
 
 func (r *CambioEstadoTareaMv) SetDefault(i int) {
 	switch i {
-	case 3:
+	case 5:
 		r.Observacion = nil
 		return
-	case 4:
+	case 6:
 		r.Usuario = nil
 		return
 	}
@@ -150,10 +172,10 @@ func (r *CambioEstadoTareaMv) SetDefault(i int) {
 
 func (r *CambioEstadoTareaMv) NullField(i int) {
 	switch i {
-	case 3:
+	case 5:
 		r.Observacion = nil
 		return
-	case 4:
+	case 6:
 		r.Usuario = nil
 		return
 	}
@@ -181,6 +203,14 @@ func (r CambioEstadoTareaMv) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["TipoEstadoTareaMvId"], err = json.Marshal(r.TipoEstadoTareaMvId)
+	if err != nil {
+		return nil, err
+	}
+	output["TareaMvIdSce"], err = json.Marshal(r.TareaMvIdSce)
+	if err != nil {
+		return nil, err
+	}
+	output["PlantaOperacionId"], err = json.Marshal(r.PlantaOperacionId)
 	if err != nil {
 		return nil, err
 	}
@@ -243,6 +273,34 @@ func (r *CambioEstadoTareaMv) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for TipoEstadoTareaMvId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TareaMvIdSce"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TareaMvIdSce); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for TareaMvIdSce")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PlantaOperacionId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PlantaOperacionId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for PlantaOperacionId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Observacion"]; ok {
