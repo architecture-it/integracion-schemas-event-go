@@ -28,15 +28,20 @@ type CambioEstadoTareaMv struct {
 
 	PlantaOperacionId int32 `json:"PlantaOperacionId"`
 
+	Cantidad int32 `json:"Cantidad"`
+
+	Contenedor *UnionNullString `json:"Contenedor"`
+
 	Observacion *UnionNullString `json:"Observacion"`
 
 	Usuario *UnionNullString `json:"Usuario"`
 }
 
-const CambioEstadoTareaMvAvroCRC64Fingerprint = "\xab6\xe1\xb8WNZm"
+const CambioEstadoTareaMvAvroCRC64Fingerprint = "*\xb1\"\xa8\x17\x121\xed"
 
 func NewCambioEstadoTareaMv() CambioEstadoTareaMv {
 	r := CambioEstadoTareaMv{}
+	r.Contenedor = nil
 	r.Observacion = nil
 	r.Usuario = nil
 	return r
@@ -87,6 +92,14 @@ func writeCambioEstadoTareaMv(r CambioEstadoTareaMv, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.Cantidad, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Contenedor, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Observacion, w)
 	if err != nil {
 		return err
@@ -103,7 +116,7 @@ func (r CambioEstadoTareaMv) Serialize(w io.Writer) error {
 }
 
 func (r CambioEstadoTareaMv) Schema() string {
-	return "{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"HojaDeRutaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"name\":\"TareaMvIdSce\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon.CambioEstadoTareaMv\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"HojaDeRutaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"name\":\"TareaMvIdSce\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"default\":null,\"name\":\"Contenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon.CambioEstadoTareaMv\",\"type\":\"record\"}"
 }
 
 func (r CambioEstadoTareaMv) SchemaName() string {
@@ -147,10 +160,19 @@ func (r *CambioEstadoTareaMv) Get(i int) types.Field {
 		return w
 
 	case 5:
+		w := types.Int{Target: &r.Cantidad}
+
+		return w
+
+	case 6:
+		r.Contenedor = NewUnionNullString()
+
+		return r.Contenedor
+	case 7:
 		r.Observacion = NewUnionNullString()
 
 		return r.Observacion
-	case 6:
+	case 8:
 		r.Usuario = NewUnionNullString()
 
 		return r.Usuario
@@ -160,10 +182,13 @@ func (r *CambioEstadoTareaMv) Get(i int) types.Field {
 
 func (r *CambioEstadoTareaMv) SetDefault(i int) {
 	switch i {
-	case 5:
+	case 6:
+		r.Contenedor = nil
+		return
+	case 7:
 		r.Observacion = nil
 		return
-	case 6:
+	case 8:
 		r.Usuario = nil
 		return
 	}
@@ -172,10 +197,13 @@ func (r *CambioEstadoTareaMv) SetDefault(i int) {
 
 func (r *CambioEstadoTareaMv) NullField(i int) {
 	switch i {
-	case 5:
+	case 6:
+		r.Contenedor = nil
+		return
+	case 7:
 		r.Observacion = nil
 		return
-	case 6:
+	case 8:
 		r.Usuario = nil
 		return
 	}
@@ -211,6 +239,14 @@ func (r CambioEstadoTareaMv) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["PlantaOperacionId"], err = json.Marshal(r.PlantaOperacionId)
+	if err != nil {
+		return nil, err
+	}
+	output["Cantidad"], err = json.Marshal(r.Cantidad)
+	if err != nil {
+		return nil, err
+	}
+	output["Contenedor"], err = json.Marshal(r.Contenedor)
 	if err != nil {
 		return nil, err
 	}
@@ -301,6 +337,36 @@ func (r *CambioEstadoTareaMv) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for PlantaOperacionId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Cantidad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cantidad); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Cantidad")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Contenedor"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Contenedor); err != nil {
+			return err
+		}
+	} else {
+		r.Contenedor = NewUnionNullString()
+
+		r.Contenedor = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Observacion"]; ok {
