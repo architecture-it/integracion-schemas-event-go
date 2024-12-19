@@ -21,7 +21,7 @@ type Direccion struct {
 	Postal Postal `json:"Postal"`
 }
 
-const DireccionAvroCRC64Fingerprint = "\x1f\xae\a\r~\xb7\xba\x19"
+const DireccionAvroCRC64Fingerprint = "\xdb4\xa4\x9d_\xaat\xe0"
 
 func NewDireccion() Direccion {
 	r := Direccion{}
@@ -67,7 +67,7 @@ func (r Direccion) Serialize(w io.Writer) error {
 }
 
 func (r Direccion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Postal\",\"type\":{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"ComponenteDeDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Postal\",\"type\":\"record\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Direccion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Postal\",\"type\":{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"ComponenteDeDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Postal\",\"type\":\"record\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Direccion\",\"type\":\"record\"}"
 }
 
 func (r Direccion) SchemaName() string {

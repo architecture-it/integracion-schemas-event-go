@@ -22,7 +22,7 @@ type Postal struct {
 
 	Calle string `json:"Calle"`
 
-	Numero string `json:"Numero"`
+	Numero int32 `json:"Numero"`
 
 	Localidad string `json:"Localidad"`
 
@@ -33,7 +33,7 @@ type Postal struct {
 	ComponentesDeDireccion []ComponenteDeDireccion `json:"ComponentesDeDireccion"`
 }
 
-const PostalAvroCRC64Fingerprint = "\xb3\xb7\xec\xe8x@\xaf\xc5"
+const PostalAvroCRC64Fingerprint = "m#I\xcc\x1b\t-\n"
 
 func NewPostal() Postal {
 	r := Postal{}
@@ -75,7 +75,7 @@ func writePostal(r Postal, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Numero, w)
+	err = vm.WriteInt(r.Numero, w)
 	if err != nil {
 		return err
 	}
@@ -103,7 +103,7 @@ func (r Postal) Serialize(w io.Writer) error {
 }
 
 func (r Postal) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"ComponenteDeDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Postal\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"ComponenteDeDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Postal\",\"type\":\"record\"}"
 }
 
 func (r Postal) SchemaName() string {
@@ -132,7 +132,7 @@ func (r *Postal) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Numero}
+		w := types.Int{Target: &r.Numero}
 
 		return w
 
