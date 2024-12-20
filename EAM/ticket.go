@@ -34,25 +34,25 @@ type Ticket struct {
 
 	Tecnico string `json:"Tecnico"`
 
-	Cliente string `json:"Cliente"`
+	Cliente *UnionNullString `json:"Cliente"`
 
-	Planta string `json:"Planta"`
+	Planta *UnionNullString `json:"Planta"`
 
-	Nave string `json:"Nave"`
+	Nave *UnionNullString `json:"Nave"`
 
-	Sector string `json:"Sector"`
+	Sector *UnionNullString `json:"Sector"`
 
-	Sectores string `json:"Sectores"`
+	Sectores *UnionNullString `json:"Sectores"`
 
-	Proceso string `json:"Proceso"`
+	Proceso *UnionNullString `json:"Proceso"`
 
-	Procesos string `json:"Procesos"`
+	Procesos *UnionNullString `json:"Procesos"`
 
-	Etiqueta string `json:"Etiqueta"`
+	Etiqueta *UnionNullString `json:"Etiqueta"`
 
-	Sucursal string `json:"Sucursal"`
+	Sucursal *UnionNullString `json:"Sucursal"`
 
-	Sucursales string `json:"Sucursales"`
+	Sucursales *UnionNullString `json:"Sucursales"`
 
 	FechaCreacion int64 `json:"FechaCreacion"`
 
@@ -65,7 +65,7 @@ type Ticket struct {
 	Estado string `json:"Estado"`
 }
 
-const TicketAvroCRC64Fingerprint = "\xa0!mg \x15\u07bc"
+const TicketAvroCRC64Fingerprint = "\x15ss\x8c\xef\xfc\xe0z"
 
 func NewTicket() Ticket {
 	r := Ticket{}
@@ -129,43 +129,43 @@ func writeTicket(r Ticket, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Cliente, w)
+	err = writeUnionNullString(r.Cliente, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Planta, w)
+	err = writeUnionNullString(r.Planta, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Nave, w)
+	err = writeUnionNullString(r.Nave, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Sector, w)
+	err = writeUnionNullString(r.Sector, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Sectores, w)
+	err = writeUnionNullString(r.Sectores, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Proceso, w)
+	err = writeUnionNullString(r.Proceso, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Procesos, w)
+	err = writeUnionNullString(r.Procesos, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Etiqueta, w)
+	err = writeUnionNullString(r.Etiqueta, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Sucursal, w)
+	err = writeUnionNullString(r.Sucursal, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Sucursales, w)
+	err = writeUnionNullString(r.Sucursales, w)
 	if err != nil {
 		return err
 	}
@@ -197,7 +197,7 @@ func (r Ticket) Serialize(w io.Writer) error {
 }
 
 func (r Ticket) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Grupo\",\"type\":\"string\"},{\"name\":\"Categoria\",\"type\":\"string\"},{\"name\":\"Articulo\",\"type\":\"string\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Tecnico\",\"type\":\"string\"},{\"name\":\"Cliente\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"Nave\",\"type\":\"string\"},{\"name\":\"Sector\",\"type\":\"string\"},{\"name\":\"Sectores\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"Procesos\",\"type\":\"string\"},{\"name\":\"Etiqueta\",\"type\":\"string\"},{\"name\":\"Sucursal\",\"type\":\"string\"},{\"name\":\"Sucursales\",\"type\":\"string\"},{\"name\":\"FechaCreacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaResolucion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaFinalizado\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.MDA.Ticket\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Grupo\",\"type\":\"string\"},{\"name\":\"Categoria\",\"type\":\"string\"},{\"name\":\"Articulo\",\"type\":\"string\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Tecnico\",\"type\":\"string\"},{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Nave\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sectores\",\"type\":[\"null\",\"string\"]},{\"name\":\"Proceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Procesos\",\"type\":[\"null\",\"string\"]},{\"name\":\"Etiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sucursal\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sucursales\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaCreacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaResolucion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaFinalizado\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.MDA.Ticket\",\"type\":\"record\"}"
 }
 
 func (r Ticket) SchemaName() string {
@@ -256,55 +256,45 @@ func (r *Ticket) Get(i int) types.Field {
 		return w
 
 	case 8:
-		w := types.String{Target: &r.Cliente}
+		r.Cliente = NewUnionNullString()
 
-		return w
-
+		return r.Cliente
 	case 9:
-		w := types.String{Target: &r.Planta}
+		r.Planta = NewUnionNullString()
 
-		return w
-
+		return r.Planta
 	case 10:
-		w := types.String{Target: &r.Nave}
+		r.Nave = NewUnionNullString()
 
-		return w
-
+		return r.Nave
 	case 11:
-		w := types.String{Target: &r.Sector}
+		r.Sector = NewUnionNullString()
 
-		return w
-
+		return r.Sector
 	case 12:
-		w := types.String{Target: &r.Sectores}
+		r.Sectores = NewUnionNullString()
 
-		return w
-
+		return r.Sectores
 	case 13:
-		w := types.String{Target: &r.Proceso}
+		r.Proceso = NewUnionNullString()
 
-		return w
-
+		return r.Proceso
 	case 14:
-		w := types.String{Target: &r.Procesos}
+		r.Procesos = NewUnionNullString()
 
-		return w
-
+		return r.Procesos
 	case 15:
-		w := types.String{Target: &r.Etiqueta}
+		r.Etiqueta = NewUnionNullString()
 
-		return w
-
+		return r.Etiqueta
 	case 16:
-		w := types.String{Target: &r.Sucursal}
+		r.Sucursal = NewUnionNullString()
 
-		return w
-
+		return r.Sucursal
 	case 17:
-		w := types.String{Target: &r.Sucursales}
+		r.Sucursales = NewUnionNullString()
 
-		return w
-
+		return r.Sucursales
 	case 18:
 		w := types.Long{Target: &r.FechaCreacion}
 
@@ -342,6 +332,36 @@ func (r *Ticket) SetDefault(i int) {
 
 func (r *Ticket) NullField(i int) {
 	switch i {
+	case 8:
+		r.Cliente = nil
+		return
+	case 9:
+		r.Planta = nil
+		return
+	case 10:
+		r.Nave = nil
+		return
+	case 11:
+		r.Sector = nil
+		return
+	case 12:
+		r.Sectores = nil
+		return
+	case 13:
+		r.Proceso = nil
+		return
+	case 14:
+		r.Procesos = nil
+		return
+	case 15:
+		r.Etiqueta = nil
+		return
+	case 16:
+		r.Sucursal = nil
+		return
+	case 17:
+		r.Sucursales = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
