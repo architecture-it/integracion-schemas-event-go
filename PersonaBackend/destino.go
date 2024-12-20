@@ -28,8 +28,6 @@ type Destino struct {
 
 	Unidad *UnionNullString `json:"Unidad"`
 
-	Region *UnionNullString `json:"Region"`
-
 	Localidad string `json:"Localidad"`
 
 	CodigoPostal string `json:"CodigoPostal"`
@@ -39,14 +37,13 @@ type Destino struct {
 	ObservacionesAdicionales *UnionNullString `json:"ObservacionesAdicionales"`
 }
 
-const DestinoAvroCRC64Fingerprint = "4\x01\xc6~)R)\xcd"
+const DestinoAvroCRC64Fingerprint = "\x17\x1c\x99\x1c\x8b\xbbRk"
 
 func NewDestino() Destino {
 	r := Destino{}
 	r.Numero = nil
 	r.Piso = nil
 	r.Unidad = nil
-	r.Region = nil
 	r.ObservacionesAdicionales = nil
 	return r
 }
@@ -96,10 +93,6 @@ func writeDestino(r Destino, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Region, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.Localidad, w)
 	if err != nil {
 		return err
@@ -124,7 +117,7 @@ func (r Destino) Serialize(w io.Writer) error {
 }
 
 func (r Destino) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Region\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PersonaBackend.Events.Common.Destino\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PersonaBackend.Events.Common.Destino\",\"type\":\"record\"}"
 }
 
 func (r Destino) SchemaName() string {
@@ -165,25 +158,21 @@ func (r *Destino) Get(i int) types.Field {
 
 		return r.Unidad
 	case 5:
-		r.Region = NewUnionNullString()
-
-		return r.Region
-	case 6:
 		w := types.String{Target: &r.Localidad}
 
 		return w
 
-	case 7:
+	case 6:
 		w := types.String{Target: &r.CodigoPostal}
 
 		return w
 
-	case 8:
+	case 7:
 		w := types.String{Target: &r.Provincia}
 
 		return w
 
-	case 9:
+	case 8:
 		r.ObservacionesAdicionales = NewUnionNullString()
 
 		return r.ObservacionesAdicionales
@@ -202,10 +191,7 @@ func (r *Destino) SetDefault(i int) {
 	case 4:
 		r.Unidad = nil
 		return
-	case 5:
-		r.Region = nil
-		return
-	case 9:
+	case 8:
 		r.ObservacionesAdicionales = nil
 		return
 	}
@@ -223,10 +209,7 @@ func (r *Destino) NullField(i int) {
 	case 4:
 		r.Unidad = nil
 		return
-	case 5:
-		r.Region = nil
-		return
-	case 9:
+	case 8:
 		r.ObservacionesAdicionales = nil
 		return
 	}
@@ -262,10 +245,6 @@ func (r Destino) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Unidad"], err = json.Marshal(r.Unidad)
-	if err != nil {
-		return nil, err
-	}
-	output["Region"], err = json.Marshal(r.Region)
 	if err != nil {
 		return nil, err
 	}
@@ -370,22 +349,6 @@ func (r *Destino) UnmarshalJSON(data []byte) error {
 		r.Unidad = NewUnionNullString()
 
 		r.Unidad = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Region"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Region); err != nil {
-			return err
-		}
-	} else {
-		r.Region = NewUnionNullString()
-
-		r.Region = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Localidad"]; ok {

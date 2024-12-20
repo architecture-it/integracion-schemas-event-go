@@ -45,12 +45,18 @@ type DatosConstancia struct {
 	SucursalAbastecedoraId string `json:"SucursalAbastecedoraId"`
 
 	CodigoZonaReparto string `json:"CodigoZonaReparto"`
+
+	Region *UnionNullString `json:"Region"`
+
+	Provincia *UnionNullString `json:"Provincia"`
 }
 
-const DatosConstanciaAvroCRC64Fingerprint = "\xfc\x8c-\xcc\xca7c+"
+const DatosConstanciaAvroCRC64Fingerprint = "\xc4e>\x8c\xbc\x0eh\x17"
 
 func NewDatosConstancia() DatosConstancia {
 	r := DatosConstancia{}
+	r.Region = nil
+	r.Provincia = nil
 	return r
 }
 
@@ -135,6 +141,14 @@ func writeDatosConstancia(r DatosConstancia, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Region, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Provincia, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -143,7 +157,7 @@ func (r DatosConstancia) Serialize(w io.Writer) error {
 }
 
 func (r DatosConstancia) Schema() string {
-	return "{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"}],\"name\":\"Andreani.PersonaBackend.Events.Common.DatosConstancia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"},{\"default\":null,\"name\":\"Region\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Provincia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PersonaBackend.Events.Common.DatosConstancia\",\"type\":\"record\"}"
 }
 
 func (r DatosConstancia) SchemaName() string {
@@ -231,18 +245,38 @@ func (r *DatosConstancia) Get(i int) types.Field {
 
 		return w
 
+	case 14:
+		r.Region = NewUnionNullString()
+
+		return r.Region
+	case 15:
+		r.Provincia = NewUnionNullString()
+
+		return r.Provincia
 	}
 	panic("Unknown field index")
 }
 
 func (r *DatosConstancia) SetDefault(i int) {
 	switch i {
+	case 14:
+		r.Region = nil
+		return
+	case 15:
+		r.Provincia = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *DatosConstancia) NullField(i int) {
 	switch i {
+	case 14:
+		r.Region = nil
+		return
+	case 15:
+		r.Provincia = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -312,6 +346,14 @@ func (r DatosConstancia) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CodigoZonaReparto"], err = json.Marshal(r.CodigoZonaReparto)
+	if err != nil {
+		return nil, err
+	}
+	output["Region"], err = json.Marshal(r.Region)
+	if err != nil {
+		return nil, err
+	}
+	output["Provincia"], err = json.Marshal(r.Provincia)
 	if err != nil {
 		return nil, err
 	}
@@ -520,6 +562,38 @@ func (r *DatosConstancia) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CodigoZonaReparto")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Region"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Region); err != nil {
+			return err
+		}
+	} else {
+		r.Region = NewUnionNullString()
+
+		r.Region = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Provincia"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Provincia); err != nil {
+			return err
+		}
+	} else {
+		r.Provincia = NewUnionNullString()
+
+		r.Provincia = nil
 	}
 	return nil
 }
