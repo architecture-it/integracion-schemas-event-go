@@ -20,11 +20,19 @@ var _ = fmt.Printf
 type DetallePreenvio struct {
 	Contrato string `json:"Contrato"`
 
-	IdPedido string `json:"IdPedido"`
-
-	ValorACobrar float32 `json:"ValorACobrar"`
+	IdBulto string `json:"IdBulto"`
 
 	NumeroRemito string `json:"NumeroRemito"`
+
+	Interno string `json:"Interno"`
+
+	Almacen string `json:"Almacen"`
+
+	Instancia string `json:"Instancia"`
+
+	FinPedido bool `json:"FinPedido"`
+
+	ValorACobrar float32 `json:"ValorACobrar"`
 
 	Origen Direccion `json:"Origen"`
 
@@ -37,7 +45,7 @@ type DetallePreenvio struct {
 	Bultos []Bulto `json:"Bultos"`
 }
 
-const DetallePreenvioAvroCRC64Fingerprint = "}\x87m.g9ܐ"
+const DetallePreenvioAvroCRC64Fingerprint = "ue\t\xfa\x9a\xa7\x1b\xd3"
 
 func NewDetallePreenvio() DetallePreenvio {
 	r := DetallePreenvio{}
@@ -83,15 +91,31 @@ func writeDetallePreenvio(r DetallePreenvio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.IdPedido, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteFloat(r.ValorACobrar, w)
+	err = vm.WriteString(r.IdBulto, w)
 	if err != nil {
 		return err
 	}
 	err = vm.WriteString(r.NumeroRemito, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Interno, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Almacen, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Instancia, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteBool(r.FinPedido, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.ValorACobrar, w)
 	if err != nil {
 		return err
 	}
@@ -123,7 +147,7 @@ func (r DetallePreenvio) Serialize(w io.Writer) error {
 }
 
 func (r DetallePreenvio) Schema() string {
-	return "{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"IdPedido\",\"type\":\"string\"},{\"name\":\"ValorACobrar\",\"type\":\"float\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":{\"fields\":[{\"name\":\"Postal\",\"type\":{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"ComponenteDeDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Postal\",\"type\":\"record\"}}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"Destino\",\"type\":\"Andreani.CalidadCertificada.Events.Record.Direccion\"},{\"name\":\"Remitente\",\"type\":{\"fields\":[{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"DocumentoTipo\",\"type\":\"string\"},{\"name\":\"DocumentoNumero\",\"type\":\"string\"},{\"name\":\"Telefonos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"int\"},{\"name\":\"Numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Persona\",\"type\":\"record\"}},{\"name\":\"Destinatario\",\"type\":{\"items\":\"Andreani.CalidadCertificada.Events.Record.Persona\",\"type\":\"array\"}},{\"name\":\"Bultos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Bulto\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.DetallePreenvio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"IdBulto\",\"type\":\"string\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"Interno\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"FinPedido\",\"type\":\"boolean\"},{\"name\":\"ValorACobrar\",\"type\":\"float\"},{\"name\":\"Origen\",\"type\":{\"fields\":[{\"name\":\"Postal\",\"type\":{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"ComponenteDeDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Postal\",\"type\":\"record\"}}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"Destino\",\"type\":\"Andreani.CalidadCertificada.Events.Record.Direccion\"},{\"name\":\"Remitente\",\"type\":{\"fields\":[{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"DocumentoTipo\",\"type\":\"string\"},{\"name\":\"DocumentoNumero\",\"type\":\"string\"},{\"name\":\"Telefonos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"int\"},{\"name\":\"Numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Persona\",\"type\":\"record\"}},{\"name\":\"Destinatario\",\"type\":{\"items\":\"Andreani.CalidadCertificada.Events.Record.Persona\",\"type\":\"array\"}},{\"name\":\"Bultos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Bulto\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.DetallePreenvio\",\"type\":\"record\"}"
 }
 
 func (r DetallePreenvio) SchemaName() string {
@@ -147,49 +171,69 @@ func (r *DetallePreenvio) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.IdPedido}
+		w := types.String{Target: &r.IdBulto}
 
 		return w
 
 	case 2:
-		w := types.Float{Target: &r.ValorACobrar}
-
-		return w
-
-	case 3:
 		w := types.String{Target: &r.NumeroRemito}
 
 		return w
 
+	case 3:
+		w := types.String{Target: &r.Interno}
+
+		return w
+
 	case 4:
+		w := types.String{Target: &r.Almacen}
+
+		return w
+
+	case 5:
+		w := types.String{Target: &r.Instancia}
+
+		return w
+
+	case 6:
+		w := types.Boolean{Target: &r.FinPedido}
+
+		return w
+
+	case 7:
+		w := types.Float{Target: &r.ValorACobrar}
+
+		return w
+
+	case 8:
 		r.Origen = NewDireccion()
 
 		w := types.Record{Target: &r.Origen}
 
 		return w
 
-	case 5:
+	case 9:
 		r.Destino = NewDireccion()
 
 		w := types.Record{Target: &r.Destino}
 
 		return w
 
-	case 6:
+	case 10:
 		r.Remitente = NewPersona()
 
 		w := types.Record{Target: &r.Remitente}
 
 		return w
 
-	case 7:
+	case 11:
 		r.Destinatario = make([]Persona, 0)
 
 		w := ArrayPersonaWrapper{Target: &r.Destinatario}
 
 		return w
 
-	case 8:
+	case 12:
 		r.Bultos = make([]Bulto, 0)
 
 		w := ArrayBultoWrapper{Target: &r.Bultos}
@@ -228,15 +272,31 @@ func (r DetallePreenvio) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["IdPedido"], err = json.Marshal(r.IdPedido)
-	if err != nil {
-		return nil, err
-	}
-	output["ValorACobrar"], err = json.Marshal(r.ValorACobrar)
+	output["IdBulto"], err = json.Marshal(r.IdBulto)
 	if err != nil {
 		return nil, err
 	}
 	output["NumeroRemito"], err = json.Marshal(r.NumeroRemito)
+	if err != nil {
+		return nil, err
+	}
+	output["Interno"], err = json.Marshal(r.Interno)
+	if err != nil {
+		return nil, err
+	}
+	output["Almacen"], err = json.Marshal(r.Almacen)
+	if err != nil {
+		return nil, err
+	}
+	output["Instancia"], err = json.Marshal(r.Instancia)
+	if err != nil {
+		return nil, err
+	}
+	output["FinPedido"], err = json.Marshal(r.FinPedido)
+	if err != nil {
+		return nil, err
+	}
+	output["ValorACobrar"], err = json.Marshal(r.ValorACobrar)
 	if err != nil {
 		return nil, err
 	}
@@ -285,32 +345,18 @@ func (r *DetallePreenvio) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Contrato")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["IdPedido"]; ok {
+		if v, ok := fields["IdBulto"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IdPedido); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdBulto); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for IdPedido")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["ValorACobrar"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ValorACobrar); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for ValorACobrar")
+		return fmt.Errorf("no value specified for IdBulto")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NumeroRemito"]; ok {
@@ -325,6 +371,76 @@ func (r *DetallePreenvio) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for NumeroRemito")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Interno"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Interno); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Interno")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Almacen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Almacen); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Almacen")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Instancia"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Instancia); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Instancia")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FinPedido"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FinPedido); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FinPedido")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ValorACobrar"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ValorACobrar); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for ValorACobrar")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Origen"]; ok {
