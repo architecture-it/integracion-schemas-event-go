@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type TripEvent struct {
-	TripId *UnionNullInt `json:"TripId"`
+	TripId *UnionNullString `json:"TripId"`
 
 	OriginOU *UnionNullString `json:"OriginOU"`
 
@@ -49,7 +49,7 @@ type TripEvent struct {
 	StatusCode *UnionNullString `json:"StatusCode"`
 }
 
-const TripEventAvroCRC64Fingerprint = "\x8cAL\x7fò\xbc\x84"
+const TripEventAvroCRC64Fingerprint = "\x17\x88\x82G\xdb\x1b;E"
 
 func NewTripEvent() TripEvent {
 	r := TripEvent{}
@@ -96,7 +96,7 @@ func DeserializeTripEventFromSchema(r io.Reader, schema string) (TripEvent, erro
 
 func writeTripEvent(r TripEvent, w io.Writer) error {
 	var err error
-	err = writeUnionNullInt(r.TripId, w)
+	err = writeUnionNullString(r.TripId, w)
 	if err != nil {
 		return err
 	}
@@ -164,7 +164,7 @@ func (r TripEvent) Serialize(w io.Writer) error {
 }
 
 func (r TripEvent) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"TripId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"OriginOU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinationOU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FirstDriverDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SecondDriverDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrimaryVehicleDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrimaryVechicleType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FirstSemiDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SecondSemiDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CloseDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Seals\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"CargoInsuredValue\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"NumberOfCustodyVehicles\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TripStatus\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StatusCode\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DMSRoutes.Events.Record.TripEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"TripId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OriginOU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinationOU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FirstDriverDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SecondDriverDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrimaryVehicleDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrimaryVechicleType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FirstSemiDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SecondSemiDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CloseDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Seals\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"CargoInsuredValue\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"NumberOfCustodyVehicles\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TripStatus\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StatusCode\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DMSRoutes.Events.Record.TripEvent\",\"type\":\"record\"}"
 }
 
 func (r TripEvent) SchemaName() string {
@@ -183,7 +183,7 @@ func (_ TripEvent) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *TripEvent) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.TripId = NewUnionNullInt()
+		r.TripId = NewUnionNullString()
 
 		return r.TripId
 	case 1:
@@ -442,7 +442,7 @@ func (r *TripEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.TripId = NewUnionNullInt()
+		r.TripId = NewUnionNullString()
 
 		r.TripId = nil
 	}
