@@ -21,7 +21,7 @@ type WosMaquinistaEstadoTareaMv struct {
 	CambioEstadoTareaMv CambioEstadoTareaMv `json:"CambioEstadoTareaMv"`
 }
 
-const WosMaquinistaEstadoTareaMvAvroCRC64Fingerprint = "\xd7\x16mgV8\xc4\x1b"
+const WosMaquinistaEstadoTareaMvAvroCRC64Fingerprint = "E$\x94,5$^\xab"
 
 func NewWosMaquinistaEstadoTareaMv() WosMaquinistaEstadoTareaMv {
 	r := WosMaquinistaEstadoTareaMv{}
@@ -67,7 +67,7 @@ func (r WosMaquinistaEstadoTareaMv) Serialize(w io.Writer) error {
 }
 
 func (r WosMaquinistaEstadoTareaMv) Schema() string {
-	return "{\"fields\":[{\"name\":\"CambioEstadoTareaMv\",\"type\":{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"HojaDeRutaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"name\":\"TareaMvIdSce\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"default\":null,\"name\":\"Contenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]}],\"name\":\"CambioEstadoTareaMv\",\"namespace\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.WosMaquinista.Events.Record.WosMaquinistaEstadoTareaMv\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CambioEstadoTareaMv\",\"type\":{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"HojaDeRutaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"name\":\"TareaMvIdSce\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"TareaInterna\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"Contenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]}],\"name\":\"CambioEstadoTareaMv\",\"namespace\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.WosMaquinista.Events.Record.WosMaquinistaEstadoTareaMv\",\"type\":\"record\"}"
 }
 
 func (r WosMaquinistaEstadoTareaMv) SchemaName() string {
