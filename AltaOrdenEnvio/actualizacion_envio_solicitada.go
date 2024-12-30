@@ -18,21 +18,21 @@ import (
 var _ = fmt.Printf
 
 type ActualizacionEnvioSolicitada struct {
-	Contrato *UnionNullString `json:"Contrato"`
+	GUID *UnionNullString `json:"GUID"`
 
 	CodigoDeEnvio *UnionNullString `json:"CodigoDeEnvio"`
+
+	Contrato *UnionNullString `json:"Contrato"`
 
 	BultoRequest *UnionNullBultoRequest `json:"BultoRequest"`
 
 	ValorACobrar *UnionNullString `json:"ValorACobrar"`
 }
 
-const ActualizacionEnvioSolicitadaAvroCRC64Fingerprint = "\x1bt\xa0\xed\x1c\vd\x1c"
+const ActualizacionEnvioSolicitadaAvroCRC64Fingerprint = "\xcc\x7f&,V\x15(\xa5"
 
 func NewActualizacionEnvioSolicitada() ActualizacionEnvioSolicitada {
 	r := ActualizacionEnvioSolicitada{}
-	r.Contrato = nil
-	r.CodigoDeEnvio = nil
 	r.BultoRequest = nil
 	r.ValorACobrar = nil
 	return r
@@ -63,11 +63,15 @@ func DeserializeActualizacionEnvioSolicitadaFromSchema(r io.Reader, schema strin
 
 func writeActualizacionEnvioSolicitada(r ActualizacionEnvioSolicitada, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.Contrato, w)
+	err = writeUnionNullString(r.GUID, w)
 	if err != nil {
 		return err
 	}
 	err = writeUnionNullString(r.CodigoDeEnvio, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Contrato, w)
 	if err != nil {
 		return err
 	}
@@ -87,7 +91,7 @@ func (r ActualizacionEnvioSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r ActualizacionEnvioSolicitada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BultoRequest\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"BultoRequest\",\"namespace\":\"Andreani.AltaOrdenEnvio.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"ValorACobrar\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BultoRequest\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"BultoRequest\",\"namespace\":\"Andreani.AltaOrdenEnvio.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"ValorACobrar\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioSolicitada\",\"type\":\"record\"}"
 }
 
 func (r ActualizacionEnvioSolicitada) SchemaName() string {
@@ -106,18 +110,22 @@ func (_ ActualizacionEnvioSolicitada) SetUnionElem(v int64) { panic("Unsupported
 func (r *ActualizacionEnvioSolicitada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Contrato = NewUnionNullString()
+		r.GUID = NewUnionNullString()
 
-		return r.Contrato
+		return r.GUID
 	case 1:
 		r.CodigoDeEnvio = NewUnionNullString()
 
 		return r.CodigoDeEnvio
 	case 2:
+		r.Contrato = NewUnionNullString()
+
+		return r.Contrato
+	case 3:
 		r.BultoRequest = NewUnionNullBultoRequest()
 
 		return r.BultoRequest
-	case 3:
+	case 4:
 		r.ValorACobrar = NewUnionNullString()
 
 		return r.ValorACobrar
@@ -127,16 +135,10 @@ func (r *ActualizacionEnvioSolicitada) Get(i int) types.Field {
 
 func (r *ActualizacionEnvioSolicitada) SetDefault(i int) {
 	switch i {
-	case 0:
-		r.Contrato = nil
-		return
-	case 1:
-		r.CodigoDeEnvio = nil
-		return
-	case 2:
+	case 3:
 		r.BultoRequest = nil
 		return
-	case 3:
+	case 4:
 		r.ValorACobrar = nil
 		return
 	}
@@ -146,15 +148,18 @@ func (r *ActualizacionEnvioSolicitada) SetDefault(i int) {
 func (r *ActualizacionEnvioSolicitada) NullField(i int) {
 	switch i {
 	case 0:
-		r.Contrato = nil
+		r.GUID = nil
 		return
 	case 1:
 		r.CodigoDeEnvio = nil
 		return
 	case 2:
-		r.BultoRequest = nil
+		r.Contrato = nil
 		return
 	case 3:
+		r.BultoRequest = nil
+		return
+	case 4:
 		r.ValorACobrar = nil
 		return
 	}
@@ -175,11 +180,15 @@ func (_ ActualizacionEnvioSolicitada) AvroCRC64Fingerprint() []byte {
 func (r ActualizacionEnvioSolicitada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Contrato"], err = json.Marshal(r.Contrato)
+	output["GUID"], err = json.Marshal(r.GUID)
 	if err != nil {
 		return nil, err
 	}
 	output["CodigoDeEnvio"], err = json.Marshal(r.CodigoDeEnvio)
+	if err != nil {
+		return nil, err
+	}
+	output["Contrato"], err = json.Marshal(r.Contrato)
 	if err != nil {
 		return nil, err
 	}
@@ -202,20 +211,18 @@ func (r *ActualizacionEnvioSolicitada) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["Contrato"]; ok {
+		if v, ok := fields["GUID"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.GUID); err != nil {
 			return err
 		}
 	} else {
-		r.Contrato = NewUnionNullString()
-
-		r.Contrato = nil
+		return fmt.Errorf("no value specified for GUID")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CodigoDeEnvio"]; ok {
@@ -229,9 +236,21 @@ func (r *ActualizacionEnvioSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.CodigoDeEnvio = NewUnionNullString()
+		return fmt.Errorf("no value specified for CodigoDeEnvio")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Contrato"]; ok {
+			return v
+		}
+		return nil
+	}()
 
-		r.CodigoDeEnvio = nil
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Contrato")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["BultoRequest"]; ok {
