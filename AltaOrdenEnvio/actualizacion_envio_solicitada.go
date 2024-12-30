@@ -27,14 +27,17 @@ type ActualizacionEnvioSolicitada struct {
 	BultoRequest *UnionNullBultoRequest `json:"BultoRequest"`
 
 	ValorACobrar *UnionNullString `json:"ValorACobrar"`
+
+	Cuando *UnionNullString `json:"Cuando"`
 }
 
-const ActualizacionEnvioSolicitadaAvroCRC64Fingerprint = "\xcc\x7f&,V\x15(\xa5"
+const ActualizacionEnvioSolicitadaAvroCRC64Fingerprint = "\xc7\x06\x99\xb2\xc7\xc0U\xce"
 
 func NewActualizacionEnvioSolicitada() ActualizacionEnvioSolicitada {
 	r := ActualizacionEnvioSolicitada{}
 	r.BultoRequest = nil
 	r.ValorACobrar = nil
+	r.Cuando = nil
 	return r
 }
 
@@ -83,6 +86,10 @@ func writeActualizacionEnvioSolicitada(r ActualizacionEnvioSolicitada, w io.Writ
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Cuando, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -91,7 +98,7 @@ func (r ActualizacionEnvioSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r ActualizacionEnvioSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BultoRequest\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"BultoRequest\",\"namespace\":\"Andreani.AltaOrdenEnvio.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"ValorACobrar\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BultoRequest\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"BultoRequest\",\"namespace\":\"Andreani.AltaOrdenEnvio.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"ValorACobrar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioSolicitada\",\"type\":\"record\"}"
 }
 
 func (r ActualizacionEnvioSolicitada) SchemaName() string {
@@ -129,6 +136,10 @@ func (r *ActualizacionEnvioSolicitada) Get(i int) types.Field {
 		r.ValorACobrar = NewUnionNullString()
 
 		return r.ValorACobrar
+	case 5:
+		r.Cuando = NewUnionNullString()
+
+		return r.Cuando
 	}
 	panic("Unknown field index")
 }
@@ -140,6 +151,9 @@ func (r *ActualizacionEnvioSolicitada) SetDefault(i int) {
 		return
 	case 4:
 		r.ValorACobrar = nil
+		return
+	case 5:
+		r.Cuando = nil
 		return
 	}
 	panic("Unknown field index")
@@ -161,6 +175,9 @@ func (r *ActualizacionEnvioSolicitada) NullField(i int) {
 		return
 	case 4:
 		r.ValorACobrar = nil
+		return
+	case 5:
+		r.Cuando = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -197,6 +214,10 @@ func (r ActualizacionEnvioSolicitada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ValorACobrar"], err = json.Marshal(r.ValorACobrar)
+	if err != nil {
+		return nil, err
+	}
+	output["Cuando"], err = json.Marshal(r.Cuando)
 	if err != nil {
 		return nil, err
 	}
@@ -283,6 +304,22 @@ func (r *ActualizacionEnvioSolicitada) UnmarshalJSON(data []byte) error {
 		r.ValorACobrar = NewUnionNullString()
 
 		r.ValorACobrar = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Cuando"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cuando); err != nil {
+			return err
+		}
+	} else {
+		r.Cuando = NewUnionNullString()
+
+		r.Cuando = nil
 	}
 	return nil
 }

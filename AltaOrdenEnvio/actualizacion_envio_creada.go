@@ -23,12 +23,15 @@ type ActualizacionEnvioCreada struct {
 	CodigoDeEnvio *UnionNullString `json:"CodigoDeEnvio"`
 
 	Contrato *UnionNullString `json:"Contrato"`
+
+	Cuando *UnionNullString `json:"Cuando"`
 }
 
-const ActualizacionEnvioCreadaAvroCRC64Fingerprint = "\x91\f\x91\x9d.,\xcbR"
+const ActualizacionEnvioCreadaAvroCRC64Fingerprint = "\xdb\xe0\xc992\xab\xf4\xc3"
 
 func NewActualizacionEnvioCreada() ActualizacionEnvioCreada {
 	r := ActualizacionEnvioCreada{}
+	r.Cuando = nil
 	return r
 }
 
@@ -69,6 +72,10 @@ func writeActualizacionEnvioCreada(r ActualizacionEnvioCreada, w io.Writer) erro
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Cuando, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -77,7 +84,7 @@ func (r ActualizacionEnvioCreada) Serialize(w io.Writer) error {
 }
 
 func (r ActualizacionEnvioCreada) Schema() string {
-	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioCreada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioCreada\",\"type\":\"record\"}"
 }
 
 func (r ActualizacionEnvioCreada) SchemaName() string {
@@ -107,12 +114,19 @@ func (r *ActualizacionEnvioCreada) Get(i int) types.Field {
 		r.Contrato = NewUnionNullString()
 
 		return r.Contrato
+	case 3:
+		r.Cuando = NewUnionNullString()
+
+		return r.Cuando
 	}
 	panic("Unknown field index")
 }
 
 func (r *ActualizacionEnvioCreada) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.Cuando = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -127,6 +141,9 @@ func (r *ActualizacionEnvioCreada) NullField(i int) {
 		return
 	case 2:
 		r.Contrato = nil
+		return
+	case 3:
+		r.Cuando = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -153,6 +170,10 @@ func (r ActualizacionEnvioCreada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Contrato"], err = json.Marshal(r.Contrato)
+	if err != nil {
+		return nil, err
+	}
+	output["Cuando"], err = json.Marshal(r.Cuando)
 	if err != nil {
 		return nil, err
 	}
@@ -207,6 +228,22 @@ func (r *ActualizacionEnvioCreada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Contrato")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Cuando"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cuando); err != nil {
+			return err
+		}
+	} else {
+		r.Cuando = NewUnionNullString()
+
+		r.Cuando = nil
 	}
 	return nil
 }
