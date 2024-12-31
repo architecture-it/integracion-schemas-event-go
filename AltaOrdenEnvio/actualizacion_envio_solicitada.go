@@ -26,12 +26,12 @@ type ActualizacionEnvioSolicitada struct {
 
 	BultoRequest *UnionNullBultoRequest `json:"BultoRequest"`
 
-	ValorACobrar *UnionNullString `json:"ValorACobrar"`
+	ValorACobrar *UnionNullFloat `json:"ValorACobrar"`
 
 	Cuando *UnionNullString `json:"Cuando"`
 }
 
-const ActualizacionEnvioSolicitadaAvroCRC64Fingerprint = "\xc7\x06\x99\xb2\xc7\xc0U\xce"
+const ActualizacionEnvioSolicitadaAvroCRC64Fingerprint = "\xc3\xd4eY\xae\xef?Z"
 
 func NewActualizacionEnvioSolicitada() ActualizacionEnvioSolicitada {
 	r := ActualizacionEnvioSolicitada{}
@@ -82,7 +82,7 @@ func writeActualizacionEnvioSolicitada(r ActualizacionEnvioSolicitada, w io.Writ
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.ValorACobrar, w)
+	err = writeUnionNullFloat(r.ValorACobrar, w)
 	if err != nil {
 		return err
 	}
@@ -98,7 +98,7 @@ func (r ActualizacionEnvioSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r ActualizacionEnvioSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BultoRequest\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"BultoRequest\",\"namespace\":\"Andreani.AltaOrdenEnvio.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"ValorACobrar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BultoRequest\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"BultoRequest\",\"namespace\":\"Andreani.AltaOrdenEnvio.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"ValorACobrar\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioSolicitada\",\"type\":\"record\"}"
 }
 
 func (r ActualizacionEnvioSolicitada) SchemaName() string {
@@ -133,7 +133,7 @@ func (r *ActualizacionEnvioSolicitada) Get(i int) types.Field {
 
 		return r.BultoRequest
 	case 4:
-		r.ValorACobrar = NewUnionNullString()
+		r.ValorACobrar = NewUnionNullFloat()
 
 		return r.ValorACobrar
 	case 5:
@@ -301,7 +301,7 @@ func (r *ActualizacionEnvioSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.ValorACobrar = NewUnionNullString()
+		r.ValorACobrar = NewUnionNullFloat()
 
 		r.ValorACobrar = nil
 	}
