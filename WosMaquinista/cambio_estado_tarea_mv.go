@@ -30,7 +30,7 @@ type CambioEstadoTareaMv struct {
 
 	Cantidad int32 `json:"Cantidad"`
 
-	TareaInterna bool `json:"TareaInterna"`
+	TareaInterna int32 `json:"TareaInterna"`
 
 	Contenedor *UnionNullString `json:"Contenedor"`
 
@@ -39,7 +39,7 @@ type CambioEstadoTareaMv struct {
 	Usuario *UnionNullString `json:"Usuario"`
 }
 
-const CambioEstadoTareaMvAvroCRC64Fingerprint = "~\"\x8b\xb5֢;\x8f"
+const CambioEstadoTareaMvAvroCRC64Fingerprint = "g\n\x02nG'\x91@"
 
 func NewCambioEstadoTareaMv() CambioEstadoTareaMv {
 	r := CambioEstadoTareaMv{}
@@ -98,7 +98,7 @@ func writeCambioEstadoTareaMv(r CambioEstadoTareaMv, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteBool(r.TareaInterna, w)
+	err = vm.WriteInt(r.TareaInterna, w)
 	if err != nil {
 		return err
 	}
@@ -122,7 +122,7 @@ func (r CambioEstadoTareaMv) Serialize(w io.Writer) error {
 }
 
 func (r CambioEstadoTareaMv) Schema() string {
-	return "{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"HojaDeRutaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"name\":\"TareaMvIdSce\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"TareaInterna\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"Contenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon.CambioEstadoTareaMv\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TareaMvId\",\"type\":\"int\"},{\"name\":\"HojaDeRutaMvId\",\"type\":\"int\"},{\"name\":\"TipoEstadoTareaMvId\",\"type\":\"int\"},{\"name\":\"TareaMvIdSce\",\"type\":\"string\"},{\"name\":\"PlantaOperacionId\",\"type\":\"int\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"TareaInterna\",\"type\":\"int\"},{\"default\":null,\"name\":\"Contenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosMaquinista.Events.CambioEstadoTareaMvCommon.CambioEstadoTareaMv\",\"type\":\"record\"}"
 }
 
 func (r CambioEstadoTareaMv) SchemaName() string {
@@ -171,7 +171,7 @@ func (r *CambioEstadoTareaMv) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.Boolean{Target: &r.TareaInterna}
+		w := types.Int{Target: &r.TareaInterna}
 
 		return w
 
