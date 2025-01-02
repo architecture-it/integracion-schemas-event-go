@@ -25,13 +25,16 @@ type ActualizacionEnvioRechazada struct {
 	Contrato *UnionNullString `json:"Contrato"`
 
 	Cuando *UnionNullString `json:"Cuando"`
+
+	Razon *UnionNullString `json:"Razon"`
 }
 
-const ActualizacionEnvioRechazadaAvroCRC64Fingerprint = "\x16\x8d\xf6--\xa0o\xff"
+const ActualizacionEnvioRechazadaAvroCRC64Fingerprint = "\xb1\vq\xa5\xbav?\xec"
 
 func NewActualizacionEnvioRechazada() ActualizacionEnvioRechazada {
 	r := ActualizacionEnvioRechazada{}
 	r.Cuando = nil
+	r.Razon = nil
 	return r
 }
 
@@ -76,6 +79,10 @@ func writeActualizacionEnvioRechazada(r ActualizacionEnvioRechazada, w io.Writer
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Razon, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -84,7 +91,7 @@ func (r ActualizacionEnvioRechazada) Serialize(w io.Writer) error {
 }
 
 func (r ActualizacionEnvioRechazada) Schema() string {
-	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Razon\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioRechazada\",\"type\":\"record\"}"
 }
 
 func (r ActualizacionEnvioRechazada) SchemaName() string {
@@ -118,6 +125,10 @@ func (r *ActualizacionEnvioRechazada) Get(i int) types.Field {
 		r.Cuando = NewUnionNullString()
 
 		return r.Cuando
+	case 4:
+		r.Razon = NewUnionNullString()
+
+		return r.Razon
 	}
 	panic("Unknown field index")
 }
@@ -126,6 +137,9 @@ func (r *ActualizacionEnvioRechazada) SetDefault(i int) {
 	switch i {
 	case 3:
 		r.Cuando = nil
+		return
+	case 4:
+		r.Razon = nil
 		return
 	}
 	panic("Unknown field index")
@@ -144,6 +158,9 @@ func (r *ActualizacionEnvioRechazada) NullField(i int) {
 		return
 	case 3:
 		r.Cuando = nil
+		return
+	case 4:
+		r.Razon = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -176,6 +193,10 @@ func (r ActualizacionEnvioRechazada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Cuando"], err = json.Marshal(r.Cuando)
+	if err != nil {
+		return nil, err
+	}
+	output["Razon"], err = json.Marshal(r.Razon)
 	if err != nil {
 		return nil, err
 	}
@@ -246,6 +267,22 @@ func (r *ActualizacionEnvioRechazada) UnmarshalJSON(data []byte) error {
 		r.Cuando = NewUnionNullString()
 
 		r.Cuando = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Razon"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Razon); err != nil {
+			return err
+		}
+	} else {
+		r.Razon = NewUnionNullString()
+
+		r.Razon = nil
 	}
 	return nil
 }
