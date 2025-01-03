@@ -24,14 +24,14 @@ type ActualizacionEnvioSolicitada struct {
 
 	Contrato *UnionNullString `json:"Contrato"`
 
-	BultoRequest *UnionNullBultoRequest `json:"BultoRequest"`
+	BultoRequest *UnionNullDetalleDePaquete `json:"BultoRequest"`
 
 	ValorACobrar *UnionNullFloat `json:"ValorACobrar"`
 
 	Cuando *UnionNullString `json:"Cuando"`
 }
 
-const ActualizacionEnvioSolicitadaAvroCRC64Fingerprint = "\xc3\xd4eY\xae\xef?Z"
+const ActualizacionEnvioSolicitadaAvroCRC64Fingerprint = "\xa7a\xf3s\xc0\x92\xb8\xc6"
 
 func NewActualizacionEnvioSolicitada() ActualizacionEnvioSolicitada {
 	r := ActualizacionEnvioSolicitada{}
@@ -78,7 +78,7 @@ func writeActualizacionEnvioSolicitada(r ActualizacionEnvioSolicitada, w io.Writ
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullBultoRequest(r.BultoRequest, w)
+	err = writeUnionNullDetalleDePaquete(r.BultoRequest, w)
 	if err != nil {
 		return err
 	}
@@ -98,7 +98,7 @@ func (r ActualizacionEnvioSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r ActualizacionEnvioSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BultoRequest\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"BultoRequest\",\"namespace\":\"Andreani.AltaOrdenEnvio.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"ValorACobrar\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BultoRequest\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]}],\"name\":\"DetalleDePaquete\",\"namespace\":\"Andreani.AltaOrdenEnvio.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"ValorACobrar\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioSolicitada\",\"type\":\"record\"}"
 }
 
 func (r ActualizacionEnvioSolicitada) SchemaName() string {
@@ -129,7 +129,7 @@ func (r *ActualizacionEnvioSolicitada) Get(i int) types.Field {
 
 		return r.Contrato
 	case 3:
-		r.BultoRequest = NewUnionNullBultoRequest()
+		r.BultoRequest = NewUnionNullDetalleDePaquete()
 
 		return r.BultoRequest
 	case 4:
@@ -285,7 +285,7 @@ func (r *ActualizacionEnvioSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.BultoRequest = NewUnionNullBultoRequest()
+		r.BultoRequest = NewUnionNullDetalleDePaquete()
 
 		r.BultoRequest = nil
 	}
