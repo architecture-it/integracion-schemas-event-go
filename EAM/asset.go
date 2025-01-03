@@ -44,10 +44,10 @@ type Asset struct {
 
 	FueraDeServicio bool `json:"fueraDeServicio"`
 
-	Cod_eam string `json:"cod_eam"`
+	Cod_eam *UnionNullString `json:"cod_eam"`
 }
 
-const AssetAvroCRC64Fingerprint = "MgM\x8c:qc\\"
+const AssetAvroCRC64Fingerprint = "\xbd\x92\xc4:t@O8"
 
 func NewAsset() Asset {
 	r := Asset{}
@@ -131,7 +131,7 @@ func writeAsset(r Asset, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Cod_eam, w)
+	err = writeUnionNullString(r.Cod_eam, w)
 	if err != nil {
 		return err
 	}
@@ -143,7 +143,7 @@ func (r Asset) Serialize(w io.Writer) error {
 }
 
 func (r Asset) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"cod_eam\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"cod_eam\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
 }
 
 func (r Asset) SchemaName() string {
@@ -227,10 +227,9 @@ func (r *Asset) Get(i int) types.Field {
 		return w
 
 	case 13:
-		w := types.String{Target: &r.Cod_eam}
+		r.Cod_eam = NewUnionNullString()
 
-		return w
-
+		return r.Cod_eam
 	}
 	panic("Unknown field index")
 }
@@ -243,6 +242,9 @@ func (r *Asset) SetDefault(i int) {
 
 func (r *Asset) NullField(i int) {
 	switch i {
+	case 13:
+		r.Cod_eam = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
