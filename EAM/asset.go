@@ -43,9 +43,11 @@ type Asset struct {
 	Propietario string `json:"propietario"`
 
 	FueraDeServicio bool `json:"fueraDeServicio"`
+
+	Cod_eam string `json:"cod_eam"`
 }
 
-const AssetAvroCRC64Fingerprint = "\x87\x1c\xf0 2Z\"\x02"
+const AssetAvroCRC64Fingerprint = "MgM\x8c:qc\\"
 
 func NewAsset() Asset {
 	r := Asset{}
@@ -129,6 +131,10 @@ func writeAsset(r Asset, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Cod_eam, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -137,7 +143,7 @@ func (r Asset) Serialize(w io.Writer) error {
 }
 
 func (r Asset) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"cod_eam\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
 }
 
 func (r Asset) SchemaName() string {
@@ -220,6 +226,11 @@ func (r *Asset) Get(i int) types.Field {
 
 		return w
 
+	case 13:
+		w := types.String{Target: &r.Cod_eam}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -297,6 +308,10 @@ func (r Asset) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["fueraDeServicio"], err = json.Marshal(r.FueraDeServicio)
+	if err != nil {
+		return nil, err
+	}
+	output["cod_eam"], err = json.Marshal(r.Cod_eam)
 	if err != nil {
 		return nil, err
 	}
@@ -491,6 +506,20 @@ func (r *Asset) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for fueraDeServicio")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cod_eam"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cod_eam); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for cod_eam")
 	}
 	return nil
 }
