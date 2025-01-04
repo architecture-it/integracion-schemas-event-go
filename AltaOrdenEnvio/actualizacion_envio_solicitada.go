@@ -26,17 +26,17 @@ type ActualizacionEnvioSolicitada struct {
 
 	BultoRequest *UnionNullListaPaquetes `json:"BultoRequest"`
 
-	ValorACobrar *UnionNullFloat `json:"ValorACobrar"`
+	DatosAActualizar *UnionNullArrayMetadato `json:"DatosAActualizar"`
 
 	Cuando *UnionNullString `json:"Cuando"`
 }
 
-const ActualizacionEnvioSolicitadaAvroCRC64Fingerprint = "\x06\x93\xf1\xc3%䕡"
+const ActualizacionEnvioSolicitadaAvroCRC64Fingerprint = "\n\xa8d!\"^ώ"
 
 func NewActualizacionEnvioSolicitada() ActualizacionEnvioSolicitada {
 	r := ActualizacionEnvioSolicitada{}
 	r.BultoRequest = nil
-	r.ValorACobrar = nil
+	r.DatosAActualizar = nil
 	r.Cuando = nil
 	return r
 }
@@ -82,7 +82,7 @@ func writeActualizacionEnvioSolicitada(r ActualizacionEnvioSolicitada, w io.Writ
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullFloat(r.ValorACobrar, w)
+	err = writeUnionNullArrayMetadato(r.DatosAActualizar, w)
 	if err != nil {
 		return err
 	}
@@ -98,7 +98,7 @@ func (r ActualizacionEnvioSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r ActualizacionEnvioSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BultoRequest\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaPaquetes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]}],\"name\":\"DetalleDePaquete\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaPaquetes\",\"namespace\":\"Andreani.AltaOrdenEnvio.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"ValorACobrar\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"GUID\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"BultoRequest\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaPaquetes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]}],\"name\":\"DetalleDePaquete\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaPaquetes\",\"namespace\":\"Andreani.AltaOrdenEnvio.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"DatosAActualizar\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Record.ActualizacionEnvioSolicitada\",\"type\":\"record\"}"
 }
 
 func (r ActualizacionEnvioSolicitada) SchemaName() string {
@@ -133,9 +133,9 @@ func (r *ActualizacionEnvioSolicitada) Get(i int) types.Field {
 
 		return r.BultoRequest
 	case 4:
-		r.ValorACobrar = NewUnionNullFloat()
+		r.DatosAActualizar = NewUnionNullArrayMetadato()
 
-		return r.ValorACobrar
+		return r.DatosAActualizar
 	case 5:
 		r.Cuando = NewUnionNullString()
 
@@ -150,7 +150,7 @@ func (r *ActualizacionEnvioSolicitada) SetDefault(i int) {
 		r.BultoRequest = nil
 		return
 	case 4:
-		r.ValorACobrar = nil
+		r.DatosAActualizar = nil
 		return
 	case 5:
 		r.Cuando = nil
@@ -174,7 +174,7 @@ func (r *ActualizacionEnvioSolicitada) NullField(i int) {
 		r.BultoRequest = nil
 		return
 	case 4:
-		r.ValorACobrar = nil
+		r.DatosAActualizar = nil
 		return
 	case 5:
 		r.Cuando = nil
@@ -213,7 +213,7 @@ func (r ActualizacionEnvioSolicitada) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["ValorACobrar"], err = json.Marshal(r.ValorACobrar)
+	output["DatosAActualizar"], err = json.Marshal(r.DatosAActualizar)
 	if err != nil {
 		return nil, err
 	}
@@ -290,20 +290,20 @@ func (r *ActualizacionEnvioSolicitada) UnmarshalJSON(data []byte) error {
 		r.BultoRequest = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["ValorACobrar"]; ok {
+		if v, ok := fields["DatosAActualizar"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ValorACobrar); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DatosAActualizar); err != nil {
 			return err
 		}
 	} else {
-		r.ValorACobrar = NewUnionNullFloat()
+		r.DatosAActualizar = NewUnionNullArrayMetadato()
 
-		r.ValorACobrar = nil
+		r.DatosAActualizar = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Cuando"]; ok {
