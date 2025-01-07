@@ -34,6 +34,8 @@ type Incidencia struct {
 
 	LecturaArticulo *UnionNullString `json:"LecturaArticulo"`
 
+	LPN *UnionNullString `json:"LPN"`
+
 	SkuArticulo *UnionNullString `json:"SkuArticulo"`
 
 	DescripcionArticulo *UnionNullString `json:"DescripcionArticulo"`
@@ -63,7 +65,7 @@ type Incidencia struct {
 	IdUnidadOperativa *UnionNullString `json:"IdUnidadOperativa"`
 }
 
-const IncidenciaAvroCRC64Fingerprint = "\xb0R}\f-|\x1e\xa5"
+const IncidenciaAvroCRC64Fingerprint = "\x12\x88'\x00\xb95\xafE"
 
 func NewIncidencia() Incidencia {
 	r := Incidencia{}
@@ -76,6 +78,7 @@ func NewIncidencia() Incidencia {
 	r.Prioridad = nil
 	r.Observaciones = nil
 	r.LecturaArticulo = nil
+	r.LPN = nil
 	r.SkuArticulo = nil
 	r.DescripcionArticulo = nil
 	r.CantidadArticulo = nil
@@ -150,6 +153,10 @@ func writeIncidencia(r Incidencia, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.LPN, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.SkuArticulo, w)
 	if err != nil {
 		return err
@@ -214,7 +221,7 @@ func (r Incidencia) Serialize(w io.Writer) error {
 }
 
 func (r Incidencia) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"}},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ReferenciaWh\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Prioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LecturaArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SkuArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroSerieArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AlmacenDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Detalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdTareaTraslado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MotivoIncidencia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MotivoResolucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdUnidadOperativa\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.Incidencia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"PlantaOperacionId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"}},{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ReferenciaWh\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReferenciaCliente2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Prioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LecturaArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SkuArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroSerieArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AlmacenDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Detalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdTareaTraslado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MotivoIncidencia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MotivoResolucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdUnidadOperativa\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.Incidencia\",\"type\":\"record\"}"
 }
 
 func (r Incidencia) SchemaName() string {
@@ -268,58 +275,62 @@ func (r *Incidencia) Get(i int) types.Field {
 
 		return r.LecturaArticulo
 	case 8:
+		r.LPN = NewUnionNullString()
+
+		return r.LPN
+	case 9:
 		r.SkuArticulo = NewUnionNullString()
 
 		return r.SkuArticulo
-	case 9:
+	case 10:
 		r.DescripcionArticulo = NewUnionNullString()
 
 		return r.DescripcionArticulo
-	case 10:
+	case 11:
 		r.CantidadArticulo = NewUnionNullString()
 
 		return r.CantidadArticulo
-	case 11:
+	case 12:
 		r.LoteArticulo = NewUnionNullString()
 
 		return r.LoteArticulo
-	case 12:
+	case 13:
 		r.NroSerieArticulo = NewUnionNullString()
 
 		return r.NroSerieArticulo
-	case 13:
+	case 14:
 		r.AlmacenDestino = NewUnionNullString()
 
 		return r.AlmacenDestino
-	case 14:
+	case 15:
 		r.IdMotivo = NewUnionNullString()
 
 		return r.IdMotivo
-	case 15:
+	case 16:
 		r.IdMotivoExterno = NewUnionNullString()
 
 		return r.IdMotivoExterno
-	case 16:
+	case 17:
 		r.Detalle = NewUnionNullString()
 
 		return r.Detalle
-	case 17:
+	case 18:
 		r.IdTareaTraslado = NewUnionNullString()
 
 		return r.IdTareaTraslado
-	case 18:
+	case 19:
 		r.MotivoIncidencia = NewUnionNullString()
 
 		return r.MotivoIncidencia
-	case 19:
+	case 20:
 		r.MotivoResolucion = NewUnionNullString()
 
 		return r.MotivoResolucion
-	case 20:
+	case 21:
 		r.IdentificadorExterno = NewUnionNullString()
 
 		return r.IdentificadorExterno
-	case 21:
+	case 22:
 		r.IdUnidadOperativa = NewUnionNullString()
 
 		return r.IdUnidadOperativa
@@ -351,45 +362,48 @@ func (r *Incidencia) SetDefault(i int) {
 		r.LecturaArticulo = nil
 		return
 	case 8:
-		r.SkuArticulo = nil
+		r.LPN = nil
 		return
 	case 9:
-		r.DescripcionArticulo = nil
+		r.SkuArticulo = nil
 		return
 	case 10:
-		r.CantidadArticulo = nil
+		r.DescripcionArticulo = nil
 		return
 	case 11:
-		r.LoteArticulo = nil
+		r.CantidadArticulo = nil
 		return
 	case 12:
-		r.NroSerieArticulo = nil
+		r.LoteArticulo = nil
 		return
 	case 13:
-		r.AlmacenDestino = nil
+		r.NroSerieArticulo = nil
 		return
 	case 14:
-		r.IdMotivo = nil
+		r.AlmacenDestino = nil
 		return
 	case 15:
-		r.IdMotivoExterno = nil
+		r.IdMotivo = nil
 		return
 	case 16:
-		r.Detalle = nil
+		r.IdMotivoExterno = nil
 		return
 	case 17:
-		r.IdTareaTraslado = nil
+		r.Detalle = nil
 		return
 	case 18:
-		r.MotivoIncidencia = nil
+		r.IdTareaTraslado = nil
 		return
 	case 19:
-		r.MotivoResolucion = nil
+		r.MotivoIncidencia = nil
 		return
 	case 20:
-		r.IdentificadorExterno = nil
+		r.MotivoResolucion = nil
 		return
 	case 21:
+		r.IdentificadorExterno = nil
+		return
+	case 22:
 		r.IdUnidadOperativa = nil
 		return
 	}
@@ -420,45 +434,48 @@ func (r *Incidencia) NullField(i int) {
 		r.LecturaArticulo = nil
 		return
 	case 8:
-		r.SkuArticulo = nil
+		r.LPN = nil
 		return
 	case 9:
-		r.DescripcionArticulo = nil
+		r.SkuArticulo = nil
 		return
 	case 10:
-		r.CantidadArticulo = nil
+		r.DescripcionArticulo = nil
 		return
 	case 11:
-		r.LoteArticulo = nil
+		r.CantidadArticulo = nil
 		return
 	case 12:
-		r.NroSerieArticulo = nil
+		r.LoteArticulo = nil
 		return
 	case 13:
-		r.AlmacenDestino = nil
+		r.NroSerieArticulo = nil
 		return
 	case 14:
-		r.IdMotivo = nil
+		r.AlmacenDestino = nil
 		return
 	case 15:
-		r.IdMotivoExterno = nil
+		r.IdMotivo = nil
 		return
 	case 16:
-		r.Detalle = nil
+		r.IdMotivoExterno = nil
 		return
 	case 17:
-		r.IdTareaTraslado = nil
+		r.Detalle = nil
 		return
 	case 18:
-		r.MotivoIncidencia = nil
+		r.IdTareaTraslado = nil
 		return
 	case 19:
-		r.MotivoResolucion = nil
+		r.MotivoIncidencia = nil
 		return
 	case 20:
-		r.IdentificadorExterno = nil
+		r.MotivoResolucion = nil
 		return
 	case 21:
+		r.IdentificadorExterno = nil
+		return
+	case 22:
 		r.IdUnidadOperativa = nil
 		return
 	}
@@ -506,6 +523,10 @@ func (r Incidencia) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["LecturaArticulo"], err = json.Marshal(r.LecturaArticulo)
+	if err != nil {
+		return nil, err
+	}
+	output["LPN"], err = json.Marshal(r.LPN)
 	if err != nil {
 		return nil, err
 	}
@@ -700,6 +721,22 @@ func (r *Incidencia) UnmarshalJSON(data []byte) error {
 		r.LecturaArticulo = NewUnionNullString()
 
 		r.LecturaArticulo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["LPN"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LPN); err != nil {
+			return err
+		}
+	} else {
+		r.LPN = NewUnionNullString()
+
+		r.LPN = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["SkuArticulo"]; ok {

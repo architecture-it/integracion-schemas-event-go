@@ -44,6 +44,8 @@ type IncidenciaCreada struct {
 
 	Almacen *UnionNullString `json:"Almacen"`
 
+	LPN *UnionNullString `json:"LPN"`
+
 	IdProceso *UnionNullInt `json:"IdProceso"`
 
 	IdentificadorExterno *UnionNullString `json:"IdentificadorExterno"`
@@ -51,7 +53,7 @@ type IncidenciaCreada struct {
 	IdUnidadOperativa *UnionNullString `json:"IdUnidadOperativa"`
 }
 
-const IncidenciaCreadaAvroCRC64Fingerprint = "\xea\x9a)\xed\xe8\x9d\xd0\xf1"
+const IncidenciaCreadaAvroCRC64Fingerprint = "\xa2\x9a\xb2jޟ1\x12"
 
 func NewIncidenciaCreada() IncidenciaCreada {
 	r := IncidenciaCreada{}
@@ -68,6 +70,7 @@ func NewIncidenciaCreada() IncidenciaCreada {
 	r.Parametros = nil
 	r.Instancia = nil
 	r.Almacen = nil
+	r.LPN = nil
 	r.IdProceso = nil
 	r.IdentificadorExterno = nil
 	r.IdUnidadOperativa = nil
@@ -151,6 +154,10 @@ func writeIncidenciaCreada(r IncidenciaCreada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.LPN, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullInt(r.IdProceso, w)
 	if err != nil {
 		return err
@@ -171,7 +178,7 @@ func (r IncidenciaCreada) Serialize(w io.Writer) error {
 }
 
 func (r IncidenciaCreada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"IdOrigen\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdPrioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Denunciante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdOperacion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoPorPropietario\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdFuenteEvidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Archivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Fotos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Parametros\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"IdParametro\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Parametro\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdProceso\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdUnidadOperativa\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.IncidenciaCreada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdOrigen\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdPrioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Denunciante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdOperacion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoPorPropietario\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdFuenteEvidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Archivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Fotos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Parametros\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"IdParametro\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Parametro\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdProceso\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdUnidadOperativa\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.IncidenciaCreada\",\"type\":\"record\"}"
 }
 
 func (r IncidenciaCreada) SchemaName() string {
@@ -242,14 +249,18 @@ func (r *IncidenciaCreada) Get(i int) types.Field {
 
 		return r.Almacen
 	case 13:
+		r.LPN = NewUnionNullString()
+
+		return r.LPN
+	case 14:
 		r.IdProceso = NewUnionNullInt()
 
 		return r.IdProceso
-	case 14:
+	case 15:
 		r.IdentificadorExterno = NewUnionNullString()
 
 		return r.IdentificadorExterno
-	case 15:
+	case 16:
 		r.IdUnidadOperativa = NewUnionNullString()
 
 		return r.IdUnidadOperativa
@@ -299,12 +310,15 @@ func (r *IncidenciaCreada) SetDefault(i int) {
 		r.Almacen = nil
 		return
 	case 13:
-		r.IdProceso = nil
+		r.LPN = nil
 		return
 	case 14:
-		r.IdentificadorExterno = nil
+		r.IdProceso = nil
 		return
 	case 15:
+		r.IdentificadorExterno = nil
+		return
+	case 16:
 		r.IdUnidadOperativa = nil
 		return
 	}
@@ -353,12 +367,15 @@ func (r *IncidenciaCreada) NullField(i int) {
 		r.Almacen = nil
 		return
 	case 13:
-		r.IdProceso = nil
+		r.LPN = nil
 		return
 	case 14:
-		r.IdentificadorExterno = nil
+		r.IdProceso = nil
 		return
 	case 15:
+		r.IdentificadorExterno = nil
+		return
+	case 16:
 		r.IdUnidadOperativa = nil
 		return
 	}
@@ -426,6 +443,10 @@ func (r IncidenciaCreada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Almacen"], err = json.Marshal(r.Almacen)
+	if err != nil {
+		return nil, err
+	}
+	output["LPN"], err = json.Marshal(r.LPN)
 	if err != nil {
 		return nil, err
 	}
@@ -658,6 +679,22 @@ func (r *IncidenciaCreada) UnmarshalJSON(data []byte) error {
 		r.Almacen = NewUnionNullString()
 
 		r.Almacen = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["LPN"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LPN); err != nil {
+			return err
+		}
+	} else {
+		r.LPN = NewUnionNullString()
+
+		r.LPN = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IdProceso"]; ok {
