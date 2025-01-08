@@ -32,10 +32,14 @@ type Bulto struct {
 
 	ValorDeclaradoConImpuestos float32 `json:"ValorDeclaradoConImpuestos"`
 
+	MontoGestionCobranza float32 `json:"MontoGestionCobranza"`
+
+	MontoFactura float32 `json:"MontoFactura"`
+
 	Referencias []Referencia `json:"Referencias"`
 }
 
-const BultoAvroCRC64Fingerprint = "\xde-I\xa2~\xe5x+"
+const BultoAvroCRC64Fingerprint = "\x17Rygk6\xb9K"
 
 func NewBulto() Bulto {
 	r := Bulto{}
@@ -97,6 +101,14 @@ func writeBulto(r Bulto, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteFloat(r.MontoGestionCobranza, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteFloat(r.MontoFactura, w)
+	if err != nil {
+		return err
+	}
 	err = writeArrayReferencia(r.Referencias, w)
 	if err != nil {
 		return err
@@ -109,7 +121,7 @@ func (r Bulto) Serialize(w io.Writer) error {
 }
 
 func (r Bulto) Schema() string {
-	return "{\"fields\":[{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Bulto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"MontoGestionCobranza\",\"type\":\"float\"},{\"name\":\"MontoFactura\",\"type\":\"float\"},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Bulto\",\"type\":\"record\"}"
 }
 
 func (r Bulto) SchemaName() string {
@@ -163,6 +175,16 @@ func (r *Bulto) Get(i int) types.Field {
 		return w
 
 	case 7:
+		w := types.Float{Target: &r.MontoGestionCobranza}
+
+		return w
+
+	case 8:
+		w := types.Float{Target: &r.MontoFactura}
+
+		return w
+
+	case 9:
 		r.Referencias = make([]Referencia, 0)
 
 		w := ArrayReferenciaWrapper{Target: &r.Referencias}
@@ -222,6 +244,14 @@ func (r Bulto) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ValorDeclaradoConImpuestos"], err = json.Marshal(r.ValorDeclaradoConImpuestos)
+	if err != nil {
+		return nil, err
+	}
+	output["MontoGestionCobranza"], err = json.Marshal(r.MontoGestionCobranza)
+	if err != nil {
+		return nil, err
+	}
+	output["MontoFactura"], err = json.Marshal(r.MontoFactura)
 	if err != nil {
 		return nil, err
 	}
@@ -336,6 +366,34 @@ func (r *Bulto) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for ValorDeclaradoConImpuestos")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["MontoGestionCobranza"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.MontoGestionCobranza); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for MontoGestionCobranza")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["MontoFactura"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.MontoFactura); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for MontoFactura")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Referencias"]; ok {
