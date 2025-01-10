@@ -43,6 +43,7 @@ const BultoAvroCRC64Fingerprint = "\xfe\x86axO7\x80v"
 
 func NewBulto() Bulto {
 	r := Bulto{}
+	r.MontoValorSeguro = nil
 	r.MontoGestionCobranza = nil
 	r.Referencias = make([]Referencia, 0)
 
@@ -122,7 +123,7 @@ func (r Bulto) Serialize(w io.Writer) error {
 }
 
 func (r Bulto) Schema() string {
-	return "{\"fields\":[{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"name\":\"MontoValorSeguro\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"MontoGestionCobranza\",\"type\":[\"null\",\"float\"]},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Bulto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"default\":null,\"name\":\"MontoValorSeguro\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"MontoGestionCobranza\",\"type\":[\"null\",\"float\"]},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Bulto\",\"type\":\"record\"}"
 }
 
 func (r Bulto) SchemaName() string {
@@ -196,6 +197,9 @@ func (r *Bulto) Get(i int) types.Field {
 
 func (r *Bulto) SetDefault(i int) {
 	switch i {
+	case 7:
+		r.MontoValorSeguro = nil
+		return
 	case 8:
 		r.MontoGestionCobranza = nil
 		return
@@ -387,7 +391,9 @@ func (r *Bulto) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for MontoValorSeguro")
+		r.MontoValorSeguro = NewUnionNullFloat()
+
+		r.MontoValorSeguro = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["MontoGestionCobranza"]; ok {
