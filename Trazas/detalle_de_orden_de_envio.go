@@ -32,6 +32,8 @@ type DetalleDeOrdenDeEnvio struct {
 
 	CodigoDeContratoInterno string `json:"codigoDeContratoInterno"`
 
+	CodigoDeContrato *UnionNullString `json:"codigoDeContrato"`
+
 	TipoDeServicio *UnionNullString `json:"tipoDeServicio"`
 
 	NumeroDeRemito *UnionNullString `json:"numeroDeRemito"`
@@ -69,7 +71,7 @@ type DetalleDeOrdenDeEnvio struct {
 	IdPedido *UnionNullString `json:"idPedido"`
 }
 
-const DetalleDeOrdenDeEnvioAvroCRC64Fingerprint = "l\t\x90OZ36U"
+const DetalleDeOrdenDeEnvioAvroCRC64Fingerprint = "\x18!\x83\t\xbc\xb3\x16j"
 
 func NewDetalleDeOrdenDeEnvio() DetalleDeOrdenDeEnvio {
 	r := DetalleDeOrdenDeEnvio{}
@@ -80,6 +82,7 @@ func NewDetalleDeOrdenDeEnvio() DetalleDeOrdenDeEnvio {
 	r.DestinoInformado = NewLugarDeRetiroEntrega()
 
 	r.OrigenInformado = nil
+	r.CodigoDeContrato = nil
 	r.TipoDeServicio = nil
 	r.NumeroDeRemito = nil
 	r.RemitosComplementarios = nil
@@ -151,6 +154,10 @@ func writeDetalleDeOrdenDeEnvio(r DetalleDeOrdenDeEnvio, w io.Writer) error {
 		return err
 	}
 	err = vm.WriteString(r.CodigoDeContratoInterno, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoDeContrato, w)
 	if err != nil {
 		return err
 	}
@@ -234,7 +241,7 @@ func (r DetalleDeOrdenDeEnvio) Serialize(w io.Writer) error {
 }
 
 func (r DetalleDeOrdenDeEnvio) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"remitenteInformado\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"tipo\",\"type\":{\"name\":\"TipoDeTelefono\",\"symbols\":[\"trabajo\",\"celular\",\"casa\",\"otro\"],\"type\":\"enum\"}},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"}]},{\"name\":\"destinatarioInformado\",\"type\":\"Integracion.Esquemas.Referencias.DatosPersonales\"},{\"default\":null,\"name\":\"destinatarioAlternativos\",\"type\":[\"null\",{\"items\":\"Integracion.Esquemas.Referencias.DatosPersonales\",\"type\":\"array\"}]},{\"name\":\"destinoInformado\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"datosSucursal\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"domicilio\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"abreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO -3166-2 (https://es.wikipedia.org/wiki/ISO_3166-2:AR)\",\"name\":\"codigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO 3166-1 alpha-2 (https://es.wikipedia.org/wiki/ISO_3166-1#Tabla_de_c.C3.B3digos_alfa-2_asignados_o_reservados)\",\"name\":\"codigoISOPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]},{\"default\":null,\"name\":\"coordenadas\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altura\",\"type\":[\"null\",\"double\"]}],\"name\":\"GeoReferencia\",\"type\":\"record\"}]}],\"name\":\"Direccion\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esLocal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"region\",\"type\":[\"null\",\"string\"]}],\"name\":\"LugarDeRetiroEntrega\",\"type\":\"record\"}},{\"default\":null,\"name\":\"origenInformado\",\"type\":[\"null\",\"Integracion.Esquemas.Referencias.LugarDeRetiroEntrega\"]},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitosComplementarios\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"centroDeCostosDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoriaDeProducto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoriaDeFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorACobrar\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"fechaPactadaDeEntrega\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"fecha\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"horaDesde\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"horaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"FechaPactada\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"productoAEntregar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"productoARetirar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pagoDestino\",\"type\":[\"null\",{\"name\":\"TipoPagoDestino\",\"symbols\":[\"undefined\",\"P\",\"D\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"sucursalDeDistribucion\",\"type\":[\"null\",\"Integracion.Esquemas.Referencias.DatosSucursal\"]},{\"default\":null,\"name\":\"sucursalCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"listaDePaquetes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"float\"]}],\"name\":\"DetalleDePaquete\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"codigoVerificadorDeEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeBultos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"agrupadorDeBulto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idPedido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Referencias.DetalleDeOrdenDeEnvio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"remitenteInformado\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idInternoDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"tipo\",\"type\":{\"name\":\"TipoDeTelefono\",\"symbols\":[\"trabajo\",\"celular\",\"casa\",\"otro\"],\"type\":\"enum\"}},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"agrupador\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoDeDocumento\",\"type\":{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}}],\"name\":\"DatosPersonales\",\"type\":\"record\"}]},{\"name\":\"destinatarioInformado\",\"type\":\"Integracion.Esquemas.Referencias.DatosPersonales\"},{\"default\":null,\"name\":\"destinatarioAlternativos\",\"type\":[\"null\",{\"items\":\"Integracion.Esquemas.Referencias.DatosPersonales\",\"type\":\"array\"}]},{\"name\":\"destinoInformado\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"datosSucursal\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"domicilio\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"abreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO -3166-2 (https://es.wikipedia.org/wiki/ISO_3166-2:AR)\",\"name\":\"codigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO 3166-1 alpha-2 (https://es.wikipedia.org/wiki/ISO_3166-1#Tabla_de_c.C3.B3digos_alfa-2_asignados_o_reservados)\",\"name\":\"codigoISOPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]},{\"default\":null,\"name\":\"coordenadas\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altura\",\"type\":[\"null\",\"double\"]}],\"name\":\"GeoReferencia\",\"type\":\"record\"}]}],\"name\":\"Direccion\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esLocal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"region\",\"type\":[\"null\",\"string\"]}],\"name\":\"LugarDeRetiroEntrega\",\"type\":\"record\"}},{\"default\":null,\"name\":\"origenInformado\",\"type\":[\"null\",\"Integracion.Esquemas.Referencias.LugarDeRetiroEntrega\"]},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitosComplementarios\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"centroDeCostosDelCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoriaDeProducto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoriaDeFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorACobrar\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"fechaPactadaDeEntrega\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"fecha\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"horaDesde\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"horaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"FechaPactada\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"productoAEntregar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"productoARetirar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pagoDestino\",\"type\":[\"null\",{\"name\":\"TipoPagoDestino\",\"symbols\":[\"undefined\",\"P\",\"D\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"sucursalDeDistribucion\",\"type\":[\"null\",\"Integracion.Esquemas.Referencias.DatosSucursal\"]},{\"default\":null,\"name\":\"sucursalCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"listaDePaquetes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"pesoEnKg\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"altoEnCm\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"anchoEnCm\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"largoEnCm\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciasDelCliente\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]},{\"default\":null,\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"valorDeclaradoSinImpuesto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"valorDeclaradoConImpuesto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"float\"]}],\"name\":\"DetalleDePaquete\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"codigoVerificadorDeEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeBultos\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"agrupadorDeBulto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idPedido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Referencias.DetalleDeOrdenDeEnvio\",\"type\":\"record\"}"
 }
 
 func (r DetalleDeOrdenDeEnvio) SchemaName() string {
@@ -289,74 +296,78 @@ func (r *DetalleDeOrdenDeEnvio) Get(i int) types.Field {
 		return w
 
 	case 7:
+		r.CodigoDeContrato = NewUnionNullString()
+
+		return r.CodigoDeContrato
+	case 8:
 		r.TipoDeServicio = NewUnionNullString()
 
 		return r.TipoDeServicio
-	case 8:
+	case 9:
 		r.NumeroDeRemito = NewUnionNullString()
 
 		return r.NumeroDeRemito
-	case 9:
+	case 10:
 		r.RemitosComplementarios = NewUnionNullArrayString()
 
 		return r.RemitosComplementarios
-	case 10:
+	case 11:
 		r.CentroDeCostosDelCliente = NewUnionNullString()
 
 		return r.CentroDeCostosDelCliente
-	case 11:
+	case 12:
 		r.CategoriaDeProducto = NewUnionNullString()
 
 		return r.CategoriaDeProducto
-	case 12:
+	case 13:
 		r.CategoriaDeFacturacion = NewUnionNullString()
 
 		return r.CategoriaDeFacturacion
-	case 13:
+	case 14:
 		r.ValorACobrar = NewUnionNullFloat()
 
 		return r.ValorACobrar
-	case 14:
+	case 15:
 		r.FechaPactadaDeEntrega = NewUnionNullFechaPactada()
 
 		return r.FechaPactadaDeEntrega
-	case 15:
+	case 16:
 		r.ProductoAEntregar = NewUnionNullString()
 
 		return r.ProductoAEntregar
-	case 16:
+	case 17:
 		r.ProductoARetirar = NewUnionNullString()
 
 		return r.ProductoARetirar
-	case 17:
+	case 18:
 		r.PagoDestino = NewUnionNullTipoPagoDestino()
 
 		return r.PagoDestino
-	case 18:
+	case 19:
 		r.SucursalDeDistribucion = NewUnionNullDatosSucursal()
 
 		return r.SucursalDeDistribucion
-	case 19:
+	case 20:
 		r.SucursalCliente = NewUnionNullString()
 
 		return r.SucursalCliente
-	case 20:
+	case 21:
 		r.ListaDePaquetes = NewUnionNullArrayDetalleDePaquete()
 
 		return r.ListaDePaquetes
-	case 21:
+	case 22:
 		r.CodigoVerificadorDeEntrega = NewUnionNullString()
 
 		return r.CodigoVerificadorDeEntrega
-	case 22:
+	case 23:
 		r.CantidadDeBultos = NewUnionNullInt()
 
 		return r.CantidadDeBultos
-	case 23:
+	case 24:
 		r.AgrupadorDeBulto = NewUnionNullString()
 
 		return r.AgrupadorDeBulto
-	case 24:
+	case 25:
 		r.IdPedido = NewUnionNullString()
 
 		return r.IdPedido
@@ -376,57 +387,60 @@ func (r *DetalleDeOrdenDeEnvio) SetDefault(i int) {
 		r.OrigenInformado = nil
 		return
 	case 7:
-		r.TipoDeServicio = nil
+		r.CodigoDeContrato = nil
 		return
 	case 8:
-		r.NumeroDeRemito = nil
+		r.TipoDeServicio = nil
 		return
 	case 9:
-		r.RemitosComplementarios = nil
+		r.NumeroDeRemito = nil
 		return
 	case 10:
-		r.CentroDeCostosDelCliente = nil
+		r.RemitosComplementarios = nil
 		return
 	case 11:
-		r.CategoriaDeProducto = nil
+		r.CentroDeCostosDelCliente = nil
 		return
 	case 12:
-		r.CategoriaDeFacturacion = nil
+		r.CategoriaDeProducto = nil
 		return
 	case 13:
-		r.ValorACobrar = nil
+		r.CategoriaDeFacturacion = nil
 		return
 	case 14:
-		r.FechaPactadaDeEntrega = nil
+		r.ValorACobrar = nil
 		return
 	case 15:
-		r.ProductoAEntregar = nil
+		r.FechaPactadaDeEntrega = nil
 		return
 	case 16:
-		r.ProductoARetirar = nil
+		r.ProductoAEntregar = nil
 		return
 	case 17:
-		r.PagoDestino = nil
+		r.ProductoARetirar = nil
 		return
 	case 18:
-		r.SucursalDeDistribucion = nil
+		r.PagoDestino = nil
 		return
 	case 19:
-		r.SucursalCliente = nil
+		r.SucursalDeDistribucion = nil
 		return
 	case 20:
-		r.ListaDePaquetes = nil
+		r.SucursalCliente = nil
 		return
 	case 21:
-		r.CodigoVerificadorDeEntrega = nil
+		r.ListaDePaquetes = nil
 		return
 	case 22:
-		r.CantidadDeBultos = nil
+		r.CodigoVerificadorDeEntrega = nil
 		return
 	case 23:
-		r.AgrupadorDeBulto = nil
+		r.CantidadDeBultos = nil
 		return
 	case 24:
+		r.AgrupadorDeBulto = nil
+		return
+	case 25:
 		r.IdPedido = nil
 		return
 	}
@@ -445,57 +459,60 @@ func (r *DetalleDeOrdenDeEnvio) NullField(i int) {
 		r.OrigenInformado = nil
 		return
 	case 7:
-		r.TipoDeServicio = nil
+		r.CodigoDeContrato = nil
 		return
 	case 8:
-		r.NumeroDeRemito = nil
+		r.TipoDeServicio = nil
 		return
 	case 9:
-		r.RemitosComplementarios = nil
+		r.NumeroDeRemito = nil
 		return
 	case 10:
-		r.CentroDeCostosDelCliente = nil
+		r.RemitosComplementarios = nil
 		return
 	case 11:
-		r.CategoriaDeProducto = nil
+		r.CentroDeCostosDelCliente = nil
 		return
 	case 12:
-		r.CategoriaDeFacturacion = nil
+		r.CategoriaDeProducto = nil
 		return
 	case 13:
-		r.ValorACobrar = nil
+		r.CategoriaDeFacturacion = nil
 		return
 	case 14:
-		r.FechaPactadaDeEntrega = nil
+		r.ValorACobrar = nil
 		return
 	case 15:
-		r.ProductoAEntregar = nil
+		r.FechaPactadaDeEntrega = nil
 		return
 	case 16:
-		r.ProductoARetirar = nil
+		r.ProductoAEntregar = nil
 		return
 	case 17:
-		r.PagoDestino = nil
+		r.ProductoARetirar = nil
 		return
 	case 18:
-		r.SucursalDeDistribucion = nil
+		r.PagoDestino = nil
 		return
 	case 19:
-		r.SucursalCliente = nil
+		r.SucursalDeDistribucion = nil
 		return
 	case 20:
-		r.ListaDePaquetes = nil
+		r.SucursalCliente = nil
 		return
 	case 21:
-		r.CodigoVerificadorDeEntrega = nil
+		r.ListaDePaquetes = nil
 		return
 	case 22:
-		r.CantidadDeBultos = nil
+		r.CodigoVerificadorDeEntrega = nil
 		return
 	case 23:
-		r.AgrupadorDeBulto = nil
+		r.CantidadDeBultos = nil
 		return
 	case 24:
+		r.AgrupadorDeBulto = nil
+		return
+	case 25:
 		r.IdPedido = nil
 		return
 	}
@@ -539,6 +556,10 @@ func (r DetalleDeOrdenDeEnvio) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["codigoDeContratoInterno"], err = json.Marshal(r.CodigoDeContratoInterno)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoDeContrato"], err = json.Marshal(r.CodigoDeContrato)
 	if err != nil {
 		return nil, err
 	}
@@ -727,6 +748,22 @@ func (r *DetalleDeOrdenDeEnvio) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for codigoDeContratoInterno")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoDeContrato"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeContrato); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoDeContrato = NewUnionNullString()
+
+		r.CodigoDeContrato = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoDeServicio"]; ok {
