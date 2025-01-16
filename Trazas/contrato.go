@@ -20,6 +20,8 @@ var _ = fmt.Printf
 type Contrato struct {
 	CodigoDeContratoInterno string `json:"codigoDeContratoInterno"`
 
+	CodigoDeContrato *UnionNullString `json:"codigoDeContrato"`
+
 	Descripcion *UnionNullString `json:"descripcion"`
 
 	EstaActivo bool `json:"estaActivo"`
@@ -35,10 +37,11 @@ type Contrato struct {
 	VigenciaHasta *UnionNullString `json:"vigenciaHasta"`
 }
 
-const ContratoAvroCRC64Fingerprint = "\xa7\x91\xc2|z\xa5\x89y"
+const ContratoAvroCRC64Fingerprint = "\x83\x1c\x93\xbe-\xd2l\x89"
 
 func NewContrato() Contrato {
 	r := Contrato{}
+	r.CodigoDeContrato = nil
 	r.Descripcion = nil
 	r.TipoDeServicio = nil
 	r.CodigoDeDireccion = nil
@@ -73,6 +76,10 @@ func DeserializeContratoFromSchema(r io.Reader, schema string) (Contrato, error)
 func writeContrato(r Contrato, w io.Writer) error {
 	var err error
 	err = vm.WriteString(r.CodigoDeContratoInterno, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoDeContrato, w)
 	if err != nil {
 		return err
 	}
@@ -112,7 +119,7 @@ func (r Contrato) Serialize(w io.Writer) error {
 }
 
 func (r Contrato) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"estaActivo\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoDeClienteInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"vigenciaDesde\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vigenciaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Referencias.Contrato\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"estaActivo\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"tipoDeServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoDeClienteInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"vigenciaDesde\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vigenciaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Referencias.Contrato\",\"type\":\"record\"}"
 }
 
 func (r Contrato) SchemaName() string {
@@ -136,32 +143,36 @@ func (r *Contrato) Get(i int) types.Field {
 		return w
 
 	case 1:
+		r.CodigoDeContrato = NewUnionNullString()
+
+		return r.CodigoDeContrato
+	case 2:
 		r.Descripcion = NewUnionNullString()
 
 		return r.Descripcion
-	case 2:
+	case 3:
 		w := types.Boolean{Target: &r.EstaActivo}
 
 		return w
 
-	case 3:
+	case 4:
 		r.TipoDeServicio = NewUnionNullString()
 
 		return r.TipoDeServicio
-	case 4:
+	case 5:
 		r.CodigoDeDireccion = NewUnionNullString()
 
 		return r.CodigoDeDireccion
-	case 5:
+	case 6:
 		w := types.String{Target: &r.CodigoDeClienteInterno}
 
 		return w
 
-	case 6:
+	case 7:
 		r.VigenciaDesde = NewUnionNullString()
 
 		return r.VigenciaDesde
-	case 7:
+	case 8:
 		r.VigenciaHasta = NewUnionNullString()
 
 		return r.VigenciaHasta
@@ -172,18 +183,21 @@ func (r *Contrato) Get(i int) types.Field {
 func (r *Contrato) SetDefault(i int) {
 	switch i {
 	case 1:
+		r.CodigoDeContrato = nil
+		return
+	case 2:
 		r.Descripcion = nil
 		return
-	case 3:
+	case 4:
 		r.TipoDeServicio = nil
 		return
-	case 4:
+	case 5:
 		r.CodigoDeDireccion = nil
 		return
-	case 6:
+	case 7:
 		r.VigenciaDesde = nil
 		return
-	case 7:
+	case 8:
 		r.VigenciaHasta = nil
 		return
 	}
@@ -193,18 +207,21 @@ func (r *Contrato) SetDefault(i int) {
 func (r *Contrato) NullField(i int) {
 	switch i {
 	case 1:
+		r.CodigoDeContrato = nil
+		return
+	case 2:
 		r.Descripcion = nil
 		return
-	case 3:
+	case 4:
 		r.TipoDeServicio = nil
 		return
-	case 4:
+	case 5:
 		r.CodigoDeDireccion = nil
 		return
-	case 6:
+	case 7:
 		r.VigenciaDesde = nil
 		return
-	case 7:
+	case 8:
 		r.VigenciaHasta = nil
 		return
 	}
@@ -224,6 +241,10 @@ func (r Contrato) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["codigoDeContratoInterno"], err = json.Marshal(r.CodigoDeContratoInterno)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoDeContrato"], err = json.Marshal(r.CodigoDeContrato)
 	if err != nil {
 		return nil, err
 	}
@@ -278,6 +299,22 @@ func (r *Contrato) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for codigoDeContratoInterno")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoDeContrato"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoDeContrato); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoDeContrato = NewUnionNullString()
+
+		r.CodigoDeContrato = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["descripcion"]; ok {
