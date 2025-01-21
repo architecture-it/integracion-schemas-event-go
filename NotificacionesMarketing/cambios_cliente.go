@@ -20,15 +20,15 @@ var _ = fmt.Printf
 type CambiosCliente struct {
 	Cliente *UnionNullMaestroCliente `json:"Cliente"`
 
-	CambiosCliente *UnionNullArrayCamposCambioCliente `json:"CambiosCliente"`
+	CamposCambioCliente *UnionNullArrayCamposCambioCliente `json:"CamposCambioCliente"`
 }
 
-const CambiosClienteAvroCRC64Fingerprint = "u\x0eH*xW\x9aO"
+const CambiosClienteAvroCRC64Fingerprint = "\xce\xfc[D\x06f\xee\""
 
 func NewCambiosCliente() CambiosCliente {
 	r := CambiosCliente{}
 	r.Cliente = nil
-	r.CambiosCliente = nil
+	r.CamposCambioCliente = nil
 	return r
 }
 
@@ -61,7 +61,7 @@ func writeCambiosCliente(r CambiosCliente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullArrayCamposCambioCliente(r.CambiosCliente, w)
+	err = writeUnionNullArrayCamposCambioCliente(r.CamposCambioCliente, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func (r CambiosCliente) Serialize(w io.Writer) error {
 }
 
 func (r CambiosCliente) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Cliente\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ClienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoRepetido\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TelefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"CodigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PisoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DtoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoPostalSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LocalidadSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProvinciaSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PaisSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ClienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneTN\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TieneCC\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"FechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeFactura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CanalDeVenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"MaestroCliente\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"CambiosCliente\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Campo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorAnterior\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorNuevo\",\"type\":[\"null\",\"string\"]}],\"name\":\"CamposCambioCliente\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.CambiosCliente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Cliente\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ClienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoRepetido\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TelefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"CodigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PisoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DtoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoPostalSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LocalidadSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProvinciaSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PaisSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ClienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneTN\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TieneCC\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"FechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeFactura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CanalDeVenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"MaestroCliente\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"CamposCambioCliente\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Campo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorAnterior\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorNuevo\",\"type\":[\"null\",\"string\"]}],\"name\":\"CamposCambioCliente\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.CambiosCliente\",\"type\":\"record\"}"
 }
 
 func (r CambiosCliente) SchemaName() string {
@@ -96,9 +96,9 @@ func (r *CambiosCliente) Get(i int) types.Field {
 
 		return r.Cliente
 	case 1:
-		r.CambiosCliente = NewUnionNullArrayCamposCambioCliente()
+		r.CamposCambioCliente = NewUnionNullArrayCamposCambioCliente()
 
-		return r.CambiosCliente
+		return r.CamposCambioCliente
 	}
 	panic("Unknown field index")
 }
@@ -109,7 +109,7 @@ func (r *CambiosCliente) SetDefault(i int) {
 		r.Cliente = nil
 		return
 	case 1:
-		r.CambiosCliente = nil
+		r.CamposCambioCliente = nil
 		return
 	}
 	panic("Unknown field index")
@@ -121,7 +121,7 @@ func (r *CambiosCliente) NullField(i int) {
 		r.Cliente = nil
 		return
 	case 1:
-		r.CambiosCliente = nil
+		r.CamposCambioCliente = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -143,7 +143,7 @@ func (r CambiosCliente) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["CambiosCliente"], err = json.Marshal(r.CambiosCliente)
+	output["CamposCambioCliente"], err = json.Marshal(r.CamposCambioCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -174,20 +174,20 @@ func (r *CambiosCliente) UnmarshalJSON(data []byte) error {
 		r.Cliente = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["CambiosCliente"]; ok {
+		if v, ok := fields["CamposCambioCliente"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CambiosCliente); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CamposCambioCliente); err != nil {
 			return err
 		}
 	} else {
-		r.CambiosCliente = NewUnionNullArrayCamposCambioCliente()
+		r.CamposCambioCliente = NewUnionNullArrayCamposCambioCliente()
 
-		r.CambiosCliente = nil
+		r.CamposCambioCliente = nil
 	}
 	return nil
 }
