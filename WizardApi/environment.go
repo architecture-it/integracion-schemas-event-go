@@ -31,9 +31,11 @@ type Environment struct {
 	MatrixDeploy string `json:"MatrixDeploy"`
 
 	Deleted bool `json:"Deleted"`
+
+	RepoEnvironmentName string `json:"RepoEnvironmentName"`
 }
 
-const EnvironmentAvroCRC64Fingerprint = "\t?UF)&\x8aB"
+const EnvironmentAvroCRC64Fingerprint = "z\xef\xfb\xfe\xb3\x86\x97o"
 
 func NewEnvironment() Environment {
 	r := Environment{}
@@ -93,6 +95,10 @@ func writeEnvironment(r Environment, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.RepoEnvironmentName, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -101,7 +107,7 @@ func (r Environment) Serialize(w io.Writer) error {
 }
 
 func (r Environment) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"HostName\",\"type\":\"string\"},{\"name\":\"IsProduction\",\"type\":\"boolean\"},{\"name\":\"Schedule\",\"type\":\"string\"},{\"name\":\"MatrixDeploy\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"}],\"name\":\"Andreani.WizardApi.Events.Common.Environment\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"HostName\",\"type\":\"string\"},{\"name\":\"IsProduction\",\"type\":\"boolean\"},{\"name\":\"Schedule\",\"type\":\"string\"},{\"name\":\"MatrixDeploy\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"name\":\"RepoEnvironmentName\",\"type\":\"string\"}],\"name\":\"Andreani.WizardApi.Events.Common.Environment\",\"type\":\"record\"}"
 }
 
 func (r Environment) SchemaName() string {
@@ -151,6 +157,11 @@ func (r *Environment) Get(i int) types.Field {
 
 	case 6:
 		w := types.Boolean{Target: &r.Deleted}
+
+		return w
+
+	case 7:
+		w := types.String{Target: &r.RepoEnvironmentName}
 
 		return w
 
@@ -207,6 +218,10 @@ func (r Environment) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Deleted"], err = json.Marshal(r.Deleted)
+	if err != nil {
+		return nil, err
+	}
+	output["RepoEnvironmentName"], err = json.Marshal(r.RepoEnvironmentName)
 	if err != nil {
 		return nil, err
 	}
@@ -317,6 +332,20 @@ func (r *Environment) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Deleted")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["RepoEnvironmentName"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RepoEnvironmentName); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for RepoEnvironmentName")
 	}
 	return nil
 }

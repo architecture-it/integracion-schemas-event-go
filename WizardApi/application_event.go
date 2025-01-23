@@ -22,8 +22,6 @@ type ApplicationEvent struct {
 
 	Name string `json:"Name"`
 
-	Namespace string `json:"Namespace"`
-
 	Deleted bool `json:"Deleted"`
 
 	IsMigration bool `json:"IsMigration"`
@@ -37,7 +35,7 @@ type ApplicationEvent struct {
 	Environments []Environment `json:"Environments"`
 }
 
-const ApplicationEventAvroCRC64Fingerprint = "ȁ\a\v\x12\x8a{\x94"
+const ApplicationEventAvroCRC64Fingerprint = "\x00\xeb^\x7f\xc6]\xf9\x95"
 
 func NewApplicationEvent() ApplicationEvent {
 	r := ApplicationEvent{}
@@ -85,10 +83,6 @@ func writeApplicationEvent(r ApplicationEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Namespace, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteBool(r.Deleted, w)
 	if err != nil {
 		return err
@@ -121,7 +115,7 @@ func (r ApplicationEvent) Serialize(w io.Writer) error {
 }
 
 func (r ApplicationEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Namespace\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"name\":\"IsMigration\",\"type\":\"boolean\"},{\"name\":\"Project\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Acronym\",\"type\":\"string\"},{\"name\":\"OwnerMail\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"}],\"name\":\"Project\",\"type\":\"record\"}},{\"name\":\"PipelineVersion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Version\",\"type\":\"string\"},{\"name\":\"ReleaseNotes\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"name\":\"Latest\",\"type\":\"boolean\"},{\"name\":\"Pipeline\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"RepositoryConfig\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"}],\"name\":\"Pipeline\",\"type\":\"record\"}}],\"name\":\"PipelineVersion\",\"type\":\"record\"}},{\"name\":\"Repository\",\"type\":{\"fields\":[{\"name\":\"RepositoryId\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"}],\"name\":\"GithubUser\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}},{\"name\":\"Organization\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"}],\"name\":\"Organization\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"Repository\",\"type\":\"record\"}},{\"name\":\"Environments\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"HostName\",\"type\":\"string\"},{\"name\":\"IsProduction\",\"type\":\"boolean\"},{\"name\":\"Schedule\",\"type\":\"string\"},{\"name\":\"MatrixDeploy\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"}],\"name\":\"Environment\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WizardApi.Events.Record.ApplicationEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"name\":\"IsMigration\",\"type\":\"boolean\"},{\"name\":\"Project\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Acronym\",\"type\":\"string\"},{\"name\":\"OwnerMail\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"}],\"name\":\"Project\",\"type\":\"record\"}},{\"name\":\"PipelineVersion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Version\",\"type\":\"string\"},{\"name\":\"ReleaseNotes\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"name\":\"Latest\",\"type\":\"boolean\"},{\"name\":\"Pipeline\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"RepositoryConfig\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"}],\"name\":\"Pipeline\",\"type\":\"record\"}}],\"name\":\"PipelineVersion\",\"type\":\"record\"}},{\"name\":\"Repository\",\"type\":{\"fields\":[{\"name\":\"RepositoryId\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"}],\"name\":\"GithubUser\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}},{\"name\":\"Organization\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"}],\"name\":\"Organization\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"Repository\",\"type\":\"record\"}},{\"name\":\"Environments\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"HostName\",\"type\":\"string\"},{\"name\":\"IsProduction\",\"type\":\"boolean\"},{\"name\":\"Schedule\",\"type\":\"string\"},{\"name\":\"MatrixDeploy\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"name\":\"RepoEnvironmentName\",\"type\":\"string\"}],\"name\":\"Environment\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WizardApi.Events.Record.ApplicationEvent\",\"type\":\"record\"}"
 }
 
 func (r ApplicationEvent) SchemaName() string {
@@ -150,42 +144,37 @@ func (r *ApplicationEvent) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Namespace}
-
-		return w
-
-	case 3:
 		w := types.Boolean{Target: &r.Deleted}
 
 		return w
 
-	case 4:
+	case 3:
 		w := types.Boolean{Target: &r.IsMigration}
 
 		return w
 
-	case 5:
+	case 4:
 		r.Project = NewProject()
 
 		w := types.Record{Target: &r.Project}
 
 		return w
 
-	case 6:
+	case 5:
 		r.PipelineVersion = NewPipelineVersion()
 
 		w := types.Record{Target: &r.PipelineVersion}
 
 		return w
 
-	case 7:
+	case 6:
 		r.Repository = NewRepository()
 
 		w := types.Record{Target: &r.Repository}
 
 		return w
 
-	case 8:
+	case 7:
 		r.Environments = make([]Environment, 0)
 
 		w := ArrayEnvironmentWrapper{Target: &r.Environments}
@@ -225,10 +214,6 @@ func (r ApplicationEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Name"], err = json.Marshal(r.Name)
-	if err != nil {
-		return nil, err
-	}
-	output["Namespace"], err = json.Marshal(r.Namespace)
 	if err != nil {
 		return nil, err
 	}
@@ -293,20 +278,6 @@ func (r *ApplicationEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Name")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Namespace"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Namespace); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Namespace")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Deleted"]; ok {
