@@ -21,7 +21,7 @@ type ListInterface640Bienes struct {
 	Interfaces []Interface640BienesData `json:"interfaces"`
 }
 
-const ListInterface640BienesAvroCRC64Fingerprint = "\x92\xab\xac͒\xed\xfa%"
+const ListInterface640BienesAvroCRC64Fingerprint = "\xa5\xfaxMi\xfe|U"
 
 func NewListInterface640Bienes() ListInterface640Bienes {
 	r := ListInterface640Bienes{}
@@ -67,7 +67,7 @@ func (r ListInterface640Bienes) Serialize(w io.Writer) error {
 }
 
 func (r ListInterface640Bienes) Schema() string {
-	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"Departamento\",\"type\":\"string\"}],\"name\":\"Interface640BienesData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMInterface640MdaBienes.Events.Record.ListInterface640Bienes\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"interfaces\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":\"string\"},{\"name\":\"Departamento\",\"type\":\"string\"}],\"name\":\"Interface640BienesData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMInterface640MdaBienes.Events.Record.ListInterface640Bienes\",\"type\":\"record\"}"
 }
 
 func (r ListInterface640Bienes) SchemaName() string {

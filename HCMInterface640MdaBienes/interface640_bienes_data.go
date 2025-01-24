@@ -28,10 +28,12 @@ type Interface640BienesData struct {
 
 	FechaBaja string `json:"FechaBaja"`
 
+	FechaAlta string `json:"FechaAlta"`
+
 	Departamento string `json:"Departamento"`
 }
 
-const Interface640BienesDataAvroCRC64Fingerprint = "\xa8I\xaft\xed\x0e\xc1\x9d"
+const Interface640BienesDataAvroCRC64Fingerprint = "\xfc\x0f$Q\xcfᮉ"
 
 func NewInterface640BienesData() Interface640BienesData {
 	r := Interface640BienesData{}
@@ -83,6 +85,10 @@ func writeInterface640BienesData(r Interface640BienesData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.FechaAlta, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Departamento, w)
 	if err != nil {
 		return err
@@ -95,7 +101,7 @@ func (r Interface640BienesData) Serialize(w io.Writer) error {
 }
 
 func (r Interface640BienesData) Schema() string {
-	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"Departamento\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface640MdaBienes.Events.Record.Interface640BienesData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Legajo\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":\"string\"},{\"name\":\"FechaBaja\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":\"string\"},{\"name\":\"Departamento\",\"type\":\"string\"}],\"name\":\"Andreani.HCMInterface640MdaBienes.Events.Record.Interface640BienesData\",\"type\":\"record\"}"
 }
 
 func (r Interface640BienesData) SchemaName() string {
@@ -139,6 +145,11 @@ func (r *Interface640BienesData) Get(i int) types.Field {
 		return w
 
 	case 5:
+		w := types.String{Target: &r.FechaAlta}
+
+		return w
+
+	case 6:
 		w := types.String{Target: &r.Departamento}
 
 		return w
@@ -188,6 +199,10 @@ func (r Interface640BienesData) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["FechaBaja"], err = json.Marshal(r.FechaBaja)
+	if err != nil {
+		return nil, err
+	}
+	output["FechaAlta"], err = json.Marshal(r.FechaAlta)
 	if err != nil {
 		return nil, err
 	}
@@ -274,6 +289,20 @@ func (r *Interface640BienesData) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for FechaBaja")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["FechaAlta"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaAlta); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for FechaAlta")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Departamento"]; ok {
