@@ -27,9 +27,15 @@ type WorkOrder struct {
 	Descripcion string `json:"descripcion"`
 
 	User_report string `json:"user_report"`
+
+	Clase string `json:"clase"`
+
+	TipoOT string `json:"tipoOT"`
+
+	SubTipoOT string `json:"subTipoOT"`
 }
 
-const WorkOrderAvroCRC64Fingerprint = "\r\x0e\x1e0q\x8b\xfd\x00"
+const WorkOrderAvroCRC64Fingerprint = "\x16\xbcW\xfb\xd6.\xe4\x18"
 
 func NewWorkOrder() WorkOrder {
 	r := WorkOrder{}
@@ -81,6 +87,18 @@ func writeWorkOrder(r WorkOrder, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Clase, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.TipoOT, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.SubTipoOT, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -89,7 +107,7 @@ func (r WorkOrder) Serialize(w io.Writer) error {
 }
 
 func (r WorkOrder) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
 }
 
 func (r WorkOrder) SchemaName() string {
@@ -129,6 +147,21 @@ func (r *WorkOrder) Get(i int) types.Field {
 
 	case 4:
 		w := types.String{Target: &r.User_report}
+
+		return w
+
+	case 5:
+		w := types.String{Target: &r.Clase}
+
+		return w
+
+	case 6:
+		w := types.String{Target: &r.TipoOT}
+
+		return w
+
+	case 7:
+		w := types.String{Target: &r.SubTipoOT}
 
 		return w
 
@@ -177,6 +210,18 @@ func (r WorkOrder) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["user_report"], err = json.Marshal(r.User_report)
+	if err != nil {
+		return nil, err
+	}
+	output["clase"], err = json.Marshal(r.Clase)
+	if err != nil {
+		return nil, err
+	}
+	output["tipoOT"], err = json.Marshal(r.TipoOT)
+	if err != nil {
+		return nil, err
+	}
+	output["subTipoOT"], err = json.Marshal(r.SubTipoOT)
 	if err != nil {
 		return nil, err
 	}
@@ -259,6 +304,48 @@ func (r *WorkOrder) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for user_report")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["clase"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Clase); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for clase")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["tipoOT"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoOT); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for tipoOT")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["subTipoOT"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SubTipoOT); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for subTipoOT")
 	}
 	return nil
 }

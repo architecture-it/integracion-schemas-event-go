@@ -21,7 +21,7 @@ type SharepointWorkOrder struct {
 	WorkOrder WorkOrder `json:"WorkOrder"`
 }
 
-const SharepointWorkOrderAvroCRC64Fingerprint = "\xa3\x04\xa3u\x8c\x8bIE"
+const SharepointWorkOrderAvroCRC64Fingerprint = "\x95\xa3\r\x90r=a_"
 
 func NewSharepointWorkOrder() SharepointWorkOrder {
 	r := SharepointWorkOrder{}
@@ -67,7 +67,7 @@ func (r SharepointWorkOrder) Serialize(w io.Writer) error {
 }
 
 func (r SharepointWorkOrder) Schema() string {
-	return "{\"fields\":[{\"name\":\"WorkOrder\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"}],\"name\":\"WorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.SharepointWorkOrder\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"WorkOrder\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"}],\"name\":\"WorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.SharepointWorkOrder\",\"type\":\"record\"}"
 }
 
 func (r SharepointWorkOrder) SchemaName() string {

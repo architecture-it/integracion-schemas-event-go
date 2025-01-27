@@ -84,7 +84,7 @@ func DeserializeUnionNullWorkOrderFromSchema(r io.Reader, schema string) (*Union
 }
 
 func (r *UnionNullWorkOrder) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"}],\"name\":\"WorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"}],\"name\":\"WorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullWorkOrder) SetBoolean(v bool)   { panic("Unsupported operation") }
