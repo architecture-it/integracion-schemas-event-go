@@ -20,23 +20,21 @@ var _ = fmt.Printf
 type Fisa struct {
 	HoraInicio int64 `json:"HoraInicio"`
 
-	HoraFin int64 `json:"HoraFin"`
+	HoraFin *UnionNullLong `json:"HoraFin"`
 
 	Tipo string `json:"Tipo"`
 
 	Estado string `json:"Estado"`
 
 	Descripcion *UnionNullString `json:"Descripcion"`
-
-	CantidadAProcesar *UnionNullInt `json:"CantidadAProcesar"`
 }
 
-const FisaAvroCRC64Fingerprint = "^Q\xf5|\xfe\xe1\xc9{"
+const FisaAvroCRC64Fingerprint = "\v\xc0f/\xfd\xb5\xa5O"
 
 func NewFisa() Fisa {
 	r := Fisa{}
+	r.HoraFin = nil
 	r.Descripcion = nil
-	r.CantidadAProcesar = nil
 	return r
 }
 
@@ -69,7 +67,7 @@ func writeFisa(r Fisa, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.HoraFin, w)
+	err = writeUnionNullLong(r.HoraFin, w)
 	if err != nil {
 		return err
 	}
@@ -85,10 +83,6 @@ func writeFisa(r Fisa, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullInt(r.CantidadAProcesar, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -97,7 +91,7 @@ func (r Fisa) Serialize(w io.Writer) error {
 }
 
 func (r Fisa) Schema() string {
-	return "{\"fields\":[{\"name\":\"HoraInicio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"HoraFin\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadAProcesar\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.Fisa.Events.Common.Fisa\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"HoraInicio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"HoraFin\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Fisa.Events.Common.Fisa\",\"type\":\"record\"}"
 }
 
 func (r Fisa) SchemaName() string {
@@ -121,10 +115,9 @@ func (r *Fisa) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.Long{Target: &r.HoraFin}
+		r.HoraFin = NewUnionNullLong()
 
-		return w
-
+		return r.HoraFin
 	case 2:
 		w := types.String{Target: &r.Tipo}
 
@@ -139,21 +132,17 @@ func (r *Fisa) Get(i int) types.Field {
 		r.Descripcion = NewUnionNullString()
 
 		return r.Descripcion
-	case 5:
-		r.CantidadAProcesar = NewUnionNullInt()
-
-		return r.CantidadAProcesar
 	}
 	panic("Unknown field index")
 }
 
 func (r *Fisa) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.HoraFin = nil
+		return
 	case 4:
 		r.Descripcion = nil
-		return
-	case 5:
-		r.CantidadAProcesar = nil
 		return
 	}
 	panic("Unknown field index")
@@ -161,11 +150,11 @@ func (r *Fisa) SetDefault(i int) {
 
 func (r *Fisa) NullField(i int) {
 	switch i {
+	case 1:
+		r.HoraFin = nil
+		return
 	case 4:
 		r.Descripcion = nil
-		return
-	case 5:
-		r.CantidadAProcesar = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -200,10 +189,6 @@ func (r Fisa) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Descripcion"], err = json.Marshal(r.Descripcion)
-	if err != nil {
-		return nil, err
-	}
-	output["CantidadAProcesar"], err = json.Marshal(r.CantidadAProcesar)
 	if err != nil {
 		return nil, err
 	}
@@ -243,7 +228,9 @@ func (r *Fisa) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for HoraFin")
+		r.HoraFin = NewUnionNullLong()
+
+		r.HoraFin = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Tipo"]; ok {
@@ -288,22 +275,6 @@ func (r *Fisa) UnmarshalJSON(data []byte) error {
 		r.Descripcion = NewUnionNullString()
 
 		r.Descripcion = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["CantidadAProcesar"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CantidadAProcesar); err != nil {
-			return err
-		}
-	} else {
-		r.CantidadAProcesar = NewUnionNullInt()
-
-		r.CantidadAProcesar = nil
 	}
 	return nil
 }

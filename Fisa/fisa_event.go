@@ -21,7 +21,7 @@ type FisaEvent struct {
 	Event Fisa `json:"Event"`
 }
 
-const FisaEventAvroCRC64Fingerprint = "X\xa06\xf0r\xbd\x98;"
+const FisaEventAvroCRC64Fingerprint = "\xe47\xb7r'r\xaa\xb0"
 
 func NewFisaEvent() FisaEvent {
 	r := FisaEvent{}
@@ -67,7 +67,7 @@ func (r FisaEvent) Serialize(w io.Writer) error {
 }
 
 func (r FisaEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Event\",\"type\":{\"fields\":[{\"name\":\"HoraInicio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"HoraFin\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantidadAProcesar\",\"type\":[\"null\",\"int\"]}],\"name\":\"Fisa\",\"namespace\":\"Andreani.Fisa.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.Fisa.Events.Record.FisaEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Event\",\"type\":{\"fields\":[{\"name\":\"HoraInicio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"HoraFin\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Fisa\",\"namespace\":\"Andreani.Fisa.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.Fisa.Events.Record.FisaEvent\",\"type\":\"record\"}"
 }
 
 func (r FisaEvent) SchemaName() string {
