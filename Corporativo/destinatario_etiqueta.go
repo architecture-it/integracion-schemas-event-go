@@ -27,9 +27,11 @@ type DestinatarioEtiqueta struct {
 	DNI string `json:"DNI"`
 
 	Email string `json:"Email"`
+
+	DestinatarioEmail string `json:"DestinatarioEmail"`
 }
 
-const DestinatarioEtiquetaAvroCRC64Fingerprint = "\xf5\tr\x99\xa4\x8ef5"
+const DestinatarioEtiquetaAvroCRC64Fingerprint = "%Q\x8f\xeby\xbc\x87\x94"
 
 func NewDestinatarioEtiqueta() DestinatarioEtiqueta {
 	r := DestinatarioEtiqueta{}
@@ -81,6 +83,10 @@ func writeDestinatarioEtiqueta(r DestinatarioEtiqueta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.DestinatarioEmail, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -89,7 +95,7 @@ func (r DestinatarioEtiqueta) Serialize(w io.Writer) error {
 }
 
 func (r DestinatarioEtiqueta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DestinatarioEtiqueta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"DNI\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"DestinatarioEmail\",\"type\":\"string\"}],\"name\":\"Andreani.Corporativo.Events.Record.DestinatarioEtiqueta\",\"type\":\"record\"}"
 }
 
 func (r DestinatarioEtiqueta) SchemaName() string {
@@ -129,6 +135,11 @@ func (r *DestinatarioEtiqueta) Get(i int) types.Field {
 
 	case 4:
 		w := types.String{Target: &r.Email}
+
+		return w
+
+	case 5:
+		w := types.String{Target: &r.DestinatarioEmail}
 
 		return w
 
@@ -177,6 +188,10 @@ func (r DestinatarioEtiqueta) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Email"], err = json.Marshal(r.Email)
+	if err != nil {
+		return nil, err
+	}
+	output["DestinatarioEmail"], err = json.Marshal(r.DestinatarioEmail)
 	if err != nil {
 		return nil, err
 	}
@@ -259,6 +274,20 @@ func (r *DestinatarioEtiqueta) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Email")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DestinatarioEmail"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DestinatarioEmail); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for DestinatarioEmail")
 	}
 	return nil
 }
