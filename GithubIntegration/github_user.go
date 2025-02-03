@@ -24,13 +24,14 @@ type GithubUser struct {
 
 	UserName string `json:"UserName"`
 
-	Email string `json:"Email"`
+	Email *UnionNullString `json:"Email"`
 }
 
-const GithubUserAvroCRC64Fingerprint = "Ky\xd2x\xf7S&t"
+const GithubUserAvroCRC64Fingerprint = "\xff\xad\xf6\b\xbf<\x1c\xd5"
 
 func NewGithubUser() GithubUser {
 	r := GithubUser{}
+	r.Email = nil
 	return r
 }
 
@@ -71,7 +72,7 @@ func writeGithubUser(r GithubUser, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Email, w)
+	err = writeUnionNullString(r.Email, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +84,7 @@ func (r GithubUser) Serialize(w io.Writer) error {
 }
 
 func (r GithubUser) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"}],\"name\":\"Andreani.GithubIntegration.Events.Common.GithubUser\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.GithubIntegration.Events.Common.GithubUser\",\"type\":\"record\"}"
 }
 
 func (r GithubUser) SchemaName() string {
@@ -117,22 +118,27 @@ func (r *GithubUser) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.Email}
+		r.Email = NewUnionNullString()
 
-		return w
-
+		return r.Email
 	}
 	panic("Unknown field index")
 }
 
 func (r *GithubUser) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.Email = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *GithubUser) NullField(i int) {
 	switch i {
+	case 3:
+		r.Email = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -229,7 +235,9 @@ func (r *GithubUser) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Email")
+		r.Email = NewUnionNullString()
+
+		r.Email = nil
 	}
 	return nil
 }
