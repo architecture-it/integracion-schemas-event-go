@@ -27,7 +27,7 @@ type Repository struct {
 	Organization Organization `json:"Organization"`
 }
 
-const RepositoryAvroCRC64Fingerprint = "\xbe\x0e\xd0\xc0uL\x19E"
+const RepositoryAvroCRC64Fingerprint = "\xfc-\x9e\xd7.\xa3\xb7*"
 
 func NewRepository() Repository {
 	r := Repository{}
@@ -87,7 +87,7 @@ func (r Repository) Serialize(w io.Writer) error {
 }
 
 func (r Repository) Schema() string {
-	return "{\"fields\":[{\"name\":\"RepositoryId\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"}],\"name\":\"GithubUser\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}},{\"name\":\"Organization\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"}],\"name\":\"Organization\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.WizardApi.Events.Record.Repository\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"RepositoryId\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUser\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}},{\"name\":\"Organization\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"}],\"name\":\"Organization\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.WizardApi.Events.Record.Repository\",\"type\":\"record\"}"
 }
 
 func (r Repository) SchemaName() string {
