@@ -18,27 +18,35 @@ import (
 var _ = fmt.Printf
 
 type PaymentEvent struct {
-	Reference string `json:"Reference"`
+	Reference *UnionNullString `json:"Reference"`
 
-	PaymentDate string `json:"PaymentDate"`
+	PaymentDate *UnionNullString `json:"PaymentDate"`
 
-	Status string `json:"Status"`
+	Status *UnionNullString `json:"Status"`
 
-	ServiceName string `json:"ServiceName"`
+	ServiceName *UnionNullString `json:"ServiceName"`
 
-	PaymentGatewayName string `json:"PaymentGatewayName"`
+	PaymentGatewayName *UnionNullString `json:"PaymentGatewayName"`
 
-	ExpectedAmount string `json:"ExpectedAmount"`
+	ExpectedAmount *UnionNullString `json:"ExpectedAmount"`
 
-	ReceivedAmount string `json:"ReceivedAmount"`
+	ReceivedAmount *UnionNullString `json:"ReceivedAmount"`
 
-	ExternalId string `json:"ExternalId"`
+	ExternalId *UnionNullString `json:"ExternalId"`
 }
 
-const PaymentEventAvroCRC64Fingerprint = "\xb8\xf5ڰ\xb1\xc3G\xb9"
+const PaymentEventAvroCRC64Fingerprint = "\xacه\xdd\x0f\xd5\x0e\x9f"
 
 func NewPaymentEvent() PaymentEvent {
 	r := PaymentEvent{}
+	r.Reference = nil
+	r.PaymentDate = nil
+	r.Status = nil
+	r.ServiceName = nil
+	r.PaymentGatewayName = nil
+	r.ExpectedAmount = nil
+	r.ReceivedAmount = nil
+	r.ExternalId = nil
 	return r
 }
 
@@ -67,35 +75,35 @@ func DeserializePaymentEventFromSchema(r io.Reader, schema string) (PaymentEvent
 
 func writePaymentEvent(r PaymentEvent, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Reference, w)
+	err = writeUnionNullString(r.Reference, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PaymentDate, w)
+	err = writeUnionNullString(r.PaymentDate, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Status, w)
+	err = writeUnionNullString(r.Status, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ServiceName, w)
+	err = writeUnionNullString(r.ServiceName, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PaymentGatewayName, w)
+	err = writeUnionNullString(r.PaymentGatewayName, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ExpectedAmount, w)
+	err = writeUnionNullString(r.ExpectedAmount, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ReceivedAmount, w)
+	err = writeUnionNullString(r.ReceivedAmount, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ExternalId, w)
+	err = writeUnionNullString(r.ExternalId, w)
 	if err != nil {
 		return err
 	}
@@ -107,7 +115,7 @@ func (r PaymentEvent) Serialize(w io.Writer) error {
 }
 
 func (r PaymentEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Reference\",\"type\":\"string\"},{\"name\":\"PaymentDate\",\"type\":\"string\"},{\"name\":\"Status\",\"type\":\"string\"},{\"name\":\"ServiceName\",\"type\":\"string\"},{\"name\":\"PaymentGatewayName\",\"type\":\"string\"},{\"name\":\"ExpectedAmount\",\"type\":\"string\"},{\"name\":\"ReceivedAmount\",\"type\":\"string\"},{\"name\":\"ExternalId\",\"type\":\"string\"}],\"name\":\"Andreani.TransactionalPayments.Events.Record.PaymentEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Reference\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PaymentDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Status\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ServiceName\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PaymentGatewayName\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExpectedAmount\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReceivedAmount\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExternalId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.TransactionalPayments.Events.Record.PaymentEvent\",\"type\":\"record\"}"
 }
 
 func (r PaymentEvent) SchemaName() string {
@@ -126,57 +134,97 @@ func (_ PaymentEvent) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *PaymentEvent) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Reference}
+		r.Reference = NewUnionNullString()
 
-		return w
-
+		return r.Reference
 	case 1:
-		w := types.String{Target: &r.PaymentDate}
+		r.PaymentDate = NewUnionNullString()
 
-		return w
-
+		return r.PaymentDate
 	case 2:
-		w := types.String{Target: &r.Status}
+		r.Status = NewUnionNullString()
 
-		return w
-
+		return r.Status
 	case 3:
-		w := types.String{Target: &r.ServiceName}
+		r.ServiceName = NewUnionNullString()
 
-		return w
-
+		return r.ServiceName
 	case 4:
-		w := types.String{Target: &r.PaymentGatewayName}
+		r.PaymentGatewayName = NewUnionNullString()
 
-		return w
-
+		return r.PaymentGatewayName
 	case 5:
-		w := types.String{Target: &r.ExpectedAmount}
+		r.ExpectedAmount = NewUnionNullString()
 
-		return w
-
+		return r.ExpectedAmount
 	case 6:
-		w := types.String{Target: &r.ReceivedAmount}
+		r.ReceivedAmount = NewUnionNullString()
 
-		return w
-
+		return r.ReceivedAmount
 	case 7:
-		w := types.String{Target: &r.ExternalId}
+		r.ExternalId = NewUnionNullString()
 
-		return w
-
+		return r.ExternalId
 	}
 	panic("Unknown field index")
 }
 
 func (r *PaymentEvent) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Reference = nil
+		return
+	case 1:
+		r.PaymentDate = nil
+		return
+	case 2:
+		r.Status = nil
+		return
+	case 3:
+		r.ServiceName = nil
+		return
+	case 4:
+		r.PaymentGatewayName = nil
+		return
+	case 5:
+		r.ExpectedAmount = nil
+		return
+	case 6:
+		r.ReceivedAmount = nil
+		return
+	case 7:
+		r.ExternalId = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *PaymentEvent) NullField(i int) {
 	switch i {
+	case 0:
+		r.Reference = nil
+		return
+	case 1:
+		r.PaymentDate = nil
+		return
+	case 2:
+		r.Status = nil
+		return
+	case 3:
+		r.ServiceName = nil
+		return
+	case 4:
+		r.PaymentGatewayName = nil
+		return
+	case 5:
+		r.ExpectedAmount = nil
+		return
+	case 6:
+		r.ReceivedAmount = nil
+		return
+	case 7:
+		r.ExternalId = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -247,7 +295,9 @@ func (r *PaymentEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Reference")
+		r.Reference = NewUnionNullString()
+
+		r.Reference = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PaymentDate"]; ok {
@@ -261,7 +311,9 @@ func (r *PaymentEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for PaymentDate")
+		r.PaymentDate = NewUnionNullString()
+
+		r.PaymentDate = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Status"]; ok {
@@ -275,7 +327,9 @@ func (r *PaymentEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Status")
+		r.Status = NewUnionNullString()
+
+		r.Status = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ServiceName"]; ok {
@@ -289,7 +343,9 @@ func (r *PaymentEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ServiceName")
+		r.ServiceName = NewUnionNullString()
+
+		r.ServiceName = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PaymentGatewayName"]; ok {
@@ -303,7 +359,9 @@ func (r *PaymentEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for PaymentGatewayName")
+		r.PaymentGatewayName = NewUnionNullString()
+
+		r.PaymentGatewayName = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ExpectedAmount"]; ok {
@@ -317,7 +375,9 @@ func (r *PaymentEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ExpectedAmount")
+		r.ExpectedAmount = NewUnionNullString()
+
+		r.ExpectedAmount = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ReceivedAmount"]; ok {
@@ -331,7 +391,9 @@ func (r *PaymentEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ReceivedAmount")
+		r.ReceivedAmount = NewUnionNullString()
+
+		r.ReceivedAmount = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ExternalId"]; ok {
@@ -345,7 +407,9 @@ func (r *PaymentEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ExternalId")
+		r.ExternalId = NewUnionNullString()
+
+		r.ExternalId = nil
 	}
 	return nil
 }
