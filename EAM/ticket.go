@@ -26,12 +26,14 @@ type Ticket struct {
 
 	Descripcion string `json:"Descripcion"`
 
+	Planta string `json:"Planta"`
+
 	TipoSector *UnionNullString `json:"TipoSector"`
 
 	Categoria_Servicio *UnionNullString `json:"Categoria_Servicio"`
 }
 
-const TicketAvroCRC64Fingerprint = "T|\x14\xab\xb2\x84D\xf4"
+const TicketAvroCRC64Fingerprint = "eYhsY\x80.\x19"
 
 func NewTicket() Ticket {
 	r := Ticket{}
@@ -79,6 +81,10 @@ func writeTicket(r Ticket, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Planta, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.TipoSector, w)
 	if err != nil {
 		return err
@@ -95,7 +101,7 @@ func (r Ticket) Serialize(w io.Writer) error {
 }
 
 func (r Ticket) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.Ticket\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.Ticket\",\"type\":\"record\"}"
 }
 
 func (r Ticket) SchemaName() string {
@@ -134,10 +140,15 @@ func (r *Ticket) Get(i int) types.Field {
 		return w
 
 	case 4:
+		w := types.String{Target: &r.Planta}
+
+		return w
+
+	case 5:
 		r.TipoSector = NewUnionNullString()
 
 		return r.TipoSector
-	case 5:
+	case 6:
 		r.Categoria_Servicio = NewUnionNullString()
 
 		return r.Categoria_Servicio
@@ -153,10 +164,10 @@ func (r *Ticket) SetDefault(i int) {
 
 func (r *Ticket) NullField(i int) {
 	switch i {
-	case 4:
+	case 5:
 		r.TipoSector = nil
 		return
-	case 5:
+	case 6:
 		r.Categoria_Servicio = nil
 		return
 	}
@@ -188,6 +199,10 @@ func (r Ticket) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Descripcion"], err = json.Marshal(r.Descripcion)
+	if err != nil {
+		return nil, err
+	}
+	output["Planta"], err = json.Marshal(r.Planta)
 	if err != nil {
 		return nil, err
 	}
@@ -264,6 +279,20 @@ func (r *Ticket) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Descripcion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Planta"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Planta); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Planta")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["TipoSector"]; ok {
