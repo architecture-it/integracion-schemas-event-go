@@ -21,7 +21,7 @@ type MDA struct {
 	Ticket Ticket `json:"Ticket"`
 }
 
-const MDAAvroCRC64Fingerprint = "q\x97BSR7qw"
+const MDAAvroCRC64Fingerprint = "~\xaf\rS͓\xa1\xfc"
 
 func NewMDA() MDA {
 	r := MDA{}
@@ -67,7 +67,7 @@ func (r MDA) Serialize(w io.Writer) error {
 }
 
 func (r MDA) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Grupo\",\"type\":\"string\"},{\"name\":\"Categoria\",\"type\":\"string\"},{\"name\":\"Articulo\",\"type\":\"string\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Tecnico\",\"type\":\"string\"},{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Nave\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sectores\",\"type\":[\"null\",\"string\"]},{\"name\":\"Proceso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Procesos\",\"type\":[\"null\",\"string\"]},{\"name\":\"Etiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sucursal\",\"type\":[\"null\",\"string\"]},{\"name\":\"Sucursales\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaCreacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaResolucion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaFinalizado\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"}],\"name\":\"Ticket\",\"namespace\":\"Andreani.EAM.Events.MDA\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.MDA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ticket\",\"namespace\":\"Andreani.EAM.Events.MDA\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.MDA\",\"type\":\"record\"}"
 }
 
 func (r MDA) SchemaName() string {
