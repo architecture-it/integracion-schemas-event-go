@@ -31,9 +31,11 @@ type PaymentEvent struct {
 	ExpectedAmount string `json:"ExpectedAmount"`
 
 	ReceivedAmount string `json:"ReceivedAmount"`
+
+	ExternalId string `json:"ExternalId"`
 }
 
-const PaymentEventAvroCRC64Fingerprint = "\x04\xffI\xf7%\xeft3"
+const PaymentEventAvroCRC64Fingerprint = "\xb8\xf5ڰ\xb1\xc3G\xb9"
 
 func NewPaymentEvent() PaymentEvent {
 	r := PaymentEvent{}
@@ -93,6 +95,10 @@ func writePaymentEvent(r PaymentEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.ExternalId, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -101,7 +107,7 @@ func (r PaymentEvent) Serialize(w io.Writer) error {
 }
 
 func (r PaymentEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Reference\",\"type\":\"string\"},{\"name\":\"PaymentDate\",\"type\":\"string\"},{\"name\":\"Status\",\"type\":\"string\"},{\"name\":\"ServiceName\",\"type\":\"string\"},{\"name\":\"PaymentGatewayName\",\"type\":\"string\"},{\"name\":\"ExpectedAmount\",\"type\":\"string\"},{\"name\":\"ReceivedAmount\",\"type\":\"string\"}],\"name\":\"Andreani.TransactionalPayments.Events.Record.PaymentEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Reference\",\"type\":\"string\"},{\"name\":\"PaymentDate\",\"type\":\"string\"},{\"name\":\"Status\",\"type\":\"string\"},{\"name\":\"ServiceName\",\"type\":\"string\"},{\"name\":\"PaymentGatewayName\",\"type\":\"string\"},{\"name\":\"ExpectedAmount\",\"type\":\"string\"},{\"name\":\"ReceivedAmount\",\"type\":\"string\"},{\"name\":\"ExternalId\",\"type\":\"string\"}],\"name\":\"Andreani.TransactionalPayments.Events.Record.PaymentEvent\",\"type\":\"record\"}"
 }
 
 func (r PaymentEvent) SchemaName() string {
@@ -151,6 +157,11 @@ func (r *PaymentEvent) Get(i int) types.Field {
 
 	case 6:
 		w := types.String{Target: &r.ReceivedAmount}
+
+		return w
+
+	case 7:
+		w := types.String{Target: &r.ExternalId}
 
 		return w
 
@@ -207,6 +218,10 @@ func (r PaymentEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ReceivedAmount"], err = json.Marshal(r.ReceivedAmount)
+	if err != nil {
+		return nil, err
+	}
+	output["ExternalId"], err = json.Marshal(r.ExternalId)
 	if err != nil {
 		return nil, err
 	}
@@ -317,6 +332,20 @@ func (r *PaymentEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for ReceivedAmount")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExternalId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExternalId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for ExternalId")
 	}
 	return nil
 }
