@@ -24,12 +24,12 @@ type NovedadEAMPowerApp struct {
 
 	NuevoEstado string `json:"NuevoEstado"`
 
-	OT *UnionNullWorkOrder `json:"OT"`
+	OT *UnionNullNovedadWorkOrder `json:"OT"`
 
-	Equipo *UnionNullAsset `json:"Equipo"`
+	Equipo *UnionNullNovedadAsset `json:"Equipo"`
 }
 
-const NovedadEAMPowerAppAvroCRC64Fingerprint = "?e*k+_\x17\xe7"
+const NovedadEAMPowerAppAvroCRC64Fingerprint = "\x89Rg~\x99\x03\x9cq"
 
 func NewNovedadEAMPowerApp() NovedadEAMPowerApp {
 	r := NovedadEAMPowerApp{}
@@ -75,11 +75,11 @@ func writeNovedadEAMPowerApp(r NovedadEAMPowerApp, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullWorkOrder(r.OT, w)
+	err = writeUnionNullNovedadWorkOrder(r.OT, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullAsset(r.Equipo, w)
+	err = writeUnionNullNovedadAsset(r.Equipo, w)
 	if err != nil {
 		return err
 	}
@@ -91,7 +91,7 @@ func (r NovedadEAMPowerApp) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEAMPowerApp) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"IdPowerApp\",\"type\":\"string\"},{\"name\":\"NuevoEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"OT\",\"type\":[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"}],\"name\":\"WorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Equipo\",\"type\":[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"propulsion\",\"type\":\"string\"},{\"name\":\"categoria\",\"type\":\"string\"},{\"name\":\"cod_eam\",\"type\":[\"null\",\"string\"]}],\"name\":\"Asset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]}],\"name\":\"Andreani.EAM.Events.Record.NovedadEAMPowerApp\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"IdPowerApp\",\"type\":\"string\"},{\"name\":\"NuevoEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"OT\",\"type\":[\"null\",{\"fields\":[],\"name\":\"NovedadWorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Equipo\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadAsset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]}],\"name\":\"Andreani.EAM.Events.Record.NovedadEAMPowerApp\",\"type\":\"record\"}"
 }
 
 func (r NovedadEAMPowerApp) SchemaName() string {
@@ -125,11 +125,11 @@ func (r *NovedadEAMPowerApp) Get(i int) types.Field {
 		return w
 
 	case 3:
-		r.OT = NewUnionNullWorkOrder()
+		r.OT = NewUnionNullNovedadWorkOrder()
 
 		return r.OT
 	case 4:
-		r.Equipo = NewUnionNullAsset()
+		r.Equipo = NewUnionNullNovedadAsset()
 
 		return r.Equipo
 	}
@@ -256,7 +256,7 @@ func (r *NovedadEAMPowerApp) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.OT = NewUnionNullWorkOrder()
+		r.OT = NewUnionNullNovedadWorkOrder()
 
 		r.OT = nil
 	}
@@ -272,7 +272,7 @@ func (r *NovedadEAMPowerApp) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Equipo = NewUnionNullAsset()
+		r.Equipo = NewUnionNullNovedadAsset()
 
 		r.Equipo = nil
 	}
