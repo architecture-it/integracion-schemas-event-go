@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type Bulto struct {
+	EstadoBultoId *UnionNullInt `json:"EstadoBultoId"`
+
 	Kilos float32 `json:"Kilos"`
 
 	LargoCm float32 `json:"LargoCm"`
@@ -39,10 +41,11 @@ type Bulto struct {
 	Referencias []Referencia `json:"Referencias"`
 }
 
-const BultoAvroCRC64Fingerprint = "\xfe\x86axO7\x80v"
+const BultoAvroCRC64Fingerprint = "\x1b\xff\xd5m\x91\xbb\x19\xe2"
 
 func NewBulto() Bulto {
 	r := Bulto{}
+	r.EstadoBultoId = nil
 	r.MontoValorSeguro = nil
 	r.MontoGestionCobranza = nil
 	r.Referencias = make([]Referencia, 0)
@@ -75,6 +78,10 @@ func DeserializeBultoFromSchema(r io.Reader, schema string) (Bulto, error) {
 
 func writeBulto(r Bulto, w io.Writer) error {
 	var err error
+	err = writeUnionNullInt(r.EstadoBultoId, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteFloat(r.Kilos, w)
 	if err != nil {
 		return err
@@ -123,7 +130,7 @@ func (r Bulto) Serialize(w io.Writer) error {
 }
 
 func (r Bulto) Schema() string {
-	return "{\"fields\":[{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"default\":null,\"name\":\"MontoValorSeguro\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"MontoGestionCobranza\",\"type\":[\"null\",\"float\"]},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Bulto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"EstadoBultoId\",\"type\":[\"null\",\"int\"]},{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"default\":null,\"name\":\"MontoValorSeguro\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"MontoGestionCobranza\",\"type\":[\"null\",\"float\"]},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Bulto\",\"type\":\"record\"}"
 }
 
 func (r Bulto) SchemaName() string {
@@ -142,49 +149,53 @@ func (_ Bulto) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Bulto) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.EstadoBultoId = NewUnionNullInt()
+
+		return r.EstadoBultoId
+	case 1:
 		w := types.Float{Target: &r.Kilos}
 
 		return w
 
-	case 1:
+	case 2:
 		w := types.Float{Target: &r.LargoCm}
 
 		return w
 
-	case 2:
+	case 3:
 		w := types.Float{Target: &r.AltoCm}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.Float{Target: &r.AnchoCm}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.Float{Target: &r.VolumenCm}
 
 		return w
 
-	case 5:
+	case 6:
 		w := types.Float{Target: &r.ValorDeclaradoConImpuestos}
 
 		return w
 
-	case 6:
+	case 7:
 		w := types.Float{Target: &r.ValorDeclaradoSinImpuestos}
 
 		return w
 
-	case 7:
+	case 8:
 		r.MontoValorSeguro = NewUnionNullFloat()
 
 		return r.MontoValorSeguro
-	case 8:
+	case 9:
 		r.MontoGestionCobranza = NewUnionNullFloat()
 
 		return r.MontoGestionCobranza
-	case 9:
+	case 10:
 		r.Referencias = make([]Referencia, 0)
 
 		w := ArrayReferenciaWrapper{Target: &r.Referencias}
@@ -197,10 +208,13 @@ func (r *Bulto) Get(i int) types.Field {
 
 func (r *Bulto) SetDefault(i int) {
 	switch i {
-	case 7:
-		r.MontoValorSeguro = nil
+	case 0:
+		r.EstadoBultoId = nil
 		return
 	case 8:
+		r.MontoValorSeguro = nil
+		return
+	case 9:
 		r.MontoGestionCobranza = nil
 		return
 	}
@@ -209,10 +223,13 @@ func (r *Bulto) SetDefault(i int) {
 
 func (r *Bulto) NullField(i int) {
 	switch i {
-	case 7:
-		r.MontoValorSeguro = nil
+	case 0:
+		r.EstadoBultoId = nil
 		return
 	case 8:
+		r.MontoValorSeguro = nil
+		return
+	case 9:
 		r.MontoGestionCobranza = nil
 		return
 	}
@@ -231,6 +248,10 @@ func (_ Bulto) AvroCRC64Fingerprint() []byte {
 func (r Bulto) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["EstadoBultoId"], err = json.Marshal(r.EstadoBultoId)
+	if err != nil {
+		return nil, err
+	}
 	output["Kilos"], err = json.Marshal(r.Kilos)
 	if err != nil {
 		return nil, err
@@ -281,6 +302,22 @@ func (r *Bulto) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["EstadoBultoId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EstadoBultoId); err != nil {
+			return err
+		}
+	} else {
+		r.EstadoBultoId = NewUnionNullInt()
+
+		r.EstadoBultoId = nil
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Kilos"]; ok {
 			return v
