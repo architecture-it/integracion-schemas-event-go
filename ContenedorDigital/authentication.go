@@ -22,10 +22,12 @@ type Authentication struct {
 
 	RazonSocial string `json:"RazonSocial"`
 
-	IdCierre string `json:"IdCierre"`
+	IdDatosBultos string `json:"IdDatosBultos"`
+
+	Impresora string `json:"Impresora"`
 }
 
-const AuthenticationAvroCRC64Fingerprint = "\x96<7nF\x01\xbb+"
+const AuthenticationAvroCRC64Fingerprint = "\x0461\x92\t|\xc5\xdf"
 
 func NewAuthentication() Authentication {
 	r := Authentication{}
@@ -65,7 +67,11 @@ func writeAuthentication(r Authentication, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.IdCierre, w)
+	err = vm.WriteString(r.IdDatosBultos, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Impresora, w)
 	if err != nil {
 		return err
 	}
@@ -77,7 +83,7 @@ func (r Authentication) Serialize(w io.Writer) error {
 }
 
 func (r Authentication) Schema() string {
-	return "{\"fields\":[{\"name\":\"Interno\",\"type\":\"string\"},{\"name\":\"RazonSocial\",\"type\":\"string\"},{\"name\":\"IdCierre\",\"type\":\"string\"}],\"name\":\"Andreani.ContenedorDigital.Events.Record.Authentication\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Interno\",\"type\":\"string\"},{\"name\":\"RazonSocial\",\"type\":\"string\"},{\"name\":\"IdDatosBultos\",\"type\":\"string\"},{\"name\":\"Impresora\",\"type\":\"string\"}],\"name\":\"Andreani.ContenedorDigital.Events.Record.Authentication\",\"type\":\"record\"}"
 }
 
 func (r Authentication) SchemaName() string {
@@ -106,7 +112,12 @@ func (r *Authentication) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.IdCierre}
+		w := types.String{Target: &r.IdDatosBultos}
+
+		return w
+
+	case 3:
+		w := types.String{Target: &r.Impresora}
 
 		return w
 
@@ -146,7 +157,11 @@ func (r Authentication) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["IdCierre"], err = json.Marshal(r.IdCierre)
+	output["IdDatosBultos"], err = json.Marshal(r.IdDatosBultos)
+	if err != nil {
+		return nil, err
+	}
+	output["Impresora"], err = json.Marshal(r.Impresora)
 	if err != nil {
 		return nil, err
 	}
@@ -189,18 +204,32 @@ func (r *Authentication) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for RazonSocial")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["IdCierre"]; ok {
+		if v, ok := fields["IdDatosBultos"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IdCierre); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdDatosBultos); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for IdCierre")
+		return fmt.Errorf("no value specified for IdDatosBultos")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Impresora"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Impresora); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Impresora")
 	}
 	return nil
 }
