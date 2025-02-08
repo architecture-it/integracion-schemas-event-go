@@ -21,9 +21,11 @@ type Authentication struct {
 	Interno string `json:"Interno"`
 
 	RazonSocial string `json:"RazonSocial"`
+
+	IdCierre string `json:"IdCierre"`
 }
 
-const AuthenticationAvroCRC64Fingerprint = "n\x04\b.%\xd1\v\xad"
+const AuthenticationAvroCRC64Fingerprint = "\x96<7nF\x01\xbb+"
 
 func NewAuthentication() Authentication {
 	r := Authentication{}
@@ -63,6 +65,10 @@ func writeAuthentication(r Authentication, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.IdCierre, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -71,7 +77,7 @@ func (r Authentication) Serialize(w io.Writer) error {
 }
 
 func (r Authentication) Schema() string {
-	return "{\"fields\":[{\"name\":\"Interno\",\"type\":\"string\"},{\"name\":\"RazonSocial\",\"type\":\"string\"}],\"name\":\"Andreani.ContenedorDigital.Events.Record.Authentication\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Interno\",\"type\":\"string\"},{\"name\":\"RazonSocial\",\"type\":\"string\"},{\"name\":\"IdCierre\",\"type\":\"string\"}],\"name\":\"Andreani.ContenedorDigital.Events.Record.Authentication\",\"type\":\"record\"}"
 }
 
 func (r Authentication) SchemaName() string {
@@ -96,6 +102,11 @@ func (r *Authentication) Get(i int) types.Field {
 
 	case 1:
 		w := types.String{Target: &r.RazonSocial}
+
+		return w
+
+	case 2:
+		w := types.String{Target: &r.IdCierre}
 
 		return w
 
@@ -132,6 +143,10 @@ func (r Authentication) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["RazonSocial"], err = json.Marshal(r.RazonSocial)
+	if err != nil {
+		return nil, err
+	}
+	output["IdCierre"], err = json.Marshal(r.IdCierre)
 	if err != nil {
 		return nil, err
 	}
@@ -172,6 +187,20 @@ func (r *Authentication) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for RazonSocial")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdCierre"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdCierre); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IdCierre")
 	}
 	return nil
 }
