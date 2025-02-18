@@ -25,7 +25,7 @@ type EventoWhOlaLanzada struct {
 	Detalle []Detalle `json:"Detalle"`
 }
 
-const EventoWhOlaLanzadaAvroCRC64Fingerprint = "yD\x1a\xfb\v\x84\x04\x1c"
+const EventoWhOlaLanzadaAvroCRC64Fingerprint = "\xa1\xef#\x01P#\x19\x95"
 
 func NewEventoWhOlaLanzada() EventoWhOlaLanzada {
 	r := EventoWhOlaLanzada{}
@@ -83,7 +83,7 @@ func (r EventoWhOlaLanzada) Serialize(w io.Writer) error {
 }
 
 func (r EventoWhOlaLanzada) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhOla.Events.LanzadaCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"Ola\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.EventoWhOla.Events.LanzadaCommon\",\"type\":\"record\"}},{\"name\":\"Detalle\",\"type\":{\"items\":{\"fields\":[{\"name\":\"OrdenSCE\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Ola\",\"type\":\"string\"}],\"name\":\"Detalle\",\"namespace\":\"Andreani.EventoWhOla.Events.LanzadaCommon\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.EventoWhOla.Events.Record.EventoWhOlaLanzada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhOla.Events.LanzadaCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"Ola\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.EventoWhOla.Events.LanzadaCommon\",\"type\":\"record\"}},{\"name\":\"Detalle\",\"type\":{\"items\":{\"fields\":[{\"name\":\"OrdenSCE\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Ola\",\"type\":\"string\"},{\"default\":null,\"name\":\"OrdenCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Detalle\",\"namespace\":\"Andreani.EventoWhOla.Events.LanzadaCommon\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.EventoWhOla.Events.Record.EventoWhOlaLanzada\",\"type\":\"record\"}"
 }
 
 func (r EventoWhOlaLanzada) SchemaName() string {
