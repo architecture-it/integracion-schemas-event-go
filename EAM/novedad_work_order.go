@@ -25,9 +25,11 @@ type NovedadWorkOrder struct {
 	TrabajoRealizado *UnionNullString `json:"trabajoRealizado"`
 
 	EstadoFinal *UnionNullString `json:"estadoFinal"`
+
+	IdOTEAM *UnionNullString `json:"IdOTEAM"`
 }
 
-const NovedadWorkOrderAvroCRC64Fingerprint = "\x8e\xc4+U\xc7\x1a\x19\n"
+const NovedadWorkOrderAvroCRC64Fingerprint = "\xedN\xca;\xdc\v<\x17"
 
 func NewNovedadWorkOrder() NovedadWorkOrder {
 	r := NovedadWorkOrder{}
@@ -35,6 +37,7 @@ func NewNovedadWorkOrder() NovedadWorkOrder {
 	r.CausaFalla = nil
 	r.TrabajoRealizado = nil
 	r.EstadoFinal = nil
+	r.IdOTEAM = nil
 	return r
 }
 
@@ -79,6 +82,10 @@ func writeNovedadWorkOrder(r NovedadWorkOrder, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.IdOTEAM, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -87,7 +94,7 @@ func (r NovedadWorkOrder) Serialize(w io.Writer) error {
 }
 
 func (r NovedadWorkOrder) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"IdEquipoEAM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"causaFalla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"trabajoRealizado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoFinal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.NovedadWorkOrder\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdEquipoEAM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"causaFalla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"trabajoRealizado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdOTEAM\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.NovedadWorkOrder\",\"type\":\"record\"}"
 }
 
 func (r NovedadWorkOrder) SchemaName() string {
@@ -121,6 +128,10 @@ func (r *NovedadWorkOrder) Get(i int) types.Field {
 		r.EstadoFinal = NewUnionNullString()
 
 		return r.EstadoFinal
+	case 4:
+		r.IdOTEAM = NewUnionNullString()
+
+		return r.IdOTEAM
 	}
 	panic("Unknown field index")
 }
@@ -139,6 +150,9 @@ func (r *NovedadWorkOrder) SetDefault(i int) {
 	case 3:
 		r.EstadoFinal = nil
 		return
+	case 4:
+		r.IdOTEAM = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -156,6 +170,9 @@ func (r *NovedadWorkOrder) NullField(i int) {
 		return
 	case 3:
 		r.EstadoFinal = nil
+		return
+	case 4:
+		r.IdOTEAM = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -186,6 +203,10 @@ func (r NovedadWorkOrder) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["estadoFinal"], err = json.Marshal(r.EstadoFinal)
+	if err != nil {
+		return nil, err
+	}
+	output["IdOTEAM"], err = json.Marshal(r.IdOTEAM)
 	if err != nil {
 		return nil, err
 	}
@@ -262,6 +283,22 @@ func (r *NovedadWorkOrder) UnmarshalJSON(data []byte) error {
 		r.EstadoFinal = NewUnionNullString()
 
 		r.EstadoFinal = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdOTEAM"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdOTEAM); err != nil {
+			return err
+		}
+	} else {
+		r.IdOTEAM = NewUnionNullString()
+
+		r.IdOTEAM = nil
 	}
 	return nil
 }

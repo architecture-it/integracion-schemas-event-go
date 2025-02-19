@@ -84,7 +84,7 @@ func DeserializeUnionNullNovedadWorkOrderFromSchema(r io.Reader, schema string) 
 }
 
 func (r *UnionNullNovedadWorkOrder) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"IdEquipoEAM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"causaFalla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"trabajoRealizado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoFinal\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadWorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"IdEquipoEAM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"causaFalla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"trabajoRealizado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdOTEAM\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadWorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullNovedadWorkOrder) SetBoolean(v bool)   { panic("Unsupported operation") }
