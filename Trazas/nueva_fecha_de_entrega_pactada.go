@@ -25,7 +25,7 @@ type NuevaFechaDeEntregaPactada struct {
 	NuevaFechaPactadaHasta *UnionNullString `json:"nuevaFechaPactadaHasta"`
 }
 
-const NuevaFechaDeEntregaPactadaAvroCRC64Fingerprint = "\x16\x90\u05f9\x19\x8dK!"
+const NuevaFechaDeEntregaPactadaAvroCRC64Fingerprint = "\xd71\x93\xff\xfe?>\xb6"
 
 func NewNuevaFechaDeEntregaPactada() NuevaFechaDeEntregaPactada {
 	r := NuevaFechaDeEntregaPactada{}
@@ -79,7 +79,7 @@ func (r NuevaFechaDeEntregaPactada) Serialize(w io.Writer) error {
 }
 
 func (r NuevaFechaDeEntregaPactada) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"nuevaFechaPactadaDesde\",\"type\":[\"null\",\"string\"]},{\"name\":\"nuevaFechaPactadaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Trazas.NuevaFechaDeEntregaPactada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"LogisticShipmentType\",\"type\":[\"null\",\"string\"]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"nuevaFechaPactadaDesde\",\"type\":[\"null\",\"string\"]},{\"name\":\"nuevaFechaPactadaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Trazas.NuevaFechaDeEntregaPactada\",\"type\":\"record\"}"
 }
 
 func (r NuevaFechaDeEntregaPactada) SchemaName() string {
