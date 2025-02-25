@@ -39,11 +39,9 @@ type Traza struct {
 	Comentario *UnionNullString `json:"comentario"`
 
 	SucursalAsociadaAlEvento *UnionNullDatosSucursal `json:"sucursalAsociadaAlEvento"`
-
-	LogisticShipmentType *UnionNullString `json:"LogisticShipmentType"`
 }
 
-const TrazaAvroCRC64Fingerprint = "\xe0\x90-\xe1\xf7/c\xe6"
+const TrazaAvroCRC64Fingerprint = "\xe8\aY/i\x92\x06\xd4"
 
 func NewTraza() Traza {
 	r := Traza{}
@@ -55,7 +53,6 @@ func NewTraza() Traza {
 	r.EstadoDeLaRendicion = nil
 	r.Comentario = nil
 	r.SucursalAsociadaAlEvento = nil
-	r.LogisticShipmentType = nil
 	return r
 }
 
@@ -128,10 +125,6 @@ func writeTraza(r Traza, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.LogisticShipmentType, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -140,7 +133,7 @@ func (r Traza) Serialize(w io.Writer) error {
 }
 
 func (r Traza) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"LogisticShipmentType\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Traza\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Integracion.Esquemas.Traza\",\"type\":\"record\"}"
 }
 
 func (r Traza) SchemaName() string {
@@ -205,10 +198,6 @@ func (r *Traza) Get(i int) types.Field {
 		r.SucursalAsociadaAlEvento = NewUnionNullDatosSucursal()
 
 		return r.SucursalAsociadaAlEvento
-	case 11:
-		r.LogisticShipmentType = NewUnionNullString()
-
-		return r.LogisticShipmentType
 	}
 	panic("Unknown field index")
 }
@@ -239,9 +228,6 @@ func (r *Traza) SetDefault(i int) {
 	case 10:
 		r.SucursalAsociadaAlEvento = nil
 		return
-	case 11:
-		r.LogisticShipmentType = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -271,9 +257,6 @@ func (r *Traza) NullField(i int) {
 		return
 	case 10:
 		r.SucursalAsociadaAlEvento = nil
-		return
-	case 11:
-		r.LogisticShipmentType = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -332,10 +315,6 @@ func (r Traza) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["sucursalAsociadaAlEvento"], err = json.Marshal(r.SucursalAsociadaAlEvento)
-	if err != nil {
-		return nil, err
-	}
-	output["LogisticShipmentType"], err = json.Marshal(r.LogisticShipmentType)
 	if err != nil {
 		return nil, err
 	}
@@ -518,22 +497,6 @@ func (r *Traza) UnmarshalJSON(data []byte) error {
 		r.SucursalAsociadaAlEvento = NewUnionNullDatosSucursal()
 
 		r.SucursalAsociadaAlEvento = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["LogisticShipmentType"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.LogisticShipmentType); err != nil {
-			return err
-		}
-	} else {
-		r.LogisticShipmentType = NewUnionNullString()
-
-		r.LogisticShipmentType = nil
 	}
 	return nil
 }
