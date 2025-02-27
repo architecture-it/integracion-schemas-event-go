@@ -18,14 +18,14 @@ import (
 var _ = fmt.Printf
 
 type BultoProcesadoEnSorter struct {
-	Traza Traza `json:"traza"`
+	Traza TrazaDeBulto `json:"traza"`
 }
 
-const BultoProcesadoEnSorterAvroCRC64Fingerprint = "\xadk\xbfޅ\xc7\"\x0e"
+const BultoProcesadoEnSorterAvroCRC64Fingerprint = "&\xaaT\x81F~\xbb\xf3"
 
 func NewBultoProcesadoEnSorter() BultoProcesadoEnSorter {
 	r := BultoProcesadoEnSorter{}
-	r.Traza = NewTraza()
+	r.Traza = NewTrazaDeBulto()
 
 	return r
 }
@@ -55,7 +55,7 @@ func DeserializeBultoProcesadoEnSorterFromSchema(r io.Reader, schema string) (Bu
 
 func writeBultoProcesadoEnSorter(r BultoProcesadoEnSorter, w io.Writer) error {
 	var err error
-	err = writeTraza(r.Traza, w)
+	err = writeTrazaDeBulto(r.Traza, w)
 	if err != nil {
 		return err
 	}
@@ -67,7 +67,7 @@ func (r BultoProcesadoEnSorter) Serialize(w io.Writer) error {
 }
 
 func (r BultoProcesadoEnSorter) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tipoDeBulto\",\"type\":[\"null\",{\"name\":\"TipoDeBulto\",\"symbols\":[\"Paquete\",\"Contenedor\"],\"type\":\"enum\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas.Bulto.Referencias\",\"type\":\"record\"}}],\"name\":\"Integracion.Esquemas.Bulto.Trazas.BultoProcesadoEnSorter\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tipoDeBulto\",\"type\":[\"null\",{\"name\":\"TipoDeBulto\",\"symbols\":[\"Paquete\",\"Contenedor\"],\"type\":\"enum\"}]}],\"name\":\"TrazaDeBulto\",\"namespace\":\"Integracion.Esquemas.Bulto.Referencias\",\"type\":\"record\"}}],\"name\":\"Integracion.Esquemas.Bulto.Trazas.BultoProcesadoEnSorter\",\"type\":\"record\"}"
 }
 
 func (r BultoProcesadoEnSorter) SchemaName() string {
@@ -86,7 +86,7 @@ func (_ BultoProcesadoEnSorter) SetUnionElem(v int64) { panic("Unsupported opera
 func (r *BultoProcesadoEnSorter) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Traza = NewTraza()
+		r.Traza = NewTrazaDeBulto()
 
 		w := types.Record{Target: &r.Traza}
 

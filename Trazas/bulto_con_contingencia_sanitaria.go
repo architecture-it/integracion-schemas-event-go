@@ -18,14 +18,14 @@ import (
 var _ = fmt.Printf
 
 type BultoConContingenciaSanitaria struct {
-	Traza Traza `json:"traza"`
+	Traza TrazaDeBulto `json:"traza"`
 }
 
-const BultoConContingenciaSanitariaAvroCRC64Fingerprint = "G~\x9d\xe6\x06\x90յ"
+const BultoConContingenciaSanitariaAvroCRC64Fingerprint = "\x03\x9f\xa5\xa1^\x03\xa4\xa2"
 
 func NewBultoConContingenciaSanitaria() BultoConContingenciaSanitaria {
 	r := BultoConContingenciaSanitaria{}
-	r.Traza = NewTraza()
+	r.Traza = NewTrazaDeBulto()
 
 	return r
 }
@@ -55,7 +55,7 @@ func DeserializeBultoConContingenciaSanitariaFromSchema(r io.Reader, schema stri
 
 func writeBultoConContingenciaSanitaria(r BultoConContingenciaSanitaria, w io.Writer) error {
 	var err error
-	err = writeTraza(r.Traza, w)
+	err = writeTrazaDeBulto(r.Traza, w)
 	if err != nil {
 		return err
 	}
@@ -67,7 +67,7 @@ func (r BultoConContingenciaSanitaria) Serialize(w io.Writer) error {
 }
 
 func (r BultoConContingenciaSanitaria) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tipoDeBulto\",\"type\":[\"null\",{\"name\":\"TipoDeBulto\",\"symbols\":[\"Paquete\",\"Contenedor\"],\"type\":\"enum\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas.Bulto.Referencias\",\"type\":\"record\"}}],\"name\":\"Integracion.Esquemas.Bulto.Trazas.BultoConContingenciaSanitaria\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tipoDeBulto\",\"type\":[\"null\",{\"name\":\"TipoDeBulto\",\"symbols\":[\"Paquete\",\"Contenedor\"],\"type\":\"enum\"}]}],\"name\":\"TrazaDeBulto\",\"namespace\":\"Integracion.Esquemas.Bulto.Referencias\",\"type\":\"record\"}}],\"name\":\"Integracion.Esquemas.Bulto.Trazas.BultoConContingenciaSanitaria\",\"type\":\"record\"}"
 }
 
 func (r BultoConContingenciaSanitaria) SchemaName() string {
@@ -86,7 +86,7 @@ func (_ BultoConContingenciaSanitaria) SetUnionElem(v int64) { panic("Unsupporte
 func (r *BultoConContingenciaSanitaria) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Traza = NewTraza()
+		r.Traza = NewTrazaDeBulto()
 
 		w := types.Record{Target: &r.Traza}
 

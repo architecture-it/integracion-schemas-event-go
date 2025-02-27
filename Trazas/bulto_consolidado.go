@@ -18,16 +18,16 @@ import (
 var _ = fmt.Printf
 
 type BultoConsolidado struct {
-	Traza Traza `json:"traza"`
+	Traza TrazaDeBulto `json:"traza"`
 
 	CodigoDeContenedor string `json:"codigoDeContenedor"`
 }
 
-const BultoConsolidadoAvroCRC64Fingerprint = "`b9K\x11~\x05\xc1"
+const BultoConsolidadoAvroCRC64Fingerprint = "\xe1&\xcb(\xa9\x92I\a"
 
 func NewBultoConsolidado() BultoConsolidado {
 	r := BultoConsolidado{}
-	r.Traza = NewTraza()
+	r.Traza = NewTrazaDeBulto()
 
 	return r
 }
@@ -57,7 +57,7 @@ func DeserializeBultoConsolidadoFromSchema(r io.Reader, schema string) (BultoCon
 
 func writeBultoConsolidado(r BultoConsolidado, w io.Writer) error {
 	var err error
-	err = writeTraza(r.Traza, w)
+	err = writeTrazaDeBulto(r.Traza, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func (r BultoConsolidado) Serialize(w io.Writer) error {
 }
 
 func (r BultoConsolidado) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tipoDeBulto\",\"type\":[\"null\",{\"name\":\"TipoDeBulto\",\"symbols\":[\"Paquete\",\"Contenedor\"],\"type\":\"enum\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas.Bulto.Referencias\",\"type\":\"record\"}},{\"name\":\"codigoDeContenedor\",\"type\":\"string\"}],\"name\":\"Integracion.Esquemas.Bulto.Trazas.BultoConsolidado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tipoDeBulto\",\"type\":[\"null\",{\"name\":\"TipoDeBulto\",\"symbols\":[\"Paquete\",\"Contenedor\"],\"type\":\"enum\"}]}],\"name\":\"TrazaDeBulto\",\"namespace\":\"Integracion.Esquemas.Bulto.Referencias\",\"type\":\"record\"}},{\"name\":\"codigoDeContenedor\",\"type\":\"string\"}],\"name\":\"Integracion.Esquemas.Bulto.Trazas.BultoConsolidado\",\"type\":\"record\"}"
 }
 
 func (r BultoConsolidado) SchemaName() string {
@@ -92,7 +92,7 @@ func (_ BultoConsolidado) SetUnionElem(v int64) { panic("Unsupported operation")
 func (r *BultoConsolidado) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Traza = NewTraza()
+		r.Traza = NewTrazaDeBulto()
 
 		w := types.Record{Target: &r.Traza}
 

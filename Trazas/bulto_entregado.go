@@ -18,16 +18,16 @@ import (
 var _ = fmt.Printf
 
 type BultoEntregado struct {
-	Traza Traza `json:"traza"`
+	Traza TrazaDeBulto `json:"traza"`
 
 	TipoDeEntrega TipoDeEntrega `json:"tipoDeEntrega"`
 }
 
-const BultoEntregadoAvroCRC64Fingerprint = "ɴ\a|\x1bA\xe2\xca"
+const BultoEntregadoAvroCRC64Fingerprint = "\x10\xb2\xab\x15\xf7[\xe6u"
 
 func NewBultoEntregado() BultoEntregado {
 	r := BultoEntregado{}
-	r.Traza = NewTraza()
+	r.Traza = NewTrazaDeBulto()
 
 	return r
 }
@@ -57,7 +57,7 @@ func DeserializeBultoEntregadoFromSchema(r io.Reader, schema string) (BultoEntre
 
 func writeBultoEntregado(r BultoEntregado, w io.Writer) error {
 	var err error
-	err = writeTraza(r.Traza, w)
+	err = writeTrazaDeBulto(r.Traza, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func (r BultoEntregado) Serialize(w io.Writer) error {
 }
 
 func (r BultoEntregado) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tipoDeBulto\",\"type\":[\"null\",{\"name\":\"TipoDeBulto\",\"symbols\":[\"Paquete\",\"Contenedor\"],\"type\":\"enum\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas.Bulto.Referencias\",\"type\":\"record\"}},{\"name\":\"tipoDeEntrega\",\"type\":{\"name\":\"TipoDeEntrega\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"symbols\":[\"undefined\",\"distribucion\",\"deliveryWindow\"],\"type\":\"enum\"}}],\"name\":\"Integracion.Esquemas.Bulto.Trazas.BultoEntregado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tipoDeBulto\",\"type\":[\"null\",{\"name\":\"TipoDeBulto\",\"symbols\":[\"Paquete\",\"Contenedor\"],\"type\":\"enum\"}]}],\"name\":\"TrazaDeBulto\",\"namespace\":\"Integracion.Esquemas.Bulto.Referencias\",\"type\":\"record\"}},{\"name\":\"tipoDeEntrega\",\"type\":{\"name\":\"TipoDeEntrega\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"symbols\":[\"undefined\",\"distribucion\",\"deliveryWindow\"],\"type\":\"enum\"}}],\"name\":\"Integracion.Esquemas.Bulto.Trazas.BultoEntregado\",\"type\":\"record\"}"
 }
 
 func (r BultoEntregado) SchemaName() string {
@@ -92,7 +92,7 @@ func (_ BultoEntregado) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *BultoEntregado) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Traza = NewTraza()
+		r.Traza = NewTrazaDeBulto()
 
 		w := types.Record{Target: &r.Traza}
 
