@@ -20,12 +20,14 @@ var _ = fmt.Printf
 type Email struct {
 	Destinatario string `json:"Destinatario"`
 
+	NombreDestinatario string `json:"NombreDestinatario"`
+
 	Estado string `json:"Estado"`
 
 	MotivoRechazo *UnionNullString `json:"MotivoRechazo"`
 }
 
-const EmailAvroCRC64Fingerprint = "/\t\v1\xf3a\xf3?"
+const EmailAvroCRC64Fingerprint = "\x94濯&!\xeb\f"
 
 func NewEmail() Email {
 	r := Email{}
@@ -62,6 +64,10 @@ func writeEmail(r Email, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.NombreDestinatario, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Estado, w)
 	if err != nil {
 		return err
@@ -78,7 +84,7 @@ func (r Email) Serialize(w io.Writer) error {
 }
 
 func (r Email) Schema() string {
-	return "{\"fields\":[{\"name\":\"Destinatario\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"MotivoRechazo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Email\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Destinatario\",\"type\":\"string\"},{\"name\":\"NombreDestinatario\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"MotivoRechazo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Email\",\"type\":\"record\"}"
 }
 
 func (r Email) SchemaName() string {
@@ -102,11 +108,16 @@ func (r *Email) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Estado}
+		w := types.String{Target: &r.NombreDestinatario}
 
 		return w
 
 	case 2:
+		w := types.String{Target: &r.Estado}
+
+		return w
+
+	case 3:
 		r.MotivoRechazo = NewUnionNullString()
 
 		return r.MotivoRechazo
@@ -116,7 +127,7 @@ func (r *Email) Get(i int) types.Field {
 
 func (r *Email) SetDefault(i int) {
 	switch i {
-	case 2:
+	case 3:
 		r.MotivoRechazo = nil
 		return
 	}
@@ -125,7 +136,7 @@ func (r *Email) SetDefault(i int) {
 
 func (r *Email) NullField(i int) {
 	switch i {
-	case 2:
+	case 3:
 		r.MotivoRechazo = nil
 		return
 	}
@@ -145,6 +156,10 @@ func (r Email) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["Destinatario"], err = json.Marshal(r.Destinatario)
+	if err != nil {
+		return nil, err
+	}
+	output["NombreDestinatario"], err = json.Marshal(r.NombreDestinatario)
 	if err != nil {
 		return nil, err
 	}
@@ -179,6 +194,20 @@ func (r *Email) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Destinatario")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NombreDestinatario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NombreDestinatario); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for NombreDestinatario")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Estado"]; ok {
