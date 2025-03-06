@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type InteraccionGenesys struct {
-	Id *UnionNullLong `json:"id"`
+	Id *UnionNullString `json:"id"`
 
 	DniPersona *UnionNullString `json:"dniPersona"`
 
@@ -41,7 +41,7 @@ type InteraccionGenesys struct {
 	TimeStampEnd *UnionNullLong `json:"timeStampEnd"`
 }
 
-const InteraccionGenesysAvroCRC64Fingerprint = "l\xab8\xb2\xf4\x0eA5"
+const InteraccionGenesysAvroCRC64Fingerprint = "Wf|\xf6a\xb2\xfe\xcd"
 
 func NewInteraccionGenesys() InteraccionGenesys {
 	r := InteraccionGenesys{}
@@ -84,7 +84,7 @@ func DeserializeInteraccionGenesysFromSchema(r io.Reader, schema string) (Intera
 
 func writeInteraccionGenesys(r InteraccionGenesys, w io.Writer) error {
 	var err error
-	err = writeUnionNullLong(r.Id, w)
+	err = writeUnionNullString(r.Id, w)
 	if err != nil {
 		return err
 	}
@@ -136,7 +136,7 @@ func (r InteraccionGenesys) Serialize(w io.Writer) error {
 }
 
 func (r InteraccionGenesys) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"dniPersona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"envioAsociado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"casoAsociado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sentido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuentaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoInteraccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"timeStampStart\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"timeStampEnd\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.AndiExterno.Events.Record.InteraccionGenesys\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"dniPersona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"envioAsociado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"casoAsociado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sentido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuentaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoInteraccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"timeStampStart\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"timeStampEnd\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.AndiExterno.Events.Record.InteraccionGenesys\",\"type\":\"record\"}"
 }
 
 func (r InteraccionGenesys) SchemaName() string {
@@ -155,7 +155,7 @@ func (_ InteraccionGenesys) SetUnionElem(v int64) { panic("Unsupported operation
 func (r *InteraccionGenesys) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Id = NewUnionNullLong()
+		r.Id = NewUnionNullString()
 
 		return r.Id
 	case 1:
@@ -358,7 +358,7 @@ func (r *InteraccionGenesys) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Id = NewUnionNullLong()
+		r.Id = NewUnionNullString()
 
 		r.Id = nil
 	}
