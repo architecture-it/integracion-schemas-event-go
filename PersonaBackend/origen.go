@@ -35,9 +35,11 @@ type Origen struct {
 	Provincia string `json:"Provincia"`
 
 	SucursalId *UnionNullString `json:"SucursalId"`
+
+	ObservacionesAdicionales *UnionNullString `json:"ObservacionesAdicionales"`
 }
 
-const OrigenAvroCRC64Fingerprint = "/FF\x18H\x7f\xb1\xd0"
+const OrigenAvroCRC64Fingerprint = "\xd6\xdd\xfcd\x1c\xc9\xf5\xf9"
 
 func NewOrigen() Origen {
 	r := Origen{}
@@ -45,6 +47,7 @@ func NewOrigen() Origen {
 	r.Piso = nil
 	r.Unidad = nil
 	r.SucursalId = nil
+	r.ObservacionesAdicionales = nil
 	return r
 }
 
@@ -109,6 +112,10 @@ func writeOrigen(r Origen, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ObservacionesAdicionales, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -117,7 +124,7 @@ func (r Origen) Serialize(w io.Writer) error {
 }
 
 func (r Origen) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PersonaBackend.Events.Common.Origen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PersonaBackend.Events.Common.Origen\",\"type\":\"record\"}"
 }
 
 func (r Origen) SchemaName() string {
@@ -176,6 +183,10 @@ func (r *Origen) Get(i int) types.Field {
 		r.SucursalId = NewUnionNullString()
 
 		return r.SucursalId
+	case 9:
+		r.ObservacionesAdicionales = NewUnionNullString()
+
+		return r.ObservacionesAdicionales
 	}
 	panic("Unknown field index")
 }
@@ -194,6 +205,9 @@ func (r *Origen) SetDefault(i int) {
 	case 8:
 		r.SucursalId = nil
 		return
+	case 9:
+		r.ObservacionesAdicionales = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -211,6 +225,9 @@ func (r *Origen) NullField(i int) {
 		return
 	case 8:
 		r.SucursalId = nil
+		return
+	case 9:
+		r.ObservacionesAdicionales = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -261,6 +278,10 @@ func (r Origen) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["SucursalId"], err = json.Marshal(r.SucursalId)
+	if err != nil {
+		return nil, err
+	}
+	output["ObservacionesAdicionales"], err = json.Marshal(r.ObservacionesAdicionales)
 	if err != nil {
 		return nil, err
 	}
@@ -407,6 +428,22 @@ func (r *Origen) UnmarshalJSON(data []byte) error {
 		r.SucursalId = NewUnionNullString()
 
 		r.SucursalId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ObservacionesAdicionales"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ObservacionesAdicionales); err != nil {
+			return err
+		}
+	} else {
+		r.ObservacionesAdicionales = NewUnionNullString()
+
+		r.ObservacionesAdicionales = nil
 	}
 	return nil
 }
