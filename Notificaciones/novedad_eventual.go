@@ -43,9 +43,11 @@ type NovedadEventual struct {
 	Provincia *UnionNullString `json:"provincia"`
 
 	Cuando *UnionNullLong `json:"cuando"`
+
+	AdmisionDrop *UnionNullBool `json:"AdmisionDrop"`
 }
 
-const NovedadEventualAvroCRC64Fingerprint = "\xb5@рE\xda\x17\xa8"
+const NovedadEventualAvroCRC64Fingerprint = "\r\xf6dȻ9PQ"
 
 func NewNovedadEventual() NovedadEventual {
 	r := NovedadEventual{}
@@ -57,6 +59,7 @@ func NewNovedadEventual() NovedadEventual {
 	r.CodigoPostal = nil
 	r.Provincia = nil
 	r.Cuando = nil
+	r.AdmisionDrop = nil
 	return r
 }
 
@@ -137,6 +140,10 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullBool(r.AdmisionDrop, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -145,7 +152,7 @@ func (r NovedadEventual) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEventual) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"canal\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"canal\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"AdmisionDrop\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
 }
 
 func (r NovedadEventual) SchemaName() string {
@@ -220,6 +227,10 @@ func (r *NovedadEventual) Get(i int) types.Field {
 		r.Cuando = NewUnionNullLong()
 
 		return r.Cuando
+	case 13:
+		r.AdmisionDrop = NewUnionNullBool()
+
+		return r.AdmisionDrop
 	}
 	panic("Unknown field index")
 }
@@ -250,6 +261,9 @@ func (r *NovedadEventual) SetDefault(i int) {
 	case 12:
 		r.Cuando = nil
 		return
+	case 13:
+		r.AdmisionDrop = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -279,6 +293,9 @@ func (r *NovedadEventual) NullField(i int) {
 		return
 	case 12:
 		r.Cuando = nil
+		return
+	case 13:
+		r.AdmisionDrop = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -345,6 +362,10 @@ func (r NovedadEventual) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["cuando"], err = json.Marshal(r.Cuando)
+	if err != nil {
+		return nil, err
+	}
+	output["AdmisionDrop"], err = json.Marshal(r.AdmisionDrop)
 	if err != nil {
 		return nil, err
 	}
@@ -555,6 +576,22 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 		r.Cuando = NewUnionNullLong()
 
 		r.Cuando = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["AdmisionDrop"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AdmisionDrop); err != nil {
+			return err
+		}
+	} else {
+		r.AdmisionDrop = NewUnionNullBool()
+
+		r.AdmisionDrop = nil
 	}
 	return nil
 }
