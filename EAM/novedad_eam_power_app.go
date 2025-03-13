@@ -29,7 +29,7 @@ type NovedadEAMPowerApp struct {
 	Equipo *UnionNullNovedadAsset `json:"Equipo"`
 }
 
-const NovedadEAMPowerAppAvroCRC64Fingerprint = "-\xf0\xae\xf9\xff\xc7\xc6f"
+const NovedadEAMPowerAppAvroCRC64Fingerprint = "\xf7\xfeA\xc1\x82\xf1yK"
 
 func NewNovedadEAMPowerApp() NovedadEAMPowerApp {
 	r := NovedadEAMPowerApp{}
@@ -91,7 +91,7 @@ func (r NovedadEAMPowerApp) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEAMPowerApp) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"IdPowerApp\",\"type\":\"string\"},{\"name\":\"NuevoEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"OT\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"IdEquipoEAM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"causaFalla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"trabajoRealizado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdOTEAM\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadWorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Equipo\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadAsset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]}],\"name\":\"Andreani.EAM.Events.Record.NovedadEAMPowerApp\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"IdPowerApp\",\"type\":\"string\"},{\"name\":\"NuevoEstado\",\"type\":\"string\"},{\"default\":null,\"name\":\"OT\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"IdEquipoEAM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"causaFalla\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"trabajoRealizado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdOTEAM\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadWorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Equipo\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadAsset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]}],\"name\":\"Andreani.EAM.Events.Record.NovedadEAMPowerApp\",\"type\":\"record\"}"
 }
 
 func (r NovedadEAMPowerApp) SchemaName() string {

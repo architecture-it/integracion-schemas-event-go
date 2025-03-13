@@ -19,13 +19,16 @@ var _ = fmt.Printf
 
 type NovedadAsset struct {
 	Nueva_planta *UnionNullString `json:"nueva_planta"`
+
+	Ceco *UnionNullString `json:"ceco"`
 }
 
-const NovedadAssetAvroCRC64Fingerprint = "\xd1v\x92\x88\xa5x\xb9<"
+const NovedadAssetAvroCRC64Fingerprint = "\x15촿\x00\x97\xd7\xc1"
 
 func NewNovedadAsset() NovedadAsset {
 	r := NovedadAsset{}
 	r.Nueva_planta = nil
+	r.Ceco = nil
 	return r
 }
 
@@ -58,6 +61,10 @@ func writeNovedadAsset(r NovedadAsset, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Ceco, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -66,7 +73,7 @@ func (r NovedadAsset) Serialize(w io.Writer) error {
 }
 
 func (r NovedadAsset) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.NovedadAsset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.NovedadAsset\",\"type\":\"record\"}"
 }
 
 func (r NovedadAsset) SchemaName() string {
@@ -88,6 +95,10 @@ func (r *NovedadAsset) Get(i int) types.Field {
 		r.Nueva_planta = NewUnionNullString()
 
 		return r.Nueva_planta
+	case 1:
+		r.Ceco = NewUnionNullString()
+
+		return r.Ceco
 	}
 	panic("Unknown field index")
 }
@@ -97,6 +108,9 @@ func (r *NovedadAsset) SetDefault(i int) {
 	case 0:
 		r.Nueva_planta = nil
 		return
+	case 1:
+		r.Ceco = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -105,6 +119,9 @@ func (r *NovedadAsset) NullField(i int) {
 	switch i {
 	case 0:
 		r.Nueva_planta = nil
+		return
+	case 1:
+		r.Ceco = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -123,6 +140,10 @@ func (r NovedadAsset) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["nueva_planta"], err = json.Marshal(r.Nueva_planta)
+	if err != nil {
+		return nil, err
+	}
+	output["ceco"], err = json.Marshal(r.Ceco)
 	if err != nil {
 		return nil, err
 	}
@@ -151,6 +172,22 @@ func (r *NovedadAsset) UnmarshalJSON(data []byte) error {
 		r.Nueva_planta = NewUnionNullString()
 
 		r.Nueva_planta = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ceco"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Ceco); err != nil {
+			return err
+		}
+	} else {
+		r.Ceco = NewUnionNullString()
+
+		r.Ceco = nil
 	}
 	return nil
 }

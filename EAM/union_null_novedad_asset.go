@@ -84,7 +84,7 @@ func DeserializeUnionNullNovedadAssetFromSchema(r io.Reader, schema string) (*Un
 }
 
 func (r *UnionNullNovedadAsset) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadAsset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadAsset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullNovedadAsset) SetBoolean(v bool)   { panic("Unsupported operation") }
