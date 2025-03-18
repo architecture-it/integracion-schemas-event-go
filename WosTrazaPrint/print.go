@@ -29,7 +29,7 @@ type Print struct {
 	Zpl *UnionNullString `json:"Zpl"`
 }
 
-const PrintAvroCRC64Fingerprint = "\uf2b0\x16Pt^\xd5"
+const PrintAvroCRC64Fingerprint = "\xedl\xbb\xf7\xff\x96\xdaH"
 
 func NewPrint() Print {
 	r := Print{}
@@ -92,11 +92,11 @@ func (r Print) Serialize(w io.Writer) error {
 }
 
 func (r Print) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Tarea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"IP\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zpl\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosTraza.Print.Events.Record.Print\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Tarea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"IP\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zpl\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosTrazaPrint.Events.Record.Print\",\"type\":\"record\"}"
 }
 
 func (r Print) SchemaName() string {
-	return "Andreani.WosTraza.Print.Events.Record.Print"
+	return "Andreani.WosTrazaPrint.Events.Record.Print"
 }
 
 func (_ Print) SetBoolean(v bool)    { panic("Unsupported operation") }
