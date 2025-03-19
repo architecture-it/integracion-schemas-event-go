@@ -24,18 +24,27 @@ type Print struct {
 
 	Serie *UnionNullString `json:"Serie"`
 
+	Lote *UnionNullString `json:"Lote"`
+
+	Gtin *UnionNullString `json:"Gtin"`
+
+	Estado *UnionNullString `json:"Estado"`
+
 	IP *UnionNullString `json:"IP"`
 
 	Zpl *UnionNullString `json:"Zpl"`
 }
 
-const PrintAvroCRC64Fingerprint = "\xedl\xbb\xf7\xff\x96\xdaH"
+const PrintAvroCRC64Fingerprint = "ٷ\x83bW\xef01"
 
 func NewPrint() Print {
 	r := Print{}
 	r.Propietario = nil
 	r.Tarea = nil
 	r.Serie = nil
+	r.Lote = nil
+	r.Gtin = nil
+	r.Estado = nil
 	return r
 }
 
@@ -76,6 +85,18 @@ func writePrint(r Print, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Lote, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Gtin, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Estado, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.IP, w)
 	if err != nil {
 		return err
@@ -92,7 +113,7 @@ func (r Print) Serialize(w io.Writer) error {
 }
 
 func (r Print) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Tarea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"IP\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zpl\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosTrazaPrint.Events.Record.Print\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Tarea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Lote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"string\"]},{\"name\":\"IP\",\"type\":[\"null\",\"string\"]},{\"name\":\"Zpl\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WosTrazaPrint.Events.Record.Print\",\"type\":\"record\"}"
 }
 
 func (r Print) SchemaName() string {
@@ -123,10 +144,22 @@ func (r *Print) Get(i int) types.Field {
 
 		return r.Serie
 	case 3:
+		r.Lote = NewUnionNullString()
+
+		return r.Lote
+	case 4:
+		r.Gtin = NewUnionNullString()
+
+		return r.Gtin
+	case 5:
+		r.Estado = NewUnionNullString()
+
+		return r.Estado
+	case 6:
 		r.IP = NewUnionNullString()
 
 		return r.IP
-	case 4:
+	case 7:
 		r.Zpl = NewUnionNullString()
 
 		return r.Zpl
@@ -145,6 +178,15 @@ func (r *Print) SetDefault(i int) {
 	case 2:
 		r.Serie = nil
 		return
+	case 3:
+		r.Lote = nil
+		return
+	case 4:
+		r.Gtin = nil
+		return
+	case 5:
+		r.Estado = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -161,9 +203,18 @@ func (r *Print) NullField(i int) {
 		r.Serie = nil
 		return
 	case 3:
-		r.IP = nil
+		r.Lote = nil
 		return
 	case 4:
+		r.Gtin = nil
+		return
+	case 5:
+		r.Estado = nil
+		return
+	case 6:
+		r.IP = nil
+		return
+	case 7:
 		r.Zpl = nil
 		return
 	}
@@ -191,6 +242,18 @@ func (r Print) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Serie"], err = json.Marshal(r.Serie)
+	if err != nil {
+		return nil, err
+	}
+	output["Lote"], err = json.Marshal(r.Lote)
+	if err != nil {
+		return nil, err
+	}
+	output["Gtin"], err = json.Marshal(r.Gtin)
+	if err != nil {
+		return nil, err
+	}
+	output["Estado"], err = json.Marshal(r.Estado)
 	if err != nil {
 		return nil, err
 	}
@@ -259,6 +322,54 @@ func (r *Print) UnmarshalJSON(data []byte) error {
 		r.Serie = NewUnionNullString()
 
 		r.Serie = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Lote"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Lote); err != nil {
+			return err
+		}
+	} else {
+		r.Lote = NewUnionNullString()
+
+		r.Lote = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Gtin"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Gtin); err != nil {
+			return err
+		}
+	} else {
+		r.Gtin = NewUnionNullString()
+
+		r.Gtin = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Estado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Estado); err != nil {
+			return err
+		}
+	} else {
+		r.Estado = NewUnionNullString()
+
+		r.Estado = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IP"]; ok {
