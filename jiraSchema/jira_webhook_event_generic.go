@@ -25,7 +25,7 @@ type JiraWebhookEventGeneric struct {
 	RawJson *UnionNullString `json:"rawJson"`
 }
 
-const JiraWebhookEventGenericAvroCRC64Fingerprint = "\x9c\xa3\x84\xeb![\xa6\xdf"
+const JiraWebhookEventGenericAvroCRC64Fingerprint = "\xb9\x7f\xf4ϭ:S\xde"
 
 func NewJiraWebhookEventGeneric() JiraWebhookEventGeneric {
 	r := JiraWebhookEventGeneric{}
@@ -80,11 +80,11 @@ func (r JiraWebhookEventGeneric) Serialize(w io.Writer) error {
 }
 
 func (r JiraWebhookEventGeneric) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"timestamp\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"webhookEvent\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"rawJson\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.jiraSchema.webhook.JiraWebhookEventGeneric\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"timestamp\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"webhookEvent\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"rawJson\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.jiraSchema.Events.Record.JiraWebhookEventGeneric\",\"type\":\"record\"}"
 }
 
 func (r JiraWebhookEventGeneric) SchemaName() string {
-	return "Andreani.jiraSchema.webhook.JiraWebhookEventGeneric"
+	return "Andreani.jiraSchema.Events.Record.JiraWebhookEventGeneric"
 }
 
 func (_ JiraWebhookEventGeneric) SetBoolean(v bool)    { panic("Unsupported operation") }
