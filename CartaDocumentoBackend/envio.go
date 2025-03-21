@@ -24,6 +24,8 @@ type Envio struct {
 
 	ModoDeEntrega string `json:"ModoDeEntrega"`
 
+	NumeroInterno string `json:"NumeroInterno"`
+
 	NumeroDeSeguimiento string `json:"NumeroDeSeguimiento"`
 
 	NumeroDeContrato string `json:"NumeroDeContrato"`
@@ -41,7 +43,7 @@ type Envio struct {
 	Destinatario *UnionNullDestinatario `json:"Destinatario"`
 }
 
-const EnvioAvroCRC64Fingerprint = "\x8a\a4Eg*6M"
+const EnvioAvroCRC64Fingerprint = "\x8d[\xfd\xa9\xb2I\x90\xfd"
 
 func NewEnvio() Envio {
 	r := Envio{}
@@ -89,6 +91,10 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.NumeroInterno, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.NumeroDeSeguimiento, w)
 	if err != nil {
 		return err
@@ -129,7 +135,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"name\":\"NumeroDeSeguimiento\",\"type\":\"string\"},{\"name\":\"NumeroDeContrato\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"FechaCreacion\",\"type\":\"long\"},{\"default\":null,\"name\":\"Origen\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Origen\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Destino\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Remitente\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"name\":\"NumeroInterno\",\"type\":\"string\"},{\"name\":\"NumeroDeSeguimiento\",\"type\":\"string\"},{\"name\":\"NumeroDeContrato\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"FechaCreacion\",\"type\":\"long\"},{\"default\":null,\"name\":\"Origen\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Origen\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Destino\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Remitente\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -163,38 +169,43 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.NumeroDeSeguimiento}
+		w := types.String{Target: &r.NumeroInterno}
 
 		return w
 
 	case 4:
-		w := types.String{Target: &r.NumeroDeContrato}
+		w := types.String{Target: &r.NumeroDeSeguimiento}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.Estado}
+		w := types.String{Target: &r.NumeroDeContrato}
 
 		return w
 
 	case 6:
-		w := types.Long{Target: &r.FechaCreacion}
+		w := types.String{Target: &r.Estado}
 
 		return w
 
 	case 7:
+		w := types.Long{Target: &r.FechaCreacion}
+
+		return w
+
+	case 8:
 		r.Origen = NewUnionNullOrigen()
 
 		return r.Origen
-	case 8:
+	case 9:
 		r.Destino = NewUnionNullDestino()
 
 		return r.Destino
-	case 9:
+	case 10:
 		r.Remitente = NewUnionNullRemitente()
 
 		return r.Remitente
-	case 10:
+	case 11:
 		r.Destinatario = NewUnionNullDestinatario()
 
 		return r.Destinatario
@@ -204,16 +215,16 @@ func (r *Envio) Get(i int) types.Field {
 
 func (r *Envio) SetDefault(i int) {
 	switch i {
-	case 7:
+	case 8:
 		r.Origen = nil
 		return
-	case 8:
+	case 9:
 		r.Destino = nil
 		return
-	case 9:
+	case 10:
 		r.Remitente = nil
 		return
-	case 10:
+	case 11:
 		r.Destinatario = nil
 		return
 	}
@@ -222,16 +233,16 @@ func (r *Envio) SetDefault(i int) {
 
 func (r *Envio) NullField(i int) {
 	switch i {
-	case 7:
+	case 8:
 		r.Origen = nil
 		return
-	case 8:
+	case 9:
 		r.Destino = nil
 		return
-	case 9:
+	case 10:
 		r.Remitente = nil
 		return
-	case 10:
+	case 11:
 		r.Destinatario = nil
 		return
 	}
@@ -259,6 +270,10 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ModoDeEntrega"], err = json.Marshal(r.ModoDeEntrega)
+	if err != nil {
+		return nil, err
+	}
+	output["NumeroInterno"], err = json.Marshal(r.NumeroInterno)
 	if err != nil {
 		return nil, err
 	}
@@ -345,6 +360,20 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for ModoDeEntrega")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NumeroInterno"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroInterno); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for NumeroInterno")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NumeroDeSeguimiento"]; ok {
