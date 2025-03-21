@@ -84,7 +84,7 @@ func DeserializeUnionNullOrigenFromSchema(r io.Reader, schema string) (*UnionNul
 }
 
 func (r *UnionNullOrigen) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Origen\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Origen\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullOrigen) SetBoolean(v bool)   { panic("Unsupported operation") }

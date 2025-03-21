@@ -33,18 +33,15 @@ type Destino struct {
 	CodigoPostal string `json:"CodigoPostal"`
 
 	Provincia string `json:"Provincia"`
-
-	ObservacionesAdicionales *UnionNullString `json:"ObservacionesAdicionales"`
 }
 
-const DestinoAvroCRC64Fingerprint = "\x93º\xfb\x1a\xa0xV"
+const DestinoAvroCRC64Fingerprint = "\x16\xa5\xf0\x9a\x90@\x95\xf5"
 
 func NewDestino() Destino {
 	r := Destino{}
 	r.Numero = nil
 	r.Piso = nil
 	r.Unidad = nil
-	r.ObservacionesAdicionales = nil
 	return r
 }
 
@@ -105,10 +102,6 @@ func writeDestino(r Destino, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.ObservacionesAdicionales, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -117,7 +110,7 @@ func (r Destino) Serialize(w io.Writer) error {
 }
 
 func (r Destino) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Destino\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Destino\",\"type\":\"record\"}"
 }
 
 func (r Destino) SchemaName() string {
@@ -172,10 +165,6 @@ func (r *Destino) Get(i int) types.Field {
 
 		return w
 
-	case 8:
-		r.ObservacionesAdicionales = NewUnionNullString()
-
-		return r.ObservacionesAdicionales
 	}
 	panic("Unknown field index")
 }
@@ -191,9 +180,6 @@ func (r *Destino) SetDefault(i int) {
 	case 4:
 		r.Unidad = nil
 		return
-	case 8:
-		r.ObservacionesAdicionales = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -208,9 +194,6 @@ func (r *Destino) NullField(i int) {
 		return
 	case 4:
 		r.Unidad = nil
-		return
-	case 8:
-		r.ObservacionesAdicionales = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -257,10 +240,6 @@ func (r Destino) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Provincia"], err = json.Marshal(r.Provincia)
-	if err != nil {
-		return nil, err
-	}
-	output["ObservacionesAdicionales"], err = json.Marshal(r.ObservacionesAdicionales)
 	if err != nil {
 		return nil, err
 	}
@@ -391,22 +370,6 @@ func (r *Destino) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Provincia")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["ObservacionesAdicionales"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ObservacionesAdicionales); err != nil {
-			return err
-		}
-	} else {
-		r.ObservacionesAdicionales = NewUnionNullString()
-
-		r.ObservacionesAdicionales = nil
 	}
 	return nil
 }

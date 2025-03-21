@@ -20,7 +20,7 @@ var _ = fmt.Printf
 type Destinatario struct {
 	Nombre string `json:"Nombre"`
 
-	Apellido string `json:"Apellido"`
+	Apellido *UnionNullString `json:"Apellido"`
 
 	Email string `json:"Email"`
 
@@ -29,10 +29,11 @@ type Destinatario struct {
 	Dni string `json:"Dni"`
 }
 
-const DestinatarioAvroCRC64Fingerprint = "\xf8\x9f8a\xa3k\xb3\xf5"
+const DestinatarioAvroCRC64Fingerprint = "9>)\xae\x17WUS"
 
 func NewDestinatario() Destinatario {
 	r := Destinatario{}
+	r.Apellido = nil
 	return r
 }
 
@@ -65,7 +66,7 @@ func writeDestinatario(r Destinatario, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Apellido, w)
+	err = writeUnionNullString(r.Apellido, w)
 	if err != nil {
 		return err
 	}
@@ -89,7 +90,7 @@ func (r Destinatario) Serialize(w io.Writer) error {
 }
 
 func (r Destinatario) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Destinatario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Destinatario\",\"type\":\"record\"}"
 }
 
 func (r Destinatario) SchemaName() string {
@@ -113,10 +114,9 @@ func (r *Destinatario) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Apellido}
+		r.Apellido = NewUnionNullString()
 
-		return w
-
+		return r.Apellido
 	case 2:
 		w := types.String{Target: &r.Email}
 
@@ -138,12 +138,18 @@ func (r *Destinatario) Get(i int) types.Field {
 
 func (r *Destinatario) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.Apellido = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Destinatario) NullField(i int) {
 	switch i {
+	case 1:
+		r.Apellido = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -216,7 +222,9 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Apellido")
+		r.Apellido = NewUnionNullString()
+
+		r.Apellido = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Email"]; ok {

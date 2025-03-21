@@ -27,32 +27,13 @@ type Remitente struct {
 	Telefono string `json:"Telefono"`
 
 	Dni string `json:"Dni"`
-
-	Calle string `json:"Calle"`
-
-	Numero *UnionNullString `json:"Numero"`
-
-	Localidad string `json:"Localidad"`
-
-	CodigoPostal string `json:"CodigoPostal"`
-
-	Piso *UnionNullString `json:"Piso"`
-
-	Unidad *UnionNullString `json:"Unidad"`
-
-	Pais string `json:"Pais"`
-
-	Region string `json:"Region"`
 }
 
-const RemitenteAvroCRC64Fingerprint = "r\x0f\xdf_\xdc\x10\xc2\xc9"
+const RemitenteAvroCRC64Fingerprint = "/N\xcchQ\xf4\x80\xd9"
 
 func NewRemitente() Remitente {
 	r := Remitente{}
 	r.Apellido = nil
-	r.Numero = nil
-	r.Piso = nil
-	r.Unidad = nil
 	return r
 }
 
@@ -101,38 +82,6 @@ func writeRemitente(r Remitente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Calle, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Numero, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Localidad, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.CodigoPostal, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Piso, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Unidad, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Pais, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Region, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -141,7 +90,7 @@ func (r Remitente) Serialize(w io.Writer) error {
 }
 
 func (r Remitente) Schema() string {
-	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Remitente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Remitente\",\"type\":\"record\"}"
 }
 
 func (r Remitente) SchemaName() string {
@@ -183,43 +132,6 @@ func (r *Remitente) Get(i int) types.Field {
 
 		return w
 
-	case 5:
-		w := types.String{Target: &r.Calle}
-
-		return w
-
-	case 6:
-		r.Numero = NewUnionNullString()
-
-		return r.Numero
-	case 7:
-		w := types.String{Target: &r.Localidad}
-
-		return w
-
-	case 8:
-		w := types.String{Target: &r.CodigoPostal}
-
-		return w
-
-	case 9:
-		r.Piso = NewUnionNullString()
-
-		return r.Piso
-	case 10:
-		r.Unidad = NewUnionNullString()
-
-		return r.Unidad
-	case 11:
-		w := types.String{Target: &r.Pais}
-
-		return w
-
-	case 12:
-		w := types.String{Target: &r.Region}
-
-		return w
-
 	}
 	panic("Unknown field index")
 }
@@ -229,15 +141,6 @@ func (r *Remitente) SetDefault(i int) {
 	case 1:
 		r.Apellido = nil
 		return
-	case 6:
-		r.Numero = nil
-		return
-	case 9:
-		r.Piso = nil
-		return
-	case 10:
-		r.Unidad = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -246,15 +149,6 @@ func (r *Remitente) NullField(i int) {
 	switch i {
 	case 1:
 		r.Apellido = nil
-		return
-	case 6:
-		r.Numero = nil
-		return
-	case 9:
-		r.Piso = nil
-		return
-	case 10:
-		r.Unidad = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -289,38 +183,6 @@ func (r Remitente) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Dni"], err = json.Marshal(r.Dni)
-	if err != nil {
-		return nil, err
-	}
-	output["Calle"], err = json.Marshal(r.Calle)
-	if err != nil {
-		return nil, err
-	}
-	output["Numero"], err = json.Marshal(r.Numero)
-	if err != nil {
-		return nil, err
-	}
-	output["Localidad"], err = json.Marshal(r.Localidad)
-	if err != nil {
-		return nil, err
-	}
-	output["CodigoPostal"], err = json.Marshal(r.CodigoPostal)
-	if err != nil {
-		return nil, err
-	}
-	output["Piso"], err = json.Marshal(r.Piso)
-	if err != nil {
-		return nil, err
-	}
-	output["Unidad"], err = json.Marshal(r.Unidad)
-	if err != nil {
-		return nil, err
-	}
-	output["Pais"], err = json.Marshal(r.Pais)
-	if err != nil {
-		return nil, err
-	}
-	output["Region"], err = json.Marshal(r.Region)
 	if err != nil {
 		return nil, err
 	}
@@ -405,124 +267,6 @@ func (r *Remitente) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Dni")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Calle"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Calle); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Calle")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Numero"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Numero); err != nil {
-			return err
-		}
-	} else {
-		r.Numero = NewUnionNullString()
-
-		r.Numero = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Localidad"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Localidad); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Localidad")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["CodigoPostal"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoPostal); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for CodigoPostal")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Piso"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Piso); err != nil {
-			return err
-		}
-	} else {
-		r.Piso = NewUnionNullString()
-
-		r.Piso = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Unidad"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Unidad); err != nil {
-			return err
-		}
-	} else {
-		r.Unidad = NewUnionNullString()
-
-		r.Unidad = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Pais"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Pais); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Pais")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Region"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Region); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Region")
 	}
 	return nil
 }

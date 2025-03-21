@@ -20,22 +20,17 @@ var _ = fmt.Printf
 type EnviosEvent struct {
 	PedidoId string `json:"PedidoId"`
 
-	UsuarioId string `json:"UsuarioId"`
-
 	UsuarioLoginId string `json:"UsuarioLoginId"`
 
 	Estado string `json:"Estado"`
 
-	NumeroDeOperacion *UnionNullString `json:"NumeroDeOperacion"`
-
 	Envios *UnionNullArrayEnvio `json:"Envios"`
 }
 
-const EnviosEventAvroCRC64Fingerprint = "\xedb~\xfc=\xa8\xf8J"
+const EnviosEventAvroCRC64Fingerprint = "roU\xae\xe6|\x88\xbf"
 
 func NewEnviosEvent() EnviosEvent {
 	r := EnviosEvent{}
-	r.NumeroDeOperacion = nil
 	r.Envios = nil
 	return r
 }
@@ -69,19 +64,11 @@ func writeEnviosEvent(r EnviosEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.UsuarioId, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.UsuarioLoginId, w)
 	if err != nil {
 		return err
 	}
 	err = vm.WriteString(r.Estado, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.NumeroDeOperacion, w)
 	if err != nil {
 		return err
 	}
@@ -97,7 +84,7 @@ func (r EnviosEvent) Serialize(w io.Writer) error {
 }
 
 func (r EnviosEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"PedidoId\",\"type\":\"string\"},{\"name\":\"UsuarioId\",\"type\":\"string\"},{\"name\":\"UsuarioLoginId\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"NumeroDeOperacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Envios\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"name\":\"NumeroInterno\",\"type\":\"string\"},{\"name\":\"NumeroDeSeguimiento\",\"type\":\"string\"},{\"name\":\"NumeroDeContrato\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"RemitoFactura\",\"type\":\"string\"},{\"name\":\"FechaCreacion\",\"type\":\"long\"},{\"default\":null,\"name\":\"Origen\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Origen\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destino\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"}],\"name\":\"Remitente\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Paquetes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoId\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Alto\",\"type\":\"string\"},{\"name\":\"Ancho\",\"type\":\"string\"},{\"name\":\"Largo\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"int\"},{\"default\":null,\"name\":\"NumeroDeBulto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Paquete\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"DatosConstancia\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"},{\"default\":null,\"name\":\"Region\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Provincia\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosConstancia\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Cliente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"CodigoAndreani\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Logo\",\"type\":\"string\"}],\"name\":\"Cliente\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Cotizacion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"IdMercadoPago\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Iva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PesoAforado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SeguroDistribucionSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SeguroDistribucionConIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DistribucionSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DistribucionConIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TarifaSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TarifaConIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descuento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cupon\",\"type\":[\"null\",\"string\"]}],\"name\":\"Cotizacion\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Referencia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Envio\",\"namespace\":\"Andreani.CartaDocumentoBackend.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Record.EnviosEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PedidoId\",\"type\":\"string\"},{\"name\":\"UsuarioLoginId\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Envios\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"name\":\"NumeroInterno\",\"type\":\"string\"},{\"name\":\"NumeroDeSeguimiento\",\"type\":\"string\"},{\"name\":\"NumeroDeContrato\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"FechaCreacion\",\"type\":\"long\"},{\"default\":null,\"name\":\"Origen\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Origen\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Destino\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Remitente\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"type\":\"record\"}]}],\"name\":\"Envio\",\"namespace\":\"Andreani.CartaDocumentoBackend.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Record.EnviosEvent\",\"type\":\"record\"}"
 }
 
 func (r EnviosEvent) SchemaName() string {
@@ -121,25 +108,16 @@ func (r *EnviosEvent) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.UsuarioId}
-
-		return w
-
-	case 2:
 		w := types.String{Target: &r.UsuarioLoginId}
 
 		return w
 
-	case 3:
+	case 2:
 		w := types.String{Target: &r.Estado}
 
 		return w
 
-	case 4:
-		r.NumeroDeOperacion = NewUnionNullString()
-
-		return r.NumeroDeOperacion
-	case 5:
+	case 3:
 		r.Envios = NewUnionNullArrayEnvio()
 
 		return r.Envios
@@ -149,10 +127,7 @@ func (r *EnviosEvent) Get(i int) types.Field {
 
 func (r *EnviosEvent) SetDefault(i int) {
 	switch i {
-	case 4:
-		r.NumeroDeOperacion = nil
-		return
-	case 5:
+	case 3:
 		r.Envios = nil
 		return
 	}
@@ -161,10 +136,7 @@ func (r *EnviosEvent) SetDefault(i int) {
 
 func (r *EnviosEvent) NullField(i int) {
 	switch i {
-	case 4:
-		r.NumeroDeOperacion = nil
-		return
-	case 5:
+	case 3:
 		r.Envios = nil
 		return
 	}
@@ -187,19 +159,11 @@ func (r EnviosEvent) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["UsuarioId"], err = json.Marshal(r.UsuarioId)
-	if err != nil {
-		return nil, err
-	}
 	output["UsuarioLoginId"], err = json.Marshal(r.UsuarioLoginId)
 	if err != nil {
 		return nil, err
 	}
 	output["Estado"], err = json.Marshal(r.Estado)
-	if err != nil {
-		return nil, err
-	}
-	output["NumeroDeOperacion"], err = json.Marshal(r.NumeroDeOperacion)
 	if err != nil {
 		return nil, err
 	}
@@ -232,20 +196,6 @@ func (r *EnviosEvent) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for PedidoId")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["UsuarioId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.UsuarioId); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for UsuarioId")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["UsuarioLoginId"]; ok {
 			return v
 		}
@@ -272,22 +222,6 @@ func (r *EnviosEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Estado")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["NumeroDeOperacion"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroDeOperacion); err != nil {
-			return err
-		}
-	} else {
-		r.NumeroDeOperacion = NewUnionNullString()
-
-		r.NumeroDeOperacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Envios"]; ok {

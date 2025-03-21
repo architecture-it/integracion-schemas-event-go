@@ -32,8 +32,6 @@ type Envio struct {
 
 	Estado string `json:"Estado"`
 
-	RemitoFactura string `json:"RemitoFactura"`
-
 	FechaCreacion int64 `json:"FechaCreacion"`
 
 	Origen *UnionNullOrigen `json:"Origen"`
@@ -43,21 +41,9 @@ type Envio struct {
 	Remitente *UnionNullRemitente `json:"Remitente"`
 
 	Destinatario *UnionNullDestinatario `json:"Destinatario"`
-
-	Paquetes *UnionNullArrayPaquete `json:"Paquetes"`
-
-	DatosConstancia *UnionNullDatosConstancia `json:"DatosConstancia"`
-
-	Cliente *UnionNullCliente `json:"Cliente"`
-
-	Cotizacion *UnionNullCotizacion `json:"Cotizacion"`
-
-	Canal *UnionNullString `json:"Canal"`
-
-	Referencia *UnionNullString `json:"Referencia"`
 }
 
-const EnvioAvroCRC64Fingerprint = "\xe5Wn4)~\xdd^"
+const EnvioAvroCRC64Fingerprint = "\x8d[\xfd\xa9\xb2I\x90\xfd"
 
 func NewEnvio() Envio {
 	r := Envio{}
@@ -65,12 +51,6 @@ func NewEnvio() Envio {
 	r.Destino = nil
 	r.Remitente = nil
 	r.Destinatario = nil
-	r.Paquetes = nil
-	r.DatosConstancia = nil
-	r.Cliente = nil
-	r.Cotizacion = nil
-	r.Canal = nil
-	r.Referencia = nil
 	return r
 }
 
@@ -127,10 +107,6 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.RemitoFactura, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteLong(r.FechaCreacion, w)
 	if err != nil {
 		return err
@@ -151,30 +127,6 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullArrayPaquete(r.Paquetes, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullDatosConstancia(r.DatosConstancia, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullCliente(r.Cliente, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullCotizacion(r.Cotizacion, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Canal, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Referencia, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -183,7 +135,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"name\":\"NumeroInterno\",\"type\":\"string\"},{\"name\":\"NumeroDeSeguimiento\",\"type\":\"string\"},{\"name\":\"NumeroDeContrato\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"RemitoFactura\",\"type\":\"string\"},{\"name\":\"FechaCreacion\",\"type\":\"long\"},{\"default\":null,\"name\":\"Origen\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Origen\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Destino\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"}],\"name\":\"Remitente\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Apellido\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Paquetes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoId\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Alto\",\"type\":\"string\"},{\"name\":\"Ancho\",\"type\":\"string\"},{\"name\":\"Largo\",\"type\":\"string\"},{\"name\":\"Peso\",\"type\":\"string\"},{\"name\":\"ValorDeclarado\",\"type\":\"int\"},{\"default\":null,\"name\":\"NumeroDeBulto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Paquete\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"DatosConstancia\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Url\",\"type\":\"string\"},{\"name\":\"NumeroPermisionaria\",\"type\":\"string\"},{\"name\":\"SucursalDistribucion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalDistribucionId\",\"type\":\"string\"},{\"name\":\"SucursalRendicion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionNomenclatura\",\"type\":\"string\"},{\"name\":\"SucursalRendicionDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalRendicionId\",\"type\":\"string\"},{\"name\":\"CodigoSucursalCabecera\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraDescripcion\",\"type\":\"string\"},{\"name\":\"SucursalAbastecedoraId\",\"type\":\"string\"},{\"name\":\"CodigoZonaReparto\",\"type\":\"string\"},{\"default\":null,\"name\":\"Region\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Provincia\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosConstancia\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Cliente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"CodigoAndreani\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Logo\",\"type\":\"string\"}],\"name\":\"Cliente\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Cotizacion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"IdMercadoPago\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Iva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PesoAforado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SeguroDistribucionSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SeguroDistribucionConIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DistribucionSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DistribucionConIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TarifaSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TarifaConIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descuento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cupon\",\"type\":[\"null\",\"string\"]}],\"name\":\"Cotizacion\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Referencia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"name\":\"NumeroInterno\",\"type\":\"string\"},{\"name\":\"NumeroDeSeguimiento\",\"type\":\"string\"},{\"name\":\"NumeroDeContrato\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"FechaCreacion\",\"type\":\"long\"},{\"default\":null,\"name\":\"Origen\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Origen\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destino\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Destino\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Remitente\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"Telefono\",\"type\":\"string\"},{\"name\":\"Dni\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -237,90 +189,43 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 7:
-		w := types.String{Target: &r.RemitoFactura}
-
-		return w
-
-	case 8:
 		w := types.Long{Target: &r.FechaCreacion}
 
 		return w
 
-	case 9:
+	case 8:
 		r.Origen = NewUnionNullOrigen()
 
 		return r.Origen
-	case 10:
+	case 9:
 		r.Destino = NewUnionNullDestino()
 
 		return r.Destino
-	case 11:
+	case 10:
 		r.Remitente = NewUnionNullRemitente()
 
 		return r.Remitente
-	case 12:
+	case 11:
 		r.Destinatario = NewUnionNullDestinatario()
 
 		return r.Destinatario
-	case 13:
-		r.Paquetes = NewUnionNullArrayPaquete()
-
-		return r.Paquetes
-	case 14:
-		r.DatosConstancia = NewUnionNullDatosConstancia()
-
-		return r.DatosConstancia
-	case 15:
-		r.Cliente = NewUnionNullCliente()
-
-		return r.Cliente
-	case 16:
-		r.Cotizacion = NewUnionNullCotizacion()
-
-		return r.Cotizacion
-	case 17:
-		r.Canal = NewUnionNullString()
-
-		return r.Canal
-	case 18:
-		r.Referencia = NewUnionNullString()
-
-		return r.Referencia
 	}
 	panic("Unknown field index")
 }
 
 func (r *Envio) SetDefault(i int) {
 	switch i {
-	case 9:
+	case 8:
 		r.Origen = nil
 		return
-	case 10:
+	case 9:
 		r.Destino = nil
 		return
-	case 11:
+	case 10:
 		r.Remitente = nil
 		return
-	case 12:
+	case 11:
 		r.Destinatario = nil
-		return
-	case 13:
-		r.Paquetes = nil
-		return
-	case 14:
-		r.DatosConstancia = nil
-		return
-	case 15:
-		r.Cliente = nil
-		return
-	case 16:
-		r.Cotizacion = nil
-		return
-	case 17:
-		r.Canal = nil
-		return
-	case 18:
-		r.Referencia = nil
 		return
 	}
 	panic("Unknown field index")
@@ -328,35 +233,17 @@ func (r *Envio) SetDefault(i int) {
 
 func (r *Envio) NullField(i int) {
 	switch i {
-	case 9:
+	case 8:
 		r.Origen = nil
 		return
-	case 10:
+	case 9:
 		r.Destino = nil
 		return
-	case 11:
+	case 10:
 		r.Remitente = nil
 		return
-	case 12:
+	case 11:
 		r.Destinatario = nil
-		return
-	case 13:
-		r.Paquetes = nil
-		return
-	case 14:
-		r.DatosConstancia = nil
-		return
-	case 15:
-		r.Cliente = nil
-		return
-	case 16:
-		r.Cotizacion = nil
-		return
-	case 17:
-		r.Canal = nil
-		return
-	case 18:
-		r.Referencia = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -402,10 +289,6 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["RemitoFactura"], err = json.Marshal(r.RemitoFactura)
-	if err != nil {
-		return nil, err
-	}
 	output["FechaCreacion"], err = json.Marshal(r.FechaCreacion)
 	if err != nil {
 		return nil, err
@@ -423,30 +306,6 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Destinatario"], err = json.Marshal(r.Destinatario)
-	if err != nil {
-		return nil, err
-	}
-	output["Paquetes"], err = json.Marshal(r.Paquetes)
-	if err != nil {
-		return nil, err
-	}
-	output["DatosConstancia"], err = json.Marshal(r.DatosConstancia)
-	if err != nil {
-		return nil, err
-	}
-	output["Cliente"], err = json.Marshal(r.Cliente)
-	if err != nil {
-		return nil, err
-	}
-	output["Cotizacion"], err = json.Marshal(r.Cotizacion)
-	if err != nil {
-		return nil, err
-	}
-	output["Canal"], err = json.Marshal(r.Canal)
-	if err != nil {
-		return nil, err
-	}
-	output["Referencia"], err = json.Marshal(r.Referencia)
 	if err != nil {
 		return nil, err
 	}
@@ -559,20 +418,6 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Estado")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["RemitoFactura"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.RemitoFactura); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for RemitoFactura")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["FechaCreacion"]; ok {
 			return v
 		}
@@ -649,102 +494,6 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		r.Destinatario = NewUnionNullDestinatario()
 
 		r.Destinatario = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Paquetes"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Paquetes); err != nil {
-			return err
-		}
-	} else {
-		r.Paquetes = NewUnionNullArrayPaquete()
-
-		r.Paquetes = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["DatosConstancia"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.DatosConstancia); err != nil {
-			return err
-		}
-	} else {
-		r.DatosConstancia = NewUnionNullDatosConstancia()
-
-		r.DatosConstancia = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Cliente"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Cliente); err != nil {
-			return err
-		}
-	} else {
-		r.Cliente = NewUnionNullCliente()
-
-		r.Cliente = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Cotizacion"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Cotizacion); err != nil {
-			return err
-		}
-	} else {
-		r.Cotizacion = NewUnionNullCotizacion()
-
-		r.Cotizacion = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Canal"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Canal); err != nil {
-			return err
-		}
-	} else {
-		r.Canal = NewUnionNullString()
-
-		r.Canal = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Referencia"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Referencia); err != nil {
-			return err
-		}
-	} else {
-		r.Referencia = NewUnionNullString()
-
-		r.Referencia = nil
 	}
 	return nil
 }

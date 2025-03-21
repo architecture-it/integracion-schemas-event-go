@@ -33,21 +33,15 @@ type Origen struct {
 	CodigoPostal string `json:"CodigoPostal"`
 
 	Provincia string `json:"Provincia"`
-
-	SucursalId *UnionNullString `json:"SucursalId"`
-
-	ObservacionesAdicionales *UnionNullString `json:"ObservacionesAdicionales"`
 }
 
-const OrigenAvroCRC64Fingerprint = "a\x87\aR\x8f\xabV\x05"
+const OrigenAvroCRC64Fingerprint = "\xa7q/mnг\x00"
 
 func NewOrigen() Origen {
 	r := Origen{}
 	r.Numero = nil
 	r.Piso = nil
 	r.Unidad = nil
-	r.SucursalId = nil
-	r.ObservacionesAdicionales = nil
 	return r
 }
 
@@ -108,14 +102,6 @@ func writeOrigen(r Origen, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.SucursalId, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.ObservacionesAdicionales, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -124,7 +110,7 @@ func (r Origen) Serialize(w io.Writer) error {
 }
 
 func (r Origen) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Origen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"}],\"name\":\"Andreani.CartaDocumentoBackend.Events.Common.Origen\",\"type\":\"record\"}"
 }
 
 func (r Origen) SchemaName() string {
@@ -179,14 +165,6 @@ func (r *Origen) Get(i int) types.Field {
 
 		return w
 
-	case 8:
-		r.SucursalId = NewUnionNullString()
-
-		return r.SucursalId
-	case 9:
-		r.ObservacionesAdicionales = NewUnionNullString()
-
-		return r.ObservacionesAdicionales
 	}
 	panic("Unknown field index")
 }
@@ -202,12 +180,6 @@ func (r *Origen) SetDefault(i int) {
 	case 4:
 		r.Unidad = nil
 		return
-	case 8:
-		r.SucursalId = nil
-		return
-	case 9:
-		r.ObservacionesAdicionales = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -222,12 +194,6 @@ func (r *Origen) NullField(i int) {
 		return
 	case 4:
 		r.Unidad = nil
-		return
-	case 8:
-		r.SucursalId = nil
-		return
-	case 9:
-		r.ObservacionesAdicionales = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -274,14 +240,6 @@ func (r Origen) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Provincia"], err = json.Marshal(r.Provincia)
-	if err != nil {
-		return nil, err
-	}
-	output["SucursalId"], err = json.Marshal(r.SucursalId)
-	if err != nil {
-		return nil, err
-	}
-	output["ObservacionesAdicionales"], err = json.Marshal(r.ObservacionesAdicionales)
 	if err != nil {
 		return nil, err
 	}
@@ -412,38 +370,6 @@ func (r *Origen) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Provincia")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["SucursalId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.SucursalId); err != nil {
-			return err
-		}
-	} else {
-		r.SucursalId = NewUnionNullString()
-
-		r.SucursalId = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["ObservacionesAdicionales"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ObservacionesAdicionales); err != nil {
-			return err
-		}
-	} else {
-		r.ObservacionesAdicionales = NewUnionNullString()
-
-		r.ObservacionesAdicionales = nil
 	}
 	return nil
 }
