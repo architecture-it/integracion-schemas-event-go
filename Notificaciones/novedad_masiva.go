@@ -23,7 +23,7 @@ type NovedadMasiva struct {
 	Detalles []NovedadEventual `json:"detalles"`
 }
 
-const NovedadMasivaAvroCRC64Fingerprint = "\xa0]\xae,[\xc4'\xa1"
+const NovedadMasivaAvroCRC64Fingerprint = "\x8dvG\\\x87 \x90\x0e"
 
 func NewNovedadMasiva() NovedadMasiva {
 	r := NovedadMasiva{}
@@ -73,7 +73,7 @@ func (r NovedadMasiva) Serialize(w io.Writer) error {
 }
 
 func (r NovedadMasiva) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"detalles\",\"type\":{\"items\":{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"canal\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"AdmisionDrop\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"NovedadEventual\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadMasiva\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"detalles\",\"type\":{\"items\":{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalActual\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"AdmisionDrop\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"NovedadEventual\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadMasiva\",\"type\":\"record\"}"
 }
 
 func (r NovedadMasiva) SchemaName() string {

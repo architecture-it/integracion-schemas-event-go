@@ -24,15 +24,15 @@ type NovedadEventual struct {
 
 	DestinatarioTelefono *UnionNullString `json:"destinatarioTelefono"`
 
-	Canal string `json:"canal"`
+	Canal *UnionNullString `json:"canal"`
 
 	CodigoDeEnvio *UnionNullString `json:"codigoDeEnvio"`
 
-	SucursalActual string `json:"sucursalActual"`
+	SucursalActual *UnionNullString `json:"sucursalActual"`
 
-	Segmento string `json:"segmento"`
+	Segmento *UnionNullString `json:"segmento"`
 
-	Cliente string `json:"cliente"`
+	Cliente *UnionNullString `json:"cliente"`
 
 	CodigoDeContratoInterno *UnionNullString `json:"codigoDeContratoInterno"`
 
@@ -47,13 +47,17 @@ type NovedadEventual struct {
 	AdmisionDrop *UnionNullBool `json:"AdmisionDrop"`
 }
 
-const NovedadEventualAvroCRC64Fingerprint = "\r\xf6dȻ9PQ"
+const NovedadEventualAvroCRC64Fingerprint = ":\xd1\xdd1k\xdd\xd4N"
 
 func NewNovedadEventual() NovedadEventual {
 	r := NovedadEventual{}
 	r.DestinatarioEmail = nil
 	r.DestinatarioTelefono = nil
+	r.Canal = nil
 	r.CodigoDeEnvio = nil
+	r.SucursalActual = nil
+	r.Segmento = nil
+	r.Cliente = nil
 	r.CodigoDeContratoInterno = nil
 	r.TipoContacto = nil
 	r.CodigoPostal = nil
@@ -100,7 +104,7 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Canal, w)
+	err = writeUnionNullString(r.Canal, w)
 	if err != nil {
 		return err
 	}
@@ -108,15 +112,15 @@ func writeNovedadEventual(r NovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SucursalActual, w)
+	err = writeUnionNullString(r.SucursalActual, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Segmento, w)
+	err = writeUnionNullString(r.Segmento, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Cliente, w)
+	err = writeUnionNullString(r.Cliente, w)
 	if err != nil {
 		return err
 	}
@@ -152,7 +156,7 @@ func (r NovedadEventual) Serialize(w io.Writer) error {
 }
 
 func (r NovedadEventual) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"canal\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalActual\",\"type\":\"string\"},{\"name\":\"segmento\",\"type\":\"string\"},{\"name\":\"cliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"AdmisionDrop\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalActual\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"AdmisionDrop\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadEventual\",\"type\":\"record\"}"
 }
 
 func (r NovedadEventual) SchemaName() string {
@@ -184,29 +188,25 @@ func (r *NovedadEventual) Get(i int) types.Field {
 
 		return r.DestinatarioTelefono
 	case 3:
-		w := types.String{Target: &r.Canal}
+		r.Canal = NewUnionNullString()
 
-		return w
-
+		return r.Canal
 	case 4:
 		r.CodigoDeEnvio = NewUnionNullString()
 
 		return r.CodigoDeEnvio
 	case 5:
-		w := types.String{Target: &r.SucursalActual}
+		r.SucursalActual = NewUnionNullString()
 
-		return w
-
+		return r.SucursalActual
 	case 6:
-		w := types.String{Target: &r.Segmento}
+		r.Segmento = NewUnionNullString()
 
-		return w
-
+		return r.Segmento
 	case 7:
-		w := types.String{Target: &r.Cliente}
+		r.Cliente = NewUnionNullString()
 
-		return w
-
+		return r.Cliente
 	case 8:
 		r.CodigoDeContratoInterno = NewUnionNullString()
 
@@ -243,8 +243,20 @@ func (r *NovedadEventual) SetDefault(i int) {
 	case 2:
 		r.DestinatarioTelefono = nil
 		return
+	case 3:
+		r.Canal = nil
+		return
 	case 4:
 		r.CodigoDeEnvio = nil
+		return
+	case 5:
+		r.SucursalActual = nil
+		return
+	case 6:
+		r.Segmento = nil
+		return
+	case 7:
+		r.Cliente = nil
 		return
 	case 8:
 		r.CodigoDeContratoInterno = nil
@@ -276,8 +288,20 @@ func (r *NovedadEventual) NullField(i int) {
 	case 2:
 		r.DestinatarioTelefono = nil
 		return
+	case 3:
+		r.Canal = nil
+		return
 	case 4:
 		r.CodigoDeEnvio = nil
+		return
+	case 5:
+		r.SucursalActual = nil
+		return
+	case 6:
+		r.Segmento = nil
+		return
+	case 7:
+		r.Cliente = nil
 		return
 	case 8:
 		r.CodigoDeContratoInterno = nil
@@ -437,7 +461,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for canal")
+		r.Canal = NewUnionNullString()
+
+		r.Canal = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoDeEnvio"]; ok {
@@ -467,7 +493,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for sucursalActual")
+		r.SucursalActual = NewUnionNullString()
+
+		r.SucursalActual = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["segmento"]; ok {
@@ -481,7 +509,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for segmento")
+		r.Segmento = NewUnionNullString()
+
+		r.Segmento = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cliente"]; ok {
@@ -495,7 +525,9 @@ func (r *NovedadEventual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cliente")
+		r.Cliente = NewUnionNullString()
+
+		r.Cliente = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoDeContratoInterno"]; ok {
