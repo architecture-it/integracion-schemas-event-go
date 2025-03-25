@@ -20,14 +20,14 @@ var _ = fmt.Printf
 type NovedadMasiva struct {
 	IdModelo int64 `json:"idModelo"`
 
-	Detalles []NovedadEventual `json:"detalles"`
+	Detalles []DetalleNovedadEventual `json:"detalles"`
 }
 
-const NovedadMasivaAvroCRC64Fingerprint = "\x8dvG\\\x87 \x90\x0e"
+const NovedadMasivaAvroCRC64Fingerprint = "\xe3\xb6ןX\x1c\x1aq"
 
 func NewNovedadMasiva() NovedadMasiva {
 	r := NovedadMasiva{}
-	r.Detalles = make([]NovedadEventual, 0)
+	r.Detalles = make([]DetalleNovedadEventual, 0)
 
 	return r
 }
@@ -61,7 +61,7 @@ func writeNovedadMasiva(r NovedadMasiva, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayNovedadEventual(r.Detalles, w)
+	err = writeArrayDetalleNovedadEventual(r.Detalles, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func (r NovedadMasiva) Serialize(w io.Writer) error {
 }
 
 func (r NovedadMasiva) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"detalles\",\"type\":{\"items\":{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalActual\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"AdmisionDrop\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"NovedadEventual\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadMasiva\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"detalles\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"idModelo\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalActual\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"AdmisionDrop\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"DetalleNovedadEventual\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.NovedadMasiva\",\"type\":\"record\"}"
 }
 
 func (r NovedadMasiva) SchemaName() string {
@@ -97,9 +97,9 @@ func (r *NovedadMasiva) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.Detalles = make([]NovedadEventual, 0)
+		r.Detalles = make([]DetalleNovedadEventual, 0)
 
-		w := ArrayNovedadEventualWrapper{Target: &r.Detalles}
+		w := ArrayDetalleNovedadEventualWrapper{Target: &r.Detalles}
 
 		return w
 
