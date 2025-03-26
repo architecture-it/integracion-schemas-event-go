@@ -22,6 +22,8 @@ type BultoSce struct {
 
 	TipoContenedorEmbalaje string `json:"TipoContenedorEmbalaje"`
 
+	ContenedorPreparacion *UnionNullString `json:"ContenedorPreparacion"`
+
 	Longitud *UnionNullFloat `json:"Longitud"`
 
 	Altura *UnionNullFloat `json:"Altura"`
@@ -33,10 +35,11 @@ type BultoSce struct {
 	ArticulosSce []ArticuloSce `json:"ArticulosSce"`
 }
 
-const BultoSceAvroCRC64Fingerprint = "\xa2ow\x90q;\xbe\xb5"
+const BultoSceAvroCRC64Fingerprint = "\xa1\xcbY\xa5\x9fڅc"
 
 func NewBultoSce() BultoSce {
 	r := BultoSce{}
+	r.ContenedorPreparacion = nil
 	r.Longitud = nil
 	r.Altura = nil
 	r.Ancho = nil
@@ -79,6 +82,10 @@ func writeBultoSce(r BultoSce, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ContenedorPreparacion, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullFloat(r.Longitud, w)
 	if err != nil {
 		return err
@@ -107,7 +114,7 @@ func (r BultoSce) Serialize(w io.Writer) error {
 }
 
 func (r BultoSce) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"TipoContenedorEmbalaje\",\"type\":\"string\"},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"ArticulosSce\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"NroLinea\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"name\":\"ContenedorPreparacion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaSeriesEnEmpaquetado\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ArticuloSce\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Common.BultoSce\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"TipoContenedorEmbalaje\",\"type\":\"string\"},{\"default\":null,\"name\":\"ContenedorPreparacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"ArticulosSce\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"NroLinea\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"name\":\"ContenedorPreparacion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaSeriesEnEmpaquetado\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ArticuloSce\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Common.BultoSce\",\"type\":\"record\"}"
 }
 
 func (r BultoSce) SchemaName() string {
@@ -136,22 +143,26 @@ func (r *BultoSce) Get(i int) types.Field {
 		return w
 
 	case 2:
+		r.ContenedorPreparacion = NewUnionNullString()
+
+		return r.ContenedorPreparacion
+	case 3:
 		r.Longitud = NewUnionNullFloat()
 
 		return r.Longitud
-	case 3:
+	case 4:
 		r.Altura = NewUnionNullFloat()
 
 		return r.Altura
-	case 4:
+	case 5:
 		r.Ancho = NewUnionNullFloat()
 
 		return r.Ancho
-	case 5:
+	case 6:
 		r.Peso = NewUnionNullFloat()
 
 		return r.Peso
-	case 6:
+	case 7:
 		r.ArticulosSce = make([]ArticuloSce, 0)
 
 		w := ArrayArticuloSceWrapper{Target: &r.ArticulosSce}
@@ -165,15 +176,18 @@ func (r *BultoSce) Get(i int) types.Field {
 func (r *BultoSce) SetDefault(i int) {
 	switch i {
 	case 2:
-		r.Longitud = nil
+		r.ContenedorPreparacion = nil
 		return
 	case 3:
-		r.Altura = nil
+		r.Longitud = nil
 		return
 	case 4:
-		r.Ancho = nil
+		r.Altura = nil
 		return
 	case 5:
+		r.Ancho = nil
+		return
+	case 6:
 		r.Peso = nil
 		return
 	}
@@ -183,15 +197,18 @@ func (r *BultoSce) SetDefault(i int) {
 func (r *BultoSce) NullField(i int) {
 	switch i {
 	case 2:
-		r.Longitud = nil
+		r.ContenedorPreparacion = nil
 		return
 	case 3:
-		r.Altura = nil
+		r.Longitud = nil
 		return
 	case 4:
-		r.Ancho = nil
+		r.Altura = nil
 		return
 	case 5:
+		r.Ancho = nil
+		return
+	case 6:
 		r.Peso = nil
 		return
 	}
@@ -215,6 +232,10 @@ func (r BultoSce) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["TipoContenedorEmbalaje"], err = json.Marshal(r.TipoContenedorEmbalaje)
+	if err != nil {
+		return nil, err
+	}
+	output["ContenedorPreparacion"], err = json.Marshal(r.ContenedorPreparacion)
 	if err != nil {
 		return nil, err
 	}
@@ -275,6 +296,22 @@ func (r *BultoSce) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for TipoContenedorEmbalaje")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ContenedorPreparacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ContenedorPreparacion); err != nil {
+			return err
+		}
+	} else {
+		r.ContenedorPreparacion = NewUnionNullString()
+
+		r.ContenedorPreparacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Longitud"]; ok {
