@@ -22,7 +22,7 @@ type BultoSce struct {
 
 	TipoContenedorEmbalaje string `json:"TipoContenedorEmbalaje"`
 
-	ContenedorPreparacion *UnionNullString `json:"ContenedorPreparacion"`
+	ContenedorPreparacion string `json:"ContenedorPreparacion"`
 
 	Longitud *UnionNullFloat `json:"Longitud"`
 
@@ -35,11 +35,10 @@ type BultoSce struct {
 	ArticulosSce []ArticuloSce `json:"ArticulosSce"`
 }
 
-const BultoSceAvroCRC64Fingerprint = "\xdf\x02s\x87\xa6ݖ\x8f"
+const BultoSceAvroCRC64Fingerprint = "\x01\xc7`\xccz\xe7\x9e\x10"
 
 func NewBultoSce() BultoSce {
 	r := BultoSce{}
-	r.ContenedorPreparacion = nil
 	r.Longitud = nil
 	r.Altura = nil
 	r.Ancho = nil
@@ -82,7 +81,7 @@ func writeBultoSce(r BultoSce, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.ContenedorPreparacion, w)
+	err = vm.WriteString(r.ContenedorPreparacion, w)
 	if err != nil {
 		return err
 	}
@@ -114,7 +113,7 @@ func (r BultoSce) Serialize(w io.Writer) error {
 }
 
 func (r BultoSce) Schema() string {
-	return "{\"fields\":[{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"TipoContenedorEmbalaje\",\"type\":\"string\"},{\"default\":null,\"name\":\"ContenedorPreparacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"ArticulosSce\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"NroLinea\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"default\":null,\"name\":\"ContenedorPreparacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaSeriesEnEmpaquetado\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ArticuloSce\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Common.BultoSce\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"CodigoEmbalaje\",\"type\":\"string\"},{\"name\":\"TipoContenedorEmbalaje\",\"type\":\"string\"},{\"name\":\"ContenedorPreparacion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Altura\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]},{\"name\":\"ArticulosSce\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"NroLinea\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"default\":null,\"name\":\"ContenedorPreparacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaSeriesEnEmpaquetado\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ArticuloSce\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Empaquetado.Events.Common.BultoSce\",\"type\":\"record\"}"
 }
 
 func (r BultoSce) SchemaName() string {
@@ -143,9 +142,10 @@ func (r *BultoSce) Get(i int) types.Field {
 		return w
 
 	case 2:
-		r.ContenedorPreparacion = NewUnionNullString()
+		w := types.String{Target: &r.ContenedorPreparacion}
 
-		return r.ContenedorPreparacion
+		return w
+
 	case 3:
 		r.Longitud = NewUnionNullFloat()
 
@@ -175,9 +175,6 @@ func (r *BultoSce) Get(i int) types.Field {
 
 func (r *BultoSce) SetDefault(i int) {
 	switch i {
-	case 2:
-		r.ContenedorPreparacion = nil
-		return
 	case 3:
 		r.Longitud = nil
 		return
@@ -196,9 +193,6 @@ func (r *BultoSce) SetDefault(i int) {
 
 func (r *BultoSce) NullField(i int) {
 	switch i {
-	case 2:
-		r.ContenedorPreparacion = nil
-		return
 	case 3:
 		r.Longitud = nil
 		return
@@ -309,9 +303,7 @@ func (r *BultoSce) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.ContenedorPreparacion = NewUnionNullString()
-
-		r.ContenedorPreparacion = nil
+		return fmt.Errorf("no value specified for ContenedorPreparacion")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Longitud"]; ok {
