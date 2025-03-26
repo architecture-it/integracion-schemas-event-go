@@ -28,7 +28,7 @@ type ArticuloSce struct {
 
 	Lote string `json:"Lote"`
 
-	ContenedorPreparacion string `json:"ContenedorPreparacion"`
+	ContenedorPreparacion *UnionNullString `json:"ContenedorPreparacion"`
 
 	Atributo1 *UnionNullString `json:"Atributo1"`
 
@@ -59,10 +59,11 @@ type ArticuloSce struct {
 	Series *UnionNullArrayString `json:"Series"`
 }
 
-const ArticuloSceAvroCRC64Fingerprint = "\xebE\x9f0\xe0-*\b"
+const ArticuloSceAvroCRC64Fingerprint = "\xd3\x11\xbe{\x8dr\xd3="
 
 func NewArticuloSce() ArticuloSce {
 	r := ArticuloSce{}
+	r.ContenedorPreparacion = nil
 	r.Atributo1 = nil
 	r.Atributo2 = nil
 	r.Atributo3 = nil
@@ -124,7 +125,7 @@ func writeArticuloSce(r ArticuloSce, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ContenedorPreparacion, w)
+	err = writeUnionNullString(r.ContenedorPreparacion, w)
 	if err != nil {
 		return err
 	}
@@ -192,7 +193,7 @@ func (r ArticuloSce) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloSce) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"NroLinea\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"name\":\"ContenedorPreparacion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaSeriesEnEmpaquetado\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloSce\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sku\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"NroLinea\",\"type\":\"string\"},{\"name\":\"PickDetailKey\",\"type\":\"string\"},{\"name\":\"Lote\",\"type\":\"string\"},{\"default\":null,\"name\":\"ContenedorPreparacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Atributo12\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaSeriesEnEmpaquetado\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"Series\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.Empaquetado.Events.Common.ArticuloSce\",\"type\":\"record\"}"
 }
 
 func (r ArticuloSce) SchemaName() string {
@@ -236,10 +237,9 @@ func (r *ArticuloSce) Get(i int) types.Field {
 		return w
 
 	case 5:
-		w := types.String{Target: &r.ContenedorPreparacion}
+		r.ContenedorPreparacion = NewUnionNullString()
 
-		return w
-
+		return r.ContenedorPreparacion
 	case 6:
 		r.Atributo1 = NewUnionNullString()
 
@@ -303,6 +303,9 @@ func (r *ArticuloSce) Get(i int) types.Field {
 
 func (r *ArticuloSce) SetDefault(i int) {
 	switch i {
+	case 5:
+		r.ContenedorPreparacion = nil
+		return
 	case 6:
 		r.Atributo1 = nil
 		return
@@ -348,6 +351,9 @@ func (r *ArticuloSce) SetDefault(i int) {
 
 func (r *ArticuloSce) NullField(i int) {
 	switch i {
+	case 5:
+		r.ContenedorPreparacion = nil
+		return
 	case 6:
 		r.Atributo1 = nil
 		return
@@ -575,7 +581,9 @@ func (r *ArticuloSce) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ContenedorPreparacion")
+		r.ContenedorPreparacion = NewUnionNullString()
+
+		r.ContenedorPreparacion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Atributo1"]; ok {
