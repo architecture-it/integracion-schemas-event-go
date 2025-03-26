@@ -20,7 +20,9 @@ var _ = fmt.Printf
 type DetallePago struct {
 	BancoEmisor *UnionNullString `json:"bancoEmisor"`
 
-	FechaDePago *UnionNullString `json:"fechaDePago"`
+	FechaDeEmision *UnionNullString `json:"fechaDeEmision"`
+
+	FechaDeVencimiento *UnionNullString `json:"fechaDeVencimiento"`
 
 	NumeroDeCheque *UnionNullString `json:"numeroDeCheque"`
 
@@ -31,7 +33,7 @@ type DetallePago struct {
 	Notas *UnionNullString `json:"notas"`
 }
 
-const DetallePagoAvroCRC64Fingerprint = "+!i#l\xab\v\n"
+const DetallePagoAvroCRC64Fingerprint = "\xa0\x106\x94h\x85\x91\x11"
 
 func NewDetallePago() DetallePago {
 	r := DetallePago{}
@@ -67,7 +69,11 @@ func writeDetallePago(r DetallePago, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.FechaDePago, w)
+	err = writeUnionNullString(r.FechaDeEmision, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.FechaDeVencimiento, w)
 	if err != nil {
 		return err
 	}
@@ -95,7 +101,7 @@ func (r DetallePago) Serialize(w io.Writer) error {
 }
 
 func (r DetallePago) Schema() string {
-	return "{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.DetallePago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeEmision\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.DetallePago\",\"type\":\"record\"}"
 }
 
 func (r DetallePago) SchemaName() string {
@@ -118,22 +124,26 @@ func (r *DetallePago) Get(i int) types.Field {
 
 		return r.BancoEmisor
 	case 1:
-		r.FechaDePago = NewUnionNullString()
+		r.FechaDeEmision = NewUnionNullString()
 
-		return r.FechaDePago
+		return r.FechaDeEmision
 	case 2:
+		r.FechaDeVencimiento = NewUnionNullString()
+
+		return r.FechaDeVencimiento
+	case 3:
 		r.NumeroDeCheque = NewUnionNullString()
 
 		return r.NumeroDeCheque
-	case 3:
+	case 4:
 		r.NumeroDeRetencion = NewUnionNullString()
 
 		return r.NumeroDeRetencion
-	case 4:
+	case 5:
 		r.NumeroNotaCredito = NewUnionNullString()
 
 		return r.NumeroNotaCredito
-	case 5:
+	case 6:
 		r.Notas = NewUnionNullString()
 
 		return r.Notas
@@ -153,18 +163,21 @@ func (r *DetallePago) NullField(i int) {
 		r.BancoEmisor = nil
 		return
 	case 1:
-		r.FechaDePago = nil
+		r.FechaDeEmision = nil
 		return
 	case 2:
-		r.NumeroDeCheque = nil
+		r.FechaDeVencimiento = nil
 		return
 	case 3:
-		r.NumeroDeRetencion = nil
+		r.NumeroDeCheque = nil
 		return
 	case 4:
-		r.NumeroNotaCredito = nil
+		r.NumeroDeRetencion = nil
 		return
 	case 5:
+		r.NumeroNotaCredito = nil
+		return
+	case 6:
 		r.Notas = nil
 		return
 	}
@@ -187,7 +200,11 @@ func (r DetallePago) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["fechaDePago"], err = json.Marshal(r.FechaDePago)
+	output["fechaDeEmision"], err = json.Marshal(r.FechaDeEmision)
+	if err != nil {
+		return nil, err
+	}
+	output["fechaDeVencimiento"], err = json.Marshal(r.FechaDeVencimiento)
 	if err != nil {
 		return nil, err
 	}
@@ -232,18 +249,32 @@ func (r *DetallePago) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for bancoEmisor")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["fechaDePago"]; ok {
+		if v, ok := fields["fechaDeEmision"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.FechaDePago); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaDeEmision); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for fechaDePago")
+		return fmt.Errorf("no value specified for fechaDeEmision")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["fechaDeVencimiento"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaDeVencimiento); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for fechaDeVencimiento")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeCheque"]; ok {

@@ -27,7 +27,7 @@ type Pago struct {
 	Detalles *UnionNullDetallePago `json:"detalles"`
 }
 
-const PagoAvroCRC64Fingerprint = "\x8fԫ\x836k*\x0e"
+const PagoAvroCRC64Fingerprint = "\xc3V\fu,\xc7\xccs"
 
 func NewPago() Pago {
 	r := Pago{}
@@ -83,7 +83,7 @@ func (r Pago) Serialize(w io.Writer) error {
 }
 
 func (r Pago) Schema() string {
-	return "{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"montoCobrado\",\"type\":\"string\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Pago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"tipoPago\",\"type\":\"string\"},{\"name\":\"montoCobrado\",\"type\":\"string\"},{\"name\":\"comprobante\",\"type\":\"string\"},{\"name\":\"detalles\",\"type\":[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeEmision\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.Pago\",\"type\":\"record\"}"
 }
 
 func (r Pago) SchemaName() string {
