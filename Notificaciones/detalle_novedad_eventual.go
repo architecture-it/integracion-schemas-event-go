@@ -45,9 +45,11 @@ type DetalleNovedadEventual struct {
 	Cuando *UnionNullLong `json:"cuando"`
 
 	AdmisionDrop *UnionNullBool `json:"AdmisionDrop"`
+
+	DestinatarioNombre *UnionNullString `json:"destinatarioNombre"`
 }
 
-const DetalleNovedadEventualAvroCRC64Fingerprint = "D\xe3Zo\xe3\xc6\xc4\xef"
+const DetalleNovedadEventualAvroCRC64Fingerprint = "\x93\xdd5\x17\a\x8b\xcc\xe9"
 
 func NewDetalleNovedadEventual() DetalleNovedadEventual {
 	r := DetalleNovedadEventual{}
@@ -65,6 +67,7 @@ func NewDetalleNovedadEventual() DetalleNovedadEventual {
 	r.Provincia = nil
 	r.Cuando = nil
 	r.AdmisionDrop = nil
+	r.DestinatarioNombre = nil
 	return r
 }
 
@@ -149,6 +152,10 @@ func writeDetalleNovedadEventual(r DetalleNovedadEventual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.DestinatarioNombre, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -157,7 +164,7 @@ func (r DetalleNovedadEventual) Serialize(w io.Writer) error {
 }
 
 func (r DetalleNovedadEventual) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"idModelo\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalActual\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"AdmisionDrop\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.DetalleNovedadEventual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"idModelo\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"destinatarioEmail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatarioTelefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalActual\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"AdmisionDrop\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"destinatarioNombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.DetalleNovedadEventual\",\"type\":\"record\"}"
 }
 
 func (r DetalleNovedadEventual) SchemaName() string {
@@ -231,6 +238,10 @@ func (r *DetalleNovedadEventual) Get(i int) types.Field {
 		r.AdmisionDrop = NewUnionNullBool()
 
 		return r.AdmisionDrop
+	case 14:
+		r.DestinatarioNombre = NewUnionNullString()
+
+		return r.DestinatarioNombre
 	}
 	panic("Unknown field index")
 }
@@ -279,6 +290,9 @@ func (r *DetalleNovedadEventual) SetDefault(i int) {
 	case 13:
 		r.AdmisionDrop = nil
 		return
+	case 14:
+		r.DestinatarioNombre = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -326,6 +340,9 @@ func (r *DetalleNovedadEventual) NullField(i int) {
 		return
 	case 13:
 		r.AdmisionDrop = nil
+		return
+	case 14:
+		r.DestinatarioNombre = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -396,6 +413,10 @@ func (r DetalleNovedadEventual) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["AdmisionDrop"], err = json.Marshal(r.AdmisionDrop)
+	if err != nil {
+		return nil, err
+	}
+	output["destinatarioNombre"], err = json.Marshal(r.DestinatarioNombre)
 	if err != nil {
 		return nil, err
 	}
@@ -632,6 +653,22 @@ func (r *DetalleNovedadEventual) UnmarshalJSON(data []byte) error {
 		r.AdmisionDrop = NewUnionNullBool()
 
 		r.AdmisionDrop = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["destinatarioNombre"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DestinatarioNombre); err != nil {
+			return err
+		}
+	} else {
+		r.DestinatarioNombre = NewUnionNullString()
+
+		r.DestinatarioNombre = nil
 	}
 	return nil
 }
