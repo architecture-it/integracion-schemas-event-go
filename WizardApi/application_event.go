@@ -22,30 +22,40 @@ type ApplicationEvent struct {
 
 	Name string `json:"Name"`
 
-	Deleted bool `json:"Deleted"`
+	Description string `json:"Description"`
 
 	IsMigration bool `json:"IsMigration"`
 
-	Project Project `json:"Project"`
+	JsonData string `json:"JsonData"`
 
-	PipelineVersion PipelineVersion `json:"PipelineVersion"`
+	Project ProjectEvent `json:"Project"`
 
-	Repository Repository `json:"Repository"`
+	Template TemplateEvent `json:"Template"`
 
-	Environments []Environment `json:"Environments"`
+	PipelineVersion PipelineVersionEvent `json:"PipelineVersion"`
+
+	Repository RepositoryEvent `json:"Repository"`
+
+	Status StatusEvent `json:"Status"`
+
+	AuditInfo AuditEvent `json:"AuditInfo"`
 }
 
-const ApplicationEventAvroCRC64Fingerprint = "\xc0\xf8r\xcer\xae2\xaf"
+const ApplicationEventAvroCRC64Fingerprint = "\xc9\x13l1d\xdf\xc6@"
 
 func NewApplicationEvent() ApplicationEvent {
 	r := ApplicationEvent{}
-	r.Project = NewProject()
+	r.Project = NewProjectEvent()
 
-	r.PipelineVersion = NewPipelineVersion()
+	r.Template = NewTemplateEvent()
 
-	r.Repository = NewRepository()
+	r.PipelineVersion = NewPipelineVersionEvent()
 
-	r.Environments = make([]Environment, 0)
+	r.Repository = NewRepositoryEvent()
+
+	r.Status = NewStatusEvent()
+
+	r.AuditInfo = NewAuditEvent()
 
 	return r
 }
@@ -83,7 +93,7 @@ func writeApplicationEvent(r ApplicationEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteBool(r.Deleted, w)
+	err = vm.WriteString(r.Description, w)
 	if err != nil {
 		return err
 	}
@@ -91,19 +101,31 @@ func writeApplicationEvent(r ApplicationEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeProject(r.Project, w)
+	err = vm.WriteString(r.JsonData, w)
 	if err != nil {
 		return err
 	}
-	err = writePipelineVersion(r.PipelineVersion, w)
+	err = writeProjectEvent(r.Project, w)
 	if err != nil {
 		return err
 	}
-	err = writeRepository(r.Repository, w)
+	err = writeTemplateEvent(r.Template, w)
 	if err != nil {
 		return err
 	}
-	err = writeArrayEnvironment(r.Environments, w)
+	err = writePipelineVersionEvent(r.PipelineVersion, w)
+	if err != nil {
+		return err
+	}
+	err = writeRepositoryEvent(r.Repository, w)
+	if err != nil {
+		return err
+	}
+	err = writeStatusEvent(r.Status, w)
+	if err != nil {
+		return err
+	}
+	err = writeAuditEvent(r.AuditInfo, w)
 	if err != nil {
 		return err
 	}
@@ -115,7 +137,7 @@ func (r ApplicationEvent) Serialize(w io.Writer) error {
 }
 
 func (r ApplicationEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"name\":\"IsMigration\",\"type\":\"boolean\"},{\"name\":\"Project\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Acronym\",\"type\":\"string\"},{\"name\":\"OwnerMail\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"}],\"name\":\"Project\",\"type\":\"record\"}},{\"name\":\"PipelineVersion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Version\",\"type\":\"string\"},{\"name\":\"ReleaseNotes\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"name\":\"Latest\",\"type\":\"boolean\"},{\"name\":\"Pipeline\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"RepositoryConfig\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"}],\"name\":\"Pipeline\",\"type\":\"record\"}}],\"name\":\"PipelineVersion\",\"type\":\"record\"}},{\"name\":\"Repository\",\"type\":{\"fields\":[{\"name\":\"RepositoryId\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUser\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}},{\"name\":\"Organization\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"}],\"name\":\"Organization\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"Repository\",\"type\":\"record\"}},{\"name\":\"Environments\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"HostName\",\"type\":\"string\"},{\"name\":\"IsProduction\",\"type\":\"boolean\"},{\"name\":\"Schedule\",\"type\":\"string\"},{\"name\":\"MatrixDeploy\",\"type\":\"string\"},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"name\":\"RepoEnvironmentName\",\"type\":\"string\"}],\"name\":\"Environment\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WizardApi.Events.Record.ApplicationEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"IsMigration\",\"type\":\"boolean\"},{\"name\":\"JsonData\",\"type\":\"string\"},{\"name\":\"Project\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Acronym\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"OwnerMail\",\"type\":\"string\"},{\"name\":\"OrganizationId\",\"type\":\"long\"},{\"name\":\"JsonData\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":{\"fields\":[{\"name\":\"CreateBy\",\"type\":\"string\"},{\"name\":\"CreateDate\",\"type\":{\"logicalType\":\"date\",\"type\":\"int\"}},{\"default\":null,\"name\":\"UpdateBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdateDate\",\"type\":[\"null\",{\"logicalType\":\"date\",\"type\":\"int\"}]},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"DeletedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeletedDate\",\"type\":[\"null\",{\"logicalType\":\"date\",\"type\":\"int\"}]}],\"name\":\"AuditEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"ProjectEvent\",\"type\":\"record\"}},{\"name\":\"Template\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Alias\",\"type\":\"string\"},{\"name\":\"IsTemplate\",\"type\":\"boolean\"},{\"name\":\"Active\",\"type\":\"boolean\"},{\"name\":\"FrameworkVersion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"Latest\",\"type\":\"boolean\"},{\"name\":\"StatusVersion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"}],\"name\":\"StatusEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}},{\"name\":\"Framework\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Active\",\"type\":\"boolean\"},{\"name\":\"Language\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"}],\"name\":\"LanguageEvent\",\"type\":\"record\"}}],\"name\":\"FrameworkEvent\",\"type\":\"record\"}}],\"name\":\"FrameworkVersionEvent\",\"type\":\"record\"}},{\"name\":\"Workflow\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"}],\"name\":\"WorkflowCiEvent\",\"type\":\"record\"}}],\"name\":\"TemplateEvent\",\"type\":\"record\"}},{\"name\":\"PipelineVersion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Version\",\"type\":\"string\"},{\"name\":\"ReleaseNotes\",\"type\":\"string\"},{\"name\":\"Latest\",\"type\":\"boolean\"},{\"name\":\"StatusVersion\",\"type\":\"Andreani.WizardApi.Events.Common.StatusEvent\"},{\"name\":\"Pipeline\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"Ref\",\"type\":\"string\"},{\"name\":\"RepositoryConfig\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"PipelineEvent\",\"type\":\"record\"}},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"PipelineVersionEvent\",\"type\":\"record\"}},{\"name\":\"Repository\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"TeamGroup\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"default\":[],\"name\":\"TeamGroupTeams\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Role\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"},{\"default\":null,\"name\":\"IsUserRole\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"RoleEvent\",\"type\":\"record\"}},{\"name\":\"Team\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"SlugName\",\"type\":\"string\"},{\"name\":\"Organization\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Freeze\",\"type\":\"boolean\"},{\"name\":\"UserOrganizationRole\",\"type\":{\"fields\":[{\"name\":\"Role\",\"type\":\"Andreani.WizardApi.Events.Record.RoleEvent\"},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUserEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"UserOrganizationRoleEvent\",\"type\":\"record\"}}],\"name\":\"OrganizationEvent\",\"type\":\"record\"}},{\"default\":[],\"name\":\"Users\",\"type\":{\"items\":\"Andreani.WizardApi.Events.Common.GithubUserEvent\",\"type\":\"array\"}}],\"name\":\"TeamEvent\",\"type\":\"record\"}}],\"name\":\"TeamGroupTeamEvent\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"TeamGroupEvent\",\"type\":\"record\"}},{\"name\":\"User\",\"type\":\"Andreani.WizardApi.Events.Common.GithubUserEvent\"},{\"name\":\"Organization\",\"type\":\"Andreani.WizardApi.Events.Record.OrganizationEvent\"},{\"default\":[],\"name\":\"Variables\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"Value\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"VariableEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"Secrets\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"SecretEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"Environments\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"HostName\",\"type\":\"string\"},{\"name\":\"IsProduction\",\"type\":\"boolean\"},{\"name\":\"Schedule\",\"type\":\"string\"},{\"name\":\"MatrixDeploy\",\"type\":\"string\"},{\"default\":[],\"name\":\"EnvironmentVariables\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"Value\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"EnvironmentVariableEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"EnvironmentSecrets\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"EnvironmentSecretEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"ApprovalTeams\",\"type\":{\"items\":\"Andreani.WizardApi.Events.Record.TeamEvent\",\"type\":\"array\"}},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"EnvironmentEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"RepositoryEvent\",\"type\":\"record\"}},{\"name\":\"Status\",\"type\":\"Andreani.WizardApi.Events.Common.StatusEvent\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"Andreani.WizardApi.Events.Record.ApplicationEvent\",\"type\":\"record\"}"
 }
 
 func (r ApplicationEvent) SchemaName() string {
@@ -144,7 +166,7 @@ func (r *ApplicationEvent) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.Boolean{Target: &r.Deleted}
+		w := types.String{Target: &r.Description}
 
 		return w
 
@@ -154,30 +176,49 @@ func (r *ApplicationEvent) Get(i int) types.Field {
 		return w
 
 	case 4:
-		r.Project = NewProject()
+		w := types.String{Target: &r.JsonData}
+
+		return w
+
+	case 5:
+		r.Project = NewProjectEvent()
 
 		w := types.Record{Target: &r.Project}
 
 		return w
 
-	case 5:
-		r.PipelineVersion = NewPipelineVersion()
+	case 6:
+		r.Template = NewTemplateEvent()
+
+		w := types.Record{Target: &r.Template}
+
+		return w
+
+	case 7:
+		r.PipelineVersion = NewPipelineVersionEvent()
 
 		w := types.Record{Target: &r.PipelineVersion}
 
 		return w
 
-	case 6:
-		r.Repository = NewRepository()
+	case 8:
+		r.Repository = NewRepositoryEvent()
 
 		w := types.Record{Target: &r.Repository}
 
 		return w
 
-	case 7:
-		r.Environments = make([]Environment, 0)
+	case 9:
+		r.Status = NewStatusEvent()
 
-		w := ArrayEnvironmentWrapper{Target: &r.Environments}
+		w := types.Record{Target: &r.Status}
+
+		return w
+
+	case 10:
+		r.AuditInfo = NewAuditEvent()
+
+		w := types.Record{Target: &r.AuditInfo}
 
 		return w
 
@@ -217,7 +258,7 @@ func (r ApplicationEvent) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Deleted"], err = json.Marshal(r.Deleted)
+	output["Description"], err = json.Marshal(r.Description)
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +266,15 @@ func (r ApplicationEvent) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["JsonData"], err = json.Marshal(r.JsonData)
+	if err != nil {
+		return nil, err
+	}
 	output["Project"], err = json.Marshal(r.Project)
+	if err != nil {
+		return nil, err
+	}
+	output["Template"], err = json.Marshal(r.Template)
 	if err != nil {
 		return nil, err
 	}
@@ -237,7 +286,11 @@ func (r ApplicationEvent) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Environments"], err = json.Marshal(r.Environments)
+	output["Status"], err = json.Marshal(r.Status)
+	if err != nil {
+		return nil, err
+	}
+	output["AuditInfo"], err = json.Marshal(r.AuditInfo)
 	if err != nil {
 		return nil, err
 	}
@@ -280,18 +333,18 @@ func (r *ApplicationEvent) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Name")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Deleted"]; ok {
+		if v, ok := fields["Description"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Deleted); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Description); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Deleted")
+		return fmt.Errorf("no value specified for Description")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IsMigration"]; ok {
@@ -308,6 +361,20 @@ func (r *ApplicationEvent) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for IsMigration")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["JsonData"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.JsonData); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for JsonData")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["Project"]; ok {
 			return v
 		}
@@ -320,6 +387,20 @@ func (r *ApplicationEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Project")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Template"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Template); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Template")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["PipelineVersion"]; ok {
@@ -350,18 +431,32 @@ func (r *ApplicationEvent) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Repository")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Environments"]; ok {
+		if v, ok := fields["Status"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Environments); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Status); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Environments")
+		return fmt.Errorf("no value specified for Status")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["AuditInfo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AuditInfo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for AuditInfo")
 	}
 	return nil
 }
