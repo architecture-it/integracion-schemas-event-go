@@ -19,12 +19,15 @@ var _ = fmt.Printf
 
 type OrdenHdrSolicitada struct {
 	Action *UnionNullString `json:"Action"`
+
+	Request *UnionNullRequest `json:"Request"`
 }
 
-const OrdenHdrSolicitadaAvroCRC64Fingerprint = ",\xe0\v'\x93\xe5\xbb\x14"
+const OrdenHdrSolicitadaAvroCRC64Fingerprint = "9\x01\xae\x1aV^\xbc\xd2"
 
 func NewOrdenHdrSolicitada() OrdenHdrSolicitada {
 	r := OrdenHdrSolicitada{}
+	r.Request = nil
 	return r
 }
 
@@ -57,6 +60,10 @@ func writeOrdenHdrSolicitada(r OrdenHdrSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullRequest(r.Request, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -65,7 +72,7 @@ func (r OrdenHdrSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r OrdenHdrSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"Action\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IntegracionHdrDms.Events.Record.OrdenHdrSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Action\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Request\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"SheetRouteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SheetRoute\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Shipment\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observation\",\"type\":[\"null\",\"string\"]}],\"name\":\"Request\",\"namespace\":\"Andreani.IntegracionHdrDms.Events.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.IntegracionHdrDms.Events.Record.OrdenHdrSolicitada\",\"type\":\"record\"}"
 }
 
 func (r OrdenHdrSolicitada) SchemaName() string {
@@ -87,12 +94,19 @@ func (r *OrdenHdrSolicitada) Get(i int) types.Field {
 		r.Action = NewUnionNullString()
 
 		return r.Action
+	case 1:
+		r.Request = NewUnionNullRequest()
+
+		return r.Request
 	}
 	panic("Unknown field index")
 }
 
 func (r *OrdenHdrSolicitada) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.Request = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -101,6 +115,9 @@ func (r *OrdenHdrSolicitada) NullField(i int) {
 	switch i {
 	case 0:
 		r.Action = nil
+		return
+	case 1:
+		r.Request = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -119,6 +136,10 @@ func (r OrdenHdrSolicitada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["Action"], err = json.Marshal(r.Action)
+	if err != nil {
+		return nil, err
+	}
+	output["Request"], err = json.Marshal(r.Request)
 	if err != nil {
 		return nil, err
 	}
@@ -145,6 +166,22 @@ func (r *OrdenHdrSolicitada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Action")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Request"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Request); err != nil {
+			return err
+		}
+	} else {
+		r.Request = NewUnionNullRequest()
+
+		r.Request = nil
 	}
 	return nil
 }
