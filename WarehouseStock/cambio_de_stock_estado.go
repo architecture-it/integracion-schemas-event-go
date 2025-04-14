@@ -19,17 +19,17 @@ var _ = fmt.Printf
 type CambioDeStockEstado int32
 
 const (
-	CambioDeStockEstadoPendiente CambioDeStockEstado = 0
-	CambioDeStockEstadoAceptado  CambioDeStockEstado = 1
-	CambioDeStockEstadoRechazado CambioDeStockEstado = 2
-	CambioDeStockEstadoCancelado CambioDeStockEstado = 3
-	CambioDeStockEstadoAjuste    CambioDeStockEstado = 4
+	CambioDeStockEstadoSolicitado CambioDeStockEstado = 0
+	CambioDeStockEstadoAceptado   CambioDeStockEstado = 1
+	CambioDeStockEstadoRechazado  CambioDeStockEstado = 2
+	CambioDeStockEstadoCancelado  CambioDeStockEstado = 3
+	CambioDeStockEstadoAjuste     CambioDeStockEstado = 4
 )
 
 func (e CambioDeStockEstado) String() string {
 	switch e {
-	case CambioDeStockEstadoPendiente:
-		return "Pendiente"
+	case CambioDeStockEstadoSolicitado:
+		return "Solicitado"
 	case CambioDeStockEstadoAceptado:
 		return "Aceptado"
 	case CambioDeStockEstadoRechazado:
@@ -48,8 +48,8 @@ func writeCambioDeStockEstado(r CambioDeStockEstado, w io.Writer) error {
 
 func NewCambioDeStockEstadoValue(raw string) (r CambioDeStockEstado, err error) {
 	switch raw {
-	case "Pendiente":
-		return CambioDeStockEstadoPendiente, nil
+	case "Solicitado":
+		return CambioDeStockEstadoSolicitado, nil
 	case "Aceptado":
 		return CambioDeStockEstadoAceptado, nil
 	case "Rechazado":

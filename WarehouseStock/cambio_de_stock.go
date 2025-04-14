@@ -20,6 +20,8 @@ var _ = fmt.Printf
 type CambioDeStock struct {
 	IdTransaccion *UnionNullString `json:"IdTransaccion"`
 
+	IdEvento *UnionNullString `json:"IdEvento"`
+
 	FechaHoraEventoNegocio int64 `json:"FechaHoraEventoNegocio"`
 
 	Propietario string `json:"Propietario"`
@@ -28,9 +30,9 @@ type CambioDeStock struct {
 
 	Almacen string `json:"Almacen"`
 
-	ArticuloCodigoSKU string `json:"ArticuloCodigoSKU"`
+	SKU string `json:"SKU"`
 
-	Cantidad int32 `json:"Cantidad"`
+	Cantidad float32 `json:"Cantidad"`
 
 	AbastecimientoId *UnionNullString `json:"AbastecimientoId"`
 
@@ -41,9 +43,13 @@ type CambioDeStock struct {
 	PedidoLineaId *UnionNullString `json:"PedidoLineaId"`
 
 	Estado *UnionNullCambioDeStockEstado `json:"Estado"`
+
+	StockAnteriorAjuste *UnionNullFloat `json:"StockAnteriorAjuste"`
+
+	StockPosteriorAjuste *UnionNullFloat `json:"StockPosteriorAjuste"`
 }
 
-const CambioDeStockAvroCRC64Fingerprint = "\x17\xf0\x805\x167\xb7\xf6"
+const CambioDeStockAvroCRC64Fingerprint = "u~\xb3I\xf1\xac\x03e"
 
 func NewCambioDeStock() CambioDeStock {
 	r := CambioDeStock{}
@@ -52,6 +58,8 @@ func NewCambioDeStock() CambioDeStock {
 	r.PedidoId = nil
 	r.PedidoLineaId = nil
 	r.Estado = nil
+	r.StockAnteriorAjuste = nil
+	r.StockPosteriorAjuste = nil
 	return r
 }
 
@@ -84,6 +92,10 @@ func writeCambioDeStock(r CambioDeStock, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.IdEvento, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteLong(r.FechaHoraEventoNegocio, w)
 	if err != nil {
 		return err
@@ -100,11 +112,11 @@ func writeCambioDeStock(r CambioDeStock, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ArticuloCodigoSKU, w)
+	err = vm.WriteString(r.SKU, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.Cantidad, w)
+	err = vm.WriteFloat(r.Cantidad, w)
 	if err != nil {
 		return err
 	}
@@ -128,6 +140,14 @@ func writeCambioDeStock(r CambioDeStock, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullFloat(r.StockAnteriorAjuste, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.StockPosteriorAjuste, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -136,7 +156,7 @@ func (r CambioDeStock) Serialize(w io.Writer) error {
 }
 
 func (r CambioDeStock) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaHoraEventoNegocio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"ArticuloCodigoSKU\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"int\"},{\"default\":null,\"name\":\"AbastecimientoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AbastecimientoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PedidoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PedidoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Pendiente\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Ajuste\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.WarehouseStock.Events.Record.CambioDeStock\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdEvento\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaHoraEventoNegocio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"float\"},{\"default\":null,\"name\":\"AbastecimientoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AbastecimientoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PedidoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PedidoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Ajuste\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"StockAnteriorAjuste\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockPosteriorAjuste\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.WarehouseStock.Events.Record.CambioDeStock\",\"type\":\"record\"}"
 }
 
 func (r CambioDeStock) SchemaName() string {
@@ -159,75 +179,93 @@ func (r *CambioDeStock) Get(i int) types.Field {
 
 		return r.IdTransaccion
 	case 1:
+		r.IdEvento = NewUnionNullString()
+
+		return r.IdEvento
+	case 2:
 		w := types.Long{Target: &r.FechaHoraEventoNegocio}
 
 		return w
 
-	case 2:
+	case 3:
 		w := types.String{Target: &r.Propietario}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.String{Target: &r.Instancia}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.Almacen}
 
 		return w
 
-	case 5:
-		w := types.String{Target: &r.ArticuloCodigoSKU}
-
-		return w
-
 	case 6:
-		w := types.Int{Target: &r.Cantidad}
+		w := types.String{Target: &r.SKU}
 
 		return w
 
 	case 7:
+		w := types.Float{Target: &r.Cantidad}
+
+		return w
+
+	case 8:
 		r.AbastecimientoId = NewUnionNullString()
 
 		return r.AbastecimientoId
-	case 8:
+	case 9:
 		r.AbastecimientoLineaId = NewUnionNullString()
 
 		return r.AbastecimientoLineaId
-	case 9:
+	case 10:
 		r.PedidoId = NewUnionNullString()
 
 		return r.PedidoId
-	case 10:
+	case 11:
 		r.PedidoLineaId = NewUnionNullString()
 
 		return r.PedidoLineaId
-	case 11:
+	case 12:
 		r.Estado = NewUnionNullCambioDeStockEstado()
 
 		return r.Estado
+	case 13:
+		r.StockAnteriorAjuste = NewUnionNullFloat()
+
+		return r.StockAnteriorAjuste
+	case 14:
+		r.StockPosteriorAjuste = NewUnionNullFloat()
+
+		return r.StockPosteriorAjuste
 	}
 	panic("Unknown field index")
 }
 
 func (r *CambioDeStock) SetDefault(i int) {
 	switch i {
-	case 7:
+	case 8:
 		r.AbastecimientoId = nil
 		return
-	case 8:
+	case 9:
 		r.AbastecimientoLineaId = nil
 		return
-	case 9:
+	case 10:
 		r.PedidoId = nil
 		return
-	case 10:
+	case 11:
 		r.PedidoLineaId = nil
 		return
-	case 11:
+	case 12:
 		r.Estado = nil
+		return
+	case 13:
+		r.StockAnteriorAjuste = nil
+		return
+	case 14:
+		r.StockPosteriorAjuste = nil
 		return
 	}
 	panic("Unknown field index")
@@ -238,20 +276,29 @@ func (r *CambioDeStock) NullField(i int) {
 	case 0:
 		r.IdTransaccion = nil
 		return
-	case 7:
-		r.AbastecimientoId = nil
+	case 1:
+		r.IdEvento = nil
 		return
 	case 8:
-		r.AbastecimientoLineaId = nil
+		r.AbastecimientoId = nil
 		return
 	case 9:
-		r.PedidoId = nil
+		r.AbastecimientoLineaId = nil
 		return
 	case 10:
-		r.PedidoLineaId = nil
+		r.PedidoId = nil
 		return
 	case 11:
+		r.PedidoLineaId = nil
+		return
+	case 12:
 		r.Estado = nil
+		return
+	case 13:
+		r.StockAnteriorAjuste = nil
+		return
+	case 14:
+		r.StockPosteriorAjuste = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -273,6 +320,10 @@ func (r CambioDeStock) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["IdEvento"], err = json.Marshal(r.IdEvento)
+	if err != nil {
+		return nil, err
+	}
 	output["FechaHoraEventoNegocio"], err = json.Marshal(r.FechaHoraEventoNegocio)
 	if err != nil {
 		return nil, err
@@ -289,7 +340,7 @@ func (r CambioDeStock) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["ArticuloCodigoSKU"], err = json.Marshal(r.ArticuloCodigoSKU)
+	output["SKU"], err = json.Marshal(r.SKU)
 	if err != nil {
 		return nil, err
 	}
@@ -317,6 +368,14 @@ func (r CambioDeStock) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["StockAnteriorAjuste"], err = json.Marshal(r.StockAnteriorAjuste)
+	if err != nil {
+		return nil, err
+	}
+	output["StockPosteriorAjuste"], err = json.Marshal(r.StockPosteriorAjuste)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -340,6 +399,20 @@ func (r *CambioDeStock) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for IdTransaccion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdEvento"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdEvento); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IdEvento")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["FechaHoraEventoNegocio"]; ok {
@@ -398,18 +471,18 @@ func (r *CambioDeStock) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Almacen")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["ArticuloCodigoSKU"]; ok {
+		if v, ok := fields["SKU"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ArticuloCodigoSKU); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.SKU); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ArticuloCodigoSKU")
+		return fmt.Errorf("no value specified for SKU")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Cantidad"]; ok {
@@ -504,6 +577,38 @@ func (r *CambioDeStock) UnmarshalJSON(data []byte) error {
 		r.Estado = NewUnionNullCambioDeStockEstado()
 
 		r.Estado = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["StockAnteriorAjuste"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockAnteriorAjuste); err != nil {
+			return err
+		}
+	} else {
+		r.StockAnteriorAjuste = NewUnionNullFloat()
+
+		r.StockAnteriorAjuste = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["StockPosteriorAjuste"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockPosteriorAjuste); err != nil {
+			return err
+		}
+	} else {
+		r.StockPosteriorAjuste = NewUnionNullFloat()
+
+		r.StockPosteriorAjuste = nil
 	}
 	return nil
 }
