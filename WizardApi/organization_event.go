@@ -24,15 +24,14 @@ type OrganizationEvent struct {
 
 	Freeze bool `json:"Freeze"`
 
-	UserOrganizationRoles []UserOrganizationRoleEvent `json:"UserOrganizationRoles"`
+	UserOrganizationRoles *UnionNullArrayUserOrganizationRoleEvent `json:"UserOrganizationRoles"`
 }
 
-const OrganizationEventAvroCRC64Fingerprint = "+\xf9\x04k\xd4\xea\xe2Y"
+const OrganizationEventAvroCRC64Fingerprint = "\xd8UA\xf9P\a/\xb3"
 
 func NewOrganizationEvent() OrganizationEvent {
 	r := OrganizationEvent{}
-	r.UserOrganizationRoles = make([]UserOrganizationRoleEvent, 0)
-
+	r.UserOrganizationRoles = nil
 	return r
 }
 
@@ -73,7 +72,7 @@ func writeOrganizationEvent(r OrganizationEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayUserOrganizationRoleEvent(r.UserOrganizationRoles, w)
+	err = writeUnionNullArrayUserOrganizationRoleEvent(r.UserOrganizationRoles, w)
 	if err != nil {
 		return err
 	}
@@ -85,7 +84,7 @@ func (r OrganizationEvent) Serialize(w io.Writer) error {
 }
 
 func (r OrganizationEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Freeze\",\"type\":\"boolean\"},{\"name\":\"UserOrganizationRoles\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Role\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"},{\"default\":null,\"name\":\"IsUserRole\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"RoleEvent\",\"type\":\"record\"}},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUserEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"UserOrganizationRoleEvent\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WizardApi.Events.Record.OrganizationEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Freeze\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"UserOrganizationRoles\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Role\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"},{\"default\":null,\"name\":\"IsUserRole\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"RoleEvent\",\"type\":\"record\"}},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUserEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"UserOrganizationRoleEvent\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.WizardApi.Events.Record.OrganizationEvent\",\"type\":\"record\"}"
 }
 
 func (r OrganizationEvent) SchemaName() string {
@@ -119,24 +118,27 @@ func (r *OrganizationEvent) Get(i int) types.Field {
 		return w
 
 	case 3:
-		r.UserOrganizationRoles = make([]UserOrganizationRoleEvent, 0)
+		r.UserOrganizationRoles = NewUnionNullArrayUserOrganizationRoleEvent()
 
-		w := ArrayUserOrganizationRoleEventWrapper{Target: &r.UserOrganizationRoles}
-
-		return w
-
+		return r.UserOrganizationRoles
 	}
 	panic("Unknown field index")
 }
 
 func (r *OrganizationEvent) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.UserOrganizationRoles = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *OrganizationEvent) NullField(i int) {
 	switch i {
+	case 3:
+		r.UserOrganizationRoles = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -233,7 +235,9 @@ func (r *OrganizationEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for UserOrganizationRoles")
+		r.UserOrganizationRoles = NewUnionNullArrayUserOrganizationRoleEvent()
+
+		r.UserOrganizationRoles = nil
 	}
 	return nil
 }
