@@ -24,14 +24,14 @@ type OrganizationEvent struct {
 
 	Freeze bool `json:"Freeze"`
 
-	UserOrganizationRole UserOrganizationRoleEvent `json:"UserOrganizationRole"`
+	UserOrganizationRoles []UserOrganizationRoleEvent `json:"UserOrganizationRoles"`
 }
 
-const OrganizationEventAvroCRC64Fingerprint = "r\xf6\x1e\u05cf5\xb0\x8b"
+const OrganizationEventAvroCRC64Fingerprint = "+\xf9\x04k\xd4\xea\xe2Y"
 
 func NewOrganizationEvent() OrganizationEvent {
 	r := OrganizationEvent{}
-	r.UserOrganizationRole = NewUserOrganizationRoleEvent()
+	r.UserOrganizationRoles = make([]UserOrganizationRoleEvent, 0)
 
 	return r
 }
@@ -73,7 +73,7 @@ func writeOrganizationEvent(r OrganizationEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUserOrganizationRoleEvent(r.UserOrganizationRole, w)
+	err = writeArrayUserOrganizationRoleEvent(r.UserOrganizationRoles, w)
 	if err != nil {
 		return err
 	}
@@ -85,7 +85,7 @@ func (r OrganizationEvent) Serialize(w io.Writer) error {
 }
 
 func (r OrganizationEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Freeze\",\"type\":\"boolean\"},{\"name\":\"UserOrganizationRole\",\"type\":{\"fields\":[{\"name\":\"Role\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"},{\"default\":null,\"name\":\"IsUserRole\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"RoleEvent\",\"type\":\"record\"}},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUserEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"UserOrganizationRoleEvent\",\"type\":\"record\"}}],\"name\":\"Andreani.WizardApi.Events.Record.OrganizationEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Freeze\",\"type\":\"boolean\"},{\"name\":\"UserOrganizationRoles\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Role\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"},{\"default\":null,\"name\":\"IsUserRole\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"RoleEvent\",\"type\":\"record\"}},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUserEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"UserOrganizationRoleEvent\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WizardApi.Events.Record.OrganizationEvent\",\"type\":\"record\"}"
 }
 
 func (r OrganizationEvent) SchemaName() string {
@@ -119,9 +119,9 @@ func (r *OrganizationEvent) Get(i int) types.Field {
 		return w
 
 	case 3:
-		r.UserOrganizationRole = NewUserOrganizationRoleEvent()
+		r.UserOrganizationRoles = make([]UserOrganizationRoleEvent, 0)
 
-		w := types.Record{Target: &r.UserOrganizationRole}
+		w := ArrayUserOrganizationRoleEventWrapper{Target: &r.UserOrganizationRoles}
 
 		return w
 
@@ -165,7 +165,7 @@ func (r OrganizationEvent) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["UserOrganizationRole"], err = json.Marshal(r.UserOrganizationRole)
+	output["UserOrganizationRoles"], err = json.Marshal(r.UserOrganizationRoles)
 	if err != nil {
 		return nil, err
 	}
@@ -222,18 +222,18 @@ func (r *OrganizationEvent) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Freeze")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["UserOrganizationRole"]; ok {
+		if v, ok := fields["UserOrganizationRoles"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.UserOrganizationRole); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.UserOrganizationRoles); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for UserOrganizationRole")
+		return fmt.Errorf("no value specified for UserOrganizationRoles")
 	}
 	return nil
 }

@@ -29,7 +29,7 @@ type TeamEvent struct {
 	Users []GithubUserEvent `json:"Users"`
 }
 
-const TeamEventAvroCRC64Fingerprint = "\xf2\x1d\xe0\xcb\x1fI\x05W"
+const TeamEventAvroCRC64Fingerprint = ",\xb1\"\xa6?\x15Z\xe2"
 
 func NewTeamEvent() TeamEvent {
 	r := TeamEvent{}
@@ -95,7 +95,7 @@ func (r TeamEvent) Serialize(w io.Writer) error {
 }
 
 func (r TeamEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"SlugName\",\"type\":\"string\"},{\"name\":\"Organization\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Freeze\",\"type\":\"boolean\"},{\"name\":\"UserOrganizationRole\",\"type\":{\"fields\":[{\"name\":\"Role\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"},{\"default\":null,\"name\":\"IsUserRole\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"RoleEvent\",\"type\":\"record\"}},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUserEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"UserOrganizationRoleEvent\",\"type\":\"record\"}}],\"name\":\"OrganizationEvent\",\"type\":\"record\"}},{\"default\":[],\"name\":\"Users\",\"type\":{\"items\":\"Andreani.WizardApi.Events.Common.GithubUserEvent\",\"type\":\"array\"}}],\"name\":\"Andreani.WizardApi.Events.Record.TeamEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"SlugName\",\"type\":\"string\"},{\"name\":\"Organization\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Freeze\",\"type\":\"boolean\"},{\"name\":\"UserOrganizationRoles\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Role\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"},{\"default\":null,\"name\":\"IsUserRole\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"RoleEvent\",\"type\":\"record\"}},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUserEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"UserOrganizationRoleEvent\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"OrganizationEvent\",\"type\":\"record\"}},{\"default\":[],\"name\":\"Users\",\"type\":{\"items\":\"Andreani.WizardApi.Events.Common.GithubUserEvent\",\"type\":\"array\"}}],\"name\":\"Andreani.WizardApi.Events.Record.TeamEvent\",\"type\":\"record\"}"
 }
 
 func (r TeamEvent) SchemaName() string {

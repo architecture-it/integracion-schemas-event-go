@@ -20,6 +20,8 @@ var _ = fmt.Printf
 type RepositoryEvent struct {
 	Id int32 `json:"Id"`
 
+	RepositoryId int64 `json:"RepositoryId"`
+
 	Name string `json:"Name"`
 
 	Description string `json:"Description"`
@@ -39,7 +41,7 @@ type RepositoryEvent struct {
 	AuditInfo AuditEvent `json:"AuditInfo"`
 }
 
-const RepositoryEventAvroCRC64Fingerprint = "\x10i\xbe\x87\x95\x11+\xb1"
+const RepositoryEventAvroCRC64Fingerprint = "\x1eg\x9a\xd3/\x10\"\x94"
 
 func NewRepositoryEvent() RepositoryEvent {
 	r := RepositoryEvent{}
@@ -95,6 +97,10 @@ func writeRepositoryEvent(r RepositoryEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteLong(r.RepositoryId, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Name, w)
 	if err != nil {
 		return err
@@ -139,7 +145,7 @@ func (r RepositoryEvent) Serialize(w io.Writer) error {
 }
 
 func (r RepositoryEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"TeamGroup\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"default\":[],\"name\":\"TeamGroupTeams\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Role\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"},{\"default\":null,\"name\":\"IsUserRole\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"RoleEvent\",\"type\":\"record\"}},{\"name\":\"Team\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"SlugName\",\"type\":\"string\"},{\"name\":\"Organization\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Freeze\",\"type\":\"boolean\"},{\"name\":\"UserOrganizationRole\",\"type\":{\"fields\":[{\"name\":\"Role\",\"type\":\"Andreani.WizardApi.Events.Record.RoleEvent\"},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUserEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"UserOrganizationRoleEvent\",\"type\":\"record\"}}],\"name\":\"OrganizationEvent\",\"type\":\"record\"}},{\"default\":[],\"name\":\"Users\",\"type\":{\"items\":\"Andreani.WizardApi.Events.Common.GithubUserEvent\",\"type\":\"array\"}}],\"name\":\"TeamEvent\",\"type\":\"record\"}}],\"name\":\"TeamGroupTeamEvent\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"TeamGroupEvent\",\"type\":\"record\"}},{\"name\":\"User\",\"type\":\"Andreani.WizardApi.Events.Common.GithubUserEvent\"},{\"name\":\"Organization\",\"type\":\"Andreani.WizardApi.Events.Record.OrganizationEvent\"},{\"default\":[],\"name\":\"Variables\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"Value\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":{\"fields\":[{\"name\":\"CreateBy\",\"type\":\"string\"},{\"name\":\"CreateDate\",\"type\":{\"logicalType\":\"date\",\"type\":\"int\"}},{\"default\":null,\"name\":\"UpdateBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdateDate\",\"type\":[\"null\",{\"logicalType\":\"date\",\"type\":\"int\"}]},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"DeletedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeletedDate\",\"type\":[\"null\",{\"logicalType\":\"date\",\"type\":\"int\"}]}],\"name\":\"AuditEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"VariableEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"Secrets\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"SecretEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"Environments\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"HostName\",\"type\":\"string\"},{\"name\":\"IsProduction\",\"type\":\"boolean\"},{\"name\":\"Schedule\",\"type\":\"string\"},{\"name\":\"MatrixDeploy\",\"type\":\"string\"},{\"default\":[],\"name\":\"EnvironmentVariables\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"Value\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"EnvironmentVariableEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"EnvironmentSecrets\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"EnvironmentSecretEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"ApprovalTeams\",\"type\":{\"items\":\"Andreani.WizardApi.Events.Record.TeamEvent\",\"type\":\"array\"}},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"EnvironmentEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"Andreani.WizardApi.Events.Record.RepositoryEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"RepositoryId\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"TeamGroup\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"default\":[],\"name\":\"TeamGroupTeams\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Role\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Description\",\"type\":\"string\"},{\"default\":null,\"name\":\"IsUserRole\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"RoleEvent\",\"type\":\"record\"}},{\"name\":\"Team\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"SlugName\",\"type\":\"string\"},{\"name\":\"Organization\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Freeze\",\"type\":\"boolean\"},{\"name\":\"UserOrganizationRoles\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Role\",\"type\":\"Andreani.WizardApi.Events.Record.RoleEvent\"},{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"LoginName\",\"type\":\"string\"},{\"name\":\"UserName\",\"type\":\"string\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"GithubUserEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"UserOrganizationRoleEvent\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"OrganizationEvent\",\"type\":\"record\"}},{\"default\":[],\"name\":\"Users\",\"type\":{\"items\":\"Andreani.WizardApi.Events.Common.GithubUserEvent\",\"type\":\"array\"}}],\"name\":\"TeamEvent\",\"type\":\"record\"}}],\"name\":\"TeamGroupTeamEvent\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"TeamGroupEvent\",\"type\":\"record\"}},{\"name\":\"User\",\"type\":\"Andreani.WizardApi.Events.Common.GithubUserEvent\"},{\"name\":\"Organization\",\"type\":\"Andreani.WizardApi.Events.Record.OrganizationEvent\"},{\"default\":[],\"name\":\"Variables\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"Value\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":{\"fields\":[{\"name\":\"CreateBy\",\"type\":\"string\"},{\"name\":\"CreateDate\",\"type\":{\"logicalType\":\"date\",\"type\":\"int\"}},{\"default\":null,\"name\":\"UpdateBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdateDate\",\"type\":[\"null\",{\"logicalType\":\"date\",\"type\":\"int\"}]},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"DeletedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeletedDate\",\"type\":[\"null\",{\"logicalType\":\"date\",\"type\":\"int\"}]}],\"name\":\"AuditEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"VariableEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"Secrets\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"SecretEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"Environments\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"HostName\",\"type\":\"string\"},{\"name\":\"IsProduction\",\"type\":\"boolean\"},{\"name\":\"Schedule\",\"type\":\"string\"},{\"name\":\"MatrixDeploy\",\"type\":\"string\"},{\"default\":[],\"name\":\"EnvironmentVariables\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"long\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"Value\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"EnvironmentVariableEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"EnvironmentSecrets\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Key\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"EnvironmentSecretEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"ApprovalTeams\",\"type\":{\"items\":\"Andreani.WizardApi.Events.Record.TeamEvent\",\"type\":\"array\"}},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"EnvironmentEvent\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"AuditInfo\",\"type\":\"Andreani.WizardApi.Events.Common.AuditEvent\"}],\"name\":\"Andreani.WizardApi.Events.Record.RepositoryEvent\",\"type\":\"record\"}"
 }
 
 func (r RepositoryEvent) SchemaName() string {
@@ -163,58 +169,63 @@ func (r *RepositoryEvent) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Name}
+		w := types.Long{Target: &r.RepositoryId}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Description}
+		w := types.String{Target: &r.Name}
 
 		return w
 
 	case 3:
+		w := types.String{Target: &r.Description}
+
+		return w
+
+	case 4:
 		r.TeamGroup = NewTeamGroupEvent()
 
 		w := types.Record{Target: &r.TeamGroup}
 
 		return w
 
-	case 4:
+	case 5:
 		r.User = NewGithubUserEvent()
 
 		w := types.Record{Target: &r.User}
 
 		return w
 
-	case 5:
+	case 6:
 		r.Organization = NewOrganizationEvent()
 
 		w := types.Record{Target: &r.Organization}
 
 		return w
 
-	case 6:
+	case 7:
 		r.Variables = make([]VariableEvent, 0)
 
 		w := ArrayVariableEventWrapper{Target: &r.Variables}
 
 		return w
 
-	case 7:
+	case 8:
 		r.Secrets = make([]SecretEvent, 0)
 
 		w := ArraySecretEventWrapper{Target: &r.Secrets}
 
 		return w
 
-	case 8:
+	case 9:
 		r.Environments = make([]EnvironmentEvent, 0)
 
 		w := ArrayEnvironmentEventWrapper{Target: &r.Environments}
 
 		return w
 
-	case 9:
+	case 10:
 		r.AuditInfo = NewAuditEvent()
 
 		w := types.Record{Target: &r.AuditInfo}
@@ -227,15 +238,15 @@ func (r *RepositoryEvent) Get(i int) types.Field {
 
 func (r *RepositoryEvent) SetDefault(i int) {
 	switch i {
-	case 6:
+	case 7:
 		r.Variables = make([]VariableEvent, 0)
 
 		return
-	case 7:
+	case 8:
 		r.Secrets = make([]SecretEvent, 0)
 
 		return
-	case 8:
+	case 9:
 		r.Environments = make([]EnvironmentEvent, 0)
 
 		return
@@ -262,6 +273,10 @@ func (r RepositoryEvent) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["Id"], err = json.Marshal(r.Id)
+	if err != nil {
+		return nil, err
+	}
+	output["RepositoryId"], err = json.Marshal(r.RepositoryId)
 	if err != nil {
 		return nil, err
 	}
@@ -324,6 +339,20 @@ func (r *RepositoryEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Id")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["RepositoryId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RepositoryId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for RepositoryId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Name"]; ok {
