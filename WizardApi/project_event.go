@@ -30,15 +30,16 @@ type ProjectEvent struct {
 
 	OrganizationId int64 `json:"OrganizationId"`
 
-	JsonData string `json:"JsonData"`
+	JsonData *UnionNullString `json:"JsonData"`
 
 	AuditInfo AuditEvent `json:"AuditInfo"`
 }
 
-const ProjectEventAvroCRC64Fingerprint = "c\x9c\xf8\x9c\xa17\xbdJ"
+const ProjectEventAvroCRC64Fingerprint = "\xca\xff\xd0\x1c,,vy"
 
 func NewProjectEvent() ProjectEvent {
 	r := ProjectEvent{}
+	r.JsonData = nil
 	r.AuditInfo = NewAuditEvent()
 
 	return r
@@ -93,7 +94,7 @@ func writeProjectEvent(r ProjectEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.JsonData, w)
+	err = writeUnionNullString(r.JsonData, w)
 	if err != nil {
 		return err
 	}
@@ -109,7 +110,7 @@ func (r ProjectEvent) Serialize(w io.Writer) error {
 }
 
 func (r ProjectEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Acronym\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"OwnerMail\",\"type\":\"string\"},{\"name\":\"OrganizationId\",\"type\":\"long\"},{\"name\":\"JsonData\",\"type\":\"string\"},{\"name\":\"AuditInfo\",\"type\":{\"fields\":[{\"name\":\"CreateBy\",\"type\":\"string\"},{\"name\":\"CreateDate\",\"type\":{\"logicalType\":\"date\",\"type\":\"int\"}},{\"default\":null,\"name\":\"UpdateBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdateDate\",\"type\":[\"null\",{\"logicalType\":\"date\",\"type\":\"int\"}]},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"DeletedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeletedDate\",\"type\":[\"null\",{\"logicalType\":\"date\",\"type\":\"int\"}]}],\"name\":\"AuditEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.WizardApi.Events.Record.ProjectEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Acronym\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"OwnerMail\",\"type\":\"string\"},{\"name\":\"OrganizationId\",\"type\":\"long\"},{\"default\":null,\"name\":\"JsonData\",\"type\":[\"null\",\"string\"]},{\"name\":\"AuditInfo\",\"type\":{\"fields\":[{\"name\":\"CreateBy\",\"type\":\"string\"},{\"name\":\"CreateDate\",\"type\":{\"logicalType\":\"date\",\"type\":\"int\"}},{\"default\":null,\"name\":\"UpdateBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdateDate\",\"type\":[\"null\",{\"logicalType\":\"date\",\"type\":\"int\"}]},{\"name\":\"Deleted\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"DeletedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeletedDate\",\"type\":[\"null\",{\"logicalType\":\"date\",\"type\":\"int\"}]}],\"name\":\"AuditEvent\",\"namespace\":\"Andreani.WizardApi.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.WizardApi.Events.Record.ProjectEvent\",\"type\":\"record\"}"
 }
 
 func (r ProjectEvent) SchemaName() string {
@@ -158,10 +159,9 @@ func (r *ProjectEvent) Get(i int) types.Field {
 		return w
 
 	case 6:
-		w := types.String{Target: &r.JsonData}
+		r.JsonData = NewUnionNullString()
 
-		return w
-
+		return r.JsonData
 	case 7:
 		r.AuditInfo = NewAuditEvent()
 
@@ -175,12 +175,18 @@ func (r *ProjectEvent) Get(i int) types.Field {
 
 func (r *ProjectEvent) SetDefault(i int) {
 	switch i {
+	case 6:
+		r.JsonData = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ProjectEvent) NullField(i int) {
 	switch i {
+	case 6:
+		r.JsonData = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -335,7 +341,9 @@ func (r *ProjectEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for JsonData")
+		r.JsonData = NewUnionNullString()
+
+		r.JsonData = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["AuditInfo"]; ok {
