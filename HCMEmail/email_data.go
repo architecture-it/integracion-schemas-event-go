@@ -24,12 +24,14 @@ type EmailData struct {
 
 	Attachment string `json:"Attachment"`
 
+	AttachmentFileName string `json:"AttachmentFileName"`
+
 	ToAddresses string `json:"ToAddresses"`
 
 	FromAddress string `json:"FromAddress"`
 }
 
-const EmailDataAvroCRC64Fingerprint = "\x9d\x17e\x8a\xf6|\xb5c"
+const EmailDataAvroCRC64Fingerprint = "\xf7-:\x16\r\x12n\x19"
 
 func NewEmailData() EmailData {
 	r := EmailData{}
@@ -73,6 +75,10 @@ func writeEmailData(r EmailData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.AttachmentFileName, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.ToAddresses, w)
 	if err != nil {
 		return err
@@ -89,7 +95,7 @@ func (r EmailData) Serialize(w io.Writer) error {
 }
 
 func (r EmailData) Schema() string {
-	return "{\"fields\":[{\"name\":\"Subject\",\"type\":\"string\"},{\"name\":\"Body\",\"type\":\"string\"},{\"name\":\"Attachment\",\"type\":\"string\"},{\"name\":\"ToAddresses\",\"type\":\"string\"},{\"name\":\"FromAddress\",\"type\":\"string\"}],\"name\":\"Andreani.HCMEmail.Events.Record.EmailData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Subject\",\"type\":\"string\"},{\"name\":\"Body\",\"type\":\"string\"},{\"name\":\"Attachment\",\"type\":\"string\"},{\"name\":\"AttachmentFileName\",\"type\":\"string\"},{\"name\":\"ToAddresses\",\"type\":\"string\"},{\"name\":\"FromAddress\",\"type\":\"string\"}],\"name\":\"Andreani.HCMEmail.Events.Record.EmailData\",\"type\":\"record\"}"
 }
 
 func (r EmailData) SchemaName() string {
@@ -123,11 +129,16 @@ func (r *EmailData) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.ToAddresses}
+		w := types.String{Target: &r.AttachmentFileName}
 
 		return w
 
 	case 4:
+		w := types.String{Target: &r.ToAddresses}
+
+		return w
+
+	case 5:
 		w := types.String{Target: &r.FromAddress}
 
 		return w
@@ -169,6 +180,10 @@ func (r EmailData) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Attachment"], err = json.Marshal(r.Attachment)
+	if err != nil {
+		return nil, err
+	}
+	output["AttachmentFileName"], err = json.Marshal(r.AttachmentFileName)
 	if err != nil {
 		return nil, err
 	}
@@ -231,6 +246,20 @@ func (r *EmailData) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Attachment")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["AttachmentFileName"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AttachmentFileName); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for AttachmentFileName")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ToAddresses"]; ok {

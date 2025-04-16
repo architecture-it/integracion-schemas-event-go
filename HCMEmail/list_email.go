@@ -21,7 +21,7 @@ type ListEmail struct {
 	Email []EmailData `json:"email"`
 }
 
-const ListEmailAvroCRC64Fingerprint = "ve;9\xfd\xdc\x00G"
+const ListEmailAvroCRC64Fingerprint = "\x8b\xb8}\x9a\x93)\x98k"
 
 func NewListEmail() ListEmail {
 	r := ListEmail{}
@@ -67,7 +67,7 @@ func (r ListEmail) Serialize(w io.Writer) error {
 }
 
 func (r ListEmail) Schema() string {
-	return "{\"fields\":[{\"name\":\"email\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Subject\",\"type\":\"string\"},{\"name\":\"Body\",\"type\":\"string\"},{\"name\":\"Attachment\",\"type\":\"string\"},{\"name\":\"ToAddresses\",\"type\":\"string\"},{\"name\":\"FromAddress\",\"type\":\"string\"}],\"name\":\"EmailData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMEmail.Events.Record.ListEmail\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"email\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Subject\",\"type\":\"string\"},{\"name\":\"Body\",\"type\":\"string\"},{\"name\":\"Attachment\",\"type\":\"string\"},{\"name\":\"AttachmentFileName\",\"type\":\"string\"},{\"name\":\"ToAddresses\",\"type\":\"string\"},{\"name\":\"FromAddress\",\"type\":\"string\"}],\"name\":\"EmailData\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.HCMEmail.Events.Record.ListEmail\",\"type\":\"record\"}"
 }
 
 func (r ListEmail) SchemaName() string {
