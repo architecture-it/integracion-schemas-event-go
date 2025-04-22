@@ -45,7 +45,7 @@ type TemporalDistributor struct {
 	SourceSystem *UnionNullString `json:"SourceSystem"`
 }
 
-const TemporalDistributorAvroCRC64Fingerprint = "6\r\x90\x82\x13\x83S\x82"
+const TemporalDistributorAvroCRC64Fingerprint = ":\x9eI@>\x8fu`"
 
 func NewTemporalDistributor() TemporalDistributor {
 	r := TemporalDistributor{}
@@ -150,11 +150,11 @@ func (r TemporalDistributor) Serialize(w io.Writer) error {
 }
 
 func (r TemporalDistributor) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IsActive\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"OperativeUnit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CreatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"UpdatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"SourceSystem\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Planification.Events.Record.TemporalDistributor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IsActive\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"OperativeUnit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CreatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"UpdatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"SourceSystem\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Planification.Events.TemporalDistributor\",\"type\":\"record\"}"
 }
 
 func (r TemporalDistributor) SchemaName() string {
-	return "Andreani.Planification.Events.Record.TemporalDistributor"
+	return "Andreani.Planification.Events.TemporalDistributor"
 }
 
 func (_ TemporalDistributor) SetBoolean(v bool)    { panic("Unsupported operation") }
