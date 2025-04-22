@@ -84,7 +84,7 @@ func DeserializeUnionNullDetallePagoFromSchema(r io.Reader, schema string) (*Uni
 }
 
 func (r *UnionNullDetallePago) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeEmision\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"bancoEmisor\",\"type\":[\"null\",\"string\"]},{\"name\":\"fechaDePago\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeCheque\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeRetencion\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroNotaCredito\",\"type\":[\"null\",\"string\"]},{\"name\":\"notas\",\"type\":[\"null\",\"string\"]}],\"name\":\"DetallePago\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullDetallePago) SetBoolean(v bool)   { panic("Unsupported operation") }
