@@ -38,14 +38,14 @@ type TemporalDistributor struct {
 
 	EventId *UnionNullString `json:"EventId"`
 
-	EventType *UnionNullString `json:"EventType"`
+	EventType *UnionNullEventTypeEnum `json:"EventType"`
 
 	EventTimestamp *UnionNullLong `json:"EventTimestamp"`
 
 	SourceSystem *UnionNullString `json:"SourceSystem"`
 }
 
-const TemporalDistributorAvroCRC64Fingerprint = ":\x9eI@>\x8fu`"
+const TemporalDistributorAvroCRC64Fingerprint = "JOd|\x87y\x92a"
 
 func NewTemporalDistributor() TemporalDistributor {
 	r := TemporalDistributor{}
@@ -130,7 +130,7 @@ func writeTemporalDistributor(r TemporalDistributor, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.EventType, w)
+	err = writeUnionNullEventTypeEnum(r.EventType, w)
 	if err != nil {
 		return err
 	}
@@ -150,11 +150,11 @@ func (r TemporalDistributor) Serialize(w io.Writer) error {
 }
 
 func (r TemporalDistributor) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IsActive\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"OperativeUnit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CreatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"UpdatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"SourceSystem\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Planification.Events.TemporalDistributor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IsActive\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"OperativeUnit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CreatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"UpdatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventType\",\"type\":[\"null\",{\"name\":\"EventTypeEnum\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"EventTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"SourceSystem\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Planification.Events.Record.TemporalDistributor\",\"type\":\"record\"}"
 }
 
 func (r TemporalDistributor) SchemaName() string {
-	return "Andreani.Planification.Events.TemporalDistributor"
+	return "Andreani.Planification.Events.Record.TemporalDistributor"
 }
 
 func (_ TemporalDistributor) SetBoolean(v bool)    { panic("Unsupported operation") }
@@ -209,7 +209,7 @@ func (r *TemporalDistributor) Get(i int) types.Field {
 
 		return r.EventId
 	case 10:
-		r.EventType = NewUnionNullString()
+		r.EventType = NewUnionNullEventTypeEnum()
 
 		return r.EventType
 	case 11:
@@ -560,7 +560,7 @@ func (r *TemporalDistributor) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.EventType = NewUnionNullString()
+		r.EventType = NewUnionNullEventTypeEnum()
 
 		r.EventType = nil
 	}
