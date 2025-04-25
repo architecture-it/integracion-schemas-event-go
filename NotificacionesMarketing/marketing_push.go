@@ -20,14 +20,14 @@ var _ = fmt.Printf
 type MarketingPush struct {
 	IdModelo int64 `json:"idModelo"`
 
-	MaestroCliente []MaestroCliente `json:"MaestroCliente"`
+	MaestroCliente MaestroCliente `json:"MaestroCliente"`
 }
 
-const MarketingPushAvroCRC64Fingerprint = "\x0e\x11\x05 G\f\fs"
+const MarketingPushAvroCRC64Fingerprint = "i\x9b\xdd\x18\x0f\b+z"
 
 func NewMarketingPush() MarketingPush {
 	r := MarketingPush{}
-	r.MaestroCliente = make([]MaestroCliente, 0)
+	r.MaestroCliente = NewMaestroCliente()
 
 	return r
 }
@@ -61,7 +61,7 @@ func writeMarketingPush(r MarketingPush, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayMaestroCliente(r.MaestroCliente, w)
+	err = writeMaestroCliente(r.MaestroCliente, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func (r MarketingPush) Serialize(w io.Writer) error {
 }
 
 func (r MarketingPush) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"MaestroCliente\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"ClienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoRepetido\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TelefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"CodigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PisoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DtoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoPostalSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LocalidadSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProvinciaSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PaisSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ClienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneTN\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TieneCC\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"FechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Servicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeFactura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CanalDeVenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EsUsuarioNuevoOnboarding\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"MaestroCliente\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.MarketingPush\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"MaestroCliente\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"ClienteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoRepetido\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TelefonoCodigoArea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TelefonoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Paridad\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"CodigoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PisoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DtoSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoPostalSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LocalidadSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProvinciaSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PaisSolicitanteSAP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasiaDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoClienteTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ClienteFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Segmento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TieneTN\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TieneCC\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"FechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Servicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeFactura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CanalDeVenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EsUsuarioNuevoOnboarding\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"MaestroCliente\",\"type\":\"record\"}}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.MarketingPush\",\"type\":\"record\"}"
 }
 
 func (r MarketingPush) SchemaName() string {
@@ -97,9 +97,9 @@ func (r *MarketingPush) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.MaestroCliente = make([]MaestroCliente, 0)
+		r.MaestroCliente = NewMaestroCliente()
 
-		w := ArrayMaestroClienteWrapper{Target: &r.MaestroCliente}
+		w := types.Record{Target: &r.MaestroCliente}
 
 		return w
 
