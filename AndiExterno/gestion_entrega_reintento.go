@@ -18,15 +18,17 @@ import (
 var _ = fmt.Printf
 
 type GestionEntregaReintento struct {
-	NroEnvio string `json:"NroEnvio"`
+	NroEnvio *UnionNullString `json:"NroEnvio"`
 
-	DiasInactividad int32 `json:"DiasInactividad"`
+	DiasInactividad *UnionNullInt `json:"DiasInactividad"`
 }
 
-const GestionEntregaReintentoAvroCRC64Fingerprint = "OD3\x7f\xef\xd2\x05d"
+const GestionEntregaReintentoAvroCRC64Fingerprint = ">\xb1\xa2V\xe7\xa4\xf7\xfe"
 
 func NewGestionEntregaReintento() GestionEntregaReintento {
 	r := GestionEntregaReintento{}
+	r.NroEnvio = nil
+	r.DiasInactividad = nil
 	return r
 }
 
@@ -55,11 +57,11 @@ func DeserializeGestionEntregaReintentoFromSchema(r io.Reader, schema string) (G
 
 func writeGestionEntregaReintento(r GestionEntregaReintento, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.NroEnvio, w)
+	err = writeUnionNullString(r.NroEnvio, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.DiasInactividad, w)
+	err = writeUnionNullInt(r.DiasInactividad, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +73,7 @@ func (r GestionEntregaReintento) Serialize(w io.Writer) error {
 }
 
 func (r GestionEntregaReintento) Schema() string {
-	return "{\"fields\":[{\"name\":\"NroEnvio\",\"type\":\"string\"},{\"name\":\"DiasInactividad\",\"type\":\"int\"}],\"name\":\"Andreani.AndiExterno.Events.Record.GestionEntregaReintento\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DiasInactividad\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.AndiExterno.Events.Record.GestionEntregaReintento\",\"type\":\"record\"}"
 }
 
 func (r GestionEntregaReintento) SchemaName() string {
@@ -90,27 +92,37 @@ func (_ GestionEntregaReintento) SetUnionElem(v int64) { panic("Unsupported oper
 func (r *GestionEntregaReintento) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.NroEnvio}
+		r.NroEnvio = NewUnionNullString()
 
-		return w
-
+		return r.NroEnvio
 	case 1:
-		w := types.Int{Target: &r.DiasInactividad}
+		r.DiasInactividad = NewUnionNullInt()
 
-		return w
-
+		return r.DiasInactividad
 	}
 	panic("Unknown field index")
 }
 
 func (r *GestionEntregaReintento) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.NroEnvio = nil
+		return
+	case 1:
+		r.DiasInactividad = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *GestionEntregaReintento) NullField(i int) {
 	switch i {
+	case 0:
+		r.NroEnvio = nil
+		return
+	case 1:
+		r.DiasInactividad = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -157,7 +169,9 @@ func (r *GestionEntregaReintento) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NroEnvio")
+		r.NroEnvio = NewUnionNullString()
+
+		r.NroEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DiasInactividad"]; ok {
@@ -171,7 +185,9 @@ func (r *GestionEntregaReintento) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DiasInactividad")
+		r.DiasInactividad = NewUnionNullInt()
+
+		r.DiasInactividad = nil
 	}
 	return nil
 }
