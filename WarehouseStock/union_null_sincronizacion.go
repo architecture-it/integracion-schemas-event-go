@@ -84,7 +84,7 @@ func DeserializeUnionNullSincronizacionFromSchema(r io.Reader, schema string) (*
 }
 
 func (r *UnionNullSincronizacion) Schema() string {
-	return "[\"null\",{\"fields\":[],\"name\":\"Sincronizacion\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockNoDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAsignado\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockPickeado\",\"type\":[\"null\",\"float\"]}],\"name\":\"Sincronizacion\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullSincronizacion) SetBoolean(v bool)   { panic("Unsupported operation") }

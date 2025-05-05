@@ -18,12 +18,26 @@ import (
 var _ = fmt.Printf
 
 type Sincronizacion struct {
+	StockTotal *UnionNullFloat `json:"StockTotal"`
+
+	StockDisponible *UnionNullFloat `json:"StockDisponible"`
+
+	StockNoDisponible *UnionNullFloat `json:"StockNoDisponible"`
+
+	StockAsignado *UnionNullFloat `json:"StockAsignado"`
+
+	StockPickeado *UnionNullFloat `json:"StockPickeado"`
 }
 
-const SincronizacionAvroCRC64Fingerprint = "X&%\x9f\xc1\xd6\xdc'"
+const SincronizacionAvroCRC64Fingerprint = "\xe7\xf5\xbf\xa3U\xc1o\x99"
 
 func NewSincronizacion() Sincronizacion {
 	r := Sincronizacion{}
+	r.StockTotal = nil
+	r.StockDisponible = nil
+	r.StockNoDisponible = nil
+	r.StockAsignado = nil
+	r.StockPickeado = nil
 	return r
 }
 
@@ -52,6 +66,26 @@ func DeserializeSincronizacionFromSchema(r io.Reader, schema string) (Sincroniza
 
 func writeSincronizacion(r Sincronizacion, w io.Writer) error {
 	var err error
+	err = writeUnionNullFloat(r.StockTotal, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.StockDisponible, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.StockNoDisponible, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.StockAsignado, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.StockPickeado, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -60,7 +94,7 @@ func (r Sincronizacion) Serialize(w io.Writer) error {
 }
 
 func (r Sincronizacion) Schema() string {
-	return "{\"fields\":[],\"name\":\"Andreani.WarehouseStock.Events.StockCommon.Sincronizacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockNoDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAsignado\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockPickeado\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.WarehouseStock.Events.StockCommon.Sincronizacion\",\"type\":\"record\"}"
 }
 
 func (r Sincronizacion) SchemaName() string {
@@ -78,18 +112,68 @@ func (_ Sincronizacion) SetUnionElem(v int64) { panic("Unsupported operation") }
 
 func (r *Sincronizacion) Get(i int) types.Field {
 	switch i {
+	case 0:
+		r.StockTotal = NewUnionNullFloat()
+
+		return r.StockTotal
+	case 1:
+		r.StockDisponible = NewUnionNullFloat()
+
+		return r.StockDisponible
+	case 2:
+		r.StockNoDisponible = NewUnionNullFloat()
+
+		return r.StockNoDisponible
+	case 3:
+		r.StockAsignado = NewUnionNullFloat()
+
+		return r.StockAsignado
+	case 4:
+		r.StockPickeado = NewUnionNullFloat()
+
+		return r.StockPickeado
 	}
 	panic("Unknown field index")
 }
 
 func (r *Sincronizacion) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.StockTotal = nil
+		return
+	case 1:
+		r.StockDisponible = nil
+		return
+	case 2:
+		r.StockNoDisponible = nil
+		return
+	case 3:
+		r.StockAsignado = nil
+		return
+	case 4:
+		r.StockPickeado = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Sincronizacion) NullField(i int) {
 	switch i {
+	case 0:
+		r.StockTotal = nil
+		return
+	case 1:
+		r.StockDisponible = nil
+		return
+	case 2:
+		r.StockNoDisponible = nil
+		return
+	case 3:
+		r.StockAsignado = nil
+		return
+	case 4:
+		r.StockPickeado = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -106,6 +190,26 @@ func (_ Sincronizacion) AvroCRC64Fingerprint() []byte {
 func (r Sincronizacion) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["StockTotal"], err = json.Marshal(r.StockTotal)
+	if err != nil {
+		return nil, err
+	}
+	output["StockDisponible"], err = json.Marshal(r.StockDisponible)
+	if err != nil {
+		return nil, err
+	}
+	output["StockNoDisponible"], err = json.Marshal(r.StockNoDisponible)
+	if err != nil {
+		return nil, err
+	}
+	output["StockAsignado"], err = json.Marshal(r.StockAsignado)
+	if err != nil {
+		return nil, err
+	}
+	output["StockPickeado"], err = json.Marshal(r.StockPickeado)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -116,5 +220,85 @@ func (r *Sincronizacion) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["StockTotal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockTotal); err != nil {
+			return err
+		}
+	} else {
+		r.StockTotal = NewUnionNullFloat()
+
+		r.StockTotal = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["StockDisponible"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockDisponible); err != nil {
+			return err
+		}
+	} else {
+		r.StockDisponible = NewUnionNullFloat()
+
+		r.StockDisponible = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["StockNoDisponible"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockNoDisponible); err != nil {
+			return err
+		}
+	} else {
+		r.StockNoDisponible = NewUnionNullFloat()
+
+		r.StockNoDisponible = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["StockAsignado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockAsignado); err != nil {
+			return err
+		}
+	} else {
+		r.StockAsignado = NewUnionNullFloat()
+
+		r.StockAsignado = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["StockPickeado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.StockPickeado); err != nil {
+			return err
+		}
+	} else {
+		r.StockPickeado = NewUnionNullFloat()
+
+		r.StockPickeado = nil
+	}
 	return nil
 }
