@@ -22,6 +22,8 @@ type TemporalDistributor struct {
 
 	Name *UnionNullString `json:"Name"`
 
+	LastName *UnionNullString `json:"LastName"`
+
 	Dni *UnionNullString `json:"Dni"`
 
 	IsActive *UnionNullBool `json:"IsActive"`
@@ -45,12 +47,13 @@ type TemporalDistributor struct {
 	SourceSystem *UnionNullString `json:"SourceSystem"`
 }
 
-const TemporalDistributorAvroCRC64Fingerprint = "\xb5\x19\xa5\xf1gIp\x1e"
+const TemporalDistributorAvroCRC64Fingerprint = "\xb0?\f\x03\xbb\xc2)\x83"
 
 func NewTemporalDistributor() TemporalDistributor {
 	r := TemporalDistributor{}
 	r.Id = nil
 	r.Name = nil
+	r.LastName = nil
 	r.Dni = nil
 	r.IsActive = nil
 	r.OperativeUnit = nil
@@ -95,6 +98,10 @@ func writeTemporalDistributor(r TemporalDistributor, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullString(r.Name, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.LastName, w)
 	if err != nil {
 		return err
 	}
@@ -150,7 +157,7 @@ func (r TemporalDistributor) Serialize(w io.Writer) error {
 }
 
 func (r TemporalDistributor) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IsActive\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"OperativeUnit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CreatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"UpdatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventType\",\"type\":[\"null\",{\"name\":\"EventTypeEnum\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"EventTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"SourceSystem\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DMSPlanification.Events.Record.TemporalDistributor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LastName\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IsActive\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"OperativeUnit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CreatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"UpdatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventType\",\"type\":[\"null\",{\"name\":\"EventTypeEnum\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"EventTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"SourceSystem\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DMSPlanification.Events.Record.TemporalDistributor\",\"type\":\"record\"}"
 }
 
 func (r TemporalDistributor) SchemaName() string {
@@ -177,46 +184,50 @@ func (r *TemporalDistributor) Get(i int) types.Field {
 
 		return r.Name
 	case 2:
+		r.LastName = NewUnionNullString()
+
+		return r.LastName
+	case 3:
 		r.Dni = NewUnionNullString()
 
 		return r.Dni
-	case 3:
+	case 4:
 		r.IsActive = NewUnionNullBool()
 
 		return r.IsActive
-	case 4:
+	case 5:
 		r.OperativeUnit = NewUnionNullString()
 
 		return r.OperativeUnit
-	case 5:
+	case 6:
 		r.CreatedDate = NewUnionNullLong()
 
 		return r.CreatedDate
-	case 6:
+	case 7:
 		r.UpdatedDate = NewUnionNullLong()
 
 		return r.UpdatedDate
-	case 7:
+	case 8:
 		r.CreatedBy = NewUnionNullString()
 
 		return r.CreatedBy
-	case 8:
+	case 9:
 		r.UpdatedBy = NewUnionNullString()
 
 		return r.UpdatedBy
-	case 9:
+	case 10:
 		r.EventId = NewUnionNullString()
 
 		return r.EventId
-	case 10:
+	case 11:
 		r.EventType = NewUnionNullEventTypeEnum()
 
 		return r.EventType
-	case 11:
+	case 12:
 		r.EventTimestamp = NewUnionNullLong()
 
 		return r.EventTimestamp
-	case 12:
+	case 13:
 		r.SourceSystem = NewUnionNullString()
 
 		return r.SourceSystem
@@ -233,36 +244,39 @@ func (r *TemporalDistributor) SetDefault(i int) {
 		r.Name = nil
 		return
 	case 2:
-		r.Dni = nil
+		r.LastName = nil
 		return
 	case 3:
-		r.IsActive = nil
+		r.Dni = nil
 		return
 	case 4:
-		r.OperativeUnit = nil
+		r.IsActive = nil
 		return
 	case 5:
-		r.CreatedDate = nil
+		r.OperativeUnit = nil
 		return
 	case 6:
-		r.UpdatedDate = nil
+		r.CreatedDate = nil
 		return
 	case 7:
-		r.CreatedBy = nil
+		r.UpdatedDate = nil
 		return
 	case 8:
-		r.UpdatedBy = nil
+		r.CreatedBy = nil
 		return
 	case 9:
-		r.EventId = nil
+		r.UpdatedBy = nil
 		return
 	case 10:
-		r.EventType = nil
+		r.EventId = nil
 		return
 	case 11:
-		r.EventTimestamp = nil
+		r.EventType = nil
 		return
 	case 12:
+		r.EventTimestamp = nil
+		return
+	case 13:
 		r.SourceSystem = nil
 		return
 	}
@@ -278,36 +292,39 @@ func (r *TemporalDistributor) NullField(i int) {
 		r.Name = nil
 		return
 	case 2:
-		r.Dni = nil
+		r.LastName = nil
 		return
 	case 3:
-		r.IsActive = nil
+		r.Dni = nil
 		return
 	case 4:
-		r.OperativeUnit = nil
+		r.IsActive = nil
 		return
 	case 5:
-		r.CreatedDate = nil
+		r.OperativeUnit = nil
 		return
 	case 6:
-		r.UpdatedDate = nil
+		r.CreatedDate = nil
 		return
 	case 7:
-		r.CreatedBy = nil
+		r.UpdatedDate = nil
 		return
 	case 8:
-		r.UpdatedBy = nil
+		r.CreatedBy = nil
 		return
 	case 9:
-		r.EventId = nil
+		r.UpdatedBy = nil
 		return
 	case 10:
-		r.EventType = nil
+		r.EventId = nil
 		return
 	case 11:
-		r.EventTimestamp = nil
+		r.EventType = nil
 		return
 	case 12:
+		r.EventTimestamp = nil
+		return
+	case 13:
 		r.SourceSystem = nil
 		return
 	}
@@ -331,6 +348,10 @@ func (r TemporalDistributor) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Name"], err = json.Marshal(r.Name)
+	if err != nil {
+		return nil, err
+	}
+	output["LastName"], err = json.Marshal(r.LastName)
 	if err != nil {
 		return nil, err
 	}
@@ -419,6 +440,22 @@ func (r *TemporalDistributor) UnmarshalJSON(data []byte) error {
 		r.Name = NewUnionNullString()
 
 		r.Name = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["LastName"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.LastName); err != nil {
+			return err
+		}
+	} else {
+		r.LastName = NewUnionNullString()
+
+		r.LastName = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Dni"]; ok {
