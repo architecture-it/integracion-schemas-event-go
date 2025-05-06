@@ -22,6 +22,7 @@ const (
 	EventTypeEnumCREATED EventTypeEnum = 0
 	EventTypeEnumUPDATED EventTypeEnum = 1
 	EventTypeEnumDELETED EventTypeEnum = 2
+	EventTypeEnumSUSPEND EventTypeEnum = 3
 )
 
 func (e EventTypeEnum) String() string {
@@ -32,6 +33,8 @@ func (e EventTypeEnum) String() string {
 		return "UPDATED"
 	case EventTypeEnumDELETED:
 		return "DELETED"
+	case EventTypeEnumSUSPEND:
+		return "SUSPEND"
 	}
 	return "unknown"
 }
@@ -48,6 +51,8 @@ func NewEventTypeEnumValue(raw string) (r EventTypeEnum, err error) {
 		return EventTypeEnumUPDATED, nil
 	case "DELETED":
 		return EventTypeEnumDELETED, nil
+	case "SUSPEND":
+		return EventTypeEnumSUSPEND, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for EventTypeEnum: '%s'", raw)
