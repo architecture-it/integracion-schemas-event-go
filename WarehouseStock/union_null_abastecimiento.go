@@ -84,7 +84,7 @@ func DeserializeUnionNullAbastecimientoFromSchema(r io.Reader, schema string) (*
 }
 
 func (r *UnionNullAbastecimiento) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"AbastecimientoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AbastecimientoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\"],\"type\":\"enum\"}]}],\"name\":\"Abastecimiento\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"AbastecimientoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AbastecimientoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Creado\",\"Confirmado\"],\"type\":\"enum\"}]}],\"name\":\"Abastecimiento\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullAbastecimiento) SetBoolean(v bool)   { panic("Unsupported operation") }
