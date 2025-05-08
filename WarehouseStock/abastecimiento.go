@@ -25,7 +25,7 @@ type Abastecimiento struct {
 	Estado *UnionNullCambioDeStockEstado `json:"Estado"`
 }
 
-const AbastecimientoAvroCRC64Fingerprint = "\xb6T\x18\xe5\x8a,\x1ea"
+const AbastecimientoAvroCRC64Fingerprint = "\am@\xac\xd72W?"
 
 func NewAbastecimiento() Abastecimiento {
 	r := Abastecimiento{}
@@ -80,7 +80,7 @@ func (r Abastecimiento) Serialize(w io.Writer) error {
 }
 
 func (r Abastecimiento) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"AbastecimientoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AbastecimientoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Creado\",\"Confirmado\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.WarehouseStock.Events.StockCommon.Abastecimiento\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"AbastecimientoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AbastecimientoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Creado\",\"Confirmado\",\"Expedido\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.WarehouseStock.Events.StockCommon.Abastecimiento\",\"type\":\"record\"}"
 }
 
 func (r Abastecimiento) SchemaName() string {
