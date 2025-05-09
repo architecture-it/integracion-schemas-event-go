@@ -25,13 +25,16 @@ type Email struct {
 	Estado string `json:"Estado"`
 
 	MotivoRechazo *UnionNullString `json:"MotivoRechazo"`
+
+	Url *UnionNullString `json:"Url"`
 }
 
-const EmailAvroCRC64Fingerprint = "\x94濯&!\xeb\f"
+const EmailAvroCRC64Fingerprint = "G\xdaF\xe4\xaf\xe2\xc1\x9b"
 
 func NewEmail() Email {
 	r := Email{}
 	r.MotivoRechazo = nil
+	r.Url = nil
 	return r
 }
 
@@ -76,6 +79,10 @@ func writeEmail(r Email, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Url, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -84,7 +91,7 @@ func (r Email) Serialize(w io.Writer) error {
 }
 
 func (r Email) Schema() string {
-	return "{\"fields\":[{\"name\":\"Destinatario\",\"type\":\"string\"},{\"name\":\"NombreDestinatario\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"MotivoRechazo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Email\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Destinatario\",\"type\":\"string\"},{\"name\":\"NombreDestinatario\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"MotivoRechazo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Url\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Email\",\"type\":\"record\"}"
 }
 
 func (r Email) SchemaName() string {
@@ -121,6 +128,10 @@ func (r *Email) Get(i int) types.Field {
 		r.MotivoRechazo = NewUnionNullString()
 
 		return r.MotivoRechazo
+	case 4:
+		r.Url = NewUnionNullString()
+
+		return r.Url
 	}
 	panic("Unknown field index")
 }
@@ -130,6 +141,9 @@ func (r *Email) SetDefault(i int) {
 	case 3:
 		r.MotivoRechazo = nil
 		return
+	case 4:
+		r.Url = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -138,6 +152,9 @@ func (r *Email) NullField(i int) {
 	switch i {
 	case 3:
 		r.MotivoRechazo = nil
+		return
+	case 4:
+		r.Url = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -168,6 +185,10 @@ func (r Email) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["MotivoRechazo"], err = json.Marshal(r.MotivoRechazo)
+	if err != nil {
+		return nil, err
+	}
+	output["Url"], err = json.Marshal(r.Url)
 	if err != nil {
 		return nil, err
 	}
@@ -238,6 +259,22 @@ func (r *Email) UnmarshalJSON(data []byte) error {
 		r.MotivoRechazo = NewUnionNullString()
 
 		r.MotivoRechazo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Url"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Url); err != nil {
+			return err
+		}
+	} else {
+		r.Url = NewUnionNullString()
+
+		r.Url = nil
 	}
 	return nil
 }
