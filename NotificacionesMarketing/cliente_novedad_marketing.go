@@ -20,15 +20,14 @@ var _ = fmt.Printf
 type ClienteNovedadMarketing struct {
 	IdModelo int64 `json:"idModelo"`
 
-	ClienteExcel ClienteExcel `json:"ClienteExcel"`
+	ClienteExcel *UnionNullClienteExcel `json:"ClienteExcel"`
 }
 
-const ClienteNovedadMarketingAvroCRC64Fingerprint = "\xf0\xab\x8dZbR\xdf]"
+const ClienteNovedadMarketingAvroCRC64Fingerprint = ",F\x89\xde\xc9\xfe\x14o"
 
 func NewClienteNovedadMarketing() ClienteNovedadMarketing {
 	r := ClienteNovedadMarketing{}
-	r.ClienteExcel = NewClienteExcel()
-
+	r.ClienteExcel = nil
 	return r
 }
 
@@ -61,7 +60,7 @@ func writeClienteNovedadMarketing(r ClienteNovedadMarketing, w io.Writer) error 
 	if err != nil {
 		return err
 	}
-	err = writeClienteExcel(r.ClienteExcel, w)
+	err = writeUnionNullClienteExcel(r.ClienteExcel, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +72,7 @@ func (r ClienteNovedadMarketing) Serialize(w io.Writer) error {
 }
 
 func (r ClienteNovedadMarketing) Schema() string {
-	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"name\":\"ClienteExcel\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descuento\",\"type\":[\"null\",\"string\"]}],\"name\":\"ClienteExcel\",\"type\":\"record\"}}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.ClienteNovedadMarketing\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idModelo\",\"type\":\"long\"},{\"default\":null,\"name\":\"ClienteExcel\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descuento\",\"type\":[\"null\",\"string\"]}],\"name\":\"ClienteExcel\",\"type\":\"record\"}]}],\"name\":\"Andreani.NotificacionesMarketing.Events.Record.ClienteNovedadMarketing\",\"type\":\"record\"}"
 }
 
 func (r ClienteNovedadMarketing) SchemaName() string {
@@ -97,24 +96,27 @@ func (r *ClienteNovedadMarketing) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.ClienteExcel = NewClienteExcel()
+		r.ClienteExcel = NewUnionNullClienteExcel()
 
-		w := types.Record{Target: &r.ClienteExcel}
-
-		return w
-
+		return r.ClienteExcel
 	}
 	panic("Unknown field index")
 }
 
 func (r *ClienteNovedadMarketing) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.ClienteExcel = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ClienteNovedadMarketing) NullField(i int) {
 	switch i {
+	case 1:
+		r.ClienteExcel = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -175,7 +177,9 @@ func (r *ClienteNovedadMarketing) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for ClienteExcel")
+		r.ClienteExcel = NewUnionNullClienteExcel()
+
+		r.ClienteExcel = nil
 	}
 	return nil
 }
