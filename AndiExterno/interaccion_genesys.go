@@ -30,7 +30,9 @@ type InteraccionGenesys struct {
 
 	Canal *UnionNullString `json:"canal"`
 
-	CuentaOrigen *UnionNullString `json:"cuentaOrigen"`
+	EmailOrigen *UnionNullString `json:"emailOrigen"`
+
+	TelefonoOrigen *UnionNullString `json:"telefonoOrigen"`
 
 	Contenido *UnionNullString `json:"contenido"`
 
@@ -41,7 +43,7 @@ type InteraccionGenesys struct {
 	TimeStampEnd *UnionNullLong `json:"timeStampEnd"`
 }
 
-const InteraccionGenesysAvroCRC64Fingerprint = "Wf|\xf6a\xb2\xfe\xcd"
+const InteraccionGenesysAvroCRC64Fingerprint = "8D\xc0\x1b\x9d0\xd5\xe7"
 
 func NewInteraccionGenesys() InteraccionGenesys {
 	r := InteraccionGenesys{}
@@ -51,7 +53,8 @@ func NewInteraccionGenesys() InteraccionGenesys {
 	r.CasoAsociado = nil
 	r.Sentido = nil
 	r.Canal = nil
-	r.CuentaOrigen = nil
+	r.EmailOrigen = nil
+	r.TelefonoOrigen = nil
 	r.Contenido = nil
 	r.TipoInteraccion = nil
 	r.TimeStampStart = nil
@@ -108,7 +111,11 @@ func writeInteraccionGenesys(r InteraccionGenesys, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.CuentaOrigen, w)
+	err = writeUnionNullString(r.EmailOrigen, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.TelefonoOrigen, w)
 	if err != nil {
 		return err
 	}
@@ -136,7 +143,7 @@ func (r InteraccionGenesys) Serialize(w io.Writer) error {
 }
 
 func (r InteraccionGenesys) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"dniPersona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"envioAsociado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"casoAsociado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sentido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuentaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoInteraccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"timeStampStart\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"timeStampEnd\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.AndiExterno.Events.Record.InteraccionGenesys\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"dniPersona\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"envioAsociado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"casoAsociado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sentido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"canal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"emailOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonoOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoInteraccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"timeStampStart\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"timeStampEnd\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.AndiExterno.Events.Record.InteraccionGenesys\",\"type\":\"record\"}"
 }
 
 func (r InteraccionGenesys) SchemaName() string {
@@ -179,22 +186,26 @@ func (r *InteraccionGenesys) Get(i int) types.Field {
 
 		return r.Canal
 	case 6:
-		r.CuentaOrigen = NewUnionNullString()
+		r.EmailOrigen = NewUnionNullString()
 
-		return r.CuentaOrigen
+		return r.EmailOrigen
 	case 7:
+		r.TelefonoOrigen = NewUnionNullString()
+
+		return r.TelefonoOrigen
+	case 8:
 		r.Contenido = NewUnionNullString()
 
 		return r.Contenido
-	case 8:
+	case 9:
 		r.TipoInteraccion = NewUnionNullString()
 
 		return r.TipoInteraccion
-	case 9:
+	case 10:
 		r.TimeStampStart = NewUnionNullLong()
 
 		return r.TimeStampStart
-	case 10:
+	case 11:
 		r.TimeStampEnd = NewUnionNullLong()
 
 		return r.TimeStampEnd
@@ -223,18 +234,21 @@ func (r *InteraccionGenesys) SetDefault(i int) {
 		r.Canal = nil
 		return
 	case 6:
-		r.CuentaOrigen = nil
+		r.EmailOrigen = nil
 		return
 	case 7:
-		r.Contenido = nil
+		r.TelefonoOrigen = nil
 		return
 	case 8:
-		r.TipoInteraccion = nil
+		r.Contenido = nil
 		return
 	case 9:
-		r.TimeStampStart = nil
+		r.TipoInteraccion = nil
 		return
 	case 10:
+		r.TimeStampStart = nil
+		return
+	case 11:
 		r.TimeStampEnd = nil
 		return
 	}
@@ -262,18 +276,21 @@ func (r *InteraccionGenesys) NullField(i int) {
 		r.Canal = nil
 		return
 	case 6:
-		r.CuentaOrigen = nil
+		r.EmailOrigen = nil
 		return
 	case 7:
-		r.Contenido = nil
+		r.TelefonoOrigen = nil
 		return
 	case 8:
-		r.TipoInteraccion = nil
+		r.Contenido = nil
 		return
 	case 9:
-		r.TimeStampStart = nil
+		r.TipoInteraccion = nil
 		return
 	case 10:
+		r.TimeStampStart = nil
+		return
+	case 11:
 		r.TimeStampEnd = nil
 		return
 	}
@@ -316,7 +333,11 @@ func (r InteraccionGenesys) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["cuentaOrigen"], err = json.Marshal(r.CuentaOrigen)
+	output["emailOrigen"], err = json.Marshal(r.EmailOrigen)
+	if err != nil {
+		return nil, err
+	}
+	output["telefonoOrigen"], err = json.Marshal(r.TelefonoOrigen)
 	if err != nil {
 		return nil, err
 	}
@@ -443,20 +464,36 @@ func (r *InteraccionGenesys) UnmarshalJSON(data []byte) error {
 		r.Canal = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["cuentaOrigen"]; ok {
+		if v, ok := fields["emailOrigen"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CuentaOrigen); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.EmailOrigen); err != nil {
 			return err
 		}
 	} else {
-		r.CuentaOrigen = NewUnionNullString()
+		r.EmailOrigen = NewUnionNullString()
 
-		r.CuentaOrigen = nil
+		r.EmailOrigen = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["telefonoOrigen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TelefonoOrigen); err != nil {
+			return err
+		}
+	} else {
+		r.TelefonoOrigen = NewUnionNullString()
+
+		r.TelefonoOrigen = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["contenido"]; ok {
