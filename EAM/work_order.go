@@ -33,9 +33,11 @@ type WorkOrder struct {
 	TipoOT string `json:"tipoOT"`
 
 	SubTipoOT string `json:"subTipoOT"`
+
+	Desvio string `json:"desvio"`
 }
 
-const WorkOrderAvroCRC64Fingerprint = "\x16\xbcW\xfb\xd6.\xe4\x18"
+const WorkOrderAvroCRC64Fingerprint = "J\xcc&ܖ\xaf\xed\x1c"
 
 func NewWorkOrder() WorkOrder {
 	r := WorkOrder{}
@@ -99,6 +101,10 @@ func writeWorkOrder(r WorkOrder, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Desvio, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -107,7 +113,7 @@ func (r WorkOrder) Serialize(w io.Writer) error {
 }
 
 func (r WorkOrder) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
 }
 
 func (r WorkOrder) SchemaName() string {
@@ -162,6 +168,11 @@ func (r *WorkOrder) Get(i int) types.Field {
 
 	case 7:
 		w := types.String{Target: &r.SubTipoOT}
+
+		return w
+
+	case 8:
+		w := types.String{Target: &r.Desvio}
 
 		return w
 
@@ -222,6 +233,10 @@ func (r WorkOrder) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["subTipoOT"], err = json.Marshal(r.SubTipoOT)
+	if err != nil {
+		return nil, err
+	}
+	output["desvio"], err = json.Marshal(r.Desvio)
 	if err != nil {
 		return nil, err
 	}
@@ -346,6 +361,20 @@ func (r *WorkOrder) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for subTipoOT")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["desvio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Desvio); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for desvio")
 	}
 	return nil
 }
