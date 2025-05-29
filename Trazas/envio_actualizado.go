@@ -20,10 +20,10 @@ var _ = fmt.Printf
 type EnvioActualizado struct {
 	Traza Traza `json:"traza"`
 
-	ContenidoActualizado *UnionNullArrayActualizacionDeContenido `json:"contenidoActualizado"`
+	ContenidoActualizado *UnionNullArrayModificacionDeContenido `json:"contenidoActualizado"`
 }
 
-const EnvioActualizadoAvroCRC64Fingerprint = "\x8c6<\xc2\x14\xf6S,"
+const EnvioActualizadoAvroCRC64Fingerprint = "C'\x98F\xbav\x15\xf3"
 
 func NewEnvioActualizado() EnvioActualizado {
 	r := EnvioActualizado{}
@@ -62,7 +62,7 @@ func writeEnvioActualizado(r EnvioActualizado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullArrayActualizacionDeContenido(r.ContenidoActualizado, w)
+	err = writeUnionNullArrayModificacionDeContenido(r.ContenidoActualizado, w)
 	if err != nil {
 		return err
 	}
@@ -74,7 +74,7 @@ func (r EnvioActualizado) Serialize(w io.Writer) error {
 }
 
 func (r EnvioActualizado) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"default\":null,\"name\":\"contenidoActualizado\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"propiedad\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorPrevio\",\"type\":[\"null\",\"string\"]}],\"name\":\"ActualizacionDeContenido\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Trazas.EnvioActualizado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"default\":null,\"name\":\"contenidoActualizado\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"propiedad\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valorPrevio\",\"type\":[\"null\",\"string\"]}],\"name\":\"ModificacionDeContenido\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Trazas.EnvioActualizado\",\"type\":\"record\"}"
 }
 
 func (r EnvioActualizado) SchemaName() string {
@@ -100,7 +100,7 @@ func (r *EnvioActualizado) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.ContenidoActualizado = NewUnionNullArrayActualizacionDeContenido()
+		r.ContenidoActualizado = NewUnionNullArrayModificacionDeContenido()
 
 		return r.ContenidoActualizado
 	}
@@ -181,7 +181,7 @@ func (r *EnvioActualizado) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.ContenidoActualizado = NewUnionNullArrayActualizacionDeContenido()
+		r.ContenidoActualizado = NewUnionNullArrayModificacionDeContenido()
 
 		r.ContenidoActualizado = nil
 	}
