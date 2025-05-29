@@ -21,14 +21,20 @@ type NovedadAsset struct {
 	Nueva_planta *UnionNullString `json:"nueva_planta"`
 
 	Ceco *UnionNullString `json:"ceco"`
+
+	FechaNovedad *UnionNullString `json:"fechaNovedad"`
+
+	UsuarioNovedad *UnionNullString `json:"usuarioNovedad"`
 }
 
-const NovedadAssetAvroCRC64Fingerprint = "\x15촿\x00\x97\xd7\xc1"
+const NovedadAssetAvroCRC64Fingerprint = "\x0f\x87\xd4\xe0GƗ\xa6"
 
 func NewNovedadAsset() NovedadAsset {
 	r := NovedadAsset{}
 	r.Nueva_planta = nil
 	r.Ceco = nil
+	r.FechaNovedad = nil
+	r.UsuarioNovedad = nil
 	return r
 }
 
@@ -65,6 +71,14 @@ func writeNovedadAsset(r NovedadAsset, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.FechaNovedad, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.UsuarioNovedad, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -73,7 +87,7 @@ func (r NovedadAsset) Serialize(w io.Writer) error {
 }
 
 func (r NovedadAsset) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.NovedadAsset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaNovedad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuarioNovedad\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.NovedadAsset\",\"type\":\"record\"}"
 }
 
 func (r NovedadAsset) SchemaName() string {
@@ -99,6 +113,14 @@ func (r *NovedadAsset) Get(i int) types.Field {
 		r.Ceco = NewUnionNullString()
 
 		return r.Ceco
+	case 2:
+		r.FechaNovedad = NewUnionNullString()
+
+		return r.FechaNovedad
+	case 3:
+		r.UsuarioNovedad = NewUnionNullString()
+
+		return r.UsuarioNovedad
 	}
 	panic("Unknown field index")
 }
@@ -111,6 +133,12 @@ func (r *NovedadAsset) SetDefault(i int) {
 	case 1:
 		r.Ceco = nil
 		return
+	case 2:
+		r.FechaNovedad = nil
+		return
+	case 3:
+		r.UsuarioNovedad = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -122,6 +150,12 @@ func (r *NovedadAsset) NullField(i int) {
 		return
 	case 1:
 		r.Ceco = nil
+		return
+	case 2:
+		r.FechaNovedad = nil
+		return
+	case 3:
+		r.UsuarioNovedad = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -144,6 +178,14 @@ func (r NovedadAsset) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ceco"], err = json.Marshal(r.Ceco)
+	if err != nil {
+		return nil, err
+	}
+	output["fechaNovedad"], err = json.Marshal(r.FechaNovedad)
+	if err != nil {
+		return nil, err
+	}
+	output["usuarioNovedad"], err = json.Marshal(r.UsuarioNovedad)
 	if err != nil {
 		return nil, err
 	}
@@ -188,6 +230,38 @@ func (r *NovedadAsset) UnmarshalJSON(data []byte) error {
 		r.Ceco = NewUnionNullString()
 
 		r.Ceco = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["fechaNovedad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FechaNovedad); err != nil {
+			return err
+		}
+	} else {
+		r.FechaNovedad = NewUnionNullString()
+
+		r.FechaNovedad = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["usuarioNovedad"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UsuarioNovedad); err != nil {
+			return err
+		}
+	} else {
+		r.UsuarioNovedad = NewUnionNullString()
+
+		r.UsuarioNovedad = nil
 	}
 	return nil
 }
