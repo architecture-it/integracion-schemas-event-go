@@ -37,9 +37,13 @@ type EstadoPendiente struct {
 	Cac_areainterna *UnionNullString `json:"Cac_areainterna"`
 
 	StatusCodeName string `json:"StatusCodeName"`
+
+	IncidentId string `json:"IncidentId"`
+
+	Origen string `json:"Origen"`
 }
 
-const EstadoPendienteAvroCRC64Fingerprint = "'-\xa3\xb1\xf1\xec\x02\x96"
+const EstadoPendienteAvroCRC64Fingerprint = "\x1d\xfbɢ8\x89\xach"
 
 func NewEstadoPendiente() EstadoPendiente {
 	r := EstadoPendiente{}
@@ -111,6 +115,14 @@ func writeEstadoPendiente(r EstadoPendiente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.IncidentId, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Origen, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -119,7 +131,7 @@ func (r EstadoPendiente) Serialize(w io.Writer) error {
 }
 
 func (r EstadoPendiente) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":\"string\"}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
 }
 
 func (r EstadoPendiente) SchemaName() string {
@@ -180,6 +192,16 @@ func (r *EstadoPendiente) Get(i int) types.Field {
 		return r.Cac_areainterna
 	case 9:
 		w := types.String{Target: &r.StatusCodeName}
+
+		return w
+
+	case 10:
+		w := types.String{Target: &r.IncidentId}
+
+		return w
+
+	case 11:
+		w := types.String{Target: &r.Origen}
 
 		return w
 
@@ -260,6 +282,14 @@ func (r EstadoPendiente) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["StatusCodeName"], err = json.Marshal(r.StatusCodeName)
+	if err != nil {
+		return nil, err
+	}
+	output["IncidentId"], err = json.Marshal(r.IncidentId)
+	if err != nil {
+		return nil, err
+	}
+	output["Origen"], err = json.Marshal(r.Origen)
 	if err != nil {
 		return nil, err
 	}
@@ -412,6 +442,34 @@ func (r *EstadoPendiente) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for StatusCodeName")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IncidentId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IncidentId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IncidentId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Origen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Origen); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Origen")
 	}
 	return nil
 }
