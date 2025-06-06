@@ -40,10 +40,14 @@ type EstadoResuelto struct {
 
 	Modifiedon string `json:"Modifiedon"`
 
+	IncidentId *UnionNullString `json:"IncidentId"`
+
+	Origen *UnionNullString `json:"Origen"`
+
 	Cac_comentarioresolucion *UnionNullString `json:"cac_comentarioresolucion"`
 }
 
-const EstadoResueltoAvroCRC64Fingerprint = "F\xbdH!\xf9\xfbY\xcd"
+const EstadoResueltoAvroCRC64Fingerprint = "\x93{\xe3\x90\xcc\xd2!\x9b"
 
 func NewEstadoResuelto() EstadoResuelto {
 	r := EstadoResuelto{}
@@ -119,6 +123,14 @@ func writeEstadoResuelto(r EstadoResuelto, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.IncidentId, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Origen, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Cac_comentarioresolucion, w)
 	if err != nil {
 		return err
@@ -131,7 +143,7 @@ func (r EstadoResuelto) Serialize(w io.Writer) error {
 }
 
 func (r EstadoResuelto) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Modifiedon\",\"type\":\"string\"},{\"name\":\"cac_comentarioresolucion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoResuelto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Modifiedon\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"cac_comentarioresolucion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoResuelto\",\"type\":\"record\"}"
 }
 
 func (r EstadoResuelto) SchemaName() string {
@@ -201,6 +213,14 @@ func (r *EstadoResuelto) Get(i int) types.Field {
 		return w
 
 	case 11:
+		r.IncidentId = NewUnionNullString()
+
+		return r.IncidentId
+	case 12:
+		r.Origen = NewUnionNullString()
+
+		return r.Origen
+	case 13:
 		r.Cac_comentarioresolucion = NewUnionNullString()
 
 		return r.Cac_comentarioresolucion
@@ -229,6 +249,12 @@ func (r *EstadoResuelto) NullField(i int) {
 		r.Cac_areainterna = nil
 		return
 	case 11:
+		r.IncidentId = nil
+		return
+	case 12:
+		r.Origen = nil
+		return
+	case 13:
 		r.Cac_comentarioresolucion = nil
 		return
 	}
@@ -288,6 +314,14 @@ func (r EstadoResuelto) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Modifiedon"], err = json.Marshal(r.Modifiedon)
+	if err != nil {
+		return nil, err
+	}
+	output["IncidentId"], err = json.Marshal(r.IncidentId)
+	if err != nil {
+		return nil, err
+	}
+	output["Origen"], err = json.Marshal(r.Origen)
 	if err != nil {
 		return nil, err
 	}
@@ -458,6 +492,34 @@ func (r *EstadoResuelto) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Modifiedon")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IncidentId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IncidentId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IncidentId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Origen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Origen); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Origen")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cac_comentarioresolucion"]; ok {

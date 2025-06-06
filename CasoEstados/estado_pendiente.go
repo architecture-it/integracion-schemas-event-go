@@ -38,12 +38,12 @@ type EstadoPendiente struct {
 
 	StatusCodeName string `json:"StatusCodeName"`
 
-	IncidentId string `json:"IncidentId"`
+	IncidentId *UnionNullString `json:"IncidentId"`
 
-	Origen string `json:"Origen"`
+	Origen *UnionNullString `json:"Origen"`
 }
 
-const EstadoPendienteAvroCRC64Fingerprint = "\x1d\xfbɢ8\x89\xach"
+const EstadoPendienteAvroCRC64Fingerprint = "81\x047\xaf\x1cnK"
 
 func NewEstadoPendiente() EstadoPendiente {
 	r := EstadoPendiente{}
@@ -115,11 +115,11 @@ func writeEstadoPendiente(r EstadoPendiente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.IncidentId, w)
+	err = writeUnionNullString(r.IncidentId, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Origen, w)
+	err = writeUnionNullString(r.Origen, w)
 	if err != nil {
 		return err
 	}
@@ -131,7 +131,7 @@ func (r EstadoPendiente) Serialize(w io.Writer) error {
 }
 
 func (r EstadoPendiente) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":\"string\"},{\"name\":\"Origen\",\"type\":\"string\"}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
 }
 
 func (r EstadoPendiente) SchemaName() string {
@@ -196,15 +196,13 @@ func (r *EstadoPendiente) Get(i int) types.Field {
 		return w
 
 	case 10:
-		w := types.String{Target: &r.IncidentId}
+		r.IncidentId = NewUnionNullString()
 
-		return w
-
+		return r.IncidentId
 	case 11:
-		w := types.String{Target: &r.Origen}
+		r.Origen = NewUnionNullString()
 
-		return w
-
+		return r.Origen
 	}
 	panic("Unknown field index")
 }
@@ -228,6 +226,12 @@ func (r *EstadoPendiente) NullField(i int) {
 		return
 	case 8:
 		r.Cac_areainterna = nil
+		return
+	case 10:
+		r.IncidentId = nil
+		return
+	case 11:
+		r.Origen = nil
 		return
 	}
 	panic("Not a nullable field index")
