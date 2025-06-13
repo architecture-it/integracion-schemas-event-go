@@ -39,9 +39,19 @@ type WorkOrder struct {
 	User_report_email string `json:"user_report_email"`
 
 	Ceco string `json:"ceco"`
+
+	Equipo_id_catalog string `json:"equipo_id_catalog"`
+
+	Equipo_modelo string `json:"equipo_modelo"`
+
+	Equipo_marca string `json:"equipo_marca"`
+
+	Equipo_inventario string `json:"equipo_inventario"`
+
+	Equipo_categoria string `json:"equipo_categoria"`
 }
 
-const WorkOrderAvroCRC64Fingerprint = "A\x97\xa03\xaf\xf8\b\xc4"
+const WorkOrderAvroCRC64Fingerprint = "\x1c\\ Z\xa9,Cm"
 
 func NewWorkOrder() WorkOrder {
 	r := WorkOrder{}
@@ -117,6 +127,26 @@ func writeWorkOrder(r WorkOrder, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Equipo_id_catalog, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Equipo_modelo, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Equipo_marca, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Equipo_inventario, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Equipo_categoria, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -125,7 +155,7 @@ func (r WorkOrder) Serialize(w io.Writer) error {
 }
 
 func (r WorkOrder) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"name\":\"ceco\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"name\":\"ceco\",\"type\":\"string\"},{\"name\":\"equipo_id_catalog\",\"type\":\"string\"},{\"name\":\"equipo_modelo\",\"type\":\"string\"},{\"name\":\"equipo_marca\",\"type\":\"string\"},{\"name\":\"equipo_inventario\",\"type\":\"string\"},{\"name\":\"equipo_categoria\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
 }
 
 func (r WorkOrder) SchemaName() string {
@@ -198,6 +228,31 @@ func (r *WorkOrder) Get(i int) types.Field {
 
 		return w
 
+	case 11:
+		w := types.String{Target: &r.Equipo_id_catalog}
+
+		return w
+
+	case 12:
+		w := types.String{Target: &r.Equipo_modelo}
+
+		return w
+
+	case 13:
+		w := types.String{Target: &r.Equipo_marca}
+
+		return w
+
+	case 14:
+		w := types.String{Target: &r.Equipo_inventario}
+
+		return w
+
+	case 15:
+		w := types.String{Target: &r.Equipo_categoria}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -267,6 +322,26 @@ func (r WorkOrder) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ceco"], err = json.Marshal(r.Ceco)
+	if err != nil {
+		return nil, err
+	}
+	output["equipo_id_catalog"], err = json.Marshal(r.Equipo_id_catalog)
+	if err != nil {
+		return nil, err
+	}
+	output["equipo_modelo"], err = json.Marshal(r.Equipo_modelo)
+	if err != nil {
+		return nil, err
+	}
+	output["equipo_marca"], err = json.Marshal(r.Equipo_marca)
+	if err != nil {
+		return nil, err
+	}
+	output["equipo_inventario"], err = json.Marshal(r.Equipo_inventario)
+	if err != nil {
+		return nil, err
+	}
+	output["equipo_categoria"], err = json.Marshal(r.Equipo_categoria)
 	if err != nil {
 		return nil, err
 	}
@@ -433,6 +508,76 @@ func (r *WorkOrder) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for ceco")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["equipo_id_catalog"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Equipo_id_catalog); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for equipo_id_catalog")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["equipo_modelo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Equipo_modelo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for equipo_modelo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["equipo_marca"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Equipo_marca); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for equipo_marca")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["equipo_inventario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Equipo_inventario); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for equipo_inventario")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["equipo_categoria"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Equipo_categoria); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for equipo_categoria")
 	}
 	return nil
 }
