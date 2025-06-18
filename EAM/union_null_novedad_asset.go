@@ -84,7 +84,7 @@ func DeserializeUnionNullNovedadAssetFromSchema(r io.Reader, schema string) (*Un
 }
 
 func (r *UnionNullNovedadAsset) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaNovedad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuarioNovedad\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadAsset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaNovedad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuarioNovedad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"marca\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"modelo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"razon_social\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"propulsion\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadAsset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullNovedadAsset) SetBoolean(v bool)   { panic("Unsupported operation") }

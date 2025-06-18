@@ -25,9 +25,21 @@ type NovedadAsset struct {
 	FechaNovedad *UnionNullString `json:"fechaNovedad"`
 
 	UsuarioNovedad *UnionNullString `json:"usuarioNovedad"`
+
+	Clase *UnionNullString `json:"clase"`
+
+	Marca *UnionNullString `json:"marca"`
+
+	Modelo *UnionNullString `json:"modelo"`
+
+	Nro_serie *UnionNullString `json:"nro_serie"`
+
+	Razon_social *UnionNullString `json:"razon_social"`
+
+	Propulsion *UnionNullString `json:"propulsion"`
 }
 
-const NovedadAssetAvroCRC64Fingerprint = "\x0f\x87\xd4\xe0GƗ\xa6"
+const NovedadAssetAvroCRC64Fingerprint = "s\xef\x89yԃ\xe2t"
 
 func NewNovedadAsset() NovedadAsset {
 	r := NovedadAsset{}
@@ -35,6 +47,12 @@ func NewNovedadAsset() NovedadAsset {
 	r.Ceco = nil
 	r.FechaNovedad = nil
 	r.UsuarioNovedad = nil
+	r.Clase = nil
+	r.Marca = nil
+	r.Modelo = nil
+	r.Nro_serie = nil
+	r.Razon_social = nil
+	r.Propulsion = nil
 	return r
 }
 
@@ -79,6 +97,30 @@ func writeNovedadAsset(r NovedadAsset, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Clase, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Marca, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Modelo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Nro_serie, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Razon_social, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Propulsion, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -87,7 +129,7 @@ func (r NovedadAsset) Serialize(w io.Writer) error {
 }
 
 func (r NovedadAsset) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaNovedad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuarioNovedad\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.NovedadAsset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"nueva_planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaNovedad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuarioNovedad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"marca\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"modelo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"razon_social\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"propulsion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.NovedadAsset\",\"type\":\"record\"}"
 }
 
 func (r NovedadAsset) SchemaName() string {
@@ -121,6 +163,30 @@ func (r *NovedadAsset) Get(i int) types.Field {
 		r.UsuarioNovedad = NewUnionNullString()
 
 		return r.UsuarioNovedad
+	case 4:
+		r.Clase = NewUnionNullString()
+
+		return r.Clase
+	case 5:
+		r.Marca = NewUnionNullString()
+
+		return r.Marca
+	case 6:
+		r.Modelo = NewUnionNullString()
+
+		return r.Modelo
+	case 7:
+		r.Nro_serie = NewUnionNullString()
+
+		return r.Nro_serie
+	case 8:
+		r.Razon_social = NewUnionNullString()
+
+		return r.Razon_social
+	case 9:
+		r.Propulsion = NewUnionNullString()
+
+		return r.Propulsion
 	}
 	panic("Unknown field index")
 }
@@ -139,6 +205,24 @@ func (r *NovedadAsset) SetDefault(i int) {
 	case 3:
 		r.UsuarioNovedad = nil
 		return
+	case 4:
+		r.Clase = nil
+		return
+	case 5:
+		r.Marca = nil
+		return
+	case 6:
+		r.Modelo = nil
+		return
+	case 7:
+		r.Nro_serie = nil
+		return
+	case 8:
+		r.Razon_social = nil
+		return
+	case 9:
+		r.Propulsion = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -156,6 +240,24 @@ func (r *NovedadAsset) NullField(i int) {
 		return
 	case 3:
 		r.UsuarioNovedad = nil
+		return
+	case 4:
+		r.Clase = nil
+		return
+	case 5:
+		r.Marca = nil
+		return
+	case 6:
+		r.Modelo = nil
+		return
+	case 7:
+		r.Nro_serie = nil
+		return
+	case 8:
+		r.Razon_social = nil
+		return
+	case 9:
+		r.Propulsion = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -186,6 +288,30 @@ func (r NovedadAsset) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["usuarioNovedad"], err = json.Marshal(r.UsuarioNovedad)
+	if err != nil {
+		return nil, err
+	}
+	output["clase"], err = json.Marshal(r.Clase)
+	if err != nil {
+		return nil, err
+	}
+	output["marca"], err = json.Marshal(r.Marca)
+	if err != nil {
+		return nil, err
+	}
+	output["modelo"], err = json.Marshal(r.Modelo)
+	if err != nil {
+		return nil, err
+	}
+	output["nro_serie"], err = json.Marshal(r.Nro_serie)
+	if err != nil {
+		return nil, err
+	}
+	output["razon_social"], err = json.Marshal(r.Razon_social)
+	if err != nil {
+		return nil, err
+	}
+	output["propulsion"], err = json.Marshal(r.Propulsion)
 	if err != nil {
 		return nil, err
 	}
@@ -262,6 +388,102 @@ func (r *NovedadAsset) UnmarshalJSON(data []byte) error {
 		r.UsuarioNovedad = NewUnionNullString()
 
 		r.UsuarioNovedad = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["clase"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Clase); err != nil {
+			return err
+		}
+	} else {
+		r.Clase = NewUnionNullString()
+
+		r.Clase = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["marca"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Marca); err != nil {
+			return err
+		}
+	} else {
+		r.Marca = NewUnionNullString()
+
+		r.Marca = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["modelo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Modelo); err != nil {
+			return err
+		}
+	} else {
+		r.Modelo = NewUnionNullString()
+
+		r.Modelo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["nro_serie"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Nro_serie); err != nil {
+			return err
+		}
+	} else {
+		r.Nro_serie = NewUnionNullString()
+
+		r.Nro_serie = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["razon_social"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Razon_social); err != nil {
+			return err
+		}
+	} else {
+		r.Razon_social = NewUnionNullString()
+
+		r.Razon_social = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["propulsion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Propulsion); err != nil {
+			return err
+		}
+	} else {
+		r.Propulsion = NewUnionNullString()
+
+		r.Propulsion = nil
 	}
 	return nil
 }
