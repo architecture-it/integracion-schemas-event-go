@@ -39,9 +39,11 @@ type Abastecimiento struct {
 	FechaDeRecepcionEsperada *UnionNullLong `json:"FechaDeRecepcionEsperada"`
 
 	Lineas []LineaAbastecimiento `json:"Lineas"`
+
+	ValorDeclaradoTotal *UnionNullString `json:"ValorDeclaradoTotal"`
 }
 
-const AbastecimientoAvroCRC64Fingerprint = "ٱm\xe2\xd6^6X"
+const AbastecimientoAvroCRC64Fingerprint = "|\xca\xff\x04\x96-ّ"
 
 func NewAbastecimiento() Abastecimiento {
 	r := Abastecimiento{}
@@ -56,6 +58,7 @@ func NewAbastecimiento() Abastecimiento {
 	r.FechaDeRecepcionEsperada = nil
 	r.Lineas = make([]LineaAbastecimiento, 0)
 
+	r.ValorDeclaradoTotal = nil
 	return r
 }
 
@@ -128,6 +131,10 @@ func writeAbastecimiento(r Abastecimiento, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ValorDeclaradoTotal, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -136,7 +143,7 @@ func (r Abastecimiento) Serialize(w io.Writer) error {
 }
 
 func (r Abastecimiento) Schema() string {
-	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"Subpropietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroOrdenExterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TransaccionId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"FechaOrdenExterna\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaDeRecepcionEsperada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Lineas\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"string\"},{\"name\":\"CantidadPedida\",\"type\":\"int\"},{\"name\":\"UnidadMedida\",\"type\":\"string\"},{\"name\":\"AlmacenWMS\",\"type\":\"string\"},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"default\":false,\"name\":\"EsTrazable\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"AccionControlCalidad\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoAcondicionamiento\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoControlCalidad\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"AvisoContraMuestra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstatusOTdeTrazaporLPN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstatusOtDeAcondporLpn\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UbicacionPredeterminada\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"VidaUtilDelLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventoAnmat\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GLNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"LoteFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AcondicionamientoSecundario\",\"type\":[\"null\",\"string\"]}],\"name\":\"LineaAbastecimiento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.Abastecimiento\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"Subpropietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroOrdenExterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TransaccionId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"FechaOrdenExterna\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaDeRecepcionEsperada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Lineas\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"string\"},{\"name\":\"CantidadPedida\",\"type\":\"int\"},{\"name\":\"UnidadMedida\",\"type\":\"string\"},{\"name\":\"AlmacenWMS\",\"type\":\"string\"},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"default\":false,\"name\":\"EsTrazable\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"AccionControlCalidad\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoAcondicionamiento\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoControlCalidad\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"AvisoContraMuestra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstatusOTdeTrazaporLPN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstatusOtDeAcondporLpn\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UbicacionPredeterminada\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"VidaUtilDelLote\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventoAnmat\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GLNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"LoteFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AcondicionamientoSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Bulto\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"CodigoExterno\",\"type\":\"string\"},{\"name\":\"BultoId\",\"type\":\"string\"}],\"name\":\"BultoLineaAbastecimiento\",\"type\":\"record\"}]}],\"name\":\"LineaAbastecimiento\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"ValorDeclaradoTotal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.Abastecimiento\",\"type\":\"record\"}"
 }
 
 func (r Abastecimiento) SchemaName() string {
@@ -202,6 +209,10 @@ func (r *Abastecimiento) Get(i int) types.Field {
 
 		return w
 
+	case 11:
+		r.ValorDeclaradoTotal = NewUnionNullString()
+
+		return r.ValorDeclaradoTotal
 	}
 	panic("Unknown field index")
 }
@@ -235,6 +246,9 @@ func (r *Abastecimiento) SetDefault(i int) {
 	case 9:
 		r.FechaDeRecepcionEsperada = nil
 		return
+	case 11:
+		r.ValorDeclaradoTotal = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -267,6 +281,9 @@ func (r *Abastecimiento) NullField(i int) {
 		return
 	case 9:
 		r.FechaDeRecepcionEsperada = nil
+		return
+	case 11:
+		r.ValorDeclaradoTotal = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -325,6 +342,10 @@ func (r Abastecimiento) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Lineas"], err = json.Marshal(r.Lineas)
+	if err != nil {
+		return nil, err
+	}
+	output["ValorDeclaradoTotal"], err = json.Marshal(r.ValorDeclaradoTotal)
 	if err != nil {
 		return nil, err
 	}
@@ -509,6 +530,22 @@ func (r *Abastecimiento) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Lineas")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ValorDeclaradoTotal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ValorDeclaradoTotal); err != nil {
+			return err
+		}
+	} else {
+		r.ValorDeclaradoTotal = NewUnionNullString()
+
+		r.ValorDeclaradoTotal = nil
 	}
 	return nil
 }
