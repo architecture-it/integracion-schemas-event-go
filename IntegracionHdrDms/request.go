@@ -29,9 +29,11 @@ type Request struct {
 	SubMotive *UnionNullString `json:"SubMotive"`
 
 	Observation *UnionNullString `json:"Observation"`
+
+	Fecha *UnionNullString `json:"Fecha"`
 }
 
-const RequestAvroCRC64Fingerprint = "h2\xc1\xef\xe9!9\x94"
+const RequestAvroCRC64Fingerprint = "\xd2\xf8r\xda뷉\xc5"
 
 func NewRequest() Request {
 	r := Request{}
@@ -41,6 +43,7 @@ func NewRequest() Request {
 	r.Motive = nil
 	r.SubMotive = nil
 	r.Observation = nil
+	r.Fecha = nil
 	return r
 }
 
@@ -93,6 +96,10 @@ func writeRequest(r Request, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Fecha, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -101,7 +108,7 @@ func (r Request) Serialize(w io.Writer) error {
 }
 
 func (r Request) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"SheetRouteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SheetRoute\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Shipment\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observation\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IntegracionHdrDms.Events.Common.Request\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"SheetRouteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SheetRoute\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Shipment\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observation\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Fecha\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IntegracionHdrDms.Events.Common.Request\",\"type\":\"record\"}"
 }
 
 func (r Request) SchemaName() string {
@@ -143,6 +150,10 @@ func (r *Request) Get(i int) types.Field {
 		r.Observation = NewUnionNullString()
 
 		return r.Observation
+	case 6:
+		r.Fecha = NewUnionNullString()
+
+		return r.Fecha
 	}
 	panic("Unknown field index")
 }
@@ -167,6 +178,9 @@ func (r *Request) SetDefault(i int) {
 	case 5:
 		r.Observation = nil
 		return
+	case 6:
+		r.Fecha = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -190,6 +204,9 @@ func (r *Request) NullField(i int) {
 		return
 	case 5:
 		r.Observation = nil
+		return
+	case 6:
+		r.Fecha = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -228,6 +245,10 @@ func (r Request) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Observation"], err = json.Marshal(r.Observation)
+	if err != nil {
+		return nil, err
+	}
+	output["Fecha"], err = json.Marshal(r.Fecha)
 	if err != nil {
 		return nil, err
 	}
@@ -336,6 +357,22 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 		r.Observation = NewUnionNullString()
 
 		r.Observation = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Fecha"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Fecha); err != nil {
+			return err
+		}
+	} else {
+		r.Fecha = NewUnionNullString()
+
+		r.Fecha = nil
 	}
 	return nil
 }

@@ -23,7 +23,7 @@ type OrdenHdrSolicitada struct {
 	Request *UnionNullRequest `json:"Request"`
 }
 
-const OrdenHdrSolicitadaAvroCRC64Fingerprint = "9\x01\xae\x1aV^\xbc\xd2"
+const OrdenHdrSolicitadaAvroCRC64Fingerprint = "\xe6l\xa5\\\xd7\xd9_V"
 
 func NewOrdenHdrSolicitada() OrdenHdrSolicitada {
 	r := OrdenHdrSolicitada{}
@@ -72,7 +72,7 @@ func (r OrdenHdrSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r OrdenHdrSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"Action\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Request\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"SheetRouteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SheetRoute\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Shipment\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observation\",\"type\":[\"null\",\"string\"]}],\"name\":\"Request\",\"namespace\":\"Andreani.IntegracionHdrDms.Events.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.IntegracionHdrDms.Events.Record.OrdenHdrSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Action\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Request\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"SheetRouteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SheetRoute\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Shipment\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observation\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Fecha\",\"type\":[\"null\",\"string\"]}],\"name\":\"Request\",\"namespace\":\"Andreani.IntegracionHdrDms.Events.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.IntegracionHdrDms.Events.Record.OrdenHdrSolicitada\",\"type\":\"record\"}"
 }
 
 func (r OrdenHdrSolicitada) SchemaName() string {

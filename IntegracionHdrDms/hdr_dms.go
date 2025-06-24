@@ -23,7 +23,7 @@ type HdrDms struct {
 	Request *UnionNullRequest `json:"Request"`
 }
 
-const HdrDmsAvroCRC64Fingerprint = "0\x13\xfb\xd1vѸ:"
+const HdrDmsAvroCRC64Fingerprint = "UbN{S2\xf1\x9b"
 
 func NewHdrDms() HdrDms {
 	r := HdrDms{}
@@ -72,7 +72,7 @@ func (r HdrDms) Serialize(w io.Writer) error {
 }
 
 func (r HdrDms) Schema() string {
-	return "{\"fields\":[{\"name\":\"Action\",\"type\":\"string\"},{\"default\":null,\"name\":\"Request\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"SheetRouteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SheetRoute\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Shipment\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observation\",\"type\":[\"null\",\"string\"]}],\"name\":\"Request\",\"type\":\"record\"}]}],\"name\":\"Andreani.IntegracionHdrDms.Events.Common.HdrDms\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Action\",\"type\":\"string\"},{\"default\":null,\"name\":\"Request\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"SheetRouteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SheetRoute\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Shipment\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observation\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Fecha\",\"type\":[\"null\",\"string\"]}],\"name\":\"Request\",\"type\":\"record\"}]}],\"name\":\"Andreani.IntegracionHdrDms.Events.Common.HdrDms\",\"type\":\"record\"}"
 }
 
 func (r HdrDms) SchemaName() string {

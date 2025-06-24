@@ -84,7 +84,7 @@ func DeserializeUnionNullRequestFromSchema(r io.Reader, schema string) (*UnionNu
 }
 
 func (r *UnionNullRequest) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"SheetRouteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SheetRoute\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Shipment\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observation\",\"type\":[\"null\",\"string\"]}],\"name\":\"Request\",\"namespace\":\"Andreani.IntegracionHdrDms.Events.Common\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"SheetRouteId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SheetRoute\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Shipment\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotive\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observation\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Fecha\",\"type\":[\"null\",\"string\"]}],\"name\":\"Request\",\"namespace\":\"Andreani.IntegracionHdrDms.Events.Common\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullRequest) SetBoolean(v bool)   { panic("Unsupported operation") }
