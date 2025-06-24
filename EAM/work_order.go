@@ -28,6 +28,8 @@ type WorkOrder struct {
 
 	User_report string `json:"user_report"`
 
+	Date_report string `json:"date_report"`
+
 	Propietario string `json:"propietario"`
 
 	TipoOT string `json:"tipoOT"`
@@ -49,9 +51,11 @@ type WorkOrder struct {
 	Equipo_inventario string `json:"equipo_inventario"`
 
 	Equipo_categoria string `json:"equipo_categoria"`
+
+	Equipo_descripcion string `json:"equipo_descripcion"`
 }
 
-const WorkOrderAvroCRC64Fingerprint = "\x1ae$\xa3\xf9\xf5\xd8\xff"
+const WorkOrderAvroCRC64Fingerprint = "o\xe4z\xa6\xcdlf\xd5"
 
 func NewWorkOrder() WorkOrder {
 	r := WorkOrder{}
@@ -103,6 +107,10 @@ func writeWorkOrder(r WorkOrder, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Date_report, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Propietario, w)
 	if err != nil {
 		return err
@@ -147,6 +155,10 @@ func writeWorkOrder(r WorkOrder, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Equipo_descripcion, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -155,7 +167,7 @@ func (r WorkOrder) Serialize(w io.Writer) error {
 }
 
 func (r WorkOrder) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"name\":\"ceco\",\"type\":\"string\"},{\"name\":\"equipo_id_catalog\",\"type\":\"string\"},{\"name\":\"equipo_modelo\",\"type\":\"string\"},{\"name\":\"equipo_marca\",\"type\":\"string\"},{\"name\":\"equipo_inventario\",\"type\":\"string\"},{\"name\":\"equipo_categoria\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"date_report\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"name\":\"ceco\",\"type\":\"string\"},{\"name\":\"equipo_id_catalog\",\"type\":\"string\"},{\"name\":\"equipo_modelo\",\"type\":\"string\"},{\"name\":\"equipo_marca\",\"type\":\"string\"},{\"name\":\"equipo_inventario\",\"type\":\"string\"},{\"name\":\"equipo_categoria\",\"type\":\"string\"},{\"name\":\"equipo_descripcion\",\"type\":\"string\"}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
 }
 
 func (r WorkOrder) SchemaName() string {
@@ -199,57 +211,67 @@ func (r *WorkOrder) Get(i int) types.Field {
 		return w
 
 	case 5:
-		w := types.String{Target: &r.Propietario}
+		w := types.String{Target: &r.Date_report}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.TipoOT}
+		w := types.String{Target: &r.Propietario}
 
 		return w
 
 	case 7:
-		w := types.String{Target: &r.SubTipoOT}
+		w := types.String{Target: &r.TipoOT}
 
 		return w
 
 	case 8:
-		w := types.String{Target: &r.Desvio}
+		w := types.String{Target: &r.SubTipoOT}
 
 		return w
 
 	case 9:
-		w := types.String{Target: &r.User_report_email}
+		w := types.String{Target: &r.Desvio}
 
 		return w
 
 	case 10:
-		w := types.String{Target: &r.Ceco}
+		w := types.String{Target: &r.User_report_email}
 
 		return w
 
 	case 11:
-		w := types.String{Target: &r.Equipo_id_catalog}
+		w := types.String{Target: &r.Ceco}
 
 		return w
 
 	case 12:
-		w := types.String{Target: &r.Equipo_modelo}
+		w := types.String{Target: &r.Equipo_id_catalog}
 
 		return w
 
 	case 13:
-		w := types.String{Target: &r.Equipo_marca}
+		w := types.String{Target: &r.Equipo_modelo}
 
 		return w
 
 	case 14:
-		w := types.String{Target: &r.Equipo_inventario}
+		w := types.String{Target: &r.Equipo_marca}
 
 		return w
 
 	case 15:
+		w := types.String{Target: &r.Equipo_inventario}
+
+		return w
+
+	case 16:
 		w := types.String{Target: &r.Equipo_categoria}
+
+		return w
+
+	case 17:
+		w := types.String{Target: &r.Equipo_descripcion}
 
 		return w
 
@@ -301,6 +323,10 @@ func (r WorkOrder) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["date_report"], err = json.Marshal(r.Date_report)
+	if err != nil {
+		return nil, err
+	}
 	output["propietario"], err = json.Marshal(r.Propietario)
 	if err != nil {
 		return nil, err
@@ -342,6 +368,10 @@ func (r WorkOrder) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["equipo_categoria"], err = json.Marshal(r.Equipo_categoria)
+	if err != nil {
+		return nil, err
+	}
+	output["equipo_descripcion"], err = json.Marshal(r.Equipo_descripcion)
 	if err != nil {
 		return nil, err
 	}
@@ -424,6 +454,20 @@ func (r *WorkOrder) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for user_report")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["date_report"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Date_report); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for date_report")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["propietario"]; ok {
@@ -578,6 +622,20 @@ func (r *WorkOrder) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for equipo_categoria")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["equipo_descripcion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Equipo_descripcion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for equipo_descripcion")
 	}
 	return nil
 }
