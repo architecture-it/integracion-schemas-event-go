@@ -18,10 +18,10 @@ import (
 var _ = fmt.Printf
 
 type Sender struct {
-	EmailAddress *UnionNullEmailAddress `json:"emailAddress"`
+	EmailAddress *UnionNullEmailAddress `json:"EmailAddress"`
 }
 
-const SenderAvroCRC64Fingerprint = "MI\xe6\xbe\x02Xbq"
+const SenderAvroCRC64Fingerprint = "\x8a\xb0_d\x11dH\xc5"
 
 func NewSender() Sender {
 	r := Sender{}
@@ -66,7 +66,7 @@ func (r Sender) Serialize(w io.Writer) error {
 }
 
 func (r Sender) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"emailAddress\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.Sender\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"EmailAddress\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.Sender\",\"type\":\"record\"}"
 }
 
 func (r Sender) SchemaName() string {
@@ -122,7 +122,7 @@ func (_ Sender) AvroCRC64Fingerprint() []byte {
 func (r Sender) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["emailAddress"], err = json.Marshal(r.EmailAddress)
+	output["EmailAddress"], err = json.Marshal(r.EmailAddress)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +137,7 @@ func (r *Sender) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["emailAddress"]; ok {
+		if v, ok := fields["EmailAddress"]; ok {
 			return v
 		}
 		return nil

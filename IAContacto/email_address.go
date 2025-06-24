@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type EmailAddress struct {
-	Address *UnionNullString `json:"address"`
+	Address *UnionNullString `json:"Address"`
 
-	Name *UnionNullString `json:"name"`
+	Name *UnionNullString `json:"Name"`
 }
 
-const EmailAddressAvroCRC64Fingerprint = "+\xbe\xfe\x81h\x8b\x7f\xb2"
+const EmailAddressAvroCRC64Fingerprint = "\bT\x8f\xd8Y\xec\xf6\xba"
 
 func NewEmailAddress() EmailAddress {
 	r := EmailAddress{}
@@ -73,7 +73,7 @@ func (r EmailAddress) Serialize(w io.Writer) error {
 }
 
 func (r EmailAddress) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"name\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailAddress\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailAddress\",\"type\":\"record\"}"
 }
 
 func (r EmailAddress) SchemaName() string {
@@ -139,11 +139,11 @@ func (_ EmailAddress) AvroCRC64Fingerprint() []byte {
 func (r EmailAddress) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["address"], err = json.Marshal(r.Address)
+	output["Address"], err = json.Marshal(r.Address)
 	if err != nil {
 		return nil, err
 	}
-	output["name"], err = json.Marshal(r.Name)
+	output["Name"], err = json.Marshal(r.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func (r *EmailAddress) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["address"]; ok {
+		if v, ok := fields["Address"]; ok {
 			return v
 		}
 		return nil
@@ -174,7 +174,7 @@ func (r *EmailAddress) UnmarshalJSON(data []byte) error {
 		r.Address = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["name"]; ok {
+		if v, ok := fields["Name"]; ok {
 			return v
 		}
 		return nil

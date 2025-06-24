@@ -84,7 +84,7 @@ func DeserializeUnionNullEmailAddressFromSchema(r io.Reader, schema string) (*Un
 }
 
 func (r *UnionNullEmailAddress) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullEmailAddress) SetBoolean(v bool)   { panic("Unsupported operation") }

@@ -84,7 +84,7 @@ func DeserializeUnionNullSenderFromSchema(r io.Reader, schema string) (*UnionNul
 }
 
 func (r *UnionNullSender) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"emailAddress\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]}],\"name\":\"Sender\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"EmailAddress\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]}],\"name\":\"Sender\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullSender) SetBoolean(v bool)   { panic("Unsupported operation") }

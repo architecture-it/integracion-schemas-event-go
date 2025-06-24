@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type Body struct {
-	ContentType *UnionNullString `json:"contentType"`
+	ContentType *UnionNullString `json:"ContentType"`
 
-	Content *UnionNullString `json:"content"`
+	Content *UnionNullString `json:"Content"`
 }
 
-const BodyAvroCRC64Fingerprint = "\x1d\x8a\xb0\xdb\x10\xe5\xc0\x1c"
+const BodyAvroCRC64Fingerprint = "\xf3{\xfa\xe9\xa7v\x98\xaa"
 
 func NewBody() Body {
 	r := Body{}
@@ -73,7 +73,7 @@ func (r Body) Serialize(w io.Writer) error {
 }
 
 func (r Body) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contentType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"content\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.Body\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Content\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.Body\",\"type\":\"record\"}"
 }
 
 func (r Body) SchemaName() string {
@@ -139,11 +139,11 @@ func (_ Body) AvroCRC64Fingerprint() []byte {
 func (r Body) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["contentType"], err = json.Marshal(r.ContentType)
+	output["ContentType"], err = json.Marshal(r.ContentType)
 	if err != nil {
 		return nil, err
 	}
-	output["content"], err = json.Marshal(r.Content)
+	output["Content"], err = json.Marshal(r.Content)
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func (r *Body) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["contentType"]; ok {
+		if v, ok := fields["ContentType"]; ok {
 			return v
 		}
 		return nil
@@ -174,7 +174,7 @@ func (r *Body) UnmarshalJSON(data []byte) error {
 		r.ContentType = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["content"]; ok {
+		if v, ok := fields["Content"]; ok {
 			return v
 		}
 		return nil

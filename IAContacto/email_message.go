@@ -18,18 +18,18 @@ import (
 var _ = fmt.Printf
 
 type EmailMessage struct {
-	Id string `json:"id"`
+	Id string `json:"Id"`
 
-	Subject *UnionNullString `json:"subject"`
+	Subject *UnionNullString `json:"Subject"`
 
-	ReceivedDateTime *UnionNullLong `json:"receivedDateTime"`
+	ReceivedDateTime *UnionNullLong `json:"ReceivedDateTime"`
 
-	Sender *UnionNullSender `json:"sender"`
+	Sender *UnionNullSender `json:"Sender"`
 
-	Body *UnionNullBody `json:"body"`
+	Body *UnionNullBody `json:"Body"`
 }
 
-const EmailMessageAvroCRC64Fingerprint = "\x04`X\xce\x15\x9d\t'"
+const EmailMessageAvroCRC64Fingerprint = "y\xc4\xc5\xd3+\x90\xcd\xff"
 
 func NewEmailMessage() EmailMessage {
 	r := EmailMessage{}
@@ -89,7 +89,7 @@ func (r EmailMessage) Serialize(w io.Writer) error {
 }
 
 func (r EmailMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"subject\",\"type\":[\"null\",\"string\"]},{\"name\":\"receivedDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"sender\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"emailAddress\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]}],\"name\":\"Sender\",\"type\":\"record\"}]},{\"name\":\"body\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"contentType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"content\",\"type\":[\"null\",\"string\"]}],\"name\":\"Body\",\"type\":\"record\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Subject\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReceivedDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Sender\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"EmailAddress\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]}],\"name\":\"Sender\",\"type\":\"record\"}]},{\"name\":\"Body\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Content\",\"type\":[\"null\",\"string\"]}],\"name\":\"Body\",\"type\":\"record\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailMessage\",\"type\":\"record\"}"
 }
 
 func (r EmailMessage) SchemaName() string {
@@ -168,23 +168,23 @@ func (_ EmailMessage) AvroCRC64Fingerprint() []byte {
 func (r EmailMessage) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["id"], err = json.Marshal(r.Id)
+	output["Id"], err = json.Marshal(r.Id)
 	if err != nil {
 		return nil, err
 	}
-	output["subject"], err = json.Marshal(r.Subject)
+	output["Subject"], err = json.Marshal(r.Subject)
 	if err != nil {
 		return nil, err
 	}
-	output["receivedDateTime"], err = json.Marshal(r.ReceivedDateTime)
+	output["ReceivedDateTime"], err = json.Marshal(r.ReceivedDateTime)
 	if err != nil {
 		return nil, err
 	}
-	output["sender"], err = json.Marshal(r.Sender)
+	output["Sender"], err = json.Marshal(r.Sender)
 	if err != nil {
 		return nil, err
 	}
-	output["body"], err = json.Marshal(r.Body)
+	output["Body"], err = json.Marshal(r.Body)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +199,7 @@ func (r *EmailMessage) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["id"]; ok {
+		if v, ok := fields["Id"]; ok {
 			return v
 		}
 		return nil
@@ -210,10 +210,10 @@ func (r *EmailMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for id")
+		return fmt.Errorf("no value specified for Id")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["subject"]; ok {
+		if v, ok := fields["Subject"]; ok {
 			return v
 		}
 		return nil
@@ -224,10 +224,10 @@ func (r *EmailMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for subject")
+		return fmt.Errorf("no value specified for Subject")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["receivedDateTime"]; ok {
+		if v, ok := fields["ReceivedDateTime"]; ok {
 			return v
 		}
 		return nil
@@ -238,10 +238,10 @@ func (r *EmailMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for receivedDateTime")
+		return fmt.Errorf("no value specified for ReceivedDateTime")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["sender"]; ok {
+		if v, ok := fields["Sender"]; ok {
 			return v
 		}
 		return nil
@@ -252,10 +252,10 @@ func (r *EmailMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for sender")
+		return fmt.Errorf("no value specified for Sender")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["body"]; ok {
+		if v, ok := fields["Body"]; ok {
 			return v
 		}
 		return nil
@@ -266,7 +266,7 @@ func (r *EmailMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for body")
+		return fmt.Errorf("no value specified for Body")
 	}
 	return nil
 }
