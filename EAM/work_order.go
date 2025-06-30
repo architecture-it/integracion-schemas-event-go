@@ -28,11 +28,7 @@ type WorkOrder struct {
 
 	User_report string `json:"user_report"`
 
-	Date_report *UnionNullString `json:"date_report"`
-
-	Propietario *UnionNullString `json:"propietario"`
-
-	Clase *UnionNullString `json:"clase"`
+	Clase string `json:"clase"`
 
 	TipoOT string `json:"tipoOT"`
 
@@ -41,6 +37,10 @@ type WorkOrder struct {
 	Desvio string `json:"desvio"`
 
 	User_report_email string `json:"user_report_email"`
+
+	Propietario *UnionNullString `json:"propietario"`
+
+	Date_report *UnionNullString `json:"date_report"`
 
 	Ceco *UnionNullString `json:"ceco"`
 
@@ -57,13 +57,12 @@ type WorkOrder struct {
 	Equipo_descripcion *UnionNullString `json:"equipo_descripcion"`
 }
 
-const WorkOrderAvroCRC64Fingerprint = ",\xddeF_\xacsU"
+const WorkOrderAvroCRC64Fingerprint = "0g\xff\xbdL\f\xa0\xdc"
 
 func NewWorkOrder() WorkOrder {
 	r := WorkOrder{}
-	r.Date_report = nil
 	r.Propietario = nil
-	r.Clase = nil
+	r.Date_report = nil
 	r.Ceco = nil
 	r.Equipo_id_catalog = nil
 	r.Equipo_modelo = nil
@@ -119,15 +118,7 @@ func writeWorkOrder(r WorkOrder, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Date_report, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Propietario, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Clase, w)
+	err = vm.WriteString(r.Clase, w)
 	if err != nil {
 		return err
 	}
@@ -144,6 +135,14 @@ func writeWorkOrder(r WorkOrder, w io.Writer) error {
 		return err
 	}
 	err = vm.WriteString(r.User_report_email, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Propietario, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Date_report, w)
 	if err != nil {
 		return err
 	}
@@ -183,7 +182,7 @@ func (r WorkOrder) Serialize(w io.Writer) error {
 }
 
 func (r WorkOrder) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"default\":null,\"name\":\"date_report\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"clase\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_id_catalog\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_modelo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_marca\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_inventario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"date_report\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_id_catalog\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_modelo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_marca\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_inventario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
 }
 
 func (r WorkOrder) SchemaName() string {
@@ -227,37 +226,38 @@ func (r *WorkOrder) Get(i int) types.Field {
 		return w
 
 	case 5:
-		r.Date_report = NewUnionNullString()
+		w := types.String{Target: &r.Clase}
 
-		return r.Date_report
+		return w
+
 	case 6:
-		r.Propietario = NewUnionNullString()
-
-		return r.Propietario
-	case 7:
-		r.Clase = NewUnionNullString()
-
-		return r.Clase
-	case 8:
 		w := types.String{Target: &r.TipoOT}
 
 		return w
 
-	case 9:
+	case 7:
 		w := types.String{Target: &r.SubTipoOT}
 
 		return w
 
-	case 10:
+	case 8:
 		w := types.String{Target: &r.Desvio}
 
 		return w
 
-	case 11:
+	case 9:
 		w := types.String{Target: &r.User_report_email}
 
 		return w
 
+	case 10:
+		r.Propietario = NewUnionNullString()
+
+		return r.Propietario
+	case 11:
+		r.Date_report = NewUnionNullString()
+
+		return r.Date_report
 	case 12:
 		r.Ceco = NewUnionNullString()
 
@@ -292,14 +292,11 @@ func (r *WorkOrder) Get(i int) types.Field {
 
 func (r *WorkOrder) SetDefault(i int) {
 	switch i {
-	case 5:
-		r.Date_report = nil
-		return
-	case 6:
+	case 10:
 		r.Propietario = nil
 		return
-	case 7:
-		r.Clase = nil
+	case 11:
+		r.Date_report = nil
 		return
 	case 12:
 		r.Ceco = nil
@@ -328,14 +325,11 @@ func (r *WorkOrder) SetDefault(i int) {
 
 func (r *WorkOrder) NullField(i int) {
 	switch i {
-	case 5:
-		r.Date_report = nil
-		return
-	case 6:
+	case 10:
 		r.Propietario = nil
 		return
-	case 7:
-		r.Clase = nil
+	case 11:
+		r.Date_report = nil
 		return
 	case 12:
 		r.Ceco = nil
@@ -394,14 +388,6 @@ func (r WorkOrder) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["date_report"], err = json.Marshal(r.Date_report)
-	if err != nil {
-		return nil, err
-	}
-	output["propietario"], err = json.Marshal(r.Propietario)
-	if err != nil {
-		return nil, err
-	}
 	output["clase"], err = json.Marshal(r.Clase)
 	if err != nil {
 		return nil, err
@@ -419,6 +405,14 @@ func (r WorkOrder) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["user_report_email"], err = json.Marshal(r.User_report_email)
+	if err != nil {
+		return nil, err
+	}
+	output["propietario"], err = json.Marshal(r.Propietario)
+	if err != nil {
+		return nil, err
+	}
+	output["date_report"], err = json.Marshal(r.Date_report)
 	if err != nil {
 		return nil, err
 	}
@@ -531,38 +525,6 @@ func (r *WorkOrder) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for user_report")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["date_report"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Date_report); err != nil {
-			return err
-		}
-	} else {
-		r.Date_report = NewUnionNullString()
-
-		r.Date_report = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["propietario"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Propietario); err != nil {
-			return err
-		}
-	} else {
-		r.Propietario = NewUnionNullString()
-
-		r.Propietario = nil
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["clase"]; ok {
 			return v
 		}
@@ -574,9 +536,7 @@ func (r *WorkOrder) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Clase = NewUnionNullString()
-
-		r.Clase = nil
+		return fmt.Errorf("no value specified for clase")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoOT"]; ok {
@@ -633,6 +593,38 @@ func (r *WorkOrder) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for user_report_email")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["propietario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Propietario); err != nil {
+			return err
+		}
+	} else {
+		r.Propietario = NewUnionNullString()
+
+		r.Propietario = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["date_report"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Date_report); err != nil {
+			return err
+		}
+	} else {
+		r.Date_report = NewUnionNullString()
+
+		r.Date_report = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ceco"]; ok {
