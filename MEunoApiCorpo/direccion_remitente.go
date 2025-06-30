@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type DireccionRemitente struct {
-	IdSucursal int32 `json:"idSucursal"`
+	IdSucursal *UnionNullInt `json:"idSucursal"`
 
 	Calle string `json:"calle"`
 
@@ -37,10 +37,11 @@ type DireccionRemitente struct {
 	Observaciones string `json:"observaciones"`
 }
 
-const DireccionRemitenteAvroCRC64Fingerprint = "x\\\xdb\xf1\xa4\fX\xc9"
+const DireccionRemitenteAvroCRC64Fingerprint = "\xc47\x1f\x8e6\xdec\x04"
 
 func NewDireccionRemitente() DireccionRemitente {
 	r := DireccionRemitente{}
+	r.IdSucursal = nil
 	return r
 }
 
@@ -69,7 +70,7 @@ func DeserializeDireccionRemitenteFromSchema(r io.Reader, schema string) (Direcc
 
 func writeDireccionRemitente(r DireccionRemitente, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.IdSucursal, w)
+	err = writeUnionNullInt(r.IdSucursal, w)
 	if err != nil {
 		return err
 	}
@@ -113,7 +114,7 @@ func (r DireccionRemitente) Serialize(w io.Writer) error {
 }
 
 func (r DireccionRemitente) Schema() string {
-	return "{\"fields\":[{\"name\":\"idSucursal\",\"type\":\"int\"},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"unidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"}],\"name\":\"Andreani.MEunoApiCorpo.Events.Record.Structs.DireccionRemitente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"idSucursal\",\"type\":[\"null\",\"int\"]},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"unidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"}],\"name\":\"Andreani.MEunoApiCorpo.Events.Record.Structs.DireccionRemitente\",\"type\":\"record\"}"
 }
 
 func (r DireccionRemitente) SchemaName() string {
@@ -132,10 +133,9 @@ func (_ DireccionRemitente) SetUnionElem(v int64) { panic("Unsupported operation
 func (r *DireccionRemitente) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.IdSucursal}
+		r.IdSucursal = NewUnionNullInt()
 
-		return w
-
+		return r.IdSucursal
 	case 1:
 		w := types.String{Target: &r.Calle}
 
@@ -182,12 +182,18 @@ func (r *DireccionRemitente) Get(i int) types.Field {
 
 func (r *DireccionRemitente) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.IdSucursal = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *DireccionRemitente) NullField(i int) {
 	switch i {
+	case 0:
+		r.IdSucursal = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -262,7 +268,9 @@ func (r *DireccionRemitente) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for idSucursal")
+		r.IdSucursal = NewUnionNullInt()
+
+		r.IdSucursal = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["calle"]; ok {

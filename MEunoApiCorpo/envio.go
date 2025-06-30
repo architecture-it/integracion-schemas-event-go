@@ -40,24 +40,24 @@ type Envio struct {
 
 	Peso int32 `json:"peso"`
 
-	PesoUnidad string `json:"pesoUnidad"`
+	PesoUnidad *UnionNullString `json:"pesoUnidad"`
 
 	CantidadBultos int32 `json:"cantidadBultos"`
 
-	VolumenCm int32 `json:"volumenCm"`
+	VolumenCm *UnionNullInt `json:"volumenCm"`
 
 	ValorDeclarado int32 `json:"valorDeclarado"`
 
 	NumeroInterno string `json:"numeroInterno"`
 
-	Remito string `json:"remito"`
+	Remito *UnionNullString `json:"remito"`
 
-	RemitosHijos string `json:"remitosHijos"`
+	RemitosHijos *UnionNullString `json:"remitosHijos"`
 
-	NumeroPreestablecido string `json:"numeroPreestablecido"`
+	NumeroPreestablecido *UnionNullString `json:"numeroPreestablecido"`
 }
 
-const EnvioAvroCRC64Fingerprint = "r\xf1\xe7\x88c\u05fa>"
+const EnvioAvroCRC64Fingerprint = "\xc5\x03\x03.\x8d/\x8bn"
 
 func NewEnvio() Envio {
 	r := Envio{}
@@ -67,6 +67,11 @@ func NewEnvio() Envio {
 
 	r.DireccionDestinatario = NewDireccionDestinatario()
 
+	r.PesoUnidad = nil
+	r.VolumenCm = nil
+	r.Remito = nil
+	r.RemitosHijos = nil
+	r.NumeroPreestablecido = nil
 	return r
 }
 
@@ -139,7 +144,7 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PesoUnidad, w)
+	err = writeUnionNullString(r.PesoUnidad, w)
 	if err != nil {
 		return err
 	}
@@ -147,7 +152,7 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.VolumenCm, w)
+	err = writeUnionNullInt(r.VolumenCm, w)
 	if err != nil {
 		return err
 	}
@@ -159,15 +164,15 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Remito, w)
+	err = writeUnionNullString(r.Remito, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.RemitosHijos, w)
+	err = writeUnionNullString(r.RemitosHijos, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroPreestablecido, w)
+	err = writeUnionNullString(r.NumeroPreestablecido, w)
 	if err != nil {
 		return err
 	}
@@ -179,7 +184,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroContrato\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"modoEntrega\",\"type\":\"string\"},{\"name\":\"template\",\"type\":\"string\"},{\"name\":\"direccionRemitente\",\"type\":{\"fields\":[{\"name\":\"idSucursal\",\"type\":\"int\"},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"unidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"}],\"name\":\"DireccionRemitente\",\"type\":\"record\"}},{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"direccionDestinatario\",\"type\":{\"fields\":[{\"name\":\"idSucursal\",\"type\":\"int\"},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"unidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"}],\"name\":\"DireccionDestinatario\",\"type\":\"record\"}},{\"name\":\"largo\",\"type\":\"int\"},{\"name\":\"ancho\",\"type\":\"int\"},{\"name\":\"alto\",\"type\":\"int\"},{\"name\":\"peso\",\"type\":\"int\"},{\"name\":\"pesoUnidad\",\"type\":\"string\"},{\"name\":\"cantidadBultos\",\"type\":\"int\"},{\"name\":\"volumenCm\",\"type\":\"int\"},{\"name\":\"valorDeclarado\",\"type\":\"int\"},{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"remito\",\"type\":\"string\"},{\"name\":\"remitosHijos\",\"type\":\"string\"},{\"name\":\"numeroPreestablecido\",\"type\":\"string\"}],\"name\":\"Andreani.MEunoApiCorpo.Events.Record.Structs.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroContrato\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"modoEntrega\",\"type\":\"string\"},{\"name\":\"template\",\"type\":\"string\"},{\"name\":\"direccionRemitente\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"idSucursal\",\"type\":[\"null\",\"int\"]},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"unidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"}],\"name\":\"DireccionRemitente\",\"type\":\"record\"}},{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"direccionDestinatario\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"idSucursal\",\"type\":[\"null\",\"int\"]},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"unidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"}],\"name\":\"DireccionDestinatario\",\"type\":\"record\"}},{\"name\":\"largo\",\"type\":\"int\"},{\"name\":\"ancho\",\"type\":\"int\"},{\"name\":\"alto\",\"type\":\"int\"},{\"name\":\"peso\",\"type\":\"int\"},{\"default\":null,\"name\":\"pesoUnidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"cantidadBultos\",\"type\":\"int\"},{\"default\":null,\"name\":\"volumenCm\",\"type\":[\"null\",\"int\"]},{\"name\":\"valorDeclarado\",\"type\":\"int\"},{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remitosHijos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroPreestablecido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.MEunoApiCorpo.Events.Record.Structs.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -259,20 +264,18 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 11:
-		w := types.String{Target: &r.PesoUnidad}
+		r.PesoUnidad = NewUnionNullString()
 
-		return w
-
+		return r.PesoUnidad
 	case 12:
 		w := types.Int{Target: &r.CantidadBultos}
 
 		return w
 
 	case 13:
-		w := types.Int{Target: &r.VolumenCm}
+		r.VolumenCm = NewUnionNullInt()
 
-		return w
-
+		return r.VolumenCm
 	case 14:
 		w := types.Int{Target: &r.ValorDeclarado}
 
@@ -284,32 +287,59 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 16:
-		w := types.String{Target: &r.Remito}
+		r.Remito = NewUnionNullString()
 
-		return w
-
+		return r.Remito
 	case 17:
-		w := types.String{Target: &r.RemitosHijos}
+		r.RemitosHijos = NewUnionNullString()
 
-		return w
-
+		return r.RemitosHijos
 	case 18:
-		w := types.String{Target: &r.NumeroPreestablecido}
+		r.NumeroPreestablecido = NewUnionNullString()
 
-		return w
-
+		return r.NumeroPreestablecido
 	}
 	panic("Unknown field index")
 }
 
 func (r *Envio) SetDefault(i int) {
 	switch i {
+	case 11:
+		r.PesoUnidad = nil
+		return
+	case 13:
+		r.VolumenCm = nil
+		return
+	case 16:
+		r.Remito = nil
+		return
+	case 17:
+		r.RemitosHijos = nil
+		return
+	case 18:
+		r.NumeroPreestablecido = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Envio) NullField(i int) {
 	switch i {
+	case 11:
+		r.PesoUnidad = nil
+		return
+	case 13:
+		r.VolumenCm = nil
+		return
+	case 16:
+		r.Remito = nil
+		return
+	case 17:
+		r.RemitosHijos = nil
+		return
+	case 18:
+		r.NumeroPreestablecido = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -578,7 +608,9 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for pesoUnidad")
+		r.PesoUnidad = NewUnionNullString()
+
+		r.PesoUnidad = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cantidadBultos"]; ok {
@@ -606,7 +638,9 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for volumenCm")
+		r.VolumenCm = NewUnionNullInt()
+
+		r.VolumenCm = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["valorDeclarado"]; ok {
@@ -648,7 +682,9 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for remito")
+		r.Remito = NewUnionNullString()
+
+		r.Remito = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["remitosHijos"]; ok {
@@ -662,7 +698,9 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for remitosHijos")
+		r.RemitosHijos = NewUnionNullString()
+
+		r.RemitosHijos = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroPreestablecido"]; ok {
@@ -676,7 +714,9 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroPreestablecido")
+		r.NumeroPreestablecido = NewUnionNullString()
+
+		r.NumeroPreestablecido = nil
 	}
 	return nil
 }
