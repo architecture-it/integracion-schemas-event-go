@@ -18,18 +18,18 @@ import (
 var _ = fmt.Printf
 
 type CorpoShipmentEvent struct {
-	DatosUsuario PostShippingCorpoDto `json:"DatosUsuario"`
+	PostShippingCorpoDto PostShippingCorpoDto `json:"PostShippingCorpoDto"`
 
 	MeliOrderInfo MeliOrderInfo `json:"MeliOrderInfo"`
 
 	CorpoResponse CorpoResponse `json:"CorpoResponse"`
 }
 
-const CorpoShipmentEventAvroCRC64Fingerprint = ")\xb9\b\x11\x9e(\\\x9e"
+const CorpoShipmentEventAvroCRC64Fingerprint = "\xe0\xff\xb8\xa4\x99\x00\x02\x9d"
 
 func NewCorpoShipmentEvent() CorpoShipmentEvent {
 	r := CorpoShipmentEvent{}
-	r.DatosUsuario = NewPostShippingCorpoDto()
+	r.PostShippingCorpoDto = NewPostShippingCorpoDto()
 
 	r.MeliOrderInfo = NewMeliOrderInfo()
 
@@ -63,7 +63,7 @@ func DeserializeCorpoShipmentEventFromSchema(r io.Reader, schema string) (CorpoS
 
 func writeCorpoShipmentEvent(r CorpoShipmentEvent, w io.Writer) error {
 	var err error
-	err = writePostShippingCorpoDto(r.DatosUsuario, w)
+	err = writePostShippingCorpoDto(r.PostShippingCorpoDto, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (r CorpoShipmentEvent) Serialize(w io.Writer) error {
 }
 
 func (r CorpoShipmentEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"DatosUsuario\",\"type\":{\"fields\":[{\"name\":\"usuarioId\",\"type\":\"string\"},{\"name\":\"clienteId\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"}],\"name\":\"Remitente\",\"type\":\"record\"}},{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroContrato\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"modoEntrega\",\"type\":\"string\"},{\"name\":\"template\",\"type\":\"string\"},{\"name\":\"direccionRemitente\",\"type\":{\"fields\":[{\"name\":\"idSucursal\",\"type\":\"int\"},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"unidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"}],\"name\":\"DireccionRemitente\",\"type\":\"record\"}},{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"direccionDestinatario\",\"type\":{\"fields\":[{\"name\":\"idSucursal\",\"type\":\"int\"},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"unidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"}],\"name\":\"DireccionDestinatario\",\"type\":\"record\"}},{\"name\":\"largo\",\"type\":\"int\"},{\"name\":\"ancho\",\"type\":\"int\"},{\"name\":\"alto\",\"type\":\"int\"},{\"name\":\"peso\",\"type\":\"int\"},{\"name\":\"pesoUnidad\",\"type\":\"string\"},{\"name\":\"cantidadBultos\",\"type\":\"int\"},{\"name\":\"volumenCm\",\"type\":\"int\"},{\"name\":\"valorDeclarado\",\"type\":\"int\"},{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"remito\",\"type\":\"string\"},{\"name\":\"remitosHijos\",\"type\":\"string\"},{\"name\":\"numeroPreestablecido\",\"type\":\"string\"}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"PostShippingCorpoDto\",\"namespace\":\"Andreani.MEunoApiCorpo.Events.Record.Structs\",\"type\":\"record\"}},{\"name\":\"MeliOrderInfo\",\"type\":{\"fields\":[{\"name\":\"sellerId\",\"type\":\"long\"},{\"name\":\"shipmentId\",\"type\":\"long\"},{\"name\":\"MLAId\",\"type\":\"string\"},{\"name\":\"publicationName\",\"type\":\"string\"},{\"name\":\"orderID\",\"type\":\"long\"},{\"name\":\"estimatedDeliveryTime\",\"type\":\"string\"},{\"name\":\"created\",\"type\":\"string\"},{\"name\":\"packId\",\"type\":[\"null\",\"long\"]},{\"name\":\"listCost\",\"type\":[\"null\",\"string\"]}],\"name\":\"MeliOrderInfo\",\"namespace\":\"Andreani.MEunoApiCorpo.Events.Record.Structs\",\"type\":\"record\"}},{\"name\":\"CorpoResponse\",\"type\":{\"fields\":[{\"name\":\"content\",\"type\":{\"fields\":[{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"numeroSeguimiento\",\"type\":\"string\"}],\"name\":\"EnvioResponse\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"enviosErroneos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"errorCorpo\",\"type\":\"string\"}],\"name\":\"EnviosErroneo\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Content\",\"type\":\"record\"}},{\"name\":\"statusCode\",\"type\":\"int\"},{\"name\":\"notifications\",\"type\":{\"items\":{\"fields\":[{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"property\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}],\"name\":\"Notification\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"isValid\",\"type\":\"boolean\"},{\"name\":\"headers\",\"type\":{\"fields\":[{\"name\":\"additionalProp1\",\"type\":\"string\"},{\"name\":\"additionalProp2\",\"type\":\"string\"},{\"name\":\"additionalProp3\",\"type\":\"string\"}],\"name\":\"Headers\",\"type\":\"record\"}}],\"name\":\"CorpoResponse\",\"namespace\":\"Andreani.MEunoApiCorpo.Events.Record.Structs\",\"type\":\"record\"}}],\"name\":\"Andreani.MEunoApiCorpo.Events.Record.CorpoShipmentEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PostShippingCorpoDto\",\"type\":{\"fields\":[{\"name\":\"usuarioId\",\"type\":\"string\"},{\"name\":\"clienteId\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"}],\"name\":\"Remitente\",\"type\":\"record\"}},{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroContrato\",\"type\":\"string\"},{\"name\":\"tipoServicio\",\"type\":\"string\"},{\"name\":\"modoEntrega\",\"type\":\"string\"},{\"name\":\"template\",\"type\":\"string\"},{\"name\":\"direccionRemitente\",\"type\":{\"fields\":[{\"name\":\"idSucursal\",\"type\":\"int\"},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"unidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"}],\"name\":\"DireccionRemitente\",\"type\":\"record\"}},{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"telefono\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"type\":\"record\"}},{\"name\":\"direccionDestinatario\",\"type\":{\"fields\":[{\"name\":\"idSucursal\",\"type\":\"int\"},{\"name\":\"calle\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"piso\",\"type\":\"string\"},{\"name\":\"unidad\",\"type\":\"string\"},{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"localidad\",\"type\":\"string\"},{\"name\":\"provincia\",\"type\":\"string\"},{\"name\":\"observaciones\",\"type\":\"string\"}],\"name\":\"DireccionDestinatario\",\"type\":\"record\"}},{\"name\":\"largo\",\"type\":\"int\"},{\"name\":\"ancho\",\"type\":\"int\"},{\"name\":\"alto\",\"type\":\"int\"},{\"name\":\"peso\",\"type\":\"int\"},{\"name\":\"pesoUnidad\",\"type\":\"string\"},{\"name\":\"cantidadBultos\",\"type\":\"int\"},{\"name\":\"volumenCm\",\"type\":\"int\"},{\"name\":\"valorDeclarado\",\"type\":\"int\"},{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"remito\",\"type\":\"string\"},{\"name\":\"remitosHijos\",\"type\":\"string\"},{\"name\":\"numeroPreestablecido\",\"type\":\"string\"}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"PostShippingCorpoDto\",\"namespace\":\"Andreani.MEunoApiCorpo.Events.Record.Structs\",\"type\":\"record\"}},{\"name\":\"MeliOrderInfo\",\"type\":{\"fields\":[{\"name\":\"sellerId\",\"type\":\"long\"},{\"name\":\"shipmentId\",\"type\":\"long\"},{\"name\":\"MLAId\",\"type\":\"string\"},{\"name\":\"publicationName\",\"type\":\"string\"},{\"name\":\"orderID\",\"type\":\"long\"},{\"name\":\"estimatedDeliveryTime\",\"type\":\"string\"},{\"name\":\"created\",\"type\":\"string\"},{\"name\":\"packId\",\"type\":[\"null\",\"long\"]},{\"name\":\"listCost\",\"type\":[\"null\",\"string\"]}],\"name\":\"MeliOrderInfo\",\"namespace\":\"Andreani.MEunoApiCorpo.Events.Record.Structs\",\"type\":\"record\"}},{\"name\":\"CorpoResponse\",\"type\":{\"fields\":[{\"name\":\"content\",\"type\":{\"fields\":[{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"numeroSeguimiento\",\"type\":\"string\"}],\"name\":\"EnvioResponse\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"enviosErroneos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"errorCorpo\",\"type\":\"string\"}],\"name\":\"EnviosErroneo\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Content\",\"type\":\"record\"}},{\"name\":\"statusCode\",\"type\":\"int\"},{\"name\":\"notifications\",\"type\":{\"items\":{\"fields\":[{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"property\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}],\"name\":\"Notification\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"isValid\",\"type\":\"boolean\"},{\"name\":\"headers\",\"type\":{\"fields\":[{\"name\":\"additionalProp1\",\"type\":\"string\"},{\"name\":\"additionalProp2\",\"type\":\"string\"},{\"name\":\"additionalProp3\",\"type\":\"string\"}],\"name\":\"Headers\",\"type\":\"record\"}}],\"name\":\"CorpoResponse\",\"namespace\":\"Andreani.MEunoApiCorpo.Events.Record.Structs\",\"type\":\"record\"}}],\"name\":\"Andreani.MEunoApiCorpo.Events.Record.CorpoShipmentEvent\",\"type\":\"record\"}"
 }
 
 func (r CorpoShipmentEvent) SchemaName() string {
@@ -102,9 +102,9 @@ func (_ CorpoShipmentEvent) SetUnionElem(v int64) { panic("Unsupported operation
 func (r *CorpoShipmentEvent) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.DatosUsuario = NewPostShippingCorpoDto()
+		r.PostShippingCorpoDto = NewPostShippingCorpoDto()
 
-		w := types.Record{Target: &r.DatosUsuario}
+		w := types.Record{Target: &r.PostShippingCorpoDto}
 
 		return w
 
@@ -150,7 +150,7 @@ func (_ CorpoShipmentEvent) AvroCRC64Fingerprint() []byte {
 func (r CorpoShipmentEvent) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["DatosUsuario"], err = json.Marshal(r.DatosUsuario)
+	output["PostShippingCorpoDto"], err = json.Marshal(r.PostShippingCorpoDto)
 	if err != nil {
 		return nil, err
 	}
@@ -173,18 +173,18 @@ func (r *CorpoShipmentEvent) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["DatosUsuario"]; ok {
+		if v, ok := fields["PostShippingCorpoDto"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.DatosUsuario); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.PostShippingCorpoDto); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for DatosUsuario")
+		return fmt.Errorf("no value specified for PostShippingCorpoDto")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["MeliOrderInfo"]; ok {
