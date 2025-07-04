@@ -29,7 +29,7 @@ type CorpoResponse struct {
 	Headers Headers `json:"headers"`
 }
 
-const CorpoResponseAvroCRC64Fingerprint = "\x8d0߃\xdaj~\xb2"
+const CorpoResponseAvroCRC64Fingerprint = "\x86\xb8G\x91\x03ʒ:"
 
 func NewCorpoResponse() CorpoResponse {
 	r := CorpoResponse{}
@@ -95,7 +95,7 @@ func (r CorpoResponse) Serialize(w io.Writer) error {
 }
 
 func (r CorpoResponse) Schema() string {
-	return "{\"fields\":[{\"name\":\"content\",\"type\":{\"fields\":[{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"numeroSeguimiento\",\"type\":\"string\"}],\"name\":\"EnvioResponse\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"enviosErroneos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"errorCorpo\",\"type\":\"string\"}],\"name\":\"EnviosErroneo\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Content\",\"type\":\"record\"}},{\"name\":\"statusCode\",\"type\":\"int\"},{\"name\":\"notifications\",\"type\":{\"items\":{\"fields\":[{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"property\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}],\"name\":\"Notification\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"isValid\",\"type\":\"boolean\"},{\"name\":\"headers\",\"type\":{\"fields\":[{\"name\":\"additionalProp1\",\"type\":\"string\"},{\"name\":\"additionalProp2\",\"type\":\"string\"},{\"name\":\"additionalProp3\",\"type\":\"string\"}],\"name\":\"Headers\",\"type\":\"record\"}}],\"name\":\"Andreani.MEunoApiCorpo.Events.Record.Structs.CorpoResponse\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"content\",\"type\":{\"fields\":[{\"name\":\"envios\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"numeroSeguimiento\",\"type\":\"string\"}],\"name\":\"EnvioResponse\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"enviosErroneos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroInterno\",\"type\":\"string\"},{\"name\":\"errorCorpo\",\"type\":\"string\"}],\"name\":\"EnviosErroneo\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Content\",\"type\":\"record\"}},{\"name\":\"statusCode\",\"type\":\"int\"},{\"name\":\"notifications\",\"type\":{\"items\":{\"fields\":[{\"name\":\"code\",\"type\":\"string\"},{\"name\":\"property\",\"type\":\"string\"},{\"name\":\"message\",\"type\":\"string\"}],\"name\":\"Notification\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"isValid\",\"type\":\"boolean\"},{\"name\":\"headers\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"additionalProp1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"additionalProp2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"additionalProp3\",\"type\":[\"null\",\"string\"]}],\"name\":\"Headers\",\"type\":\"record\"}}],\"name\":\"Andreani.MEunoApiCorpo.Events.Record.Structs.CorpoResponse\",\"type\":\"record\"}"
 }
 
 func (r CorpoResponse) SchemaName() string {

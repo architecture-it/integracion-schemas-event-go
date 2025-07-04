@@ -18,17 +18,20 @@ import (
 var _ = fmt.Printf
 
 type Headers struct {
-	AdditionalProp1 string `json:"additionalProp1"`
+	AdditionalProp1 *UnionNullString `json:"additionalProp1"`
 
-	AdditionalProp2 string `json:"additionalProp2"`
+	AdditionalProp2 *UnionNullString `json:"additionalProp2"`
 
-	AdditionalProp3 string `json:"additionalProp3"`
+	AdditionalProp3 *UnionNullString `json:"additionalProp3"`
 }
 
-const HeadersAvroCRC64Fingerprint = "\x9bC\vF\u0093}\x92"
+const HeadersAvroCRC64Fingerprint = "}b\xac\x85B\x12\xce{"
 
 func NewHeaders() Headers {
 	r := Headers{}
+	r.AdditionalProp1 = nil
+	r.AdditionalProp2 = nil
+	r.AdditionalProp3 = nil
 	return r
 }
 
@@ -57,15 +60,15 @@ func DeserializeHeadersFromSchema(r io.Reader, schema string) (Headers, error) {
 
 func writeHeaders(r Headers, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.AdditionalProp1, w)
+	err = writeUnionNullString(r.AdditionalProp1, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.AdditionalProp2, w)
+	err = writeUnionNullString(r.AdditionalProp2, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.AdditionalProp3, w)
+	err = writeUnionNullString(r.AdditionalProp3, w)
 	if err != nil {
 		return err
 	}
@@ -77,7 +80,7 @@ func (r Headers) Serialize(w io.Writer) error {
 }
 
 func (r Headers) Schema() string {
-	return "{\"fields\":[{\"name\":\"additionalProp1\",\"type\":\"string\"},{\"name\":\"additionalProp2\",\"type\":\"string\"},{\"name\":\"additionalProp3\",\"type\":\"string\"}],\"name\":\"Andreani.MEunoApiCorpo.Events.Record.Structs.Headers\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"additionalProp1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"additionalProp2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"additionalProp3\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.MEunoApiCorpo.Events.Record.Structs.Headers\",\"type\":\"record\"}"
 }
 
 func (r Headers) SchemaName() string {
@@ -96,32 +99,47 @@ func (_ Headers) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Headers) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.AdditionalProp1}
+		r.AdditionalProp1 = NewUnionNullString()
 
-		return w
-
+		return r.AdditionalProp1
 	case 1:
-		w := types.String{Target: &r.AdditionalProp2}
+		r.AdditionalProp2 = NewUnionNullString()
 
-		return w
-
+		return r.AdditionalProp2
 	case 2:
-		w := types.String{Target: &r.AdditionalProp3}
+		r.AdditionalProp3 = NewUnionNullString()
 
-		return w
-
+		return r.AdditionalProp3
 	}
 	panic("Unknown field index")
 }
 
 func (r *Headers) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.AdditionalProp1 = nil
+		return
+	case 1:
+		r.AdditionalProp2 = nil
+		return
+	case 2:
+		r.AdditionalProp3 = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Headers) NullField(i int) {
 	switch i {
+	case 0:
+		r.AdditionalProp1 = nil
+		return
+	case 1:
+		r.AdditionalProp2 = nil
+		return
+	case 2:
+		r.AdditionalProp3 = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -172,7 +190,9 @@ func (r *Headers) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for additionalProp1")
+		r.AdditionalProp1 = NewUnionNullString()
+
+		r.AdditionalProp1 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["additionalProp2"]; ok {
@@ -186,7 +206,9 @@ func (r *Headers) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for additionalProp2")
+		r.AdditionalProp2 = NewUnionNullString()
+
+		r.AdditionalProp2 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["additionalProp3"]; ok {
@@ -200,7 +222,9 @@ func (r *Headers) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for additionalProp3")
+		r.AdditionalProp3 = NewUnionNullString()
+
+		r.AdditionalProp3 = nil
 	}
 	return nil
 }
