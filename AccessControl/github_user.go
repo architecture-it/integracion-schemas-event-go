@@ -20,14 +20,14 @@ var _ = fmt.Printf
 type GithubUser struct {
 	Id int32 `json:"Id"`
 
-	GithubUser *UnionNullString `json:"GithubUser"`
+	User *UnionNullString `json:"User"`
 
 	UserName string `json:"UserName"`
 
 	Payload *UnionNullString `json:"Payload"`
 }
 
-const GithubUserAvroCRC64Fingerprint = "\xaeS-|\xa5\x8d\x1e\xaa"
+const GithubUserAvroCRC64Fingerprint = "KI\xdd\xfcT:{\xbb"
 
 func NewGithubUser() GithubUser {
 	r := GithubUser{}
@@ -63,7 +63,7 @@ func writeGithubUser(r GithubUser, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.GithubUser, w)
+	err = writeUnionNullString(r.User, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (r GithubUser) Serialize(w io.Writer) error {
 }
 
 func (r GithubUser) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"GithubUser\",\"type\":[\"null\",\"string\"]},{\"name\":\"UserName\",\"type\":\"string\"},{\"name\":\"Payload\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AccessControl.Events.Record.GithubUser\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"int\"},{\"name\":\"User\",\"type\":[\"null\",\"string\"]},{\"name\":\"UserName\",\"type\":\"string\"},{\"name\":\"Payload\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AccessControl.Events.Record.GithubUser\",\"type\":\"record\"}"
 }
 
 func (r GithubUser) SchemaName() string {
@@ -107,9 +107,9 @@ func (r *GithubUser) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.GithubUser = NewUnionNullString()
+		r.User = NewUnionNullString()
 
-		return r.GithubUser
+		return r.User
 	case 2:
 		w := types.String{Target: &r.UserName}
 
@@ -132,7 +132,7 @@ func (r *GithubUser) SetDefault(i int) {
 func (r *GithubUser) NullField(i int) {
 	switch i {
 	case 1:
-		r.GithubUser = nil
+		r.User = nil
 		return
 	case 3:
 		r.Payload = nil
@@ -157,7 +157,7 @@ func (r GithubUser) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["GithubUser"], err = json.Marshal(r.GithubUser)
+	output["User"], err = json.Marshal(r.User)
 	if err != nil {
 		return nil, err
 	}
@@ -194,18 +194,18 @@ func (r *GithubUser) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Id")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["GithubUser"]; ok {
+		if v, ok := fields["User"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.GithubUser); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.User); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for GithubUser")
+		return fmt.Errorf("no value specified for User")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UserName"]; ok {
