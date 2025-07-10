@@ -43,6 +43,7 @@ const BultoInformadoPorSorterAvroCRC64Fingerprint = "\xd1\xef\x9e\xec\x88n\x19\x
 
 func NewBultoInformadoPorSorter() BultoInformadoPorSorter {
 	r := BultoInformadoPorSorter{}
+	r.EstadoClasificacion = nil
 	return r
 }
 
@@ -119,7 +120,7 @@ func (r BultoInformadoPorSorter) Serialize(w io.Writer) error {
 }
 
 func (r BultoInformadoPorSorter) Schema() string {
-	return "{\"fields\":[{\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"codigoEnEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Desvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"donde\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"Modo\",\"type\":[\"null\",\"string\"]},{\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"name\":\"estadoClasificacion\",\"type\":[\"null\",{\"name\":\"EstadoClasificacion\",\"symbols\":[\"Normal\",\"SalidaCerrada\",\"NoOutputRampOTimeOut\",\"PaquetePerdido\",\"Recirculacion\",\"SinVolumenOPeso\",\"FueraDeRangoDimensionPeso\",\"OtroError\",\"Undefined\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.SppSchema.Events.BultoInformadoPorSorter\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"codigoEnEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Desvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"donde\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"Modo\",\"type\":[\"null\",\"string\"]},{\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"estadoClasificacion\",\"type\":[\"null\",{\"name\":\"EstadoClasificacion\",\"symbols\":[\"Normal\",\"SalidaCerrada\",\"NoOutputRampOTimeOut\",\"PaquetePerdido\",\"Recirculacion\",\"SinVolumenOPeso\",\"FueraDeRangoDimensionPeso\",\"OtroError\",\"Undefined\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.SppSchema.Events.BultoInformadoPorSorter\",\"type\":\"record\"}"
 }
 
 func (r BultoInformadoPorSorter) SchemaName() string {
@@ -183,6 +184,9 @@ func (r *BultoInformadoPorSorter) Get(i int) types.Field {
 
 func (r *BultoInformadoPorSorter) SetDefault(i int) {
 	switch i {
+	case 9:
+		r.EstadoClasificacion = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -423,7 +427,9 @@ func (r *BultoInformadoPorSorter) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for estadoClasificacion")
+		r.EstadoClasificacion = NewUnionNullEstadoClasificacion()
+
+		r.EstadoClasificacion = nil
 	}
 	return nil
 }
