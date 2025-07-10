@@ -36,14 +36,14 @@ type BultoInformadoPorSorter struct {
 
 	VolumenEnCm3 *UnionNullDouble `json:"volumenEnCm3"`
 
-	EstadoClasificacion *UnionNullEstadoClasificacion `json:"estadoClasificacion"`
+	ResultadoClasificacion *UnionNullEstadoClasificacion `json:"resultadoClasificacion"`
 }
 
-const BultoInformadoPorSorterAvroCRC64Fingerprint = "\xd1\xef\x9e\xec\x88n\x19\xd6"
+const BultoInformadoPorSorterAvroCRC64Fingerprint = "\xd9\r\x00+\xd8j\xbf\xd6"
 
 func NewBultoInformadoPorSorter() BultoInformadoPorSorter {
 	r := BultoInformadoPorSorter{}
-	r.EstadoClasificacion = nil
+	r.ResultadoClasificacion = nil
 	return r
 }
 
@@ -108,7 +108,7 @@ func writeBultoInformadoPorSorter(r BultoInformadoPorSorter, w io.Writer) error 
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullEstadoClasificacion(r.EstadoClasificacion, w)
+	err = writeUnionNullEstadoClasificacion(r.ResultadoClasificacion, w)
 	if err != nil {
 		return err
 	}
@@ -120,7 +120,7 @@ func (r BultoInformadoPorSorter) Serialize(w io.Writer) error {
 }
 
 func (r BultoInformadoPorSorter) Schema() string {
-	return "{\"fields\":[{\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"codigoEnEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Desvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"donde\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"Modo\",\"type\":[\"null\",\"string\"]},{\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"estadoClasificacion\",\"type\":[\"null\",{\"name\":\"EstadoClasificacion\",\"symbols\":[\"Normal\",\"SalidaCerrada\",\"NoOutputRampOTimeOut\",\"PaquetePerdido\",\"Recirculacion\",\"SinVolumenOPeso\",\"FueraDeRangoDimensionPeso\",\"OtroError\",\"Undefined\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.SppSchema.Events.BultoInformadoPorSorter\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"codigoEnEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Desvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"donde\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"Modo\",\"type\":[\"null\",\"string\"]},{\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"resultadoClasificacion\",\"type\":[\"null\",{\"name\":\"EstadoClasificacion\",\"symbols\":[\"Normal\",\"SalidaCerrada\",\"NoOutputRampOTimeOut\",\"PaquetePerdido\",\"Recirculacion\",\"SinVolumenOPeso\",\"FueraDeRangoDimensionPeso\",\"OtroError\",\"Undefined\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.SppSchema.Events.BultoInformadoPorSorter\",\"type\":\"record\"}"
 }
 
 func (r BultoInformadoPorSorter) SchemaName() string {
@@ -175,9 +175,9 @@ func (r *BultoInformadoPorSorter) Get(i int) types.Field {
 
 		return r.VolumenEnCm3
 	case 9:
-		r.EstadoClasificacion = NewUnionNullEstadoClasificacion()
+		r.ResultadoClasificacion = NewUnionNullEstadoClasificacion()
 
-		return r.EstadoClasificacion
+		return r.ResultadoClasificacion
 	}
 	panic("Unknown field index")
 }
@@ -185,7 +185,7 @@ func (r *BultoInformadoPorSorter) Get(i int) types.Field {
 func (r *BultoInformadoPorSorter) SetDefault(i int) {
 	switch i {
 	case 9:
-		r.EstadoClasificacion = nil
+		r.ResultadoClasificacion = nil
 		return
 	}
 	panic("Unknown field index")
@@ -221,7 +221,7 @@ func (r *BultoInformadoPorSorter) NullField(i int) {
 		r.VolumenEnCm3 = nil
 		return
 	case 9:
-		r.EstadoClasificacion = nil
+		r.ResultadoClasificacion = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -275,7 +275,7 @@ func (r BultoInformadoPorSorter) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["estadoClasificacion"], err = json.Marshal(r.EstadoClasificacion)
+	output["resultadoClasificacion"], err = json.Marshal(r.ResultadoClasificacion)
 	if err != nil {
 		return nil, err
 	}
@@ -416,20 +416,20 @@ func (r *BultoInformadoPorSorter) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for volumenEnCm3")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["estadoClasificacion"]; ok {
+		if v, ok := fields["resultadoClasificacion"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.EstadoClasificacion); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ResultadoClasificacion); err != nil {
 			return err
 		}
 	} else {
-		r.EstadoClasificacion = NewUnionNullEstadoClasificacion()
+		r.ResultadoClasificacion = NewUnionNullEstadoClasificacion()
 
-		r.EstadoClasificacion = nil
+		r.ResultadoClasificacion = nil
 	}
 	return nil
 }
