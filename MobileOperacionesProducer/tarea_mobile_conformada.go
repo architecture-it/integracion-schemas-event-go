@@ -61,9 +61,11 @@ type TareaMobileConformada struct {
 	Orientacion *UnionNullString `json:"orientacion"`
 
 	EsRectificacion *UnionNullBool `json:"esRectificacion"`
+
+	Linking *UnionNullMapUnionStringBoolArrayIntInt `json:"linking"`
 }
 
-const TareaMobileConformadaAvroCRC64Fingerprint = "P}1Κ\x17\xc1\xa5"
+const TareaMobileConformadaAvroCRC64Fingerprint = "\xed\xbbD\xae\\c\xbb\x1e"
 
 func NewTareaMobileConformada() TareaMobileConformada {
 	r := TareaMobileConformada{}
@@ -88,6 +90,7 @@ func NewTareaMobileConformada() TareaMobileConformada {
 	r.Motivo = nil
 	r.Motivo_id = nil
 	r.Orientacion = nil
+	r.Linking = nil
 	return r
 }
 
@@ -204,6 +207,10 @@ func writeTareaMobileConformada(r TareaMobileConformada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullMapUnionStringBoolArrayIntInt(r.Linking, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -212,7 +219,7 @@ func (r TareaMobileConformada) Serialize(w io.Writer) error {
 }
 
 func (r TareaMobileConformada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"notificada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"enviada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"verificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaCierre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroSeguimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"imagenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"observaciones\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivo_id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"orientacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"esRectificacion\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.TareaMobileConformada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"notificada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"enviada\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"verificacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaCierre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tarea\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaContacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroSeguimiento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitudDomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"imagenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"observaciones\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivo_id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"orientacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"esRectificacion\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"type\":\"map\",\"values\":[\"string\",\"boolean\",{\"items\":\"int\",\"type\":\"array\"},\"int\"]}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.TareaMobileConformada\",\"type\":\"record\"}"
 }
 
 func (r TareaMobileConformada) SchemaName() string {
@@ -318,6 +325,10 @@ func (r *TareaMobileConformada) Get(i int) types.Field {
 		r.EsRectificacion = NewUnionNullBool()
 
 		return r.EsRectificacion
+	case 22:
+		r.Linking = NewUnionNullMapUnionStringBoolArrayIntInt()
+
+		return r.Linking
 	}
 	panic("Unknown field index")
 }
@@ -386,6 +397,9 @@ func (r *TareaMobileConformada) SetDefault(i int) {
 		return
 	case 20:
 		r.Orientacion = nil
+		return
+	case 22:
+		r.Linking = nil
 		return
 	}
 	panic("Unknown field index")
@@ -458,6 +472,9 @@ func (r *TareaMobileConformada) NullField(i int) {
 		return
 	case 21:
 		r.EsRectificacion = nil
+		return
+	case 22:
+		r.Linking = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -560,6 +577,10 @@ func (r TareaMobileConformada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["esRectificacion"], err = json.Marshal(r.EsRectificacion)
+	if err != nil {
+		return nil, err
+	}
+	output["linking"], err = json.Marshal(r.Linking)
 	if err != nil {
 		return nil, err
 	}
@@ -922,6 +943,22 @@ func (r *TareaMobileConformada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for esRectificacion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["linking"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Linking); err != nil {
+			return err
+		}
+	} else {
+		r.Linking = NewUnionNullMapUnionStringBoolArrayIntInt()
+
+		r.Linking = nil
 	}
 	return nil
 }
