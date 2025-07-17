@@ -92,7 +92,7 @@ func (r EventoDeNegocio) Serialize(w io.Writer) error {
 }
 
 func (r EventoDeNegocio) Schema() string {
-	return "{\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",\"long\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.EventoDeNegocio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"timestamp\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",\"long\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.EventoDeNegocio\",\"type\":\"record\"}"
 }
 
 func (r EventoDeNegocio) SchemaName() string {
