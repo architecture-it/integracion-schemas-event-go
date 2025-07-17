@@ -34,10 +34,12 @@ type Articulo struct {
 
 	Datosadicionales *UnionNullListaDePropiedades `json:"datosadicionales"`
 
+	ValorDeclaradoUnitario *UnionNullString `json:"valorDeclaradoUnitario"`
+
 	Lote LoteArticulo `json:"lote"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "\xb0ޏ\ueae7\x13\x83"
+const ArticuloAvroCRC64Fingerprint = "vx65\x95\x99\x93\x84"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
@@ -45,6 +47,7 @@ func NewArticulo() Articulo {
 	r.ZonaConsumo = nil
 	r.Serie = nil
 	r.Datosadicionales = nil
+	r.ValorDeclaradoUnitario = nil
 	r.Lote = NewLoteArticulo()
 
 	return r
@@ -107,6 +110,10 @@ func writeArticulo(r Articulo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ValorDeclaradoUnitario, w)
+	if err != nil {
+		return err
+	}
 	err = writeLoteArticulo(r.Lote, w)
 	if err != nil {
 		return err
@@ -119,7 +126,7 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"valorDeclaradoUnitario\",\"type\":[\"null\",\"string\"]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
@@ -174,6 +181,10 @@ func (r *Articulo) Get(i int) types.Field {
 
 		return r.Datosadicionales
 	case 8:
+		r.ValorDeclaradoUnitario = NewUnionNullString()
+
+		return r.ValorDeclaradoUnitario
+	case 9:
 		r.Lote = NewLoteArticulo()
 
 		w := types.Record{Target: &r.Lote}
@@ -198,6 +209,9 @@ func (r *Articulo) SetDefault(i int) {
 	case 7:
 		r.Datosadicionales = nil
 		return
+	case 8:
+		r.ValorDeclaradoUnitario = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -215,6 +229,9 @@ func (r *Articulo) NullField(i int) {
 		return
 	case 7:
 		r.Datosadicionales = nil
+		return
+	case 8:
+		r.ValorDeclaradoUnitario = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -261,6 +278,10 @@ func (r Articulo) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["datosadicionales"], err = json.Marshal(r.Datosadicionales)
+	if err != nil {
+		return nil, err
+	}
+	output["valorDeclaradoUnitario"], err = json.Marshal(r.ValorDeclaradoUnitario)
 	if err != nil {
 		return nil, err
 	}
@@ -397,6 +418,22 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 		r.Datosadicionales = NewUnionNullListaDePropiedades()
 
 		r.Datosadicionales = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["valorDeclaradoUnitario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ValorDeclaradoUnitario); err != nil {
+			return err
+		}
+	} else {
+		r.ValorDeclaradoUnitario = NewUnionNullString()
+
+		r.ValorDeclaradoUnitario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["lote"]; ok {
