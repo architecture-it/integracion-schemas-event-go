@@ -21,7 +21,7 @@ type ImpRemito struct {
 	Value string `json:"value"`
 }
 
-const ImpRemitoAvroCRC64Fingerprint = "\xa4C\xf2\xf4\xb1;\x14B"
+const ImpRemitoAvroCRC64Fingerprint = "\x14\x1c\xf1\x8f`\n4R"
 
 func NewImpRemito() ImpRemito {
 	r := ImpRemito{}
@@ -65,11 +65,11 @@ func (r ImpRemito) Serialize(w io.Writer) error {
 }
 
 func (r ImpRemito) Schema() string {
-	return "{\"fields\":[{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.ImpRemito\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.ImpRemito\",\"type\":\"record\"}"
 }
 
 func (r ImpRemito) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.ImpRemito"
+	return "Andreani.WarehousePedido.Events.Record.ImpRemito"
 }
 
 func (_ ImpRemito) SetBoolean(v bool)    { panic("Unsupported operation") }

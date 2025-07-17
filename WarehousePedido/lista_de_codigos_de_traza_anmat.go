@@ -21,7 +21,7 @@ type ListaDeCodigosDeTrazaANMAT struct {
 	CodigosDeTrazaANMAT []CodigosDeTrazaANMAT `json:"codigosDeTrazaANMAT"`
 }
 
-const ListaDeCodigosDeTrazaANMATAvroCRC64Fingerprint = "~a\x11\xfc^\x1dQ\x9f"
+const ListaDeCodigosDeTrazaANMATAvroCRC64Fingerprint = "0R\xa8\x88&c\xb4a"
 
 func NewListaDeCodigosDeTrazaANMAT() ListaDeCodigosDeTrazaANMAT {
 	r := ListaDeCodigosDeTrazaANMAT{}
@@ -67,11 +67,11 @@ func (r ListaDeCodigosDeTrazaANMAT) Serialize(w io.Writer) error {
 }
 
 func (r ListaDeCodigosDeTrazaANMAT) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigosDeTrazaANMAT\",\"type\":{\"items\":{\"fields\":[{\"name\":\"codigoDeTrazaANMAT\",\"type\":\"int\"}],\"name\":\"CodigosDeTrazaANMAT\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.ListaDeCodigosDeTrazaANMAT\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigosDeTrazaANMAT\",\"type\":{\"items\":{\"fields\":[{\"name\":\"codigoDeTrazaANMAT\",\"type\":\"int\"}],\"name\":\"CodigosDeTrazaANMAT\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ListaDeCodigosDeTrazaANMAT\",\"type\":\"record\"}"
 }
 
 func (r ListaDeCodigosDeTrazaANMAT) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.ListaDeCodigosDeTrazaANMAT"
+	return "Andreani.WarehousePedido.Events.Record.ListaDeCodigosDeTrazaANMAT"
 }
 
 func (_ ListaDeCodigosDeTrazaANMAT) SetBoolean(v bool)    { panic("Unsupported operation") }

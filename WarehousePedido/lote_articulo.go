@@ -29,7 +29,7 @@ type LoteArticulo struct {
 	Estado *UnionNullString `json:"estado"`
 }
 
-const LoteArticuloAvroCRC64Fingerprint = "|\f\xaf0\x89s\xb3b"
+const LoteArticuloAvroCRC64Fingerprint = "\x94\x92\xd7.\xefg\x13|"
 
 func NewLoteArticulo() LoteArticulo {
 	r := LoteArticulo{}
@@ -94,11 +94,11 @@ func (r LoteArticulo) Serialize(w io.Writer) error {
 }
 
 func (r LoteArticulo) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.LoteArticulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.LoteArticulo\",\"type\":\"record\"}"
 }
 
 func (r LoteArticulo) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.LoteArticulo"
+	return "Andreani.WarehousePedido.Events.Record.LoteArticulo"
 }
 
 func (_ LoteArticulo) SetBoolean(v bool)    { panic("Unsupported operation") }

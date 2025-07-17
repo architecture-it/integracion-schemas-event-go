@@ -37,7 +37,7 @@ type Articulo struct {
 	Lote LoteArticulo `json:"lote"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "<\x9b?x\xe8\x9d\x11o"
+const ArticuloAvroCRC64Fingerprint = "\xb0ޏ\ueae7\x13\x83"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
@@ -119,11 +119,11 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.Articulo"
+	return "Andreani.WarehousePedido.Events.Record.Articulo"
 }
 
 func (_ Articulo) SetBoolean(v bool)    { panic("Unsupported operation") }

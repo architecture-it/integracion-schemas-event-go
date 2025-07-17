@@ -21,7 +21,7 @@ type ListaUrlsDocumentos struct {
 	Documentos []UrlDocumento `json:"documentos"`
 }
 
-const ListaUrlsDocumentosAvroCRC64Fingerprint = "q!~\x97\xd1z\xc1m"
+const ListaUrlsDocumentosAvroCRC64Fingerprint = "J}P\f\xba*e\x05"
 
 func NewListaUrlsDocumentos() ListaUrlsDocumentos {
 	r := ListaUrlsDocumentos{}
@@ -67,11 +67,11 @@ func (r ListaUrlsDocumentos) Serialize(w io.Writer) error {
 }
 
 func (r ListaUrlsDocumentos) Schema() string {
-	return "{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"UrlDocumento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.ListaUrlsDocumentos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"UrlDocumento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ListaUrlsDocumentos\",\"type\":\"record\"}"
 }
 
 func (r ListaUrlsDocumentos) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.ListaUrlsDocumentos"
+	return "Andreani.WarehousePedido.Events.Record.ListaUrlsDocumentos"
 }
 
 func (_ ListaUrlsDocumentos) SetBoolean(v bool)    { panic("Unsupported operation") }

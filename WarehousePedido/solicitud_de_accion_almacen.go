@@ -31,7 +31,7 @@ type SolicitudDeAccionAlmacen struct {
 	ContratoWarehouse *UnionNullString `json:"contratoWarehouse"`
 }
 
-const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "t\xcb`HV\x97\xe9("
+const SolicitudDeAccionAlmacenAvroCRC64Fingerprint = "\x87\x00\xf8\x8a\xc6\\\xaa6"
 
 func NewSolicitudDeAccionAlmacen() SolicitudDeAccionAlmacen {
 	r := SolicitudDeAccionAlmacen{}
@@ -100,11 +100,11 @@ func (r SolicitudDeAccionAlmacen) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudDeAccionAlmacen) Schema() string {
-	return "{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",\"long\"]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"eventoDeNegocio\",\"type\":{\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",\"long\"]}],\"name\":\"EventoDeNegocio\",\"type\":\"record\"}},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"almacen\",\"type\":\"string\"},{\"default\":null,\"name\":\"instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.SolicitudDeAccionAlmacen\",\"type\":\"record\"}"
 }
 
 func (r SolicitudDeAccionAlmacen) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.SolicitudDeAccionAlmacen"
+	return "Andreani.WarehousePedido.Events.Record.SolicitudDeAccionAlmacen"
 }
 
 func (_ SolicitudDeAccionAlmacen) SetBoolean(v bool)    { panic("Unsupported operation") }

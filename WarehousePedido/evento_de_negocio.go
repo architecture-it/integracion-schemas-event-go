@@ -29,7 +29,7 @@ type EventoDeNegocio struct {
 	Vencimiento *UnionNullLong `json:"vencimiento"`
 }
 
-const EventoDeNegocioAvroCRC64Fingerprint = "S\x0e\xa7Dl^\x12\r"
+const EventoDeNegocioAvroCRC64Fingerprint = "\xae\xb5\x8c\x96e\xd0٘"
 
 func NewEventoDeNegocio() EventoDeNegocio {
 	r := EventoDeNegocio{}
@@ -92,11 +92,11 @@ func (r EventoDeNegocio) Serialize(w io.Writer) error {
 }
 
 func (r EventoDeNegocio) Schema() string {
-	return "{\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",\"long\"]}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.EventoDeNegocio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"timestamp\",\"type\":\"long\"},{\"name\":\"remitente\",\"type\":\"string\"},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeOrden\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"vencimiento\",\"type\":[\"null\",\"long\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.EventoDeNegocio\",\"type\":\"record\"}"
 }
 
 func (r EventoDeNegocio) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.EventoDeNegocio"
+	return "Andreani.WarehousePedido.Events.Record.EventoDeNegocio"
 }
 
 func (_ EventoDeNegocio) SetBoolean(v bool)    { panic("Unsupported operation") }

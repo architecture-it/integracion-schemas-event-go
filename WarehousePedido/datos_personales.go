@@ -33,7 +33,7 @@ type DatosPersonales struct {
 	TipoDeDocumento *UnionNullTipoDeDocumento `json:"tipoDeDocumento"`
 }
 
-const DatosPersonalesAvroCRC64Fingerprint = "U\x86&}\xad\x9d-\xe8"
+const DatosPersonalesAvroCRC64Fingerprint = "Z\xed۾\xa9\x00{\xf6"
 
 func NewDatosPersonales() DatosPersonales {
 	r := DatosPersonales{}
@@ -108,11 +108,11 @@ func (r DatosPersonales) Serialize(w io.Writer) error {
 }
 
 func (r DatosPersonales) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.DatosPersonales\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.DatosPersonales\",\"type\":\"record\"}"
 }
 
 func (r DatosPersonales) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.DatosPersonales"
+	return "Andreani.WarehousePedido.Events.Record.DatosPersonales"
 }
 
 func (_ DatosPersonales) SetBoolean(v bool)    { panic("Unsupported operation") }

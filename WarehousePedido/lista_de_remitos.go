@@ -21,7 +21,7 @@ type ListaDeRemitos struct {
 	Documentos []Remito `json:"documentos"`
 }
 
-const ListaDeRemitosAvroCRC64Fingerprint = "\x88\xee\xbc߲\x0f8$"
+const ListaDeRemitosAvroCRC64Fingerprint = "\xe2\xd2\xcb;u\xce\\\x1b"
 
 func NewListaDeRemitos() ListaDeRemitos {
 	r := ListaDeRemitos{}
@@ -67,11 +67,11 @@ func (r ListaDeRemitos) Serialize(w io.Writer) error {
 }
 
 func (r ListaDeRemitos) Schema() string {
-	return "{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"Remito\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.ListaDeRemitos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"Remito\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ListaDeRemitos\",\"type\":\"record\"}"
 }
 
 func (r ListaDeRemitos) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.ListaDeRemitos"
+	return "Andreani.WarehousePedido.Events.Record.ListaDeRemitos"
 }
 
 func (_ ListaDeRemitos) SetBoolean(v bool)    { panic("Unsupported operation") }

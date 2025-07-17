@@ -29,7 +29,7 @@ type Distribuidor struct {
 	Datosadicionales *UnionNullString `json:"datosadicionales"`
 }
 
-const DistribuidorAvroCRC64Fingerprint = "\xef\xd7\xdf\xca\x7fl\xdc\x14"
+const DistribuidorAvroCRC64Fingerprint = "\xb7z\xd4\xfe*\x82LU"
 
 func NewDistribuidor() Distribuidor {
 	r := Distribuidor{}
@@ -94,11 +94,11 @@ func (r Distribuidor) Serialize(w io.Writer) error {
 }
 
 func (r Distribuidor) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"etiqueta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.Distribuidor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"etiqueta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.Distribuidor\",\"type\":\"record\"}"
 }
 
 func (r Distribuidor) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.Distribuidor"
+	return "Andreani.WarehousePedido.Events.Record.Distribuidor"
 }
 
 func (_ Distribuidor) SetBoolean(v bool)    { panic("Unsupported operation") }

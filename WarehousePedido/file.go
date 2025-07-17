@@ -23,7 +23,7 @@ type File struct {
 	Documento string `json:"documento"`
 }
 
-const FileAvroCRC64Fingerprint = "NR.\x99ޙ\x82\xe9"
+const FileAvroCRC64Fingerprint = "~\xf5\x1b\xf7H,\xdd\xed"
 
 func NewFile() File {
 	r := File{}
@@ -71,11 +71,11 @@ func (r File) Serialize(w io.Writer) error {
 }
 
 func (r File) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.File\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.File\",\"type\":\"record\"}"
 }
 
 func (r File) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.File"
+	return "Andreani.WarehousePedido.Events.Record.File"
 }
 
 func (_ File) SetBoolean(v bool)    { panic("Unsupported operation") }

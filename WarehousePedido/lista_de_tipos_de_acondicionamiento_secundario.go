@@ -21,7 +21,7 @@ type ListaDeTiposDeAcondicionamientoSecundario struct {
 	TiposDeAcondicionamientoSecundario []TiposDeAcondicionamientoSecundario `json:"tiposDeAcondicionamientoSecundario"`
 }
 
-const ListaDeTiposDeAcondicionamientoSecundarioAvroCRC64Fingerprint = "\xc2g\xd5c\xfa\xf8\xce'"
+const ListaDeTiposDeAcondicionamientoSecundarioAvroCRC64Fingerprint = "j\"\x92\xb9`c/\x12"
 
 func NewListaDeTiposDeAcondicionamientoSecundario() ListaDeTiposDeAcondicionamientoSecundario {
 	r := ListaDeTiposDeAcondicionamientoSecundario{}
@@ -67,11 +67,11 @@ func (r ListaDeTiposDeAcondicionamientoSecundario) Serialize(w io.Writer) error 
 }
 
 func (r ListaDeTiposDeAcondicionamientoSecundario) Schema() string {
-	return "{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}"
 }
 
 func (r ListaDeTiposDeAcondicionamientoSecundario) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.ListaDeTiposDeAcondicionamientoSecundario"
+	return "Andreani.WarehousePedido.Events.Record.ListaDeTiposDeAcondicionamientoSecundario"
 }
 
 func (_ ListaDeTiposDeAcondicionamientoSecundario) SetBoolean(v bool) { panic("Unsupported operation") }

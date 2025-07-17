@@ -21,7 +21,7 @@ type CodigosDeTrazaANMAT struct {
 	CodigoDeTrazaANMAT int32 `json:"codigoDeTrazaANMAT"`
 }
 
-const CodigosDeTrazaANMATAvroCRC64Fingerprint = "!:Q\xb3Ӧ5\xc3"
+const CodigosDeTrazaANMATAvroCRC64Fingerprint = "\xe8?\x04r\xf8\xf9\xcdk"
 
 func NewCodigosDeTrazaANMAT() CodigosDeTrazaANMAT {
 	r := CodigosDeTrazaANMAT{}
@@ -65,11 +65,11 @@ func (r CodigosDeTrazaANMAT) Serialize(w io.Writer) error {
 }
 
 func (r CodigosDeTrazaANMAT) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigoDeTrazaANMAT\",\"type\":\"int\"}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.CodigosDeTrazaANMAT\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigoDeTrazaANMAT\",\"type\":\"int\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.CodigosDeTrazaANMAT\",\"type\":\"record\"}"
 }
 
 func (r CodigosDeTrazaANMAT) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.CodigosDeTrazaANMAT"
+	return "Andreani.WarehousePedido.Events.Record.CodigosDeTrazaANMAT"
 }
 
 func (_ CodigosDeTrazaANMAT) SetBoolean(v bool)    { panic("Unsupported operation") }

@@ -21,7 +21,7 @@ type TiposDeAcondicionamientoSecundario struct {
 	TipoDeAcondi string `json:"tipoDeAcondi"`
 }
 
-const TiposDeAcondicionamientoSecundarioAvroCRC64Fingerprint = "QhcШj\x10\xcf"
+const TiposDeAcondicionamientoSecundarioAvroCRC64Fingerprint = "\x1a\x82gN_\xd7\xee\xb7"
 
 func NewTiposDeAcondicionamientoSecundario() TiposDeAcondicionamientoSecundario {
 	r := TiposDeAcondicionamientoSecundario{}
@@ -65,11 +65,11 @@ func (r TiposDeAcondicionamientoSecundario) Serialize(w io.Writer) error {
 }
 
 func (r TiposDeAcondicionamientoSecundario) Schema() string {
-	return "{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.TiposDeAcondicionamientoSecundario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.TiposDeAcondicionamientoSecundario\",\"type\":\"record\"}"
 }
 
 func (r TiposDeAcondicionamientoSecundario) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.TiposDeAcondicionamientoSecundario"
+	return "Andreani.WarehousePedido.Events.Record.TiposDeAcondicionamientoSecundario"
 }
 
 func (_ TiposDeAcondicionamientoSecundario) SetBoolean(v bool)    { panic("Unsupported operation") }

@@ -21,7 +21,7 @@ type ListaDePropiedades struct {
 	Metadatos []Metadato `json:"metadatos"`
 }
 
-const ListaDePropiedadesAvroCRC64Fingerprint = "V3\x9bZ\xc2\\'\xe2"
+const ListaDePropiedadesAvroCRC64Fingerprint = "$\xc7,\xef\xc7,]7"
 
 func NewListaDePropiedades() ListaDePropiedades {
 	r := ListaDePropiedades{}
@@ -67,11 +67,11 @@ func (r ListaDePropiedades) Serialize(w io.Writer) error {
 }
 
 func (r ListaDePropiedades) Schema() string {
-	return "{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.ListaDePropiedades\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ListaDePropiedades\",\"type\":\"record\"}"
 }
 
 func (r ListaDePropiedades) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.ListaDePropiedades"
+	return "Andreani.WarehousePedido.Events.Record.ListaDePropiedades"
 }
 
 func (_ ListaDePropiedades) SetBoolean(v bool)    { panic("Unsupported operation") }

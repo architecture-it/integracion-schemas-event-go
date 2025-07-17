@@ -37,7 +37,7 @@ type Direccion struct {
 	Pais *UnionNullString `json:"pais"`
 }
 
-const DireccionAvroCRC64Fingerprint = "\x03\x99$\xf8\xd2]ͪ"
+const DireccionAvroCRC64Fingerprint = "\xa9\x02\xb8Y\xa1\x87k\x9e"
 
 func NewDireccion() Direccion {
 	r := Direccion{}
@@ -122,11 +122,11 @@ func (r Direccion) Serialize(w io.Writer) error {
 }
 
 func (r Direccion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.Direccion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.Direccion\",\"type\":\"record\"}"
 }
 
 func (r Direccion) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.Direccion"
+	return "Andreani.WarehousePedido.Events.Record.Direccion"
 }
 
 func (_ Direccion) SetBoolean(v bool)    { panic("Unsupported operation") }

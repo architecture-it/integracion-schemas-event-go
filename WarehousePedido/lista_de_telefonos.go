@@ -21,7 +21,7 @@ type ListaDeTelefonos struct {
 	ListaDeTelefonos *UnionNullArrayTelefono `json:"listaDeTelefonos"`
 }
 
-const ListaDeTelefonosAvroCRC64Fingerprint = "n\xe1: }\x8c\xa1c"
+const ListaDeTelefonosAvroCRC64Fingerprint = "\x03\xf9\x97\x15h\x9f\xdd\xf4"
 
 func NewListaDeTelefonos() ListaDeTelefonos {
 	r := ListaDeTelefonos{}
@@ -66,11 +66,11 @@ func (r ListaDeTelefonos) Serialize(w io.Writer) error {
 }
 
 func (r ListaDeTelefonos) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.ListaDeTelefonos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.ListaDeTelefonos\",\"type\":\"record\"}"
 }
 
 func (r ListaDeTelefonos) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.ListaDeTelefonos"
+	return "Andreani.WarehousePedido.Events.Record.ListaDeTelefonos"
 }
 
 func (_ ListaDeTelefonos) SetBoolean(v bool)    { panic("Unsupported operation") }

@@ -23,7 +23,7 @@ type Remito struct {
 	Documento string `json:"documento"`
 }
 
-const RemitoAvroCRC64Fingerprint = "\x92\xdc\xd5\xd4eI؏"
+const RemitoAvroCRC64Fingerprint = ">,\xd8.\"\xab\xaf\xef"
 
 func NewRemito() Remito {
 	r := Remito{}
@@ -71,11 +71,11 @@ func (r Remito) Serialize(w io.Writer) error {
 }
 
 func (r Remito) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.Remito\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.Remito\",\"type\":\"record\"}"
 }
 
 func (r Remito) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.Remito"
+	return "Andreani.WarehousePedido.Events.Record.Remito"
 }
 
 func (_ Remito) SetBoolean(v bool)    { panic("Unsupported operation") }

@@ -23,7 +23,7 @@ type Telefono struct {
 	Numero string `json:"numero"`
 }
 
-const TelefonoAvroCRC64Fingerprint = "*\x16w\x94\xa8\x1c7\xaf"
+const TelefonoAvroCRC64Fingerprint = "\xeapT\xf2\x00\xc6Ev"
 
 func NewTelefono() Telefono {
 	r := Telefono{}
@@ -72,11 +72,11 @@ func (r Telefono) Serialize(w io.Writer) error {
 }
 
 func (r Telefono) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.Telefono\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.Telefono\",\"type\":\"record\"}"
 }
 
 func (r Telefono) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.Telefono"
+	return "Andreani.WarehousePedido.Events.Record.Telefono"
 }
 
 func (_ Telefono) SetBoolean(v bool)    { panic("Unsupported operation") }

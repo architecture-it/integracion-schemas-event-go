@@ -21,7 +21,7 @@ type UrlDocumento struct {
 	Url string `json:"url"`
 }
 
-const UrlDocumentoAvroCRC64Fingerprint = "\xfc&\x16k\x88\x02\x17J"
+const UrlDocumentoAvroCRC64Fingerprint = "Q\xd1\xf7\ue786,R"
 
 func NewUrlDocumento() UrlDocumento {
 	r := UrlDocumento{}
@@ -65,11 +65,11 @@ func (r UrlDocumento) Serialize(w io.Writer) error {
 }
 
 func (r UrlDocumento) Schema() string {
-	return "{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.UrlDocumento\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.UrlDocumento\",\"type\":\"record\"}"
 }
 
 func (r UrlDocumento) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.UrlDocumento"
+	return "Andreani.WarehousePedido.Events.Record.UrlDocumento"
 }
 
 func (_ UrlDocumento) SetBoolean(v bool)    { panic("Unsupported operation") }

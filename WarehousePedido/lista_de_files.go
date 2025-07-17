@@ -21,7 +21,7 @@ type ListaDeFiles struct {
 	Documentos []File `json:"documentos"`
 }
 
-const ListaDeFilesAvroCRC64Fingerprint = "\xc2o\xcd\xc5\xf4\x00\x83\xa7"
+const ListaDeFilesAvroCRC64Fingerprint = "\U00039bb8\x9e\x1cx!"
 
 func NewListaDeFiles() ListaDeFiles {
 	r := ListaDeFiles{}
@@ -67,11 +67,11 @@ func (r ListaDeFiles) Serialize(w io.Writer) error {
 }
 
 func (r ListaDeFiles) Schema() string {
-	return "{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"File\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.ListaDeFiles\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"numeroEntidad\",\"type\":\"string\"},{\"name\":\"documento\",\"type\":\"string\"}],\"name\":\"File\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ListaDeFiles\",\"type\":\"record\"}"
 }
 
 func (r ListaDeFiles) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.ListaDeFiles"
+	return "Andreani.WarehousePedido.Events.Record.ListaDeFiles"
 }
 
 func (_ ListaDeFiles) SetBoolean(v bool)    { panic("Unsupported operation") }

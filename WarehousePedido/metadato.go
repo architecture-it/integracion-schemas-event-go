@@ -23,7 +23,7 @@ type Metadato struct {
 	Contenido string `json:"contenido"`
 }
 
-const MetadatoAvroCRC64Fingerprint = "\x87\x9c*\xbdVEJ\x11"
+const MetadatoAvroCRC64Fingerprint = "%\x13\x82 \xc2\x01;#"
 
 func NewMetadato() Metadato {
 	r := Metadato{}
@@ -71,11 +71,11 @@ func (r Metadato) Serialize(w io.Writer) error {
 }
 
 func (r Metadato) Schema() string {
-	return "{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.Metadato\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.Metadato\",\"type\":\"record\"}"
 }
 
 func (r Metadato) SchemaName() string {
-	return "Andreani.WarehouseAbastecimiento.Events.Record.Metadato"
+	return "Andreani.WarehousePedido.Events.Record.Metadato"
 }
 
 func (_ Metadato) SetBoolean(v bool)    { panic("Unsupported operation") }

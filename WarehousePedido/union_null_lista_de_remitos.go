@@ -125,7 +125,7 @@ func (r *UnionNullListaDeRemitos) MarshalJSON() ([]byte, error) {
 
 	switch r.UnionType {
 	case UnionNullListaDeRemitosTypeEnumListaDeRemitos:
-		return json.Marshal(map[string]interface{}{"Andreani.WarehouseAbastecimiento.Events.Record.ListaDeRemitos": r.ListaDeRemitos})
+		return json.Marshal(map[string]interface{}{"Andreani.WarehousePedido.Events.Record.ListaDeRemitos": r.ListaDeRemitos})
 	}
 	return nil, fmt.Errorf("invalid value for *UnionNullListaDeRemitos")
 }
@@ -139,7 +139,7 @@ func (r *UnionNullListaDeRemitos) UnmarshalJSON(data []byte) error {
 	if len(fields) > 1 {
 		return fmt.Errorf("more than one type supplied for union")
 	}
-	if value, ok := fields["Andreani.WarehouseAbastecimiento.Events.Record.ListaDeRemitos"]; ok {
+	if value, ok := fields["Andreani.WarehousePedido.Events.Record.ListaDeRemitos"]; ok {
 		r.UnionType = 1
 		return json.Unmarshal([]byte(value), &r.ListaDeRemitos)
 	}
