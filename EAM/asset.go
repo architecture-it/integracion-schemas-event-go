@@ -49,9 +49,13 @@ type Asset struct {
 	Categoria string `json:"categoria"`
 
 	Cod_eam *UnionNullString `json:"cod_eam"`
+
+	Cargador *UnionNullCharger `json:"cargador"`
+
+	Bateria *UnionNullArrayBattery `json:"bateria"`
 }
 
-const AssetAvroCRC64Fingerprint = "\xf9\x06\xa9\xbb\x13\xe9j."
+const AssetAvroCRC64Fingerprint = "\xbf1#\x14\xa5\xb7\x18f"
 
 func NewAsset() Asset {
 	r := Asset{}
@@ -147,6 +151,14 @@ func writeAsset(r Asset, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullCharger(r.Cargador, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullArrayBattery(r.Bateria, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -155,7 +167,7 @@ func (r Asset) Serialize(w io.Writer) error {
 }
 
 func (r Asset) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"propulsion\",\"type\":\"string\"},{\"name\":\"categoria\",\"type\":\"string\"},{\"name\":\"cod_eam\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"propulsion\",\"type\":\"string\"},{\"name\":\"categoria\",\"type\":\"string\"},{\"name\":\"cod_eam\",\"type\":[\"null\",\"string\"]},{\"name\":\"cargador\",\"type\":[\"null\",{\"fields\":[{\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Charger\",\"type\":\"record\"}]},{\"name\":\"bateria\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Battery\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
 }
 
 func (r Asset) SchemaName() string {
@@ -252,6 +264,14 @@ func (r *Asset) Get(i int) types.Field {
 		r.Cod_eam = NewUnionNullString()
 
 		return r.Cod_eam
+	case 16:
+		r.Cargador = NewUnionNullCharger()
+
+		return r.Cargador
+	case 17:
+		r.Bateria = NewUnionNullArrayBattery()
+
+		return r.Bateria
 	}
 	panic("Unknown field index")
 }
@@ -266,6 +286,12 @@ func (r *Asset) NullField(i int) {
 	switch i {
 	case 15:
 		r.Cod_eam = nil
+		return
+	case 16:
+		r.Cargador = nil
+		return
+	case 17:
+		r.Bateria = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -344,6 +370,14 @@ func (r Asset) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["cod_eam"], err = json.Marshal(r.Cod_eam)
+	if err != nil {
+		return nil, err
+	}
+	output["cargador"], err = json.Marshal(r.Cargador)
+	if err != nil {
+		return nil, err
+	}
+	output["bateria"], err = json.Marshal(r.Bateria)
 	if err != nil {
 		return nil, err
 	}
@@ -580,6 +614,34 @@ func (r *Asset) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for cod_eam")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cargador"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cargador); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for cargador")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["bateria"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Bateria); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for bateria")
 	}
 	return nil
 }

@@ -21,7 +21,7 @@ type SharepointAsset struct {
 	Asset Asset `json:"Asset"`
 }
 
-const SharepointAssetAvroCRC64Fingerprint = "\xf8\x14ܠq\x031\xc6"
+const SharepointAssetAvroCRC64Fingerprint = "V2W\x94\x84Eh\x84"
 
 func NewSharepointAsset() SharepointAsset {
 	r := SharepointAsset{}
@@ -67,7 +67,7 @@ func (r SharepointAsset) Serialize(w io.Writer) error {
 }
 
 func (r SharepointAsset) Schema() string {
-	return "{\"fields\":[{\"name\":\"Asset\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"propulsion\",\"type\":\"string\"},{\"name\":\"categoria\",\"type\":\"string\"},{\"name\":\"cod_eam\",\"type\":[\"null\",\"string\"]}],\"name\":\"Asset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.SharepointAsset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Asset\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"propulsion\",\"type\":\"string\"},{\"name\":\"categoria\",\"type\":\"string\"},{\"name\":\"cod_eam\",\"type\":[\"null\",\"string\"]},{\"name\":\"cargador\",\"type\":[\"null\",{\"fields\":[{\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Charger\",\"type\":\"record\"}]},{\"name\":\"bateria\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Battery\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Asset\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.SharepointAsset\",\"type\":\"record\"}"
 }
 
 func (r SharepointAsset) SchemaName() string {
