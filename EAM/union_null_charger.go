@@ -84,7 +84,7 @@ func DeserializeUnionNullChargerFromSchema(r io.Reader, schema string) (*UnionNu
 }
 
 func (r *UnionNullCharger) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Charger\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Charger\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullCharger) SetBoolean(v bool)   { panic("Unsupported operation") }

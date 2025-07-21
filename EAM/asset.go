@@ -59,6 +59,8 @@ const AssetAvroCRC64Fingerprint = "\xbf1#\x14\xa5\xb7\x18f"
 
 func NewAsset() Asset {
 	r := Asset{}
+	r.Cargador = nil
+	r.Bateria = nil
 	return r
 }
 
@@ -167,7 +169,7 @@ func (r Asset) Serialize(w io.Writer) error {
 }
 
 func (r Asset) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"propulsion\",\"type\":\"string\"},{\"name\":\"categoria\",\"type\":\"string\"},{\"name\":\"cod_eam\",\"type\":[\"null\",\"string\"]},{\"name\":\"cargador\",\"type\":[\"null\",{\"fields\":[{\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Charger\",\"type\":\"record\"}]},{\"name\":\"bateria\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Battery\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"propulsion\",\"type\":\"string\"},{\"name\":\"categoria\",\"type\":\"string\"},{\"name\":\"cod_eam\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cargador\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Charger\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"bateria\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Battery\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
 }
 
 func (r Asset) SchemaName() string {
@@ -278,6 +280,12 @@ func (r *Asset) Get(i int) types.Field {
 
 func (r *Asset) SetDefault(i int) {
 	switch i {
+	case 16:
+		r.Cargador = nil
+		return
+	case 17:
+		r.Bateria = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -627,7 +635,9 @@ func (r *Asset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cargador")
+		r.Cargador = NewUnionNullCharger()
+
+		r.Cargador = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["bateria"]; ok {
@@ -641,7 +651,9 @@ func (r *Asset) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for bateria")
+		r.Bateria = NewUnionNullArrayBattery()
+
+		r.Bateria = nil
 	}
 	return nil
 }

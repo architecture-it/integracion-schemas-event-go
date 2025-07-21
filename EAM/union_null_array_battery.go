@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayBatteryFromSchema(r io.Reader, schema string) (*Un
 }
 
 func (r *UnionNullArrayBattery) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Battery\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Battery\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayBattery) SetBoolean(v bool)   { panic("Unsupported operation") }

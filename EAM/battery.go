@@ -25,6 +25,7 @@ const BatteryAvroCRC64Fingerprint = "9\b\xac\xb8-\xa1\xe04"
 
 func NewBattery() Battery {
 	r := Battery{}
+	r.Nro_serie = nil
 	return r
 }
 
@@ -65,7 +66,7 @@ func (r Battery) Serialize(w io.Writer) error {
 }
 
 func (r Battery) Schema() string {
-	return "{\"fields\":[{\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Battery\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Battery\",\"type\":\"record\"}"
 }
 
 func (r Battery) SchemaName() string {
@@ -93,6 +94,9 @@ func (r *Battery) Get(i int) types.Field {
 
 func (r *Battery) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Nro_serie = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -144,7 +148,9 @@ func (r *Battery) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nro_serie")
+		r.Nro_serie = NewUnionNullString()
+
+		r.Nro_serie = nil
 	}
 	return nil
 }
