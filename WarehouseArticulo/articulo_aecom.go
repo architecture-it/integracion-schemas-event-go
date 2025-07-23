@@ -24,21 +24,24 @@ type ArticuloAECOM struct {
 
 	TipoEan *UnionNullString `json:"TipoEan"`
 
-	Alto float32 `json:"Alto"`
+	Alto *UnionNullFloat `json:"Alto"`
 
-	Ancho float32 `json:"Ancho"`
+	Ancho *UnionNullFloat `json:"Ancho"`
 
-	Largo float32 `json:"Largo"`
+	Largo *UnionNullFloat `json:"Largo"`
 
-	PesoBruto float32 `json:"PesoBruto"`
+	PesoBruto *UnionNullFloat `json:"PesoBruto"`
+
+	ValorDeclarado *UnionNullFloat `json:"ValorDeclarado"`
 }
 
-const ArticuloAECOMAvroCRC64Fingerprint = "u庍*F\xf6\x9b"
+const ArticuloAECOMAvroCRC64Fingerprint = "\xf6ά\xfc\xbd\x91\xdey"
 
 func NewArticuloAECOM() ArticuloAECOM {
 	r := ArticuloAECOM{}
 	r.Ean = nil
 	r.TipoEan = nil
+	r.ValorDeclarado = nil
 	return r
 }
 
@@ -79,19 +82,23 @@ func writeArticuloAECOM(r ArticuloAECOM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.Alto, w)
+	err = writeUnionNullFloat(r.Alto, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.Ancho, w)
+	err = writeUnionNullFloat(r.Ancho, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.Largo, w)
+	err = writeUnionNullFloat(r.Largo, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteFloat(r.PesoBruto, w)
+	err = writeUnionNullFloat(r.PesoBruto, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullFloat(r.ValorDeclarado, w)
 	if err != nil {
 		return err
 	}
@@ -103,7 +110,7 @@ func (r ArticuloAECOM) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloAECOM) Schema() string {
-	return "{\"fields\":[{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEan\",\"type\":[\"null\",\"string\"]},{\"name\":\"Alto\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Largo\",\"type\":\"float\"},{\"name\":\"PesoBruto\",\"type\":\"float\"}],\"name\":\"Andreani.WarehouseArticulo.Events.Record.ArticuloAECOM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEan\",\"type\":[\"null\",\"string\"]},{\"name\":\"Alto\",\"type\":[\"null\",\"float\"]},{\"name\":\"Ancho\",\"type\":[\"null\",\"float\"]},{\"name\":\"Largo\",\"type\":[\"null\",\"float\"]},{\"name\":\"PesoBruto\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.WarehouseArticulo.Events.Record.ArticuloAECOM\",\"type\":\"record\"}"
 }
 
 func (r ArticuloAECOM) SchemaName() string {
@@ -135,25 +142,25 @@ func (r *ArticuloAECOM) Get(i int) types.Field {
 
 		return r.TipoEan
 	case 3:
-		w := types.Float{Target: &r.Alto}
+		r.Alto = NewUnionNullFloat()
 
-		return w
-
+		return r.Alto
 	case 4:
-		w := types.Float{Target: &r.Ancho}
+		r.Ancho = NewUnionNullFloat()
 
-		return w
-
+		return r.Ancho
 	case 5:
-		w := types.Float{Target: &r.Largo}
+		r.Largo = NewUnionNullFloat()
 
-		return w
-
+		return r.Largo
 	case 6:
-		w := types.Float{Target: &r.PesoBruto}
+		r.PesoBruto = NewUnionNullFloat()
 
-		return w
+		return r.PesoBruto
+	case 7:
+		r.ValorDeclarado = NewUnionNullFloat()
 
+		return r.ValorDeclarado
 	}
 	panic("Unknown field index")
 }
@@ -166,6 +173,9 @@ func (r *ArticuloAECOM) SetDefault(i int) {
 	case 2:
 		r.TipoEan = nil
 		return
+	case 7:
+		r.ValorDeclarado = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -177,6 +187,21 @@ func (r *ArticuloAECOM) NullField(i int) {
 		return
 	case 2:
 		r.TipoEan = nil
+		return
+	case 3:
+		r.Alto = nil
+		return
+	case 4:
+		r.Ancho = nil
+		return
+	case 5:
+		r.Largo = nil
+		return
+	case 6:
+		r.PesoBruto = nil
+		return
+	case 7:
+		r.ValorDeclarado = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -219,6 +244,10 @@ func (r ArticuloAECOM) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["PesoBruto"], err = json.Marshal(r.PesoBruto)
+	if err != nil {
+		return nil, err
+	}
+	output["ValorDeclarado"], err = json.Marshal(r.ValorDeclarado)
 	if err != nil {
 		return nil, err
 	}
@@ -333,6 +362,22 @@ func (r *ArticuloAECOM) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for PesoBruto")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ValorDeclarado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ValorDeclarado); err != nil {
+			return err
+		}
+	} else {
+		r.ValorDeclarado = NewUnionNullFloat()
+
+		r.ValorDeclarado = nil
 	}
 	return nil
 }
