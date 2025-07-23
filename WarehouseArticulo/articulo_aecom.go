@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type ArticuloAECOM struct {
+	Descripcion string `json:"Descripcion"`
+
 	Ean *UnionNullString `json:"Ean"`
 
 	TipoEan *UnionNullString `json:"TipoEan"`
@@ -31,7 +33,7 @@ type ArticuloAECOM struct {
 	PesoBruto float32 `json:"PesoBruto"`
 }
 
-const ArticuloAECOMAvroCRC64Fingerprint = "lv\xb9o\r5\xa9\x1e"
+const ArticuloAECOMAvroCRC64Fingerprint = "u庍*F\xf6\x9b"
 
 func NewArticuloAECOM() ArticuloAECOM {
 	r := ArticuloAECOM{}
@@ -65,6 +67,10 @@ func DeserializeArticuloAECOMFromSchema(r io.Reader, schema string) (ArticuloAEC
 
 func writeArticuloAECOM(r ArticuloAECOM, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.Descripcion, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Ean, w)
 	if err != nil {
 		return err
@@ -97,7 +103,7 @@ func (r ArticuloAECOM) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloAECOM) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEan\",\"type\":[\"null\",\"string\"]},{\"name\":\"Alto\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Largo\",\"type\":\"float\"},{\"name\":\"PesoBruto\",\"type\":\"float\"}],\"name\":\"Andreani.WarehouseArticulo.Events.Record.ArticuloAECOM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEan\",\"type\":[\"null\",\"string\"]},{\"name\":\"Alto\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Largo\",\"type\":\"float\"},{\"name\":\"PesoBruto\",\"type\":\"float\"}],\"name\":\"Andreani.WarehouseArticulo.Events.Record.ArticuloAECOM\",\"type\":\"record\"}"
 }
 
 func (r ArticuloAECOM) SchemaName() string {
@@ -116,29 +122,34 @@ func (_ ArticuloAECOM) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *ArticuloAECOM) Get(i int) types.Field {
 	switch i {
 	case 0:
+		w := types.String{Target: &r.Descripcion}
+
+		return w
+
+	case 1:
 		r.Ean = NewUnionNullString()
 
 		return r.Ean
-	case 1:
+	case 2:
 		r.TipoEan = NewUnionNullString()
 
 		return r.TipoEan
-	case 2:
+	case 3:
 		w := types.Float{Target: &r.Alto}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.Float{Target: &r.Ancho}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.Float{Target: &r.Largo}
 
 		return w
 
-	case 5:
+	case 6:
 		w := types.Float{Target: &r.PesoBruto}
 
 		return w
@@ -149,10 +160,10 @@ func (r *ArticuloAECOM) Get(i int) types.Field {
 
 func (r *ArticuloAECOM) SetDefault(i int) {
 	switch i {
-	case 0:
+	case 1:
 		r.Ean = nil
 		return
-	case 1:
+	case 2:
 		r.TipoEan = nil
 		return
 	}
@@ -161,10 +172,10 @@ func (r *ArticuloAECOM) SetDefault(i int) {
 
 func (r *ArticuloAECOM) NullField(i int) {
 	switch i {
-	case 0:
+	case 1:
 		r.Ean = nil
 		return
-	case 1:
+	case 2:
 		r.TipoEan = nil
 		return
 	}
@@ -183,6 +194,10 @@ func (_ ArticuloAECOM) AvroCRC64Fingerprint() []byte {
 func (r ArticuloAECOM) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["Descripcion"], err = json.Marshal(r.Descripcion)
+	if err != nil {
+		return nil, err
+	}
 	output["Ean"], err = json.Marshal(r.Ean)
 	if err != nil {
 		return nil, err
@@ -217,6 +232,20 @@ func (r *ArticuloAECOM) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["Descripcion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Descripcion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Descripcion")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Ean"]; ok {
 			return v

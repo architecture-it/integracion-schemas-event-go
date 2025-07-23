@@ -25,7 +25,7 @@ type SolicitudModificacionArticulo struct {
 	Topic string `json:"Topic"`
 }
 
-const SolicitudModificacionArticuloAvroCRC64Fingerprint = "\xf8|)\xde[\xcc\x1bp"
+const SolicitudModificacionArticuloAvroCRC64Fingerprint = "\xc2,\xb0\x8d\xac\xa7m\xaf"
 
 func NewSolicitudModificacionArticulo() SolicitudModificacionArticulo {
 	r := SolicitudModificacionArticulo{}
@@ -80,7 +80,7 @@ func (r SolicitudModificacionArticulo) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudModificacionArticulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"TransaccionId\",\"type\":\"int\"},{\"name\":\"Articulo\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEan\",\"type\":[\"null\",\"string\"]},{\"name\":\"Alto\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Largo\",\"type\":\"float\"},{\"name\":\"PesoBruto\",\"type\":\"float\"}],\"name\":\"ArticuloAECOM\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/SolicitudModificacionArticulo\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseArticulo.Events.Record.SolicitudModificacionArticulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TransaccionId\",\"type\":\"int\"},{\"name\":\"Articulo\",\"type\":{\"fields\":[{\"name\":\"Descripcion\",\"type\":\"string\"},{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEan\",\"type\":[\"null\",\"string\"]},{\"name\":\"Alto\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Largo\",\"type\":\"float\"},{\"name\":\"PesoBruto\",\"type\":\"float\"}],\"name\":\"ArticuloAECOM\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/SolicitudModificacionArticulo\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseArticulo.Events.Record.SolicitudModificacionArticulo\",\"type\":\"record\"}"
 }
 
 func (r SolicitudModificacionArticulo) SchemaName() string {
