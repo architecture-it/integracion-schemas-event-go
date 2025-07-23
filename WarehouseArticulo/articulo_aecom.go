@@ -31,7 +31,7 @@ type ArticuloAECOM struct {
 	PesoBruto float32 `json:"PesoBruto"`
 }
 
-const ArticuloAECOMAvroCRC64Fingerprint = "\x84\x1b\x96E\xf1\xa1\xc6\xff"
+const ArticuloAECOMAvroCRC64Fingerprint = "lv\xb9o\r5\xa9\x1e"
 
 func NewArticuloAECOM() ArticuloAECOM {
 	r := ArticuloAECOM{}
@@ -97,11 +97,11 @@ func (r ArticuloAECOM) Serialize(w io.Writer) error {
 }
 
 func (r ArticuloAECOM) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEan\",\"type\":[\"null\",\"string\"]},{\"name\":\"Alto\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Largo\",\"type\":\"float\"},{\"name\":\"PesoBruto\",\"type\":\"float\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.ArticuloAECOM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEan\",\"type\":[\"null\",\"string\"]},{\"name\":\"Alto\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Largo\",\"type\":\"float\"},{\"name\":\"PesoBruto\",\"type\":\"float\"}],\"name\":\"Andreani.WarehouseArticulo.Events.Record.ArticuloAECOM\",\"type\":\"record\"}"
 }
 
 func (r ArticuloAECOM) SchemaName() string {
-	return "Andreani.WarehousePedido.Events.Record.ArticuloAECOM"
+	return "Andreani.WarehouseArticulo.Events.Record.ArticuloAECOM"
 }
 
 func (_ ArticuloAECOM) SetBoolean(v bool)    { panic("Unsupported operation") }

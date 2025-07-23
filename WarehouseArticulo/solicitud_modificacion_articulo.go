@@ -25,7 +25,7 @@ type SolicitudModificacionArticulo struct {
 	Topic string `json:"Topic"`
 }
 
-const SolicitudModificacionArticuloAvroCRC64Fingerprint = "|S\xe3¶ˣ\x8d"
+const SolicitudModificacionArticuloAvroCRC64Fingerprint = "\xf8|)\xde[\xcc\x1bp"
 
 func NewSolicitudModificacionArticulo() SolicitudModificacionArticulo {
 	r := SolicitudModificacionArticulo{}
@@ -80,11 +80,11 @@ func (r SolicitudModificacionArticulo) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudModificacionArticulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"TransaccionId\",\"type\":\"int\"},{\"name\":\"Articulo\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEan\",\"type\":[\"null\",\"string\"]},{\"name\":\"Alto\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Largo\",\"type\":\"float\"},{\"name\":\"PesoBruto\",\"type\":\"float\"}],\"name\":\"ArticuloAECOM\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/SolicitudModificacionArticulo\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.SolicitudModificacionArticulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TransaccionId\",\"type\":\"int\"},{\"name\":\"Articulo\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Ean\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEan\",\"type\":[\"null\",\"string\"]},{\"name\":\"Alto\",\"type\":\"float\"},{\"name\":\"Ancho\",\"type\":\"float\"},{\"name\":\"Largo\",\"type\":\"float\"},{\"name\":\"PesoBruto\",\"type\":\"float\"}],\"name\":\"ArticuloAECOM\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/SolicitudModificacionArticulo\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseArticulo.Events.Record.SolicitudModificacionArticulo\",\"type\":\"record\"}"
 }
 
 func (r SolicitudModificacionArticulo) SchemaName() string {
-	return "Andreani.WarehousePedido.Events.Record.SolicitudModificacionArticulo"
+	return "Andreani.WarehouseArticulo.Events.Record.SolicitudModificacionArticulo"
 }
 
 func (_ SolicitudModificacionArticulo) SetBoolean(v bool)    { panic("Unsupported operation") }
