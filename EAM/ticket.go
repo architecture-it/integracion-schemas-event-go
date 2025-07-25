@@ -31,9 +31,15 @@ type Ticket struct {
 	TipoSector *UnionNullString `json:"TipoSector"`
 
 	Categoria_Servicio *UnionNullString `json:"Categoria_Servicio"`
+
+	Telefono *UnionNullString `json:"Telefono"`
+
+	Correo_Electronico *UnionNullString `json:"Correo_Electronico"`
+
+	Mesa_Origen *UnionNullString `json:"Mesa_Origen"`
 }
 
-const TicketAvroCRC64Fingerprint = "eYhsY\x80.\x19"
+const TicketAvroCRC64Fingerprint = "X\xe2\xd2.\xb0\x82\xb7}"
 
 func NewTicket() Ticket {
 	r := Ticket{}
@@ -93,6 +99,18 @@ func writeTicket(r Ticket, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Telefono, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Correo_Electronico, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Mesa_Origen, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -101,7 +119,7 @@ func (r Ticket) Serialize(w io.Writer) error {
 }
 
 func (r Ticket) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.Ticket\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"Correo_Electronico\",\"type\":[\"null\",\"string\"]},{\"name\":\"Mesa_Origen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.Ticket\",\"type\":\"record\"}"
 }
 
 func (r Ticket) SchemaName() string {
@@ -152,6 +170,18 @@ func (r *Ticket) Get(i int) types.Field {
 		r.Categoria_Servicio = NewUnionNullString()
 
 		return r.Categoria_Servicio
+	case 7:
+		r.Telefono = NewUnionNullString()
+
+		return r.Telefono
+	case 8:
+		r.Correo_Electronico = NewUnionNullString()
+
+		return r.Correo_Electronico
+	case 9:
+		r.Mesa_Origen = NewUnionNullString()
+
+		return r.Mesa_Origen
 	}
 	panic("Unknown field index")
 }
@@ -169,6 +199,15 @@ func (r *Ticket) NullField(i int) {
 		return
 	case 6:
 		r.Categoria_Servicio = nil
+		return
+	case 7:
+		r.Telefono = nil
+		return
+	case 8:
+		r.Correo_Electronico = nil
+		return
+	case 9:
+		r.Mesa_Origen = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -211,6 +250,18 @@ func (r Ticket) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Categoria_Servicio"], err = json.Marshal(r.Categoria_Servicio)
+	if err != nil {
+		return nil, err
+	}
+	output["Telefono"], err = json.Marshal(r.Telefono)
+	if err != nil {
+		return nil, err
+	}
+	output["Correo_Electronico"], err = json.Marshal(r.Correo_Electronico)
+	if err != nil {
+		return nil, err
+	}
+	output["Mesa_Origen"], err = json.Marshal(r.Mesa_Origen)
 	if err != nil {
 		return nil, err
 	}
@@ -321,6 +372,48 @@ func (r *Ticket) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Categoria_Servicio")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Telefono"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Telefono); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Telefono")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Correo_Electronico"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Correo_Electronico); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Correo_Electronico")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Mesa_Origen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Mesa_Origen); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Mesa_Origen")
 	}
 	return nil
 }
