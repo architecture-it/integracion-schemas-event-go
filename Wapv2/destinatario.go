@@ -27,9 +27,13 @@ type Destinatario struct {
 	OtrosDatos *UnionNullListaDePropiedades `json:"otrosDatos"`
 
 	Contacto *UnionNullString `json:"contacto"`
+
+	IdSucursal *UnionNullString `json:"idSucursal"`
+
+	PalabraClave *UnionNullString `json:"palabraClave"`
 }
 
-const DestinatarioAvroCRC64Fingerprint = "\xa3\x8ef\x96PbD\xa1"
+const DestinatarioAvroCRC64Fingerprint = "\xdc\x1c\b:\x8c\xfb\xf7\xc2"
 
 func NewDestinatario() Destinatario {
 	r := Destinatario{}
@@ -39,6 +43,8 @@ func NewDestinatario() Destinatario {
 
 	r.OtrosDatos = nil
 	r.Contacto = nil
+	r.IdSucursal = nil
+	r.PalabraClave = nil
 	return r
 }
 
@@ -87,6 +93,14 @@ func writeDestinatario(r Destinatario, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.IdSucursal, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.PalabraClave, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -95,7 +109,7 @@ func (r Destinatario) Serialize(w io.Writer) error {
 }
 
 func (r Destinatario) Schema() string {
-	return "{\"fields\":[{\"name\":\"idDestinatario\",\"type\":\"string\"},{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.Destinatario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idDestinatario\",\"type\":\"string\"},{\"name\":\"datosPersonales\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"numeroDeDocumento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idinternocliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"eMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeDocumento\",\"type\":[\"null\",{\"name\":\"TipoDeDocumento\",\"symbols\":[\"undefined\",\"DNI\",\"CUIT\",\"CUIL\"],\"type\":\"enum\"}]}],\"name\":\"DatosPersonales\",\"type\":\"record\"}},{\"name\":\"direccion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referenciadedomicilio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"contacto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idSucursal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"palabraClave\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.Destinatario\",\"type\":\"record\"}"
 }
 
 func (r Destinatario) SchemaName() string {
@@ -140,6 +154,14 @@ func (r *Destinatario) Get(i int) types.Field {
 		r.Contacto = NewUnionNullString()
 
 		return r.Contacto
+	case 5:
+		r.IdSucursal = NewUnionNullString()
+
+		return r.IdSucursal
+	case 6:
+		r.PalabraClave = NewUnionNullString()
+
+		return r.PalabraClave
 	}
 	panic("Unknown field index")
 }
@@ -152,6 +174,12 @@ func (r *Destinatario) SetDefault(i int) {
 	case 4:
 		r.Contacto = nil
 		return
+	case 5:
+		r.IdSucursal = nil
+		return
+	case 6:
+		r.PalabraClave = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -163,6 +191,12 @@ func (r *Destinatario) NullField(i int) {
 		return
 	case 4:
 		r.Contacto = nil
+		return
+	case 5:
+		r.IdSucursal = nil
+		return
+	case 6:
+		r.PalabraClave = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -197,6 +231,14 @@ func (r Destinatario) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["contacto"], err = json.Marshal(r.Contacto)
+	if err != nil {
+		return nil, err
+	}
+	output["idSucursal"], err = json.Marshal(r.IdSucursal)
+	if err != nil {
+		return nil, err
+	}
+	output["palabraClave"], err = json.Marshal(r.PalabraClave)
 	if err != nil {
 		return nil, err
 	}
@@ -283,6 +325,38 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 		r.Contacto = NewUnionNullString()
 
 		r.Contacto = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idSucursal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdSucursal); err != nil {
+			return err
+		}
+	} else {
+		r.IdSucursal = NewUnionNullString()
+
+		r.IdSucursal = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["palabraClave"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PalabraClave); err != nil {
+			return err
+		}
+	} else {
+		r.PalabraClave = NewUnionNullString()
+
+		r.PalabraClave = nil
 	}
 	return nil
 }
