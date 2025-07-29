@@ -43,6 +43,9 @@ const TicketAvroCRC64Fingerprint = "X\xe2\xd2.\xb0\x82\xb7}"
 
 func NewTicket() Ticket {
 	r := Ticket{}
+	r.Telefono = nil
+	r.Correo_Electronico = nil
+	r.Mesa_Origen = nil
 	return r
 }
 
@@ -119,7 +122,7 @@ func (r Ticket) Serialize(w io.Writer) error {
 }
 
 func (r Ticket) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"Correo_Electronico\",\"type\":[\"null\",\"string\"]},{\"name\":\"Mesa_Origen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.Ticket\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Correo_Electronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mesa_Origen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.Ticket\",\"type\":\"record\"}"
 }
 
 func (r Ticket) SchemaName() string {
@@ -188,6 +191,15 @@ func (r *Ticket) Get(i int) types.Field {
 
 func (r *Ticket) SetDefault(i int) {
 	switch i {
+	case 7:
+		r.Telefono = nil
+		return
+	case 8:
+		r.Correo_Electronico = nil
+		return
+	case 9:
+		r.Mesa_Origen = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -385,7 +397,9 @@ func (r *Ticket) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Telefono")
+		r.Telefono = NewUnionNullString()
+
+		r.Telefono = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Correo_Electronico"]; ok {
@@ -399,7 +413,9 @@ func (r *Ticket) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Correo_Electronico")
+		r.Correo_Electronico = NewUnionNullString()
+
+		r.Correo_Electronico = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Mesa_Origen"]; ok {
@@ -413,7 +429,9 @@ func (r *Ticket) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Mesa_Origen")
+		r.Mesa_Origen = NewUnionNullString()
+
+		r.Mesa_Origen = nil
 	}
 	return nil
 }

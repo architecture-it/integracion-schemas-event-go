@@ -67,7 +67,7 @@ func (r MDA) Serialize(w io.Writer) error {
 }
 
 func (r MDA) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"Correo_Electronico\",\"type\":[\"null\",\"string\"]},{\"name\":\"Mesa_Origen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ticket\",\"namespace\":\"Andreani.EAM.Events.MDA\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.MDA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Correo_Electronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mesa_Origen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ticket\",\"namespace\":\"Andreani.EAM.Events.MDA\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.MDA\",\"type\":\"record\"}"
 }
 
 func (r MDA) SchemaName() string {
