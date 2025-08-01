@@ -32,10 +32,12 @@ type DetallePedido struct {
 
 	DiasVencimientoMinimo *UnionNullInt `json:"diasVencimientoMinimo"`
 
+	ValorDeclaradoUnitario *UnionNullDecimal18_2 `json:"valorDeclaradoUnitario"`
+
 	TiposDeAcondicionamientoSecundario *UnionNullListaDeTiposDeAcondicionamientoSecundario `json:"tiposDeAcondicionamientoSecundario"`
 }
 
-const DetallePedidoAvroCRC64Fingerprint = "O;\xb8\x94\x12E\xabD"
+const DetallePedidoAvroCRC64Fingerprint = "\xbb\x9f/\xc3\xd44\x06\xbc"
 
 func NewDetallePedido() DetallePedido {
 	r := DetallePedido{}
@@ -47,6 +49,7 @@ func NewDetallePedido() DetallePedido {
 	r.Admitepickingparcial = nil
 	r.EstatusOTdeAcondi = nil
 	r.DiasVencimientoMinimo = nil
+	r.ValorDeclaradoUnitario = nil
 	r.TiposDeAcondicionamientoSecundario = nil
 	return r
 }
@@ -104,6 +107,10 @@ func writeDetallePedido(r DetallePedido, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullDecimal18_2(r.ValorDeclaradoUnitario, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullListaDeTiposDeAcondicionamientoSecundario(r.TiposDeAcondicionamientoSecundario, w)
 	if err != nil {
 		return err
@@ -116,7 +123,7 @@ func (r DetallePedido) Serialize(w io.Writer) error {
 }
 
 func (r DetallePedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"valorDeclaradoUnitario\",\"type\":[\"null\",\"string\"]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estatusOTdeAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"diasVencimientoMinimo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.DetallePedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"articulo\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"valorDeclaradoUnitario\",\"type\":[\"null\",\"string\"]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Articulo\",\"type\":\"record\"}},{\"default\":null,\"name\":\"contratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numerodelinea\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoacondicionamientoescundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"admitepickingparcial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estatusOTdeAcondi\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"diasVencimientoMinimo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorDeclaradoUnitario\",\"type\":[\"null\",{\"logicalType\":\"decimal\",\"name\":\"Decimal18_2\",\"precision\":18,\"scale\":2,\"size\":9,\"type\":\"fixed\"}]},{\"default\":null,\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"tiposDeAcondicionamientoSecundario\",\"type\":{\"items\":{\"fields\":[{\"name\":\"tipoDeAcondi\",\"type\":\"string\"}],\"name\":\"TiposDeAcondicionamientoSecundario\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeTiposDeAcondicionamientoSecundario\",\"type\":\"record\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.DetallePedido\",\"type\":\"record\"}"
 }
 
 func (r DetallePedido) SchemaName() string {
@@ -166,6 +173,10 @@ func (r *DetallePedido) Get(i int) types.Field {
 
 		return r.DiasVencimientoMinimo
 	case 7:
+		r.ValorDeclaradoUnitario = NewUnionNullDecimal18_2()
+
+		return r.ValorDeclaradoUnitario
+	case 8:
 		r.TiposDeAcondicionamientoSecundario = NewUnionNullListaDeTiposDeAcondicionamientoSecundario()
 
 		return r.TiposDeAcondicionamientoSecundario
@@ -194,6 +205,9 @@ func (r *DetallePedido) SetDefault(i int) {
 		r.DiasVencimientoMinimo = nil
 		return
 	case 7:
+		r.ValorDeclaradoUnitario = nil
+		return
+	case 8:
 		r.TiposDeAcondicionamientoSecundario = nil
 		return
 	}
@@ -221,6 +235,9 @@ func (r *DetallePedido) NullField(i int) {
 		r.DiasVencimientoMinimo = nil
 		return
 	case 7:
+		r.ValorDeclaradoUnitario = nil
+		return
+	case 8:
 		r.TiposDeAcondicionamientoSecundario = nil
 		return
 	}
@@ -264,6 +281,10 @@ func (r DetallePedido) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["diasVencimientoMinimo"], err = json.Marshal(r.DiasVencimientoMinimo)
+	if err != nil {
+		return nil, err
+	}
+	output["valorDeclaradoUnitario"], err = json.Marshal(r.ValorDeclaradoUnitario)
 	if err != nil {
 		return nil, err
 	}
@@ -390,6 +411,22 @@ func (r *DetallePedido) UnmarshalJSON(data []byte) error {
 		r.DiasVencimientoMinimo = NewUnionNullInt()
 
 		r.DiasVencimientoMinimo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["valorDeclaradoUnitario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ValorDeclaradoUnitario); err != nil {
+			return err
+		}
+	} else {
+		r.ValorDeclaradoUnitario = NewUnionNullDecimal18_2()
+
+		r.ValorDeclaradoUnitario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tiposDeAcondicionamientoSecundario"]; ok {
