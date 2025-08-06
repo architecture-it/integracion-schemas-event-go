@@ -46,6 +46,8 @@ const BultoAvroCRC64Fingerprint = "\x1b\xff\xd5m\x91\xbb\x19\xe2"
 func NewBulto() Bulto {
 	r := Bulto{}
 	r.EstadoBultoId = nil
+	r.MontoValorSeguro = nil
+	r.MontoGestionCobranza = nil
 	r.Referencias = make([]Referencia, 0)
 
 	return r
@@ -128,7 +130,7 @@ func (r Bulto) Serialize(w io.Writer) error {
 }
 
 func (r Bulto) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"EstadoBultoId\",\"type\":[\"null\",\"int\"]},{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"name\":\"MontoValorSeguro\",\"type\":[\"null\",\"float\"]},{\"name\":\"MontoGestionCobranza\",\"type\":[\"null\",\"float\"]},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Bulto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"EstadoBultoId\",\"type\":[\"null\",\"int\"]},{\"name\":\"Kilos\",\"type\":\"float\"},{\"name\":\"LargoCm\",\"type\":\"float\"},{\"name\":\"AltoCm\",\"type\":\"float\"},{\"name\":\"AnchoCm\",\"type\":\"float\"},{\"name\":\"VolumenCm\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"float\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"float\"},{\"default\":null,\"name\":\"MontoValorSeguro\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"MontoGestionCobranza\",\"type\":[\"null\",\"float\"]},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificada.Events.Record.Bulto\",\"type\":\"record\"}"
 }
 
 func (r Bulto) SchemaName() string {
@@ -208,6 +210,12 @@ func (r *Bulto) SetDefault(i int) {
 	switch i {
 	case 0:
 		r.EstadoBultoId = nil
+		return
+	case 8:
+		r.MontoValorSeguro = nil
+		return
+	case 9:
+		r.MontoGestionCobranza = nil
 		return
 	}
 	panic("Unknown field index")
@@ -420,7 +428,9 @@ func (r *Bulto) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for MontoValorSeguro")
+		r.MontoValorSeguro = NewUnionNullFloat()
+
+		r.MontoValorSeguro = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["MontoGestionCobranza"]; ok {
@@ -434,7 +444,9 @@ func (r *Bulto) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for MontoGestionCobranza")
+		r.MontoGestionCobranza = NewUnionNullFloat()
+
+		r.MontoGestionCobranza = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Referencias"]; ok {
