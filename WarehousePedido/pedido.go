@@ -18,10 +18,10 @@ import (
 var _ = fmt.Printf
 
 type Pedido struct {
-	Id string `json:"id"`
+	TransactionId string `json:"transactionId"`
 }
 
-const PedidoAvroCRC64Fingerprint = "8,\x902\xc0)\"2"
+const PedidoAvroCRC64Fingerprint = "gUU\xc7[\xea\xf4\xb3"
 
 func NewPedido() Pedido {
 	r := Pedido{}
@@ -53,7 +53,7 @@ func DeserializePedidoFromSchema(r io.Reader, schema string) (Pedido, error) {
 
 func writePedido(r Pedido, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Id, w)
+	err = vm.WriteString(r.TransactionId, w)
 	if err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func (r Pedido) Serialize(w io.Writer) error {
 }
 
 func (r Pedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.Pedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"transactionId\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.Pedido\",\"type\":\"record\"}"
 }
 
 func (r Pedido) SchemaName() string {
@@ -84,7 +84,7 @@ func (_ Pedido) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Pedido) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Id}
+		w := types.String{Target: &r.TransactionId}
 
 		return w
 
@@ -116,7 +116,7 @@ func (_ Pedido) AvroCRC64Fingerprint() []byte {
 func (r Pedido) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["id"], err = json.Marshal(r.Id)
+	output["transactionId"], err = json.Marshal(r.TransactionId)
 	if err != nil {
 		return nil, err
 	}
@@ -131,18 +131,18 @@ func (r *Pedido) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["id"]; ok {
+		if v, ok := fields["transactionId"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Id); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.TransactionId); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for id")
+		return fmt.Errorf("no value specified for transactionId")
 	}
 	return nil
 }

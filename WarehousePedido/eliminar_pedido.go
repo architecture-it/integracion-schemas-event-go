@@ -21,7 +21,7 @@ type EliminarPedido struct {
 	Pedido Pedido `json:"pedido"`
 }
 
-const EliminarPedidoAvroCRC64Fingerprint = "\x19CS\xe8y\xf1+\xac"
+const EliminarPedidoAvroCRC64Fingerprint = "1\x9a\xc5\xc1\xfdG]\xac"
 
 func NewEliminarPedido() EliminarPedido {
 	r := EliminarPedido{}
@@ -67,7 +67,7 @@ func (r EliminarPedido) Serialize(w io.Writer) error {
 }
 
 func (r EliminarPedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"pedido\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"Pedido\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.EliminarPedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"pedido\",\"type\":{\"fields\":[{\"name\":\"transactionId\",\"type\":\"string\"}],\"name\":\"Pedido\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.EliminarPedido\",\"type\":\"record\"}"
 }
 
 func (r EliminarPedido) SchemaName() string {
