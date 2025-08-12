@@ -39,9 +39,11 @@ type Traza struct {
 	EstadoDelEnvio *UnionNullString `json:"EstadoDelEnvio"`
 
 	SucursalAsociada *UnionNullString `json:"SucursalAsociada"`
+
+	Comentario *UnionNullString `json:"Comentario"`
 }
 
-const TrazaAvroCRC64Fingerprint = "\xa6\r\xaaن\xb1\x922"
+const TrazaAvroCRC64Fingerprint = "\a\xecaם\x8f\r\x9d"
 
 func NewTraza() Traza {
 	r := Traza{}
@@ -55,6 +57,7 @@ func NewTraza() Traza {
 	r.Remitente = nil
 	r.EstadoDelEnvio = nil
 	r.SucursalAsociada = nil
+	r.Comentario = nil
 	return r
 }
 
@@ -127,6 +130,10 @@ func writeTraza(r Traza, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Comentario, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -135,7 +142,7 @@ func (r Traza) Serialize(w io.Writer) error {
 }
 
 func (r Traza) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Common.Traza\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalAsociada\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.NovedadesCustom.Events.Common.Traza\",\"type\":\"record\"}"
 }
 
 func (r Traza) SchemaName() string {
@@ -198,6 +205,10 @@ func (r *Traza) Get(i int) types.Field {
 		r.SucursalAsociada = NewUnionNullString()
 
 		return r.SucursalAsociada
+	case 11:
+		r.Comentario = NewUnionNullString()
+
+		return r.Comentario
 	}
 	panic("Unknown field index")
 }
@@ -234,6 +245,9 @@ func (r *Traza) SetDefault(i int) {
 	case 10:
 		r.SucursalAsociada = nil
 		return
+	case 11:
+		r.Comentario = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -269,6 +283,9 @@ func (r *Traza) NullField(i int) {
 		return
 	case 10:
 		r.SucursalAsociada = nil
+		return
+	case 11:
+		r.Comentario = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -327,6 +344,10 @@ func (r Traza) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["SucursalAsociada"], err = json.Marshal(r.SucursalAsociada)
+	if err != nil {
+		return nil, err
+	}
+	output["Comentario"], err = json.Marshal(r.Comentario)
 	if err != nil {
 		return nil, err
 	}
@@ -513,6 +534,22 @@ func (r *Traza) UnmarshalJSON(data []byte) error {
 		r.SucursalAsociada = NewUnionNullString()
 
 		r.SucursalAsociada = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Comentario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Comentario); err != nil {
+			return err
+		}
+	} else {
+		r.Comentario = NewUnionNullString()
+
+		r.Comentario = nil
 	}
 	return nil
 }
