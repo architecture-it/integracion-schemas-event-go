@@ -21,7 +21,7 @@ type ConfirmarPago struct {
 	PedidosBatch PedidoBatch `json:"pedidosBatch"`
 }
 
-const ConfirmarPagoAvroCRC64Fingerprint = "\xd9a\x05\x1b\"\xf0\x95%"
+const ConfirmarPagoAvroCRC64Fingerprint = "\xfb41\x1ab3\xe2-"
 
 func NewConfirmarPago() ConfirmarPago {
 	r := ConfirmarPago{}
@@ -67,7 +67,7 @@ func (r ConfirmarPago) Serialize(w io.Writer) error {
 }
 
 func (r ConfirmarPago) Schema() string {
-	return "{\"fields\":[{\"name\":\"pedidosBatch\",\"type\":{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"pagoId\",\"type\":\"string\"}],\"name\":\"PedidoBatch\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ConfirmarPago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"pedidosBatch\",\"type\":{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"}],\"name\":\"PedidoBatch\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ConfirmarPago\",\"type\":\"record\"}"
 }
 
 func (r ConfirmarPago) SchemaName() string {

@@ -20,10 +20,12 @@ var _ = fmt.Printf
 type PedidoBatch struct {
 	BatchId string `json:"batchId"`
 
-	PagoId string `json:"pagoId"`
+	IdPagoExterno string `json:"idPagoExterno"`
+
+	ProveedorPago string `json:"proveedorPago"`
 }
 
-const PedidoBatchAvroCRC64Fingerprint = "\xf1\rJ\xd6\x1b\x16\xe6\xe5"
+const PedidoBatchAvroCRC64Fingerprint = "\xb7;\xb4\xd81\x83\xfa\x05"
 
 func NewPedidoBatch() PedidoBatch {
 	r := PedidoBatch{}
@@ -59,7 +61,11 @@ func writePedidoBatch(r PedidoBatch, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.PagoId, w)
+	err = vm.WriteString(r.IdPagoExterno, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.ProveedorPago, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +77,7 @@ func (r PedidoBatch) Serialize(w io.Writer) error {
 }
 
 func (r PedidoBatch) Schema() string {
-	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"pagoId\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
 }
 
 func (r PedidoBatch) SchemaName() string {
@@ -95,7 +101,12 @@ func (r *PedidoBatch) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.PagoId}
+		w := types.String{Target: &r.IdPagoExterno}
+
+		return w
+
+	case 2:
+		w := types.String{Target: &r.ProveedorPago}
 
 		return w
 
@@ -131,7 +142,11 @@ func (r PedidoBatch) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["pagoId"], err = json.Marshal(r.PagoId)
+	output["idPagoExterno"], err = json.Marshal(r.IdPagoExterno)
+	if err != nil {
+		return nil, err
+	}
+	output["proveedorPago"], err = json.Marshal(r.ProveedorPago)
 	if err != nil {
 		return nil, err
 	}
@@ -160,18 +175,32 @@ func (r *PedidoBatch) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for batchId")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["pagoId"]; ok {
+		if v, ok := fields["idPagoExterno"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.PagoId); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdPagoExterno); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for pagoId")
+		return fmt.Errorf("no value specified for idPagoExterno")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["proveedorPago"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ProveedorPago); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for proveedorPago")
 	}
 	return nil
 }
