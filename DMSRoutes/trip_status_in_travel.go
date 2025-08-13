@@ -26,13 +26,15 @@ type TripStatusInTravel struct {
 
 	OriginOperativeUnitId *UnionNullString `json:"OriginOperativeUnitId"`
 
-	OriginOperativeUnitName *UnionNullString `json:"OriginOperativeUnitName"`
-
 	DestinationOperativeUnitId *UnionNullString `json:"DestinationOperativeUnitId"`
 
-	DestinationOperativeUnitName *UnionNullString `json:"DestinationOperativeUnitName"`
-
 	JourneyStatus *UnionNullString `json:"JourneyStatus"`
+
+	VehicleType *UnionNullString `json:"VehicleType"`
+
+	VehicleDomain *UnionNullString `json:"VehicleDomain"`
+
+	Semis *UnionNullString `json:"Semis"`
 
 	RealDepartureDateTime *UnionNullString `json:"RealDepartureDateTime"`
 
@@ -43,7 +45,7 @@ type TripStatusInTravel struct {
 	UserNameLastModifiedBy *UnionNullString `json:"UserNameLastModifiedBy"`
 }
 
-const TripStatusInTravelAvroCRC64Fingerprint = "\x1f\x90\xb3\xadRW\xddF"
+const TripStatusInTravelAvroCRC64Fingerprint = "}\xfd`g\xb9\xb5 \xc3"
 
 func NewTripStatusInTravel() TripStatusInTravel {
 	r := TripStatusInTravel{}
@@ -51,10 +53,11 @@ func NewTripStatusInTravel() TripStatusInTravel {
 	r.TripId = nil
 	r.Seal = nil
 	r.OriginOperativeUnitId = nil
-	r.OriginOperativeUnitName = nil
 	r.DestinationOperativeUnitId = nil
-	r.DestinationOperativeUnitName = nil
 	r.JourneyStatus = nil
+	r.VehicleType = nil
+	r.VehicleDomain = nil
+	r.Semis = nil
 	r.RealDepartureDateTime = nil
 	r.LastModified = nil
 	r.LastStatusModify = nil
@@ -103,19 +106,23 @@ func writeTripStatusInTravel(r TripStatusInTravel, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.OriginOperativeUnitName, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.DestinationOperativeUnitId, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.DestinationOperativeUnitName, w)
+	err = writeUnionNullString(r.JourneyStatus, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.JourneyStatus, w)
+	err = writeUnionNullString(r.VehicleType, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.VehicleDomain, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Semis, w)
 	if err != nil {
 		return err
 	}
@@ -143,7 +150,7 @@ func (r TripStatusInTravel) Serialize(w io.Writer) error {
 }
 
 func (r TripStatusInTravel) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TripId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Seal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OriginOperativeUnitId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OriginOperativeUnitName\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinationOperativeUnitId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinationOperativeUnitName\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"JourneyStatus\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RealDepartureDateTime\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LastModified\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LastStatusModify\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserNameLastModifiedBy\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DMSRoutes.Events.Record.TripStatusInTravel\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TripId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Seal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OriginOperativeUnitId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinationOperativeUnitId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"JourneyStatus\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"VehicleType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"VehicleDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Semis\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"RealDepartureDateTime\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LastModified\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LastStatusModify\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserNameLastModifiedBy\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DMSRoutes.Events.Record.TripStatusInTravel\",\"type\":\"record\"}"
 }
 
 func (r TripStatusInTravel) SchemaName() string {
@@ -178,34 +185,38 @@ func (r *TripStatusInTravel) Get(i int) types.Field {
 
 		return r.OriginOperativeUnitId
 	case 4:
-		r.OriginOperativeUnitName = NewUnionNullString()
-
-		return r.OriginOperativeUnitName
-	case 5:
 		r.DestinationOperativeUnitId = NewUnionNullString()
 
 		return r.DestinationOperativeUnitId
-	case 6:
-		r.DestinationOperativeUnitName = NewUnionNullString()
-
-		return r.DestinationOperativeUnitName
-	case 7:
+	case 5:
 		r.JourneyStatus = NewUnionNullString()
 
 		return r.JourneyStatus
+	case 6:
+		r.VehicleType = NewUnionNullString()
+
+		return r.VehicleType
+	case 7:
+		r.VehicleDomain = NewUnionNullString()
+
+		return r.VehicleDomain
 	case 8:
+		r.Semis = NewUnionNullString()
+
+		return r.Semis
+	case 9:
 		r.RealDepartureDateTime = NewUnionNullString()
 
 		return r.RealDepartureDateTime
-	case 9:
+	case 10:
 		r.LastModified = NewUnionNullString()
 
 		return r.LastModified
-	case 10:
+	case 11:
 		r.LastStatusModify = NewUnionNullString()
 
 		return r.LastStatusModify
-	case 11:
+	case 12:
 		r.UserNameLastModifiedBy = NewUnionNullString()
 
 		return r.UserNameLastModifiedBy
@@ -228,27 +239,30 @@ func (r *TripStatusInTravel) SetDefault(i int) {
 		r.OriginOperativeUnitId = nil
 		return
 	case 4:
-		r.OriginOperativeUnitName = nil
-		return
-	case 5:
 		r.DestinationOperativeUnitId = nil
 		return
-	case 6:
-		r.DestinationOperativeUnitName = nil
-		return
-	case 7:
+	case 5:
 		r.JourneyStatus = nil
 		return
+	case 6:
+		r.VehicleType = nil
+		return
+	case 7:
+		r.VehicleDomain = nil
+		return
 	case 8:
-		r.RealDepartureDateTime = nil
+		r.Semis = nil
 		return
 	case 9:
-		r.LastModified = nil
+		r.RealDepartureDateTime = nil
 		return
 	case 10:
-		r.LastStatusModify = nil
+		r.LastModified = nil
 		return
 	case 11:
+		r.LastStatusModify = nil
+		return
+	case 12:
 		r.UserNameLastModifiedBy = nil
 		return
 	}
@@ -270,27 +284,30 @@ func (r *TripStatusInTravel) NullField(i int) {
 		r.OriginOperativeUnitId = nil
 		return
 	case 4:
-		r.OriginOperativeUnitName = nil
-		return
-	case 5:
 		r.DestinationOperativeUnitId = nil
 		return
-	case 6:
-		r.DestinationOperativeUnitName = nil
-		return
-	case 7:
+	case 5:
 		r.JourneyStatus = nil
 		return
+	case 6:
+		r.VehicleType = nil
+		return
+	case 7:
+		r.VehicleDomain = nil
+		return
 	case 8:
-		r.RealDepartureDateTime = nil
+		r.Semis = nil
 		return
 	case 9:
-		r.LastModified = nil
+		r.RealDepartureDateTime = nil
 		return
 	case 10:
-		r.LastStatusModify = nil
+		r.LastModified = nil
 		return
 	case 11:
+		r.LastStatusModify = nil
+		return
+	case 12:
 		r.UserNameLastModifiedBy = nil
 		return
 	}
@@ -325,19 +342,23 @@ func (r TripStatusInTravel) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["OriginOperativeUnitName"], err = json.Marshal(r.OriginOperativeUnitName)
-	if err != nil {
-		return nil, err
-	}
 	output["DestinationOperativeUnitId"], err = json.Marshal(r.DestinationOperativeUnitId)
 	if err != nil {
 		return nil, err
 	}
-	output["DestinationOperativeUnitName"], err = json.Marshal(r.DestinationOperativeUnitName)
+	output["JourneyStatus"], err = json.Marshal(r.JourneyStatus)
 	if err != nil {
 		return nil, err
 	}
-	output["JourneyStatus"], err = json.Marshal(r.JourneyStatus)
+	output["VehicleType"], err = json.Marshal(r.VehicleType)
+	if err != nil {
+		return nil, err
+	}
+	output["VehicleDomain"], err = json.Marshal(r.VehicleDomain)
+	if err != nil {
+		return nil, err
+	}
+	output["Semis"], err = json.Marshal(r.Semis)
 	if err != nil {
 		return nil, err
 	}
@@ -432,22 +453,6 @@ func (r *TripStatusInTravel) UnmarshalJSON(data []byte) error {
 		r.OriginOperativeUnitId = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["OriginOperativeUnitName"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.OriginOperativeUnitName); err != nil {
-			return err
-		}
-	} else {
-		r.OriginOperativeUnitName = NewUnionNullString()
-
-		r.OriginOperativeUnitName = nil
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["DestinationOperativeUnitId"]; ok {
 			return v
 		}
@@ -464,22 +469,6 @@ func (r *TripStatusInTravel) UnmarshalJSON(data []byte) error {
 		r.DestinationOperativeUnitId = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["DestinationOperativeUnitName"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.DestinationOperativeUnitName); err != nil {
-			return err
-		}
-	} else {
-		r.DestinationOperativeUnitName = NewUnionNullString()
-
-		r.DestinationOperativeUnitName = nil
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["JourneyStatus"]; ok {
 			return v
 		}
@@ -494,6 +483,54 @@ func (r *TripStatusInTravel) UnmarshalJSON(data []byte) error {
 		r.JourneyStatus = NewUnionNullString()
 
 		r.JourneyStatus = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["VehicleType"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.VehicleType); err != nil {
+			return err
+		}
+	} else {
+		r.VehicleType = NewUnionNullString()
+
+		r.VehicleType = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["VehicleDomain"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.VehicleDomain); err != nil {
+			return err
+		}
+	} else {
+		r.VehicleDomain = NewUnionNullString()
+
+		r.VehicleDomain = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Semis"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Semis); err != nil {
+			return err
+		}
+	} else {
+		r.Semis = NewUnionNullString()
+
+		r.Semis = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["RealDepartureDateTime"]; ok {
