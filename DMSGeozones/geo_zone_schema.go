@@ -22,7 +22,7 @@ type GeoZoneSchema struct {
 
 	Key *UnionNullString `json:"Key"`
 
-	OperativeUnit *UnionNullOperativeUnitDto `json:"OperativeUnit"`
+	OperativeUnit *UnionNullOperativeUnitSchemaDto `json:"OperativeUnit"`
 
 	Aggregator *UnionNullString `json:"Aggregator"`
 
@@ -38,9 +38,9 @@ type GeoZoneSchema struct {
 
 	ShipmentType []string `json:"ShipmentType"`
 
-	State *UnionNullGeoZoneStateEnum `json:"State"`
+	State *UnionNullGeoZoneStateSchemaEnum `json:"State"`
 
-	SuspensionDates []SuspensionDateDto `json:"SuspensionDates"`
+	SuspensionDates []SuspensionDateSchemaDto `json:"SuspensionDates"`
 
 	RequestedLogistics []string `json:"RequestedLogistics"`
 
@@ -50,7 +50,7 @@ type GeoZoneSchema struct {
 
 	MobileForm []string `json:"MobileForm"`
 
-	GeoPoints []GeoDto `json:"GeoPoints"`
+	GeoPoints []GeoSchemaDto `json:"GeoPoints"`
 
 	Contracts []string `json:"Contracts"`
 
@@ -73,7 +73,7 @@ type GeoZoneSchema struct {
 	SourceSystem *UnionNullString `json:"SourceSystem"`
 }
 
-const GeoZoneSchemaAvroCRC64Fingerprint = "(I\xb4\xac)#\xb7y"
+const GeoZoneSchemaAvroCRC64Fingerprint = "\x95\xf2\x8c[\xbf\"\x9a\xc8"
 
 func NewGeoZoneSchema() GeoZoneSchema {
 	r := GeoZoneSchema{}
@@ -94,9 +94,9 @@ func NewGeoZoneSchema() GeoZoneSchema {
 	r.ShipmentType = make([]string, 0)
 
 	r.State = nil
-	r.SuspensionDates = make([]SuspensionDateDto, 0)
+	r.SuspensionDates = make([]SuspensionDateSchemaDto, 0)
 
-	r.SuspensionDates = make([]SuspensionDateDto, 0)
+	r.SuspensionDates = make([]SuspensionDateSchemaDto, 0)
 
 	r.RequestedLogistics = make([]string, 0)
 
@@ -114,9 +114,9 @@ func NewGeoZoneSchema() GeoZoneSchema {
 
 	r.MobileForm = make([]string, 0)
 
-	r.GeoPoints = make([]GeoDto, 0)
+	r.GeoPoints = make([]GeoSchemaDto, 0)
 
-	r.GeoPoints = make([]GeoDto, 0)
+	r.GeoPoints = make([]GeoSchemaDto, 0)
 
 	r.Contracts = make([]string, 0)
 
@@ -170,7 +170,7 @@ func writeGeoZoneSchema(r GeoZoneSchema, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullOperativeUnitDto(r.OperativeUnit, w)
+	err = writeUnionNullOperativeUnitSchemaDto(r.OperativeUnit, w)
 	if err != nil {
 		return err
 	}
@@ -202,11 +202,11 @@ func writeGeoZoneSchema(r GeoZoneSchema, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullGeoZoneStateEnum(r.State, w)
+	err = writeUnionNullGeoZoneStateSchemaEnum(r.State, w)
 	if err != nil {
 		return err
 	}
-	err = writeArraySuspensionDateDto(r.SuspensionDates, w)
+	err = writeArraySuspensionDateSchemaDto(r.SuspensionDates, w)
 	if err != nil {
 		return err
 	}
@@ -226,7 +226,7 @@ func writeGeoZoneSchema(r GeoZoneSchema, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArrayGeoDto(r.GeoPoints, w)
+	err = writeArrayGeoSchemaDto(r.GeoPoints, w)
 	if err != nil {
 		return err
 	}
@@ -278,7 +278,7 @@ func (r GeoZoneSchema) Serialize(w io.Writer) error {
 }
 
 func (r GeoZoneSchema) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"ZoneId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OperativeUnit\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumberCode\",\"type\":[\"null\",\"string\"]}],\"name\":\"OperativeUnitDto\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Aggregator\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zone\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MaxVolume\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ValidFrom\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ValidUntil\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":[],\"name\":\"VehicleType\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":[],\"name\":\"ShipmentType\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"State\",\"type\":[\"null\",{\"name\":\"GeoZoneStateEnum\",\"symbols\":[\"ACTIVE\",\"SUSPENDED\",\"DRAFT\",\"DELETED\",\"INACTIVE\"],\"type\":\"enum\"}]},{\"default\":[],\"name\":\"SuspensionDates\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"From\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Until\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"SuspensionDateDto\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"RequestedLogistics\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":[],\"name\":\"Continent\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":[],\"name\":\"SLA\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":[],\"name\":\"MobileForm\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":[],\"name\":\"GeoPoints\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Order\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Lat\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"Lng\",\"type\":[\"null\",\"double\"]}],\"name\":\"GeoDto\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"Contracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"CreatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"UpdatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":[],\"name\":\"AggregatorType\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"EventId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventType\",\"type\":[\"null\",{\"name\":\"EventTypeEnum\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\",\"SUSPEND\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"EventTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"SourceSystem\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DMSGeozones.Events.Record.GeoZoneSchema\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"ZoneId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Key\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OperativeUnit\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Id\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumberCode\",\"type\":[\"null\",\"string\"]}],\"name\":\"OperativeUnitSchemaDto\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Aggregator\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Zone\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MaxVolume\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ValidFrom\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ValidUntil\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":[],\"name\":\"VehicleType\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":[],\"name\":\"ShipmentType\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"State\",\"type\":[\"null\",{\"name\":\"GeoZoneStateSchemaEnum\",\"symbols\":[\"ACTIVE\",\"SUSPENDED\",\"DRAFT\",\"DELETED\",\"INACTIVE\"],\"type\":\"enum\"}]},{\"default\":[],\"name\":\"SuspensionDates\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"From\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Until\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"SuspensionDateSchemaDto\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"RequestedLogistics\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":[],\"name\":\"Continent\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":[],\"name\":\"SLA\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":[],\"name\":\"MobileForm\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":[],\"name\":\"GeoPoints\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Order\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Lat\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"Lng\",\"type\":[\"null\",\"double\"]}],\"name\":\"GeoSchemaDto\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":[],\"name\":\"Contracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"CreatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"UpdatedDate\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"CreatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UpdatedBy\",\"type\":[\"null\",\"string\"]},{\"default\":[],\"name\":\"AggregatorType\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"EventId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventType\",\"type\":[\"null\",{\"name\":\"EventTypeEnum\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\",\"SUSPEND\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"EventTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"SourceSystem\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DMSGeozones.Events.Record.GeoZoneSchema\",\"type\":\"record\"}"
 }
 
 func (r GeoZoneSchema) SchemaName() string {
@@ -305,7 +305,7 @@ func (r *GeoZoneSchema) Get(i int) types.Field {
 
 		return r.Key
 	case 2:
-		r.OperativeUnit = NewUnionNullOperativeUnitDto()
+		r.OperativeUnit = NewUnionNullOperativeUnitSchemaDto()
 
 		return r.OperativeUnit
 	case 3:
@@ -343,13 +343,13 @@ func (r *GeoZoneSchema) Get(i int) types.Field {
 		return w
 
 	case 10:
-		r.State = NewUnionNullGeoZoneStateEnum()
+		r.State = NewUnionNullGeoZoneStateSchemaEnum()
 
 		return r.State
 	case 11:
-		r.SuspensionDates = make([]SuspensionDateDto, 0)
+		r.SuspensionDates = make([]SuspensionDateSchemaDto, 0)
 
-		w := ArraySuspensionDateDtoWrapper{Target: &r.SuspensionDates}
+		w := ArraySuspensionDateSchemaDtoWrapper{Target: &r.SuspensionDates}
 
 		return w
 
@@ -382,9 +382,9 @@ func (r *GeoZoneSchema) Get(i int) types.Field {
 		return w
 
 	case 16:
-		r.GeoPoints = make([]GeoDto, 0)
+		r.GeoPoints = make([]GeoSchemaDto, 0)
 
-		w := ArrayGeoDtoWrapper{Target: &r.GeoPoints}
+		w := ArrayGeoSchemaDtoWrapper{Target: &r.GeoPoints}
 
 		return w
 
@@ -476,7 +476,7 @@ func (r *GeoZoneSchema) SetDefault(i int) {
 		r.State = nil
 		return
 	case 11:
-		r.SuspensionDates = make([]SuspensionDateDto, 0)
+		r.SuspensionDates = make([]SuspensionDateSchemaDto, 0)
 
 		return
 	case 12:
@@ -496,7 +496,7 @@ func (r *GeoZoneSchema) SetDefault(i int) {
 
 		return
 	case 16:
-		r.GeoPoints = make([]GeoDto, 0)
+		r.GeoPoints = make([]GeoSchemaDto, 0)
 
 		return
 	case 17:
@@ -766,7 +766,7 @@ func (r *GeoZoneSchema) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.OperativeUnit = NewUnionNullOperativeUnitDto()
+		r.OperativeUnit = NewUnionNullOperativeUnitSchemaDto()
 
 		r.OperativeUnit = nil
 	}
@@ -896,7 +896,7 @@ func (r *GeoZoneSchema) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.State = NewUnionNullGeoZoneStateEnum()
+		r.State = NewUnionNullGeoZoneStateSchemaEnum()
 
 		r.State = nil
 	}
@@ -912,9 +912,9 @@ func (r *GeoZoneSchema) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.SuspensionDates = make([]SuspensionDateDto, 0)
+		r.SuspensionDates = make([]SuspensionDateSchemaDto, 0)
 
-		r.SuspensionDates = make([]SuspensionDateDto, 0)
+		r.SuspensionDates = make([]SuspensionDateSchemaDto, 0)
 
 	}
 	val = func() json.RawMessage {
@@ -997,9 +997,9 @@ func (r *GeoZoneSchema) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.GeoPoints = make([]GeoDto, 0)
+		r.GeoPoints = make([]GeoSchemaDto, 0)
 
-		r.GeoPoints = make([]GeoDto, 0)
+		r.GeoPoints = make([]GeoSchemaDto, 0)
 
 	}
 	val = func() json.RawMessage {

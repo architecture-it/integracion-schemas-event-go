@@ -17,7 +17,7 @@ import (
 
 var _ = fmt.Printf
 
-type GeoDto struct {
+type GeoSchemaDto struct {
 	Order *UnionNullInt `json:"Order"`
 
 	Lat *UnionNullDouble `json:"Lat"`
@@ -25,18 +25,18 @@ type GeoDto struct {
 	Lng *UnionNullDouble `json:"Lng"`
 }
 
-const GeoDtoAvroCRC64Fingerprint = "\xf1X\xf5`\xee\xe6\x038"
+const GeoSchemaDtoAvroCRC64Fingerprint = "\x1d\xd6\xddɓ6\xd4C"
 
-func NewGeoDto() GeoDto {
-	r := GeoDto{}
+func NewGeoSchemaDto() GeoSchemaDto {
+	r := GeoSchemaDto{}
 	r.Order = nil
 	r.Lat = nil
 	r.Lng = nil
 	return r
 }
 
-func DeserializeGeoDto(r io.Reader) (GeoDto, error) {
-	t := NewGeoDto()
+func DeserializeGeoSchemaDto(r io.Reader) (GeoSchemaDto, error) {
+	t := NewGeoSchemaDto()
 	deser, err := compiler.CompileSchemaBytes([]byte(t.Schema()), []byte(t.Schema()))
 	if err != nil {
 		return t, err
@@ -46,8 +46,8 @@ func DeserializeGeoDto(r io.Reader) (GeoDto, error) {
 	return t, err
 }
 
-func DeserializeGeoDtoFromSchema(r io.Reader, schema string) (GeoDto, error) {
-	t := NewGeoDto()
+func DeserializeGeoSchemaDtoFromSchema(r io.Reader, schema string) (GeoSchemaDto, error) {
+	t := NewGeoSchemaDto()
 
 	deser, err := compiler.CompileSchemaBytes([]byte(schema), []byte(t.Schema()))
 	if err != nil {
@@ -58,7 +58,7 @@ func DeserializeGeoDtoFromSchema(r io.Reader, schema string) (GeoDto, error) {
 	return t, err
 }
 
-func writeGeoDto(r GeoDto, w io.Writer) error {
+func writeGeoSchemaDto(r GeoSchemaDto, w io.Writer) error {
 	var err error
 	err = writeUnionNullInt(r.Order, w)
 	if err != nil {
@@ -75,28 +75,28 @@ func writeGeoDto(r GeoDto, w io.Writer) error {
 	return err
 }
 
-func (r GeoDto) Serialize(w io.Writer) error {
-	return writeGeoDto(r, w)
+func (r GeoSchemaDto) Serialize(w io.Writer) error {
+	return writeGeoSchemaDto(r, w)
 }
 
-func (r GeoDto) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Order\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Lat\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"Lng\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.DMSGeozones.Events.Record.GeoDto\",\"type\":\"record\"}"
+func (r GeoSchemaDto) Schema() string {
+	return "{\"fields\":[{\"default\":null,\"name\":\"Order\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Lat\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"Lng\",\"type\":[\"null\",\"double\"]}],\"name\":\"Andreani.DMSGeozones.Events.Record.GeoSchemaDto\",\"type\":\"record\"}"
 }
 
-func (r GeoDto) SchemaName() string {
-	return "Andreani.DMSGeozones.Events.Record.GeoDto"
+func (r GeoSchemaDto) SchemaName() string {
+	return "Andreani.DMSGeozones.Events.Record.GeoSchemaDto"
 }
 
-func (_ GeoDto) SetBoolean(v bool)    { panic("Unsupported operation") }
-func (_ GeoDto) SetInt(v int32)       { panic("Unsupported operation") }
-func (_ GeoDto) SetLong(v int64)      { panic("Unsupported operation") }
-func (_ GeoDto) SetFloat(v float32)   { panic("Unsupported operation") }
-func (_ GeoDto) SetDouble(v float64)  { panic("Unsupported operation") }
-func (_ GeoDto) SetBytes(v []byte)    { panic("Unsupported operation") }
-func (_ GeoDto) SetString(v string)   { panic("Unsupported operation") }
-func (_ GeoDto) SetUnionElem(v int64) { panic("Unsupported operation") }
+func (_ GeoSchemaDto) SetBoolean(v bool)    { panic("Unsupported operation") }
+func (_ GeoSchemaDto) SetInt(v int32)       { panic("Unsupported operation") }
+func (_ GeoSchemaDto) SetLong(v int64)      { panic("Unsupported operation") }
+func (_ GeoSchemaDto) SetFloat(v float32)   { panic("Unsupported operation") }
+func (_ GeoSchemaDto) SetDouble(v float64)  { panic("Unsupported operation") }
+func (_ GeoSchemaDto) SetBytes(v []byte)    { panic("Unsupported operation") }
+func (_ GeoSchemaDto) SetString(v string)   { panic("Unsupported operation") }
+func (_ GeoSchemaDto) SetUnionElem(v int64) { panic("Unsupported operation") }
 
-func (r *GeoDto) Get(i int) types.Field {
+func (r *GeoSchemaDto) Get(i int) types.Field {
 	switch i {
 	case 0:
 		r.Order = NewUnionNullInt()
@@ -114,7 +114,7 @@ func (r *GeoDto) Get(i int) types.Field {
 	panic("Unknown field index")
 }
 
-func (r *GeoDto) SetDefault(i int) {
+func (r *GeoSchemaDto) SetDefault(i int) {
 	switch i {
 	case 0:
 		r.Order = nil
@@ -129,7 +129,7 @@ func (r *GeoDto) SetDefault(i int) {
 	panic("Unknown field index")
 }
 
-func (r *GeoDto) NullField(i int) {
+func (r *GeoSchemaDto) NullField(i int) {
 	switch i {
 	case 0:
 		r.Order = nil
@@ -144,16 +144,16 @@ func (r *GeoDto) NullField(i int) {
 	panic("Not a nullable field index")
 }
 
-func (_ GeoDto) AppendMap(key string) types.Field { panic("Unsupported operation") }
-func (_ GeoDto) AppendArray() types.Field         { panic("Unsupported operation") }
-func (_ GeoDto) HintSize(int)                     { panic("Unsupported operation") }
-func (_ GeoDto) Finalize()                        {}
+func (_ GeoSchemaDto) AppendMap(key string) types.Field { panic("Unsupported operation") }
+func (_ GeoSchemaDto) AppendArray() types.Field         { panic("Unsupported operation") }
+func (_ GeoSchemaDto) HintSize(int)                     { panic("Unsupported operation") }
+func (_ GeoSchemaDto) Finalize()                        {}
 
-func (_ GeoDto) AvroCRC64Fingerprint() []byte {
-	return []byte(GeoDtoAvroCRC64Fingerprint)
+func (_ GeoSchemaDto) AvroCRC64Fingerprint() []byte {
+	return []byte(GeoSchemaDtoAvroCRC64Fingerprint)
 }
 
-func (r GeoDto) MarshalJSON() ([]byte, error) {
+func (r GeoSchemaDto) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["Order"], err = json.Marshal(r.Order)
@@ -171,7 +171,7 @@ func (r GeoDto) MarshalJSON() ([]byte, error) {
 	return json.Marshal(output)
 }
 
-func (r *GeoDto) UnmarshalJSON(data []byte) error {
+func (r *GeoSchemaDto) UnmarshalJSON(data []byte) error {
 	var fields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &fields); err != nil {
 		return err
