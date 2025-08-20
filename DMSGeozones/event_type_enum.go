@@ -19,10 +19,11 @@ var _ = fmt.Printf
 type EventTypeEnum int32
 
 const (
-	EventTypeEnumCREATED EventTypeEnum = 0
-	EventTypeEnumUPDATED EventTypeEnum = 1
-	EventTypeEnumDELETED EventTypeEnum = 2
-	EventTypeEnumSUSPEND EventTypeEnum = 3
+	EventTypeEnumCREATED   EventTypeEnum = 0
+	EventTypeEnumUPDATED   EventTypeEnum = 1
+	EventTypeEnumDELETED   EventTypeEnum = 2
+	EventTypeEnumSUSPEND   EventTypeEnum = 3
+	EventTypeEnumACTIVATED EventTypeEnum = 4
 )
 
 func (e EventTypeEnum) String() string {
@@ -35,6 +36,8 @@ func (e EventTypeEnum) String() string {
 		return "DELETED"
 	case EventTypeEnumSUSPEND:
 		return "SUSPEND"
+	case EventTypeEnumACTIVATED:
+		return "ACTIVATED"
 	}
 	return "unknown"
 }
@@ -53,6 +56,8 @@ func NewEventTypeEnumValue(raw string) (r EventTypeEnum, err error) {
 		return EventTypeEnumDELETED, nil
 	case "SUSPEND":
 		return EventTypeEnumSUSPEND, nil
+	case "ACTIVATED":
+		return EventTypeEnumACTIVATED, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for EventTypeEnum: '%s'", raw)
