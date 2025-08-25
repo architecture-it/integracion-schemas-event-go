@@ -20,10 +20,12 @@ var _ = fmt.Printf
 type SolicitudEliminacionArticulo struct {
 	TransaccionId int32 `json:"TransaccionId"`
 
+	BusinessType string `json:"BusinessType"`
+
 	Topic string `json:"Topic"`
 }
 
-const SolicitudEliminacionArticuloAvroCRC64Fingerprint = "\xd2\";\xa9\xbf\xeej\x8c"
+const SolicitudEliminacionArticuloAvroCRC64Fingerprint = "HlB\xa3\xa2ս\x12"
 
 func NewSolicitudEliminacionArticulo() SolicitudEliminacionArticulo {
 	r := SolicitudEliminacionArticulo{}
@@ -60,6 +62,10 @@ func writeSolicitudEliminacionArticulo(r SolicitudEliminacionArticulo, w io.Writ
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.BusinessType, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Topic, w)
 	if err != nil {
 		return err
@@ -72,7 +78,7 @@ func (r SolicitudEliminacionArticulo) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudEliminacionArticulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"TransaccionId\",\"type\":\"int\"},{\"default\":\"Almacen/Solicitudes/SolicitudEliminacionArticulo\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseArticulo.Events.Record.SolicitudEliminacionArticulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TransaccionId\",\"type\":\"int\"},{\"name\":\"BusinessType\",\"type\":\"string\"},{\"default\":\"Almacen/Solicitudes/SolicitudEliminacionArticulo\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseArticulo.Events.Record.SolicitudEliminacionArticulo\",\"type\":\"record\"}"
 }
 
 func (r SolicitudEliminacionArticulo) SchemaName() string {
@@ -96,6 +102,11 @@ func (r *SolicitudEliminacionArticulo) Get(i int) types.Field {
 		return w
 
 	case 1:
+		w := types.String{Target: &r.BusinessType}
+
+		return w
+
+	case 2:
 		w := types.String{Target: &r.Topic}
 
 		return w
@@ -106,7 +117,7 @@ func (r *SolicitudEliminacionArticulo) Get(i int) types.Field {
 
 func (r *SolicitudEliminacionArticulo) SetDefault(i int) {
 	switch i {
-	case 1:
+	case 2:
 		r.Topic = "Almacen/Solicitudes/SolicitudEliminacionArticulo"
 		return
 	}
@@ -137,6 +148,10 @@ func (r SolicitudEliminacionArticulo) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["BusinessType"], err = json.Marshal(r.BusinessType)
+	if err != nil {
+		return nil, err
+	}
 	output["Topic"], err = json.Marshal(r.Topic)
 	if err != nil {
 		return nil, err
@@ -164,6 +179,20 @@ func (r *SolicitudEliminacionArticulo) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for TransaccionId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["BusinessType"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.BusinessType); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for BusinessType")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Topic"]; ok {
