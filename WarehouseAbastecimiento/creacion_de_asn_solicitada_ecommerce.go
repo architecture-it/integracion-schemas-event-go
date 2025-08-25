@@ -18,16 +18,16 @@ import (
 var _ = fmt.Printf
 
 type CreacionDeAsnSolicitadaEcommerce struct {
-	Abastecimiento Abastecimiento `json:"Abastecimiento"`
+	Abastecimiento AbastecimientoEcommerce `json:"Abastecimiento"`
 
 	Topic string `json:"Topic"`
 }
 
-const CreacionDeAsnSolicitadaEcommerceAvroCRC64Fingerprint = "\x96\x88\x8d\x99{\xfe\xa0\xd3"
+const CreacionDeAsnSolicitadaEcommerceAvroCRC64Fingerprint = "\x1a\xa1\x91\xb1W\x8f\x81;"
 
 func NewCreacionDeAsnSolicitadaEcommerce() CreacionDeAsnSolicitadaEcommerce {
 	r := CreacionDeAsnSolicitadaEcommerce{}
-	r.Abastecimiento = NewAbastecimiento()
+	r.Abastecimiento = NewAbastecimientoEcommerce()
 
 	r.Topic = "Almacen/Solicitudes/CreacionDeAsnSolicitada"
 	return r
@@ -58,7 +58,7 @@ func DeserializeCreacionDeAsnSolicitadaEcommerceFromSchema(r io.Reader, schema s
 
 func writeCreacionDeAsnSolicitadaEcommerce(r CreacionDeAsnSolicitadaEcommerce, w io.Writer) error {
 	var err error
-	err = writeAbastecimiento(r.Abastecimiento, w)
+	err = writeAbastecimientoEcommerce(r.Abastecimiento, w)
 	if err != nil {
 		return err
 	}
@@ -74,11 +74,11 @@ func (r CreacionDeAsnSolicitadaEcommerce) Serialize(w io.Writer) error {
 }
 
 func (r CreacionDeAsnSolicitadaEcommerce) Schema() string {
-	return "{\"fields\":[{\"name\":\"Abastecimiento\",\"type\":{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroOrdenExterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TransaccionId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"FechaOrdenExterna\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaDeRecepcionEsperada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Lineas\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"string\"},{\"name\":\"CantidadPedida\",\"type\":\"int\"},{\"name\":\"UnidadMedida\",\"type\":\"string\"},{\"name\":\"AlmacenWMS\",\"type\":\"string\"},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"default\":false,\"name\":\"EsTrazable\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"TipoAcondicionamiento\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoControlCalidad\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventoAnmat\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GLNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"LoteFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AcondicionamientoSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Bulto\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"CodigoExterno\",\"type\":\"string\"},{\"name\":\"BultoId\",\"type\":\"string\"}],\"name\":\"BultoLineaAbastecimiento\",\"type\":\"record\"}]}],\"name\":\"LineaAbastecimiento\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"ValorDeclaradoTotal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroOperacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Abastecimiento\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/CreacionDeAsnSolicitada\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.EcommerceAbastecimiento.Events.Record.CreacionDeAsnSolicitadaEcommerce\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Abastecimiento\",\"type\":{\"fields\":[{\"name\":\"Propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoWarehouse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroOrdenExterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TransaccionId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"FechaOrdenExterna\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaDeRecepcionEsperada\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Lineas\",\"type\":{\"items\":{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"string\"},{\"name\":\"CantidadPedida\",\"type\":\"int\"},{\"name\":\"UnidadMedida\",\"type\":\"string\"},{\"name\":\"AlmacenWMS\",\"type\":\"string\"},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"default\":false,\"name\":\"EsTrazable\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"TipoAcondicionamiento\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoControlCalidad\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventoAnmat\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GLNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"LoteFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AcondicionamientoSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Bulto\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"CodigoExterno\",\"type\":\"string\"},{\"name\":\"BultoId\",\"type\":\"string\"}],\"name\":\"BultoLineaAbastecimientoEcommerce\",\"type\":\"record\"}]}],\"name\":\"LineaAbastecimientoEcommerce\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"ValorDeclaradoTotal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroOperacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"AbastecimientoEcommerce\",\"type\":\"record\"}},{\"default\":\"Almacen/Solicitudes/CreacionDeAsnSolicitada\",\"name\":\"Topic\",\"type\":\"string\"}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.CreacionDeAsnSolicitadaEcommerce\",\"type\":\"record\"}"
 }
 
 func (r CreacionDeAsnSolicitadaEcommerce) SchemaName() string {
-	return "Andreani.EcommerceAbastecimiento.Events.Record.CreacionDeAsnSolicitadaEcommerce"
+	return "Andreani.WarehouseAbastecimiento.Events.Record.CreacionDeAsnSolicitadaEcommerce"
 }
 
 func (_ CreacionDeAsnSolicitadaEcommerce) SetBoolean(v bool)    { panic("Unsupported operation") }
@@ -93,7 +93,7 @@ func (_ CreacionDeAsnSolicitadaEcommerce) SetUnionElem(v int64) { panic("Unsuppo
 func (r *CreacionDeAsnSolicitadaEcommerce) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Abastecimiento = NewAbastecimiento()
+		r.Abastecimiento = NewAbastecimientoEcommerce()
 
 		w := types.Record{Target: &r.Abastecimiento}
 
