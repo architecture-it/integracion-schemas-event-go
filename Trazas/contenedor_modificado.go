@@ -26,14 +26,14 @@ type ContenedorModificado struct {
 
 	Destinos *UnionNullArrayDatosSucursal `json:"destinos"`
 
-	Envios *UnionNullArrayEnvio `json:"envios"`
+	Bultos *UnionNullArrayBulto `json:"bultos"`
 
 	Contenedores *UnionNullArrayContenedor `json:"contenedores"`
 
 	Documentos *UnionNullArrayDocumento `json:"documentos"`
 }
 
-const ContenedorModificadoAvroCRC64Fingerprint = "]\xfe\xecĎ\x0f\x87\r"
+const ContenedorModificadoAvroCRC64Fingerprint = "\xfa \xb2Y\xf71K\x8e"
 
 func NewContenedorModificado() ContenedorModificado {
 	r := ContenedorModificado{}
@@ -44,7 +44,7 @@ func NewContenedorModificado() ContenedorModificado {
 	r.Destino = NewDatosSucursal()
 
 	r.Destinos = nil
-	r.Envios = nil
+	r.Bultos = nil
 	r.Contenedores = nil
 	r.Documentos = nil
 	return r
@@ -91,7 +91,7 @@ func writeContenedorModificado(r ContenedorModificado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullArrayEnvio(r.Envios, w)
+	err = writeUnionNullArrayBulto(r.Bultos, w)
 	if err != nil {
 		return err
 	}
@@ -111,7 +111,7 @@ func (r ContenedorModificado) Serialize(w io.Writer) error {
 }
 
 func (r ContenedorModificado) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"name\":\"origen\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"destino\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"default\":null,\"name\":\"destinos\",\"type\":[\"null\",{\"items\":\"Integracion.Esquemas.Referencias.DatosSucursal\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"envios\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"cantidadDeBultos\",\"type\":\"int\"},{\"name\":\"cantidadDeBultosLeidos\",\"type\":\"int\"},{\"name\":\"totalizador\",\"type\":\"string\"},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Bulto\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Envio\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"contenedores\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"documentos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeReferencia\",\"type\":\"string\"}],\"name\":\"Documento\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorModificado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"name\":\"origen\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"destino\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"default\":null,\"name\":\"destinos\",\"type\":[\"null\",{\"items\":\"Integracion.Esquemas.Referencias.DatosSucursal\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Bulto\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"contenedores\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"documentos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeReferencia\",\"type\":\"string\"}],\"name\":\"Documento\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorModificado\",\"type\":\"record\"}"
 }
 
 func (r ContenedorModificado) SchemaName() string {
@@ -155,9 +155,9 @@ func (r *ContenedorModificado) Get(i int) types.Field {
 
 		return r.Destinos
 	case 4:
-		r.Envios = NewUnionNullArrayEnvio()
+		r.Bultos = NewUnionNullArrayBulto()
 
-		return r.Envios
+		return r.Bultos
 	case 5:
 		r.Contenedores = NewUnionNullArrayContenedor()
 
@@ -176,7 +176,7 @@ func (r *ContenedorModificado) SetDefault(i int) {
 		r.Destinos = nil
 		return
 	case 4:
-		r.Envios = nil
+		r.Bultos = nil
 		return
 	case 5:
 		r.Contenedores = nil
@@ -194,7 +194,7 @@ func (r *ContenedorModificado) NullField(i int) {
 		r.Destinos = nil
 		return
 	case 4:
-		r.Envios = nil
+		r.Bultos = nil
 		return
 	case 5:
 		r.Contenedores = nil
@@ -234,7 +234,7 @@ func (r ContenedorModificado) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["envios"], err = json.Marshal(r.Envios)
+	output["bultos"], err = json.Marshal(r.Bultos)
 	if err != nil {
 		return nil, err
 	}
@@ -315,20 +315,20 @@ func (r *ContenedorModificado) UnmarshalJSON(data []byte) error {
 		r.Destinos = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["envios"]; ok {
+		if v, ok := fields["bultos"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Envios); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Bultos); err != nil {
 			return err
 		}
 	} else {
-		r.Envios = NewUnionNullArrayEnvio()
+		r.Bultos = NewUnionNullArrayBulto()
 
-		r.Envios = nil
+		r.Bultos = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["contenedores"]; ok {
