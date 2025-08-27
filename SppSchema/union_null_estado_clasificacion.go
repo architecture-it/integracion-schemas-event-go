@@ -84,7 +84,7 @@ func DeserializeUnionNullEstadoClasificacionFromSchema(r io.Reader, schema strin
 }
 
 func (r *UnionNullEstadoClasificacion) Schema() string {
-	return "[\"null\",{\"name\":\"EstadoClasificacion\",\"symbols\":[\"Normal\",\"SalidaCerrada\",\"NoOutputRampOTimeOut\",\"PaquetePerdido\",\"Recirculacion\",\"SinVolumenOPeso\",\"FueraDeRangoDimensionPeso\",\"OtroError\",\"Undefined\"],\"type\":\"enum\"}]"
+	return "[\"null\",{\"name\":\"EstadoClasificacion\",\"symbols\":[\"Normal\",\"SalidaCerrada\",\"NoOutputRampOTimeOut\",\"PaquetePerdido\",\"Recirculacion\",\"SinVolumenOPeso\",\"FueraDeRangoDimensionPeso\",\"OtroError\",\"Undefined\",\"NoRead\"],\"type\":\"enum\"}]"
 }
 
 func (_ *UnionNullEstadoClasificacion) SetBoolean(v bool)   { panic("Unsupported operation") }

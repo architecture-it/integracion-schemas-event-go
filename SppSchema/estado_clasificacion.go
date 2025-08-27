@@ -28,6 +28,7 @@ const (
 	EstadoClasificacionFueraDeRangoDimensionPeso EstadoClasificacion = 6
 	EstadoClasificacionOtroError                 EstadoClasificacion = 7
 	EstadoClasificacionUndefined                 EstadoClasificacion = 8
+	EstadoClasificacionNoRead                    EstadoClasificacion = 9
 )
 
 func (e EstadoClasificacion) String() string {
@@ -50,6 +51,8 @@ func (e EstadoClasificacion) String() string {
 		return "OtroError"
 	case EstadoClasificacionUndefined:
 		return "Undefined"
+	case EstadoClasificacionNoRead:
+		return "NoRead"
 	}
 	return "unknown"
 }
@@ -78,6 +81,8 @@ func NewEstadoClasificacionValue(raw string) (r EstadoClasificacion, err error) 
 		return EstadoClasificacionOtroError, nil
 	case "Undefined":
 		return EstadoClasificacionUndefined, nil
+	case "NoRead":
+		return EstadoClasificacionNoRead, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for EstadoClasificacion: '%s'", raw)

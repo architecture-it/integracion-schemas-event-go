@@ -39,7 +39,7 @@ type BultoInformadoPorSorter struct {
 	ResultadoClasificacion *UnionNullEstadoClasificacion `json:"resultadoClasificacion"`
 }
 
-const BultoInformadoPorSorterAvroCRC64Fingerprint = "\xd9\r\x00+\xd8j\xbf\xd6"
+const BultoInformadoPorSorterAvroCRC64Fingerprint = "\xccT\xf3\x14\xe9Yo-"
 
 func NewBultoInformadoPorSorter() BultoInformadoPorSorter {
 	r := BultoInformadoPorSorter{}
@@ -120,7 +120,7 @@ func (r BultoInformadoPorSorter) Serialize(w io.Writer) error {
 }
 
 func (r BultoInformadoPorSorter) Schema() string {
-	return "{\"fields\":[{\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"codigoEnEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Desvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"donde\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"Modo\",\"type\":[\"null\",\"string\"]},{\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"resultadoClasificacion\",\"type\":[\"null\",{\"name\":\"EstadoClasificacion\",\"symbols\":[\"Normal\",\"SalidaCerrada\",\"NoOutputRampOTimeOut\",\"PaquetePerdido\",\"Recirculacion\",\"SinVolumenOPeso\",\"FueraDeRangoDimensionPeso\",\"OtroError\",\"Undefined\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.SppSchema.Events.BultoInformadoPorSorter\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"altoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"anchoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"codigoEnEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Desvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"donde\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"name\":\"largoEnCm\",\"type\":[\"null\",\"double\"]},{\"name\":\"Modo\",\"type\":[\"null\",\"string\"]},{\"name\":\"pesoEnKg\",\"type\":[\"null\",\"double\"]},{\"name\":\"volumenEnCm3\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"resultadoClasificacion\",\"type\":[\"null\",{\"name\":\"EstadoClasificacion\",\"symbols\":[\"Normal\",\"SalidaCerrada\",\"NoOutputRampOTimeOut\",\"PaquetePerdido\",\"Recirculacion\",\"SinVolumenOPeso\",\"FueraDeRangoDimensionPeso\",\"OtroError\",\"Undefined\",\"NoRead\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.SppSchema.Events.BultoInformadoPorSorter\",\"type\":\"record\"}"
 }
 
 func (r BultoInformadoPorSorter) SchemaName() string {
