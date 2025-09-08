@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type CustodiaRechazada struct {
+	Contrato string `json:"contrato"`
+
 	NumeroDeSucursal string `json:"numeroDeSucursal"`
 
 	NumeroAndreani string `json:"numeroAndreani"`
@@ -25,7 +27,7 @@ type CustodiaRechazada struct {
 	Razon string `json:"razon"`
 }
 
-const CustodiaRechazadaAvroCRC64Fingerprint = "\x84q\xacá\x8c\x025"
+const CustodiaRechazadaAvroCRC64Fingerprint = "|\xd3%b\x1f\x01\xe28"
 
 func NewCustodiaRechazada() CustodiaRechazada {
 	r := CustodiaRechazada{}
@@ -57,6 +59,10 @@ func DeserializeCustodiaRechazadaFromSchema(r io.Reader, schema string) (Custodi
 
 func writeCustodiaRechazada(r CustodiaRechazada, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.Contrato, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.NumeroDeSucursal, w)
 	if err != nil {
 		return err
@@ -77,7 +83,7 @@ func (r CustodiaRechazada) Serialize(w io.Writer) error {
 }
 
 func (r CustodiaRechazada) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CustodiaRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CustodiaRechazada\",\"type\":\"record\"}"
 }
 
 func (r CustodiaRechazada) SchemaName() string {
@@ -96,16 +102,21 @@ func (_ CustodiaRechazada) SetUnionElem(v int64) { panic("Unsupported operation"
 func (r *CustodiaRechazada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.NumeroDeSucursal}
+		w := types.String{Target: &r.Contrato}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.NumeroAndreani}
+		w := types.String{Target: &r.NumeroDeSucursal}
 
 		return w
 
 	case 2:
+		w := types.String{Target: &r.NumeroAndreani}
+
+		return w
+
+	case 3:
 		w := types.String{Target: &r.Razon}
 
 		return w
@@ -138,6 +149,10 @@ func (_ CustodiaRechazada) AvroCRC64Fingerprint() []byte {
 func (r CustodiaRechazada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["contrato"], err = json.Marshal(r.Contrato)
+	if err != nil {
+		return nil, err
+	}
 	output["numeroDeSucursal"], err = json.Marshal(r.NumeroDeSucursal)
 	if err != nil {
 		return nil, err
@@ -160,6 +175,20 @@ func (r *CustodiaRechazada) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["contrato"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for contrato")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeSucursal"]; ok {
 			return v

@@ -24,13 +24,17 @@ type ReenvioRechazada struct {
 
 	NumeroAndreani string `json:"numeroAndreani"`
 
+	Destinatario Destinatario `json:"destinatario"`
+
 	Razon string `json:"razon"`
 }
 
-const ReenvioRechazadaAvroCRC64Fingerprint = "\xfb\xd0\xcbσ\xb8\x832"
+const ReenvioRechazadaAvroCRC64Fingerprint = "\xa5I\x11\x01)\x87\xee\xc5"
 
 func NewReenvioRechazada() ReenvioRechazada {
 	r := ReenvioRechazada{}
+	r.Destinatario = NewDestinatario()
+
 	return r
 }
 
@@ -71,6 +75,10 @@ func writeReenvioRechazada(r ReenvioRechazada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeDestinatario(r.Destinatario, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Razon, w)
 	if err != nil {
 		return err
@@ -83,7 +91,7 @@ func (r ReenvioRechazada) Serialize(w io.Writer) error {
 }
 
 func (r ReenvioRechazada) Schema() string {
-	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"esRemitente\",\"type\":\"boolean\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ReenvioRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"esRemitente\",\"type\":\"boolean\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidad\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ReenvioRechazada\",\"type\":\"record\"}"
 }
 
 func (r ReenvioRechazada) SchemaName() string {
@@ -117,6 +125,13 @@ func (r *ReenvioRechazada) Get(i int) types.Field {
 		return w
 
 	case 3:
+		r.Destinatario = NewDestinatario()
+
+		w := types.Record{Target: &r.Destinatario}
+
+		return w
+
+	case 4:
 		w := types.String{Target: &r.Razon}
 
 		return w
@@ -158,6 +173,10 @@ func (r ReenvioRechazada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	if err != nil {
+		return nil, err
+	}
+	output["destinatario"], err = json.Marshal(r.Destinatario)
 	if err != nil {
 		return nil, err
 	}
@@ -216,6 +235,20 @@ func (r *ReenvioRechazada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for numeroAndreani")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["destinatario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Destinatario); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for destinatario")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["razon"]; ok {

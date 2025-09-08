@@ -18,12 +18,14 @@ import (
 var _ = fmt.Printf
 
 type CustodiaSolicitada struct {
+	Contrato string `json:"contrato"`
+
 	NumeroDeSucursal string `json:"numeroDeSucursal"`
 
 	NumeroAndreani string `json:"numeroAndreani"`
 }
 
-const CustodiaSolicitadaAvroCRC64Fingerprint = "K\x7f\a[\x05Y0\n"
+const CustodiaSolicitadaAvroCRC64Fingerprint = "I\x9b\xb0\x8e\x006\xaa\xc2"
 
 func NewCustodiaSolicitada() CustodiaSolicitada {
 	r := CustodiaSolicitada{}
@@ -55,6 +57,10 @@ func DeserializeCustodiaSolicitadaFromSchema(r io.Reader, schema string) (Custod
 
 func writeCustodiaSolicitada(r CustodiaSolicitada, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.Contrato, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.NumeroDeSucursal, w)
 	if err != nil {
 		return err
@@ -71,7 +77,7 @@ func (r CustodiaSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r CustodiaSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CustodiaSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CustodiaSolicitada\",\"type\":\"record\"}"
 }
 
 func (r CustodiaSolicitada) SchemaName() string {
@@ -90,11 +96,16 @@ func (_ CustodiaSolicitada) SetUnionElem(v int64) { panic("Unsupported operation
 func (r *CustodiaSolicitada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.NumeroDeSucursal}
+		w := types.String{Target: &r.Contrato}
 
 		return w
 
 	case 1:
+		w := types.String{Target: &r.NumeroDeSucursal}
+
+		return w
+
+	case 2:
 		w := types.String{Target: &r.NumeroAndreani}
 
 		return w
@@ -127,6 +138,10 @@ func (_ CustodiaSolicitada) AvroCRC64Fingerprint() []byte {
 func (r CustodiaSolicitada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["contrato"], err = json.Marshal(r.Contrato)
+	if err != nil {
+		return nil, err
+	}
 	output["numeroDeSucursal"], err = json.Marshal(r.NumeroDeSucursal)
 	if err != nil {
 		return nil, err
@@ -145,6 +160,20 @@ func (r *CustodiaSolicitada) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["contrato"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Contrato); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for contrato")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeSucursal"]; ok {
 			return v
