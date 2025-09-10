@@ -24,6 +24,8 @@ type RescateDevolucionRechazada struct {
 
 	NumeroDeSucursal string `json:"numeroDeSucursal"`
 
+	CodigoCliente string `json:"codigoCliente"`
+
 	NumeroAndreani []string `json:"numeroAndreani"`
 
 	TipoDeRescate *UnionNullString `json:"tipoDeRescate"`
@@ -31,7 +33,7 @@ type RescateDevolucionRechazada struct {
 	Razon string `json:"razon"`
 }
 
-const RescateDevolucionRechazadaAvroCRC64Fingerprint = "\xbf\x90x\xd4\xd7$\u05cc"
+const RescateDevolucionRechazadaAvroCRC64Fingerprint = "\x95\xdbSH\x1d\xce{3"
 
 func NewRescateDevolucionRechazada() RescateDevolucionRechazada {
 	r := RescateDevolucionRechazada{}
@@ -79,6 +81,10 @@ func writeRescateDevolucionRechazada(r RescateDevolucionRechazada, w io.Writer) 
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.CodigoCliente, w)
+	if err != nil {
+		return err
+	}
 	err = writeArrayString(r.NumeroAndreani, w)
 	if err != nil {
 		return err
@@ -99,7 +105,7 @@ func (r RescateDevolucionRechazada) Serialize(w io.Writer) error {
 }
 
 func (r RescateDevolucionRechazada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionRechazada\",\"type\":\"record\"}"
 }
 
 func (r RescateDevolucionRechazada) SchemaName() string {
@@ -132,17 +138,22 @@ func (r *RescateDevolucionRechazada) Get(i int) types.Field {
 		return w
 
 	case 3:
+		w := types.String{Target: &r.CodigoCliente}
+
+		return w
+
+	case 4:
 		r.NumeroAndreani = make([]string, 0)
 
 		w := ArrayStringWrapper{Target: &r.NumeroAndreani}
 
 		return w
 
-	case 4:
+	case 5:
 		r.TipoDeRescate = NewUnionNullString()
 
 		return r.TipoDeRescate
-	case 5:
+	case 6:
 		w := types.String{Target: &r.Razon}
 
 		return w
@@ -156,7 +167,7 @@ func (r *RescateDevolucionRechazada) SetDefault(i int) {
 	case 0:
 		r.MotivoDelRescateInterno = nil
 		return
-	case 4:
+	case 5:
 		r.TipoDeRescate = nil
 		return
 	}
@@ -168,7 +179,7 @@ func (r *RescateDevolucionRechazada) NullField(i int) {
 	case 0:
 		r.MotivoDelRescateInterno = nil
 		return
-	case 4:
+	case 5:
 		r.TipoDeRescate = nil
 		return
 	}
@@ -196,6 +207,10 @@ func (r RescateDevolucionRechazada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroDeSucursal"], err = json.Marshal(r.NumeroDeSucursal)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoCliente"], err = json.Marshal(r.CodigoCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -264,6 +279,20 @@ func (r *RescateDevolucionRechazada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for numeroDeSucursal")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for codigoCliente")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroAndreani"]; ok {
