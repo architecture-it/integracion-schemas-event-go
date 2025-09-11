@@ -23,9 +23,11 @@ type DestruccionSolicitada struct {
 	Ejemplar *UnionNullString `json:"ejemplar"`
 
 	NumeroAndreani string `json:"numeroAndreani"`
+
+	CodigoCliente string `json:"codigoCliente"`
 }
 
-const DestruccionSolicitadaAvroCRC64Fingerprint = "\xa6ȟW\xfet\"*"
+const DestruccionSolicitadaAvroCRC64Fingerprint = "\x16v\xb7\x93\xd6\xcak\xb9"
 
 func NewDestruccionSolicitada() DestruccionSolicitada {
 	r := DestruccionSolicitada{}
@@ -70,6 +72,10 @@ func writeDestruccionSolicitada(r DestruccionSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.CodigoCliente, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -78,7 +84,7 @@ func (r DestruccionSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r DestruccionSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"ejemplar\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroAndreani\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.DestruccionSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"ejemplar\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.DestruccionSolicitada\",\"type\":\"record\"}"
 }
 
 func (r DestruccionSolicitada) SchemaName() string {
@@ -107,6 +113,11 @@ func (r *DestruccionSolicitada) Get(i int) types.Field {
 		return r.Ejemplar
 	case 2:
 		w := types.String{Target: &r.NumeroAndreani}
+
+		return w
+
+	case 3:
+		w := types.String{Target: &r.CodigoCliente}
 
 		return w
 
@@ -153,6 +164,10 @@ func (r DestruccionSolicitada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoCliente"], err = json.Marshal(r.CodigoCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -209,6 +224,20 @@ func (r *DestruccionSolicitada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for numeroAndreani")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for codigoCliente")
 	}
 	return nil
 }

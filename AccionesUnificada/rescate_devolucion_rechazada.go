@@ -26,20 +26,18 @@ type RescateDevolucionRechazada struct {
 
 	CodigoCliente string `json:"codigoCliente"`
 
-	NumeroAndreani []string `json:"numeroAndreani"`
+	NumeroAndreani string `json:"numeroAndreani"`
 
 	TipoDeRescate *UnionNullString `json:"tipoDeRescate"`
 
 	Razon string `json:"razon"`
 }
 
-const RescateDevolucionRechazadaAvroCRC64Fingerprint = "\x95\xdbSH\x1d\xce{3"
+const RescateDevolucionRechazadaAvroCRC64Fingerprint = "\xfd\x91Z˕\x00C\xb2"
 
 func NewRescateDevolucionRechazada() RescateDevolucionRechazada {
 	r := RescateDevolucionRechazada{}
 	r.MotivoDelRescateInterno = nil
-	r.NumeroAndreani = make([]string, 0)
-
 	r.TipoDeRescate = nil
 	return r
 }
@@ -85,7 +83,7 @@ func writeRescateDevolucionRechazada(r RescateDevolucionRechazada, w io.Writer) 
 	if err != nil {
 		return err
 	}
-	err = writeArrayString(r.NumeroAndreani, w)
+	err = vm.WriteString(r.NumeroAndreani, w)
 	if err != nil {
 		return err
 	}
@@ -105,7 +103,7 @@ func (r RescateDevolucionRechazada) Serialize(w io.Writer) error {
 }
 
 func (r RescateDevolucionRechazada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionRechazada\",\"type\":\"record\"}"
 }
 
 func (r RescateDevolucionRechazada) SchemaName() string {
@@ -143,9 +141,7 @@ func (r *RescateDevolucionRechazada) Get(i int) types.Field {
 		return w
 
 	case 4:
-		r.NumeroAndreani = make([]string, 0)
-
-		w := ArrayStringWrapper{Target: &r.NumeroAndreani}
+		w := types.String{Target: &r.NumeroAndreani}
 
 		return w
 

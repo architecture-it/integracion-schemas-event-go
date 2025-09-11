@@ -22,10 +22,12 @@ type CancelacionSolicitada struct {
 
 	NumeroAndreani string `json:"numeroAndreani"`
 
+	CodigoCliente string `json:"codigoCliente"`
+
 	Componentes *UnionNullArrayString `json:"componentes"`
 }
 
-const CancelacionSolicitadaAvroCRC64Fingerprint = "FG\xac\xf8ɻ\xe3\a"
+const CancelacionSolicitadaAvroCRC64Fingerprint = "Y\xf0\xfb+\x02\x05d\x99"
 
 func NewCancelacionSolicitada() CancelacionSolicitada {
 	r := CancelacionSolicitada{}
@@ -66,6 +68,10 @@ func writeCancelacionSolicitada(r CancelacionSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.CodigoCliente, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullArrayString(r.Componentes, w)
 	if err != nil {
 		return err
@@ -78,7 +84,7 @@ func (r CancelacionSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r CancelacionSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CancelacionSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CancelacionSolicitada\",\"type\":\"record\"}"
 }
 
 func (r CancelacionSolicitada) SchemaName() string {
@@ -107,6 +113,11 @@ func (r *CancelacionSolicitada) Get(i int) types.Field {
 		return w
 
 	case 2:
+		w := types.String{Target: &r.CodigoCliente}
+
+		return w
+
+	case 3:
 		r.Componentes = NewUnionNullArrayString()
 
 		return r.Componentes
@@ -116,7 +127,7 @@ func (r *CancelacionSolicitada) Get(i int) types.Field {
 
 func (r *CancelacionSolicitada) SetDefault(i int) {
 	switch i {
-	case 2:
+	case 3:
 		r.Componentes = nil
 		return
 	}
@@ -125,7 +136,7 @@ func (r *CancelacionSolicitada) SetDefault(i int) {
 
 func (r *CancelacionSolicitada) NullField(i int) {
 	switch i {
-	case 2:
+	case 3:
 		r.Componentes = nil
 		return
 	}
@@ -149,6 +160,10 @@ func (r CancelacionSolicitada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoCliente"], err = json.Marshal(r.CodigoCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -193,6 +208,20 @@ func (r *CancelacionSolicitada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for numeroAndreani")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for codigoCliente")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["componentes"]; ok {

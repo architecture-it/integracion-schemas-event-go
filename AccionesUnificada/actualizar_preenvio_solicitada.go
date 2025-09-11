@@ -22,12 +22,14 @@ type ActualizarPreenvioSolicitada struct {
 
 	NumeroAndreani string `json:"numeroAndreani"`
 
+	CodigoCliente string `json:"codigoCliente"`
+
 	Bultos *UnionNullListaDeBultos `json:"bultos"`
 
 	DatosAActualizar *UnionNullDatosAActualizar `json:"datosAActualizar"`
 }
 
-const ActualizarPreenvioSolicitadaAvroCRC64Fingerprint = "!\x97\xbd\x9d\x8d\x9aw\x03"
+const ActualizarPreenvioSolicitadaAvroCRC64Fingerprint = "\x06\x91\xd7?T\xc6iq"
 
 func NewActualizarPreenvioSolicitada() ActualizarPreenvioSolicitada {
 	r := ActualizarPreenvioSolicitada{}
@@ -69,6 +71,10 @@ func writeActualizarPreenvioSolicitada(r ActualizarPreenvioSolicitada, w io.Writ
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.CodigoCliente, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullListaDeBultos(r.Bultos, w)
 	if err != nil {
 		return err
@@ -85,7 +91,7 @@ func (r ActualizarPreenvioSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r ActualizarPreenvioSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"kilos\",\"type\":\"double\"},{\"name\":\"largoCm\",\"type\":\"double\"},{\"name\":\"altoCm\",\"type\":\"double\"},{\"name\":\"anchoCm\",\"type\":\"double\"},{\"name\":\"volumenCm\",\"type\":\"double\"},{\"name\":\"valorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeMetadatos\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",\"Andreani.AccionesUnificada.Events.Common.ListaDeMetadatos\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]}],\"name\":\"Bulto\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeBultos\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosAActualizar\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"datos\",\"type\":[\"null\",{\"items\":\"Andreani.AccionesUnificada.Events.Common.Metadato\",\"type\":\"array\"}]}],\"name\":\"DatosAActualizar\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ActualizarPreenvioSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"kilos\",\"type\":\"double\"},{\"name\":\"largoCm\",\"type\":\"double\"},{\"name\":\"altoCm\",\"type\":\"double\"},{\"name\":\"anchoCm\",\"type\":\"double\"},{\"name\":\"volumenCm\",\"type\":\"double\"},{\"name\":\"valorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeMetadatos\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",\"Andreani.AccionesUnificada.Events.Common.ListaDeMetadatos\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]}],\"name\":\"Bulto\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeBultos\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosAActualizar\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"datos\",\"type\":[\"null\",{\"items\":\"Andreani.AccionesUnificada.Events.Common.Metadato\",\"type\":\"array\"}]}],\"name\":\"DatosAActualizar\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ActualizarPreenvioSolicitada\",\"type\":\"record\"}"
 }
 
 func (r ActualizarPreenvioSolicitada) SchemaName() string {
@@ -114,10 +120,15 @@ func (r *ActualizarPreenvioSolicitada) Get(i int) types.Field {
 		return w
 
 	case 2:
+		w := types.String{Target: &r.CodigoCliente}
+
+		return w
+
+	case 3:
 		r.Bultos = NewUnionNullListaDeBultos()
 
 		return r.Bultos
-	case 3:
+	case 4:
 		r.DatosAActualizar = NewUnionNullDatosAActualizar()
 
 		return r.DatosAActualizar
@@ -127,10 +138,10 @@ func (r *ActualizarPreenvioSolicitada) Get(i int) types.Field {
 
 func (r *ActualizarPreenvioSolicitada) SetDefault(i int) {
 	switch i {
-	case 2:
+	case 3:
 		r.Bultos = nil
 		return
-	case 3:
+	case 4:
 		r.DatosAActualizar = nil
 		return
 	}
@@ -139,10 +150,10 @@ func (r *ActualizarPreenvioSolicitada) SetDefault(i int) {
 
 func (r *ActualizarPreenvioSolicitada) NullField(i int) {
 	switch i {
-	case 2:
+	case 3:
 		r.Bultos = nil
 		return
-	case 3:
+	case 4:
 		r.DatosAActualizar = nil
 		return
 	}
@@ -168,6 +179,10 @@ func (r ActualizarPreenvioSolicitada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoCliente"], err = json.Marshal(r.CodigoCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -216,6 +231,20 @@ func (r *ActualizarPreenvioSolicitada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for numeroAndreani")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for codigoCliente")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["bultos"]; ok {

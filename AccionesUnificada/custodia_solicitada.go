@@ -23,9 +23,11 @@ type CustodiaSolicitada struct {
 	NumeroDeSucursal string `json:"numeroDeSucursal"`
 
 	NumeroAndreani string `json:"numeroAndreani"`
+
+	CodigoCliente string `json:"codigoCliente"`
 }
 
-const CustodiaSolicitadaAvroCRC64Fingerprint = "I\x9b\xb0\x8e\x006\xaa\xc2"
+const CustodiaSolicitadaAvroCRC64Fingerprint = "}E\xa4\x98\t.?\xe0"
 
 func NewCustodiaSolicitada() CustodiaSolicitada {
 	r := CustodiaSolicitada{}
@@ -69,6 +71,10 @@ func writeCustodiaSolicitada(r CustodiaSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.CodigoCliente, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -77,7 +83,7 @@ func (r CustodiaSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r CustodiaSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CustodiaSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CustodiaSolicitada\",\"type\":\"record\"}"
 }
 
 func (r CustodiaSolicitada) SchemaName() string {
@@ -107,6 +113,11 @@ func (r *CustodiaSolicitada) Get(i int) types.Field {
 
 	case 2:
 		w := types.String{Target: &r.NumeroAndreani}
+
+		return w
+
+	case 3:
+		w := types.String{Target: &r.CodigoCliente}
 
 		return w
 
@@ -147,6 +158,10 @@ func (r CustodiaSolicitada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoCliente"], err = json.Marshal(r.CodigoCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -201,6 +216,20 @@ func (r *CustodiaSolicitada) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for numeroAndreani")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for codigoCliente")
 	}
 	return nil
 }

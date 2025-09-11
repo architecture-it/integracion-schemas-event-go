@@ -20,7 +20,7 @@ var _ = fmt.Printf
 type ActualizarPreenvioRechazada struct {
 	Contrato string `json:"contrato"`
 
-	NumeroAndreani []string `json:"numeroAndreani"`
+	NumeroAndreani string `json:"numeroAndreani"`
 
 	Bultos *UnionNullListaDeBultos `json:"bultos"`
 
@@ -29,12 +29,10 @@ type ActualizarPreenvioRechazada struct {
 	Razon string `json:"razon"`
 }
 
-const ActualizarPreenvioRechazadaAvroCRC64Fingerprint = "]\x1f\xf5n\x93<\x96\x9d"
+const ActualizarPreenvioRechazadaAvroCRC64Fingerprint = "\xe4\xea\xd8E\x0e\xfbɄ"
 
 func NewActualizarPreenvioRechazada() ActualizarPreenvioRechazada {
 	r := ActualizarPreenvioRechazada{}
-	r.NumeroAndreani = make([]string, 0)
-
 	r.Bultos = nil
 	r.DatosAActualizar = nil
 	return r
@@ -69,7 +67,7 @@ func writeActualizarPreenvioRechazada(r ActualizarPreenvioRechazada, w io.Writer
 	if err != nil {
 		return err
 	}
-	err = writeArrayString(r.NumeroAndreani, w)
+	err = vm.WriteString(r.NumeroAndreani, w)
 	if err != nil {
 		return err
 	}
@@ -93,7 +91,7 @@ func (r ActualizarPreenvioRechazada) Serialize(w io.Writer) error {
 }
 
 func (r ActualizarPreenvioRechazada) Schema() string {
-	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"kilos\",\"type\":\"double\"},{\"name\":\"largoCm\",\"type\":\"double\"},{\"name\":\"altoCm\",\"type\":\"double\"},{\"name\":\"anchoCm\",\"type\":\"double\"},{\"name\":\"volumenCm\",\"type\":\"double\"},{\"name\":\"valorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeMetadatos\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",\"Andreani.AccionesUnificada.Events.Common.ListaDeMetadatos\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]}],\"name\":\"Bulto\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeBultos\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosAActualizar\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"datos\",\"type\":[\"null\",{\"items\":\"Andreani.AccionesUnificada.Events.Common.Metadato\",\"type\":\"array\"}]}],\"name\":\"DatosAActualizar\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ActualizarPreenvioRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"kilos\",\"type\":\"double\"},{\"name\":\"largoCm\",\"type\":\"double\"},{\"name\":\"altoCm\",\"type\":\"double\"},{\"name\":\"anchoCm\",\"type\":\"double\"},{\"name\":\"volumenCm\",\"type\":\"double\"},{\"name\":\"valorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeMetadatos\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",\"Andreani.AccionesUnificada.Events.Common.ListaDeMetadatos\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]}],\"name\":\"Bulto\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeBultos\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosAActualizar\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"datos\",\"type\":[\"null\",{\"items\":\"Andreani.AccionesUnificada.Events.Common.Metadato\",\"type\":\"array\"}]}],\"name\":\"DatosAActualizar\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ActualizarPreenvioRechazada\",\"type\":\"record\"}"
 }
 
 func (r ActualizarPreenvioRechazada) SchemaName() string {
@@ -117,9 +115,7 @@ func (r *ActualizarPreenvioRechazada) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.NumeroAndreani = make([]string, 0)
-
-		w := ArrayStringWrapper{Target: &r.NumeroAndreani}
+		w := types.String{Target: &r.NumeroAndreani}
 
 		return w
 
