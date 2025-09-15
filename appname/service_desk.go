@@ -67,7 +67,7 @@ func (r ServiceDesk) Serialize(w io.Writer) error {
 }
 
 func (r ServiceDesk) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ticket\",\"namespace\":\"Andreani.Jira.Events.ServiceDesk\",\"type\":\"record\"}}],\"name\":\"Andreani.Jira.Events.Record.ServiceDesk\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ticket\",\"namespace\":\"Andreani.Jira.Events.ServiceDesk\",\"type\":\"record\"}}],\"name\":\"Andreani.Jira.Events.Record.ServiceDesk\",\"type\":\"record\"}"
 }
 
 func (r ServiceDesk) SchemaName() string {

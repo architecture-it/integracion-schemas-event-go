@@ -29,6 +29,9 @@ const TicketAvroCRC64Fingerprint = "{c\xcb\xf9Wt~\xae"
 
 func NewTicket() Ticket {
 	r := Ticket{}
+	r.IdTicket = nil
+	r.Asunto = nil
+	r.Descripcion = nil
 	return r
 }
 
@@ -77,7 +80,7 @@ func (r Ticket) Serialize(w io.Writer) error {
 }
 
 func (r Ticket) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Jira.Events.ServiceDesk.Ticket\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Jira.Events.ServiceDesk.Ticket\",\"type\":\"record\"}"
 }
 
 func (r Ticket) SchemaName() string {
@@ -113,6 +116,15 @@ func (r *Ticket) Get(i int) types.Field {
 
 func (r *Ticket) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.IdTicket = nil
+		return
+	case 1:
+		r.Asunto = nil
+		return
+	case 2:
+		r.Descripcion = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -178,7 +190,9 @@ func (r *Ticket) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for IdTicket")
+		r.IdTicket = NewUnionNullInt()
+
+		r.IdTicket = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Asunto"]; ok {
@@ -192,7 +206,9 @@ func (r *Ticket) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Asunto")
+		r.Asunto = NewUnionNullString()
+
+		r.Asunto = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Descripcion"]; ok {
@@ -206,7 +222,9 @@ func (r *Ticket) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Descripcion")
+		r.Descripcion = NewUnionNullString()
+
+		r.Descripcion = nil
 	}
 	return nil
 }
