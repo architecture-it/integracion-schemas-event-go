@@ -41,12 +41,15 @@ type Proyecto struct {
 	FechaResolucion int64 `json:"FechaResolucion"`
 
 	FechaFinalizado int64 `json:"FechaFinalizado"`
+
+	Asunto *UnionNullString `json:"Asunto"`
 }
 
-const ProyectoAvroCRC64Fingerprint = "\xa4\xa7\xab>/յN"
+const ProyectoAvroCRC64Fingerprint = "\xbe\xaboC\xfa\x82LE"
 
 func NewProyecto() Proyecto {
 	r := Proyecto{}
+	r.Asunto = nil
 	return r
 }
 
@@ -123,6 +126,10 @@ func writeProyecto(r Proyecto, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Asunto, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -131,7 +138,7 @@ func (r Proyecto) Serialize(w io.Writer) error {
 }
 
 func (r Proyecto) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Coordinador\",\"type\":\"string\"},{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"Presupuesto\",\"type\":\"string\"},{\"name\":\"TipoOrigen\",\"type\":\"string\"},{\"name\":\"FechaCreacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaResolucion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaFinalizado\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.EAM.Events.MDA.Proyecto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"name\":\"Coordinador\",\"type\":\"string\"},{\"name\":\"Codigo\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Estado\",\"type\":\"string\"},{\"name\":\"Presupuesto\",\"type\":\"string\"},{\"name\":\"TipoOrigen\",\"type\":\"string\"},{\"name\":\"FechaCreacion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaVencimiento\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaResolucion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaFinalizado\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.Proyecto\",\"type\":\"record\"}"
 }
 
 func (r Proyecto) SchemaName() string {
@@ -208,12 +215,19 @@ func (r *Proyecto) Get(i int) types.Field {
 
 		return w
 
+	case 12:
+		r.Asunto = NewUnionNullString()
+
+		return r.Asunto
 	}
 	panic("Unknown field index")
 }
 
 func (r *Proyecto) SetDefault(i int) {
 	switch i {
+	case 12:
+		r.Asunto = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -222,6 +236,9 @@ func (r *Proyecto) NullField(i int) {
 	switch i {
 	case 1:
 		r.Planta = nil
+		return
+	case 12:
+		r.Asunto = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -284,6 +301,10 @@ func (r Proyecto) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["FechaFinalizado"], err = json.Marshal(r.FechaFinalizado)
+	if err != nil {
+		return nil, err
+	}
+	output["Asunto"], err = json.Marshal(r.Asunto)
 	if err != nil {
 		return nil, err
 	}
@@ -464,6 +485,22 @@ func (r *Proyecto) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for FechaFinalizado")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Asunto"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Asunto); err != nil {
+			return err
+		}
+	} else {
+		r.Asunto = NewUnionNullString()
+
+		r.Asunto = nil
 	}
 	return nil
 }
