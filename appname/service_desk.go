@@ -18,17 +18,15 @@ import (
 var _ = fmt.Printf
 
 type ServiceDesk struct {
-	Id int32 `json:"id"`
-
-	Asunto string `json:"Asunto"`
-
-	Descripcion string `json:"Descripcion"`
+	Ticket Ticket `json:"Ticket"`
 }
 
-const ServiceDeskAvroCRC64Fingerprint = "ݞ\x0e?\v\xe8\v\xb7"
+const ServiceDeskAvroCRC64Fingerprint = "\x95k\v\xe6\xf8\\`["
 
 func NewServiceDesk() ServiceDesk {
 	r := ServiceDesk{}
+	r.Ticket = NewTicket()
+
 	return r
 }
 
@@ -57,15 +55,7 @@ func DeserializeServiceDeskFromSchema(r io.Reader, schema string) (ServiceDesk, 
 
 func writeServiceDesk(r ServiceDesk, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.Id, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Asunto, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Descripcion, w)
+	err = writeTicket(r.Ticket, w)
 	if err != nil {
 		return err
 	}
@@ -77,7 +67,7 @@ func (r ServiceDesk) Serialize(w io.Writer) error {
 }
 
 func (r ServiceDesk) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"Andreani.Jira.Events.Record.ServiceDesk\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ticket\",\"namespace\":\"Andreani.Jira.Events.ServiceDesk\",\"type\":\"record\"}}],\"name\":\"Andreani.Jira.Events.Record.ServiceDesk\",\"type\":\"record\"}"
 }
 
 func (r ServiceDesk) SchemaName() string {
@@ -96,17 +86,9 @@ func (_ ServiceDesk) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *ServiceDesk) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.Id}
+		r.Ticket = NewTicket()
 
-		return w
-
-	case 1:
-		w := types.String{Target: &r.Asunto}
-
-		return w
-
-	case 2:
-		w := types.String{Target: &r.Descripcion}
+		w := types.Record{Target: &r.Ticket}
 
 		return w
 
@@ -138,15 +120,7 @@ func (_ ServiceDesk) AvroCRC64Fingerprint() []byte {
 func (r ServiceDesk) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["id"], err = json.Marshal(r.Id)
-	if err != nil {
-		return nil, err
-	}
-	output["Asunto"], err = json.Marshal(r.Asunto)
-	if err != nil {
-		return nil, err
-	}
-	output["Descripcion"], err = json.Marshal(r.Descripcion)
+	output["Ticket"], err = json.Marshal(r.Ticket)
 	if err != nil {
 		return nil, err
 	}
@@ -161,46 +135,18 @@ func (r *ServiceDesk) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["id"]; ok {
+		if v, ok := fields["Ticket"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Id); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Ticket); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for id")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Asunto"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Asunto); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Asunto")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Descripcion"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Descripcion); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Descripcion")
+		return fmt.Errorf("no value specified for Ticket")
 	}
 	return nil
 }
