@@ -35,7 +35,7 @@ type UserInfo struct {
 	Contratos []Contrato `json:"Contratos"`
 }
 
-const UserInfoAvroCRC64Fingerprint = " \xf8\x04\x95\xf7\x04]\xe0"
+const UserInfoAvroCRC64Fingerprint = "'\x7f\x9a\x0f.\xe7M:"
 
 func NewUserInfo() UserInfo {
 	r := UserInfo{}
@@ -109,7 +109,7 @@ func (r UserInfo) Serialize(w io.Writer) error {
 }
 
 func (r UserInfo) Schema() string {
-	return "{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding.UserInfo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"admitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding.UserInfo\",\"type\":\"record\"}"
 }
 
 func (r UserInfo) SchemaName() string {

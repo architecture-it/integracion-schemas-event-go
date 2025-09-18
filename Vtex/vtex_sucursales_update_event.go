@@ -23,7 +23,7 @@ type VtexSucursalesUpdateEvent struct {
 	CarrierType []CarrierType `json:"CarrierType"`
 }
 
-const VtexSucursalesUpdateEventAvroCRC64Fingerprint = "\xbaE@\xc84\xde<\xcd"
+const VtexSucursalesUpdateEventAvroCRC64Fingerprint = "\xb4\xce\xe1\x7f\xf3%\xed\xec"
 
 func NewVtexSucursalesUpdateEvent() VtexSucursalesUpdateEvent {
 	r := VtexSucursalesUpdateEvent{}
@@ -75,7 +75,7 @@ func (r VtexSucursalesUpdateEvent) Serialize(w io.Writer) error {
 }
 
 func (r VtexSucursalesUpdateEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"UserInfo\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding\",\"type\":\"record\"}},{\"name\":\"CarrierType\",\"type\":{\"items\":{\"name\":\"CarrierType\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesCreationNotification\",\"symbols\":[\"AndreaniSucursal\",\"AndreaniBigger\"],\"type\":\"enum\"},\"type\":\"array\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesUpdateEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"admitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"UserInfo\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding\",\"type\":\"record\"}},{\"name\":\"CarrierType\",\"type\":{\"items\":{\"name\":\"CarrierType\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesCreationNotification\",\"symbols\":[\"AndreaniSucursal\",\"AndreaniBigger\"],\"type\":\"enum\"},\"type\":\"array\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesUpdateEvent\",\"type\":\"record\"}"
 }
 
 func (r VtexSucursalesUpdateEvent) SchemaName() string {

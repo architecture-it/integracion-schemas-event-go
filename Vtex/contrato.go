@@ -22,17 +22,22 @@ type Contrato struct {
 
 	Nombre string `json:"Nombre"`
 
+	Numero string `json:"Numero"`
+
 	Descripcion string `json:"Descripcion"`
 
 	TipoDeEnvio string `json:"TipoDeEnvio"`
 
 	ModoDeEntrega string `json:"ModoDeEntrega"`
+
+	AdmitePuntosHop bool `json:"admitePuntosHop"`
 }
 
-const ContratoAvroCRC64Fingerprint = "\xdb\x03͢Ѕ-\xef"
+const ContratoAvroCRC64Fingerprint = "7]b.\xa3y\r\xd1"
 
 func NewContrato() Contrato {
 	r := Contrato{}
+	r.AdmitePuntosHop = false
 	return r
 }
 
@@ -69,6 +74,10 @@ func writeContrato(r Contrato, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Numero, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Descripcion, w)
 	if err != nil {
 		return err
@@ -81,6 +90,10 @@ func writeContrato(r Contrato, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteBool(r.AdmitePuntosHop, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -89,7 +102,7 @@ func (r Contrato) Serialize(w io.Writer) error {
 }
 
 func (r Contrato) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding.Contrato\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"admitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding.Contrato\",\"type\":\"record\"}"
 }
 
 func (r Contrato) SchemaName() string {
@@ -118,17 +131,27 @@ func (r *Contrato) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Descripcion}
+		w := types.String{Target: &r.Numero}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.TipoDeEnvio}
+		w := types.String{Target: &r.Descripcion}
 
 		return w
 
 	case 4:
+		w := types.String{Target: &r.TipoDeEnvio}
+
+		return w
+
+	case 5:
 		w := types.String{Target: &r.ModoDeEntrega}
+
+		return w
+
+	case 6:
+		w := types.Boolean{Target: &r.AdmitePuntosHop}
 
 		return w
 
@@ -138,6 +161,9 @@ func (r *Contrato) Get(i int) types.Field {
 
 func (r *Contrato) SetDefault(i int) {
 	switch i {
+	case 6:
+		r.AdmitePuntosHop = false
+		return
 	}
 	panic("Unknown field index")
 }
@@ -168,6 +194,10 @@ func (r Contrato) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["Numero"], err = json.Marshal(r.Numero)
+	if err != nil {
+		return nil, err
+	}
 	output["Descripcion"], err = json.Marshal(r.Descripcion)
 	if err != nil {
 		return nil, err
@@ -177,6 +207,10 @@ func (r Contrato) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ModoDeEntrega"], err = json.Marshal(r.ModoDeEntrega)
+	if err != nil {
+		return nil, err
+	}
+	output["admitePuntosHop"], err = json.Marshal(r.AdmitePuntosHop)
 	if err != nil {
 		return nil, err
 	}
@@ -219,6 +253,20 @@ func (r *Contrato) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Nombre")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["Numero"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Numero); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Numero")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["Descripcion"]; ok {
 			return v
 		}
@@ -259,6 +307,20 @@ func (r *Contrato) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for ModoDeEntrega")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["admitePuntosHop"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AdmitePuntosHop); err != nil {
+			return err
+		}
+	} else {
+		r.AdmitePuntosHop = false
 	}
 	return nil
 }
