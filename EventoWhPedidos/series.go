@@ -18,10 +18,9 @@ import (
 var _ = fmt.Printf
 
 type Series struct {
-	Serie string `json:"Serie"`
 }
 
-const SeriesAvroCRC64Fingerprint = "z\x82\xb72w\x92\xa1\r"
+const SeriesAvroCRC64Fingerprint = "\u07b6#\r\x00\f\x14\x8d"
 
 func NewSeries() Series {
 	r := Series{}
@@ -53,10 +52,6 @@ func DeserializeSeriesFromSchema(r io.Reader, schema string) (Series, error) {
 
 func writeSeries(r Series, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Serie, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -65,11 +60,11 @@ func (r Series) Serialize(w io.Writer) error {
 }
 
 func (r Series) Schema() string {
-	return "{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"Andreani.EventoWhPedidos.Events.AsignacionCommon.Series\",\"type\":\"record\"}"
+	return "{\"fields\":[],\"name\":\"Andreani.EventoWhPedidos.Events.DesasignacionCommon.Series\",\"type\":\"record\"}"
 }
 
 func (r Series) SchemaName() string {
-	return "Andreani.EventoWhPedidos.Events.AsignacionCommon.Series"
+	return "Andreani.EventoWhPedidos.Events.DesasignacionCommon.Series"
 }
 
 func (_ Series) SetBoolean(v bool)    { panic("Unsupported operation") }
@@ -83,11 +78,6 @@ func (_ Series) SetUnionElem(v int64) { panic("Unsupported operation") }
 
 func (r *Series) Get(i int) types.Field {
 	switch i {
-	case 0:
-		w := types.String{Target: &r.Serie}
-
-		return w
-
 	}
 	panic("Unknown field index")
 }
@@ -116,10 +106,6 @@ func (_ Series) AvroCRC64Fingerprint() []byte {
 func (r Series) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Serie"], err = json.Marshal(r.Serie)
-	if err != nil {
-		return nil, err
-	}
 	return json.Marshal(output)
 }
 
@@ -130,19 +116,5 @@ func (r *Series) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["Serie"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Serie); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Serie")
-	}
 	return nil
 }
