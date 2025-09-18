@@ -25,7 +25,7 @@ type EventoWhPedidosDesasignados struct {
 	Detalle []Detalle `json:"Detalle"`
 }
 
-const EventoWhPedidosDesasignadosAvroCRC64Fingerprint = "\xbaN\x1e\xfb\x81Ⱥ^"
+const EventoWhPedidosDesasignadosAvroCRC64Fingerprint = "\xd093R\xe9f?\x8a"
 
 func NewEventoWhPedidosDesasignados() EventoWhPedidosDesasignados {
 	r := EventoWhPedidosDesasignados{}
@@ -83,7 +83,7 @@ func (r EventoWhPedidosDesasignados) Serialize(w io.Writer) error {
 }
 
 func (r EventoWhPedidosDesasignados) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhPedidos.Events.DesasignacionCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[],\"name\":\"Cabecera\",\"namespace\":\"Andreani.EventoWhPedidos.Events.DesasignacionCommon\",\"type\":\"record\"}},{\"name\":\"Detalle\",\"type\":{\"items\":{\"fields\":[],\"name\":\"Detalle\",\"namespace\":\"Andreani.EventoWhPedidos.Events.DesasignacionCommon\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.EventoWhPedidos.Events.Record.EventoWhPedidosDesasignados\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhPedidos.Events.DesasignacionCommon\",\"type\":\"record\"}},{\"name\":\"Cabecera\",\"type\":{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"}],\"name\":\"Cabecera\",\"namespace\":\"Andreani.EventoWhPedidos.Events.DesasignacionCommon\",\"type\":\"record\"}},{\"name\":\"Detalle\",\"type\":{\"items\":{\"fields\":[{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"float\"}],\"name\":\"Detalle\",\"namespace\":\"Andreani.EventoWhPedidos.Events.DesasignacionCommon\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.EventoWhPedidos.Events.Record.EventoWhPedidosDesasignados\",\"type\":\"record\"}"
 }
 
 func (r EventoWhPedidosDesasignados) SchemaName() string {
