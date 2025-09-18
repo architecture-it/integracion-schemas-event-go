@@ -24,14 +24,14 @@ type RescateDevolucionSolicitada struct {
 
 	NumeroDeSucursal *UnionNullString `json:"numeroDeSucursal"`
 
-	NumeroAndreani *UnionNullString `json:"numeroAndreani"`
+	NumeroAndreani *UnionNullStringArrayString `json:"numeroAndreani"`
 
 	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
 	TipoDeRescate *UnionNullString `json:"tipoDeRescate"`
 }
 
-const RescateDevolucionSolicitadaAvroCRC64Fingerprint = "\xe0By=\xb6\xd8\xf4\x9c"
+const RescateDevolucionSolicitadaAvroCRC64Fingerprint = "\xa4\xd1g\xfe\xda\x12\x8ei"
 
 func NewRescateDevolucionSolicitada() RescateDevolucionSolicitada {
 	r := RescateDevolucionSolicitada{}
@@ -81,7 +81,7 @@ func writeRescateDevolucionSolicitada(r RescateDevolucionSolicitada, w io.Writer
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.NumeroAndreani, w)
+	err = writeUnionNullStringArrayString(r.NumeroAndreani, w)
 	if err != nil {
 		return err
 	}
@@ -101,7 +101,7 @@ func (r RescateDevolucionSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r RescateDevolucionSolicitada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeSucursal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeSucursal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionSolicitada\",\"type\":\"record\"}"
 }
 
 func (r RescateDevolucionSolicitada) SchemaName() string {
@@ -132,7 +132,7 @@ func (r *RescateDevolucionSolicitada) Get(i int) types.Field {
 
 		return r.NumeroDeSucursal
 	case 3:
-		r.NumeroAndreani = NewUnionNullString()
+		r.NumeroAndreani = NewUnionNullStringArrayString()
 
 		return r.NumeroAndreani
 	case 4:
@@ -303,7 +303,7 @@ func (r *RescateDevolucionSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.NumeroAndreani = NewUnionNullString()
+		r.NumeroAndreani = NewUnionNullStringArrayString()
 
 		r.NumeroAndreani = nil
 	}
