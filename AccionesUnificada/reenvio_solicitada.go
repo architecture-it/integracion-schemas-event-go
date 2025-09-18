@@ -18,23 +18,24 @@ import (
 var _ = fmt.Printf
 
 type ReenvioSolicitada struct {
-	Contrato string `json:"contrato"`
+	Contrato *UnionNullString `json:"contrato"`
 
 	EsRemitente bool `json:"esRemitente"`
 
 	NumeroAndreani string `json:"numeroAndreani"`
 
-	CodigoCliente string `json:"codigoCliente"`
+	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
-	Destinatario Destinatario `json:"destinatario"`
+	Destinatario *UnionNullDestinatario `json:"destinatario"`
 }
 
-const ReenvioSolicitadaAvroCRC64Fingerprint = "\xa1\xec\xab\xfafߋ}"
+const ReenvioSolicitadaAvroCRC64Fingerprint = "\xad7\xf1]\x9a\x88+\x03"
 
 func NewReenvioSolicitada() ReenvioSolicitada {
 	r := ReenvioSolicitada{}
-	r.Destinatario = NewDestinatario()
-
+	r.Contrato = nil
+	r.CodigoCliente = nil
+	r.Destinatario = nil
 	return r
 }
 
@@ -63,7 +64,7 @@ func DeserializeReenvioSolicitadaFromSchema(r io.Reader, schema string) (Reenvio
 
 func writeReenvioSolicitada(r ReenvioSolicitada, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Contrato, w)
+	err = writeUnionNullString(r.Contrato, w)
 	if err != nil {
 		return err
 	}
@@ -75,11 +76,11 @@ func writeReenvioSolicitada(r ReenvioSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoCliente, w)
+	err = writeUnionNullString(r.CodigoCliente, w)
 	if err != nil {
 		return err
 	}
-	err = writeDestinatario(r.Destinatario, w)
+	err = writeUnionNullDestinatario(r.Destinatario, w)
 	if err != nil {
 		return err
 	}
@@ -91,7 +92,7 @@ func (r ReenvioSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r ReenvioSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"esRemitente\",\"type\":\"boolean\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidad\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ReenvioSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"esRemitente\",\"type\":\"boolean\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidad\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ReenvioSolicitada\",\"type\":\"record\"}"
 }
 
 func (r ReenvioSolicitada) SchemaName() string {
@@ -110,10 +111,9 @@ func (_ ReenvioSolicitada) SetUnionElem(v int64) { panic("Unsupported operation"
 func (r *ReenvioSolicitada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Contrato}
+		r.Contrato = NewUnionNullString()
 
-		return w
-
+		return r.Contrato
 	case 1:
 		w := types.Boolean{Target: &r.EsRemitente}
 
@@ -125,29 +125,43 @@ func (r *ReenvioSolicitada) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.CodigoCliente}
+		r.CodigoCliente = NewUnionNullString()
 
-		return w
-
+		return r.CodigoCliente
 	case 4:
-		r.Destinatario = NewDestinatario()
+		r.Destinatario = NewUnionNullDestinatario()
 
-		w := types.Record{Target: &r.Destinatario}
-
-		return w
-
+		return r.Destinatario
 	}
 	panic("Unknown field index")
 }
 
 func (r *ReenvioSolicitada) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Contrato = nil
+		return
+	case 3:
+		r.CodigoCliente = nil
+		return
+	case 4:
+		r.Destinatario = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ReenvioSolicitada) NullField(i int) {
 	switch i {
+	case 0:
+		r.Contrato = nil
+		return
+	case 3:
+		r.CodigoCliente = nil
+		return
+	case 4:
+		r.Destinatario = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -206,7 +220,9 @@ func (r *ReenvioSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for contrato")
+		r.Contrato = NewUnionNullString()
+
+		r.Contrato = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["esRemitente"]; ok {
@@ -248,7 +264,9 @@ func (r *ReenvioSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoCliente")
+		r.CodigoCliente = NewUnionNullString()
+
+		r.CodigoCliente = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatario"]; ok {
@@ -262,7 +280,9 @@ func (r *ReenvioSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for destinatario")
+		r.Destinatario = NewUnionNullDestinatario()
+
+		r.Destinatario = nil
 	}
 	return nil
 }

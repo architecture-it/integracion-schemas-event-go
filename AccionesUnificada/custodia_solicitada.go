@@ -18,19 +18,21 @@ import (
 var _ = fmt.Printf
 
 type CustodiaSolicitada struct {
-	Contrato string `json:"contrato"`
+	Contrato *UnionNullString `json:"contrato"`
 
 	NumeroDeSucursal string `json:"numeroDeSucursal"`
 
 	NumeroAndreani string `json:"numeroAndreani"`
 
-	CodigoCliente string `json:"codigoCliente"`
+	CodigoCliente *UnionNullString `json:"codigoCliente"`
 }
 
-const CustodiaSolicitadaAvroCRC64Fingerprint = "}E\xa4\x98\t.?\xe0"
+const CustodiaSolicitadaAvroCRC64Fingerprint = "\xf7\xeaRQ<쁉"
 
 func NewCustodiaSolicitada() CustodiaSolicitada {
 	r := CustodiaSolicitada{}
+	r.Contrato = nil
+	r.CodigoCliente = nil
 	return r
 }
 
@@ -59,7 +61,7 @@ func DeserializeCustodiaSolicitadaFromSchema(r io.Reader, schema string) (Custod
 
 func writeCustodiaSolicitada(r CustodiaSolicitada, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Contrato, w)
+	err = writeUnionNullString(r.Contrato, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +73,7 @@ func writeCustodiaSolicitada(r CustodiaSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoCliente, w)
+	err = writeUnionNullString(r.CodigoCliente, w)
 	if err != nil {
 		return err
 	}
@@ -83,7 +85,7 @@ func (r CustodiaSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r CustodiaSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CustodiaSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CustodiaSolicitada\",\"type\":\"record\"}"
 }
 
 func (r CustodiaSolicitada) SchemaName() string {
@@ -102,10 +104,9 @@ func (_ CustodiaSolicitada) SetUnionElem(v int64) { panic("Unsupported operation
 func (r *CustodiaSolicitada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Contrato}
+		r.Contrato = NewUnionNullString()
 
-		return w
-
+		return r.Contrato
 	case 1:
 		w := types.String{Target: &r.NumeroDeSucursal}
 
@@ -117,22 +118,33 @@ func (r *CustodiaSolicitada) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.CodigoCliente}
+		r.CodigoCliente = NewUnionNullString()
 
-		return w
-
+		return r.CodigoCliente
 	}
 	panic("Unknown field index")
 }
 
 func (r *CustodiaSolicitada) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Contrato = nil
+		return
+	case 3:
+		r.CodigoCliente = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *CustodiaSolicitada) NullField(i int) {
 	switch i {
+	case 0:
+		r.Contrato = nil
+		return
+	case 3:
+		r.CodigoCliente = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -187,7 +199,9 @@ func (r *CustodiaSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for contrato")
+		r.Contrato = NewUnionNullString()
+
+		r.Contrato = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeSucursal"]; ok {
@@ -229,7 +243,9 @@ func (r *CustodiaSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoCliente")
+		r.CodigoCliente = NewUnionNullString()
+
+		r.CodigoCliente = nil
 	}
 	return nil
 }

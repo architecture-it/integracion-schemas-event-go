@@ -18,20 +18,22 @@ import (
 var _ = fmt.Printf
 
 type DestruccionSolicitada struct {
-	Contrato string `json:"contrato"`
+	Contrato *UnionNullString `json:"contrato"`
 
 	Ejemplar *UnionNullString `json:"ejemplar"`
 
 	NumeroAndreani string `json:"numeroAndreani"`
 
-	CodigoCliente string `json:"codigoCliente"`
+	CodigoCliente *UnionNullString `json:"codigoCliente"`
 }
 
-const DestruccionSolicitadaAvroCRC64Fingerprint = "\x16v\xb7\x93\xd6\xcak\xb9"
+const DestruccionSolicitadaAvroCRC64Fingerprint = "\x12W\xab\xfd\xb7|a\x8c"
 
 func NewDestruccionSolicitada() DestruccionSolicitada {
 	r := DestruccionSolicitada{}
+	r.Contrato = nil
 	r.Ejemplar = nil
+	r.CodigoCliente = nil
 	return r
 }
 
@@ -60,7 +62,7 @@ func DeserializeDestruccionSolicitadaFromSchema(r io.Reader, schema string) (Des
 
 func writeDestruccionSolicitada(r DestruccionSolicitada, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Contrato, w)
+	err = writeUnionNullString(r.Contrato, w)
 	if err != nil {
 		return err
 	}
@@ -72,7 +74,7 @@ func writeDestruccionSolicitada(r DestruccionSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoCliente, w)
+	err = writeUnionNullString(r.CodigoCliente, w)
 	if err != nil {
 		return err
 	}
@@ -84,7 +86,7 @@ func (r DestruccionSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r DestruccionSolicitada) Schema() string {
-	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"ejemplar\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.DestruccionSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ejemplar\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.DestruccionSolicitada\",\"type\":\"record\"}"
 }
 
 func (r DestruccionSolicitada) SchemaName() string {
@@ -103,10 +105,9 @@ func (_ DestruccionSolicitada) SetUnionElem(v int64) { panic("Unsupported operat
 func (r *DestruccionSolicitada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Contrato}
+		r.Contrato = NewUnionNullString()
 
-		return w
-
+		return r.Contrato
 	case 1:
 		r.Ejemplar = NewUnionNullString()
 
@@ -117,18 +118,23 @@ func (r *DestruccionSolicitada) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.CodigoCliente}
+		r.CodigoCliente = NewUnionNullString()
 
-		return w
-
+		return r.CodigoCliente
 	}
 	panic("Unknown field index")
 }
 
 func (r *DestruccionSolicitada) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Contrato = nil
+		return
 	case 1:
 		r.Ejemplar = nil
+		return
+	case 3:
+		r.CodigoCliente = nil
 		return
 	}
 	panic("Unknown field index")
@@ -136,8 +142,14 @@ func (r *DestruccionSolicitada) SetDefault(i int) {
 
 func (r *DestruccionSolicitada) NullField(i int) {
 	switch i {
+	case 0:
+		r.Contrato = nil
+		return
 	case 1:
 		r.Ejemplar = nil
+		return
+	case 3:
+		r.CodigoCliente = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -193,7 +205,9 @@ func (r *DestruccionSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for contrato")
+		r.Contrato = NewUnionNullString()
+
+		r.Contrato = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ejemplar"]; ok {
@@ -237,7 +251,9 @@ func (r *DestruccionSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoCliente")
+		r.CodigoCliente = NewUnionNullString()
+
+		r.CodigoCliente = nil
 	}
 	return nil
 }
