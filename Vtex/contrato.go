@@ -30,10 +30,10 @@ type Contrato struct {
 
 	ModoDeEntrega string `json:"ModoDeEntrega"`
 
-	AdmitePuntosHop bool `json:"admitePuntosHop"`
+	AdmitePuntosHop bool `json:"AdmitePuntosHop"`
 }
 
-const ContratoAvroCRC64Fingerprint = "7]b.\xa3y\r\xd1"
+const ContratoAvroCRC64Fingerprint = "\xd589חf\xb5\x93"
 
 func NewContrato() Contrato {
 	r := Contrato{}
@@ -102,7 +102,7 @@ func (r Contrato) Serialize(w io.Writer) error {
 }
 
 func (r Contrato) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"admitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding.Contrato\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"AdmitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding.Contrato\",\"type\":\"record\"}"
 }
 
 func (r Contrato) SchemaName() string {
@@ -210,7 +210,7 @@ func (r Contrato) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["admitePuntosHop"], err = json.Marshal(r.AdmitePuntosHop)
+	output["AdmitePuntosHop"], err = json.Marshal(r.AdmitePuntosHop)
 	if err != nil {
 		return nil, err
 	}
@@ -309,7 +309,7 @@ func (r *Contrato) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for ModoDeEntrega")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["admitePuntosHop"]; ok {
+		if v, ok := fields["AdmitePuntosHop"]; ok {
 			return v
 		}
 		return nil
