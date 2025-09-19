@@ -24,14 +24,16 @@ type RescateDevolucionSolicitada struct {
 
 	NumeroDeSucursal *UnionNullString `json:"numeroDeSucursal"`
 
-	NumeroAndreani *UnionNullStringArrayString `json:"numeroAndreani"`
+	NumeroAndreani *UnionNullArrayString `json:"numeroAndreani"`
+
+	NumeroDeEnvio *UnionNullString `json:"numeroDeEnvio"`
 
 	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
 	TipoDeRescate *UnionNullString `json:"tipoDeRescate"`
 }
 
-const RescateDevolucionSolicitadaAvroCRC64Fingerprint = "\xa4\xd1g\xfe\xda\x12\x8ei"
+const RescateDevolucionSolicitadaAvroCRC64Fingerprint = "\xa18\xe9\xa2k\xfb\x89I"
 
 func NewRescateDevolucionSolicitada() RescateDevolucionSolicitada {
 	r := RescateDevolucionSolicitada{}
@@ -39,6 +41,7 @@ func NewRescateDevolucionSolicitada() RescateDevolucionSolicitada {
 	r.Contrato = nil
 	r.NumeroDeSucursal = nil
 	r.NumeroAndreani = nil
+	r.NumeroDeEnvio = nil
 	r.CodigoCliente = nil
 	r.TipoDeRescate = nil
 	return r
@@ -81,7 +84,11 @@ func writeRescateDevolucionSolicitada(r RescateDevolucionSolicitada, w io.Writer
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullStringArrayString(r.NumeroAndreani, w)
+	err = writeUnionNullArrayString(r.NumeroAndreani, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumeroDeEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -101,7 +108,7 @@ func (r RescateDevolucionSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r RescateDevolucionSolicitada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeSucursal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeSucursal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionSolicitada\",\"type\":\"record\"}"
 }
 
 func (r RescateDevolucionSolicitada) SchemaName() string {
@@ -132,14 +139,18 @@ func (r *RescateDevolucionSolicitada) Get(i int) types.Field {
 
 		return r.NumeroDeSucursal
 	case 3:
-		r.NumeroAndreani = NewUnionNullStringArrayString()
+		r.NumeroAndreani = NewUnionNullArrayString()
 
 		return r.NumeroAndreani
 	case 4:
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		return r.NumeroDeEnvio
+	case 5:
 		r.CodigoCliente = NewUnionNullString()
 
 		return r.CodigoCliente
-	case 5:
+	case 6:
 		r.TipoDeRescate = NewUnionNullString()
 
 		return r.TipoDeRescate
@@ -162,9 +173,12 @@ func (r *RescateDevolucionSolicitada) SetDefault(i int) {
 		r.NumeroAndreani = nil
 		return
 	case 4:
-		r.CodigoCliente = nil
+		r.NumeroDeEnvio = nil
 		return
 	case 5:
+		r.CodigoCliente = nil
+		return
+	case 6:
 		r.TipoDeRescate = nil
 		return
 	}
@@ -186,9 +200,12 @@ func (r *RescateDevolucionSolicitada) NullField(i int) {
 		r.NumeroAndreani = nil
 		return
 	case 4:
-		r.CodigoCliente = nil
+		r.NumeroDeEnvio = nil
 		return
 	case 5:
+		r.CodigoCliente = nil
+		return
+	case 6:
 		r.TipoDeRescate = nil
 		return
 	}
@@ -222,6 +239,10 @@ func (r RescateDevolucionSolicitada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	if err != nil {
+		return nil, err
+	}
+	output["numeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -303,9 +324,25 @@ func (r *RescateDevolucionSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.NumeroAndreani = NewUnionNullStringArrayString()
+		r.NumeroAndreani = NewUnionNullArrayString()
 
 		r.NumeroAndreani = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroDeEnvio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeEnvio); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		r.NumeroDeEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoCliente"]; ok {

@@ -20,18 +20,22 @@ var _ = fmt.Printf
 type CancelacionSolicitada struct {
 	Contrato *UnionNullString `json:"contrato"`
 
-	NumeroAndreani string `json:"numeroAndreani"`
+	NumeroAndreani *UnionNullString `json:"numeroAndreani"`
+
+	NumeroDeEnvio *UnionNullString `json:"numeroDeEnvio"`
 
 	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
 	Componentes *UnionNullArrayString `json:"componentes"`
 }
 
-const CancelacionSolicitadaAvroCRC64Fingerprint = "H\xa1\xc5P\xb6\xa2\xb3\x19"
+const CancelacionSolicitadaAvroCRC64Fingerprint = "\x84Z\x9c\x01\xab\xf6\xe2\x19"
 
 func NewCancelacionSolicitada() CancelacionSolicitada {
 	r := CancelacionSolicitada{}
 	r.Contrato = nil
+	r.NumeroAndreani = nil
+	r.NumeroDeEnvio = nil
 	r.CodigoCliente = nil
 	r.Componentes = nil
 	return r
@@ -66,7 +70,11 @@ func writeCancelacionSolicitada(r CancelacionSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroAndreani, w)
+	err = writeUnionNullString(r.NumeroAndreani, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumeroDeEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -86,7 +94,7 @@ func (r CancelacionSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r CancelacionSolicitada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CancelacionSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CancelacionSolicitada\",\"type\":\"record\"}"
 }
 
 func (r CancelacionSolicitada) SchemaName() string {
@@ -109,15 +117,18 @@ func (r *CancelacionSolicitada) Get(i int) types.Field {
 
 		return r.Contrato
 	case 1:
-		w := types.String{Target: &r.NumeroAndreani}
+		r.NumeroAndreani = NewUnionNullString()
 
-		return w
-
+		return r.NumeroAndreani
 	case 2:
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		return r.NumeroDeEnvio
+	case 3:
 		r.CodigoCliente = NewUnionNullString()
 
 		return r.CodigoCliente
-	case 3:
+	case 4:
 		r.Componentes = NewUnionNullArrayString()
 
 		return r.Componentes
@@ -130,10 +141,16 @@ func (r *CancelacionSolicitada) SetDefault(i int) {
 	case 0:
 		r.Contrato = nil
 		return
+	case 1:
+		r.NumeroAndreani = nil
+		return
 	case 2:
-		r.CodigoCliente = nil
+		r.NumeroDeEnvio = nil
 		return
 	case 3:
+		r.CodigoCliente = nil
+		return
+	case 4:
 		r.Componentes = nil
 		return
 	}
@@ -145,10 +162,16 @@ func (r *CancelacionSolicitada) NullField(i int) {
 	case 0:
 		r.Contrato = nil
 		return
+	case 1:
+		r.NumeroAndreani = nil
+		return
 	case 2:
-		r.CodigoCliente = nil
+		r.NumeroDeEnvio = nil
 		return
 	case 3:
+		r.CodigoCliente = nil
+		return
+	case 4:
 		r.Componentes = nil
 		return
 	}
@@ -172,6 +195,10 @@ func (r CancelacionSolicitada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	if err != nil {
+		return nil, err
+	}
+	output["numeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +248,25 @@ func (r *CancelacionSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroAndreani")
+		r.NumeroAndreani = NewUnionNullString()
+
+		r.NumeroAndreani = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroDeEnvio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeEnvio); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		r.NumeroDeEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoCliente"]; ok {

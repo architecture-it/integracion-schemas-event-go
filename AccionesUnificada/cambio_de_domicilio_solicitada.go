@@ -20,18 +20,22 @@ var _ = fmt.Printf
 type CambioDeDomicilioSolicitada struct {
 	Contrato *UnionNullString `json:"contrato"`
 
-	NumeroAndreani string `json:"numeroAndreani"`
+	NumeroAndreani *UnionNullString `json:"numeroAndreani"`
+
+	NumeroDeEnvio *UnionNullString `json:"numeroDeEnvio"`
 
 	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
 	Destinatario Destinatario `json:"destinatario"`
 }
 
-const CambioDeDomicilioSolicitadaAvroCRC64Fingerprint = "QA\x86z\xee^c\xc2"
+const CambioDeDomicilioSolicitadaAvroCRC64Fingerprint = "\xe4p]\\{\xf1\xb4\x05"
 
 func NewCambioDeDomicilioSolicitada() CambioDeDomicilioSolicitada {
 	r := CambioDeDomicilioSolicitada{}
 	r.Contrato = nil
+	r.NumeroAndreani = nil
+	r.NumeroDeEnvio = nil
 	r.CodigoCliente = nil
 	r.Destinatario = NewDestinatario()
 
@@ -67,7 +71,11 @@ func writeCambioDeDomicilioSolicitada(r CambioDeDomicilioSolicitada, w io.Writer
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroAndreani, w)
+	err = writeUnionNullString(r.NumeroAndreani, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumeroDeEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -87,7 +95,7 @@ func (r CambioDeDomicilioSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r CambioDeDomicilioSolicitada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidad\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CambioDeDomicilioSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"destinatario\",\"type\":{\"fields\":[{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidad\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CambioDeDomicilioSolicitada\",\"type\":\"record\"}"
 }
 
 func (r CambioDeDomicilioSolicitada) SchemaName() string {
@@ -110,15 +118,18 @@ func (r *CambioDeDomicilioSolicitada) Get(i int) types.Field {
 
 		return r.Contrato
 	case 1:
-		w := types.String{Target: &r.NumeroAndreani}
+		r.NumeroAndreani = NewUnionNullString()
 
-		return w
-
+		return r.NumeroAndreani
 	case 2:
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		return r.NumeroDeEnvio
+	case 3:
 		r.CodigoCliente = NewUnionNullString()
 
 		return r.CodigoCliente
-	case 3:
+	case 4:
 		r.Destinatario = NewDestinatario()
 
 		w := types.Record{Target: &r.Destinatario}
@@ -134,7 +145,13 @@ func (r *CambioDeDomicilioSolicitada) SetDefault(i int) {
 	case 0:
 		r.Contrato = nil
 		return
+	case 1:
+		r.NumeroAndreani = nil
+		return
 	case 2:
+		r.NumeroDeEnvio = nil
+		return
+	case 3:
 		r.CodigoCliente = nil
 		return
 	}
@@ -146,7 +163,13 @@ func (r *CambioDeDomicilioSolicitada) NullField(i int) {
 	case 0:
 		r.Contrato = nil
 		return
+	case 1:
+		r.NumeroAndreani = nil
+		return
 	case 2:
+		r.NumeroDeEnvio = nil
+		return
+	case 3:
 		r.CodigoCliente = nil
 		return
 	}
@@ -172,6 +195,10 @@ func (r CambioDeDomicilioSolicitada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	if err != nil {
+		return nil, err
+	}
+	output["numeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +248,25 @@ func (r *CambioDeDomicilioSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroAndreani")
+		r.NumeroAndreani = NewUnionNullString()
+
+		r.NumeroAndreani = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroDeEnvio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeEnvio); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		r.NumeroDeEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoCliente"]; ok {

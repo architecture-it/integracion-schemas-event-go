@@ -22,17 +22,21 @@ type DestruccionSolicitada struct {
 
 	Ejemplar *UnionNullString `json:"ejemplar"`
 
-	NumeroAndreani string `json:"numeroAndreani"`
+	NumeroAndreani *UnionNullString `json:"numeroAndreani"`
+
+	NumeroDeEnvio *UnionNullString `json:"numeroDeEnvio"`
 
 	CodigoCliente *UnionNullString `json:"codigoCliente"`
 }
 
-const DestruccionSolicitadaAvroCRC64Fingerprint = "\x12W\xab\xfd\xb7|a\x8c"
+const DestruccionSolicitadaAvroCRC64Fingerprint = "\xa6\x11;~%3\x1d\xf8"
 
 func NewDestruccionSolicitada() DestruccionSolicitada {
 	r := DestruccionSolicitada{}
 	r.Contrato = nil
 	r.Ejemplar = nil
+	r.NumeroAndreani = nil
+	r.NumeroDeEnvio = nil
 	r.CodigoCliente = nil
 	return r
 }
@@ -70,7 +74,11 @@ func writeDestruccionSolicitada(r DestruccionSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroAndreani, w)
+	err = writeUnionNullString(r.NumeroAndreani, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumeroDeEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -86,7 +94,7 @@ func (r DestruccionSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r DestruccionSolicitada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ejemplar\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.DestruccionSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ejemplar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.DestruccionSolicitada\",\"type\":\"record\"}"
 }
 
 func (r DestruccionSolicitada) SchemaName() string {
@@ -113,11 +121,14 @@ func (r *DestruccionSolicitada) Get(i int) types.Field {
 
 		return r.Ejemplar
 	case 2:
-		w := types.String{Target: &r.NumeroAndreani}
+		r.NumeroAndreani = NewUnionNullString()
 
-		return w
-
+		return r.NumeroAndreani
 	case 3:
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		return r.NumeroDeEnvio
+	case 4:
 		r.CodigoCliente = NewUnionNullString()
 
 		return r.CodigoCliente
@@ -133,7 +144,13 @@ func (r *DestruccionSolicitada) SetDefault(i int) {
 	case 1:
 		r.Ejemplar = nil
 		return
+	case 2:
+		r.NumeroAndreani = nil
+		return
 	case 3:
+		r.NumeroDeEnvio = nil
+		return
+	case 4:
 		r.CodigoCliente = nil
 		return
 	}
@@ -148,7 +165,13 @@ func (r *DestruccionSolicitada) NullField(i int) {
 	case 1:
 		r.Ejemplar = nil
 		return
+	case 2:
+		r.NumeroAndreani = nil
+		return
 	case 3:
+		r.NumeroDeEnvio = nil
+		return
+	case 4:
 		r.CodigoCliente = nil
 		return
 	}
@@ -176,6 +199,10 @@ func (r DestruccionSolicitada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	if err != nil {
+		return nil, err
+	}
+	output["numeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -237,7 +264,25 @@ func (r *DestruccionSolicitada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroAndreani")
+		r.NumeroAndreani = NewUnionNullString()
+
+		r.NumeroAndreani = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroDeEnvio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeEnvio); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		r.NumeroDeEnvio = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoCliente"]; ok {
