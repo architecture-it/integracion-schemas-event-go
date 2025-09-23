@@ -36,10 +36,20 @@ type Origen struct {
 
 	SucursalId *UnionNullString `json:"SucursalId"`
 
+	SucursalCodigo *UnionNullString `json:"SucursalCodigo"`
+
+	SucursalNumero *UnionNullString `json:"SucursalNumero"`
+
+	PuntoDeTerceroId *UnionNullString `json:"PuntoDeTerceroId"`
+
+	PuntoDeTerceroCodigo *UnionNullString `json:"PuntoDeTerceroCodigo"`
+
+	PuntoDeTerceroNumero *UnionNullString `json:"PuntoDeTerceroNumero"`
+
 	ObservacionesAdicionales *UnionNullString `json:"ObservacionesAdicionales"`
 }
 
-const OrigenAvroCRC64Fingerprint = "\xd6\xdd\xfcd\x1c\xc9\xf5\xf9"
+const OrigenAvroCRC64Fingerprint = "n\x9a\xc1\xc8\x06\xc6u\xe5"
 
 func NewOrigen() Origen {
 	r := Origen{}
@@ -47,6 +57,11 @@ func NewOrigen() Origen {
 	r.Piso = nil
 	r.Unidad = nil
 	r.SucursalId = nil
+	r.SucursalCodigo = nil
+	r.SucursalNumero = nil
+	r.PuntoDeTerceroId = nil
+	r.PuntoDeTerceroCodigo = nil
+	r.PuntoDeTerceroNumero = nil
 	r.ObservacionesAdicionales = nil
 	return r
 }
@@ -112,6 +127,26 @@ func writeOrigen(r Origen, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.SucursalCodigo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.SucursalNumero, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.PuntoDeTerceroId, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.PuntoDeTerceroCodigo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.PuntoDeTerceroNumero, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.ObservacionesAdicionales, w)
 	if err != nil {
 		return err
@@ -124,7 +159,7 @@ func (r Origen) Serialize(w io.Writer) error {
 }
 
 func (r Origen) Schema() string {
-	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PersonaBackend.Events.Common.Origen\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Unidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Provincia\",\"type\":\"string\"},{\"default\":null,\"name\":\"SucursalId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalCodigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PuntoDeTerceroId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PuntoDeTerceroCodigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PuntoDeTerceroNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ObservacionesAdicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.PersonaBackend.Events.Common.Origen\",\"type\":\"record\"}"
 }
 
 func (r Origen) SchemaName() string {
@@ -184,6 +219,26 @@ func (r *Origen) Get(i int) types.Field {
 
 		return r.SucursalId
 	case 9:
+		r.SucursalCodigo = NewUnionNullString()
+
+		return r.SucursalCodigo
+	case 10:
+		r.SucursalNumero = NewUnionNullString()
+
+		return r.SucursalNumero
+	case 11:
+		r.PuntoDeTerceroId = NewUnionNullString()
+
+		return r.PuntoDeTerceroId
+	case 12:
+		r.PuntoDeTerceroCodigo = NewUnionNullString()
+
+		return r.PuntoDeTerceroCodigo
+	case 13:
+		r.PuntoDeTerceroNumero = NewUnionNullString()
+
+		return r.PuntoDeTerceroNumero
+	case 14:
 		r.ObservacionesAdicionales = NewUnionNullString()
 
 		return r.ObservacionesAdicionales
@@ -206,6 +261,21 @@ func (r *Origen) SetDefault(i int) {
 		r.SucursalId = nil
 		return
 	case 9:
+		r.SucursalCodigo = nil
+		return
+	case 10:
+		r.SucursalNumero = nil
+		return
+	case 11:
+		r.PuntoDeTerceroId = nil
+		return
+	case 12:
+		r.PuntoDeTerceroCodigo = nil
+		return
+	case 13:
+		r.PuntoDeTerceroNumero = nil
+		return
+	case 14:
 		r.ObservacionesAdicionales = nil
 		return
 	}
@@ -227,6 +297,21 @@ func (r *Origen) NullField(i int) {
 		r.SucursalId = nil
 		return
 	case 9:
+		r.SucursalCodigo = nil
+		return
+	case 10:
+		r.SucursalNumero = nil
+		return
+	case 11:
+		r.PuntoDeTerceroId = nil
+		return
+	case 12:
+		r.PuntoDeTerceroCodigo = nil
+		return
+	case 13:
+		r.PuntoDeTerceroNumero = nil
+		return
+	case 14:
 		r.ObservacionesAdicionales = nil
 		return
 	}
@@ -278,6 +363,26 @@ func (r Origen) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["SucursalId"], err = json.Marshal(r.SucursalId)
+	if err != nil {
+		return nil, err
+	}
+	output["SucursalCodigo"], err = json.Marshal(r.SucursalCodigo)
+	if err != nil {
+		return nil, err
+	}
+	output["SucursalNumero"], err = json.Marshal(r.SucursalNumero)
+	if err != nil {
+		return nil, err
+	}
+	output["PuntoDeTerceroId"], err = json.Marshal(r.PuntoDeTerceroId)
+	if err != nil {
+		return nil, err
+	}
+	output["PuntoDeTerceroCodigo"], err = json.Marshal(r.PuntoDeTerceroCodigo)
+	if err != nil {
+		return nil, err
+	}
+	output["PuntoDeTerceroNumero"], err = json.Marshal(r.PuntoDeTerceroNumero)
 	if err != nil {
 		return nil, err
 	}
@@ -428,6 +533,86 @@ func (r *Origen) UnmarshalJSON(data []byte) error {
 		r.SucursalId = NewUnionNullString()
 
 		r.SucursalId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["SucursalCodigo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SucursalCodigo); err != nil {
+			return err
+		}
+	} else {
+		r.SucursalCodigo = NewUnionNullString()
+
+		r.SucursalCodigo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["SucursalNumero"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SucursalNumero); err != nil {
+			return err
+		}
+	} else {
+		r.SucursalNumero = NewUnionNullString()
+
+		r.SucursalNumero = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PuntoDeTerceroId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PuntoDeTerceroId); err != nil {
+			return err
+		}
+	} else {
+		r.PuntoDeTerceroId = NewUnionNullString()
+
+		r.PuntoDeTerceroId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PuntoDeTerceroCodigo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PuntoDeTerceroCodigo); err != nil {
+			return err
+		}
+	} else {
+		r.PuntoDeTerceroCodigo = NewUnionNullString()
+
+		r.PuntoDeTerceroCodigo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PuntoDeTerceroNumero"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PuntoDeTerceroNumero); err != nil {
+			return err
+		}
+	} else {
+		r.PuntoDeTerceroNumero = NewUnionNullString()
+
+		r.PuntoDeTerceroNumero = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ObservacionesAdicionales"]; ok {
