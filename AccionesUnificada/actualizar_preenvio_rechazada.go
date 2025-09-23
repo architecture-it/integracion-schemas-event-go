@@ -18,9 +18,13 @@ import (
 var _ = fmt.Printf
 
 type ActualizarPreenvioRechazada struct {
-	Contrato string `json:"contrato"`
+	Contrato *UnionNullString `json:"contrato"`
 
-	NumeroAndreani string `json:"numeroAndreani"`
+	NumeroAndreani *UnionNullArrayString `json:"numeroAndreani"`
+
+	NumeroDeEnvio *UnionNullString `json:"numeroDeEnvio"`
+
+	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
 	Bultos *UnionNullListaDeBultos `json:"bultos"`
 
@@ -29,10 +33,14 @@ type ActualizarPreenvioRechazada struct {
 	Razon string `json:"razon"`
 }
 
-const ActualizarPreenvioRechazadaAvroCRC64Fingerprint = "\xe4\xea\xd8E\x0e\xfbɄ"
+const ActualizarPreenvioRechazadaAvroCRC64Fingerprint = "G|GeZ\xf3ir"
 
 func NewActualizarPreenvioRechazada() ActualizarPreenvioRechazada {
 	r := ActualizarPreenvioRechazada{}
+	r.Contrato = nil
+	r.NumeroAndreani = nil
+	r.NumeroDeEnvio = nil
+	r.CodigoCliente = nil
 	r.Bultos = nil
 	r.DatosAActualizar = nil
 	return r
@@ -63,11 +71,19 @@ func DeserializeActualizarPreenvioRechazadaFromSchema(r io.Reader, schema string
 
 func writeActualizarPreenvioRechazada(r ActualizarPreenvioRechazada, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Contrato, w)
+	err = writeUnionNullString(r.Contrato, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroAndreani, w)
+	err = writeUnionNullArrayString(r.NumeroAndreani, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.NumeroDeEnvio, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoCliente, w)
 	if err != nil {
 		return err
 	}
@@ -91,7 +107,7 @@ func (r ActualizarPreenvioRechazada) Serialize(w io.Writer) error {
 }
 
 func (r ActualizarPreenvioRechazada) Schema() string {
-	return "{\"fields\":[{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"kilos\",\"type\":\"double\"},{\"name\":\"largoCm\",\"type\":\"double\"},{\"name\":\"altoCm\",\"type\":\"double\"},{\"name\":\"anchoCm\",\"type\":\"double\"},{\"name\":\"volumenCm\",\"type\":\"double\"},{\"name\":\"valorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeMetadatos\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",\"Andreani.AccionesUnificada.Events.Common.ListaDeMetadatos\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]}],\"name\":\"Bulto\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeBultos\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosAActualizar\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"datos\",\"type\":[\"null\",{\"items\":\"Andreani.AccionesUnificada.Events.Common.Metadato\",\"type\":\"array\"}]}],\"name\":\"DatosAActualizar\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ActualizarPreenvioRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"kilos\",\"type\":\"double\"},{\"name\":\"largoCm\",\"type\":\"double\"},{\"name\":\"altoCm\",\"type\":\"double\"},{\"name\":\"anchoCm\",\"type\":\"double\"},{\"name\":\"volumenCm\",\"type\":\"double\"},{\"name\":\"valorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"valorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"lista\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeMetadatos\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",\"Andreani.AccionesUnificada.Events.Common.ListaDeMetadatos\"]},{\"default\":null,\"name\":\"numeroDeBulto\",\"type\":[\"null\",\"int\"]}],\"name\":\"Bulto\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeBultos\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosAActualizar\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"datos\",\"type\":[\"null\",{\"items\":\"Andreani.AccionesUnificada.Events.Common.Metadato\",\"type\":\"array\"}]}],\"name\":\"DatosAActualizar\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ActualizarPreenvioRechazada\",\"type\":\"record\"}"
 }
 
 func (r ActualizarPreenvioRechazada) SchemaName() string {
@@ -110,24 +126,30 @@ func (_ ActualizarPreenvioRechazada) SetUnionElem(v int64) { panic("Unsupported 
 func (r *ActualizarPreenvioRechazada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Contrato}
+		r.Contrato = NewUnionNullString()
 
-		return w
-
+		return r.Contrato
 	case 1:
-		w := types.String{Target: &r.NumeroAndreani}
+		r.NumeroAndreani = NewUnionNullArrayString()
 
-		return w
-
+		return r.NumeroAndreani
 	case 2:
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		return r.NumeroDeEnvio
+	case 3:
+		r.CodigoCliente = NewUnionNullString()
+
+		return r.CodigoCliente
+	case 4:
 		r.Bultos = NewUnionNullListaDeBultos()
 
 		return r.Bultos
-	case 3:
+	case 5:
 		r.DatosAActualizar = NewUnionNullDatosAActualizar()
 
 		return r.DatosAActualizar
-	case 4:
+	case 6:
 		w := types.String{Target: &r.Razon}
 
 		return w
@@ -138,10 +160,22 @@ func (r *ActualizarPreenvioRechazada) Get(i int) types.Field {
 
 func (r *ActualizarPreenvioRechazada) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Contrato = nil
+		return
+	case 1:
+		r.NumeroAndreani = nil
+		return
 	case 2:
-		r.Bultos = nil
+		r.NumeroDeEnvio = nil
 		return
 	case 3:
+		r.CodigoCliente = nil
+		return
+	case 4:
+		r.Bultos = nil
+		return
+	case 5:
 		r.DatosAActualizar = nil
 		return
 	}
@@ -150,10 +184,22 @@ func (r *ActualizarPreenvioRechazada) SetDefault(i int) {
 
 func (r *ActualizarPreenvioRechazada) NullField(i int) {
 	switch i {
+	case 0:
+		r.Contrato = nil
+		return
+	case 1:
+		r.NumeroAndreani = nil
+		return
 	case 2:
-		r.Bultos = nil
+		r.NumeroDeEnvio = nil
 		return
 	case 3:
+		r.CodigoCliente = nil
+		return
+	case 4:
+		r.Bultos = nil
+		return
+	case 5:
 		r.DatosAActualizar = nil
 		return
 	}
@@ -179,6 +225,14 @@ func (r ActualizarPreenvioRechazada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	if err != nil {
+		return nil, err
+	}
+	output["numeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoCliente"], err = json.Marshal(r.CodigoCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -216,7 +270,9 @@ func (r *ActualizarPreenvioRechazada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for contrato")
+		r.Contrato = NewUnionNullString()
+
+		r.Contrato = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroAndreani"]; ok {
@@ -230,7 +286,41 @@ func (r *ActualizarPreenvioRechazada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroAndreani")
+		r.NumeroAndreani = NewUnionNullArrayString()
+
+		r.NumeroAndreani = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroDeEnvio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeEnvio); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		r.NumeroDeEnvio = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoCliente = NewUnionNullString()
+
+		r.CodigoCliente = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["bultos"]; ok {

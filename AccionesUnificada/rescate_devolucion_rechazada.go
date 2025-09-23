@@ -20,24 +20,31 @@ var _ = fmt.Printf
 type RescateDevolucionRechazada struct {
 	MotivoDelRescateInterno *UnionNullString `json:"motivoDelRescateInterno"`
 
-	Contrato string `json:"contrato"`
+	Contrato *UnionNullString `json:"contrato"`
 
-	NumeroDeSucursal string `json:"numeroDeSucursal"`
+	NumeroDeSucursal *UnionNullString `json:"numeroDeSucursal"`
 
-	CodigoCliente string `json:"codigoCliente"`
+	NumeroAndreani *UnionNullArrayString `json:"numeroAndreani"`
 
-	NumeroAndreani string `json:"numeroAndreani"`
+	NumeroDeEnvio *UnionNullString `json:"numeroDeEnvio"`
+
+	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
 	TipoDeRescate *UnionNullString `json:"tipoDeRescate"`
 
 	Razon string `json:"razon"`
 }
 
-const RescateDevolucionRechazadaAvroCRC64Fingerprint = "\xfd\x91Z˕\x00C\xb2"
+const RescateDevolucionRechazadaAvroCRC64Fingerprint = "\xd6m\xca\xe8o$\x1c\x8d"
 
 func NewRescateDevolucionRechazada() RescateDevolucionRechazada {
 	r := RescateDevolucionRechazada{}
 	r.MotivoDelRescateInterno = nil
+	r.Contrato = nil
+	r.NumeroDeSucursal = nil
+	r.NumeroAndreani = nil
+	r.NumeroDeEnvio = nil
+	r.CodigoCliente = nil
 	r.TipoDeRescate = nil
 	return r
 }
@@ -71,19 +78,23 @@ func writeRescateDevolucionRechazada(r RescateDevolucionRechazada, w io.Writer) 
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Contrato, w)
+	err = writeUnionNullString(r.Contrato, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroDeSucursal, w)
+	err = writeUnionNullString(r.NumeroDeSucursal, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoCliente, w)
+	err = writeUnionNullArrayString(r.NumeroAndreani, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.NumeroAndreani, w)
+	err = writeUnionNullString(r.NumeroDeEnvio, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoCliente, w)
 	if err != nil {
 		return err
 	}
@@ -103,7 +114,7 @@ func (r RescateDevolucionRechazada) Serialize(w io.Writer) error {
 }
 
 func (r RescateDevolucionRechazada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"contrato\",\"type\":\"string\"},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"name\":\"codigoCliente\",\"type\":\"string\"},{\"name\":\"numeroAndreani\",\"type\":\"string\"},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeSucursal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionRechazada\",\"type\":\"record\"}"
 }
 
 func (r RescateDevolucionRechazada) SchemaName() string {
@@ -126,30 +137,30 @@ func (r *RescateDevolucionRechazada) Get(i int) types.Field {
 
 		return r.MotivoDelRescateInterno
 	case 1:
-		w := types.String{Target: &r.Contrato}
+		r.Contrato = NewUnionNullString()
 
-		return w
-
+		return r.Contrato
 	case 2:
-		w := types.String{Target: &r.NumeroDeSucursal}
+		r.NumeroDeSucursal = NewUnionNullString()
 
-		return w
-
+		return r.NumeroDeSucursal
 	case 3:
-		w := types.String{Target: &r.CodigoCliente}
+		r.NumeroAndreani = NewUnionNullArrayString()
 
-		return w
-
+		return r.NumeroAndreani
 	case 4:
-		w := types.String{Target: &r.NumeroAndreani}
+		r.NumeroDeEnvio = NewUnionNullString()
 
-		return w
-
+		return r.NumeroDeEnvio
 	case 5:
+		r.CodigoCliente = NewUnionNullString()
+
+		return r.CodigoCliente
+	case 6:
 		r.TipoDeRescate = NewUnionNullString()
 
 		return r.TipoDeRescate
-	case 6:
+	case 7:
 		w := types.String{Target: &r.Razon}
 
 		return w
@@ -163,7 +174,22 @@ func (r *RescateDevolucionRechazada) SetDefault(i int) {
 	case 0:
 		r.MotivoDelRescateInterno = nil
 		return
+	case 1:
+		r.Contrato = nil
+		return
+	case 2:
+		r.NumeroDeSucursal = nil
+		return
+	case 3:
+		r.NumeroAndreani = nil
+		return
+	case 4:
+		r.NumeroDeEnvio = nil
+		return
 	case 5:
+		r.CodigoCliente = nil
+		return
+	case 6:
 		r.TipoDeRescate = nil
 		return
 	}
@@ -175,7 +201,22 @@ func (r *RescateDevolucionRechazada) NullField(i int) {
 	case 0:
 		r.MotivoDelRescateInterno = nil
 		return
+	case 1:
+		r.Contrato = nil
+		return
+	case 2:
+		r.NumeroDeSucursal = nil
+		return
+	case 3:
+		r.NumeroAndreani = nil
+		return
+	case 4:
+		r.NumeroDeEnvio = nil
+		return
 	case 5:
+		r.CodigoCliente = nil
+		return
+	case 6:
 		r.TipoDeRescate = nil
 		return
 	}
@@ -206,11 +247,15 @@ func (r RescateDevolucionRechazada) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["codigoCliente"], err = json.Marshal(r.CodigoCliente)
+	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
 	if err != nil {
 		return nil, err
 	}
-	output["numeroAndreani"], err = json.Marshal(r.NumeroAndreani)
+	output["numeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoCliente"], err = json.Marshal(r.CodigoCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +305,9 @@ func (r *RescateDevolucionRechazada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for contrato")
+		r.Contrato = NewUnionNullString()
+
+		r.Contrato = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroDeSucursal"]; ok {
@@ -274,21 +321,9 @@ func (r *RescateDevolucionRechazada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroDeSucursal")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["codigoCliente"]; ok {
-			return v
-		}
-		return nil
-	}()
+		r.NumeroDeSucursal = NewUnionNullString()
 
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for codigoCliente")
+		r.NumeroDeSucursal = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["numeroAndreani"]; ok {
@@ -302,7 +337,41 @@ func (r *RescateDevolucionRechazada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for numeroAndreani")
+		r.NumeroAndreani = NewUnionNullArrayString()
+
+		r.NumeroAndreani = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroDeEnvio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeEnvio); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroDeEnvio = NewUnionNullString()
+
+		r.NumeroDeEnvio = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCliente); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoCliente = NewUnionNullString()
+
+		r.CodigoCliente = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoDeRescate"]; ok {
