@@ -45,9 +45,13 @@ type EstadoResuelto struct {
 	Origen *UnionNullString `json:"Origen"`
 
 	Cac_comentarioresolucion *UnionNullString `json:"cac_comentarioresolucion"`
+
+	CorreoRemitente *UnionNullString `json:"CorreoRemitente"`
+
+	CorreoDestinatario *UnionNullString `json:"CorreoDestinatario"`
 }
 
-const EstadoResueltoAvroCRC64Fingerprint = "\x93{\xe3\x90\xcc\xd2!\x9b"
+const EstadoResueltoAvroCRC64Fingerprint = "\xf6\xe0\x19\x9b\x1e\x19\"\xf6"
 
 func NewEstadoResuelto() EstadoResuelto {
 	r := EstadoResuelto{}
@@ -135,6 +139,14 @@ func writeEstadoResuelto(r EstadoResuelto, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.CorreoRemitente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CorreoDestinatario, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -143,7 +155,7 @@ func (r EstadoResuelto) Serialize(w io.Writer) error {
 }
 
 func (r EstadoResuelto) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Modifiedon\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"cac_comentarioresolucion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoResuelto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Modifiedon\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"cac_comentarioresolucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoResuelto\",\"type\":\"record\"}"
 }
 
 func (r EstadoResuelto) SchemaName() string {
@@ -224,6 +236,14 @@ func (r *EstadoResuelto) Get(i int) types.Field {
 		r.Cac_comentarioresolucion = NewUnionNullString()
 
 		return r.Cac_comentarioresolucion
+	case 14:
+		r.CorreoRemitente = NewUnionNullString()
+
+		return r.CorreoRemitente
+	case 15:
+		r.CorreoDestinatario = NewUnionNullString()
+
+		return r.CorreoDestinatario
 	}
 	panic("Unknown field index")
 }
@@ -256,6 +276,12 @@ func (r *EstadoResuelto) NullField(i int) {
 		return
 	case 13:
 		r.Cac_comentarioresolucion = nil
+		return
+	case 14:
+		r.CorreoRemitente = nil
+		return
+	case 15:
+		r.CorreoDestinatario = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -326,6 +352,14 @@ func (r EstadoResuelto) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["cac_comentarioresolucion"], err = json.Marshal(r.Cac_comentarioresolucion)
+	if err != nil {
+		return nil, err
+	}
+	output["CorreoRemitente"], err = json.Marshal(r.CorreoRemitente)
+	if err != nil {
+		return nil, err
+	}
+	output["CorreoDestinatario"], err = json.Marshal(r.CorreoDestinatario)
 	if err != nil {
 		return nil, err
 	}
@@ -534,6 +568,34 @@ func (r *EstadoResuelto) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for cac_comentarioresolucion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CorreoRemitente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CorreoRemitente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CorreoRemitente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CorreoDestinatario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CorreoDestinatario); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CorreoDestinatario")
 	}
 	return nil
 }

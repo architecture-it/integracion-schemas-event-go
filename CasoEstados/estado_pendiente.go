@@ -18,32 +18,36 @@ import (
 var _ = fmt.Printf
 
 type EstadoPendiente struct {
-	Ticketnumber string `json:"Ticketnumber"`
-
-	Subjectid string `json:"Subjectid"`
-
-	And_numerodeenvio *UnionNullString `json:"And_numerodeenvio"`
-
 	Title string `json:"Title"`
 
-	Description *UnionNullString `json:"Description"`
+	Ticketnumber string `json:"Ticketnumber"`
 
-	Createdon string `json:"Createdon"`
-
-	Cac_numerodeenvioincorrecto *UnionNullString `json:"Cac_numerodeenvioincorrecto"`
+	NumeroDeEnvio *UnionNullString `json:"NumeroDeEnvio"`
 
 	Customername string `json:"Customername"`
 
+	Cac_numerodeenvioincorrecto *UnionNullString `json:"Cac_numerodeenvioincorrecto"`
+
 	Cac_areainterna *UnionNullString `json:"Cac_areainterna"`
 
+	Description *UnionNullString `json:"Description"`
+
 	StatusCodeName string `json:"StatusCodeName"`
+
+	Createdon string `json:"Createdon"`
+
+	Asunto string `json:"Asunto"`
 
 	IncidentId *UnionNullString `json:"IncidentId"`
 
 	Origen *UnionNullString `json:"Origen"`
+
+	CorreoRemitente *UnionNullString `json:"CorreoRemitente"`
+
+	CorreoDestinatario *UnionNullString `json:"CorreoDestinatario"`
 }
 
-const EstadoPendienteAvroCRC64Fingerprint = "81\x047\xaf\x1cnK"
+const EstadoPendienteAvroCRC64Fingerprint = "t\xde-ّW\x9f@"
 
 func NewEstadoPendiente() EstadoPendiente {
 	r := EstadoPendiente{}
@@ -75,31 +79,15 @@ func DeserializeEstadoPendienteFromSchema(r io.Reader, schema string) (EstadoPen
 
 func writeEstadoPendiente(r EstadoPendiente, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Ticketnumber, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteString(r.Subjectid, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.And_numerodeenvio, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.Title, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Description, w)
+	err = vm.WriteString(r.Ticketnumber, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Createdon, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Cac_numerodeenvioincorrecto, w)
+	err = writeUnionNullString(r.NumeroDeEnvio, w)
 	if err != nil {
 		return err
 	}
@@ -107,11 +95,27 @@ func writeEstadoPendiente(r EstadoPendiente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Cac_numerodeenvioincorrecto, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Cac_areainterna, w)
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Description, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.StatusCodeName, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Createdon, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Asunto, w)
 	if err != nil {
 		return err
 	}
@@ -123,6 +127,14 @@ func writeEstadoPendiente(r EstadoPendiente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.CorreoRemitente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CorreoDestinatario, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -131,7 +143,7 @@ func (r EstadoPendiente) Serialize(w io.Writer) error {
 }
 
 func (r EstadoPendiente) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
 }
 
 func (r EstadoPendiente) SchemaName() string {
@@ -150,48 +162,48 @@ func (_ EstadoPendiente) SetUnionElem(v int64) { panic("Unsupported operation") 
 func (r *EstadoPendiente) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Ticketnumber}
-
-		return w
-
-	case 1:
-		w := types.String{Target: &r.Subjectid}
-
-		return w
-
-	case 2:
-		r.And_numerodeenvio = NewUnionNullString()
-
-		return r.And_numerodeenvio
-	case 3:
 		w := types.String{Target: &r.Title}
 
 		return w
 
-	case 4:
-		r.Description = NewUnionNullString()
-
-		return r.Description
-	case 5:
-		w := types.String{Target: &r.Createdon}
+	case 1:
+		w := types.String{Target: &r.Ticketnumber}
 
 		return w
 
-	case 6:
-		r.Cac_numerodeenvioincorrecto = NewUnionNullString()
+	case 2:
+		r.NumeroDeEnvio = NewUnionNullString()
 
-		return r.Cac_numerodeenvioincorrecto
-	case 7:
+		return r.NumeroDeEnvio
+	case 3:
 		w := types.String{Target: &r.Customername}
 
 		return w
 
-	case 8:
+	case 4:
+		r.Cac_numerodeenvioincorrecto = NewUnionNullString()
+
+		return r.Cac_numerodeenvioincorrecto
+	case 5:
 		r.Cac_areainterna = NewUnionNullString()
 
 		return r.Cac_areainterna
-	case 9:
+	case 6:
+		r.Description = NewUnionNullString()
+
+		return r.Description
+	case 7:
 		w := types.String{Target: &r.StatusCodeName}
+
+		return w
+
+	case 8:
+		w := types.String{Target: &r.Createdon}
+
+		return w
+
+	case 9:
+		w := types.String{Target: &r.Asunto}
 
 		return w
 
@@ -203,6 +215,14 @@ func (r *EstadoPendiente) Get(i int) types.Field {
 		r.Origen = NewUnionNullString()
 
 		return r.Origen
+	case 12:
+		r.CorreoRemitente = NewUnionNullString()
+
+		return r.CorreoRemitente
+	case 13:
+		r.CorreoDestinatario = NewUnionNullString()
+
+		return r.CorreoDestinatario
 	}
 	panic("Unknown field index")
 }
@@ -216,22 +236,28 @@ func (r *EstadoPendiente) SetDefault(i int) {
 func (r *EstadoPendiente) NullField(i int) {
 	switch i {
 	case 2:
-		r.And_numerodeenvio = nil
+		r.NumeroDeEnvio = nil
 		return
 	case 4:
-		r.Description = nil
-		return
-	case 6:
 		r.Cac_numerodeenvioincorrecto = nil
 		return
-	case 8:
+	case 5:
 		r.Cac_areainterna = nil
+		return
+	case 6:
+		r.Description = nil
 		return
 	case 10:
 		r.IncidentId = nil
 		return
 	case 11:
 		r.Origen = nil
+		return
+	case 12:
+		r.CorreoRemitente = nil
+		return
+	case 13:
+		r.CorreoDestinatario = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -249,31 +275,15 @@ func (_ EstadoPendiente) AvroCRC64Fingerprint() []byte {
 func (r EstadoPendiente) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Ticketnumber"], err = json.Marshal(r.Ticketnumber)
-	if err != nil {
-		return nil, err
-	}
-	output["Subjectid"], err = json.Marshal(r.Subjectid)
-	if err != nil {
-		return nil, err
-	}
-	output["And_numerodeenvio"], err = json.Marshal(r.And_numerodeenvio)
-	if err != nil {
-		return nil, err
-	}
 	output["Title"], err = json.Marshal(r.Title)
 	if err != nil {
 		return nil, err
 	}
-	output["Description"], err = json.Marshal(r.Description)
+	output["Ticketnumber"], err = json.Marshal(r.Ticketnumber)
 	if err != nil {
 		return nil, err
 	}
-	output["Createdon"], err = json.Marshal(r.Createdon)
-	if err != nil {
-		return nil, err
-	}
-	output["Cac_numerodeenvioincorrecto"], err = json.Marshal(r.Cac_numerodeenvioincorrecto)
+	output["NumeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -281,11 +291,27 @@ func (r EstadoPendiente) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["Cac_numerodeenvioincorrecto"], err = json.Marshal(r.Cac_numerodeenvioincorrecto)
+	if err != nil {
+		return nil, err
+	}
 	output["Cac_areainterna"], err = json.Marshal(r.Cac_areainterna)
 	if err != nil {
 		return nil, err
 	}
+	output["Description"], err = json.Marshal(r.Description)
+	if err != nil {
+		return nil, err
+	}
 	output["StatusCodeName"], err = json.Marshal(r.StatusCodeName)
+	if err != nil {
+		return nil, err
+	}
+	output["Createdon"], err = json.Marshal(r.Createdon)
+	if err != nil {
+		return nil, err
+	}
+	output["Asunto"], err = json.Marshal(r.Asunto)
 	if err != nil {
 		return nil, err
 	}
@@ -294,6 +320,14 @@ func (r EstadoPendiente) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Origen"], err = json.Marshal(r.Origen)
+	if err != nil {
+		return nil, err
+	}
+	output["CorreoRemitente"], err = json.Marshal(r.CorreoRemitente)
+	if err != nil {
+		return nil, err
+	}
+	output["CorreoDestinatario"], err = json.Marshal(r.CorreoDestinatario)
 	if err != nil {
 		return nil, err
 	}
@@ -307,48 +341,6 @@ func (r *EstadoPendiente) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["Ticketnumber"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Ticketnumber); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Ticketnumber")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Subjectid"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Subjectid); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Subjectid")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["And_numerodeenvio"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.And_numerodeenvio); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for And_numerodeenvio")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Title"]; ok {
 			return v
@@ -364,46 +356,32 @@ func (r *EstadoPendiente) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Title")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Description"]; ok {
+		if v, ok := fields["Ticketnumber"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Description); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Ticketnumber); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Description")
+		return fmt.Errorf("no value specified for Ticketnumber")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Createdon"]; ok {
+		if v, ok := fields["NumeroDeEnvio"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Createdon); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroDeEnvio); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Createdon")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["Cac_numerodeenvioincorrecto"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Cac_numerodeenvioincorrecto); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for Cac_numerodeenvioincorrecto")
+		return fmt.Errorf("no value specified for NumeroDeEnvio")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Customername"]; ok {
@@ -420,6 +398,20 @@ func (r *EstadoPendiente) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Customername")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["Cac_numerodeenvioincorrecto"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cac_numerodeenvioincorrecto); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Cac_numerodeenvioincorrecto")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["Cac_areainterna"]; ok {
 			return v
 		}
@@ -434,6 +426,20 @@ func (r *EstadoPendiente) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Cac_areainterna")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["Description"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Description); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Description")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["StatusCodeName"]; ok {
 			return v
 		}
@@ -446,6 +452,34 @@ func (r *EstadoPendiente) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for StatusCodeName")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Createdon"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Createdon); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Createdon")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Asunto"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Asunto); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Asunto")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IncidentId"]; ok {
@@ -474,6 +508,34 @@ func (r *EstadoPendiente) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Origen")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CorreoRemitente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CorreoRemitente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CorreoRemitente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CorreoDestinatario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CorreoDestinatario); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CorreoDestinatario")
 	}
 	return nil
 }
