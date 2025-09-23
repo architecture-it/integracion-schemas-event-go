@@ -22,7 +22,7 @@ type EstadoPendiente struct {
 
 	Ticketnumber string `json:"Ticketnumber"`
 
-	NumeroDeEnvio *UnionNullString `json:"NumeroDeEnvio"`
+	And_numerodeenvio *UnionNullString `json:"And_numerodeenvio"`
 
 	Customername string `json:"Customername"`
 
@@ -36,7 +36,7 @@ type EstadoPendiente struct {
 
 	Createdon string `json:"Createdon"`
 
-	Asunto string `json:"Asunto"`
+	Subjectid string `json:"Subjectid"`
 
 	IncidentId *UnionNullString `json:"IncidentId"`
 
@@ -47,7 +47,7 @@ type EstadoPendiente struct {
 	CorreoDestinatario *UnionNullString `json:"CorreoDestinatario"`
 }
 
-const EstadoPendienteAvroCRC64Fingerprint = "t\xde-ّW\x9f@"
+const EstadoPendienteAvroCRC64Fingerprint = "\x15\x96\a.\tȮ\xc6"
 
 func NewEstadoPendiente() EstadoPendiente {
 	r := EstadoPendiente{}
@@ -87,7 +87,7 @@ func writeEstadoPendiente(r EstadoPendiente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.NumeroDeEnvio, w)
+	err = writeUnionNullString(r.And_numerodeenvio, w)
 	if err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func writeEstadoPendiente(r EstadoPendiente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Asunto, w)
+	err = vm.WriteString(r.Subjectid, w)
 	if err != nil {
 		return err
 	}
@@ -143,7 +143,7 @@ func (r EstadoPendiente) Serialize(w io.Writer) error {
 }
 
 func (r EstadoPendiente) Schema() string {
-	return "{\"fields\":[{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
 }
 
 func (r EstadoPendiente) SchemaName() string {
@@ -172,9 +172,9 @@ func (r *EstadoPendiente) Get(i int) types.Field {
 		return w
 
 	case 2:
-		r.NumeroDeEnvio = NewUnionNullString()
+		r.And_numerodeenvio = NewUnionNullString()
 
-		return r.NumeroDeEnvio
+		return r.And_numerodeenvio
 	case 3:
 		w := types.String{Target: &r.Customername}
 
@@ -203,7 +203,7 @@ func (r *EstadoPendiente) Get(i int) types.Field {
 		return w
 
 	case 9:
-		w := types.String{Target: &r.Asunto}
+		w := types.String{Target: &r.Subjectid}
 
 		return w
 
@@ -236,7 +236,7 @@ func (r *EstadoPendiente) SetDefault(i int) {
 func (r *EstadoPendiente) NullField(i int) {
 	switch i {
 	case 2:
-		r.NumeroDeEnvio = nil
+		r.And_numerodeenvio = nil
 		return
 	case 4:
 		r.Cac_numerodeenvioincorrecto = nil
@@ -283,7 +283,7 @@ func (r EstadoPendiente) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["NumeroDeEnvio"], err = json.Marshal(r.NumeroDeEnvio)
+	output["And_numerodeenvio"], err = json.Marshal(r.And_numerodeenvio)
 	if err != nil {
 		return nil, err
 	}
@@ -311,7 +311,7 @@ func (r EstadoPendiente) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Asunto"], err = json.Marshal(r.Asunto)
+	output["Subjectid"], err = json.Marshal(r.Subjectid)
 	if err != nil {
 		return nil, err
 	}
@@ -370,18 +370,18 @@ func (r *EstadoPendiente) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Ticketnumber")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["NumeroDeEnvio"]; ok {
+		if v, ok := fields["And_numerodeenvio"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.NumeroDeEnvio); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.And_numerodeenvio); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for NumeroDeEnvio")
+		return fmt.Errorf("no value specified for And_numerodeenvio")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Customername"]; ok {
@@ -468,18 +468,18 @@ func (r *EstadoPendiente) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for Createdon")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Asunto"]; ok {
+		if v, ok := fields["Subjectid"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Asunto); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Subjectid); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Asunto")
+		return fmt.Errorf("no value specified for Subjectid")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IncidentId"]; ok {
