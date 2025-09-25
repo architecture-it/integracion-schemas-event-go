@@ -35,7 +35,7 @@ type UserInfo struct {
 	Contratos []Contrato `json:"Contratos"`
 }
 
-const UserInfoAvroCRC64Fingerprint = "\x1e/\x94\x8fw\xea\x9a\xf8"
+const UserInfoAvroCRC64Fingerprint = "9sd\x98\xfd+E\t"
 
 func NewUserInfo() UserInfo {
 	r := UserInfo{}
@@ -109,7 +109,7 @@ func (r UserInfo) Serialize(w io.Writer) error {
 }
 
 func (r UserInfo) Schema() string {
-	return "{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"AdmitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding.UserInfo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"AdmitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding.UserInfo\",\"type\":\"record\"}"
 }
 
 func (r UserInfo) SchemaName() string {

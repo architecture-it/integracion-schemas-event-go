@@ -22,7 +22,7 @@ type Contrato struct {
 
 	Nombre string `json:"Nombre"`
 
-	Numero string `json:"Numero"`
+	Numero *UnionNullString `json:"Numero"`
 
 	Descripcion string `json:"Descripcion"`
 
@@ -33,10 +33,11 @@ type Contrato struct {
 	AdmitePuntosHop bool `json:"AdmitePuntosHop"`
 }
 
-const ContratoAvroCRC64Fingerprint = "\xd589חf\xb5\x93"
+const ContratoAvroCRC64Fingerprint = "\xbc\x7f0:\x95\x1e\xa9\xcf"
 
 func NewContrato() Contrato {
 	r := Contrato{}
+	r.Numero = nil
 	r.AdmitePuntosHop = false
 	return r
 }
@@ -74,7 +75,7 @@ func writeContrato(r Contrato, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Numero, w)
+	err = writeUnionNullString(r.Numero, w)
 	if err != nil {
 		return err
 	}
@@ -102,7 +103,7 @@ func (r Contrato) Serialize(w io.Writer) error {
 }
 
 func (r Contrato) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"AdmitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding.Contrato\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"AdmitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding.Contrato\",\"type\":\"record\"}"
 }
 
 func (r Contrato) SchemaName() string {
@@ -131,10 +132,9 @@ func (r *Contrato) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Numero}
+		r.Numero = NewUnionNullString()
 
-		return w
-
+		return r.Numero
 	case 3:
 		w := types.String{Target: &r.Descripcion}
 
@@ -161,6 +161,9 @@ func (r *Contrato) Get(i int) types.Field {
 
 func (r *Contrato) SetDefault(i int) {
 	switch i {
+	case 2:
+		r.Numero = nil
+		return
 	case 6:
 		r.AdmitePuntosHop = false
 		return
@@ -170,6 +173,9 @@ func (r *Contrato) SetDefault(i int) {
 
 func (r *Contrato) NullField(i int) {
 	switch i {
+	case 2:
+		r.Numero = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -264,7 +270,9 @@ func (r *Contrato) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Numero")
+		r.Numero = NewUnionNullString()
+
+		r.Numero = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Descripcion"]; ok {

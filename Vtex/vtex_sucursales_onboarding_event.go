@@ -21,7 +21,7 @@ type VtexSucursalesOnboardingEvent struct {
 	User UserInfo `json:"User"`
 }
 
-const VtexSucursalesOnboardingEventAvroCRC64Fingerprint = "r\x8cf\x03\x92\xffM\t"
+const VtexSucursalesOnboardingEventAvroCRC64Fingerprint = "\a\x8fD\xafP\xa6\xdfZ"
 
 func NewVtexSucursalesOnboardingEvent() VtexSucursalesOnboardingEvent {
 	r := VtexSucursalesOnboardingEvent{}
@@ -67,7 +67,7 @@ func (r VtexSucursalesOnboardingEvent) Serialize(w io.Writer) error {
 }
 
 func (r VtexSucursalesOnboardingEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"AdmitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"UserInfo\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding\",\"type\":\"record\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboardingEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"User\",\"type\":{\"fields\":[{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"VtexURL\",\"type\":\"string\"},{\"name\":\"VtexAppKey\",\"type\":\"string\"},{\"name\":\"VtexAppToken\",\"type\":\"string\"},{\"name\":\"Usuario_login\",\"type\":\"long\"},{\"name\":\"Aol_id\",\"type\":\"long\"},{\"name\":\"Hostname\",\"type\":\"string\"},{\"name\":\"Contratos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"Numero\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"TipoDeEnvio\",\"type\":\"string\"},{\"name\":\"ModoDeEntrega\",\"type\":\"string\"},{\"default\":false,\"name\":\"AdmitePuntosHop\",\"type\":\"boolean\"}],\"name\":\"Contrato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"UserInfo\",\"namespace\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboarding\",\"type\":\"record\"}}],\"name\":\"Andreani.Vtex.Events.Record.VtexSucursalesOnboardingEvent\",\"type\":\"record\"}"
 }
 
 func (r VtexSucursalesOnboardingEvent) SchemaName() string {
