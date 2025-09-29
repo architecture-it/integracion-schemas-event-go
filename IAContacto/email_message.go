@@ -27,12 +27,18 @@ type EmailMessage struct {
 	Sender *UnionNullSender `json:"Sender"`
 
 	Body *UnionNullBody `json:"Body"`
+
+	HasAttachment *UnionNullBool `json:"HasAttachment"`
+
+	Attachment *UnionNullString `json:"Attachment"`
 }
 
-const EmailMessageAvroCRC64Fingerprint = "y\xc4\xc5\xd3+\x90\xcd\xff"
+const EmailMessageAvroCRC64Fingerprint = "\xa2Xv\xa3\xe7\x1f\x1a:"
 
 func NewEmailMessage() EmailMessage {
 	r := EmailMessage{}
+	r.HasAttachment = nil
+	r.Attachment = nil
 	return r
 }
 
@@ -81,6 +87,14 @@ func writeEmailMessage(r EmailMessage, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullBool(r.HasAttachment, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Attachment, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -89,7 +103,7 @@ func (r EmailMessage) Serialize(w io.Writer) error {
 }
 
 func (r EmailMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Subject\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReceivedDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Sender\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"EmailAddress\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]}],\"name\":\"Sender\",\"type\":\"record\"}]},{\"name\":\"Body\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Content\",\"type\":[\"null\",\"string\"]}],\"name\":\"Body\",\"type\":\"record\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Subject\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReceivedDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Sender\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"EmailAddress\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]}],\"name\":\"Sender\",\"type\":\"record\"}]},{\"name\":\"Body\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Content\",\"type\":[\"null\",\"string\"]}],\"name\":\"Body\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"HasAttachment\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Attachment\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailMessage\",\"type\":\"record\"}"
 }
 
 func (r EmailMessage) SchemaName() string {
@@ -128,12 +142,26 @@ func (r *EmailMessage) Get(i int) types.Field {
 		r.Body = NewUnionNullBody()
 
 		return r.Body
+	case 5:
+		r.HasAttachment = NewUnionNullBool()
+
+		return r.HasAttachment
+	case 6:
+		r.Attachment = NewUnionNullString()
+
+		return r.Attachment
 	}
 	panic("Unknown field index")
 }
 
 func (r *EmailMessage) SetDefault(i int) {
 	switch i {
+	case 5:
+		r.HasAttachment = nil
+		return
+	case 6:
+		r.Attachment = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -151,6 +179,12 @@ func (r *EmailMessage) NullField(i int) {
 		return
 	case 4:
 		r.Body = nil
+		return
+	case 5:
+		r.HasAttachment = nil
+		return
+	case 6:
+		r.Attachment = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -185,6 +219,14 @@ func (r EmailMessage) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Body"], err = json.Marshal(r.Body)
+	if err != nil {
+		return nil, err
+	}
+	output["HasAttachment"], err = json.Marshal(r.HasAttachment)
+	if err != nil {
+		return nil, err
+	}
+	output["Attachment"], err = json.Marshal(r.Attachment)
 	if err != nil {
 		return nil, err
 	}
@@ -267,6 +309,38 @@ func (r *EmailMessage) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for Body")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["HasAttachment"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.HasAttachment); err != nil {
+			return err
+		}
+	} else {
+		r.HasAttachment = NewUnionNullBool()
+
+		r.HasAttachment = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Attachment"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Attachment); err != nil {
+			return err
+		}
+	} else {
+		r.Attachment = NewUnionNullString()
+
+		r.Attachment = nil
 	}
 	return nil
 }
