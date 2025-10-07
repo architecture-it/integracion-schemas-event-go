@@ -35,9 +35,11 @@ type Geocerca struct {
 	Longitud *UnionNullString `json:"longitud"`
 
 	HexagonoH3Id *UnionNullPoligono `json:"hexagonoH3Id"`
+
+	PuntoHop *UnionNullDatosSucursal `json:"puntoHop"`
 }
 
-const GeocercaAvroCRC64Fingerprint = "\xf9\x82\xc9W\xf5\x12\xb9\x8b"
+const GeocercaAvroCRC64Fingerprint = "f\xd5g\x9f\xc7aT\xb3"
 
 func NewGeocerca() Geocerca {
 	r := Geocerca{}
@@ -48,6 +50,7 @@ func NewGeocerca() Geocerca {
 	r.Latitud = nil
 	r.Longitud = nil
 	r.HexagonoH3Id = nil
+	r.PuntoHop = nil
 	return r
 }
 
@@ -112,6 +115,10 @@ func writeGeocerca(r Geocerca, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullDatosSucursal(r.PuntoHop, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -120,7 +127,7 @@ func (r Geocerca) Serialize(w io.Writer) error {
 }
 
 func (r Geocerca) Schema() string {
-	return "{\"fields\":[{\"name\":\"topic\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"sucursalOrigen\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"sucursalDestino\",\"type\":[\"null\",\"Andreani.SppSchema.Events.DatosSucursal\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"zonaReparto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"hexagonoH3Id\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"resolution8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"resolution9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"resolution10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"resolution11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"resolution12\",\"type\":[\"null\",\"string\"]}],\"name\":\"Poligono\",\"type\":\"record\"}]}],\"name\":\"Andreani.SppSchema.Events.Geocerca\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"topic\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"sucursalOrigen\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"sucursalDestino\",\"type\":[\"null\",\"Andreani.SppSchema.Events.DatosSucursal\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"zonaReparto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"hexagonoH3Id\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"resolution8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"resolution9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"resolution10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"resolution11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"resolution12\",\"type\":[\"null\",\"string\"]}],\"name\":\"Poligono\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"puntoHop\",\"type\":[\"null\",\"Andreani.SppSchema.Events.DatosSucursal\"]}],\"name\":\"Andreani.SppSchema.Events.Geocerca\",\"type\":\"record\"}"
 }
 
 func (r Geocerca) SchemaName() string {
@@ -176,6 +183,10 @@ func (r *Geocerca) Get(i int) types.Field {
 		r.HexagonoH3Id = NewUnionNullPoligono()
 
 		return r.HexagonoH3Id
+	case 9:
+		r.PuntoHop = NewUnionNullDatosSucursal()
+
+		return r.PuntoHop
 	}
 	panic("Unknown field index")
 }
@@ -203,6 +214,9 @@ func (r *Geocerca) SetDefault(i int) {
 	case 8:
 		r.HexagonoH3Id = nil
 		return
+	case 9:
+		r.PuntoHop = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -229,6 +243,9 @@ func (r *Geocerca) NullField(i int) {
 		return
 	case 8:
 		r.HexagonoH3Id = nil
+		return
+	case 9:
+		r.PuntoHop = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -279,6 +296,10 @@ func (r Geocerca) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["hexagonoH3Id"], err = json.Marshal(r.HexagonoH3Id)
+	if err != nil {
+		return nil, err
+	}
+	output["puntoHop"], err = json.Marshal(r.PuntoHop)
 	if err != nil {
 		return nil, err
 	}
@@ -431,6 +452,22 @@ func (r *Geocerca) UnmarshalJSON(data []byte) error {
 		r.HexagonoH3Id = NewUnionNullPoligono()
 
 		r.HexagonoH3Id = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["puntoHop"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PuntoHop); err != nil {
+			return err
+		}
+	} else {
+		r.PuntoHop = NewUnionNullDatosSucursal()
+
+		r.PuntoHop = nil
 	}
 	return nil
 }
