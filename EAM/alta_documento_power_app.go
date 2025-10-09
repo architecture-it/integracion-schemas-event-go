@@ -21,7 +21,7 @@ type AltaDocumentoPowerApp struct {
 	Document Document `json:"Document"`
 }
 
-const AltaDocumentoPowerAppAvroCRC64Fingerprint = "\x88E'\xfb\xfc\x97\x16<"
+const AltaDocumentoPowerAppAvroCRC64Fingerprint = "%\xfc\x17Cr\xf22\x04"
 
 func NewAltaDocumentoPowerApp() AltaDocumentoPowerApp {
 	r := AltaDocumentoPowerApp{}
@@ -67,7 +67,7 @@ func (r AltaDocumentoPowerApp) Serialize(w io.Writer) error {
 }
 
 func (r AltaDocumentoPowerApp) Schema() string {
-	return "{\"fields\":[{\"name\":\"Document\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"idEam\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idPowerApp\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"organizacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Document\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.AltaDocumentoPowerApp\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Document\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"idEam\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idPowerApp\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"organizacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantImgBateria\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CantImgCargador\",\"type\":[\"null\",\"int\"]}],\"name\":\"Document\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.AltaDocumentoPowerApp\",\"type\":\"record\"}"
 }
 
 func (r AltaDocumentoPowerApp) SchemaName() string {

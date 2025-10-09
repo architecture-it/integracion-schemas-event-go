@@ -53,14 +53,20 @@ type Asset struct {
 	Cargador *UnionNullCharger `json:"cargador"`
 
 	Bateria *UnionNullArrayBattery `json:"bateria"`
+
+	CantImgBateria *UnionNullInt `json:"CantImgBateria"`
+
+	CantImgCargador *UnionNullInt `json:"CantImgCargador"`
 }
 
-const AssetAvroCRC64Fingerprint = "\xbf1#\x14\xa5\xb7\x18f"
+const AssetAvroCRC64Fingerprint = "\xb7p]4\x83\xa3\xf3\x81"
 
 func NewAsset() Asset {
 	r := Asset{}
 	r.Cargador = nil
 	r.Bateria = nil
+	r.CantImgBateria = nil
+	r.CantImgCargador = nil
 	return r
 }
 
@@ -161,6 +167,14 @@ func writeAsset(r Asset, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullInt(r.CantImgBateria, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullInt(r.CantImgCargador, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -169,7 +183,7 @@ func (r Asset) Serialize(w io.Writer) error {
 }
 
 func (r Asset) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"propulsion\",\"type\":\"string\"},{\"name\":\"categoria\",\"type\":\"string\"},{\"name\":\"cod_eam\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cargador\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Charger\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"bateria\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Battery\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipo_objeto\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"codigo_costo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"fecha_alta\",\"type\":\"string\"},{\"name\":\"organizacion\",\"type\":\"string\"},{\"name\":\"fabricante\",\"type\":\"string\"},{\"name\":\"modelo\",\"type\":\"string\"},{\"name\":\"nro_serie\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"name\":\"fueraDeServicio\",\"type\":\"boolean\"},{\"name\":\"propulsion\",\"type\":\"string\"},{\"name\":\"categoria\",\"type\":\"string\"},{\"name\":\"cod_eam\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cargador\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Charger\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"bateria\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"nro_serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Battery\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"CantImgBateria\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CantImgCargador\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Asset\",\"type\":\"record\"}"
 }
 
 func (r Asset) SchemaName() string {
@@ -274,6 +288,14 @@ func (r *Asset) Get(i int) types.Field {
 		r.Bateria = NewUnionNullArrayBattery()
 
 		return r.Bateria
+	case 18:
+		r.CantImgBateria = NewUnionNullInt()
+
+		return r.CantImgBateria
+	case 19:
+		r.CantImgCargador = NewUnionNullInt()
+
+		return r.CantImgCargador
 	}
 	panic("Unknown field index")
 }
@@ -285,6 +307,12 @@ func (r *Asset) SetDefault(i int) {
 		return
 	case 17:
 		r.Bateria = nil
+		return
+	case 18:
+		r.CantImgBateria = nil
+		return
+	case 19:
+		r.CantImgCargador = nil
 		return
 	}
 	panic("Unknown field index")
@@ -300,6 +328,12 @@ func (r *Asset) NullField(i int) {
 		return
 	case 17:
 		r.Bateria = nil
+		return
+	case 18:
+		r.CantImgBateria = nil
+		return
+	case 19:
+		r.CantImgCargador = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -386,6 +420,14 @@ func (r Asset) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["bateria"], err = json.Marshal(r.Bateria)
+	if err != nil {
+		return nil, err
+	}
+	output["CantImgBateria"], err = json.Marshal(r.CantImgBateria)
+	if err != nil {
+		return nil, err
+	}
+	output["CantImgCargador"], err = json.Marshal(r.CantImgCargador)
 	if err != nil {
 		return nil, err
 	}
@@ -654,6 +696,38 @@ func (r *Asset) UnmarshalJSON(data []byte) error {
 		r.Bateria = NewUnionNullArrayBattery()
 
 		r.Bateria = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CantImgBateria"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantImgBateria); err != nil {
+			return err
+		}
+	} else {
+		r.CantImgBateria = NewUnionNullInt()
+
+		r.CantImgBateria = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CantImgCargador"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantImgCargador); err != nil {
+			return err
+		}
+	} else {
+		r.CantImgCargador = NewUnionNullInt()
+
+		r.CantImgCargador = nil
 	}
 	return nil
 }
