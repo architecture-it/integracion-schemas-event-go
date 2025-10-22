@@ -24,18 +24,21 @@ type Document struct {
 
 	Organizacion *UnionNullString `json:"organizacion"`
 
+	Tipo *UnionNullString `json:"tipo"`
+
 	CantImgBateria *UnionNullInt `json:"CantImgBateria"`
 
 	CantImgCargador *UnionNullInt `json:"CantImgCargador"`
 }
 
-const DocumentAvroCRC64Fingerprint = "\x898\x04\x9bb\xb4\x14p"
+const DocumentAvroCRC64Fingerprint = "\\\x14lo)i\xa1\xf5"
 
 func NewDocument() Document {
 	r := Document{}
 	r.IdEam = nil
 	r.IdPowerApp = nil
 	r.Organizacion = nil
+	r.Tipo = nil
 	r.CantImgBateria = nil
 	r.CantImgCargador = nil
 	return r
@@ -78,6 +81,10 @@ func writeDocument(r Document, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Tipo, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullInt(r.CantImgBateria, w)
 	if err != nil {
 		return err
@@ -94,7 +101,7 @@ func (r Document) Serialize(w io.Writer) error {
 }
 
 func (r Document) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"idEam\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idPowerApp\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"organizacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantImgBateria\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CantImgCargador\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Document\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"idEam\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"idPowerApp\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"organizacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CantImgBateria\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"CantImgCargador\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.Document\",\"type\":\"record\"}"
 }
 
 func (r Document) SchemaName() string {
@@ -125,10 +132,14 @@ func (r *Document) Get(i int) types.Field {
 
 		return r.Organizacion
 	case 3:
+		r.Tipo = NewUnionNullString()
+
+		return r.Tipo
+	case 4:
 		r.CantImgBateria = NewUnionNullInt()
 
 		return r.CantImgBateria
-	case 4:
+	case 5:
 		r.CantImgCargador = NewUnionNullInt()
 
 		return r.CantImgCargador
@@ -148,9 +159,12 @@ func (r *Document) SetDefault(i int) {
 		r.Organizacion = nil
 		return
 	case 3:
-		r.CantImgBateria = nil
+		r.Tipo = nil
 		return
 	case 4:
+		r.CantImgBateria = nil
+		return
+	case 5:
 		r.CantImgCargador = nil
 		return
 	}
@@ -169,9 +183,12 @@ func (r *Document) NullField(i int) {
 		r.Organizacion = nil
 		return
 	case 3:
-		r.CantImgBateria = nil
+		r.Tipo = nil
 		return
 	case 4:
+		r.CantImgBateria = nil
+		return
+	case 5:
 		r.CantImgCargador = nil
 		return
 	}
@@ -199,6 +216,10 @@ func (r Document) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["organizacion"], err = json.Marshal(r.Organizacion)
+	if err != nil {
+		return nil, err
+	}
+	output["tipo"], err = json.Marshal(r.Tipo)
 	if err != nil {
 		return nil, err
 	}
@@ -267,6 +288,22 @@ func (r *Document) UnmarshalJSON(data []byte) error {
 		r.Organizacion = NewUnionNullString()
 
 		r.Organizacion = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["tipo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Tipo); err != nil {
+			return err
+		}
+	} else {
+		r.Tipo = NewUnionNullString()
+
+		r.Tipo = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["CantImgBateria"]; ok {
