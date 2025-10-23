@@ -28,6 +28,8 @@ type LineaAbastecimientoEcommerce struct {
 
 	CodigoArticulo string `json:"CodigoArticulo"`
 
+	TransaccionId string `json:"TransaccionId"`
+
 	EstadoLote string `json:"EstadoLote"`
 
 	EsTrazable bool `json:"EsTrazable"`
@@ -57,10 +59,11 @@ type LineaAbastecimientoEcommerce struct {
 	Bulto *UnionNullBultoLineaAbastecimientoEcommerce `json:"Bulto"`
 }
 
-const LineaAbastecimientoEcommerceAvroCRC64Fingerprint = "\x14\x02b\xb3\xa6\xfc\xa6\\"
+const LineaAbastecimientoEcommerceAvroCRC64Fingerprint = "r\x14\xb3\xfdG\xce\x1dZ"
 
 func NewLineaAbastecimientoEcommerce() LineaAbastecimientoEcommerce {
 	r := LineaAbastecimientoEcommerce{}
+	r.TransaccionId = ""
 	r.EsTrazable = false
 	r.TipoAcondicionamiento = nil
 	r.TipoControlCalidad = nil
@@ -119,6 +122,10 @@ func writeLineaAbastecimientoEcommerce(r LineaAbastecimientoEcommerce, w io.Writ
 		return err
 	}
 	err = vm.WriteString(r.CodigoArticulo, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.TransaccionId, w)
 	if err != nil {
 		return err
 	}
@@ -186,7 +193,7 @@ func (r LineaAbastecimientoEcommerce) Serialize(w io.Writer) error {
 }
 
 func (r LineaAbastecimientoEcommerce) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"string\"},{\"name\":\"CantidadPedida\",\"type\":\"int\"},{\"name\":\"UnidadMedida\",\"type\":\"string\"},{\"name\":\"AlmacenWMS\",\"type\":\"string\"},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"default\":false,\"name\":\"EsTrazable\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"TipoAcondicionamiento\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoControlCalidad\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventoAnmat\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GLNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"LoteFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AcondicionamientoSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Bulto\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"CodigoExterno\",\"type\":\"string\"},{\"name\":\"BultoId\",\"type\":\"string\"}],\"name\":\"BultoLineaAbastecimientoEcommerce\",\"type\":\"record\"}]}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.LineaAbastecimientoEcommerce\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NumeroDeLinea\",\"type\":\"string\"},{\"name\":\"CantidadPedida\",\"type\":\"int\"},{\"name\":\"UnidadMedida\",\"type\":\"string\"},{\"name\":\"AlmacenWMS\",\"type\":\"string\"},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TransaccionId\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"default\":false,\"name\":\"EsTrazable\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"TipoAcondicionamiento\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoControlCalidad\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoTraza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProductoTrazable\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EventoAnmat\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GLNDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"LoteFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LoteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AcondicionamientoSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Bulto\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Cantidad\",\"type\":\"int\"},{\"name\":\"CodigoExterno\",\"type\":\"string\"},{\"name\":\"BultoId\",\"type\":\"string\"}],\"name\":\"BultoLineaAbastecimientoEcommerce\",\"type\":\"record\"}]}],\"name\":\"Andreani.WarehouseAbastecimiento.Events.Record.LineaAbastecimientoEcommerce\",\"type\":\"record\"}"
 }
 
 func (r LineaAbastecimientoEcommerce) SchemaName() string {
@@ -230,60 +237,65 @@ func (r *LineaAbastecimientoEcommerce) Get(i int) types.Field {
 		return w
 
 	case 5:
-		w := types.String{Target: &r.EstadoLote}
+		w := types.String{Target: &r.TransaccionId}
 
 		return w
 
 	case 6:
-		w := types.Boolean{Target: &r.EsTrazable}
+		w := types.String{Target: &r.EstadoLote}
 
 		return w
 
 	case 7:
+		w := types.Boolean{Target: &r.EsTrazable}
+
+		return w
+
+	case 8:
 		r.TipoAcondicionamiento = NewUnionNullArrayString()
 
 		return r.TipoAcondicionamiento
-	case 8:
+	case 9:
 		r.TipoControlCalidad = NewUnionNullArrayString()
 
 		return r.TipoControlCalidad
-	case 9:
+	case 10:
 		r.TipoTraza = NewUnionNullString()
 
 		return r.TipoTraza
-	case 10:
+	case 11:
 		r.ProductoTrazable = NewUnionNullString()
 
 		return r.ProductoTrazable
-	case 11:
+	case 12:
 		r.EventoAnmat = NewUnionNullString()
 
 		return r.EventoAnmat
-	case 12:
+	case 13:
 		r.GLNDestino = NewUnionNullString()
 
 		return r.GLNDestino
-	case 13:
+	case 14:
 		r.ValorDeclarado = NewUnionNullString()
 
 		return r.ValorDeclarado
-	case 14:
+	case 15:
 		r.FechaVencimiento = NewUnionNullLong()
 
 		return r.FechaVencimiento
-	case 15:
+	case 16:
 		r.LoteFabricante = NewUnionNullString()
 
 		return r.LoteFabricante
-	case 16:
+	case 17:
 		r.LoteSecundario = NewUnionNullString()
 
 		return r.LoteSecundario
-	case 17:
+	case 18:
 		r.AcondicionamientoSecundario = NewUnionNullString()
 
 		return r.AcondicionamientoSecundario
-	case 18:
+	case 19:
 		r.Bulto = NewUnionNullBultoLineaAbastecimientoEcommerce()
 
 		return r.Bulto
@@ -293,43 +305,46 @@ func (r *LineaAbastecimientoEcommerce) Get(i int) types.Field {
 
 func (r *LineaAbastecimientoEcommerce) SetDefault(i int) {
 	switch i {
-	case 6:
-		r.EsTrazable = false
+	case 5:
+		r.TransaccionId = ""
 		return
 	case 7:
-		r.TipoAcondicionamiento = nil
+		r.EsTrazable = false
 		return
 	case 8:
-		r.TipoControlCalidad = nil
+		r.TipoAcondicionamiento = nil
 		return
 	case 9:
-		r.TipoTraza = nil
+		r.TipoControlCalidad = nil
 		return
 	case 10:
-		r.ProductoTrazable = nil
+		r.TipoTraza = nil
 		return
 	case 11:
-		r.EventoAnmat = nil
+		r.ProductoTrazable = nil
 		return
 	case 12:
-		r.GLNDestino = nil
+		r.EventoAnmat = nil
 		return
 	case 13:
-		r.ValorDeclarado = nil
+		r.GLNDestino = nil
 		return
 	case 14:
-		r.FechaVencimiento = nil
+		r.ValorDeclarado = nil
 		return
 	case 15:
-		r.LoteFabricante = nil
+		r.FechaVencimiento = nil
 		return
 	case 16:
-		r.LoteSecundario = nil
+		r.LoteFabricante = nil
 		return
 	case 17:
-		r.AcondicionamientoSecundario = nil
+		r.LoteSecundario = nil
 		return
 	case 18:
+		r.AcondicionamientoSecundario = nil
+		return
+	case 19:
 		r.Bulto = nil
 		return
 	}
@@ -338,40 +353,40 @@ func (r *LineaAbastecimientoEcommerce) SetDefault(i int) {
 
 func (r *LineaAbastecimientoEcommerce) NullField(i int) {
 	switch i {
-	case 7:
+	case 8:
 		r.TipoAcondicionamiento = nil
 		return
-	case 8:
+	case 9:
 		r.TipoControlCalidad = nil
 		return
-	case 9:
+	case 10:
 		r.TipoTraza = nil
 		return
-	case 10:
+	case 11:
 		r.ProductoTrazable = nil
 		return
-	case 11:
+	case 12:
 		r.EventoAnmat = nil
 		return
-	case 12:
+	case 13:
 		r.GLNDestino = nil
 		return
-	case 13:
+	case 14:
 		r.ValorDeclarado = nil
 		return
-	case 14:
+	case 15:
 		r.FechaVencimiento = nil
 		return
-	case 15:
+	case 16:
 		r.LoteFabricante = nil
 		return
-	case 16:
+	case 17:
 		r.LoteSecundario = nil
 		return
-	case 17:
+	case 18:
 		r.AcondicionamientoSecundario = nil
 		return
-	case 18:
+	case 19:
 		r.Bulto = nil
 		return
 	}
@@ -409,6 +424,10 @@ func (r LineaAbastecimientoEcommerce) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CodigoArticulo"], err = json.Marshal(r.CodigoArticulo)
+	if err != nil {
+		return nil, err
+	}
+	output["TransaccionId"], err = json.Marshal(r.TransaccionId)
 	if err != nil {
 		return nil, err
 	}
@@ -547,6 +566,20 @@ func (r *LineaAbastecimientoEcommerce) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CodigoArticulo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TransaccionId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TransaccionId); err != nil {
+			return err
+		}
+	} else {
+		r.TransaccionId = ""
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["EstadoLote"]; ok {
