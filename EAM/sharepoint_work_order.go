@@ -21,7 +21,7 @@ type SharepointWorkOrder struct {
 	WorkOrder WorkOrder `json:"WorkOrder"`
 }
 
-const SharepointWorkOrderAvroCRC64Fingerprint = "\xe3\xfd\x8d2+\xf7c\t"
+const SharepointWorkOrderAvroCRC64Fingerprint = "\xf0\x90\x82\xe2\x87@S\xc6"
 
 func NewSharepointWorkOrder() SharepointWorkOrder {
 	r := SharepointWorkOrder{}
@@ -67,7 +67,7 @@ func (r SharepointWorkOrder) Serialize(w io.Writer) error {
 }
 
 func (r SharepointWorkOrder) Schema() string {
-	return "{\"fields\":[{\"name\":\"WorkOrder\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"date_report\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_id_catalog\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_modelo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_marca\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_inventario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"WorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.SharepointWorkOrder\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"WorkOrder\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"default\":null,\"name\":\"clase\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"date_report\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_id_catalog\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_modelo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_marca\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_inventario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"WorkOrder\",\"namespace\":\"Andreani.EAM.Events.Sharepoint\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.SharepointWorkOrder\",\"type\":\"record\"}"
 }
 
 func (r SharepointWorkOrder) SchemaName() string {

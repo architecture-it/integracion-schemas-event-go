@@ -28,7 +28,7 @@ type WorkOrder struct {
 
 	User_report string `json:"user_report"`
 
-	Clase string `json:"clase"`
+	Clase *UnionNullString `json:"clase"`
 
 	TipoOT string `json:"tipoOT"`
 
@@ -57,10 +57,11 @@ type WorkOrder struct {
 	Equipo_descripcion *UnionNullString `json:"equipo_descripcion"`
 }
 
-const WorkOrderAvroCRC64Fingerprint = "0g\xff\xbdL\f\xa0\xdc"
+const WorkOrderAvroCRC64Fingerprint = " \xa6\xfe(\x98\f\x02\x1e"
 
 func NewWorkOrder() WorkOrder {
 	r := WorkOrder{}
+	r.Clase = nil
 	r.Propietario = nil
 	r.Date_report = nil
 	r.Ceco = nil
@@ -118,7 +119,7 @@ func writeWorkOrder(r WorkOrder, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Clase, w)
+	err = writeUnionNullString(r.Clase, w)
 	if err != nil {
 		return err
 	}
@@ -182,7 +183,7 @@ func (r WorkOrder) Serialize(w io.Writer) error {
 }
 
 func (r WorkOrder) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"name\":\"clase\",\"type\":\"string\"},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"date_report\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_id_catalog\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_modelo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_marca\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_inventario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"default\":null,\"name\":\"clase\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"date_report\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_id_catalog\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_modelo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_marca\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_inventario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
 }
 
 func (r WorkOrder) SchemaName() string {
@@ -226,10 +227,9 @@ func (r *WorkOrder) Get(i int) types.Field {
 		return w
 
 	case 5:
-		w := types.String{Target: &r.Clase}
+		r.Clase = NewUnionNullString()
 
-		return w
-
+		return r.Clase
 	case 6:
 		w := types.String{Target: &r.TipoOT}
 
@@ -292,6 +292,9 @@ func (r *WorkOrder) Get(i int) types.Field {
 
 func (r *WorkOrder) SetDefault(i int) {
 	switch i {
+	case 5:
+		r.Clase = nil
+		return
 	case 10:
 		r.Propietario = nil
 		return
@@ -325,6 +328,9 @@ func (r *WorkOrder) SetDefault(i int) {
 
 func (r *WorkOrder) NullField(i int) {
 	switch i {
+	case 5:
+		r.Clase = nil
+		return
 	case 10:
 		r.Propietario = nil
 		return
@@ -536,7 +542,9 @@ func (r *WorkOrder) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for clase")
+		r.Clase = NewUnionNullString()
+
+		r.Clase = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoOT"]; ok {
