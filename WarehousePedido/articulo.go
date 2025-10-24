@@ -20,6 +20,8 @@ var _ = fmt.Printf
 type Articulo struct {
 	Codigo string `json:"codigo"`
 
+	IdTransaccion string `json:"idTransaccion"`
+
 	Cantidad float64 `json:"cantidad"`
 
 	Propietario string `json:"propietario"`
@@ -39,7 +41,7 @@ type Articulo struct {
 	Lote LoteArticulo `json:"lote"`
 }
 
-const ArticuloAvroCRC64Fingerprint = "vx65\x95\x99\x93\x84"
+const ArticuloAvroCRC64Fingerprint = "\x87\x82/\x81\xed\xf9&6"
 
 func NewArticulo() Articulo {
 	r := Articulo{}
@@ -79,6 +81,10 @@ func DeserializeArticuloFromSchema(r io.Reader, schema string) (Articulo, error)
 func writeArticulo(r Articulo, w io.Writer) error {
 	var err error
 	err = vm.WriteString(r.Codigo, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.IdTransaccion, w)
 	if err != nil {
 		return err
 	}
@@ -126,7 +132,7 @@ func (r Articulo) Serialize(w io.Writer) error {
 }
 
 func (r Articulo) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"valorDeclaradoUnitario\",\"type\":[\"null\",\"string\"]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.Articulo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"cantidad\",\"type\":\"double\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeropedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"zonaConsumo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]},{\"name\":\"unidadmedida\",\"type\":\"string\"},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"valorDeclaradoUnitario\",\"type\":[\"null\",\"string\"]},{\"name\":\"lote\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"loteDeFabricante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"loteSecundario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"otrosDatos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estado\",\"type\":[\"null\",\"string\"]}],\"name\":\"LoteArticulo\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.Articulo\",\"type\":\"record\"}"
 }
 
 func (r Articulo) SchemaName() string {
@@ -150,41 +156,46 @@ func (r *Articulo) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.Double{Target: &r.Cantidad}
+		w := types.String{Target: &r.IdTransaccion}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Propietario}
+		w := types.Double{Target: &r.Cantidad}
 
 		return w
 
 	case 3:
+		w := types.String{Target: &r.Propietario}
+
+		return w
+
+	case 4:
 		r.Numeropedido = NewUnionNullString()
 
 		return r.Numeropedido
-	case 4:
+	case 5:
 		r.ZonaConsumo = NewUnionNullString()
 
 		return r.ZonaConsumo
-	case 5:
+	case 6:
 		r.Serie = NewUnionNullString()
 
 		return r.Serie
-	case 6:
+	case 7:
 		w := types.String{Target: &r.Unidadmedida}
 
 		return w
 
-	case 7:
+	case 8:
 		r.Datosadicionales = NewUnionNullListaDePropiedades()
 
 		return r.Datosadicionales
-	case 8:
+	case 9:
 		r.ValorDeclaradoUnitario = NewUnionNullString()
 
 		return r.ValorDeclaradoUnitario
-	case 9:
+	case 10:
 		r.Lote = NewLoteArticulo()
 
 		w := types.Record{Target: &r.Lote}
@@ -197,19 +208,19 @@ func (r *Articulo) Get(i int) types.Field {
 
 func (r *Articulo) SetDefault(i int) {
 	switch i {
-	case 3:
+	case 4:
 		r.Numeropedido = nil
 		return
-	case 4:
+	case 5:
 		r.ZonaConsumo = nil
 		return
-	case 5:
+	case 6:
 		r.Serie = nil
 		return
-	case 7:
+	case 8:
 		r.Datosadicionales = nil
 		return
-	case 8:
+	case 9:
 		r.ValorDeclaradoUnitario = nil
 		return
 	}
@@ -218,19 +229,19 @@ func (r *Articulo) SetDefault(i int) {
 
 func (r *Articulo) NullField(i int) {
 	switch i {
-	case 3:
+	case 4:
 		r.Numeropedido = nil
 		return
-	case 4:
+	case 5:
 		r.ZonaConsumo = nil
 		return
-	case 5:
+	case 6:
 		r.Serie = nil
 		return
-	case 7:
+	case 8:
 		r.Datosadicionales = nil
 		return
-	case 8:
+	case 9:
 		r.ValorDeclaradoUnitario = nil
 		return
 	}
@@ -250,6 +261,10 @@ func (r Articulo) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["codigo"], err = json.Marshal(r.Codigo)
+	if err != nil {
+		return nil, err
+	}
+	output["idTransaccion"], err = json.Marshal(r.IdTransaccion)
 	if err != nil {
 		return nil, err
 	}
@@ -312,6 +327,20 @@ func (r *Articulo) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for codigo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["idTransaccion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdTransaccion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for idTransaccion")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cantidad"]; ok {
