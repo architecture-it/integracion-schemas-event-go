@@ -22,10 +22,10 @@ type Atributo struct {
 
 	Nombre string `json:"nombre"`
 
-	Valor *UnionNullString `json:"valor"`
+	Valor *UnionNullStringIntLongDoubleBoolArrayString `json:"valor"`
 }
 
-const AtributoAvroCRC64Fingerprint = "\xd7\xfc\xeem\xc3[T\xf0"
+const AtributoAvroCRC64Fingerprint = "\xcd\xcc\uf4car{n"
 
 func NewAtributo() Atributo {
 	r := Atributo{}
@@ -66,7 +66,7 @@ func writeAtributo(r Atributo, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Valor, w)
+	err = writeUnionNullStringIntLongDoubleBoolArrayString(r.Valor, w)
 	if err != nil {
 		return err
 	}
@@ -78,7 +78,7 @@ func (r Atributo) Serialize(w io.Writer) error {
 }
 
 func (r Atributo) Schema() string {
-	return "{\"fields\":[{\"name\":\"atributoId\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Atributo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"atributoId\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\",\"int\",\"long\",\"double\",\"boolean\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Atributo\",\"type\":\"record\"}"
 }
 
 func (r Atributo) SchemaName() string {
@@ -107,7 +107,7 @@ func (r *Atributo) Get(i int) types.Field {
 		return w
 
 	case 2:
-		r.Valor = NewUnionNullString()
+		r.Valor = NewUnionNullStringIntLongDoubleBoolArrayString()
 
 		return r.Valor
 	}
@@ -206,7 +206,7 @@ func (r *Atributo) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Valor = NewUnionNullString()
+		r.Valor = NewUnionNullStringIntLongDoubleBoolArrayString()
 
 		r.Valor = nil
 	}
