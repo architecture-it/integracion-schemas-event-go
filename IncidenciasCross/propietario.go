@@ -23,7 +23,7 @@ type Propietario struct {
 	Id *UnionNullInt `json:"id"`
 }
 
-const PropietarioAvroCRC64Fingerprint = "\xb4\x8eb\\\x03\xfd\xda3"
+const PropietarioAvroCRC64Fingerprint = "\xd9V\xcd\x1bv\xcc\xf6S"
 
 func NewPropietario() Propietario {
 	r := Propietario{}
@@ -72,11 +72,11 @@ func (r Propietario) Serialize(w io.Writer) error {
 }
 
 func (r Propietario) Schema() string {
-	return "{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.Incidencias.Events.Common.Propietario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Propietario\",\"type\":\"record\"}"
 }
 
 func (r Propietario) SchemaName() string {
-	return "Andreani.Incidencias.Events.Common.Propietario"
+	return "Andreani.IncidenciasCross.Events.Common.Propietario"
 }
 
 func (_ Propietario) SetBoolean(v bool)    { panic("Unsupported operation") }

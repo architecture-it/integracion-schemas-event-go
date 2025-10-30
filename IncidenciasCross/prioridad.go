@@ -23,7 +23,7 @@ type Prioridad struct {
 	Nombre *UnionNullString `json:"nombre"`
 }
 
-const PrioridadAvroCRC64Fingerprint = "\x97\x0f\x16\ue6aap|"
+const PrioridadAvroCRC64Fingerprint = "؍\xb0\xd4_)D\xcf"
 
 func NewPrioridad() Prioridad {
 	r := Prioridad{}
@@ -72,11 +72,11 @@ func (r Prioridad) Serialize(w io.Writer) error {
 }
 
 func (r Prioridad) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Common.Prioridad\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Prioridad\",\"type\":\"record\"}"
 }
 
 func (r Prioridad) SchemaName() string {
-	return "Andreani.Incidencias.Events.Common.Prioridad"
+	return "Andreani.IncidenciasCross.Events.Common.Prioridad"
 }
 
 func (_ Prioridad) SetBoolean(v bool)    { panic("Unsupported operation") }

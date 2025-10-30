@@ -23,7 +23,7 @@ type Accion struct {
 	Codigo string `json:"codigo"`
 }
 
-const AccionAvroCRC64Fingerprint = "\xd3ԉ\xbfQ?D\x03"
+const AccionAvroCRC64Fingerprint = "\x99\xcf\x18Ĩ\x92u\x8c"
 
 func NewAccion() Accion {
 	r := Accion{}
@@ -71,11 +71,11 @@ func (r Accion) Serialize(w io.Writer) error {
 }
 
 func (r Accion) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Andreani.Incidencias.Events.Common.Accion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Accion\",\"type\":\"record\"}"
 }
 
 func (r Accion) SchemaName() string {
-	return "Andreani.Incidencias.Events.Common.Accion"
+	return "Andreani.IncidenciasCross.Events.Common.Accion"
 }
 
 func (_ Accion) SetBoolean(v bool)    { panic("Unsupported operation") }

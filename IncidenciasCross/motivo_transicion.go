@@ -23,7 +23,7 @@ type MotivoTransicion struct {
 	Nombre string `json:"nombre"`
 }
 
-const MotivoTransicionAvroCRC64Fingerprint = "\x0f\xe5\xc2\xc52\x1d\x12*"
+const MotivoTransicionAvroCRC64Fingerprint = "\x92@\xda8KH\xea\n"
 
 func NewMotivoTransicion() MotivoTransicion {
 	r := MotivoTransicion{}
@@ -71,11 +71,11 @@ func (r MotivoTransicion) Serialize(w io.Writer) error {
 }
 
 func (r MotivoTransicion) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Andreani.Incidencias.Events.Common.MotivoTransicion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.MotivoTransicion\",\"type\":\"record\"}"
 }
 
 func (r MotivoTransicion) SchemaName() string {
-	return "Andreani.Incidencias.Events.Common.MotivoTransicion"
+	return "Andreani.IncidenciasCross.Events.Common.MotivoTransicion"
 }
 
 func (_ MotivoTransicion) SetBoolean(v bool)    { panic("Unsupported operation") }

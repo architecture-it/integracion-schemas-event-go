@@ -25,7 +25,7 @@ type EntidadIncidentada struct {
 	Subentidades *UnionNullArrayString `json:"subentidades"`
 }
 
-const EntidadIncidentadaAvroCRC64Fingerprint = "\xa6GF\xc5-\x8a\xec\xac"
+const EntidadIncidentadaAvroCRC64Fingerprint = "\x04..\x94xH\xa9\x1e"
 
 func NewEntidadIncidentada() EntidadIncidentada {
 	r := EntidadIncidentada{}
@@ -78,11 +78,11 @@ func (r EntidadIncidentada) Serialize(w io.Writer) error {
 }
 
 func (r EntidadIncidentada) Schema() string {
-	return "{\"fields\":[{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"identificador\",\"type\":\"string\"},{\"default\":null,\"name\":\"subentidades\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.Incidencias.Events.Common.EntidadIncidentada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"identificador\",\"type\":\"string\"},{\"default\":null,\"name\":\"subentidades\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.EntidadIncidentada\",\"type\":\"record\"}"
 }
 
 func (r EntidadIncidentada) SchemaName() string {
-	return "Andreani.Incidencias.Events.Common.EntidadIncidentada"
+	return "Andreani.IncidenciasCross.Events.Common.EntidadIncidentada"
 }
 
 func (_ EntidadIncidentada) SetBoolean(v bool)    { panic("Unsupported operation") }

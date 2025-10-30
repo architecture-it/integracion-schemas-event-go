@@ -25,7 +25,7 @@ type Atributo struct {
 	Valor *UnionNullString `json:"valor"`
 }
 
-const AtributoAvroCRC64Fingerprint = "\xce\xea\xd3\xc9\x14\x0f)Z"
+const AtributoAvroCRC64Fingerprint = "\xd7\xfc\xeem\xc3[T\xf0"
 
 func NewAtributo() Atributo {
 	r := Atributo{}
@@ -78,11 +78,11 @@ func (r Atributo) Serialize(w io.Writer) error {
 }
 
 func (r Atributo) Schema() string {
-	return "{\"fields\":[{\"name\":\"atributoId\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Common.Atributo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"atributoId\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Atributo\",\"type\":\"record\"}"
 }
 
 func (r Atributo) SchemaName() string {
-	return "Andreani.Incidencias.Events.Common.Atributo"
+	return "Andreani.IncidenciasCross.Events.Common.Atributo"
 }
 
 func (_ Atributo) SetBoolean(v bool)    { panic("Unsupported operation") }

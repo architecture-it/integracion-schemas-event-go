@@ -23,7 +23,7 @@ type Estado struct {
 	Nombre string `json:"nombre"`
 }
 
-const EstadoAvroCRC64Fingerprint = ")\xa6;E\xd9\xd6Y\x10"
+const EstadoAvroCRC64Fingerprint = "c\xbd\xaa> {h\x9f"
 
 func NewEstado() Estado {
 	r := Estado{}
@@ -71,11 +71,11 @@ func (r Estado) Serialize(w io.Writer) error {
 }
 
 func (r Estado) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Andreani.Incidencias.Events.Common.Estado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Estado\",\"type\":\"record\"}"
 }
 
 func (r Estado) SchemaName() string {
-	return "Andreani.Incidencias.Events.Common.Estado"
+	return "Andreani.IncidenciasCross.Events.Common.Estado"
 }
 
 func (_ Estado) SetBoolean(v bool)    { panic("Unsupported operation") }

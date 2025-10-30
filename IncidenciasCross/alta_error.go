@@ -31,7 +31,7 @@ type AltaError struct {
 	CorrelationId *UnionNullString `json:"correlationId"`
 }
 
-const AltaErrorAvroCRC64Fingerprint = "{\xe4Qu\x02D\xa4\xcb"
+const AltaErrorAvroCRC64Fingerprint = "\xbf\f\xadC\x14\x14RV"
 
 func NewAltaError() AltaError {
 	r := AltaError{}
@@ -104,11 +104,11 @@ func (r AltaError) Serialize(w io.Writer) error {
 }
 
 func (r AltaError) Schema() string {
-	return "{\"fields\":[{\"name\":\"incidencia\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"prioridad\",\"type\":[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Prioridad\",\"type\":\"record\"}]}],\"name\":\"SolicitudIncidencia\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"identificador\",\"type\":\"string\"},{\"default\":null,\"name\":\"subentidades\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"}},{\"name\":\"errores\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"mensaje\",\"type\":\"string\"}],\"name\":\"ErrorValidacion\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaError\",\"type\":\"long\"},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.AltaError\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"incidencia\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"prioridad\",\"type\":[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Prioridad\",\"type\":\"record\"}]}],\"name\":\"SolicitudIncidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"identificador\",\"type\":\"string\"},{\"default\":null,\"name\":\"subentidades\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"errores\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"mensaje\",\"type\":\"string\"}],\"name\":\"ErrorValidacion\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaError\",\"type\":\"long\"},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.AltaError\",\"type\":\"record\"}"
 }
 
 func (r AltaError) SchemaName() string {
-	return "Andreani.Incidencias.Events.AltaError"
+	return "Andreani.IncidenciasCross.Events.AltaError"
 }
 
 func (_ AltaError) SetBoolean(v bool)    { panic("Unsupported operation") }

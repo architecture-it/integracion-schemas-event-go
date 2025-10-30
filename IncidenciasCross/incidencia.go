@@ -29,7 +29,7 @@ type Incidencia struct {
 	MotivoNombre string `json:"motivoNombre"`
 }
 
-const IncidenciaAvroCRC64Fingerprint = "\xdb8e2\xfcLE\xaf"
+const IncidenciaAvroCRC64Fingerprint = "U\x19{2^Қ\xb7"
 
 func NewIncidencia() Incidencia {
 	r := Incidencia{}
@@ -89,11 +89,11 @@ func (r Incidencia) Serialize(w io.Writer) error {
 }
 
 func (r Incidencia) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipoId\",\"type\":\"int\"},{\"name\":\"tipoNombre\",\"type\":\"string\"},{\"name\":\"motivoId\",\"type\":\"int\"},{\"name\":\"motivoNombre\",\"type\":\"string\"}],\"name\":\"Andreani.Incidencias.Events.Common.Incidencia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipoId\",\"type\":\"int\"},{\"name\":\"tipoNombre\",\"type\":\"string\"},{\"name\":\"motivoId\",\"type\":\"int\"},{\"name\":\"motivoNombre\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Incidencia\",\"type\":\"record\"}"
 }
 
 func (r Incidencia) SchemaName() string {
-	return "Andreani.Incidencias.Events.Common.Incidencia"
+	return "Andreani.IncidenciasCross.Events.Common.Incidencia"
 }
 
 func (_ Incidencia) SetBoolean(v bool)    { panic("Unsupported operation") }

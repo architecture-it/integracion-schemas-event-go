@@ -23,7 +23,7 @@ type ErrorValidacion struct {
 	Mensaje string `json:"mensaje"`
 }
 
-const ErrorValidacionAvroCRC64Fingerprint = "\x90&\xd70\x1a\x86m\xd3"
+const ErrorValidacionAvroCRC64Fingerprint = "\xf9\x8a;Hꋾ\\"
 
 func NewErrorValidacion() ErrorValidacion {
 	r := ErrorValidacion{}
@@ -72,11 +72,11 @@ func (r ErrorValidacion) Serialize(w io.Writer) error {
 }
 
 func (r ErrorValidacion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"mensaje\",\"type\":\"string\"}],\"name\":\"Andreani.Incidencias.Events.Common.ErrorValidacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"mensaje\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.ErrorValidacion\",\"type\":\"record\"}"
 }
 
 func (r ErrorValidacion) SchemaName() string {
-	return "Andreani.Incidencias.Events.Common.ErrorValidacion"
+	return "Andreani.IncidenciasCross.Events.Common.ErrorValidacion"
 }
 
 func (_ ErrorValidacion) SetBoolean(v bool)    { panic("Unsupported operation") }
