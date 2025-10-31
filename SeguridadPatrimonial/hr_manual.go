@@ -18,24 +18,24 @@ import (
 var _ = fmt.Printf
 
 type HrManual struct {
-	Hr string `json:"hr"`
+	Hr string `json:"Hr"`
 
-	UnidadOperativaOrigen string `json:"unidadOperativaOrigen"`
+	UnidadOperativaOrigen string `json:"UnidadOperativaOrigen"`
 
-	UnidadOperativaDestino string `json:"unidadOperativaDestino"`
+	UnidadOperativaDestino string `json:"UnidadOperativaDestino"`
 
-	Transportista string `json:"transportista"`
+	Transportista string `json:"Transportista"`
 
-	DominioPrincipal string `json:"dominioPrincipal"`
+	DominioPrincipal string `json:"DominioPrincipal"`
 
-	DominiosSecundarios *UnionNullArrayString `json:"dominiosSecundarios"`
+	DominiosSecundarios *UnionNullArrayString `json:"DominiosSecundarios"`
 
-	Fecha string `json:"fecha"`
+	Fecha int64 `json:"Fecha"`
 
-	TipoViaje string `json:"tipoViaje"`
+	TipoViaje int32 `json:"TipoViaje"`
 }
 
-const HrManualAvroCRC64Fingerprint = "\xf7k\x1c\xf1\xa3a\x95\xd8"
+const HrManualAvroCRC64Fingerprint = "\xa4\xb9\xd3,(=\x83\xa8"
 
 func NewHrManual() HrManual {
 	r := HrManual{}
@@ -92,11 +92,11 @@ func writeHrManual(r HrManual, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Fecha, w)
+	err = vm.WriteLong(r.Fecha, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TipoViaje, w)
+	err = vm.WriteInt(r.TipoViaje, w)
 	if err != nil {
 		return err
 	}
@@ -108,7 +108,7 @@ func (r HrManual) Serialize(w io.Writer) error {
 }
 
 func (r HrManual) Schema() string {
-	return "{\"fields\":[{\"name\":\"hr\",\"type\":\"string\"},{\"name\":\"unidadOperativaOrigen\",\"type\":\"string\"},{\"name\":\"unidadOperativaDestino\",\"type\":\"string\"},{\"name\":\"transportista\",\"type\":\"string\"},{\"name\":\"dominioPrincipal\",\"type\":\"string\"},{\"default\":null,\"name\":\"dominiosSecundarios\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"fecha\",\"type\":\"string\"},{\"name\":\"tipoViaje\",\"type\":\"string\"}],\"name\":\"Andreani.SeguridadPatrimonial.Events.Record.HrManual\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Hr\",\"type\":\"string\"},{\"name\":\"UnidadOperativaOrigen\",\"type\":\"string\"},{\"name\":\"UnidadOperativaDestino\",\"type\":\"string\"},{\"name\":\"Transportista\",\"type\":\"string\"},{\"name\":\"DominioPrincipal\",\"type\":\"string\"},{\"default\":null,\"name\":\"DominiosSecundarios\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"TipoViaje\",\"type\":\"int\"}],\"name\":\"Andreani.SeguridadPatrimonial.Events.Record.HrManual\",\"type\":\"record\"}"
 }
 
 func (r HrManual) SchemaName() string {
@@ -156,12 +156,12 @@ func (r *HrManual) Get(i int) types.Field {
 
 		return r.DominiosSecundarios
 	case 6:
-		w := types.String{Target: &r.Fecha}
+		w := types.Long{Target: &r.Fecha}
 
 		return w
 
 	case 7:
-		w := types.String{Target: &r.TipoViaje}
+		w := types.Int{Target: &r.TipoViaje}
 
 		return w
 
@@ -199,35 +199,35 @@ func (_ HrManual) AvroCRC64Fingerprint() []byte {
 func (r HrManual) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["hr"], err = json.Marshal(r.Hr)
+	output["Hr"], err = json.Marshal(r.Hr)
 	if err != nil {
 		return nil, err
 	}
-	output["unidadOperativaOrigen"], err = json.Marshal(r.UnidadOperativaOrigen)
+	output["UnidadOperativaOrigen"], err = json.Marshal(r.UnidadOperativaOrigen)
 	if err != nil {
 		return nil, err
 	}
-	output["unidadOperativaDestino"], err = json.Marshal(r.UnidadOperativaDestino)
+	output["UnidadOperativaDestino"], err = json.Marshal(r.UnidadOperativaDestino)
 	if err != nil {
 		return nil, err
 	}
-	output["transportista"], err = json.Marshal(r.Transportista)
+	output["Transportista"], err = json.Marshal(r.Transportista)
 	if err != nil {
 		return nil, err
 	}
-	output["dominioPrincipal"], err = json.Marshal(r.DominioPrincipal)
+	output["DominioPrincipal"], err = json.Marshal(r.DominioPrincipal)
 	if err != nil {
 		return nil, err
 	}
-	output["dominiosSecundarios"], err = json.Marshal(r.DominiosSecundarios)
+	output["DominiosSecundarios"], err = json.Marshal(r.DominiosSecundarios)
 	if err != nil {
 		return nil, err
 	}
-	output["fecha"], err = json.Marshal(r.Fecha)
+	output["Fecha"], err = json.Marshal(r.Fecha)
 	if err != nil {
 		return nil, err
 	}
-	output["tipoViaje"], err = json.Marshal(r.TipoViaje)
+	output["TipoViaje"], err = json.Marshal(r.TipoViaje)
 	if err != nil {
 		return nil, err
 	}
@@ -242,7 +242,7 @@ func (r *HrManual) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["hr"]; ok {
+		if v, ok := fields["Hr"]; ok {
 			return v
 		}
 		return nil
@@ -253,10 +253,10 @@ func (r *HrManual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for hr")
+		return fmt.Errorf("no value specified for Hr")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["unidadOperativaOrigen"]; ok {
+		if v, ok := fields["UnidadOperativaOrigen"]; ok {
 			return v
 		}
 		return nil
@@ -267,10 +267,10 @@ func (r *HrManual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for unidadOperativaOrigen")
+		return fmt.Errorf("no value specified for UnidadOperativaOrigen")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["unidadOperativaDestino"]; ok {
+		if v, ok := fields["UnidadOperativaDestino"]; ok {
 			return v
 		}
 		return nil
@@ -281,10 +281,10 @@ func (r *HrManual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for unidadOperativaDestino")
+		return fmt.Errorf("no value specified for UnidadOperativaDestino")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["transportista"]; ok {
+		if v, ok := fields["Transportista"]; ok {
 			return v
 		}
 		return nil
@@ -295,10 +295,10 @@ func (r *HrManual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for transportista")
+		return fmt.Errorf("no value specified for Transportista")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["dominioPrincipal"]; ok {
+		if v, ok := fields["DominioPrincipal"]; ok {
 			return v
 		}
 		return nil
@@ -309,10 +309,10 @@ func (r *HrManual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for dominioPrincipal")
+		return fmt.Errorf("no value specified for DominioPrincipal")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["dominiosSecundarios"]; ok {
+		if v, ok := fields["DominiosSecundarios"]; ok {
 			return v
 		}
 		return nil
@@ -328,7 +328,7 @@ func (r *HrManual) UnmarshalJSON(data []byte) error {
 		r.DominiosSecundarios = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["fecha"]; ok {
+		if v, ok := fields["Fecha"]; ok {
 			return v
 		}
 		return nil
@@ -339,10 +339,10 @@ func (r *HrManual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for fecha")
+		return fmt.Errorf("no value specified for Fecha")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tipoViaje"]; ok {
+		if v, ok := fields["TipoViaje"]; ok {
 			return v
 		}
 		return nil
@@ -353,7 +353,7 @@ func (r *HrManual) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipoViaje")
+		return fmt.Errorf("no value specified for TipoViaje")
 	}
 	return nil
 }

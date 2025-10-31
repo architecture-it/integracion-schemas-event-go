@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type Evento struct {
-	Codigo string `json:"codigo"`
+	Codigo int32 `json:"Codigo"`
 
 	Tipo *UnionNullString `json:"Tipo"`
 }
 
-const EventoAvroCRC64Fingerprint = "\xb7\x93wEvHu\xc2"
+const EventoAvroCRC64Fingerprint = "0\xcf\xd222\xe3R\xab"
 
 func NewEvento() Evento {
 	r := Evento{}
@@ -56,7 +56,7 @@ func DeserializeEventoFromSchema(r io.Reader, schema string) (Evento, error) {
 
 func writeEvento(r Evento, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Codigo, w)
+	err = vm.WriteInt(r.Codigo, w)
 	if err != nil {
 		return err
 	}
@@ -72,7 +72,7 @@ func (r Evento) Serialize(w io.Writer) error {
 }
 
 func (r Evento) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"Tipo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SeguridadPatrimonial.Events.Record.Evento\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"default\":null,\"name\":\"Tipo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SeguridadPatrimonial.Events.Record.Evento\",\"type\":\"record\"}"
 }
 
 func (r Evento) SchemaName() string {
@@ -91,7 +91,7 @@ func (_ Evento) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Evento) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Codigo}
+		w := types.Int{Target: &r.Codigo}
 
 		return w
 
@@ -133,7 +133,7 @@ func (_ Evento) AvroCRC64Fingerprint() []byte {
 func (r Evento) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["codigo"], err = json.Marshal(r.Codigo)
+	output["Codigo"], err = json.Marshal(r.Codigo)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ func (r *Evento) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["codigo"]; ok {
+		if v, ok := fields["Codigo"]; ok {
 			return v
 		}
 		return nil
@@ -163,7 +163,7 @@ func (r *Evento) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigo")
+		return fmt.Errorf("no value specified for Codigo")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Tipo"]; ok {

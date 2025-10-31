@@ -18,20 +18,20 @@ import (
 var _ = fmt.Printf
 
 type EventoPlataformaSP struct {
-	Hr string `json:"hr"`
+	Hr string `json:"Hr"`
 
-	FechaAlta string `json:"fechaAlta"`
+	FechaAlta int64 `json:"FechaAlta"`
 
-	FechaCierre string `json:"fechaCierre"`
+	FechaCierre int64 `json:"FechaCierre"`
 
-	Latitud float32 `json:"latitud"`
+	Latitud float32 `json:"Latitud"`
 
-	Longitud float32 `json:"longitud"`
+	Longitud float32 `json:"Longitud"`
 
-	Evento Evento `json:"evento"`
+	Evento Evento `json:"Evento"`
 }
 
-const EventoPlataformaSPAvroCRC64Fingerprint = "\x02\x97\xbd\x8c\xda\xeb\b9"
+const EventoPlataformaSPAvroCRC64Fingerprint = "\v\xa9\xe6\x01{*\xab\xa6"
 
 func NewEventoPlataformaSP() EventoPlataformaSP {
 	r := EventoPlataformaSP{}
@@ -69,11 +69,11 @@ func writeEventoPlataformaSP(r EventoPlataformaSP, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FechaAlta, w)
+	err = vm.WriteLong(r.FechaAlta, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.FechaCierre, w)
+	err = vm.WriteLong(r.FechaCierre, w)
 	if err != nil {
 		return err
 	}
@@ -97,7 +97,7 @@ func (r EventoPlataformaSP) Serialize(w io.Writer) error {
 }
 
 func (r EventoPlataformaSP) Schema() string {
-	return "{\"fields\":[{\"name\":\"hr\",\"type\":\"string\"},{\"name\":\"fechaAlta\",\"type\":\"string\"},{\"name\":\"fechaCierre\",\"type\":\"string\"},{\"name\":\"latitud\",\"type\":\"float\"},{\"name\":\"longitud\",\"type\":\"float\"},{\"name\":\"evento\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"Tipo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Evento\",\"type\":\"record\"}}],\"name\":\"Andreani.SeguridadPatrimonial.Events.Record.EventoPlataformaSP\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Hr\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaCierre\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Latitud\",\"type\":\"float\"},{\"name\":\"Longitud\",\"type\":\"float\"},{\"name\":\"Evento\",\"type\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"default\":null,\"name\":\"Tipo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Evento\",\"type\":\"record\"}}],\"name\":\"Andreani.SeguridadPatrimonial.Events.Record.EventoPlataformaSP\",\"type\":\"record\"}"
 }
 
 func (r EventoPlataformaSP) SchemaName() string {
@@ -121,12 +121,12 @@ func (r *EventoPlataformaSP) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.FechaAlta}
+		w := types.Long{Target: &r.FechaAlta}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.FechaCierre}
+		w := types.Long{Target: &r.FechaCierre}
 
 		return w
 
@@ -175,27 +175,27 @@ func (_ EventoPlataformaSP) AvroCRC64Fingerprint() []byte {
 func (r EventoPlataformaSP) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["hr"], err = json.Marshal(r.Hr)
+	output["Hr"], err = json.Marshal(r.Hr)
 	if err != nil {
 		return nil, err
 	}
-	output["fechaAlta"], err = json.Marshal(r.FechaAlta)
+	output["FechaAlta"], err = json.Marshal(r.FechaAlta)
 	if err != nil {
 		return nil, err
 	}
-	output["fechaCierre"], err = json.Marshal(r.FechaCierre)
+	output["FechaCierre"], err = json.Marshal(r.FechaCierre)
 	if err != nil {
 		return nil, err
 	}
-	output["latitud"], err = json.Marshal(r.Latitud)
+	output["Latitud"], err = json.Marshal(r.Latitud)
 	if err != nil {
 		return nil, err
 	}
-	output["longitud"], err = json.Marshal(r.Longitud)
+	output["Longitud"], err = json.Marshal(r.Longitud)
 	if err != nil {
 		return nil, err
 	}
-	output["evento"], err = json.Marshal(r.Evento)
+	output["Evento"], err = json.Marshal(r.Evento)
 	if err != nil {
 		return nil, err
 	}
@@ -210,7 +210,7 @@ func (r *EventoPlataformaSP) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["hr"]; ok {
+		if v, ok := fields["Hr"]; ok {
 			return v
 		}
 		return nil
@@ -221,10 +221,10 @@ func (r *EventoPlataformaSP) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for hr")
+		return fmt.Errorf("no value specified for Hr")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["fechaAlta"]; ok {
+		if v, ok := fields["FechaAlta"]; ok {
 			return v
 		}
 		return nil
@@ -235,10 +235,10 @@ func (r *EventoPlataformaSP) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for fechaAlta")
+		return fmt.Errorf("no value specified for FechaAlta")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["fechaCierre"]; ok {
+		if v, ok := fields["FechaCierre"]; ok {
 			return v
 		}
 		return nil
@@ -249,10 +249,10 @@ func (r *EventoPlataformaSP) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for fechaCierre")
+		return fmt.Errorf("no value specified for FechaCierre")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["latitud"]; ok {
+		if v, ok := fields["Latitud"]; ok {
 			return v
 		}
 		return nil
@@ -263,10 +263,10 @@ func (r *EventoPlataformaSP) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for latitud")
+		return fmt.Errorf("no value specified for Latitud")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["longitud"]; ok {
+		if v, ok := fields["Longitud"]; ok {
 			return v
 		}
 		return nil
@@ -277,10 +277,10 @@ func (r *EventoPlataformaSP) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for longitud")
+		return fmt.Errorf("no value specified for Longitud")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["evento"]; ok {
+		if v, ok := fields["Evento"]; ok {
 			return v
 		}
 		return nil
@@ -291,7 +291,7 @@ func (r *EventoPlataformaSP) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for evento")
+		return fmt.Errorf("no value specified for Evento")
 	}
 	return nil
 }
