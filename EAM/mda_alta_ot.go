@@ -21,7 +21,7 @@ type MDAAltaOT struct {
 	Ticket TicketOt `json:"Ticket"`
 }
 
-const MDAAltaOTAvroCRC64Fingerprint = "\xd5ϰ7B\xf4\"\xb8"
+const MDAAltaOTAvroCRC64Fingerprint = "\xb9q\xbf\x803\x06\x02\xf5"
 
 func NewMDAAltaOT() MDAAltaOT {
 	r := MDAAltaOT{}
@@ -67,7 +67,7 @@ func (r MDAAltaOT) Serialize(w io.Writer) error {
 }
 
 func (r MDAAltaOT) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Solicitante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCreacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Correo_Electronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mesa_Origen\",\"type\":[\"null\",\"string\"]}],\"name\":\"TicketOt\",\"namespace\":\"Andreani.EAM.Events.MDA\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.MDAAltaOT\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Solicitante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCreacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Correo_Electronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mesa_Origen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Adjuntos\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"TicketOt\",\"namespace\":\"Andreani.EAM.Events.MDA\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.MDAAltaOT\",\"type\":\"record\"}"
 }
 
 func (r MDAAltaOT) SchemaName() string {

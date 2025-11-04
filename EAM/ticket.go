@@ -37,15 +37,18 @@ type Ticket struct {
 	Correo_Electronico *UnionNullString `json:"Correo_Electronico"`
 
 	Mesa_Origen *UnionNullString `json:"Mesa_Origen"`
+
+	Adjuntos *UnionNullBool `json:"Adjuntos"`
 }
 
-const TicketAvroCRC64Fingerprint = "X\xe2\xd2.\xb0\x82\xb7}"
+const TicketAvroCRC64Fingerprint = "\xd8\xd3\xdd4\vM\x02*"
 
 func NewTicket() Ticket {
 	r := Ticket{}
 	r.Telefono = nil
 	r.Correo_Electronico = nil
 	r.Mesa_Origen = nil
+	r.Adjuntos = nil
 	return r
 }
 
@@ -114,6 +117,10 @@ func writeTicket(r Ticket, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullBool(r.Adjuntos, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -122,7 +129,7 @@ func (r Ticket) Serialize(w io.Writer) error {
 }
 
 func (r Ticket) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Correo_Electronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mesa_Origen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.Ticket\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTicket\",\"type\":\"int\"},{\"name\":\"Solicitante\",\"type\":\"string\"},{\"name\":\"Asunto\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"Planta\",\"type\":\"string\"},{\"name\":\"TipoSector\",\"type\":[\"null\",\"string\"]},{\"name\":\"Categoria_Servicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Correo_Electronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mesa_Origen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Adjuntos\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.EAM.Events.MDA.Ticket\",\"type\":\"record\"}"
 }
 
 func (r Ticket) SchemaName() string {
@@ -185,6 +192,10 @@ func (r *Ticket) Get(i int) types.Field {
 		r.Mesa_Origen = NewUnionNullString()
 
 		return r.Mesa_Origen
+	case 10:
+		r.Adjuntos = NewUnionNullBool()
+
+		return r.Adjuntos
 	}
 	panic("Unknown field index")
 }
@@ -199,6 +210,9 @@ func (r *Ticket) SetDefault(i int) {
 		return
 	case 9:
 		r.Mesa_Origen = nil
+		return
+	case 10:
+		r.Adjuntos = nil
 		return
 	}
 	panic("Unknown field index")
@@ -220,6 +234,9 @@ func (r *Ticket) NullField(i int) {
 		return
 	case 9:
 		r.Mesa_Origen = nil
+		return
+	case 10:
+		r.Adjuntos = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -274,6 +291,10 @@ func (r Ticket) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Mesa_Origen"], err = json.Marshal(r.Mesa_Origen)
+	if err != nil {
+		return nil, err
+	}
+	output["Adjuntos"], err = json.Marshal(r.Adjuntos)
 	if err != nil {
 		return nil, err
 	}
@@ -432,6 +453,22 @@ func (r *Ticket) UnmarshalJSON(data []byte) error {
 		r.Mesa_Origen = NewUnionNullString()
 
 		r.Mesa_Origen = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Adjuntos"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Adjuntos); err != nil {
+			return err
+		}
+	} else {
+		r.Adjuntos = NewUnionNullBool()
+
+		r.Adjuntos = nil
 	}
 	return nil
 }
