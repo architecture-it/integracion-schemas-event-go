@@ -18,15 +18,16 @@ import (
 var _ = fmt.Printf
 
 type Prioridad struct {
-	Id int32 `json:"id"`
+	Id *UnionNullInt `json:"id"`
 
 	Nombre *UnionNullString `json:"nombre"`
 }
 
-const PrioridadAvroCRC64Fingerprint = "؍\xb0\xd4_)D\xcf"
+const PrioridadAvroCRC64Fingerprint = "\xb3?\xc9\xc0\x8b\xb8\xe8\xc6"
 
 func NewPrioridad() Prioridad {
 	r := Prioridad{}
+	r.Id = nil
 	r.Nombre = nil
 	return r
 }
@@ -56,7 +57,7 @@ func DeserializePrioridadFromSchema(r io.Reader, schema string) (Prioridad, erro
 
 func writePrioridad(r Prioridad, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.Id, w)
+	err = writeUnionNullInt(r.Id, w)
 	if err != nil {
 		return err
 	}
@@ -72,7 +73,7 @@ func (r Prioridad) Serialize(w io.Writer) error {
 }
 
 func (r Prioridad) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Prioridad\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Prioridad\",\"type\":\"record\"}"
 }
 
 func (r Prioridad) SchemaName() string {
@@ -91,10 +92,9 @@ func (_ Prioridad) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Prioridad) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.Id}
+		r.Id = NewUnionNullInt()
 
-		return w
-
+		return r.Id
 	case 1:
 		r.Nombre = NewUnionNullString()
 
@@ -105,6 +105,9 @@ func (r *Prioridad) Get(i int) types.Field {
 
 func (r *Prioridad) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Id = nil
+		return
 	case 1:
 		r.Nombre = nil
 		return
@@ -114,6 +117,9 @@ func (r *Prioridad) SetDefault(i int) {
 
 func (r *Prioridad) NullField(i int) {
 	switch i {
+	case 0:
+		r.Id = nil
+		return
 	case 1:
 		r.Nombre = nil
 		return
@@ -163,7 +169,9 @@ func (r *Prioridad) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for id")
+		r.Id = NewUnionNullInt()
+
+		r.Id = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["nombre"]; ok {

@@ -18,18 +18,21 @@ import (
 var _ = fmt.Printf
 
 type EntidadIncidentada struct {
-	Tipo string `json:"tipo"`
+	NombreEntidad string `json:"nombreEntidad"`
 
-	Identificador string `json:"identificador"`
+	Valor string `json:"valor"`
 
-	Subentidades *UnionNullArrayString `json:"subentidades"`
+	NombreSubentidades *UnionNullString `json:"nombreSubentidades"`
+
+	Valores *UnionNullArrayString `json:"valores"`
 }
 
-const EntidadIncidentadaAvroCRC64Fingerprint = "\x04..\x94xH\xa9\x1e"
+const EntidadIncidentadaAvroCRC64Fingerprint = "\x1f\x84\x9e]\xab\x04CL"
 
 func NewEntidadIncidentada() EntidadIncidentada {
 	r := EntidadIncidentada{}
-	r.Subentidades = nil
+	r.NombreSubentidades = nil
+	r.Valores = nil
 	return r
 }
 
@@ -58,15 +61,19 @@ func DeserializeEntidadIncidentadaFromSchema(r io.Reader, schema string) (Entida
 
 func writeEntidadIncidentada(r EntidadIncidentada, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Tipo, w)
+	err = vm.WriteString(r.NombreEntidad, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Identificador, w)
+	err = vm.WriteString(r.Valor, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullArrayString(r.Subentidades, w)
+	err = writeUnionNullString(r.NombreSubentidades, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullArrayString(r.Valores, w)
 	if err != nil {
 		return err
 	}
@@ -78,7 +85,7 @@ func (r EntidadIncidentada) Serialize(w io.Writer) error {
 }
 
 func (r EntidadIncidentada) Schema() string {
-	return "{\"fields\":[{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"identificador\",\"type\":\"string\"},{\"default\":null,\"name\":\"subentidades\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.EntidadIncidentada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.EntidadIncidentada\",\"type\":\"record\"}"
 }
 
 func (r EntidadIncidentada) SchemaName() string {
@@ -97,19 +104,23 @@ func (_ EntidadIncidentada) SetUnionElem(v int64) { panic("Unsupported operation
 func (r *EntidadIncidentada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Tipo}
+		w := types.String{Target: &r.NombreEntidad}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Identificador}
+		w := types.String{Target: &r.Valor}
 
 		return w
 
 	case 2:
-		r.Subentidades = NewUnionNullArrayString()
+		r.NombreSubentidades = NewUnionNullString()
 
-		return r.Subentidades
+		return r.NombreSubentidades
+	case 3:
+		r.Valores = NewUnionNullArrayString()
+
+		return r.Valores
 	}
 	panic("Unknown field index")
 }
@@ -117,7 +128,10 @@ func (r *EntidadIncidentada) Get(i int) types.Field {
 func (r *EntidadIncidentada) SetDefault(i int) {
 	switch i {
 	case 2:
-		r.Subentidades = nil
+		r.NombreSubentidades = nil
+		return
+	case 3:
+		r.Valores = nil
 		return
 	}
 	panic("Unknown field index")
@@ -126,7 +140,10 @@ func (r *EntidadIncidentada) SetDefault(i int) {
 func (r *EntidadIncidentada) NullField(i int) {
 	switch i {
 	case 2:
-		r.Subentidades = nil
+		r.NombreSubentidades = nil
+		return
+	case 3:
+		r.Valores = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -144,15 +161,19 @@ func (_ EntidadIncidentada) AvroCRC64Fingerprint() []byte {
 func (r EntidadIncidentada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["tipo"], err = json.Marshal(r.Tipo)
+	output["nombreEntidad"], err = json.Marshal(r.NombreEntidad)
 	if err != nil {
 		return nil, err
 	}
-	output["identificador"], err = json.Marshal(r.Identificador)
+	output["valor"], err = json.Marshal(r.Valor)
 	if err != nil {
 		return nil, err
 	}
-	output["subentidades"], err = json.Marshal(r.Subentidades)
+	output["nombreSubentidades"], err = json.Marshal(r.NombreSubentidades)
+	if err != nil {
+		return nil, err
+	}
+	output["valores"], err = json.Marshal(r.Valores)
 	if err != nil {
 		return nil, err
 	}
@@ -167,48 +188,64 @@ func (r *EntidadIncidentada) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["tipo"]; ok {
+		if v, ok := fields["nombreEntidad"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Tipo); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.NombreEntidad); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipo")
+		return fmt.Errorf("no value specified for nombreEntidad")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["identificador"]; ok {
+		if v, ok := fields["valor"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Identificador); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Valor); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for identificador")
+		return fmt.Errorf("no value specified for valor")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["subentidades"]; ok {
+		if v, ok := fields["nombreSubentidades"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Subentidades); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.NombreSubentidades); err != nil {
 			return err
 		}
 	} else {
-		r.Subentidades = NewUnionNullArrayString()
+		r.NombreSubentidades = NewUnionNullString()
 
-		r.Subentidades = nil
+		r.NombreSubentidades = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["valores"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Valores); err != nil {
+			return err
+		}
+	} else {
+		r.Valores = NewUnionNullArrayString()
+
+		r.Valores = nil
 	}
 	return nil
 }

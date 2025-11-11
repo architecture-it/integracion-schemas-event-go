@@ -18,14 +18,12 @@ import (
 var _ = fmt.Printf
 
 type Atributo struct {
-	AtributoId int32 `json:"atributoId"`
-
 	Nombre string `json:"nombre"`
 
 	Valor *UnionNullStringIntLongDoubleBoolArrayString `json:"valor"`
 }
 
-const AtributoAvroCRC64Fingerprint = "\xcd\xcc\uf4car{n"
+const AtributoAvroCRC64Fingerprint = "\xceؿ\x1dKBə"
 
 func NewAtributo() Atributo {
 	r := Atributo{}
@@ -58,10 +56,6 @@ func DeserializeAtributoFromSchema(r io.Reader, schema string) (Atributo, error)
 
 func writeAtributo(r Atributo, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.AtributoId, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.Nombre, w)
 	if err != nil {
 		return err
@@ -78,7 +72,7 @@ func (r Atributo) Serialize(w io.Writer) error {
 }
 
 func (r Atributo) Schema() string {
-	return "{\"fields\":[{\"name\":\"atributoId\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\",\"int\",\"long\",\"double\",\"boolean\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Atributo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\",\"int\",\"long\",\"double\",\"boolean\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Atributo\",\"type\":\"record\"}"
 }
 
 func (r Atributo) SchemaName() string {
@@ -97,16 +91,11 @@ func (_ Atributo) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Atributo) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.AtributoId}
-
-		return w
-
-	case 1:
 		w := types.String{Target: &r.Nombre}
 
 		return w
 
-	case 2:
+	case 1:
 		r.Valor = NewUnionNullStringIntLongDoubleBoolArrayString()
 
 		return r.Valor
@@ -116,7 +105,7 @@ func (r *Atributo) Get(i int) types.Field {
 
 func (r *Atributo) SetDefault(i int) {
 	switch i {
-	case 2:
+	case 1:
 		r.Valor = nil
 		return
 	}
@@ -125,7 +114,7 @@ func (r *Atributo) SetDefault(i int) {
 
 func (r *Atributo) NullField(i int) {
 	switch i {
-	case 2:
+	case 1:
 		r.Valor = nil
 		return
 	}
@@ -144,10 +133,6 @@ func (_ Atributo) AvroCRC64Fingerprint() []byte {
 func (r Atributo) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["atributoId"], err = json.Marshal(r.AtributoId)
-	if err != nil {
-		return nil, err
-	}
 	output["nombre"], err = json.Marshal(r.Nombre)
 	if err != nil {
 		return nil, err
@@ -166,20 +151,6 @@ func (r *Atributo) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["atributoId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AtributoId); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for atributoId")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["nombre"]; ok {
 			return v

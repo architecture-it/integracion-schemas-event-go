@@ -31,7 +31,7 @@ type Transicion struct {
 	AccionEnDominio *UnionNullAccion `json:"accionEnDominio"`
 }
 
-const TransicionAvroCRC64Fingerprint = "\xc6\xc9\x12\x04\xdd.\xe2E"
+const TransicionAvroCRC64Fingerprint = "\x84\xcf\xe1]sA\x1b\xc6"
 
 func NewTransicion() Transicion {
 	r := Transicion{}
@@ -104,7 +104,7 @@ func (r Transicion) Serialize(w io.Writer) error {
 }
 
 func (r Transicion) Schema() string {
-	return "{\"fields\":[{\"name\":\"estadoAnterior\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Estado\",\"type\":\"record\"}},{\"name\":\"estadoActual\",\"type\":\"Andreani.IncidenciasCross.Events.Common.Estado\"},{\"name\":\"motivoTransicion\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"MotivoTransicion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"responsableAnterior\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Usuario\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"responsableActual\",\"type\":[\"null\",\"Andreani.IncidenciasCross.Events.Common.Usuario\"]},{\"default\":null,\"name\":\"accionEnDominio\",\"type\":[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Accion\",\"type\":\"record\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Transicion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"estadoAnterior\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Estado\",\"type\":\"record\"}},{\"name\":\"estadoActual\",\"type\":\"Andreani.IncidenciasCross.Events.Common.Estado\"},{\"name\":\"motivoTransicion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"MotivoTransicion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"responsableAnterior\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Usuario\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"responsableActual\",\"type\":[\"null\",\"Andreani.IncidenciasCross.Events.Common.Usuario\"]},{\"default\":null,\"name\":\"accionEnDominio\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Accion\",\"type\":\"record\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Transicion\",\"type\":\"record\"}"
 }
 
 func (r Transicion) SchemaName() string {

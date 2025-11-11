@@ -23,7 +23,7 @@ type SolicitudIncidencia struct {
 	Prioridad *UnionNullPrioridad `json:"prioridad"`
 }
 
-const SolicitudIncidenciaAvroCRC64Fingerprint = "\xbek\x9e\xab\xb7\xb4eE"
+const SolicitudIncidenciaAvroCRC64Fingerprint = "\x82\xe9X\xfa\x11u\xb2*"
 
 func NewSolicitudIncidencia() SolicitudIncidencia {
 	r := SolicitudIncidencia{}
@@ -72,7 +72,7 @@ func (r SolicitudIncidencia) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudIncidencia) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"prioridad\",\"type\":[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Prioridad\",\"type\":\"record\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.SolicitudIncidencia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"prioridad\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Prioridad\",\"type\":\"record\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.SolicitudIncidencia\",\"type\":\"record\"}"
 }
 
 func (r SolicitudIncidencia) SchemaName() string {

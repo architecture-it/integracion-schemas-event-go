@@ -18,15 +18,16 @@ import (
 var _ = fmt.Printf
 
 type Accion struct {
-	Id int32 `json:"id"`
+	Id *UnionNullInt `json:"id"`
 
 	Codigo string `json:"codigo"`
 }
 
-const AccionAvroCRC64Fingerprint = "\x99\xcf\x18Ĩ\x92u\x8c"
+const AccionAvroCRC64Fingerprint = "\xb6\x9b릷~\xf1\x13"
 
 func NewAccion() Accion {
 	r := Accion{}
+	r.Id = nil
 	return r
 }
 
@@ -55,7 +56,7 @@ func DeserializeAccionFromSchema(r io.Reader, schema string) (Accion, error) {
 
 func writeAccion(r Accion, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.Id, w)
+	err = writeUnionNullInt(r.Id, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +72,7 @@ func (r Accion) Serialize(w io.Writer) error {
 }
 
 func (r Accion) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Accion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Accion\",\"type\":\"record\"}"
 }
 
 func (r Accion) SchemaName() string {
@@ -90,10 +91,9 @@ func (_ Accion) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Accion) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.Id}
+		r.Id = NewUnionNullInt()
 
-		return w
-
+		return r.Id
 	case 1:
 		w := types.String{Target: &r.Codigo}
 
@@ -105,12 +105,18 @@ func (r *Accion) Get(i int) types.Field {
 
 func (r *Accion) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Id = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Accion) NullField(i int) {
 	switch i {
+	case 0:
+		r.Id = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -157,7 +163,9 @@ func (r *Accion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for id")
+		r.Id = NewUnionNullInt()
+
+		r.Id = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigo"]; ok {

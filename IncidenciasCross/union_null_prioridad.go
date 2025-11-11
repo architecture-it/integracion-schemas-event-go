@@ -84,7 +84,7 @@ func DeserializeUnionNullPrioridadFromSchema(r io.Reader, schema string) (*Union
 }
 
 func (r *UnionNullPrioridad) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Prioridad\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Prioridad\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullPrioridad) SetBoolean(v bool)   { panic("Unsupported operation") }
