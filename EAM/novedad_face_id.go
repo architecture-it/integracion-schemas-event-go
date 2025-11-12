@@ -20,6 +20,8 @@ var _ = fmt.Printf
 type NovedadFaceId struct {
 	Evento *UnionNullString `json:"Evento"`
 
+	OT *UnionNullString `json:"OT"`
+
 	Legajo *UnionNullString `json:"Legajo"`
 
 	Dispositivo *UnionNullString `json:"Dispositivo"`
@@ -27,11 +29,12 @@ type NovedadFaceId struct {
 	Trabajo *UnionNullString `json:"Trabajo"`
 }
 
-const NovedadFaceIdAvroCRC64Fingerprint = ">\xdc_\xc2L%E\x1f"
+const NovedadFaceIdAvroCRC64Fingerprint = "vH\t\xc4[\x1dqk"
 
 func NewNovedadFaceId() NovedadFaceId {
 	r := NovedadFaceId{}
 	r.Evento = nil
+	r.OT = nil
 	r.Legajo = nil
 	r.Dispositivo = nil
 	r.Trabajo = nil
@@ -67,6 +70,10 @@ func writeNovedadFaceId(r NovedadFaceId, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.OT, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Legajo, w)
 	if err != nil {
 		return err
@@ -87,7 +94,7 @@ func (r NovedadFaceId) Serialize(w io.Writer) error {
 }
 
 func (r NovedadFaceId) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Legajo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dispositivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Trabajo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.FaceId.NovedadFaceId\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Evento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OT\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Legajo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dispositivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Trabajo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.FaceId.NovedadFaceId\",\"type\":\"record\"}"
 }
 
 func (r NovedadFaceId) SchemaName() string {
@@ -110,14 +117,18 @@ func (r *NovedadFaceId) Get(i int) types.Field {
 
 		return r.Evento
 	case 1:
+		r.OT = NewUnionNullString()
+
+		return r.OT
+	case 2:
 		r.Legajo = NewUnionNullString()
 
 		return r.Legajo
-	case 2:
+	case 3:
 		r.Dispositivo = NewUnionNullString()
 
 		return r.Dispositivo
-	case 3:
+	case 4:
 		r.Trabajo = NewUnionNullString()
 
 		return r.Trabajo
@@ -131,12 +142,15 @@ func (r *NovedadFaceId) SetDefault(i int) {
 		r.Evento = nil
 		return
 	case 1:
-		r.Legajo = nil
+		r.OT = nil
 		return
 	case 2:
-		r.Dispositivo = nil
+		r.Legajo = nil
 		return
 	case 3:
+		r.Dispositivo = nil
+		return
+	case 4:
 		r.Trabajo = nil
 		return
 	}
@@ -149,12 +163,15 @@ func (r *NovedadFaceId) NullField(i int) {
 		r.Evento = nil
 		return
 	case 1:
-		r.Legajo = nil
+		r.OT = nil
 		return
 	case 2:
-		r.Dispositivo = nil
+		r.Legajo = nil
 		return
 	case 3:
+		r.Dispositivo = nil
+		return
+	case 4:
 		r.Trabajo = nil
 		return
 	}
@@ -174,6 +191,10 @@ func (r NovedadFaceId) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["Evento"], err = json.Marshal(r.Evento)
+	if err != nil {
+		return nil, err
+	}
+	output["OT"], err = json.Marshal(r.OT)
 	if err != nil {
 		return nil, err
 	}
@@ -214,6 +235,22 @@ func (r *NovedadFaceId) UnmarshalJSON(data []byte) error {
 		r.Evento = NewUnionNullString()
 
 		r.Evento = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["OT"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OT); err != nil {
+			return err
+		}
+	} else {
+		r.OT = NewUnionNullString()
+
+		r.OT = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Legajo"]; ok {
