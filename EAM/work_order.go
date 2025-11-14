@@ -55,9 +55,11 @@ type WorkOrder struct {
 	Equipo_categoria *UnionNullString `json:"equipo_categoria"`
 
 	Equipo_descripcion *UnionNullString `json:"equipo_descripcion"`
+
+	Organizacion *UnionNullString `json:"organizacion"`
 }
 
-const WorkOrderAvroCRC64Fingerprint = " \xa6\xfe(\x98\f\x02\x1e"
+const WorkOrderAvroCRC64Fingerprint = "\xf5\\\xb6:(\xbbJ\xdb"
 
 func NewWorkOrder() WorkOrder {
 	r := WorkOrder{}
@@ -71,6 +73,7 @@ func NewWorkOrder() WorkOrder {
 	r.Equipo_inventario = nil
 	r.Equipo_categoria = nil
 	r.Equipo_descripcion = nil
+	r.Organizacion = nil
 	return r
 }
 
@@ -175,6 +178,10 @@ func writeWorkOrder(r WorkOrder, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Organizacion, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -183,7 +190,7 @@ func (r WorkOrder) Serialize(w io.Writer) error {
 }
 
 func (r WorkOrder) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"default\":null,\"name\":\"clase\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"date_report\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_id_catalog\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_modelo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_marca\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_inventario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"id_equipo\",\"type\":\"string\"},{\"name\":\"planta\",\"type\":\"string\"},{\"name\":\"descripcion\",\"type\":\"string\"},{\"name\":\"user_report\",\"type\":\"string\"},{\"default\":null,\"name\":\"clase\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipoOT\",\"type\":\"string\"},{\"name\":\"subTipoOT\",\"type\":\"string\"},{\"name\":\"desvio\",\"type\":\"string\"},{\"name\":\"user_report_email\",\"type\":\"string\"},{\"default\":null,\"name\":\"propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"date_report\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ceco\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_id_catalog\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_modelo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_marca\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_inventario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"equipo_descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"organizacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.Sharepoint.WorkOrder\",\"type\":\"record\"}"
 }
 
 func (r WorkOrder) SchemaName() string {
@@ -286,6 +293,10 @@ func (r *WorkOrder) Get(i int) types.Field {
 		r.Equipo_descripcion = NewUnionNullString()
 
 		return r.Equipo_descripcion
+	case 19:
+		r.Organizacion = NewUnionNullString()
+
+		return r.Organizacion
 	}
 	panic("Unknown field index")
 }
@@ -322,6 +333,9 @@ func (r *WorkOrder) SetDefault(i int) {
 	case 18:
 		r.Equipo_descripcion = nil
 		return
+	case 19:
+		r.Organizacion = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -357,6 +371,9 @@ func (r *WorkOrder) NullField(i int) {
 		return
 	case 18:
 		r.Equipo_descripcion = nil
+		return
+	case 19:
+		r.Organizacion = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -447,6 +464,10 @@ func (r WorkOrder) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["equipo_descripcion"], err = json.Marshal(r.Equipo_descripcion)
+	if err != nil {
+		return nil, err
+	}
+	output["organizacion"], err = json.Marshal(r.Organizacion)
 	if err != nil {
 		return nil, err
 	}
@@ -745,6 +766,22 @@ func (r *WorkOrder) UnmarshalJSON(data []byte) error {
 		r.Equipo_descripcion = NewUnionNullString()
 
 		r.Equipo_descripcion = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["organizacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Organizacion); err != nil {
+			return err
+		}
+	} else {
+		r.Organizacion = NewUnionNullString()
+
+		r.Organizacion = nil
 	}
 	return nil
 }
