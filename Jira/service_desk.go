@@ -21,7 +21,7 @@ type ServiceDesk struct {
 	Ticket Ticket `json:"Ticket"`
 }
 
-const ServiceDeskAvroCRC64Fingerprint = "\x95k\v\xe6\xf8\\`["
+const ServiceDeskAvroCRC64Fingerprint = "A\xd71%\xed\xdbt\x9c"
 
 func NewServiceDesk() ServiceDesk {
 	r := ServiceDesk{}
@@ -67,7 +67,7 @@ func (r ServiceDesk) Serialize(w io.Writer) error {
 }
 
 func (r ServiceDesk) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ticket\",\"namespace\":\"Andreani.Jira.Events.ServiceDesk\",\"type\":\"record\"}}],\"name\":\"Andreani.Jira.Events.Record.ServiceDesk\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioAlta\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ticket\",\"namespace\":\"Andreani.Jira.Events.ServiceDesk\",\"type\":\"record\"}}],\"name\":\"Andreani.Jira.Events.Record.ServiceDesk\",\"type\":\"record\"}"
 }
 
 func (r ServiceDesk) SchemaName() string {
