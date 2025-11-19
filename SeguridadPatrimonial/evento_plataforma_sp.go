@@ -24,14 +24,14 @@ type EventoPlataformaSP struct {
 
 	FechaCierre int64 `json:"FechaCierre"`
 
-	Latitud *UnionNullFloat `json:"Latitud"`
+	Latitud *UnionNullDouble `json:"Latitud"`
 
-	Longitud *UnionNullFloat `json:"Longitud"`
+	Longitud *UnionNullDouble `json:"Longitud"`
 
 	Evento Evento `json:"Evento"`
 }
 
-const EventoPlataformaSPAvroCRC64Fingerprint = "\xc0\xd8\xf7?Y\xd7u\x15"
+const EventoPlataformaSPAvroCRC64Fingerprint = "\xe3gU{\xb8qZu"
 
 func NewEventoPlataformaSP() EventoPlataformaSP {
 	r := EventoPlataformaSP{}
@@ -79,11 +79,11 @@ func writeEventoPlataformaSP(r EventoPlataformaSP, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullFloat(r.Latitud, w)
+	err = writeUnionNullDouble(r.Latitud, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullFloat(r.Longitud, w)
+	err = writeUnionNullDouble(r.Longitud, w)
 	if err != nil {
 		return err
 	}
@@ -99,7 +99,7 @@ func (r EventoPlataformaSP) Serialize(w io.Writer) error {
 }
 
 func (r EventoPlataformaSP) Schema() string {
-	return "{\"fields\":[{\"name\":\"Hr\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaCierre\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"Latitud\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"float\"]},{\"name\":\"Evento\",\"type\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"default\":null,\"name\":\"Tipo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Evento\",\"type\":\"record\"}}],\"name\":\"Andreani.SeguridadPatrimonial.Events.Record.EventoPlataformaSP\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Hr\",\"type\":\"string\"},{\"name\":\"FechaAlta\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaCierre\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"Latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"Longitud\",\"type\":[\"null\",\"double\"]},{\"name\":\"Evento\",\"type\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"default\":null,\"name\":\"Tipo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Evento\",\"type\":\"record\"}}],\"name\":\"Andreani.SeguridadPatrimonial.Events.Record.EventoPlataformaSP\",\"type\":\"record\"}"
 }
 
 func (r EventoPlataformaSP) SchemaName() string {
@@ -133,11 +133,11 @@ func (r *EventoPlataformaSP) Get(i int) types.Field {
 		return w
 
 	case 3:
-		r.Latitud = NewUnionNullFloat()
+		r.Latitud = NewUnionNullDouble()
 
 		return r.Latitud
 	case 4:
-		r.Longitud = NewUnionNullFloat()
+		r.Longitud = NewUnionNullDouble()
 
 		return r.Longitud
 	case 5:
@@ -275,7 +275,7 @@ func (r *EventoPlataformaSP) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Latitud = NewUnionNullFloat()
+		r.Latitud = NewUnionNullDouble()
 
 		r.Latitud = nil
 	}
@@ -291,7 +291,7 @@ func (r *EventoPlataformaSP) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Longitud = NewUnionNullFloat()
+		r.Longitud = NewUnionNullDouble()
 
 		r.Longitud = nil
 	}
