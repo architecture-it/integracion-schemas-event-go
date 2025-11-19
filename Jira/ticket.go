@@ -25,9 +25,11 @@ type Ticket struct {
 	Descripcion *UnionNullString `json:"Descripcion"`
 
 	UsuarioAlta *UnionNullString `json:"UsuarioAlta"`
+
+	ProyectoAsociado *UnionNullString `json:"ProyectoAsociado"`
 }
 
-const TicketAvroCRC64Fingerprint = "\xb1\x86\xcb\f\xd4\x14\x90\xf7"
+const TicketAvroCRC64Fingerprint = "\x83\xdbu\x02Ļn\xbc"
 
 func NewTicket() Ticket {
 	r := Ticket{}
@@ -35,6 +37,7 @@ func NewTicket() Ticket {
 	r.Asunto = nil
 	r.Descripcion = nil
 	r.UsuarioAlta = nil
+	r.ProyectoAsociado = nil
 	return r
 }
 
@@ -79,6 +82,10 @@ func writeTicket(r Ticket, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ProyectoAsociado, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -87,7 +94,7 @@ func (r Ticket) Serialize(w io.Writer) error {
 }
 
 func (r Ticket) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioAlta\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Jira.Events.ServiceDesk.Ticket\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UsuarioAlta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProyectoAsociado\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Jira.Events.ServiceDesk.Ticket\",\"type\":\"record\"}"
 }
 
 func (r Ticket) SchemaName() string {
@@ -121,6 +128,10 @@ func (r *Ticket) Get(i int) types.Field {
 		r.UsuarioAlta = NewUnionNullString()
 
 		return r.UsuarioAlta
+	case 4:
+		r.ProyectoAsociado = NewUnionNullString()
+
+		return r.ProyectoAsociado
 	}
 	panic("Unknown field index")
 }
@@ -139,6 +150,9 @@ func (r *Ticket) SetDefault(i int) {
 	case 3:
 		r.UsuarioAlta = nil
 		return
+	case 4:
+		r.ProyectoAsociado = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -156,6 +170,9 @@ func (r *Ticket) NullField(i int) {
 		return
 	case 3:
 		r.UsuarioAlta = nil
+		return
+	case 4:
+		r.ProyectoAsociado = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -186,6 +203,10 @@ func (r Ticket) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["UsuarioAlta"], err = json.Marshal(r.UsuarioAlta)
+	if err != nil {
+		return nil, err
+	}
+	output["ProyectoAsociado"], err = json.Marshal(r.ProyectoAsociado)
 	if err != nil {
 		return nil, err
 	}
@@ -262,6 +283,22 @@ func (r *Ticket) UnmarshalJSON(data []byte) error {
 		r.UsuarioAlta = NewUnionNullString()
 
 		r.UsuarioAlta = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ProyectoAsociado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ProyectoAsociado); err != nil {
+			return err
+		}
+	} else {
+		r.ProyectoAsociado = NewUnionNullString()
+
+		r.ProyectoAsociado = nil
 	}
 	return nil
 }
