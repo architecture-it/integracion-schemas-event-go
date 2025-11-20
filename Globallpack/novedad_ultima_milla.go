@@ -41,7 +41,7 @@ type NovedadUltimaMilla struct {
 	SucursalAsociadaAlEvento *UnionNullDatosSucursal `json:"sucursalAsociadaAlEvento"`
 }
 
-const NovedadUltimaMillaAvroCRC64Fingerprint = "\xf3\xb5:\x11еtP"
+const NovedadUltimaMillaAvroCRC64Fingerprint = "\x0fԸ\x0f\xb5k\xa1\x10"
 
 func NewNovedadUltimaMilla() NovedadUltimaMilla {
 	r := NovedadUltimaMilla{}
@@ -136,11 +136,11 @@ func (r NovedadUltimaMilla) Serialize(w io.Writer) error {
 }
 
 func (r NovedadUltimaMilla) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]}],\"name\":\"Andreani.Globallpack.Events.Common.NovedadUltimaMilla\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"namespace\":\"Andreani.Globallpack.Events.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.Globallpack.Events.Record.NovedadUltimaMilla\",\"type\":\"record\"}"
 }
 
 func (r NovedadUltimaMilla) SchemaName() string {
-	return "Andreani.Globallpack.Events.Common.NovedadUltimaMilla"
+	return "Andreani.Globallpack.Events.Record.NovedadUltimaMilla"
 }
 
 func (_ NovedadUltimaMilla) SetBoolean(v bool)    { panic("Unsupported operation") }

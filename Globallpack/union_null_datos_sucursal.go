@@ -84,7 +84,7 @@ func DeserializeUnionNullDatosSucursalFromSchema(r io.Reader, schema string) (*U
 }
 
 func (r *UnionNullDatosSucursal) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"namespace\":\"Andreani.Globallpack.Events.Common\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullDatosSucursal) SetBoolean(v bool)   { panic("Unsupported operation") }
