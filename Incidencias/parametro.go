@@ -25,7 +25,7 @@ type Parametro struct {
 	Valor string `json:"Valor"`
 }
 
-const ParametroAvroCRC64Fingerprint = "\"sMؤnjx"
+const ParametroAvroCRC64Fingerprint = "\x8e\xb5:l\xf3\xb8A\xd5"
 
 func NewParametro() Parametro {
 	r := Parametro{}
@@ -77,11 +77,11 @@ func (r Parametro) Serialize(w io.Writer) error {
 }
 
 func (r Parametro) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdParametro\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Andreani.Incidencias.Events.Common.Parametro\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdParametro\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasWOS.Events.Common.Parametro\",\"type\":\"record\"}"
 }
 
 func (r Parametro) SchemaName() string {
-	return "Andreani.Incidencias.Events.Common.Parametro"
+	return "Andreani.IncidenciasWOS.Events.Common.Parametro"
 }
 
 func (_ Parametro) SetBoolean(v bool)    { panic("Unsupported operation") }

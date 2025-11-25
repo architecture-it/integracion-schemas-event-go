@@ -31,7 +31,7 @@ type IncidenciaActualizada struct {
 	IdentificadorExterno *UnionNullString `json:"IdentificadorExterno"`
 }
 
-const IncidenciaActualizadaAvroCRC64Fingerprint = "\x85\xb81\xea\xfaM\xd3n"
+const IncidenciaActualizadaAvroCRC64Fingerprint = "!\xa8\x8c\xafui\xa9\xb5"
 
 func NewIncidenciaActualizada() IncidenciaActualizada {
 	r := IncidenciaActualizada{}
@@ -101,11 +101,11 @@ func (r IncidenciaActualizada) Serialize(w io.Writer) error {
 }
 
 func (r IncidenciaActualizada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"IdMotivoResolucion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ObservacionesAuditor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoCancelacion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoAuditor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdIncidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.IncidenciaActualizada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdMotivoResolucion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ObservacionesAuditor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoCancelacion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TiempoAuditor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdIncidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasWOS.Events.Record.IncidenciaActualizada\",\"type\":\"record\"}"
 }
 
 func (r IncidenciaActualizada) SchemaName() string {
-	return "Andreani.Incidencias.Events.Record.IncidenciaActualizada"
+	return "Andreani.IncidenciasWOS.Events.Record.IncidenciaActualizada"
 }
 
 func (_ IncidenciaActualizada) SetBoolean(v bool)    { panic("Unsupported operation") }

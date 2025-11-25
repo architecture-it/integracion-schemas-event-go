@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayParametroFromSchema(r io.Reader, schema string) (*
 }
 
 func (r *UnionNullArrayParametro) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"IdParametro\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Parametro\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"IdParametro\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Parametro\",\"namespace\":\"Andreani.IncidenciasWOS.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayParametro) SetBoolean(v bool)   { panic("Unsupported operation") }

@@ -53,7 +53,7 @@ type IncidenciaCreada struct {
 	IdUnidadOperativa *UnionNullString `json:"IdUnidadOperativa"`
 }
 
-const IncidenciaCreadaAvroCRC64Fingerprint = "\xa2\x9a\xb2jޟ1\x12"
+const IncidenciaCreadaAvroCRC64Fingerprint = "9\x13Ѥ9\xf2\xde{"
 
 func NewIncidenciaCreada() IncidenciaCreada {
 	r := IncidenciaCreada{}
@@ -178,11 +178,11 @@ func (r IncidenciaCreada) Serialize(w io.Writer) error {
 }
 
 func (r IncidenciaCreada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"IdOrigen\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdPrioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Denunciante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdOperacion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoPorPropietario\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdFuenteEvidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Archivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Fotos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Parametros\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"IdParametro\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Parametro\",\"namespace\":\"Andreani.Incidencias.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdProceso\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdUnidadOperativa\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.IncidenciaCreada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdOrigen\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdPrioridad\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Denunciante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Observaciones\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdOperacion\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdMotivoPorPropietario\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdFuenteEvidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Archivos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Fotos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"Parametros\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"IdParametro\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Parametro\",\"namespace\":\"Andreani.IncidenciasWOS.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LPN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdProceso\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdUnidadOperativa\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasWOS.Events.Record.IncidenciaCreada\",\"type\":\"record\"}"
 }
 
 func (r IncidenciaCreada) SchemaName() string {
-	return "Andreani.Incidencias.Events.Record.IncidenciaCreada"
+	return "Andreani.IncidenciasWOS.Events.Record.IncidenciaCreada"
 }
 
 func (_ IncidenciaCreada) SetBoolean(v bool)    { panic("Unsupported operation") }

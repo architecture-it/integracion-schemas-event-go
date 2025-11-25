@@ -27,7 +27,7 @@ type InformaError struct {
 	IdentificadorExterno *UnionNullString `json:"IdentificadorExterno"`
 }
 
-const InformaErrorAvroCRC64Fingerprint = "n=LlI\xdb\xd6T"
+const InformaErrorAvroCRC64Fingerprint = "Fk1\xc3\xd6\xc0\xb6\xf1"
 
 func NewInformaError() InformaError {
 	r := InformaError{}
@@ -87,11 +87,11 @@ func (r InformaError) Serialize(w io.Writer) error {
 }
 
 func (r InformaError) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"IdIncidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"EventoNombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Error\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Incidencias.Events.Record.InformaError\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdIncidencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"EventoNombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Error\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdentificadorExterno\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasWOS.Events.Record.InformaError\",\"type\":\"record\"}"
 }
 
 func (r InformaError) SchemaName() string {
-	return "Andreani.Incidencias.Events.Record.InformaError"
+	return "Andreani.IncidenciasWOS.Events.Record.InformaError"
 }
 
 func (_ InformaError) SetBoolean(v bool)    { panic("Unsupported operation") }
