@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type AltaAceptada struct {
-	Incidencia Incidencia `json:"incidencia"`
+	DetalleIncidencia Incidencia `json:"detalleIncidencia"`
 
 	Estado string `json:"estado"`
 
@@ -31,11 +31,11 @@ type AltaAceptada struct {
 	CorrelationId *UnionNullString `json:"correlationId"`
 }
 
-const AltaAceptadaAvroCRC64Fingerprint = "6\x94l\xd3l\xd2\xc2M"
+const AltaAceptadaAvroCRC64Fingerprint = "\x90Q\xd2\xc5\xc9\xe1B\x90"
 
 func NewAltaAceptada() AltaAceptada {
 	r := AltaAceptada{}
-	r.Incidencia = NewIncidencia()
+	r.DetalleIncidencia = NewIncidencia()
 
 	r.Propietario = NewPropietario()
 
@@ -70,7 +70,7 @@ func DeserializeAltaAceptadaFromSchema(r io.Reader, schema string) (AltaAceptada
 
 func writeAltaAceptada(r AltaAceptada, w io.Writer) error {
 	var err error
-	err = writeIncidencia(r.Incidencia, w)
+	err = writeIncidencia(r.DetalleIncidencia, w)
 	if err != nil {
 		return err
 	}
@@ -102,7 +102,7 @@ func (r AltaAceptada) Serialize(w io.Writer) error {
 }
 
 func (r AltaAceptada) Schema() string {
-	return "{\"fields\":[{\"name\":\"incidencia\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipoId\",\"type\":\"int\"},{\"name\":\"tipoNombre\",\"type\":\"string\"},{\"name\":\"motivoId\",\"type\":\"int\"},{\"name\":\"motivoNombre\",\"type\":\"string\"}],\"name\":\"Incidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"fechaCreacion\",\"type\":\"long\"},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.AltaAceptada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"detalleIncidencia\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipoId\",\"type\":\"int\"},{\"name\":\"tipoNombre\",\"type\":\"string\"},{\"name\":\"motivoId\",\"type\":\"int\"},{\"name\":\"motivoNombre\",\"type\":\"string\"}],\"name\":\"Incidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"fechaCreacion\",\"type\":\"long\"},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.AltaAceptada\",\"type\":\"record\"}"
 }
 
 func (r AltaAceptada) SchemaName() string {
@@ -121,9 +121,9 @@ func (_ AltaAceptada) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *AltaAceptada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Incidencia = NewIncidencia()
+		r.DetalleIncidencia = NewIncidencia()
 
-		w := types.Record{Target: &r.Incidencia}
+		w := types.Record{Target: &r.DetalleIncidencia}
 
 		return w
 
@@ -189,7 +189,7 @@ func (_ AltaAceptada) AvroCRC64Fingerprint() []byte {
 func (r AltaAceptada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["incidencia"], err = json.Marshal(r.Incidencia)
+	output["detalleIncidencia"], err = json.Marshal(r.DetalleIncidencia)
 	if err != nil {
 		return nil, err
 	}
@@ -224,18 +224,18 @@ func (r *AltaAceptada) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["incidencia"]; ok {
+		if v, ok := fields["detalleIncidencia"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Incidencia); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DetalleIncidencia); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for incidencia")
+		return fmt.Errorf("no value specified for detalleIncidencia")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["estado"]; ok {

@@ -18,7 +18,7 @@ import (
 var _ = fmt.Printf
 
 type AltaError struct {
-	Incidencia SolicitudIncidencia `json:"incidencia"`
+	Solicitud SolicitudIncidencia `json:"solicitud"`
 
 	Propietario Propietario `json:"propietario"`
 
@@ -31,11 +31,11 @@ type AltaError struct {
 	CorrelationId *UnionNullString `json:"correlationId"`
 }
 
-const AltaErrorAvroCRC64Fingerprint = "\xe1\xa1)\xe8< !\x0e"
+const AltaErrorAvroCRC64Fingerprint = "\xf4\x82Ҍ\xe8\x8c\xc1\xea"
 
 func NewAltaError() AltaError {
 	r := AltaError{}
-	r.Incidencia = NewSolicitudIncidencia()
+	r.Solicitud = NewSolicitudIncidencia()
 
 	r.Propietario = NewPropietario()
 
@@ -72,7 +72,7 @@ func DeserializeAltaErrorFromSchema(r io.Reader, schema string) (AltaError, erro
 
 func writeAltaError(r AltaError, w io.Writer) error {
 	var err error
-	err = writeSolicitudIncidencia(r.Incidencia, w)
+	err = writeSolicitudIncidencia(r.Solicitud, w)
 	if err != nil {
 		return err
 	}
@@ -104,7 +104,7 @@ func (r AltaError) Serialize(w io.Writer) error {
 }
 
 func (r AltaError) Schema() string {
-	return "{\"fields\":[{\"name\":\"incidencia\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"prioridad\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Prioridad\",\"type\":\"record\"}]}],\"name\":\"SolicitudIncidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"errores\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"mensaje\",\"type\":\"string\"}],\"name\":\"ErrorValidacion\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaError\",\"type\":\"long\"},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.AltaError\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"solicitud\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"prioridad\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Prioridad\",\"type\":\"record\"}]}],\"name\":\"SolicitudIncidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"errores\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"mensaje\",\"type\":\"string\"}],\"name\":\"ErrorValidacion\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"fechaError\",\"type\":\"long\"},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.AltaError\",\"type\":\"record\"}"
 }
 
 func (r AltaError) SchemaName() string {
@@ -123,9 +123,9 @@ func (_ AltaError) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *AltaError) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Incidencia = NewSolicitudIncidencia()
+		r.Solicitud = NewSolicitudIncidencia()
 
-		w := types.Record{Target: &r.Incidencia}
+		w := types.Record{Target: &r.Solicitud}
 
 		return w
 
@@ -193,7 +193,7 @@ func (_ AltaError) AvroCRC64Fingerprint() []byte {
 func (r AltaError) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["incidencia"], err = json.Marshal(r.Incidencia)
+	output["solicitud"], err = json.Marshal(r.Solicitud)
 	if err != nil {
 		return nil, err
 	}
@@ -228,18 +228,18 @@ func (r *AltaError) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["incidencia"]; ok {
+		if v, ok := fields["solicitud"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Incidencia); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Solicitud); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for incidencia")
+		return fmt.Errorf("no value specified for solicitud")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["propietario"]; ok {
