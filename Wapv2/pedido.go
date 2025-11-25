@@ -45,9 +45,11 @@ type Pedido struct {
 	DatosAdicionales *UnionNullListaDePropiedades `json:"datosAdicionales"`
 
 	EstatusOTdeTraza *UnionNullString `json:"estatusOTdeTraza"`
+
+	Distribuidor Distribuidor `json:"distribuidor"`
 }
 
-const PedidoAvroCRC64Fingerprint = "O\xa1\xb5\"\x8d\xe3S\xa0"
+const PedidoAvroCRC64Fingerprint = "\xed\xef!֒\xb4\xee\x9c"
 
 func NewPedido() Pedido {
 	r := Pedido{}
@@ -63,6 +65,8 @@ func NewPedido() Pedido {
 	r.FechaEntrega = nil
 	r.DatosAdicionales = nil
 	r.EstatusOTdeTraza = nil
+	r.Distribuidor = NewDistribuidor()
+
 	return r
 }
 
@@ -147,6 +151,10 @@ func writePedido(r Pedido, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeDistribuidor(r.Distribuidor, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -155,7 +163,7 @@ func (r Pedido) Serialize(w io.Writer) error {
 }
 
 func (r Pedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urlsDocumentos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"UrlDocumento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaUrlsDocumentos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"documentosBase64\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"documentoBase64\",\"type\":\"string\"}],\"name\":\"Documentos\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDocumentos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"precioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"estatusOTdeTraza\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Wapv2.Events.Record.Pedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numeroOrdenExterna\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":\"string\"},{\"default\":null,\"name\":\"valorDeclarado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urlsDocumentos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"url\",\"type\":\"string\"}],\"name\":\"UrlDocumento\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaUrlsDocumentos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"documentosBase64\",\"type\":[\"null\",{\"fields\":[{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"documentoBase64\",\"type\":\"string\"}],\"name\":\"Documentos\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDeDocumentos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"tieneGestionCobranza\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"facturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaDeFacturacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"precioValorFC\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaEntrega\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"estatusOTdeTraza\",\"type\":[\"null\",\"string\"]},{\"name\":\"distribuidor\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"remito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"etiqueta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosadicionales\",\"type\":[\"null\",\"string\"]}],\"name\":\"Distribuidor\",\"type\":\"record\"}}],\"name\":\"Andreani.Wapv2.Events.Record.Pedido\",\"type\":\"record\"}"
 }
 
 func (r Pedido) SchemaName() string {
@@ -231,6 +239,13 @@ func (r *Pedido) Get(i int) types.Field {
 		r.EstatusOTdeTraza = NewUnionNullString()
 
 		return r.EstatusOTdeTraza
+	case 14:
+		r.Distribuidor = NewDistribuidor()
+
+		w := types.Record{Target: &r.Distribuidor}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -384,6 +399,10 @@ func (r Pedido) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["estatusOTdeTraza"], err = json.Marshal(r.EstatusOTdeTraza)
+	if err != nil {
+		return nil, err
+	}
+	output["distribuidor"], err = json.Marshal(r.Distribuidor)
 	if err != nil {
 		return nil, err
 	}
@@ -616,6 +635,20 @@ func (r *Pedido) UnmarshalJSON(data []byte) error {
 		r.EstatusOTdeTraza = NewUnionNullString()
 
 		r.EstatusOTdeTraza = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["distribuidor"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Distribuidor); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for distribuidor")
 	}
 	return nil
 }
