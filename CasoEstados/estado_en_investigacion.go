@@ -47,9 +47,11 @@ type EstadoEnInvestigacion struct {
 	CorreoRemitente *UnionNullString `json:"CorreoRemitente"`
 
 	CorreoDestinatario *UnionNullString `json:"CorreoDestinatario"`
+
+	CorreoReclamante *UnionNullString `json:"CorreoReclamante"`
 }
 
-const EstadoEnInvestigacionAvroCRC64Fingerprint = "\\\x1e\xa2\xd3p\xaf\xf9%"
+const EstadoEnInvestigacionAvroCRC64Fingerprint = "$Q\x1d\x17ݘ\xdbL"
 
 func NewEstadoEnInvestigacion() EstadoEnInvestigacion {
 	r := EstadoEnInvestigacion{}
@@ -141,6 +143,10 @@ func writeEstadoEnInvestigacion(r EstadoEnInvestigacion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.CorreoReclamante, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -149,7 +155,7 @@ func (r EstadoEnInvestigacion) Serialize(w io.Writer) error {
 }
 
 func (r EstadoEnInvestigacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Modifiedon\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoEnInvestigacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Modifiedon\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoReclamante\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoEnInvestigacion\",\"type\":\"record\"}"
 }
 
 func (r EstadoEnInvestigacion) SchemaName() string {
@@ -234,6 +240,10 @@ func (r *EstadoEnInvestigacion) Get(i int) types.Field {
 		r.CorreoDestinatario = NewUnionNullString()
 
 		return r.CorreoDestinatario
+	case 15:
+		r.CorreoReclamante = NewUnionNullString()
+
+		return r.CorreoReclamante
 	}
 	panic("Unknown field index")
 }
@@ -269,6 +279,9 @@ func (r *EstadoEnInvestigacion) NullField(i int) {
 		return
 	case 14:
 		r.CorreoDestinatario = nil
+		return
+	case 15:
+		r.CorreoReclamante = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -343,6 +356,10 @@ func (r EstadoEnInvestigacion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CorreoDestinatario"], err = json.Marshal(r.CorreoDestinatario)
+	if err != nil {
+		return nil, err
+	}
+	output["CorreoReclamante"], err = json.Marshal(r.CorreoReclamante)
 	if err != nil {
 		return nil, err
 	}
@@ -565,6 +582,20 @@ func (r *EstadoEnInvestigacion) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CorreoDestinatario")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CorreoReclamante"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CorreoReclamante); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CorreoReclamante")
 	}
 	return nil
 }

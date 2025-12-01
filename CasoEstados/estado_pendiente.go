@@ -45,9 +45,11 @@ type EstadoPendiente struct {
 	CorreoRemitente *UnionNullString `json:"CorreoRemitente"`
 
 	CorreoDestinatario *UnionNullString `json:"CorreoDestinatario"`
+
+	CorreoReclamante *UnionNullString `json:"CorreoReclamante"`
 }
 
-const EstadoPendienteAvroCRC64Fingerprint = "\x15\x96\a.\tȮ\xc6"
+const EstadoPendienteAvroCRC64Fingerprint = "[oJ9\xceU\xae\x94"
 
 func NewEstadoPendiente() EstadoPendiente {
 	r := EstadoPendiente{}
@@ -135,6 +137,10 @@ func writeEstadoPendiente(r EstadoPendiente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.CorreoReclamante, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -143,7 +149,7 @@ func (r EstadoPendiente) Serialize(w io.Writer) error {
 }
 
 func (r EstadoPendiente) Schema() string {
-	return "{\"fields\":[{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoReclamante\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoPendiente\",\"type\":\"record\"}"
 }
 
 func (r EstadoPendiente) SchemaName() string {
@@ -223,6 +229,10 @@ func (r *EstadoPendiente) Get(i int) types.Field {
 		r.CorreoDestinatario = NewUnionNullString()
 
 		return r.CorreoDestinatario
+	case 14:
+		r.CorreoReclamante = NewUnionNullString()
+
+		return r.CorreoReclamante
 	}
 	panic("Unknown field index")
 }
@@ -258,6 +268,9 @@ func (r *EstadoPendiente) NullField(i int) {
 		return
 	case 13:
 		r.CorreoDestinatario = nil
+		return
+	case 14:
+		r.CorreoReclamante = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -328,6 +341,10 @@ func (r EstadoPendiente) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CorreoDestinatario"], err = json.Marshal(r.CorreoDestinatario)
+	if err != nil {
+		return nil, err
+	}
+	output["CorreoReclamante"], err = json.Marshal(r.CorreoReclamante)
 	if err != nil {
 		return nil, err
 	}
@@ -536,6 +553,20 @@ func (r *EstadoPendiente) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CorreoDestinatario")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CorreoReclamante"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CorreoReclamante); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for CorreoReclamante")
 	}
 	return nil
 }
