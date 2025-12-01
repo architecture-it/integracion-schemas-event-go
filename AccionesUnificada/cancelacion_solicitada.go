@@ -27,9 +27,13 @@ type CancelacionSolicitada struct {
 	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
 	Componentes *UnionNullArrayString `json:"componentes"`
+
+	Motivo *UnionNullString `json:"motivo"`
+
+	EsInterno *UnionNullBool `json:"esInterno"`
 }
 
-const CancelacionSolicitadaAvroCRC64Fingerprint = "\x84Z\x9c\x01\xab\xf6\xe2\x19"
+const CancelacionSolicitadaAvroCRC64Fingerprint = "ȇ\x9b\xab\xban\v\xbc"
 
 func NewCancelacionSolicitada() CancelacionSolicitada {
 	r := CancelacionSolicitada{}
@@ -38,6 +42,8 @@ func NewCancelacionSolicitada() CancelacionSolicitada {
 	r.NumeroDeEnvio = nil
 	r.CodigoCliente = nil
 	r.Componentes = nil
+	r.Motivo = nil
+	r.EsInterno = nil
 	return r
 }
 
@@ -86,6 +92,14 @@ func writeCancelacionSolicitada(r CancelacionSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Motivo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullBool(r.EsInterno, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -94,7 +108,7 @@ func (r CancelacionSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r CancelacionSolicitada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CancelacionSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esInterno\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CancelacionSolicitada\",\"type\":\"record\"}"
 }
 
 func (r CancelacionSolicitada) SchemaName() string {
@@ -132,6 +146,14 @@ func (r *CancelacionSolicitada) Get(i int) types.Field {
 		r.Componentes = NewUnionNullArrayString()
 
 		return r.Componentes
+	case 5:
+		r.Motivo = NewUnionNullString()
+
+		return r.Motivo
+	case 6:
+		r.EsInterno = NewUnionNullBool()
+
+		return r.EsInterno
 	}
 	panic("Unknown field index")
 }
@@ -153,6 +175,12 @@ func (r *CancelacionSolicitada) SetDefault(i int) {
 	case 4:
 		r.Componentes = nil
 		return
+	case 5:
+		r.Motivo = nil
+		return
+	case 6:
+		r.EsInterno = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -173,6 +201,12 @@ func (r *CancelacionSolicitada) NullField(i int) {
 		return
 	case 4:
 		r.Componentes = nil
+		return
+	case 5:
+		r.Motivo = nil
+		return
+	case 6:
+		r.EsInterno = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -207,6 +241,14 @@ func (r CancelacionSolicitada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["componentes"], err = json.Marshal(r.Componentes)
+	if err != nil {
+		return nil, err
+	}
+	output["motivo"], err = json.Marshal(r.Motivo)
+	if err != nil {
+		return nil, err
+	}
+	output["esInterno"], err = json.Marshal(r.EsInterno)
 	if err != nil {
 		return nil, err
 	}
@@ -299,6 +341,38 @@ func (r *CancelacionSolicitada) UnmarshalJSON(data []byte) error {
 		r.Componentes = NewUnionNullArrayString()
 
 		r.Componentes = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["motivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
+			return err
+		}
+	} else {
+		r.Motivo = NewUnionNullString()
+
+		r.Motivo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["esInterno"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EsInterno); err != nil {
+			return err
+		}
+	} else {
+		r.EsInterno = NewUnionNullBool()
+
+		r.EsInterno = nil
 	}
 	return nil
 }

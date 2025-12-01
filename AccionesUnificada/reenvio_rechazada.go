@@ -28,12 +28,16 @@ type ReenvioRechazada struct {
 
 	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
+	Motivo *UnionNullString `json:"motivo"`
+
+	EsInterno *UnionNullBool `json:"esInterno"`
+
 	Destinatario *UnionNullDestinatario `json:"destinatario"`
 
 	Razon string `json:"razon"`
 }
 
-const ReenvioRechazadaAvroCRC64Fingerprint = "e\xec\x1e\xe3\xf6\x9c\xdb\v"
+const ReenvioRechazadaAvroCRC64Fingerprint = "PZ8P2W\xb9\xab"
 
 func NewReenvioRechazada() ReenvioRechazada {
 	r := ReenvioRechazada{}
@@ -41,6 +45,8 @@ func NewReenvioRechazada() ReenvioRechazada {
 	r.NumeroAndreani = nil
 	r.NumeroDeEnvio = nil
 	r.CodigoCliente = nil
+	r.Motivo = nil
+	r.EsInterno = nil
 	r.Destinatario = nil
 	return r
 }
@@ -90,6 +96,14 @@ func writeReenvioRechazada(r ReenvioRechazada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Motivo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullBool(r.EsInterno, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullDestinatario(r.Destinatario, w)
 	if err != nil {
 		return err
@@ -106,7 +120,7 @@ func (r ReenvioRechazada) Serialize(w io.Writer) error {
 }
 
 func (r ReenvioRechazada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"esRemitente\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidad\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ReenvioRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"esRemitente\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esInterno\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"destinatario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoPostal\",\"type\":\"string\"},{\"name\":\"direccion\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidad\",\"type\":\"string\"}],\"name\":\"Destinatario\",\"namespace\":\"Andreani.AccionesUnificada.Events.Common\",\"type\":\"record\"}]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.ReenvioRechazada\",\"type\":\"record\"}"
 }
 
 func (r ReenvioRechazada) SchemaName() string {
@@ -146,10 +160,18 @@ func (r *ReenvioRechazada) Get(i int) types.Field {
 
 		return r.CodigoCliente
 	case 5:
+		r.Motivo = NewUnionNullString()
+
+		return r.Motivo
+	case 6:
+		r.EsInterno = NewUnionNullBool()
+
+		return r.EsInterno
+	case 7:
 		r.Destinatario = NewUnionNullDestinatario()
 
 		return r.Destinatario
-	case 6:
+	case 8:
 		w := types.String{Target: &r.Razon}
 
 		return w
@@ -173,6 +195,12 @@ func (r *ReenvioRechazada) SetDefault(i int) {
 		r.CodigoCliente = nil
 		return
 	case 5:
+		r.Motivo = nil
+		return
+	case 6:
+		r.EsInterno = nil
+		return
+	case 7:
 		r.Destinatario = nil
 		return
 	}
@@ -194,6 +222,12 @@ func (r *ReenvioRechazada) NullField(i int) {
 		r.CodigoCliente = nil
 		return
 	case 5:
+		r.Motivo = nil
+		return
+	case 6:
+		r.EsInterno = nil
+		return
+	case 7:
 		r.Destinatario = nil
 		return
 	}
@@ -229,6 +263,14 @@ func (r ReenvioRechazada) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["codigoCliente"], err = json.Marshal(r.CodigoCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["motivo"], err = json.Marshal(r.Motivo)
+	if err != nil {
+		return nil, err
+	}
+	output["esInterno"], err = json.Marshal(r.EsInterno)
 	if err != nil {
 		return nil, err
 	}
@@ -327,6 +369,38 @@ func (r *ReenvioRechazada) UnmarshalJSON(data []byte) error {
 		r.CodigoCliente = NewUnionNullString()
 
 		r.CodigoCliente = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["motivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
+			return err
+		}
+	} else {
+		r.Motivo = NewUnionNullString()
+
+		r.Motivo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["esInterno"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EsInterno); err != nil {
+			return err
+		}
+	} else {
+		r.EsInterno = NewUnionNullBool()
+
+		r.EsInterno = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatario"]; ok {
