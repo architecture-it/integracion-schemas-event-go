@@ -28,14 +28,14 @@ type CustodiaRechazada struct {
 
 	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
-	Motivo *UnionNullString `json:"motivo"`
+	Usuario *UnionNullString `json:"usuario"`
 
 	EsInterno *UnionNullBool `json:"esInterno"`
 
 	Razon string `json:"razon"`
 }
 
-const CustodiaRechazadaAvroCRC64Fingerprint = "m\xbc\x9d.A\x98\x84\xaf"
+const CustodiaRechazadaAvroCRC64Fingerprint = "@\t\xe0\xceBg9\xc8"
 
 func NewCustodiaRechazada() CustodiaRechazada {
 	r := CustodiaRechazada{}
@@ -43,7 +43,7 @@ func NewCustodiaRechazada() CustodiaRechazada {
 	r.NumeroAndreani = nil
 	r.NumeroDeEnvio = nil
 	r.CodigoCliente = nil
-	r.Motivo = nil
+	r.Usuario = nil
 	r.EsInterno = nil
 	return r
 }
@@ -93,7 +93,7 @@ func writeCustodiaRechazada(r CustodiaRechazada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Motivo, w)
+	err = writeUnionNullString(r.Usuario, w)
 	if err != nil {
 		return err
 	}
@@ -113,7 +113,7 @@ func (r CustodiaRechazada) Serialize(w io.Writer) error {
 }
 
 func (r CustodiaRechazada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esInterno\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CustodiaRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"numeroDeSucursal\",\"type\":\"string\"},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esInterno\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CustodiaRechazada\",\"type\":\"record\"}"
 }
 
 func (r CustodiaRechazada) SchemaName() string {
@@ -153,9 +153,9 @@ func (r *CustodiaRechazada) Get(i int) types.Field {
 
 		return r.CodigoCliente
 	case 5:
-		r.Motivo = NewUnionNullString()
+		r.Usuario = NewUnionNullString()
 
-		return r.Motivo
+		return r.Usuario
 	case 6:
 		r.EsInterno = NewUnionNullBool()
 
@@ -184,7 +184,7 @@ func (r *CustodiaRechazada) SetDefault(i int) {
 		r.CodigoCliente = nil
 		return
 	case 5:
-		r.Motivo = nil
+		r.Usuario = nil
 		return
 	case 6:
 		r.EsInterno = nil
@@ -208,7 +208,7 @@ func (r *CustodiaRechazada) NullField(i int) {
 		r.CodigoCliente = nil
 		return
 	case 5:
-		r.Motivo = nil
+		r.Usuario = nil
 		return
 	case 6:
 		r.EsInterno = nil
@@ -249,7 +249,7 @@ func (r CustodiaRechazada) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["motivo"], err = json.Marshal(r.Motivo)
+	output["usuario"], err = json.Marshal(r.Usuario)
 	if err != nil {
 		return nil, err
 	}
@@ -350,20 +350,20 @@ func (r *CustodiaRechazada) UnmarshalJSON(data []byte) error {
 		r.CodigoCliente = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["motivo"]; ok {
+		if v, ok := fields["usuario"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Usuario); err != nil {
 			return err
 		}
 	} else {
-		r.Motivo = NewUnionNullString()
+		r.Usuario = NewUnionNullString()
 
-		r.Motivo = nil
+		r.Usuario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["esInterno"]; ok {

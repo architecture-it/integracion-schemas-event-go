@@ -32,12 +32,12 @@ type RescateDevolucionSolicitada struct {
 
 	TipoDeRescate *UnionNullString `json:"tipoDeRescate"`
 
-	Motivo *UnionNullString `json:"motivo"`
+	Usuario *UnionNullString `json:"usuario"`
 
 	EsInterno *UnionNullBool `json:"esInterno"`
 }
 
-const RescateDevolucionSolicitadaAvroCRC64Fingerprint = "\x04\xb2\x89\xbd\x94\xbam\xdb"
+const RescateDevolucionSolicitadaAvroCRC64Fingerprint = "\"\x04\xf1l\xc4\xd5a,"
 
 func NewRescateDevolucionSolicitada() RescateDevolucionSolicitada {
 	r := RescateDevolucionSolicitada{}
@@ -48,7 +48,7 @@ func NewRescateDevolucionSolicitada() RescateDevolucionSolicitada {
 	r.NumeroDeEnvio = nil
 	r.CodigoCliente = nil
 	r.TipoDeRescate = nil
-	r.Motivo = nil
+	r.Usuario = nil
 	r.EsInterno = nil
 	return r
 }
@@ -106,7 +106,7 @@ func writeRescateDevolucionSolicitada(r RescateDevolucionSolicitada, w io.Writer
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Motivo, w)
+	err = writeUnionNullString(r.Usuario, w)
 	if err != nil {
 		return err
 	}
@@ -122,7 +122,7 @@ func (r RescateDevolucionSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r RescateDevolucionSolicitada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeSucursal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esInterno\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"motivoDelRescateInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeSucursal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoDeRescate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esInterno\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.RescateDevolucionSolicitada\",\"type\":\"record\"}"
 }
 
 func (r RescateDevolucionSolicitada) SchemaName() string {
@@ -169,9 +169,9 @@ func (r *RescateDevolucionSolicitada) Get(i int) types.Field {
 
 		return r.TipoDeRescate
 	case 7:
-		r.Motivo = NewUnionNullString()
+		r.Usuario = NewUnionNullString()
 
-		return r.Motivo
+		return r.Usuario
 	case 8:
 		r.EsInterno = NewUnionNullBool()
 
@@ -204,7 +204,7 @@ func (r *RescateDevolucionSolicitada) SetDefault(i int) {
 		r.TipoDeRescate = nil
 		return
 	case 7:
-		r.Motivo = nil
+		r.Usuario = nil
 		return
 	case 8:
 		r.EsInterno = nil
@@ -237,7 +237,7 @@ func (r *RescateDevolucionSolicitada) NullField(i int) {
 		r.TipoDeRescate = nil
 		return
 	case 7:
-		r.Motivo = nil
+		r.Usuario = nil
 		return
 	case 8:
 		r.EsInterno = nil
@@ -288,7 +288,7 @@ func (r RescateDevolucionSolicitada) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["motivo"], err = json.Marshal(r.Motivo)
+	output["usuario"], err = json.Marshal(r.Usuario)
 	if err != nil {
 		return nil, err
 	}
@@ -419,20 +419,20 @@ func (r *RescateDevolucionSolicitada) UnmarshalJSON(data []byte) error {
 		r.TipoDeRescate = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["motivo"]; ok {
+		if v, ok := fields["usuario"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Usuario); err != nil {
 			return err
 		}
 	} else {
-		r.Motivo = NewUnionNullString()
+		r.Usuario = NewUnionNullString()
 
-		r.Motivo = nil
+		r.Usuario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["esInterno"]; ok {

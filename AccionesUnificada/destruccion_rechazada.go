@@ -28,14 +28,14 @@ type DestruccionRechazada struct {
 
 	CodigoCliente *UnionNullString `json:"codigoCliente"`
 
-	Motivo *UnionNullString `json:"motivo"`
+	Usuario *UnionNullString `json:"usuario"`
 
 	EsInterno *UnionNullBool `json:"esInterno"`
 
 	Razon string `json:"razon"`
 }
 
-const DestruccionRechazadaAvroCRC64Fingerprint = "ď\x03R\xaco\xebw"
+const DestruccionRechazadaAvroCRC64Fingerprint = "]<\xa4\x9c\x80\x04\xddQ"
 
 func NewDestruccionRechazada() DestruccionRechazada {
 	r := DestruccionRechazada{}
@@ -44,7 +44,7 @@ func NewDestruccionRechazada() DestruccionRechazada {
 	r.NumeroAndreani = nil
 	r.NumeroDeEnvio = nil
 	r.CodigoCliente = nil
-	r.Motivo = nil
+	r.Usuario = nil
 	r.EsInterno = nil
 	return r
 }
@@ -94,7 +94,7 @@ func writeDestruccionRechazada(r DestruccionRechazada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Motivo, w)
+	err = writeUnionNullString(r.Usuario, w)
 	if err != nil {
 		return err
 	}
@@ -114,7 +114,7 @@ func (r DestruccionRechazada) Serialize(w io.Writer) error {
 }
 
 func (r DestruccionRechazada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ejemplar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esInterno\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.DestruccionRechazada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ejemplar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"usuario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esInterno\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"razon\",\"type\":\"string\"}],\"name\":\"Andreani.AccionesUnificada.Events.Record.DestruccionRechazada\",\"type\":\"record\"}"
 }
 
 func (r DestruccionRechazada) SchemaName() string {
@@ -153,9 +153,9 @@ func (r *DestruccionRechazada) Get(i int) types.Field {
 
 		return r.CodigoCliente
 	case 5:
-		r.Motivo = NewUnionNullString()
+		r.Usuario = NewUnionNullString()
 
-		return r.Motivo
+		return r.Usuario
 	case 6:
 		r.EsInterno = NewUnionNullBool()
 
@@ -187,7 +187,7 @@ func (r *DestruccionRechazada) SetDefault(i int) {
 		r.CodigoCliente = nil
 		return
 	case 5:
-		r.Motivo = nil
+		r.Usuario = nil
 		return
 	case 6:
 		r.EsInterno = nil
@@ -214,7 +214,7 @@ func (r *DestruccionRechazada) NullField(i int) {
 		r.CodigoCliente = nil
 		return
 	case 5:
-		r.Motivo = nil
+		r.Usuario = nil
 		return
 	case 6:
 		r.EsInterno = nil
@@ -255,7 +255,7 @@ func (r DestruccionRechazada) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["motivo"], err = json.Marshal(r.Motivo)
+	output["usuario"], err = json.Marshal(r.Usuario)
 	if err != nil {
 		return nil, err
 	}
@@ -358,20 +358,20 @@ func (r *DestruccionRechazada) UnmarshalJSON(data []byte) error {
 		r.CodigoCliente = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["motivo"]; ok {
+		if v, ok := fields["usuario"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Usuario); err != nil {
 			return err
 		}
 	} else {
-		r.Motivo = NewUnionNullString()
+		r.Usuario = NewUnionNullString()
 
-		r.Motivo = nil
+		r.Usuario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["esInterno"]; ok {

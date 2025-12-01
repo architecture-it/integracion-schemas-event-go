@@ -28,12 +28,12 @@ type CancelacionSolicitada struct {
 
 	Componentes *UnionNullArrayString `json:"componentes"`
 
-	Motivo *UnionNullString `json:"motivo"`
+	Usuario *UnionNullString `json:"usuario"`
 
 	EsInterno *UnionNullBool `json:"esInterno"`
 }
 
-const CancelacionSolicitadaAvroCRC64Fingerprint = "ȇ\x9b\xab\xban\v\xbc"
+const CancelacionSolicitadaAvroCRC64Fingerprint = "\xceB\xf4>W\x12[\x1a"
 
 func NewCancelacionSolicitada() CancelacionSolicitada {
 	r := CancelacionSolicitada{}
@@ -42,7 +42,7 @@ func NewCancelacionSolicitada() CancelacionSolicitada {
 	r.NumeroDeEnvio = nil
 	r.CodigoCliente = nil
 	r.Componentes = nil
-	r.Motivo = nil
+	r.Usuario = nil
 	r.EsInterno = nil
 	return r
 }
@@ -92,7 +92,7 @@ func writeCancelacionSolicitada(r CancelacionSolicitada, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Motivo, w)
+	err = writeUnionNullString(r.Usuario, w)
 	if err != nil {
 		return err
 	}
@@ -108,7 +108,7 @@ func (r CancelacionSolicitada) Serialize(w io.Writer) error {
 }
 
 func (r CancelacionSolicitada) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esInterno\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CancelacionSolicitada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroAndreani\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"usuario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"esInterno\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.AccionesUnificada.Events.Record.CancelacionSolicitada\",\"type\":\"record\"}"
 }
 
 func (r CancelacionSolicitada) SchemaName() string {
@@ -147,9 +147,9 @@ func (r *CancelacionSolicitada) Get(i int) types.Field {
 
 		return r.Componentes
 	case 5:
-		r.Motivo = NewUnionNullString()
+		r.Usuario = NewUnionNullString()
 
-		return r.Motivo
+		return r.Usuario
 	case 6:
 		r.EsInterno = NewUnionNullBool()
 
@@ -176,7 +176,7 @@ func (r *CancelacionSolicitada) SetDefault(i int) {
 		r.Componentes = nil
 		return
 	case 5:
-		r.Motivo = nil
+		r.Usuario = nil
 		return
 	case 6:
 		r.EsInterno = nil
@@ -203,7 +203,7 @@ func (r *CancelacionSolicitada) NullField(i int) {
 		r.Componentes = nil
 		return
 	case 5:
-		r.Motivo = nil
+		r.Usuario = nil
 		return
 	case 6:
 		r.EsInterno = nil
@@ -244,7 +244,7 @@ func (r CancelacionSolicitada) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["motivo"], err = json.Marshal(r.Motivo)
+	output["usuario"], err = json.Marshal(r.Usuario)
 	if err != nil {
 		return nil, err
 	}
@@ -343,20 +343,20 @@ func (r *CancelacionSolicitada) UnmarshalJSON(data []byte) error {
 		r.Componentes = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["motivo"]; ok {
+		if v, ok := fields["usuario"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Motivo); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Usuario); err != nil {
 			return err
 		}
 	} else {
-		r.Motivo = NewUnionNullString()
+		r.Usuario = NewUnionNullString()
 
-		r.Motivo = nil
+		r.Usuario = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["esInterno"]; ok {
