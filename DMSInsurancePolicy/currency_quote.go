@@ -23,7 +23,7 @@ type CurrencyQuote struct {
 	Amount float64 `json:"Amount"`
 }
 
-const CurrencyQuoteAvroCRC64Fingerprint = "\xfd\xf2\xe9ϙ\xf2\xaev"
+const CurrencyQuoteAvroCRC64Fingerprint = "e\x16H\x8e\xaa?\xf5\x89"
 
 func NewCurrencyQuote() CurrencyQuote {
 	r := CurrencyQuote{}
@@ -71,11 +71,11 @@ func (r CurrencyQuote) Serialize(w io.Writer) error {
 }
 
 func (r CurrencyQuote) Schema() string {
-	return "{\"fields\":[{\"name\":\"Currency\",\"type\":\"string\"},{\"name\":\"Amount\",\"type\":\"double\"}],\"name\":\"Andreani.DMS.InsurancePolicy.Events.Record.CurrencyQuote\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Currency\",\"type\":\"string\"},{\"name\":\"Amount\",\"type\":\"double\"}],\"name\":\"Andreani.DMSInsurancePolicy.Events.Record.CurrencyQuote\",\"type\":\"record\"}"
 }
 
 func (r CurrencyQuote) SchemaName() string {
-	return "Andreani.DMS.InsurancePolicy.Events.Record.CurrencyQuote"
+	return "Andreani.DMSInsurancePolicy.Events.Record.CurrencyQuote"
 }
 
 func (_ CurrencyQuote) SetBoolean(v bool)    { panic("Unsupported operation") }

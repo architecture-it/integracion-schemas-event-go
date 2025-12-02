@@ -31,7 +31,7 @@ type ResultSecurityRequirement struct {
 	Quantity int32 `json:"Quantity"`
 }
 
-const ResultSecurityRequirementAvroCRC64Fingerprint = "\xc7\x00\xc2\x1e\xa3\xcd\xed\xd7"
+const ResultSecurityRequirementAvroCRC64Fingerprint = "²ϴ_\xd5\xec\xbb"
 
 func NewResultSecurityRequirement() ResultSecurityRequirement {
 	r := ResultSecurityRequirement{}
@@ -95,11 +95,11 @@ func (r ResultSecurityRequirement) Serialize(w io.Writer) error {
 }
 
 func (r ResultSecurityRequirement) Schema() string {
-	return "{\"fields\":[{\"name\":\"SecurityRequirementType\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"FullJourney\",\"type\":\"boolean\"},{\"name\":\"From\",\"type\":\"double\"},{\"name\":\"To\",\"type\":\"double\"},{\"name\":\"Quantity\",\"type\":\"int\"}],\"name\":\"Andreani.DMS.InsurancePolicy.Events.Record.ResultSecurityRequirement\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"SecurityRequirementType\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"FullJourney\",\"type\":\"boolean\"},{\"name\":\"From\",\"type\":\"double\"},{\"name\":\"To\",\"type\":\"double\"},{\"name\":\"Quantity\",\"type\":\"int\"}],\"name\":\"Andreani.DMSInsurancePolicy.Events.Record.ResultSecurityRequirement\",\"type\":\"record\"}"
 }
 
 func (r ResultSecurityRequirement) SchemaName() string {
-	return "Andreani.DMS.InsurancePolicy.Events.Record.ResultSecurityRequirement"
+	return "Andreani.DMSInsurancePolicy.Events.Record.ResultSecurityRequirement"
 }
 
 func (_ ResultSecurityRequirement) SetBoolean(v bool)    { panic("Unsupported operation") }

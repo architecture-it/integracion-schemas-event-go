@@ -41,7 +41,7 @@ type JourneySecurityRequirement struct {
 	ResultGrouped []ResultSecurityRequirement `json:"ResultGrouped"`
 }
 
-const JourneySecurityRequirementAvroCRC64Fingerprint = ")M*\v\x9a\xe4\xd41"
+const JourneySecurityRequirementAvroCRC64Fingerprint = "6\xedV\x03~\xc7G@"
 
 func NewJourneySecurityRequirement() JourneySecurityRequirement {
 	r := JourneySecurityRequirement{}
@@ -137,11 +137,11 @@ func (r JourneySecurityRequirement) Serialize(w io.Writer) error {
 }
 
 func (r JourneySecurityRequirement) Schema() string {
-	return "{\"fields\":[{\"name\":\"Journey\",\"type\":\"string\"},{\"name\":\"PolicyStatesUsed\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"Contracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"Shipments\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"CurrencyQuotes\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Currency\",\"type\":\"string\"},{\"name\":\"Amount\",\"type\":\"double\"}],\"name\":\"CurrencyQuote\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"PolicyExceeded\",\"type\":\"boolean\"},{\"name\":\"IsGlobalPolicyUsed\",\"type\":\"boolean\"},{\"name\":\"JourneyType\",\"type\":\"string\"},{\"name\":\"Zone\",\"type\":\"string\"},{\"name\":\"ResultByPolicy\",\"type\":{\"items\":{\"fields\":[{\"name\":\"PolicyGrouper\",\"type\":\"string\"},{\"name\":\"Contracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"Shipments\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"TotalDeclaredValue\",\"type\":\"double\"},{\"name\":\"SecurityRequierements\",\"type\":{\"items\":{\"fields\":[{\"name\":\"SecurityRequirementType\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"FullJourney\",\"type\":\"boolean\"},{\"name\":\"From\",\"type\":\"double\"},{\"name\":\"To\",\"type\":\"double\"},{\"name\":\"Quantity\",\"type\":\"int\"}],\"name\":\"ResultSecurityRequirement\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ResultByPolicy\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"ResultGrouped\",\"type\":{\"items\":\"Andreani.DMS.InsurancePolicy.Events.Record.ResultSecurityRequirement\",\"type\":\"array\"}}],\"name\":\"Andreani.DMS.InsurancePolicy.Events.Record.JourneySecurityRequirement\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Journey\",\"type\":\"string\"},{\"name\":\"PolicyStatesUsed\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"Contracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"Shipments\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"CurrencyQuotes\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Currency\",\"type\":\"string\"},{\"name\":\"Amount\",\"type\":\"double\"}],\"name\":\"CurrencyQuote\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"PolicyExceeded\",\"type\":\"boolean\"},{\"name\":\"IsGlobalPolicyUsed\",\"type\":\"boolean\"},{\"name\":\"JourneyType\",\"type\":\"string\"},{\"name\":\"Zone\",\"type\":\"string\"},{\"name\":\"ResultByPolicy\",\"type\":{\"items\":{\"fields\":[{\"name\":\"PolicyGrouper\",\"type\":\"string\"},{\"name\":\"Contracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"Shipments\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"TotalDeclaredValue\",\"type\":\"double\"},{\"name\":\"SecurityRequierements\",\"type\":{\"items\":{\"fields\":[{\"name\":\"SecurityRequirementType\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"FullJourney\",\"type\":\"boolean\"},{\"name\":\"From\",\"type\":\"double\"},{\"name\":\"To\",\"type\":\"double\"},{\"name\":\"Quantity\",\"type\":\"int\"}],\"name\":\"ResultSecurityRequirement\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ResultByPolicy\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"ResultGrouped\",\"type\":{\"items\":\"Andreani.DMSInsurancePolicy.Events.Record.ResultSecurityRequirement\",\"type\":\"array\"}}],\"name\":\"Andreani.DMSInsurancePolicy.Events.Record.JourneySecurityRequirement\",\"type\":\"record\"}"
 }
 
 func (r JourneySecurityRequirement) SchemaName() string {
-	return "Andreani.DMS.InsurancePolicy.Events.Record.JourneySecurityRequirement"
+	return "Andreani.DMSInsurancePolicy.Events.Record.JourneySecurityRequirement"
 }
 
 func (_ JourneySecurityRequirement) SetBoolean(v bool)    { panic("Unsupported operation") }

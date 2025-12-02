@@ -29,7 +29,7 @@ type ResultByPolicy struct {
 	SecurityRequierements []ResultSecurityRequirement `json:"SecurityRequierements"`
 }
 
-const ResultByPolicyAvroCRC64Fingerprint = "V\x86\xe8wDհ\f"
+const ResultByPolicyAvroCRC64Fingerprint = "|\x05\xf2TP\x11\xd9\x04"
 
 func NewResultByPolicy() ResultByPolicy {
 	r := ResultByPolicy{}
@@ -95,11 +95,11 @@ func (r ResultByPolicy) Serialize(w io.Writer) error {
 }
 
 func (r ResultByPolicy) Schema() string {
-	return "{\"fields\":[{\"name\":\"PolicyGrouper\",\"type\":\"string\"},{\"name\":\"Contracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"Shipments\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"TotalDeclaredValue\",\"type\":\"double\"},{\"name\":\"SecurityRequierements\",\"type\":{\"items\":{\"fields\":[{\"name\":\"SecurityRequirementType\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"FullJourney\",\"type\":\"boolean\"},{\"name\":\"From\",\"type\":\"double\"},{\"name\":\"To\",\"type\":\"double\"},{\"name\":\"Quantity\",\"type\":\"int\"}],\"name\":\"ResultSecurityRequirement\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.DMS.InsurancePolicy.Events.Record.ResultByPolicy\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PolicyGrouper\",\"type\":\"string\"},{\"name\":\"Contracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"Shipments\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"TotalDeclaredValue\",\"type\":\"double\"},{\"name\":\"SecurityRequierements\",\"type\":{\"items\":{\"fields\":[{\"name\":\"SecurityRequirementType\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"FullJourney\",\"type\":\"boolean\"},{\"name\":\"From\",\"type\":\"double\"},{\"name\":\"To\",\"type\":\"double\"},{\"name\":\"Quantity\",\"type\":\"int\"}],\"name\":\"ResultSecurityRequirement\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.DMSInsurancePolicy.Events.Record.ResultByPolicy\",\"type\":\"record\"}"
 }
 
 func (r ResultByPolicy) SchemaName() string {
-	return "Andreani.DMS.InsurancePolicy.Events.Record.ResultByPolicy"
+	return "Andreani.DMSInsurancePolicy.Events.Record.ResultByPolicy"
 }
 
 func (_ ResultByPolicy) SetBoolean(v bool)    { panic("Unsupported operation") }
