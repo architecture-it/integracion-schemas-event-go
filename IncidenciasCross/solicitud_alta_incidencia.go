@@ -28,10 +28,12 @@ type SolicitudAltaIncidencia struct {
 
 	AtributosDeAlta []Atributo `json:"atributosDeAlta"`
 
+	Operacion Operacion `json:"operacion"`
+
 	CorrelationId *UnionNullString `json:"correlationId"`
 }
 
-const SolicitudAltaIncidenciaAvroCRC64Fingerprint = "\xf2x\xb1\xb5\x93\xc7LX"
+const SolicitudAltaIncidenciaAvroCRC64Fingerprint = "\xb9Y\x06,\x1a\x8cwi"
 
 func NewSolicitudAltaIncidencia() SolicitudAltaIncidencia {
 	r := SolicitudAltaIncidencia{}
@@ -44,6 +46,8 @@ func NewSolicitudAltaIncidencia() SolicitudAltaIncidencia {
 	r.EntidadIncidentada = NewEntidadIncidentada()
 
 	r.AtributosDeAlta = make([]Atributo, 0)
+
+	r.Operacion = NewOperacion()
 
 	r.CorrelationId = nil
 	return r
@@ -94,6 +98,10 @@ func writeSolicitudAltaIncidencia(r SolicitudAltaIncidencia, w io.Writer) error 
 	if err != nil {
 		return err
 	}
+	err = writeOperacion(r.Operacion, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.CorrelationId, w)
 	if err != nil {
 		return err
@@ -106,7 +114,7 @@ func (r SolicitudAltaIncidencia) Serialize(w io.Writer) error {
 }
 
 func (r SolicitudAltaIncidencia) Schema() string {
-	return "{\"fields\":[{\"name\":\"solicitud\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"prioridad\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Prioridad\",\"type\":\"record\"}]}],\"name\":\"SolicitudIncidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"denunciante\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Usuario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"atributosDeAlta\",\"type\":{\"items\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\",\"int\",\"long\",\"double\",\"boolean\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Atributo\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.SolicitudAltaIncidencia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"solicitud\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"default\":null,\"name\":\"prioridad\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Prioridad\",\"type\":\"record\"}]}],\"name\":\"SolicitudIncidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"denunciante\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Usuario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"atributosDeAlta\",\"type\":{\"items\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\",\"int\",\"long\",\"double\",\"boolean\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Atributo\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"operacion\",\"type\":{\"fields\":[{\"name\":\"IdExterno\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"Operacion\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.SolicitudAltaIncidencia\",\"type\":\"record\"}"
 }
 
 func (r SolicitudAltaIncidencia) SchemaName() string {
@@ -160,6 +168,13 @@ func (r *SolicitudAltaIncidencia) Get(i int) types.Field {
 		return w
 
 	case 5:
+		r.Operacion = NewOperacion()
+
+		w := types.Record{Target: &r.Operacion}
+
+		return w
+
+	case 6:
 		r.CorrelationId = NewUnionNullString()
 
 		return r.CorrelationId
@@ -169,7 +184,7 @@ func (r *SolicitudAltaIncidencia) Get(i int) types.Field {
 
 func (r *SolicitudAltaIncidencia) SetDefault(i int) {
 	switch i {
-	case 5:
+	case 6:
 		r.CorrelationId = nil
 		return
 	}
@@ -178,7 +193,7 @@ func (r *SolicitudAltaIncidencia) SetDefault(i int) {
 
 func (r *SolicitudAltaIncidencia) NullField(i int) {
 	switch i {
-	case 5:
+	case 6:
 		r.CorrelationId = nil
 		return
 	}
@@ -214,6 +229,10 @@ func (r SolicitudAltaIncidencia) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["atributosDeAlta"], err = json.Marshal(r.AtributosDeAlta)
+	if err != nil {
+		return nil, err
+	}
+	output["operacion"], err = json.Marshal(r.Operacion)
 	if err != nil {
 		return nil, err
 	}
@@ -300,6 +319,20 @@ func (r *SolicitudAltaIncidencia) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for atributosDeAlta")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["operacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Operacion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for operacion")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["correlationId"]; ok {

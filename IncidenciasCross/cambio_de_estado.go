@@ -28,12 +28,14 @@ type CambioDeEstado struct {
 
 	AtributosDeTransicion *UnionNullArrayAtributo `json:"atributosDeTransicion"`
 
+	Operacion Operacion `json:"operacion"`
+
 	FechaCambio int64 `json:"fechaCambio"`
 
 	CorrelationId *UnionNullString `json:"correlationId"`
 }
 
-const CambioDeEstadoAvroCRC64Fingerprint = "\xba\xfe\xc0\x18YsD\xe7"
+const CambioDeEstadoAvroCRC64Fingerprint = "\xcdt-\xda\n|\xbf\t"
 
 func NewCambioDeEstado() CambioDeEstado {
 	r := CambioDeEstado{}
@@ -46,6 +48,8 @@ func NewCambioDeEstado() CambioDeEstado {
 	r.Transicion = NewTransicion()
 
 	r.AtributosDeTransicion = nil
+	r.Operacion = NewOperacion()
+
 	r.CorrelationId = nil
 	return r
 }
@@ -95,6 +99,10 @@ func writeCambioDeEstado(r CambioDeEstado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeOperacion(r.Operacion, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteLong(r.FechaCambio, w)
 	if err != nil {
 		return err
@@ -111,7 +119,7 @@ func (r CambioDeEstado) Serialize(w io.Writer) error {
 }
 
 func (r CambioDeEstado) Schema() string {
-	return "{\"fields\":[{\"name\":\"detalleIncidencia\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipoId\",\"type\":\"int\"},{\"name\":\"tipoNombre\",\"type\":\"string\"},{\"name\":\"motivoId\",\"type\":\"int\"},{\"name\":\"motivoNombre\",\"type\":\"string\"}],\"name\":\"Incidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"transicion\",\"type\":{\"fields\":[{\"name\":\"estadoAnterior\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Estado\",\"type\":\"record\"}},{\"name\":\"estadoActual\",\"type\":\"Andreani.IncidenciasCross.Events.Common.Estado\"},{\"name\":\"motivoTransicion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"MotivoTransicion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"responsableAnterior\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Usuario\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"responsableActual\",\"type\":[\"null\",\"Andreani.IncidenciasCross.Events.Common.Usuario\"]},{\"default\":null,\"name\":\"accionEnDominio\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Accion\",\"type\":\"record\"}]}],\"name\":\"Transicion\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"default\":null,\"name\":\"atributosDeTransicion\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\",\"int\",\"long\",\"double\",\"boolean\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Atributo\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"fechaCambio\",\"type\":\"long\"},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.CambioDeEstado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"detalleIncidencia\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipoId\",\"type\":\"int\"},{\"name\":\"tipoNombre\",\"type\":\"string\"},{\"name\":\"motivoId\",\"type\":\"int\"},{\"name\":\"motivoNombre\",\"type\":\"string\"}],\"name\":\"Incidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"transicion\",\"type\":{\"fields\":[{\"name\":\"estadoAnterior\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Estado\",\"type\":\"record\"}},{\"name\":\"estadoActual\",\"type\":\"Andreani.IncidenciasCross.Events.Common.Estado\"},{\"name\":\"motivoTransicion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"MotivoTransicion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"responsableAnterior\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Usuario\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"responsableActual\",\"type\":[\"null\",\"Andreani.IncidenciasCross.Events.Common.Usuario\"]},{\"default\":null,\"name\":\"accionEnDominio\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Accion\",\"type\":\"record\"}]}],\"name\":\"Transicion\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"default\":null,\"name\":\"atributosDeTransicion\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\",\"int\",\"long\",\"double\",\"boolean\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Atributo\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"operacion\",\"type\":{\"fields\":[{\"name\":\"IdExterno\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"Operacion\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"fechaCambio\",\"type\":\"long\"},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.CambioDeEstado\",\"type\":\"record\"}"
 }
 
 func (r CambioDeEstado) SchemaName() string {
@@ -162,11 +170,18 @@ func (r *CambioDeEstado) Get(i int) types.Field {
 
 		return r.AtributosDeTransicion
 	case 5:
-		w := types.Long{Target: &r.FechaCambio}
+		r.Operacion = NewOperacion()
+
+		w := types.Record{Target: &r.Operacion}
 
 		return w
 
 	case 6:
+		w := types.Long{Target: &r.FechaCambio}
+
+		return w
+
+	case 7:
 		r.CorrelationId = NewUnionNullString()
 
 		return r.CorrelationId
@@ -179,7 +194,7 @@ func (r *CambioDeEstado) SetDefault(i int) {
 	case 4:
 		r.AtributosDeTransicion = nil
 		return
-	case 6:
+	case 7:
 		r.CorrelationId = nil
 		return
 	}
@@ -191,7 +206,7 @@ func (r *CambioDeEstado) NullField(i int) {
 	case 4:
 		r.AtributosDeTransicion = nil
 		return
-	case 6:
+	case 7:
 		r.CorrelationId = nil
 		return
 	}
@@ -227,6 +242,10 @@ func (r CambioDeEstado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["atributosDeTransicion"], err = json.Marshal(r.AtributosDeTransicion)
+	if err != nil {
+		return nil, err
+	}
+	output["operacion"], err = json.Marshal(r.Operacion)
 	if err != nil {
 		return nil, err
 	}
@@ -319,6 +338,20 @@ func (r *CambioDeEstado) UnmarshalJSON(data []byte) error {
 		r.AtributosDeTransicion = NewUnionNullArrayAtributo()
 
 		r.AtributosDeTransicion = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["operacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Operacion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for operacion")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["fechaCambio"]; ok {
