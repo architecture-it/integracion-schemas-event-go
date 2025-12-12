@@ -18,19 +18,21 @@ import (
 var _ = fmt.Printf
 
 type EntidadIncidentada struct {
-	NombreEntidad string `json:"nombreEntidad"`
+	NombreEntidad *UnionNullString `json:"nombreEntidad"`
 
-	Valor string `json:"valor"`
+	Valor *UnionNullString `json:"valor"`
 
 	NombreSubentidades *UnionNullString `json:"nombreSubentidades"`
 
 	Valores *UnionNullArrayString `json:"valores"`
 }
 
-const EntidadIncidentadaAvroCRC64Fingerprint = "\x1f\x84\x9e]\xab\x04CL"
+const EntidadIncidentadaAvroCRC64Fingerprint = "\x92\x12\v\x15\xc2\xd0}\x88"
 
 func NewEntidadIncidentada() EntidadIncidentada {
 	r := EntidadIncidentada{}
+	r.NombreEntidad = nil
+	r.Valor = nil
 	r.NombreSubentidades = nil
 	r.Valores = nil
 	return r
@@ -61,11 +63,11 @@ func DeserializeEntidadIncidentadaFromSchema(r io.Reader, schema string) (Entida
 
 func writeEntidadIncidentada(r EntidadIncidentada, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.NombreEntidad, w)
+	err = writeUnionNullString(r.NombreEntidad, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Valor, w)
+	err = writeUnionNullString(r.Valor, w)
 	if err != nil {
 		return err
 	}
@@ -85,7 +87,7 @@ func (r EntidadIncidentada) Serialize(w io.Writer) error {
 }
 
 func (r EntidadIncidentada) Schema() string {
-	return "{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.EntidadIncidentada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"nombreEntidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.EntidadIncidentada\",\"type\":\"record\"}"
 }
 
 func (r EntidadIncidentada) SchemaName() string {
@@ -104,15 +106,13 @@ func (_ EntidadIncidentada) SetUnionElem(v int64) { panic("Unsupported operation
 func (r *EntidadIncidentada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.NombreEntidad}
+		r.NombreEntidad = NewUnionNullString()
 
-		return w
-
+		return r.NombreEntidad
 	case 1:
-		w := types.String{Target: &r.Valor}
+		r.Valor = NewUnionNullString()
 
-		return w
-
+		return r.Valor
 	case 2:
 		r.NombreSubentidades = NewUnionNullString()
 
@@ -127,6 +127,12 @@ func (r *EntidadIncidentada) Get(i int) types.Field {
 
 func (r *EntidadIncidentada) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.NombreEntidad = nil
+		return
+	case 1:
+		r.Valor = nil
+		return
 	case 2:
 		r.NombreSubentidades = nil
 		return
@@ -139,6 +145,12 @@ func (r *EntidadIncidentada) SetDefault(i int) {
 
 func (r *EntidadIncidentada) NullField(i int) {
 	switch i {
+	case 0:
+		r.NombreEntidad = nil
+		return
+	case 1:
+		r.Valor = nil
+		return
 	case 2:
 		r.NombreSubentidades = nil
 		return
@@ -199,7 +211,9 @@ func (r *EntidadIncidentada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nombreEntidad")
+		r.NombreEntidad = NewUnionNullString()
+
+		r.NombreEntidad = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["valor"]; ok {
@@ -213,7 +227,9 @@ func (r *EntidadIncidentada) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for valor")
+		r.Valor = NewUnionNullString()
+
+		r.Valor = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["nombreSubentidades"]; ok {

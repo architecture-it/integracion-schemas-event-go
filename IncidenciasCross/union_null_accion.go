@@ -84,7 +84,7 @@ func DeserializeUnionNullAccionFromSchema(r io.Reader, schema string) (*UnionNul
 }
 
 func (r *UnionNullAccion) Schema() string {
-	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Accion\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Accion\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullAccion) SetBoolean(v bool)   { panic("Unsupported operation") }

@@ -20,14 +20,15 @@ var _ = fmt.Printf
 type MotivoTransicion struct {
 	Id *UnionNullInt `json:"id"`
 
-	Nombre string `json:"nombre"`
+	Nombre *UnionNullString `json:"nombre"`
 }
 
-const MotivoTransicionAvroCRC64Fingerprint = "\xcb\xcdp\x9fb\"/\xa5"
+const MotivoTransicionAvroCRC64Fingerprint = "\x8b\xc7/f\xf8\xcb\xf5\xe8"
 
 func NewMotivoTransicion() MotivoTransicion {
 	r := MotivoTransicion{}
 	r.Id = nil
+	r.Nombre = nil
 	return r
 }
 
@@ -60,7 +61,7 @@ func writeMotivoTransicion(r MotivoTransicion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Nombre, w)
+	err = writeUnionNullString(r.Nombre, w)
 	if err != nil {
 		return err
 	}
@@ -72,7 +73,7 @@ func (r MotivoTransicion) Serialize(w io.Writer) error {
 }
 
 func (r MotivoTransicion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.MotivoTransicion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.MotivoTransicion\",\"type\":\"record\"}"
 }
 
 func (r MotivoTransicion) SchemaName() string {
@@ -95,10 +96,9 @@ func (r *MotivoTransicion) Get(i int) types.Field {
 
 		return r.Id
 	case 1:
-		w := types.String{Target: &r.Nombre}
+		r.Nombre = NewUnionNullString()
 
-		return w
-
+		return r.Nombre
 	}
 	panic("Unknown field index")
 }
@@ -108,6 +108,9 @@ func (r *MotivoTransicion) SetDefault(i int) {
 	case 0:
 		r.Id = nil
 		return
+	case 1:
+		r.Nombre = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -116,6 +119,9 @@ func (r *MotivoTransicion) NullField(i int) {
 	switch i {
 	case 0:
 		r.Id = nil
+		return
+	case 1:
+		r.Nombre = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -179,7 +185,9 @@ func (r *MotivoTransicion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nombre")
+		r.Nombre = NewUnionNullString()
+
+		r.Nombre = nil
 	}
 	return nil
 }

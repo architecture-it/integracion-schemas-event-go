@@ -20,14 +20,15 @@ var _ = fmt.Printf
 type ErrorValidacion struct {
 	Codigo *UnionNullString `json:"codigo"`
 
-	Mensaje string `json:"mensaje"`
+	Mensaje *UnionNullString `json:"mensaje"`
 }
 
-const ErrorValidacionAvroCRC64Fingerprint = "\xf9\x8a;Hꋾ\\"
+const ErrorValidacionAvroCRC64Fingerprint = "\xe4\x11A\xc4UL;\xa6"
 
 func NewErrorValidacion() ErrorValidacion {
 	r := ErrorValidacion{}
 	r.Codigo = nil
+	r.Mensaje = nil
 	return r
 }
 
@@ -60,7 +61,7 @@ func writeErrorValidacion(r ErrorValidacion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Mensaje, w)
+	err = writeUnionNullString(r.Mensaje, w)
 	if err != nil {
 		return err
 	}
@@ -72,7 +73,7 @@ func (r ErrorValidacion) Serialize(w io.Writer) error {
 }
 
 func (r ErrorValidacion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"mensaje\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.ErrorValidacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"mensaje\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.ErrorValidacion\",\"type\":\"record\"}"
 }
 
 func (r ErrorValidacion) SchemaName() string {
@@ -95,10 +96,9 @@ func (r *ErrorValidacion) Get(i int) types.Field {
 
 		return r.Codigo
 	case 1:
-		w := types.String{Target: &r.Mensaje}
+		r.Mensaje = NewUnionNullString()
 
-		return w
-
+		return r.Mensaje
 	}
 	panic("Unknown field index")
 }
@@ -108,6 +108,9 @@ func (r *ErrorValidacion) SetDefault(i int) {
 	case 0:
 		r.Codigo = nil
 		return
+	case 1:
+		r.Mensaje = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -116,6 +119,9 @@ func (r *ErrorValidacion) NullField(i int) {
 	switch i {
 	case 0:
 		r.Codigo = nil
+		return
+	case 1:
+		r.Mensaje = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -179,7 +185,9 @@ func (r *ErrorValidacion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for mensaje")
+		r.Mensaje = NewUnionNullString()
+
+		r.Mensaje = nil
 	}
 	return nil
 }

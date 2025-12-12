@@ -18,17 +18,20 @@ import (
 var _ = fmt.Printf
 
 type Operacion struct {
-	IdExterno string `json:"IdExterno"`
+	IdExterno *UnionNullString `json:"idExterno"`
 
-	Nombre string `json:"Nombre"`
+	Nombre *UnionNullString `json:"nombre"`
 
-	Descripcion string `json:"Descripcion"`
+	Descripcion *UnionNullString `json:"descripcion"`
 }
 
-const OperacionAvroCRC64Fingerprint = "\x19\xee\xa1\xea\xc66\xb71"
+const OperacionAvroCRC64Fingerprint = ".\xd3r\xdd]\x80\xe0\xb3"
 
 func NewOperacion() Operacion {
 	r := Operacion{}
+	r.IdExterno = nil
+	r.Nombre = nil
+	r.Descripcion = nil
 	return r
 }
 
@@ -57,15 +60,15 @@ func DeserializeOperacionFromSchema(r io.Reader, schema string) (Operacion, erro
 
 func writeOperacion(r Operacion, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.IdExterno, w)
+	err = writeUnionNullString(r.IdExterno, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Nombre, w)
+	err = writeUnionNullString(r.Nombre, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Descripcion, w)
+	err = writeUnionNullString(r.Descripcion, w)
 	if err != nil {
 		return err
 	}
@@ -77,7 +80,7 @@ func (r Operacion) Serialize(w io.Writer) error {
 }
 
 func (r Operacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdExterno\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Descripcion\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Operacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"idExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Operacion\",\"type\":\"record\"}"
 }
 
 func (r Operacion) SchemaName() string {
@@ -96,32 +99,47 @@ func (_ Operacion) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Operacion) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.IdExterno}
+		r.IdExterno = NewUnionNullString()
 
-		return w
-
+		return r.IdExterno
 	case 1:
-		w := types.String{Target: &r.Nombre}
+		r.Nombre = NewUnionNullString()
 
-		return w
-
+		return r.Nombre
 	case 2:
-		w := types.String{Target: &r.Descripcion}
+		r.Descripcion = NewUnionNullString()
 
-		return w
-
+		return r.Descripcion
 	}
 	panic("Unknown field index")
 }
 
 func (r *Operacion) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.IdExterno = nil
+		return
+	case 1:
+		r.Nombre = nil
+		return
+	case 2:
+		r.Descripcion = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Operacion) NullField(i int) {
 	switch i {
+	case 0:
+		r.IdExterno = nil
+		return
+	case 1:
+		r.Nombre = nil
+		return
+	case 2:
+		r.Descripcion = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -138,15 +156,15 @@ func (_ Operacion) AvroCRC64Fingerprint() []byte {
 func (r Operacion) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["IdExterno"], err = json.Marshal(r.IdExterno)
+	output["idExterno"], err = json.Marshal(r.IdExterno)
 	if err != nil {
 		return nil, err
 	}
-	output["Nombre"], err = json.Marshal(r.Nombre)
+	output["nombre"], err = json.Marshal(r.Nombre)
 	if err != nil {
 		return nil, err
 	}
-	output["Descripcion"], err = json.Marshal(r.Descripcion)
+	output["descripcion"], err = json.Marshal(r.Descripcion)
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +179,7 @@ func (r *Operacion) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["IdExterno"]; ok {
+		if v, ok := fields["idExterno"]; ok {
 			return v
 		}
 		return nil
@@ -172,10 +190,12 @@ func (r *Operacion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for IdExterno")
+		r.IdExterno = NewUnionNullString()
+
+		r.IdExterno = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Nombre"]; ok {
+		if v, ok := fields["nombre"]; ok {
 			return v
 		}
 		return nil
@@ -186,10 +206,12 @@ func (r *Operacion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Nombre")
+		r.Nombre = NewUnionNullString()
+
+		r.Nombre = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Descripcion"]; ok {
+		if v, ok := fields["descripcion"]; ok {
 			return v
 		}
 		return nil
@@ -200,7 +222,9 @@ func (r *Operacion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Descripcion")
+		r.Descripcion = NewUnionNullString()
+
+		r.Descripcion = nil
 	}
 	return nil
 }

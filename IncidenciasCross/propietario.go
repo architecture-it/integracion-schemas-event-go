@@ -18,15 +18,16 @@ import (
 var _ = fmt.Printf
 
 type Propietario struct {
-	Nombre string `json:"nombre"`
+	Nombre *UnionNullString `json:"nombre"`
 
 	Id *UnionNullInt `json:"id"`
 }
 
-const PropietarioAvroCRC64Fingerprint = "\xd9V\xcd\x1bv\xcc\xf6S"
+const PropietarioAvroCRC64Fingerprint = "\x14.N\xd0,\x0e\x91\xdc"
 
 func NewPropietario() Propietario {
 	r := Propietario{}
+	r.Nombre = nil
 	r.Id = nil
 	return r
 }
@@ -56,7 +57,7 @@ func DeserializePropietarioFromSchema(r io.Reader, schema string) (Propietario, 
 
 func writePropietario(r Propietario, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Nombre, w)
+	err = writeUnionNullString(r.Nombre, w)
 	if err != nil {
 		return err
 	}
@@ -72,7 +73,7 @@ func (r Propietario) Serialize(w io.Writer) error {
 }
 
 func (r Propietario) Schema() string {
-	return "{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Propietario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Propietario\",\"type\":\"record\"}"
 }
 
 func (r Propietario) SchemaName() string {
@@ -91,10 +92,9 @@ func (_ Propietario) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Propietario) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Nombre}
+		r.Nombre = NewUnionNullString()
 
-		return w
-
+		return r.Nombre
 	case 1:
 		r.Id = NewUnionNullInt()
 
@@ -105,6 +105,9 @@ func (r *Propietario) Get(i int) types.Field {
 
 func (r *Propietario) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Nombre = nil
+		return
 	case 1:
 		r.Id = nil
 		return
@@ -114,6 +117,9 @@ func (r *Propietario) SetDefault(i int) {
 
 func (r *Propietario) NullField(i int) {
 	switch i {
+	case 0:
+		r.Nombre = nil
+		return
 	case 1:
 		r.Id = nil
 		return
@@ -163,7 +169,9 @@ func (r *Propietario) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nombre")
+		r.Nombre = NewUnionNullString()
+
+		r.Nombre = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["id"]; ok {

@@ -18,11 +18,11 @@ import (
 var _ = fmt.Printf
 
 type Transicion struct {
-	EstadoAnterior Estado `json:"estadoAnterior"`
+	EstadoAnterior *UnionNullEstado `json:"estadoAnterior"`
 
-	EstadoActual Estado `json:"estadoActual"`
+	EstadoActual *UnionNullEstado `json:"estadoActual"`
 
-	MotivoTransicion MotivoTransicion `json:"motivoTransicion"`
+	MotivoTransicion *UnionNullMotivoTransicion `json:"motivoTransicion"`
 
 	ResponsableAnterior *UnionNullUsuario `json:"responsableAnterior"`
 
@@ -31,16 +31,13 @@ type Transicion struct {
 	AccionEnDominio *UnionNullAccion `json:"accionEnDominio"`
 }
 
-const TransicionAvroCRC64Fingerprint = "\x84\xcf\xe1]sA\x1b\xc6"
+const TransicionAvroCRC64Fingerprint = "Z\x80\xc3\xd8!G\x1a\xac"
 
 func NewTransicion() Transicion {
 	r := Transicion{}
-	r.EstadoAnterior = NewEstado()
-
-	r.EstadoActual = NewEstado()
-
-	r.MotivoTransicion = NewMotivoTransicion()
-
+	r.EstadoAnterior = nil
+	r.EstadoActual = nil
+	r.MotivoTransicion = nil
 	r.ResponsableAnterior = nil
 	r.ResponsableActual = nil
 	r.AccionEnDominio = nil
@@ -72,15 +69,15 @@ func DeserializeTransicionFromSchema(r io.Reader, schema string) (Transicion, er
 
 func writeTransicion(r Transicion, w io.Writer) error {
 	var err error
-	err = writeEstado(r.EstadoAnterior, w)
+	err = writeUnionNullEstado(r.EstadoAnterior, w)
 	if err != nil {
 		return err
 	}
-	err = writeEstado(r.EstadoActual, w)
+	err = writeUnionNullEstado(r.EstadoActual, w)
 	if err != nil {
 		return err
 	}
-	err = writeMotivoTransicion(r.MotivoTransicion, w)
+	err = writeUnionNullMotivoTransicion(r.MotivoTransicion, w)
 	if err != nil {
 		return err
 	}
@@ -104,7 +101,7 @@ func (r Transicion) Serialize(w io.Writer) error {
 }
 
 func (r Transicion) Schema() string {
-	return "{\"fields\":[{\"name\":\"estadoAnterior\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Estado\",\"type\":\"record\"}},{\"name\":\"estadoActual\",\"type\":\"Andreani.IncidenciasCross.Events.Common.Estado\"},{\"name\":\"motivoTransicion\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"MotivoTransicion\",\"type\":\"record\"}},{\"default\":null,\"name\":\"responsableAnterior\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Usuario\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"responsableActual\",\"type\":[\"null\",\"Andreani.IncidenciasCross.Events.Common.Usuario\"]},{\"default\":null,\"name\":\"accionEnDominio\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Accion\",\"type\":\"record\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Transicion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"estadoAnterior\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Estado\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"estadoActual\",\"type\":[\"null\",\"Andreani.IncidenciasCross.Events.Common.Estado\"]},{\"default\":null,\"name\":\"motivoTransicion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"MotivoTransicion\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"responsableAnterior\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"usuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Usuario\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"responsableActual\",\"type\":[\"null\",\"Andreani.IncidenciasCross.Events.Common.Usuario\"]},{\"default\":null,\"name\":\"accionEnDominio\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Accion\",\"type\":\"record\"}]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Transicion\",\"type\":\"record\"}"
 }
 
 func (r Transicion) SchemaName() string {
@@ -123,26 +120,17 @@ func (_ Transicion) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Transicion) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.EstadoAnterior = NewEstado()
+		r.EstadoAnterior = NewUnionNullEstado()
 
-		w := types.Record{Target: &r.EstadoAnterior}
-
-		return w
-
+		return r.EstadoAnterior
 	case 1:
-		r.EstadoActual = NewEstado()
+		r.EstadoActual = NewUnionNullEstado()
 
-		w := types.Record{Target: &r.EstadoActual}
-
-		return w
-
+		return r.EstadoActual
 	case 2:
-		r.MotivoTransicion = NewMotivoTransicion()
+		r.MotivoTransicion = NewUnionNullMotivoTransicion()
 
-		w := types.Record{Target: &r.MotivoTransicion}
-
-		return w
-
+		return r.MotivoTransicion
 	case 3:
 		r.ResponsableAnterior = NewUnionNullUsuario()
 
@@ -161,6 +149,15 @@ func (r *Transicion) Get(i int) types.Field {
 
 func (r *Transicion) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.EstadoAnterior = nil
+		return
+	case 1:
+		r.EstadoActual = nil
+		return
+	case 2:
+		r.MotivoTransicion = nil
+		return
 	case 3:
 		r.ResponsableAnterior = nil
 		return
@@ -176,6 +173,15 @@ func (r *Transicion) SetDefault(i int) {
 
 func (r *Transicion) NullField(i int) {
 	switch i {
+	case 0:
+		r.EstadoAnterior = nil
+		return
+	case 1:
+		r.EstadoActual = nil
+		return
+	case 2:
+		r.MotivoTransicion = nil
+		return
 	case 3:
 		r.ResponsableAnterior = nil
 		return
@@ -247,7 +253,9 @@ func (r *Transicion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for estadoAnterior")
+		r.EstadoAnterior = NewUnionNullEstado()
+
+		r.EstadoAnterior = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["estadoActual"]; ok {
@@ -261,7 +269,9 @@ func (r *Transicion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for estadoActual")
+		r.EstadoActual = NewUnionNullEstado()
+
+		r.EstadoActual = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["motivoTransicion"]; ok {
@@ -275,7 +285,9 @@ func (r *Transicion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for motivoTransicion")
+		r.MotivoTransicion = NewUnionNullMotivoTransicion()
+
+		r.MotivoTransicion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["responsableAnterior"]; ok {

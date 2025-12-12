@@ -20,14 +20,15 @@ var _ = fmt.Printf
 type Accion struct {
 	Id *UnionNullInt `json:"id"`
 
-	Codigo string `json:"codigo"`
+	Codigo *UnionNullString `json:"codigo"`
 }
 
-const AccionAvroCRC64Fingerprint = "\xb6\x9b릷~\xf1\x13"
+const AccionAvroCRC64Fingerprint = "J\x1c\xaa1M=\xc5\xd2"
 
 func NewAccion() Accion {
 	r := Accion{}
 	r.Id = nil
+	r.Codigo = nil
 	return r
 }
 
@@ -60,7 +61,7 @@ func writeAccion(r Accion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Codigo, w)
+	err = writeUnionNullString(r.Codigo, w)
 	if err != nil {
 		return err
 	}
@@ -72,7 +73,7 @@ func (r Accion) Serialize(w io.Writer) error {
 }
 
 func (r Accion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Accion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Accion\",\"type\":\"record\"}"
 }
 
 func (r Accion) SchemaName() string {
@@ -95,10 +96,9 @@ func (r *Accion) Get(i int) types.Field {
 
 		return r.Id
 	case 1:
-		w := types.String{Target: &r.Codigo}
+		r.Codigo = NewUnionNullString()
 
-		return w
-
+		return r.Codigo
 	}
 	panic("Unknown field index")
 }
@@ -108,6 +108,9 @@ func (r *Accion) SetDefault(i int) {
 	case 0:
 		r.Id = nil
 		return
+	case 1:
+		r.Codigo = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -116,6 +119,9 @@ func (r *Accion) NullField(i int) {
 	switch i {
 	case 0:
 		r.Id = nil
+		return
+	case 1:
+		r.Codigo = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -179,7 +185,9 @@ func (r *Accion) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigo")
+		r.Codigo = NewUnionNullString()
+
+		r.Codigo = nil
 	}
 	return nil
 }

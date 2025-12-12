@@ -31,7 +31,7 @@ type AltaAceptada struct {
 	CorrelationId *UnionNullString `json:"correlationId"`
 }
 
-const AltaAceptadaAvroCRC64Fingerprint = "\x90Q\xd2\xc5\xc9\xe1B\x90"
+const AltaAceptadaAvroCRC64Fingerprint = "\x92\x18\xfbwK\xc9\nC"
 
 func NewAltaAceptada() AltaAceptada {
 	r := AltaAceptada{}
@@ -102,7 +102,7 @@ func (r AltaAceptada) Serialize(w io.Writer) error {
 }
 
 func (r AltaAceptada) Schema() string {
-	return "{\"fields\":[{\"name\":\"detalleIncidencia\",\"type\":{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipoId\",\"type\":\"int\"},{\"name\":\"tipoNombre\",\"type\":\"string\"},{\"name\":\"motivoId\",\"type\":\"int\"},{\"name\":\"motivoNombre\",\"type\":\"string\"}],\"name\":\"Incidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"name\":\"nombreEntidad\",\"type\":\"string\"},{\"name\":\"valor\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"fechaCreacion\",\"type\":\"long\"},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.AltaAceptada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"detalleIncidencia\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoNombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivoId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"motivoNombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Incidencia\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"propietario\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]}],\"name\":\"Propietario\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"entidadIncidentada\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"nombreEntidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreSubentidades\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"valores\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"EntidadIncidentada\",\"namespace\":\"Andreani.IncidenciasCross.Events.Common\",\"type\":\"record\"}},{\"name\":\"fechaCreacion\",\"type\":\"long\"},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.AltaAceptada\",\"type\":\"record\"}"
 }
 
 func (r AltaAceptada) SchemaName() string {

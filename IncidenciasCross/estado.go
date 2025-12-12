@@ -18,15 +18,17 @@ import (
 var _ = fmt.Printf
 
 type Estado struct {
-	Id int32 `json:"id"`
+	Id *UnionNullInt `json:"id"`
 
-	Nombre string `json:"nombre"`
+	Nombre *UnionNullString `json:"nombre"`
 }
 
-const EstadoAvroCRC64Fingerprint = "c\xbd\xaa> {h\x9f"
+const EstadoAvroCRC64Fingerprint = "\x18\xbf\x02؊n\x8fN"
 
 func NewEstado() Estado {
 	r := Estado{}
+	r.Id = nil
+	r.Nombre = nil
 	return r
 }
 
@@ -55,11 +57,11 @@ func DeserializeEstadoFromSchema(r io.Reader, schema string) (Estado, error) {
 
 func writeEstado(r Estado, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.Id, w)
+	err = writeUnionNullInt(r.Id, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Nombre, w)
+	err = writeUnionNullString(r.Nombre, w)
 	if err != nil {
 		return err
 	}
@@ -71,7 +73,7 @@ func (r Estado) Serialize(w io.Writer) error {
 }
 
 func (r Estado) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"nombre\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Estado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Estado\",\"type\":\"record\"}"
 }
 
 func (r Estado) SchemaName() string {
@@ -90,27 +92,37 @@ func (_ Estado) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Estado) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.Id}
+		r.Id = NewUnionNullInt()
 
-		return w
-
+		return r.Id
 	case 1:
-		w := types.String{Target: &r.Nombre}
+		r.Nombre = NewUnionNullString()
 
-		return w
-
+		return r.Nombre
 	}
 	panic("Unknown field index")
 }
 
 func (r *Estado) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Id = nil
+		return
+	case 1:
+		r.Nombre = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Estado) NullField(i int) {
 	switch i {
+	case 0:
+		r.Id = nil
+		return
+	case 1:
+		r.Nombre = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -157,7 +169,9 @@ func (r *Estado) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for id")
+		r.Id = NewUnionNullInt()
+
+		r.Id = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["nombre"]; ok {
@@ -171,7 +185,9 @@ func (r *Estado) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nombre")
+		r.Nombre = NewUnionNullString()
+
+		r.Nombre = nil
 	}
 	return nil
 }

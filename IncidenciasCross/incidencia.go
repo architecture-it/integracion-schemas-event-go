@@ -18,21 +18,26 @@ import (
 var _ = fmt.Printf
 
 type Incidencia struct {
-	Id int32 `json:"id"`
+	Id *UnionNullInt `json:"id"`
 
-	TipoId int32 `json:"tipoId"`
+	TipoId *UnionNullInt `json:"tipoId"`
 
-	TipoNombre string `json:"tipoNombre"`
+	TipoNombre *UnionNullString `json:"tipoNombre"`
 
-	MotivoId int32 `json:"motivoId"`
+	MotivoId *UnionNullInt `json:"motivoId"`
 
-	MotivoNombre string `json:"motivoNombre"`
+	MotivoNombre *UnionNullString `json:"motivoNombre"`
 }
 
-const IncidenciaAvroCRC64Fingerprint = "U\x19{2^Қ\xb7"
+const IncidenciaAvroCRC64Fingerprint = "\x8e\xadO\xbe\x81~V\xd8"
 
 func NewIncidencia() Incidencia {
 	r := Incidencia{}
+	r.Id = nil
+	r.TipoId = nil
+	r.TipoNombre = nil
+	r.MotivoId = nil
+	r.MotivoNombre = nil
 	return r
 }
 
@@ -61,23 +66,23 @@ func DeserializeIncidenciaFromSchema(r io.Reader, schema string) (Incidencia, er
 
 func writeIncidencia(r Incidencia, w io.Writer) error {
 	var err error
-	err = vm.WriteInt(r.Id, w)
+	err = writeUnionNullInt(r.Id, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.TipoId, w)
+	err = writeUnionNullInt(r.TipoId, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.TipoNombre, w)
+	err = writeUnionNullString(r.TipoNombre, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.MotivoId, w)
+	err = writeUnionNullInt(r.MotivoId, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.MotivoNombre, w)
+	err = writeUnionNullString(r.MotivoNombre, w)
 	if err != nil {
 		return err
 	}
@@ -89,7 +94,7 @@ func (r Incidencia) Serialize(w io.Writer) error {
 }
 
 func (r Incidencia) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"int\"},{\"name\":\"tipoId\",\"type\":\"int\"},{\"name\":\"tipoNombre\",\"type\":\"string\"},{\"name\":\"motivoId\",\"type\":\"int\"},{\"name\":\"motivoNombre\",\"type\":\"string\"}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Incidencia\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"tipoNombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivoId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"motivoNombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Incidencia\",\"type\":\"record\"}"
 }
 
 func (r Incidencia) SchemaName() string {
@@ -108,42 +113,67 @@ func (_ Incidencia) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *Incidencia) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.Int{Target: &r.Id}
+		r.Id = NewUnionNullInt()
 
-		return w
-
+		return r.Id
 	case 1:
-		w := types.Int{Target: &r.TipoId}
+		r.TipoId = NewUnionNullInt()
 
-		return w
-
+		return r.TipoId
 	case 2:
-		w := types.String{Target: &r.TipoNombre}
+		r.TipoNombre = NewUnionNullString()
 
-		return w
-
+		return r.TipoNombre
 	case 3:
-		w := types.Int{Target: &r.MotivoId}
+		r.MotivoId = NewUnionNullInt()
 
-		return w
-
+		return r.MotivoId
 	case 4:
-		w := types.String{Target: &r.MotivoNombre}
+		r.MotivoNombre = NewUnionNullString()
 
-		return w
-
+		return r.MotivoNombre
 	}
 	panic("Unknown field index")
 }
 
 func (r *Incidencia) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Id = nil
+		return
+	case 1:
+		r.TipoId = nil
+		return
+	case 2:
+		r.TipoNombre = nil
+		return
+	case 3:
+		r.MotivoId = nil
+		return
+	case 4:
+		r.MotivoNombre = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Incidencia) NullField(i int) {
 	switch i {
+	case 0:
+		r.Id = nil
+		return
+	case 1:
+		r.TipoId = nil
+		return
+	case 2:
+		r.TipoNombre = nil
+		return
+	case 3:
+		r.MotivoId = nil
+		return
+	case 4:
+		r.MotivoNombre = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -202,7 +232,9 @@ func (r *Incidencia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for id")
+		r.Id = NewUnionNullInt()
+
+		r.Id = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoId"]; ok {
@@ -216,7 +248,9 @@ func (r *Incidencia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipoId")
+		r.TipoId = NewUnionNullInt()
+
+		r.TipoId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["tipoNombre"]; ok {
@@ -230,7 +264,9 @@ func (r *Incidencia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for tipoNombre")
+		r.TipoNombre = NewUnionNullString()
+
+		r.TipoNombre = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["motivoId"]; ok {
@@ -244,7 +280,9 @@ func (r *Incidencia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for motivoId")
+		r.MotivoId = NewUnionNullInt()
+
+		r.MotivoId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["motivoNombre"]; ok {
@@ -258,7 +296,9 @@ func (r *Incidencia) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for motivoNombre")
+		r.MotivoNombre = NewUnionNullString()
+
+		r.MotivoNombre = nil
 	}
 	return nil
 }
