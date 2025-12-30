@@ -26,10 +26,10 @@ type PedidoBatch struct {
 
 	NombreFantasia *UnionNullString `json:"nombreFantasia"`
 
-	Importe *UnionNullBytes `json:"Importe"`
+	Importe *UnionNullBytes `json:"importe"`
 }
 
-const PedidoBatchAvroCRC64Fingerprint = "\xe8\xea\xb4C\xfb\x1c\xc7\xf9"
+const PedidoBatchAvroCRC64Fingerprint = "\f\x90ط\xd2Ɵ\x8c"
 
 func NewPedidoBatch() PedidoBatch {
 	r := PedidoBatch{}
@@ -89,7 +89,7 @@ func (r PedidoBatch) Serialize(w io.Writer) error {
 }
 
 func (r PedidoBatch) Schema() string {
-	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Importe\",\"type\":[\"null\",{\"logicalType\":\"decimal\",\"precision\":10,\"scale\":2,\"type\":\"bytes\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"name\":\"importe\",\"type\":[\"null\",{\"logicalType\":\"decimal\",\"precision\":10,\"scale\":2,\"type\":\"bytes\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
 }
 
 func (r PedidoBatch) SchemaName() string {
@@ -180,7 +180,7 @@ func (r PedidoBatch) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Importe"], err = json.Marshal(r.Importe)
+	output["importe"], err = json.Marshal(r.Importe)
 	if err != nil {
 		return nil, err
 	}
@@ -251,7 +251,7 @@ func (r *PedidoBatch) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for nombreFantasia")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Importe"]; ok {
+		if v, ok := fields["importe"]; ok {
 			return v
 		}
 		return nil
@@ -262,7 +262,7 @@ func (r *PedidoBatch) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Importe")
+		return fmt.Errorf("no value specified for importe")
 	}
 	return nil
 }
