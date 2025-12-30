@@ -21,7 +21,7 @@ type ConfirmarPago struct {
 	PedidosBatch PedidoBatch `json:"pedidosBatch"`
 }
 
-const ConfirmarPagoAvroCRC64Fingerprint = "\a\xe6\f\xc0\x0e\x04\t+"
+const ConfirmarPagoAvroCRC64Fingerprint = "\xacz\xd3\xf5O\xed\x95\x1f"
 
 func NewConfirmarPago() ConfirmarPago {
 	r := ConfirmarPago{}
@@ -67,7 +67,7 @@ func (r ConfirmarPago) Serialize(w io.Writer) error {
 }
 
 func (r ConfirmarPago) Schema() string {
-	return "{\"fields\":[{\"name\":\"pedidosBatch\",\"type\":{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoBatch\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ConfirmarPago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"pedidosBatch\",\"type\":{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Importe\",\"type\":[\"null\",{\"logicalType\":\"decimal\",\"precision\":10,\"scale\":2,\"type\":\"bytes\"}]}],\"name\":\"PedidoBatch\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ConfirmarPago\",\"type\":\"record\"}"
 }
 
 func (r ConfirmarPago) SchemaName() string {

@@ -25,9 +25,11 @@ type PedidoBatch struct {
 	ProveedorPago string `json:"proveedorPago"`
 
 	NombreFantasia *UnionNullString `json:"nombreFantasia"`
+
+	Importe *UnionNullBytes `json:"Importe"`
 }
 
-const PedidoBatchAvroCRC64Fingerprint = "\xb5}% \xcc\xf7\n\x8f"
+const PedidoBatchAvroCRC64Fingerprint = "\xe8\xea\xb4C\xfb\x1c\xc7\xf9"
 
 func NewPedidoBatch() PedidoBatch {
 	r := PedidoBatch{}
@@ -75,6 +77,10 @@ func writePedidoBatch(r PedidoBatch, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullBytes(r.Importe, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -83,7 +89,7 @@ func (r PedidoBatch) Serialize(w io.Writer) error {
 }
 
 func (r PedidoBatch) Schema() string {
-	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"name\":\"Importe\",\"type\":[\"null\",{\"logicalType\":\"decimal\",\"precision\":10,\"scale\":2,\"type\":\"bytes\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
 }
 
 func (r PedidoBatch) SchemaName() string {
@@ -120,6 +126,10 @@ func (r *PedidoBatch) Get(i int) types.Field {
 		r.NombreFantasia = NewUnionNullString()
 
 		return r.NombreFantasia
+	case 4:
+		r.Importe = NewUnionNullBytes()
+
+		return r.Importe
 	}
 	panic("Unknown field index")
 }
@@ -134,6 +144,9 @@ func (r *PedidoBatch) NullField(i int) {
 	switch i {
 	case 3:
 		r.NombreFantasia = nil
+		return
+	case 4:
+		r.Importe = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -164,6 +177,10 @@ func (r PedidoBatch) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["nombreFantasia"], err = json.Marshal(r.NombreFantasia)
+	if err != nil {
+		return nil, err
+	}
+	output["Importe"], err = json.Marshal(r.Importe)
 	if err != nil {
 		return nil, err
 	}
@@ -232,6 +249,20 @@ func (r *PedidoBatch) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for nombreFantasia")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Importe"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Importe); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Importe")
 	}
 	return nil
 }
