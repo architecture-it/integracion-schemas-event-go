@@ -25,13 +25,18 @@ type DocumentoInformado struct {
 	IdDocumento string `json:"IdDocumento"`
 
 	NombreDocumento string `json:"NombreDocumento"`
+
+	GuiaMadre *UnionNullString `json:"GuiaMadre"`
+
+	Fecha int64 `json:"Fecha"`
 }
 
-const DocumentoInformadoAvroCRC64Fingerprint = "\xa7\xc9\xc3*\xc3y\x13\x88"
+const DocumentoInformadoAvroCRC64Fingerprint = "\x00-\xfe<a\xc3S\x1a"
 
 func NewDocumentoInformado() DocumentoInformado {
 	r := DocumentoInformado{}
 	r.TipoSistema = nil
+	r.GuiaMadre = nil
 	return r
 }
 
@@ -76,6 +81,14 @@ func writeDocumentoInformado(r DocumentoInformado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.GuiaMadre, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteLong(r.Fecha, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -84,7 +97,7 @@ func (r DocumentoInformado) Serialize(w io.Writer) error {
 }
 
 func (r DocumentoInformado) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sistema\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoSistema\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdDocumento\",\"type\":\"string\"},{\"name\":\"NombreDocumento\",\"type\":\"string\"}],\"name\":\"Andreani.Globallpack.Events.Record.DocumentoInformado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sistema\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoSistema\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdDocumento\",\"type\":\"string\"},{\"name\":\"NombreDocumento\",\"type\":\"string\"},{\"default\":null,\"name\":\"GuiaMadre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Fecha\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.Globallpack.Events.Record.DocumentoInformado\",\"type\":\"record\"}"
 }
 
 func (r DocumentoInformado) SchemaName() string {
@@ -121,6 +134,15 @@ func (r *DocumentoInformado) Get(i int) types.Field {
 
 		return w
 
+	case 4:
+		r.GuiaMadre = NewUnionNullString()
+
+		return r.GuiaMadre
+	case 5:
+		w := types.Long{Target: &r.Fecha}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -130,6 +152,9 @@ func (r *DocumentoInformado) SetDefault(i int) {
 	case 1:
 		r.TipoSistema = nil
 		return
+	case 4:
+		r.GuiaMadre = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -138,6 +163,9 @@ func (r *DocumentoInformado) NullField(i int) {
 	switch i {
 	case 1:
 		r.TipoSistema = nil
+		return
+	case 4:
+		r.GuiaMadre = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -168,6 +196,14 @@ func (r DocumentoInformado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["NombreDocumento"], err = json.Marshal(r.NombreDocumento)
+	if err != nil {
+		return nil, err
+	}
+	output["GuiaMadre"], err = json.Marshal(r.GuiaMadre)
+	if err != nil {
+		return nil, err
+	}
+	output["Fecha"], err = json.Marshal(r.Fecha)
 	if err != nil {
 		return nil, err
 	}
@@ -238,6 +274,36 @@ func (r *DocumentoInformado) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for NombreDocumento")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["GuiaMadre"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.GuiaMadre); err != nil {
+			return err
+		}
+	} else {
+		r.GuiaMadre = NewUnionNullString()
+
+		r.GuiaMadre = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Fecha"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Fecha); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Fecha")
 	}
 	return nil
 }
