@@ -21,14 +21,17 @@ type Accion struct {
 	Id *UnionNullInt `json:"id"`
 
 	Codigo *UnionNullString `json:"codigo"`
+
+	MotivoExterno *UnionNullString `json:"motivoExterno"`
 }
 
-const AccionAvroCRC64Fingerprint = "J\x1c\xaa1M=\xc5\xd2"
+const AccionAvroCRC64Fingerprint = "@\xd5}\xe3J\n5B"
 
 func NewAccion() Accion {
 	r := Accion{}
 	r.Id = nil
 	r.Codigo = nil
+	r.MotivoExterno = nil
 	return r
 }
 
@@ -65,6 +68,10 @@ func writeAccion(r Accion, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.MotivoExterno, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -73,7 +80,7 @@ func (r Accion) Serialize(w io.Writer) error {
 }
 
 func (r Accion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Accion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"motivoExterno\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IncidenciasCross.Events.Common.Accion\",\"type\":\"record\"}"
 }
 
 func (r Accion) SchemaName() string {
@@ -99,6 +106,10 @@ func (r *Accion) Get(i int) types.Field {
 		r.Codigo = NewUnionNullString()
 
 		return r.Codigo
+	case 2:
+		r.MotivoExterno = NewUnionNullString()
+
+		return r.MotivoExterno
 	}
 	panic("Unknown field index")
 }
@@ -111,6 +122,9 @@ func (r *Accion) SetDefault(i int) {
 	case 1:
 		r.Codigo = nil
 		return
+	case 2:
+		r.MotivoExterno = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -122,6 +136,9 @@ func (r *Accion) NullField(i int) {
 		return
 	case 1:
 		r.Codigo = nil
+		return
+	case 2:
+		r.MotivoExterno = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -144,6 +161,10 @@ func (r Accion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["codigo"], err = json.Marshal(r.Codigo)
+	if err != nil {
+		return nil, err
+	}
+	output["motivoExterno"], err = json.Marshal(r.MotivoExterno)
 	if err != nil {
 		return nil, err
 	}
@@ -188,6 +209,22 @@ func (r *Accion) UnmarshalJSON(data []byte) error {
 		r.Codigo = NewUnionNullString()
 
 		r.Codigo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["motivoExterno"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.MotivoExterno); err != nil {
+			return err
+		}
+	} else {
+		r.MotivoExterno = NewUnionNullString()
+
+		r.MotivoExterno = nil
 	}
 	return nil
 }
