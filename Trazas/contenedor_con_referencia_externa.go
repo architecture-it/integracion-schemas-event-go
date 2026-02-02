@@ -23,7 +23,7 @@ type ContenedorConReferenciaExterna struct {
 	NumeroReferencia *UnionNullString `json:"numeroReferencia"`
 }
 
-const ContenedorConReferenciaExternaAvroCRC64Fingerprint = "W\xe7\b\x9d\xdf\x7f\xd0\xf4"
+const ContenedorConReferenciaExternaAvroCRC64Fingerprint = "\xb5\xc6TAD\xe4\xb5\xcd"
 
 func NewContenedorConReferenciaExterna() ContenedorConReferenciaExterna {
 	r := ContenedorConReferenciaExterna{}
@@ -74,7 +74,7 @@ func (r ContenedorConReferenciaExterna) Serialize(w io.Writer) error {
 }
 
 func (r ContenedorConReferenciaExterna) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"default\":null,\"name\":\"numeroReferencia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorConReferenciaExterna\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"default\":null,\"name\":\"numeroReferencia\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorConReferenciaExterna\",\"type\":\"record\"}"
 }
 
 func (r ContenedorConReferenciaExterna) SchemaName() string {
