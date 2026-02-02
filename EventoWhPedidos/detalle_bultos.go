@@ -59,9 +59,11 @@ type DetalleBultos struct {
 	EntregaAntesDe *UnionNullLong `json:"EntregaAntesDe"`
 
 	ConsumoAntesDe *UnionNullLong `json:"ConsumoAntesDe"`
+
+	Peso *UnionNullFloat `json:"Peso"`
 }
 
-const DetalleBultosAvroCRC64Fingerprint = "q\x85\xf1\x99\xad=\x0eK"
+const DetalleBultosAvroCRC64Fingerprint = "5\xab>y\x03m\xbdH"
 
 func NewDetalleBultos() DetalleBultos {
 	r := DetalleBultos{}
@@ -71,6 +73,7 @@ func NewDetalleBultos() DetalleBultos {
 	r.FechaVencimiento = nil
 	r.EntregaAntesDe = nil
 	r.ConsumoAntesDe = nil
+	r.Peso = nil
 	return r
 }
 
@@ -183,6 +186,10 @@ func writeDetalleBultos(r DetalleBultos, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullFloat(r.Peso, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -191,7 +198,7 @@ func (r DetalleBultos) Serialize(w io.Writer) error {
 }
 
 func (r DetalleBultos) Schema() string {
-	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"CantidadEmbalada\",\"type\":\"float\"},{\"name\":\"EtiquetaEmbalaje\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoDeContenedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.DetalleBultos\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"OrdenWH\",\"type\":\"string\"},{\"name\":\"OrdenCliente\",\"type\":\"string\"},{\"default\":null,\"name\":\"Remito\",\"type\":[\"null\",\"string\"]},{\"name\":\"LineaPedidoWH\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"CantidadEmbalada\",\"type\":\"float\"},{\"name\":\"EtiquetaEmbalaje\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoDeContenedor\",\"type\":[\"null\",\"string\"]},{\"name\":\"PaqueteLote\",\"type\":\"string\"},{\"name\":\"LoteCajitaFabricante\",\"type\":\"string\"},{\"name\":\"LoteSecundario\",\"type\":\"string\"},{\"default\":null,\"name\":\"FechaFabricacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaVencimiento\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"ProductoTrazable\",\"type\":\"string\"},{\"name\":\"AlmacenConsumo\",\"type\":\"string\"},{\"name\":\"EstadoLote\",\"type\":\"string\"},{\"name\":\"BloqueoUbicacion\",\"type\":\"string\"},{\"name\":\"VidaUtilLote\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntregaAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"ConsumoAntesDe\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Peso\",\"type\":[\"null\",\"float\"]}],\"name\":\"Andreani.EventoWhPedidos.Events.SCEPedidosEmpaquetadosCommon.DetalleBultos\",\"type\":\"record\"}"
 }
 
 func (r DetalleBultos) SchemaName() string {
@@ -308,6 +315,10 @@ func (r *DetalleBultos) Get(i int) types.Field {
 		r.ConsumoAntesDe = NewUnionNullLong()
 
 		return r.ConsumoAntesDe
+	case 21:
+		r.Peso = NewUnionNullFloat()
+
+		return r.Peso
 	}
 	panic("Unknown field index")
 }
@@ -332,6 +343,9 @@ func (r *DetalleBultos) SetDefault(i int) {
 	case 20:
 		r.ConsumoAntesDe = nil
 		return
+	case 21:
+		r.Peso = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -355,6 +369,9 @@ func (r *DetalleBultos) NullField(i int) {
 		return
 	case 20:
 		r.ConsumoAntesDe = nil
+		return
+	case 21:
+		r.Peso = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -453,6 +470,10 @@ func (r DetalleBultos) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ConsumoAntesDe"], err = json.Marshal(r.ConsumoAntesDe)
+	if err != nil {
+		return nil, err
+	}
+	output["Peso"], err = json.Marshal(r.Peso)
 	if err != nil {
 		return nil, err
 	}
@@ -771,6 +792,22 @@ func (r *DetalleBultos) UnmarshalJSON(data []byte) error {
 		r.ConsumoAntesDe = NewUnionNullLong()
 
 		r.ConsumoAntesDe = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Peso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Peso); err != nil {
+			return err
+		}
+	} else {
+		r.Peso = NewUnionNullFloat()
+
+		r.Peso = nil
 	}
 	return nil
 }
