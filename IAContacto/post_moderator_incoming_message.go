@@ -18,12 +18,12 @@ import (
 var _ = fmt.Printf
 
 type PostModeratorIncomingMessage struct {
-	Message *UnionNullMessage `json:"message"`
+	Message *UnionNullString `json:"message"`
 
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
 }
 
-const PostModeratorIncomingMessageAvroCRC64Fingerprint = "s\xa2\xa2ʓ\xd7\xe6\xae"
+const PostModeratorIncomingMessageAvroCRC64Fingerprint = "d\x02\x17\xea\xdd\x16\xe3k"
 
 func NewPostModeratorIncomingMessage() PostModeratorIncomingMessage {
 	r := PostModeratorIncomingMessage{}
@@ -57,7 +57,7 @@ func DeserializePostModeratorIncomingMessageFromSchema(r io.Reader, schema strin
 
 func writePostModeratorIncomingMessage(r PostModeratorIncomingMessage, w io.Writer) error {
 	var err error
-	err = writeUnionNullMessage(r.Message, w)
+	err = writeUnionNullString(r.Message, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func (r PostModeratorIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r PostModeratorIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"message\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.PostModeratorIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"message\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.PostModeratorIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r PostModeratorIncomingMessage) SchemaName() string {
@@ -92,7 +92,7 @@ func (_ PostModeratorIncomingMessage) SetUnionElem(v int64) { panic("Unsupported
 func (r *PostModeratorIncomingMessage) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Message = NewUnionNullMessage()
+		r.Message = NewUnionNullString()
 
 		return r.Message
 	case 1:
@@ -171,7 +171,7 @@ func (r *PostModeratorIncomingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Message = NewUnionNullMessage()
+		r.Message = NewUnionNullString()
 
 		r.Message = nil
 	}
