@@ -27,9 +27,13 @@ type SocialMediaOutgoingMessage struct {
 	IncidentsConsulted *UnionNullArrayCasoInfo `json:"incidentsConsulted"`
 
 	TransferToOperator bool `json:"transferToOperator"`
+
+	Platform string `json:"Platform"`
+
+	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
 }
 
-const SocialMediaOutgoingMessageAvroCRC64Fingerprint = "\xbdο\xce\x119\xfd\x9e"
+const SocialMediaOutgoingMessageAvroCRC64Fingerprint = "\xfb\xb4\xf9\x88\x91\xc1$Y"
 
 func NewSocialMediaOutgoingMessage() SocialMediaOutgoingMessage {
 	r := SocialMediaOutgoingMessage{}
@@ -37,6 +41,7 @@ func NewSocialMediaOutgoingMessage() SocialMediaOutgoingMessage {
 	r.IncidentsCreated = nil
 	r.IncidentsConsulted = nil
 	r.TransferToOperator = false
+	r.ReceivedTimestamp = nil
 	return r
 }
 
@@ -85,6 +90,14 @@ func writeSocialMediaOutgoingMessage(r SocialMediaOutgoingMessage, w io.Writer) 
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Platform, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.ReceivedTimestamp, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -93,7 +106,7 @@ func (r SocialMediaOutgoingMessage) Serialize(w io.Writer) error {
 }
 
 func (r SocialMediaOutgoingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"ConversationId\",\"type\":\"string\"},{\"default\":null,\"name\":\"assistantResponse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"incidentsCreated\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"incidentsConsulted\",\"type\":[\"null\",{\"items\":\"Andreani.IAContacto.Events.Record.CasoInfo\",\"type\":\"array\"}]},{\"default\":false,\"name\":\"transferToOperator\",\"type\":\"boolean\"}],\"name\":\"Andreani.IAContacto.Events.Record.SocialMediaOutgoingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ConversationId\",\"type\":\"string\"},{\"default\":null,\"name\":\"assistantResponse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"incidentsCreated\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"incidentsConsulted\",\"type\":[\"null\",{\"items\":\"Andreani.IAContacto.Events.Record.CasoInfo\",\"type\":\"array\"}]},{\"default\":false,\"name\":\"transferToOperator\",\"type\":\"boolean\"},{\"name\":\"Platform\",\"type\":\"string\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.SocialMediaOutgoingMessage\",\"type\":\"record\"}"
 }
 
 func (r SocialMediaOutgoingMessage) SchemaName() string {
@@ -133,6 +146,15 @@ func (r *SocialMediaOutgoingMessage) Get(i int) types.Field {
 
 		return w
 
+	case 5:
+		w := types.String{Target: &r.Platform}
+
+		return w
+
+	case 6:
+		r.ReceivedTimestamp = NewUnionNullLong()
+
+		return r.ReceivedTimestamp
 	}
 	panic("Unknown field index")
 }
@@ -151,6 +173,9 @@ func (r *SocialMediaOutgoingMessage) SetDefault(i int) {
 	case 4:
 		r.TransferToOperator = false
 		return
+	case 6:
+		r.ReceivedTimestamp = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -165,6 +190,9 @@ func (r *SocialMediaOutgoingMessage) NullField(i int) {
 		return
 	case 3:
 		r.IncidentsConsulted = nil
+		return
+	case 6:
+		r.ReceivedTimestamp = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -199,6 +227,14 @@ func (r SocialMediaOutgoingMessage) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["transferToOperator"], err = json.Marshal(r.TransferToOperator)
+	if err != nil {
+		return nil, err
+	}
+	output["Platform"], err = json.Marshal(r.Platform)
+	if err != nil {
+		return nil, err
+	}
+	output["receivedTimestamp"], err = json.Marshal(r.ReceivedTimestamp)
 	if err != nil {
 		return nil, err
 	}
@@ -287,6 +323,36 @@ func (r *SocialMediaOutgoingMessage) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		r.TransferToOperator = false
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Platform"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Platform); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Platform")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["receivedTimestamp"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ReceivedTimestamp); err != nil {
+			return err
+		}
+	} else {
+		r.ReceivedTimestamp = NewUnionNullLong()
+
+		r.ReceivedTimestamp = nil
 	}
 	return nil
 }
