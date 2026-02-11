@@ -20,12 +20,12 @@ var _ = fmt.Printf
 type PostModeratorIncomingMessage struct {
 	RequestId string `json:"requestId"`
 
-	Message *UnionNullMessage `json:"message"`
+	Message *UnionNullString `json:"message"`
 
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
 }
 
-const PostModeratorIncomingMessageAvroCRC64Fingerprint = "jɰ)\x157'7"
+const PostModeratorIncomingMessageAvroCRC64Fingerprint = "?\xeam}\xa9Їy"
 
 func NewPostModeratorIncomingMessage() PostModeratorIncomingMessage {
 	r := PostModeratorIncomingMessage{}
@@ -63,7 +63,7 @@ func writePostModeratorIncomingMessage(r PostModeratorIncomingMessage, w io.Writ
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullMessage(r.Message, w)
+	err = writeUnionNullString(r.Message, w)
 	if err != nil {
 		return err
 	}
@@ -79,7 +79,7 @@ func (r PostModeratorIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r PostModeratorIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"requestId\",\"type\":\"string\"},{\"default\":null,\"name\":\"message\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.PostModeratorIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"requestId\",\"type\":\"string\"},{\"default\":null,\"name\":\"message\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.PostModeratorIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r PostModeratorIncomingMessage) SchemaName() string {
@@ -103,7 +103,7 @@ func (r *PostModeratorIncomingMessage) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.Message = NewUnionNullMessage()
+		r.Message = NewUnionNullString()
 
 		return r.Message
 	case 2:
@@ -200,7 +200,7 @@ func (r *PostModeratorIncomingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Message = NewUnionNullMessage()
+		r.Message = NewUnionNullString()
 
 		r.Message = nil
 	}
