@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type EmailOutgoingMessage struct {
+	RequestId string `json:"requestId"`
+
 	Destinatario string `json:"destinatario"`
 
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
@@ -35,7 +37,7 @@ type EmailOutgoingMessage struct {
 	ChatMessages *UnionNullChatMessageDto `json:"chatMessages"`
 }
 
-const EmailOutgoingMessageAvroCRC64Fingerprint = "\x19\xf0Į\x14WES"
+const EmailOutgoingMessageAvroCRC64Fingerprint = ",4;\x81\x8eL\xb0\xda"
 
 func NewEmailOutgoingMessage() EmailOutgoingMessage {
 	r := EmailOutgoingMessage{}
@@ -74,6 +76,10 @@ func DeserializeEmailOutgoingMessageFromSchema(r io.Reader, schema string) (Emai
 
 func writeEmailOutgoingMessage(r EmailOutgoingMessage, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.RequestId, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Destinatario, w)
 	if err != nil {
 		return err
@@ -114,7 +120,7 @@ func (r EmailOutgoingMessage) Serialize(w io.Writer) error {
 }
 
 func (r EmailOutgoingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"assistantResponse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"incidentsCreated\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"incidentsConsulted\",\"type\":[\"null\",{\"items\":\"Andreani.IAContacto.Events.Record.CasoInfo\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"chatMessages\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"messages\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ChatMessageDto\",\"type\":\"record\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailOutgoingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"requestId\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"assistantResponse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"incidentsCreated\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"incidentsConsulted\",\"type\":[\"null\",{\"items\":\"Andreani.IAContacto.Events.Record.CasoInfo\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"chatMessages\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"messages\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ChatMessageDto\",\"type\":\"record\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailOutgoingMessage\",\"type\":\"record\"}"
 }
 
 func (r EmailOutgoingMessage) SchemaName() string {
@@ -133,35 +139,40 @@ func (_ EmailOutgoingMessage) SetUnionElem(v int64) { panic("Unsupported operati
 func (r *EmailOutgoingMessage) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Destinatario}
+		w := types.String{Target: &r.RequestId}
 
 		return w
 
 	case 1:
+		w := types.String{Target: &r.Destinatario}
+
+		return w
+
+	case 2:
 		r.ReceivedTimestamp = NewUnionNullLong()
 
 		return r.ReceivedTimestamp
-	case 2:
+	case 3:
 		r.Asunto = NewUnionNullString()
 
 		return r.Asunto
-	case 3:
+	case 4:
 		r.Body = NewUnionNullString()
 
 		return r.Body
-	case 4:
+	case 5:
 		r.AssistantResponse = NewUnionNullString()
 
 		return r.AssistantResponse
-	case 5:
+	case 6:
 		r.IncidentsCreated = NewUnionNullArrayCasoInfo()
 
 		return r.IncidentsCreated
-	case 6:
+	case 7:
 		r.IncidentsConsulted = NewUnionNullArrayCasoInfo()
 
 		return r.IncidentsConsulted
-	case 7:
+	case 8:
 		r.ChatMessages = NewUnionNullChatMessageDto()
 
 		return r.ChatMessages
@@ -171,25 +182,25 @@ func (r *EmailOutgoingMessage) Get(i int) types.Field {
 
 func (r *EmailOutgoingMessage) SetDefault(i int) {
 	switch i {
-	case 1:
+	case 2:
 		r.ReceivedTimestamp = nil
 		return
-	case 2:
+	case 3:
 		r.Asunto = nil
 		return
-	case 3:
+	case 4:
 		r.Body = nil
 		return
-	case 4:
+	case 5:
 		r.AssistantResponse = nil
 		return
-	case 5:
+	case 6:
 		r.IncidentsCreated = nil
 		return
-	case 6:
+	case 7:
 		r.IncidentsConsulted = nil
 		return
-	case 7:
+	case 8:
 		r.ChatMessages = nil
 		return
 	}
@@ -198,25 +209,25 @@ func (r *EmailOutgoingMessage) SetDefault(i int) {
 
 func (r *EmailOutgoingMessage) NullField(i int) {
 	switch i {
-	case 1:
+	case 2:
 		r.ReceivedTimestamp = nil
 		return
-	case 2:
+	case 3:
 		r.Asunto = nil
 		return
-	case 3:
+	case 4:
 		r.Body = nil
 		return
-	case 4:
+	case 5:
 		r.AssistantResponse = nil
 		return
-	case 5:
+	case 6:
 		r.IncidentsCreated = nil
 		return
-	case 6:
+	case 7:
 		r.IncidentsConsulted = nil
 		return
-	case 7:
+	case 8:
 		r.ChatMessages = nil
 		return
 	}
@@ -235,6 +246,10 @@ func (_ EmailOutgoingMessage) AvroCRC64Fingerprint() []byte {
 func (r EmailOutgoingMessage) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["requestId"], err = json.Marshal(r.RequestId)
+	if err != nil {
+		return nil, err
+	}
 	output["destinatario"], err = json.Marshal(r.Destinatario)
 	if err != nil {
 		return nil, err
@@ -277,6 +292,20 @@ func (r *EmailOutgoingMessage) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["requestId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RequestId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for requestId")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatario"]; ok {
 			return v

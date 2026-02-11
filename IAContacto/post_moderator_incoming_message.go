@@ -18,12 +18,14 @@ import (
 var _ = fmt.Printf
 
 type PostModeratorIncomingMessage struct {
-	Message *UnionNullString `json:"message"`
+	RequestId string `json:"requestId"`
+
+	Message *UnionNullMessage `json:"message"`
 
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
 }
 
-const PostModeratorIncomingMessageAvroCRC64Fingerprint = "d\x02\x17\xea\xdd\x16\xe3k"
+const PostModeratorIncomingMessageAvroCRC64Fingerprint = "jɰ)\x157'7"
 
 func NewPostModeratorIncomingMessage() PostModeratorIncomingMessage {
 	r := PostModeratorIncomingMessage{}
@@ -57,7 +59,11 @@ func DeserializePostModeratorIncomingMessageFromSchema(r io.Reader, schema strin
 
 func writePostModeratorIncomingMessage(r PostModeratorIncomingMessage, w io.Writer) error {
 	var err error
-	err = writeUnionNullString(r.Message, w)
+	err = vm.WriteString(r.RequestId, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullMessage(r.Message, w)
 	if err != nil {
 		return err
 	}
@@ -73,7 +79,7 @@ func (r PostModeratorIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r PostModeratorIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"message\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.PostModeratorIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"requestId\",\"type\":\"string\"},{\"default\":null,\"name\":\"message\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.PostModeratorIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r PostModeratorIncomingMessage) SchemaName() string {
@@ -92,10 +98,15 @@ func (_ PostModeratorIncomingMessage) SetUnionElem(v int64) { panic("Unsupported
 func (r *PostModeratorIncomingMessage) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Message = NewUnionNullString()
+		w := types.String{Target: &r.RequestId}
+
+		return w
+
+	case 1:
+		r.Message = NewUnionNullMessage()
 
 		return r.Message
-	case 1:
+	case 2:
 		r.ReceivedTimestamp = NewUnionNullLong()
 
 		return r.ReceivedTimestamp
@@ -105,10 +116,10 @@ func (r *PostModeratorIncomingMessage) Get(i int) types.Field {
 
 func (r *PostModeratorIncomingMessage) SetDefault(i int) {
 	switch i {
-	case 0:
+	case 1:
 		r.Message = nil
 		return
-	case 1:
+	case 2:
 		r.ReceivedTimestamp = nil
 		return
 	}
@@ -117,10 +128,10 @@ func (r *PostModeratorIncomingMessage) SetDefault(i int) {
 
 func (r *PostModeratorIncomingMessage) NullField(i int) {
 	switch i {
-	case 0:
+	case 1:
 		r.Message = nil
 		return
-	case 1:
+	case 2:
 		r.ReceivedTimestamp = nil
 		return
 	}
@@ -141,6 +152,10 @@ func (_ PostModeratorIncomingMessage) AvroCRC64Fingerprint() []byte {
 func (r PostModeratorIncomingMessage) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["requestId"], err = json.Marshal(r.RequestId)
+	if err != nil {
+		return nil, err
+	}
 	output["message"], err = json.Marshal(r.Message)
 	if err != nil {
 		return nil, err
@@ -160,6 +175,20 @@ func (r *PostModeratorIncomingMessage) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
+		if v, ok := fields["requestId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RequestId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for requestId")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["message"]; ok {
 			return v
 		}
@@ -171,7 +200,7 @@ func (r *PostModeratorIncomingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Message = NewUnionNullString()
+		r.Message = NewUnionNullMessage()
 
 		r.Message = nil
 	}

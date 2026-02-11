@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type EmailIncomingMessage struct {
+	RequestId string `json:"requestId"`
+
 	Destinatario string `json:"destinatario"`
 
 	Asunto *UnionNullString `json:"asunto"`
@@ -29,7 +31,7 @@ type EmailIncomingMessage struct {
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
 }
 
-const EmailIncomingMessageAvroCRC64Fingerprint = "\xe8\xe2\xc2F㟖\xb3"
+const EmailIncomingMessageAvroCRC64Fingerprint = "\x9f\xa1a\x02\xbb\"\xb1\x18"
 
 func NewEmailIncomingMessage() EmailIncomingMessage {
 	r := EmailIncomingMessage{}
@@ -65,6 +67,10 @@ func DeserializeEmailIncomingMessageFromSchema(r io.Reader, schema string) (Emai
 
 func writeEmailIncomingMessage(r EmailIncomingMessage, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.RequestId, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Destinatario, w)
 	if err != nil {
 		return err
@@ -93,7 +99,7 @@ func (r EmailIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r EmailIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"default\":null,\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"hasAttachment\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"requestId\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"default\":null,\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"hasAttachment\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r EmailIncomingMessage) SchemaName() string {
@@ -112,24 +118,29 @@ func (_ EmailIncomingMessage) SetUnionElem(v int64) { panic("Unsupported operati
 func (r *EmailIncomingMessage) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Destinatario}
+		w := types.String{Target: &r.RequestId}
 
 		return w
 
 	case 1:
+		w := types.String{Target: &r.Destinatario}
+
+		return w
+
+	case 2:
 		r.Asunto = NewUnionNullString()
 
 		return r.Asunto
-	case 2:
+	case 3:
 		r.Body = NewUnionNullString()
 
 		return r.Body
-	case 3:
+	case 4:
 		w := types.Boolean{Target: &r.HasAttachment}
 
 		return w
 
-	case 4:
+	case 5:
 		r.ReceivedTimestamp = NewUnionNullLong()
 
 		return r.ReceivedTimestamp
@@ -139,16 +150,16 @@ func (r *EmailIncomingMessage) Get(i int) types.Field {
 
 func (r *EmailIncomingMessage) SetDefault(i int) {
 	switch i {
-	case 1:
+	case 2:
 		r.Asunto = nil
 		return
-	case 2:
+	case 3:
 		r.Body = nil
 		return
-	case 3:
+	case 4:
 		r.HasAttachment = false
 		return
-	case 4:
+	case 5:
 		r.ReceivedTimestamp = nil
 		return
 	}
@@ -157,13 +168,13 @@ func (r *EmailIncomingMessage) SetDefault(i int) {
 
 func (r *EmailIncomingMessage) NullField(i int) {
 	switch i {
-	case 1:
+	case 2:
 		r.Asunto = nil
 		return
-	case 2:
+	case 3:
 		r.Body = nil
 		return
-	case 4:
+	case 5:
 		r.ReceivedTimestamp = nil
 		return
 	}
@@ -182,6 +193,10 @@ func (_ EmailIncomingMessage) AvroCRC64Fingerprint() []byte {
 func (r EmailIncomingMessage) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["requestId"], err = json.Marshal(r.RequestId)
+	if err != nil {
+		return nil, err
+	}
 	output["destinatario"], err = json.Marshal(r.Destinatario)
 	if err != nil {
 		return nil, err
@@ -212,6 +227,20 @@ func (r *EmailIncomingMessage) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["requestId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RequestId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for requestId")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatario"]; ok {
 			return v

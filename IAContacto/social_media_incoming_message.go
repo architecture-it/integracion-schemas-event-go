@@ -20,6 +20,8 @@ var _ = fmt.Printf
 type SocialMediaIncomingMessage struct {
 	ConversationId string `json:"ConversationId"`
 
+	RequestId string `json:"requestId"`
+
 	Platform string `json:"Platform"`
 
 	Message string `json:"Message"`
@@ -27,7 +29,7 @@ type SocialMediaIncomingMessage struct {
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
 }
 
-const SocialMediaIncomingMessageAvroCRC64Fingerprint = "H\xad\xeb\xb1\xef\x17\x92d"
+const SocialMediaIncomingMessageAvroCRC64Fingerprint = "\xef\xed\xc1ݒ\xf9\xbb\xfe"
 
 func NewSocialMediaIncomingMessage() SocialMediaIncomingMessage {
 	r := SocialMediaIncomingMessage{}
@@ -64,6 +66,10 @@ func writeSocialMediaIncomingMessage(r SocialMediaIncomingMessage, w io.Writer) 
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.RequestId, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Platform, w)
 	if err != nil {
 		return err
@@ -84,7 +90,7 @@ func (r SocialMediaIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r SocialMediaIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"ConversationId\",\"type\":\"string\"},{\"name\":\"Platform\",\"type\":\"string\"},{\"name\":\"Message\",\"type\":\"string\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.SocialMediaIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ConversationId\",\"type\":\"string\"},{\"name\":\"requestId\",\"type\":\"string\"},{\"name\":\"Platform\",\"type\":\"string\"},{\"name\":\"Message\",\"type\":\"string\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.SocialMediaIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r SocialMediaIncomingMessage) SchemaName() string {
@@ -108,16 +114,21 @@ func (r *SocialMediaIncomingMessage) Get(i int) types.Field {
 		return w
 
 	case 1:
-		w := types.String{Target: &r.Platform}
+		w := types.String{Target: &r.RequestId}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.Message}
+		w := types.String{Target: &r.Platform}
 
 		return w
 
 	case 3:
+		w := types.String{Target: &r.Message}
+
+		return w
+
+	case 4:
 		r.ReceivedTimestamp = NewUnionNullLong()
 
 		return r.ReceivedTimestamp
@@ -127,7 +138,7 @@ func (r *SocialMediaIncomingMessage) Get(i int) types.Field {
 
 func (r *SocialMediaIncomingMessage) SetDefault(i int) {
 	switch i {
-	case 3:
+	case 4:
 		r.ReceivedTimestamp = nil
 		return
 	}
@@ -136,7 +147,7 @@ func (r *SocialMediaIncomingMessage) SetDefault(i int) {
 
 func (r *SocialMediaIncomingMessage) NullField(i int) {
 	switch i {
-	case 3:
+	case 4:
 		r.ReceivedTimestamp = nil
 		return
 	}
@@ -156,6 +167,10 @@ func (r SocialMediaIncomingMessage) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["ConversationId"], err = json.Marshal(r.ConversationId)
+	if err != nil {
+		return nil, err
+	}
+	output["requestId"], err = json.Marshal(r.RequestId)
 	if err != nil {
 		return nil, err
 	}
@@ -194,6 +209,20 @@ func (r *SocialMediaIncomingMessage) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for ConversationId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["requestId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RequestId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for requestId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Platform"]; ok {

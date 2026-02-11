@@ -18,14 +18,19 @@ import (
 var _ = fmt.Printf
 
 type PostModeratorOutgoingMessage struct {
+	RequestId string `json:"requestId"`
+
 	Intent *UnionNullString `json:"intent"`
+
+	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
 }
 
-const PostModeratorOutgoingMessageAvroCRC64Fingerprint = "L,\xda\xfa\x0f\t\xff\xef"
+const PostModeratorOutgoingMessageAvroCRC64Fingerprint = "\xc0\xbb/dd9{t"
 
 func NewPostModeratorOutgoingMessage() PostModeratorOutgoingMessage {
 	r := PostModeratorOutgoingMessage{}
 	r.Intent = nil
+	r.ReceivedTimestamp = nil
 	return r
 }
 
@@ -54,7 +59,15 @@ func DeserializePostModeratorOutgoingMessageFromSchema(r io.Reader, schema strin
 
 func writePostModeratorOutgoingMessage(r PostModeratorOutgoingMessage, w io.Writer) error {
 	var err error
+	err = vm.WriteString(r.RequestId, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Intent, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.ReceivedTimestamp, w)
 	if err != nil {
 		return err
 	}
@@ -66,7 +79,7 @@ func (r PostModeratorOutgoingMessage) Serialize(w io.Writer) error {
 }
 
 func (r PostModeratorOutgoingMessage) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"intent\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.PostModeratorOutgoingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"requestId\",\"type\":\"string\"},{\"default\":null,\"name\":\"intent\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.PostModeratorOutgoingMessage\",\"type\":\"record\"}"
 }
 
 func (r PostModeratorOutgoingMessage) SchemaName() string {
@@ -85,17 +98,29 @@ func (_ PostModeratorOutgoingMessage) SetUnionElem(v int64) { panic("Unsupported
 func (r *PostModeratorOutgoingMessage) Get(i int) types.Field {
 	switch i {
 	case 0:
+		w := types.String{Target: &r.RequestId}
+
+		return w
+
+	case 1:
 		r.Intent = NewUnionNullString()
 
 		return r.Intent
+	case 2:
+		r.ReceivedTimestamp = NewUnionNullLong()
+
+		return r.ReceivedTimestamp
 	}
 	panic("Unknown field index")
 }
 
 func (r *PostModeratorOutgoingMessage) SetDefault(i int) {
 	switch i {
-	case 0:
+	case 1:
 		r.Intent = nil
+		return
+	case 2:
+		r.ReceivedTimestamp = nil
 		return
 	}
 	panic("Unknown field index")
@@ -103,8 +128,11 @@ func (r *PostModeratorOutgoingMessage) SetDefault(i int) {
 
 func (r *PostModeratorOutgoingMessage) NullField(i int) {
 	switch i {
-	case 0:
+	case 1:
 		r.Intent = nil
+		return
+	case 2:
+		r.ReceivedTimestamp = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -124,7 +152,15 @@ func (_ PostModeratorOutgoingMessage) AvroCRC64Fingerprint() []byte {
 func (r PostModeratorOutgoingMessage) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["requestId"], err = json.Marshal(r.RequestId)
+	if err != nil {
+		return nil, err
+	}
 	output["intent"], err = json.Marshal(r.Intent)
+	if err != nil {
+		return nil, err
+	}
+	output["receivedTimestamp"], err = json.Marshal(r.ReceivedTimestamp)
 	if err != nil {
 		return nil, err
 	}
@@ -138,6 +174,20 @@ func (r *PostModeratorOutgoingMessage) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["requestId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RequestId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for requestId")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["intent"]; ok {
 			return v
@@ -153,6 +203,22 @@ func (r *PostModeratorOutgoingMessage) UnmarshalJSON(data []byte) error {
 		r.Intent = NewUnionNullString()
 
 		r.Intent = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["receivedTimestamp"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ReceivedTimestamp); err != nil {
+			return err
+		}
+	} else {
+		r.ReceivedTimestamp = NewUnionNullLong()
+
+		r.ReceivedTimestamp = nil
 	}
 	return nil
 }
