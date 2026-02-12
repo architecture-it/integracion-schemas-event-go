@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayCasoInfoFromSchema(r io.Reader, schema string) (*U
 }
 
 func (r *UnionNullArrayCasoInfo) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayCasoInfo) SetBoolean(v bool)   { panic("Unsupported operation") }

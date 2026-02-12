@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayMessageFromSchema(r io.Reader, schema string) (*Un
 }
 
 func (r *UnionNullArrayMessage) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayMessage) SetBoolean(v bool)   { panic("Unsupported operation") }

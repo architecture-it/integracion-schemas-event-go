@@ -29,9 +29,6 @@ const CasoInfoAvroCRC64Fingerprint = "\xa9OV\xf9y\x97Yg"
 
 func NewCasoInfo() CasoInfo {
 	r := CasoInfo{}
-	r.AsuntoDelCaso = nil
-	r.NroCaso = nil
-	r.NroEnvio = nil
 	return r
 }
 
@@ -80,7 +77,7 @@ func (r CasoInfo) Serialize(w io.Writer) error {
 }
 
 func (r CasoInfo) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.CasoInfo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.CasoInfo\",\"type\":\"record\"}"
 }
 
 func (r CasoInfo) SchemaName() string {
@@ -116,15 +113,6 @@ func (r *CasoInfo) Get(i int) types.Field {
 
 func (r *CasoInfo) SetDefault(i int) {
 	switch i {
-	case 0:
-		r.AsuntoDelCaso = nil
-		return
-	case 1:
-		r.NroCaso = nil
-		return
-	case 2:
-		r.NroEnvio = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -190,9 +178,7 @@ func (r *CasoInfo) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.AsuntoDelCaso = NewUnionNullString()
-
-		r.AsuntoDelCaso = nil
+		return fmt.Errorf("no value specified for AsuntoDelCaso")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NroCaso"]; ok {
@@ -206,9 +192,7 @@ func (r *CasoInfo) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.NroCaso = NewUnionNullString()
-
-		r.NroCaso = nil
+		return fmt.Errorf("no value specified for NroCaso")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NroEnvio"]; ok {
@@ -222,9 +206,7 @@ func (r *CasoInfo) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.NroEnvio = NewUnionNullString()
-
-		r.NroEnvio = nil
+		return fmt.Errorf("no value specified for NroEnvio")
 	}
 	return nil
 }

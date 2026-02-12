@@ -18,8 +18,6 @@ import (
 var _ = fmt.Printf
 
 type EmailIncomingMessage struct {
-	RequestId string `json:"requestId"`
-
 	Destinatario string `json:"destinatario"`
 
 	Asunto *UnionNullString `json:"asunto"`
@@ -29,16 +27,15 @@ type EmailIncomingMessage struct {
 	HasAttachment bool `json:"hasAttachment"`
 
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
+
+	RequestId *UnionNullString `json:"requestId"`
 }
 
-const EmailIncomingMessageAvroCRC64Fingerprint = "\x9f\xa1a\x02\xbb\"\xb1\x18"
+const EmailIncomingMessageAvroCRC64Fingerprint = "^\xa5T>\x14\xb9C\xe2"
 
 func NewEmailIncomingMessage() EmailIncomingMessage {
 	r := EmailIncomingMessage{}
-	r.Asunto = nil
-	r.Body = nil
 	r.HasAttachment = false
-	r.ReceivedTimestamp = nil
 	return r
 }
 
@@ -67,10 +64,6 @@ func DeserializeEmailIncomingMessageFromSchema(r io.Reader, schema string) (Emai
 
 func writeEmailIncomingMessage(r EmailIncomingMessage, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.RequestId, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.Destinatario, w)
 	if err != nil {
 		return err
@@ -91,6 +84,10 @@ func writeEmailIncomingMessage(r EmailIncomingMessage, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.RequestId, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -99,7 +96,7 @@ func (r EmailIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r EmailIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"requestId\",\"type\":\"string\"},{\"name\":\"destinatario\",\"type\":\"string\"},{\"default\":null,\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"hasAttachment\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"hasAttachment\",\"type\":\"boolean\"},{\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r EmailIncomingMessage) SchemaName() string {
@@ -118,49 +115,39 @@ func (_ EmailIncomingMessage) SetUnionElem(v int64) { panic("Unsupported operati
 func (r *EmailIncomingMessage) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.RequestId}
-
-		return w
-
-	case 1:
 		w := types.String{Target: &r.Destinatario}
 
 		return w
 
-	case 2:
+	case 1:
 		r.Asunto = NewUnionNullString()
 
 		return r.Asunto
-	case 3:
+	case 2:
 		r.Body = NewUnionNullString()
 
 		return r.Body
-	case 4:
+	case 3:
 		w := types.Boolean{Target: &r.HasAttachment}
 
 		return w
 
-	case 5:
+	case 4:
 		r.ReceivedTimestamp = NewUnionNullLong()
 
 		return r.ReceivedTimestamp
+	case 5:
+		r.RequestId = NewUnionNullString()
+
+		return r.RequestId
 	}
 	panic("Unknown field index")
 }
 
 func (r *EmailIncomingMessage) SetDefault(i int) {
 	switch i {
-	case 2:
-		r.Asunto = nil
-		return
 	case 3:
-		r.Body = nil
-		return
-	case 4:
 		r.HasAttachment = false
-		return
-	case 5:
-		r.ReceivedTimestamp = nil
 		return
 	}
 	panic("Unknown field index")
@@ -168,14 +155,17 @@ func (r *EmailIncomingMessage) SetDefault(i int) {
 
 func (r *EmailIncomingMessage) NullField(i int) {
 	switch i {
-	case 2:
+	case 1:
 		r.Asunto = nil
 		return
-	case 3:
+	case 2:
 		r.Body = nil
 		return
-	case 5:
+	case 4:
 		r.ReceivedTimestamp = nil
+		return
+	case 5:
+		r.RequestId = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -193,10 +183,6 @@ func (_ EmailIncomingMessage) AvroCRC64Fingerprint() []byte {
 func (r EmailIncomingMessage) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["requestId"], err = json.Marshal(r.RequestId)
-	if err != nil {
-		return nil, err
-	}
 	output["destinatario"], err = json.Marshal(r.Destinatario)
 	if err != nil {
 		return nil, err
@@ -217,6 +203,10 @@ func (r EmailIncomingMessage) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["requestId"], err = json.Marshal(r.RequestId)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -227,20 +217,6 @@ func (r *EmailIncomingMessage) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["requestId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.RequestId); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for requestId")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinatario"]; ok {
 			return v
@@ -267,9 +243,7 @@ func (r *EmailIncomingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Asunto = NewUnionNullString()
-
-		r.Asunto = nil
+		return fmt.Errorf("no value specified for asunto")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["body"]; ok {
@@ -283,9 +257,7 @@ func (r *EmailIncomingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Body = NewUnionNullString()
-
-		r.Body = nil
+		return fmt.Errorf("no value specified for body")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["hasAttachment"]; ok {
@@ -313,9 +285,21 @@ func (r *EmailIncomingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.ReceivedTimestamp = NewUnionNullLong()
+		return fmt.Errorf("no value specified for receivedTimestamp")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["requestId"]; ok {
+			return v
+		}
+		return nil
+	}()
 
-		r.ReceivedTimestamp = nil
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RequestId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for requestId")
 	}
 	return nil
 }

@@ -18,19 +18,17 @@ import (
 var _ = fmt.Printf
 
 type PostModeratorIncomingMessage struct {
-	RequestId string `json:"requestId"`
-
-	Message *UnionNullString `json:"message"`
+	Message *UnionNullMessage `json:"message"`
 
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
+
+	RequestId *UnionNullString `json:"requestId"`
 }
 
-const PostModeratorIncomingMessageAvroCRC64Fingerprint = "?\xeam}\xa9Їy"
+const PostModeratorIncomingMessageAvroCRC64Fingerprint = "@MQ\xac;\xa9T\xd3"
 
 func NewPostModeratorIncomingMessage() PostModeratorIncomingMessage {
 	r := PostModeratorIncomingMessage{}
-	r.Message = nil
-	r.ReceivedTimestamp = nil
 	return r
 }
 
@@ -59,15 +57,15 @@ func DeserializePostModeratorIncomingMessageFromSchema(r io.Reader, schema strin
 
 func writePostModeratorIncomingMessage(r PostModeratorIncomingMessage, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.RequestId, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.Message, w)
+	err = writeUnionNullMessage(r.Message, w)
 	if err != nil {
 		return err
 	}
 	err = writeUnionNullLong(r.ReceivedTimestamp, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.RequestId, w)
 	if err != nil {
 		return err
 	}
@@ -79,7 +77,7 @@ func (r PostModeratorIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r PostModeratorIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"requestId\",\"type\":\"string\"},{\"default\":null,\"name\":\"message\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.PostModeratorIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"message\",\"type\":[\"null\",{\"fields\":[{\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"}]},{\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.PostModeratorIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r PostModeratorIncomingMessage) SchemaName() string {
@@ -98,41 +96,37 @@ func (_ PostModeratorIncomingMessage) SetUnionElem(v int64) { panic("Unsupported
 func (r *PostModeratorIncomingMessage) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.RequestId}
-
-		return w
-
-	case 1:
-		r.Message = NewUnionNullString()
+		r.Message = NewUnionNullMessage()
 
 		return r.Message
-	case 2:
+	case 1:
 		r.ReceivedTimestamp = NewUnionNullLong()
 
 		return r.ReceivedTimestamp
+	case 2:
+		r.RequestId = NewUnionNullString()
+
+		return r.RequestId
 	}
 	panic("Unknown field index")
 }
 
 func (r *PostModeratorIncomingMessage) SetDefault(i int) {
 	switch i {
-	case 1:
-		r.Message = nil
-		return
-	case 2:
-		r.ReceivedTimestamp = nil
-		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *PostModeratorIncomingMessage) NullField(i int) {
 	switch i {
-	case 1:
+	case 0:
 		r.Message = nil
 		return
-	case 2:
+	case 1:
 		r.ReceivedTimestamp = nil
+		return
+	case 2:
+		r.RequestId = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -152,15 +146,15 @@ func (_ PostModeratorIncomingMessage) AvroCRC64Fingerprint() []byte {
 func (r PostModeratorIncomingMessage) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["requestId"], err = json.Marshal(r.RequestId)
-	if err != nil {
-		return nil, err
-	}
 	output["message"], err = json.Marshal(r.Message)
 	if err != nil {
 		return nil, err
 	}
 	output["receivedTimestamp"], err = json.Marshal(r.ReceivedTimestamp)
+	if err != nil {
+		return nil, err
+	}
+	output["requestId"], err = json.Marshal(r.RequestId)
 	if err != nil {
 		return nil, err
 	}
@@ -175,20 +169,6 @@ func (r *PostModeratorIncomingMessage) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["requestId"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.RequestId); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for requestId")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["message"]; ok {
 			return v
 		}
@@ -200,9 +180,7 @@ func (r *PostModeratorIncomingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Message = NewUnionNullString()
-
-		r.Message = nil
+		return fmt.Errorf("no value specified for message")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["receivedTimestamp"]; ok {
@@ -216,9 +194,21 @@ func (r *PostModeratorIncomingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.ReceivedTimestamp = NewUnionNullLong()
+		return fmt.Errorf("no value specified for receivedTimestamp")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["requestId"]; ok {
+			return v
+		}
+		return nil
+	}()
 
-		r.ReceivedTimestamp = nil
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RequestId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for requestId")
 	}
 	return nil
 }

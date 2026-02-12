@@ -25,7 +25,6 @@ const ChatMessageDtoAvroCRC64Fingerprint = "s\xc2ѭ\x02\xe4\xb9\xf1"
 
 func NewChatMessageDto() ChatMessageDto {
 	r := ChatMessageDto{}
-	r.Messages = nil
 	return r
 }
 
@@ -66,7 +65,7 @@ func (r ChatMessageDto) Serialize(w io.Writer) error {
 }
 
 func (r ChatMessageDto) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"messages\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.ChatMessageDto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"messages\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.ChatMessageDto\",\"type\":\"record\"}"
 }
 
 func (r ChatMessageDto) SchemaName() string {
@@ -94,9 +93,6 @@ func (r *ChatMessageDto) Get(i int) types.Field {
 
 func (r *ChatMessageDto) SetDefault(i int) {
 	switch i {
-	case 0:
-		r.Messages = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -148,9 +144,7 @@ func (r *ChatMessageDto) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.Messages = NewUnionNullArrayMessage()
-
-		r.Messages = nil
+		return fmt.Errorf("no value specified for messages")
 	}
 	return nil
 }
