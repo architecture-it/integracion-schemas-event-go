@@ -20,6 +20,10 @@ var _ = fmt.Printf
 type SocialMediaOutgoingMessage struct {
 	ConversationId string `json:"ConversationId"`
 
+	Platform string `json:"Platform"`
+
+	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
+
 	AssistantResponse *UnionNullString `json:"assistantResponse"`
 
 	IncidentsCreated *UnionNullArrayCasoInfo `json:"incidentsCreated"`
@@ -28,18 +32,19 @@ type SocialMediaOutgoingMessage struct {
 
 	TransferToOperator bool `json:"transferToOperator"`
 
-	Platform string `json:"Platform"`
-
-	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
-
 	RequestId *UnionNullString `json:"requestId"`
 }
 
-const SocialMediaOutgoingMessageAvroCRC64Fingerprint = "%m\xcc\x0eҺ2c"
+const SocialMediaOutgoingMessageAvroCRC64Fingerprint = "\xcb\"\xf7I\xe9\x9c?\xde"
 
 func NewSocialMediaOutgoingMessage() SocialMediaOutgoingMessage {
 	r := SocialMediaOutgoingMessage{}
+	r.ReceivedTimestamp = nil
+	r.AssistantResponse = nil
+	r.IncidentsCreated = nil
+	r.IncidentsConsulted = nil
 	r.TransferToOperator = false
+	r.RequestId = nil
 	return r
 }
 
@@ -72,6 +77,14 @@ func writeSocialMediaOutgoingMessage(r SocialMediaOutgoingMessage, w io.Writer) 
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Platform, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullLong(r.ReceivedTimestamp, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.AssistantResponse, w)
 	if err != nil {
 		return err
@@ -88,14 +101,6 @@ func writeSocialMediaOutgoingMessage(r SocialMediaOutgoingMessage, w io.Writer) 
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Platform, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullLong(r.ReceivedTimestamp, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.RequestId, w)
 	if err != nil {
 		return err
@@ -108,7 +113,7 @@ func (r SocialMediaOutgoingMessage) Serialize(w io.Writer) error {
 }
 
 func (r SocialMediaOutgoingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"ConversationId\",\"type\":\"string\"},{\"name\":\"assistantResponse\",\"type\":[\"null\",\"string\"]},{\"name\":\"incidentsCreated\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"incidentsConsulted\",\"type\":[\"null\",{\"items\":\"Andreani.IAContacto.Events.Record.CasoInfo\",\"type\":\"array\"}]},{\"default\":false,\"name\":\"transferToOperator\",\"type\":\"boolean\"},{\"name\":\"Platform\",\"type\":\"string\"},{\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.SocialMediaOutgoingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ConversationId\",\"type\":\"string\"},{\"name\":\"Platform\",\"type\":\"string\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"assistantResponse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"incidentsCreated\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"incidentsConsulted\",\"type\":[\"null\",{\"items\":\"Andreani.IAContacto.Events.Record.CasoInfo\",\"type\":\"array\"}]},{\"default\":false,\"name\":\"transferToOperator\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.SocialMediaOutgoingMessage\",\"type\":\"record\"}"
 }
 
 func (r SocialMediaOutgoingMessage) SchemaName() string {
@@ -132,31 +137,31 @@ func (r *SocialMediaOutgoingMessage) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.AssistantResponse = NewUnionNullString()
-
-		return r.AssistantResponse
-	case 2:
-		r.IncidentsCreated = NewUnionNullArrayCasoInfo()
-
-		return r.IncidentsCreated
-	case 3:
-		r.IncidentsConsulted = NewUnionNullArrayCasoInfo()
-
-		return r.IncidentsConsulted
-	case 4:
-		w := types.Boolean{Target: &r.TransferToOperator}
-
-		return w
-
-	case 5:
 		w := types.String{Target: &r.Platform}
 
 		return w
 
-	case 6:
+	case 2:
 		r.ReceivedTimestamp = NewUnionNullLong()
 
 		return r.ReceivedTimestamp
+	case 3:
+		r.AssistantResponse = NewUnionNullString()
+
+		return r.AssistantResponse
+	case 4:
+		r.IncidentsCreated = NewUnionNullArrayCasoInfo()
+
+		return r.IncidentsCreated
+	case 5:
+		r.IncidentsConsulted = NewUnionNullArrayCasoInfo()
+
+		return r.IncidentsConsulted
+	case 6:
+		w := types.Boolean{Target: &r.TransferToOperator}
+
+		return w
+
 	case 7:
 		r.RequestId = NewUnionNullString()
 
@@ -167,8 +172,23 @@ func (r *SocialMediaOutgoingMessage) Get(i int) types.Field {
 
 func (r *SocialMediaOutgoingMessage) SetDefault(i int) {
 	switch i {
+	case 2:
+		r.ReceivedTimestamp = nil
+		return
+	case 3:
+		r.AssistantResponse = nil
+		return
 	case 4:
+		r.IncidentsCreated = nil
+		return
+	case 5:
+		r.IncidentsConsulted = nil
+		return
+	case 6:
 		r.TransferToOperator = false
+		return
+	case 7:
+		r.RequestId = nil
 		return
 	}
 	panic("Unknown field index")
@@ -176,17 +196,17 @@ func (r *SocialMediaOutgoingMessage) SetDefault(i int) {
 
 func (r *SocialMediaOutgoingMessage) NullField(i int) {
 	switch i {
-	case 1:
-		r.AssistantResponse = nil
-		return
 	case 2:
-		r.IncidentsCreated = nil
+		r.ReceivedTimestamp = nil
 		return
 	case 3:
-		r.IncidentsConsulted = nil
+		r.AssistantResponse = nil
 		return
-	case 6:
-		r.ReceivedTimestamp = nil
+	case 4:
+		r.IncidentsCreated = nil
+		return
+	case 5:
+		r.IncidentsConsulted = nil
 		return
 	case 7:
 		r.RequestId = nil
@@ -211,6 +231,14 @@ func (r SocialMediaOutgoingMessage) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["Platform"], err = json.Marshal(r.Platform)
+	if err != nil {
+		return nil, err
+	}
+	output["receivedTimestamp"], err = json.Marshal(r.ReceivedTimestamp)
+	if err != nil {
+		return nil, err
+	}
 	output["assistantResponse"], err = json.Marshal(r.AssistantResponse)
 	if err != nil {
 		return nil, err
@@ -224,14 +252,6 @@ func (r SocialMediaOutgoingMessage) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["transferToOperator"], err = json.Marshal(r.TransferToOperator)
-	if err != nil {
-		return nil, err
-	}
-	output["Platform"], err = json.Marshal(r.Platform)
-	if err != nil {
-		return nil, err
-	}
-	output["receivedTimestamp"], err = json.Marshal(r.ReceivedTimestamp)
 	if err != nil {
 		return nil, err
 	}
@@ -264,62 +284,6 @@ func (r *SocialMediaOutgoingMessage) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for ConversationId")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["assistantResponse"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AssistantResponse); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for assistantResponse")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["incidentsCreated"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IncidentsCreated); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for incidentsCreated")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["incidentsConsulted"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IncidentsConsulted); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for incidentsConsulted")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["transferToOperator"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TransferToOperator); err != nil {
-			return err
-		}
-	} else {
-		r.TransferToOperator = false
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["Platform"]; ok {
 			return v
 		}
@@ -345,7 +309,71 @@ func (r *SocialMediaOutgoingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for receivedTimestamp")
+		r.ReceivedTimestamp = NewUnionNullLong()
+
+		r.ReceivedTimestamp = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["assistantResponse"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AssistantResponse); err != nil {
+			return err
+		}
+	} else {
+		r.AssistantResponse = NewUnionNullString()
+
+		r.AssistantResponse = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["incidentsCreated"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IncidentsCreated); err != nil {
+			return err
+		}
+	} else {
+		r.IncidentsCreated = NewUnionNullArrayCasoInfo()
+
+		r.IncidentsCreated = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["incidentsConsulted"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IncidentsConsulted); err != nil {
+			return err
+		}
+	} else {
+		r.IncidentsConsulted = NewUnionNullArrayCasoInfo()
+
+		r.IncidentsConsulted = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["transferToOperator"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TransferToOperator); err != nil {
+			return err
+		}
+	} else {
+		r.TransferToOperator = false
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["requestId"]; ok {
@@ -359,7 +387,9 @@ func (r *SocialMediaOutgoingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for requestId")
+		r.RequestId = NewUnionNullString()
+
+		r.RequestId = nil
 	}
 	return nil
 }

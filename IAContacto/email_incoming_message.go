@@ -36,6 +36,8 @@ const EmailIncomingMessageAvroCRC64Fingerprint = "^\xa5T>\x14\xb9C\xe2"
 func NewEmailIncomingMessage() EmailIncomingMessage {
 	r := EmailIncomingMessage{}
 	r.HasAttachment = false
+	r.ReceivedTimestamp = nil
+	r.RequestId = nil
 	return r
 }
 
@@ -96,7 +98,7 @@ func (r EmailIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r EmailIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"hasAttachment\",\"type\":\"boolean\"},{\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"hasAttachment\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r EmailIncomingMessage) SchemaName() string {
@@ -148,6 +150,12 @@ func (r *EmailIncomingMessage) SetDefault(i int) {
 	switch i {
 	case 3:
 		r.HasAttachment = false
+		return
+	case 4:
+		r.ReceivedTimestamp = nil
+		return
+	case 5:
+		r.RequestId = nil
 		return
 	}
 	panic("Unknown field index")
@@ -285,7 +293,9 @@ func (r *EmailIncomingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for receivedTimestamp")
+		r.ReceivedTimestamp = NewUnionNullLong()
+
+		r.ReceivedTimestamp = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["requestId"]; ok {
@@ -299,7 +309,9 @@ func (r *EmailIncomingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for requestId")
+		r.RequestId = NewUnionNullString()
+
+		r.RequestId = nil
 	}
 	return nil
 }

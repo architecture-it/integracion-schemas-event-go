@@ -41,6 +41,14 @@ const EmailOutgoingMessageAvroCRC64Fingerprint = "=\x8b\xf4\x0e~\xac\xa33"
 
 func NewEmailOutgoingMessage() EmailOutgoingMessage {
 	r := EmailOutgoingMessage{}
+	r.ReceivedTimestamp = nil
+	r.Asunto = nil
+	r.Body = nil
+	r.AssistantResponse = nil
+	r.IncidentsCreated = nil
+	r.IncidentsConsulted = nil
+	r.ChatMessages = nil
+	r.RequestId = nil
 	return r
 }
 
@@ -113,7 +121,7 @@ func (r EmailOutgoingMessage) Serialize(w io.Writer) error {
 }
 
 func (r EmailOutgoingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"name\":\"assistantResponse\",\"type\":[\"null\",\"string\"]},{\"name\":\"incidentsCreated\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"incidentsConsulted\",\"type\":[\"null\",{\"items\":\"Andreani.IAContacto.Events.Record.CasoInfo\",\"type\":\"array\"}]},{\"name\":\"chatMessages\",\"type\":[\"null\",{\"fields\":[{\"name\":\"messages\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ChatMessageDto\",\"type\":\"record\"}]},{\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailOutgoingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"assistantResponse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"incidentsCreated\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"incidentsConsulted\",\"type\":[\"null\",{\"items\":\"Andreani.IAContacto.Events.Record.CasoInfo\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"chatMessages\",\"type\":[\"null\",{\"fields\":[{\"name\":\"messages\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Message\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ChatMessageDto\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailOutgoingMessage\",\"type\":\"record\"}"
 }
 
 func (r EmailOutgoingMessage) SchemaName() string {
@@ -174,6 +182,30 @@ func (r *EmailOutgoingMessage) Get(i int) types.Field {
 
 func (r *EmailOutgoingMessage) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.ReceivedTimestamp = nil
+		return
+	case 2:
+		r.Asunto = nil
+		return
+	case 3:
+		r.Body = nil
+		return
+	case 4:
+		r.AssistantResponse = nil
+		return
+	case 5:
+		r.IncidentsCreated = nil
+		return
+	case 6:
+		r.IncidentsConsulted = nil
+		return
+	case 7:
+		r.ChatMessages = nil
+		return
+	case 8:
+		r.RequestId = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -292,7 +324,9 @@ func (r *EmailOutgoingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for receivedTimestamp")
+		r.ReceivedTimestamp = NewUnionNullLong()
+
+		r.ReceivedTimestamp = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["asunto"]; ok {
@@ -306,7 +340,9 @@ func (r *EmailOutgoingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for asunto")
+		r.Asunto = NewUnionNullString()
+
+		r.Asunto = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["body"]; ok {
@@ -320,7 +356,9 @@ func (r *EmailOutgoingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for body")
+		r.Body = NewUnionNullString()
+
+		r.Body = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["assistantResponse"]; ok {
@@ -334,7 +372,9 @@ func (r *EmailOutgoingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for assistantResponse")
+		r.AssistantResponse = NewUnionNullString()
+
+		r.AssistantResponse = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["incidentsCreated"]; ok {
@@ -348,7 +388,9 @@ func (r *EmailOutgoingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for incidentsCreated")
+		r.IncidentsCreated = NewUnionNullArrayCasoInfo()
+
+		r.IncidentsCreated = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["incidentsConsulted"]; ok {
@@ -362,7 +404,9 @@ func (r *EmailOutgoingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for incidentsConsulted")
+		r.IncidentsConsulted = NewUnionNullArrayCasoInfo()
+
+		r.IncidentsConsulted = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["chatMessages"]; ok {
@@ -376,7 +420,9 @@ func (r *EmailOutgoingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for chatMessages")
+		r.ChatMessages = NewUnionNullChatMessageDto()
+
+		r.ChatMessages = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["requestId"]; ok {
@@ -390,7 +436,9 @@ func (r *EmailOutgoingMessage) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for requestId")
+		r.RequestId = NewUnionNullString()
+
+		r.RequestId = nil
 	}
 	return nil
 }
