@@ -27,9 +27,11 @@ type ResultByPolicy struct {
 	TotalDeclaredValue float64 `json:"TotalDeclaredValue"`
 
 	SecurityRequierements []ResultSecurityRequirement `json:"SecurityRequierements"`
+
+	PolicyExceeded bool `json:"PolicyExceeded"`
 }
 
-const ResultByPolicyAvroCRC64Fingerprint = "|\x05\xf2TP\x11\xd9\x04"
+const ResultByPolicyAvroCRC64Fingerprint = "\xf5罅\b\xf0\xfdR"
 
 func NewResultByPolicy() ResultByPolicy {
 	r := ResultByPolicy{}
@@ -39,6 +41,7 @@ func NewResultByPolicy() ResultByPolicy {
 
 	r.SecurityRequierements = make([]ResultSecurityRequirement, 0)
 
+	r.PolicyExceeded = false
 	return r
 }
 
@@ -87,6 +90,10 @@ func writeResultByPolicy(r ResultByPolicy, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteBool(r.PolicyExceeded, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -95,7 +102,7 @@ func (r ResultByPolicy) Serialize(w io.Writer) error {
 }
 
 func (r ResultByPolicy) Schema() string {
-	return "{\"fields\":[{\"name\":\"PolicyGrouper\",\"type\":\"string\"},{\"name\":\"Contracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"Shipments\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"TotalDeclaredValue\",\"type\":\"double\"},{\"name\":\"SecurityRequierements\",\"type\":{\"items\":{\"fields\":[{\"name\":\"SecurityRequirementType\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"FullJourney\",\"type\":\"boolean\"},{\"name\":\"From\",\"type\":\"double\"},{\"name\":\"To\",\"type\":\"double\"},{\"name\":\"Quantity\",\"type\":\"int\"}],\"name\":\"ResultSecurityRequirement\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.DMSInsurancePolicy.Events.Record.ResultByPolicy\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PolicyGrouper\",\"type\":\"string\"},{\"name\":\"Contracts\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"Shipments\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"TotalDeclaredValue\",\"type\":\"double\"},{\"name\":\"SecurityRequierements\",\"type\":{\"items\":{\"fields\":[{\"name\":\"SecurityRequirementType\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":\"string\"},{\"name\":\"FullJourney\",\"type\":\"boolean\"},{\"name\":\"From\",\"type\":\"double\"},{\"name\":\"To\",\"type\":\"double\"},{\"name\":\"Quantity\",\"type\":\"int\"}],\"name\":\"ResultSecurityRequirement\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":false,\"name\":\"PolicyExceeded\",\"type\":\"boolean\"}],\"name\":\"Andreani.DMSInsurancePolicy.Events.Record.ResultByPolicy\",\"type\":\"record\"}"
 }
 
 func (r ResultByPolicy) SchemaName() string {
@@ -144,12 +151,20 @@ func (r *ResultByPolicy) Get(i int) types.Field {
 
 		return w
 
+	case 5:
+		w := types.Boolean{Target: &r.PolicyExceeded}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
 
 func (r *ResultByPolicy) SetDefault(i int) {
 	switch i {
+	case 5:
+		r.PolicyExceeded = false
+		return
 	}
 	panic("Unknown field index")
 }
@@ -189,6 +204,10 @@ func (r ResultByPolicy) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["SecurityRequierements"], err = json.Marshal(r.SecurityRequierements)
+	if err != nil {
+		return nil, err
+	}
+	output["PolicyExceeded"], err = json.Marshal(r.PolicyExceeded)
 	if err != nil {
 		return nil, err
 	}
@@ -271,6 +290,20 @@ func (r *ResultByPolicy) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for SecurityRequierements")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["PolicyExceeded"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PolicyExceeded); err != nil {
+			return err
+		}
+	} else {
+		r.PolicyExceeded = false
 	}
 	return nil
 }
