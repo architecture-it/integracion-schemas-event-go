@@ -21,7 +21,7 @@ type ConfirmarPago struct {
 	PedidosBatch PedidoBatch `json:"pedidosBatch"`
 }
 
-const ConfirmarPagoAvroCRC64Fingerprint = "\xf4\n\xf7\xde^\xd6\x1b]"
+const ConfirmarPagoAvroCRC64Fingerprint = "\xbc\x92\f\xdcZ\xbf\x9d\xc5"
 
 func NewConfirmarPago() ConfirmarPago {
 	r := ConfirmarPago{}
@@ -67,7 +67,7 @@ func (r ConfirmarPago) Serialize(w io.Writer) error {
 }
 
 func (r ConfirmarPago) Schema() string {
-	return "{\"fields\":[{\"name\":\"pedidosBatch\",\"type\":{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importesPorPedido\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoImportesPago\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"PedidoBatch\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ConfirmarPago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"pedidosBatch\",\"type\":{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importesPorPedido\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCupon\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoImportesPago\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"PedidoBatch\",\"type\":\"record\"}}],\"name\":\"Andreani.WarehousePedido.Events.Record.ConfirmarPago\",\"type\":\"record\"}"
 }
 
 func (r ConfirmarPago) SchemaName() string {

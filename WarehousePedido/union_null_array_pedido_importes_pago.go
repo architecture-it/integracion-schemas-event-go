@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayPedidoImportesPagoFromSchema(r io.Reader, schema s
 }
 
 func (r *UnionNullArrayPedidoImportesPago) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoImportesPago\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCupon\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoImportesPago\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayPedidoImportesPago) SetBoolean(v bool)   { panic("Unsupported operation") }

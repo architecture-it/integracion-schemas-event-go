@@ -29,7 +29,7 @@ type PedidoBatch struct {
 	ImportesPorPedido *UnionNullArrayPedidoImportesPago `json:"importesPorPedido"`
 }
 
-const PedidoBatchAvroCRC64Fingerprint = "\xcbl\xe2\xcc\xc7\xc1\x15\x92"
+const PedidoBatchAvroCRC64Fingerprint = "@\xa8&\xa4O_\x15o"
 
 func NewPedidoBatch() PedidoBatch {
 	r := PedidoBatch{}
@@ -90,7 +90,7 @@ func (r PedidoBatch) Serialize(w io.Writer) error {
 }
 
 func (r PedidoBatch) Schema() string {
-	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importesPorPedido\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoImportesPago\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importesPorPedido\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCupon\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoImportesPago\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
 }
 
 func (r PedidoBatch) SchemaName() string {

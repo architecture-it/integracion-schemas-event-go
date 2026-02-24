@@ -26,12 +26,21 @@ type PedidoImportesPago struct {
 	ImporteEnvioSinIva *UnionNullString `json:"importeEnvioSinIva"`
 
 	ImporteIva *UnionNullString `json:"importeIva"`
+
+	DescuentoTotal *UnionNullString `json:"descuentoTotal"`
+
+	ImporteFinal *UnionNullString `json:"importeFinal"`
+
+	CodigoCupon *UnionNullString `json:"codigoCupon"`
 }
 
-const PedidoImportesPagoAvroCRC64Fingerprint = "\x01r\x04\x913\xbf\xed\x02"
+const PedidoImportesPagoAvroCRC64Fingerprint = "\x9b\xc4Q&\xdc`\xd7\xe6"
 
 func NewPedidoImportesPago() PedidoImportesPago {
 	r := PedidoImportesPago{}
+	r.DescuentoTotal = nil
+	r.ImporteFinal = nil
+	r.CodigoCupon = nil
 	return r
 }
 
@@ -76,6 +85,18 @@ func writePedidoImportesPago(r PedidoImportesPago, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.DescuentoTotal, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ImporteFinal, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CodigoCupon, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -84,7 +105,7 @@ func (r PedidoImportesPago) Serialize(w io.Writer) error {
 }
 
 func (r PedidoImportesPago) Schema() string {
-	return "{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoImportesPago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCupon\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoImportesPago\",\"type\":\"record\"}"
 }
 
 func (r PedidoImportesPago) SchemaName() string {
@@ -119,12 +140,33 @@ func (r *PedidoImportesPago) Get(i int) types.Field {
 		r.ImporteIva = NewUnionNullString()
 
 		return r.ImporteIva
+	case 4:
+		r.DescuentoTotal = NewUnionNullString()
+
+		return r.DescuentoTotal
+	case 5:
+		r.ImporteFinal = NewUnionNullString()
+
+		return r.ImporteFinal
+	case 6:
+		r.CodigoCupon = NewUnionNullString()
+
+		return r.CodigoCupon
 	}
 	panic("Unknown field index")
 }
 
 func (r *PedidoImportesPago) SetDefault(i int) {
 	switch i {
+	case 4:
+		r.DescuentoTotal = nil
+		return
+	case 5:
+		r.ImporteFinal = nil
+		return
+	case 6:
+		r.CodigoCupon = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -139,6 +181,15 @@ func (r *PedidoImportesPago) NullField(i int) {
 		return
 	case 3:
 		r.ImporteIva = nil
+		return
+	case 4:
+		r.DescuentoTotal = nil
+		return
+	case 5:
+		r.ImporteFinal = nil
+		return
+	case 6:
+		r.CodigoCupon = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -169,6 +220,18 @@ func (r PedidoImportesPago) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["importeIva"], err = json.Marshal(r.ImporteIva)
+	if err != nil {
+		return nil, err
+	}
+	output["descuentoTotal"], err = json.Marshal(r.DescuentoTotal)
+	if err != nil {
+		return nil, err
+	}
+	output["importeFinal"], err = json.Marshal(r.ImporteFinal)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoCupon"], err = json.Marshal(r.CodigoCupon)
 	if err != nil {
 		return nil, err
 	}
@@ -237,6 +300,54 @@ func (r *PedidoImportesPago) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for importeIva")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["descuentoTotal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescuentoTotal); err != nil {
+			return err
+		}
+	} else {
+		r.DescuentoTotal = NewUnionNullString()
+
+		r.DescuentoTotal = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["importeFinal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ImporteFinal); err != nil {
+			return err
+		}
+	} else {
+		r.ImporteFinal = NewUnionNullString()
+
+		r.ImporteFinal = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoCupon"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCupon); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoCupon = NewUnionNullString()
+
+		r.CodigoCupon = nil
 	}
 	return nil
 }
