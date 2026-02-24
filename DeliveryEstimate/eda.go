@@ -22,6 +22,8 @@ type EDA struct {
 
 	Eda *UnionNullLong `json:"eda"`
 
+	Mail *UnionNullString `json:"mail"`
+
 	Sistema *UnionNullString `json:"sistema"`
 
 	CodigoDeEnvio *UnionNullString `json:"codigoDeEnvio"`
@@ -45,7 +47,7 @@ type EDA struct {
 	ComunicacionEDA *UnionNullString `json:"comunicacionEDA"`
 }
 
-const EDAAvroCRC64Fingerprint = "\xe1\xd6̓C\xd2/\r"
+const EDAAvroCRC64Fingerprint = "\xeb\xe7-\f\xda\x1b\x98\xd5"
 
 func NewEDA() EDA {
 	r := EDA{}
@@ -89,6 +91,10 @@ func writeEDA(r EDA, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullLong(r.Eda, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Mail, w)
 	if err != nil {
 		return err
 	}
@@ -144,7 +150,7 @@ func (r EDA) Serialize(w io.Writer) error {
 }
 
 func (r EDA) Schema() string {
-	return "{\"fields\":[{\"name\":\"diasHabiles\",\"type\":[\"null\",\"int\"]},{\"name\":\"eda\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"sistema\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"calculoEda\",\"type\":{\"fields\":[{\"name\":\"codigoPostalSucursalOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostalSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadSucursalOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"fechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionDescripcionI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comunicacionEDA\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.EDA\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"diasHabiles\",\"type\":[\"null\",\"int\"]},{\"name\":\"eda\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"mail\",\"type\":[\"null\",\"string\"]},{\"name\":\"sistema\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"calculoEda\",\"type\":{\"fields\":[{\"name\":\"codigoPostalSucursalOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostalSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadSucursalOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"fechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionDescripcionI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comunicacionEDA\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.EDA\",\"type\":\"record\"}"
 }
 
 func (r EDA) SchemaName() string {
@@ -171,49 +177,53 @@ func (r *EDA) Get(i int) types.Field {
 
 		return r.Eda
 	case 2:
+		r.Mail = NewUnionNullString()
+
+		return r.Mail
+	case 3:
 		r.Sistema = NewUnionNullString()
 
 		return r.Sistema
-	case 3:
+	case 4:
 		r.CodigoDeEnvio = NewUnionNullString()
 
 		return r.CodigoDeEnvio
-	case 4:
+	case 5:
 		r.CodigoDeContratoInterno = NewUnionNullString()
 
 		return r.CodigoDeContratoInterno
-	case 5:
+	case 6:
 		r.CalculoEda = NewCalculoEda()
 
 		w := types.Record{Target: &r.CalculoEda}
 
 		return w
 
-	case 6:
+	case 7:
 		r.Cuando = NewUnionNullLong()
 
 		return r.Cuando
-	case 7:
+	case 8:
 		r.FechaAlta = NewUnionNullLong()
 
 		return r.FechaAlta
-	case 8:
+	case 9:
 		r.Estimacion = NewUnionNullString()
 
 		return r.Estimacion
-	case 9:
+	case 10:
 		r.EstimacionDescripcion = NewUnionNullString()
 
 		return r.EstimacionDescripcion
-	case 10:
+	case 11:
 		r.EstimacionI = NewUnionNullString()
 
 		return r.EstimacionI
-	case 11:
+	case 12:
 		r.EstimacionDescripcionI = NewUnionNullString()
 
 		return r.EstimacionDescripcionI
-	case 12:
+	case 13:
 		r.ComunicacionEDA = NewUnionNullString()
 
 		return r.ComunicacionEDA
@@ -223,19 +233,19 @@ func (r *EDA) Get(i int) types.Field {
 
 func (r *EDA) SetDefault(i int) {
 	switch i {
-	case 8:
+	case 9:
 		r.Estimacion = nil
 		return
-	case 9:
+	case 10:
 		r.EstimacionDescripcion = nil
 		return
-	case 10:
+	case 11:
 		r.EstimacionI = nil
 		return
-	case 11:
+	case 12:
 		r.EstimacionDescripcionI = nil
 		return
-	case 12:
+	case 13:
 		r.ComunicacionEDA = nil
 		return
 	}
@@ -251,33 +261,36 @@ func (r *EDA) NullField(i int) {
 		r.Eda = nil
 		return
 	case 2:
-		r.Sistema = nil
+		r.Mail = nil
 		return
 	case 3:
-		r.CodigoDeEnvio = nil
+		r.Sistema = nil
 		return
 	case 4:
+		r.CodigoDeEnvio = nil
+		return
+	case 5:
 		r.CodigoDeContratoInterno = nil
 		return
-	case 6:
+	case 7:
 		r.Cuando = nil
 		return
-	case 7:
+	case 8:
 		r.FechaAlta = nil
 		return
-	case 8:
+	case 9:
 		r.Estimacion = nil
 		return
-	case 9:
+	case 10:
 		r.EstimacionDescripcion = nil
 		return
-	case 10:
+	case 11:
 		r.EstimacionI = nil
 		return
-	case 11:
+	case 12:
 		r.EstimacionDescripcionI = nil
 		return
-	case 12:
+	case 13:
 		r.ComunicacionEDA = nil
 		return
 	}
@@ -301,6 +314,10 @@ func (r EDA) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["eda"], err = json.Marshal(r.Eda)
+	if err != nil {
+		return nil, err
+	}
+	output["mail"], err = json.Marshal(r.Mail)
 	if err != nil {
 		return nil, err
 	}
@@ -385,6 +402,20 @@ func (r *EDA) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for eda")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["mail"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Mail); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for mail")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["sistema"]; ok {
