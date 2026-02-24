@@ -27,20 +27,20 @@ type PedidoImportesPago struct {
 
 	ImporteIva *UnionNullString `json:"importeIva"`
 
-	DescuentoTotal *UnionNullString `json:"descuentoTotal"`
-
 	ImporteFinal *UnionNullString `json:"importeFinal"`
 
-	CodigoCupon *UnionNullString `json:"codigoCupon"`
+	DescuentoTotal *UnionNullString `json:"descuentoTotal"`
 }
 
-const PedidoImportesPagoAvroCRC64Fingerprint = "\x9b\xc4Q&\xdc`\xd7\xe6"
+const PedidoImportesPagoAvroCRC64Fingerprint = "\xfb)\x023hҭ\xbf"
 
 func NewPedidoImportesPago() PedidoImportesPago {
 	r := PedidoImportesPago{}
-	r.DescuentoTotal = nil
+	r.ImporteDelSeguro = nil
+	r.ImporteEnvioSinIva = nil
+	r.ImporteIva = nil
 	r.ImporteFinal = nil
-	r.CodigoCupon = nil
+	r.DescuentoTotal = nil
 	return r
 }
 
@@ -85,15 +85,11 @@ func writePedidoImportesPago(r PedidoImportesPago, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.DescuentoTotal, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.ImporteFinal, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.CodigoCupon, w)
+	err = writeUnionNullString(r.DescuentoTotal, w)
 	if err != nil {
 		return err
 	}
@@ -105,7 +101,7 @@ func (r PedidoImportesPago) Serialize(w io.Writer) error {
 }
 
 func (r PedidoImportesPago) Schema() string {
-	return "{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCupon\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoImportesPago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"default\":null,\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoImportesPago\",\"type\":\"record\"}"
 }
 
 func (r PedidoImportesPago) SchemaName() string {
@@ -141,31 +137,33 @@ func (r *PedidoImportesPago) Get(i int) types.Field {
 
 		return r.ImporteIva
 	case 4:
-		r.DescuentoTotal = NewUnionNullString()
-
-		return r.DescuentoTotal
-	case 5:
 		r.ImporteFinal = NewUnionNullString()
 
 		return r.ImporteFinal
-	case 6:
-		r.CodigoCupon = NewUnionNullString()
+	case 5:
+		r.DescuentoTotal = NewUnionNullString()
 
-		return r.CodigoCupon
+		return r.DescuentoTotal
 	}
 	panic("Unknown field index")
 }
 
 func (r *PedidoImportesPago) SetDefault(i int) {
 	switch i {
-	case 4:
-		r.DescuentoTotal = nil
+	case 1:
+		r.ImporteDelSeguro = nil
 		return
-	case 5:
+	case 2:
+		r.ImporteEnvioSinIva = nil
+		return
+	case 3:
+		r.ImporteIva = nil
+		return
+	case 4:
 		r.ImporteFinal = nil
 		return
-	case 6:
-		r.CodigoCupon = nil
+	case 5:
+		r.DescuentoTotal = nil
 		return
 	}
 	panic("Unknown field index")
@@ -183,13 +181,10 @@ func (r *PedidoImportesPago) NullField(i int) {
 		r.ImporteIva = nil
 		return
 	case 4:
-		r.DescuentoTotal = nil
-		return
-	case 5:
 		r.ImporteFinal = nil
 		return
-	case 6:
-		r.CodigoCupon = nil
+	case 5:
+		r.DescuentoTotal = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -223,15 +218,11 @@ func (r PedidoImportesPago) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["descuentoTotal"], err = json.Marshal(r.DescuentoTotal)
-	if err != nil {
-		return nil, err
-	}
 	output["importeFinal"], err = json.Marshal(r.ImporteFinal)
 	if err != nil {
 		return nil, err
 	}
-	output["codigoCupon"], err = json.Marshal(r.CodigoCupon)
+	output["descuentoTotal"], err = json.Marshal(r.DescuentoTotal)
 	if err != nil {
 		return nil, err
 	}
@@ -271,7 +262,9 @@ func (r *PedidoImportesPago) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for importeDelSeguro")
+		r.ImporteDelSeguro = NewUnionNullString()
+
+		r.ImporteDelSeguro = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["importeEnvioSinIva"]; ok {
@@ -285,7 +278,9 @@ func (r *PedidoImportesPago) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for importeEnvioSinIva")
+		r.ImporteEnvioSinIva = NewUnionNullString()
+
+		r.ImporteEnvioSinIva = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["importeIva"]; ok {
@@ -299,23 +294,9 @@ func (r *PedidoImportesPago) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for importeIva")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["descuentoTotal"]; ok {
-			return v
-		}
-		return nil
-	}()
+		r.ImporteIva = NewUnionNullString()
 
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.DescuentoTotal); err != nil {
-			return err
-		}
-	} else {
-		r.DescuentoTotal = NewUnionNullString()
-
-		r.DescuentoTotal = nil
+		r.ImporteIva = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["importeFinal"]; ok {
@@ -334,20 +315,20 @@ func (r *PedidoImportesPago) UnmarshalJSON(data []byte) error {
 		r.ImporteFinal = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigoCupon"]; ok {
+		if v, ok := fields["descuentoTotal"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoCupon); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescuentoTotal); err != nil {
 			return err
 		}
 	} else {
-		r.CodigoCupon = NewUnionNullString()
+		r.DescuentoTotal = NewUnionNullString()
 
-		r.CodigoCupon = nil
+		r.DescuentoTotal = nil
 	}
 	return nil
 }

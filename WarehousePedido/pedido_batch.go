@@ -24,15 +24,19 @@ type PedidoBatch struct {
 
 	ProveedorPago string `json:"proveedorPago"`
 
+	CodigoCupon *UnionNullString `json:"codigoCupon"`
+
 	NombreFantasia *UnionNullString `json:"nombreFantasia"`
 
 	ImportesPorPedido *UnionNullArrayPedidoImportesPago `json:"importesPorPedido"`
 }
 
-const PedidoBatchAvroCRC64Fingerprint = "@\xa8&\xa4O_\x15o"
+const PedidoBatchAvroCRC64Fingerprint = "U\xd3\xf4\x85{\xab&\xc6"
 
 func NewPedidoBatch() PedidoBatch {
 	r := PedidoBatch{}
+	r.CodigoCupon = nil
+	r.NombreFantasia = nil
 	r.ImportesPorPedido = nil
 	return r
 }
@@ -74,6 +78,10 @@ func writePedidoBatch(r PedidoBatch, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.CodigoCupon, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.NombreFantasia, w)
 	if err != nil {
 		return err
@@ -90,7 +98,7 @@ func (r PedidoBatch) Serialize(w io.Writer) error {
 }
 
 func (r PedidoBatch) Schema() string {
-	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importesPorPedido\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCupon\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoImportesPago\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoCupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importesPorPedido\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"default\":null,\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoImportesPago\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
 }
 
 func (r PedidoBatch) SchemaName() string {
@@ -124,10 +132,14 @@ func (r *PedidoBatch) Get(i int) types.Field {
 		return w
 
 	case 3:
+		r.CodigoCupon = NewUnionNullString()
+
+		return r.CodigoCupon
+	case 4:
 		r.NombreFantasia = NewUnionNullString()
 
 		return r.NombreFantasia
-	case 4:
+	case 5:
 		r.ImportesPorPedido = NewUnionNullArrayPedidoImportesPago()
 
 		return r.ImportesPorPedido
@@ -137,7 +149,13 @@ func (r *PedidoBatch) Get(i int) types.Field {
 
 func (r *PedidoBatch) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.CodigoCupon = nil
+		return
 	case 4:
+		r.NombreFantasia = nil
+		return
+	case 5:
 		r.ImportesPorPedido = nil
 		return
 	}
@@ -147,9 +165,12 @@ func (r *PedidoBatch) SetDefault(i int) {
 func (r *PedidoBatch) NullField(i int) {
 	switch i {
 	case 3:
-		r.NombreFantasia = nil
+		r.CodigoCupon = nil
 		return
 	case 4:
+		r.NombreFantasia = nil
+		return
+	case 5:
 		r.ImportesPorPedido = nil
 		return
 	}
@@ -177,6 +198,10 @@ func (r PedidoBatch) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["proveedorPago"], err = json.Marshal(r.ProveedorPago)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoCupon"], err = json.Marshal(r.CodigoCupon)
 	if err != nil {
 		return nil, err
 	}
@@ -241,6 +266,22 @@ func (r *PedidoBatch) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for proveedorPago")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["codigoCupon"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoCupon); err != nil {
+			return err
+		}
+	} else {
+		r.CodigoCupon = NewUnionNullString()
+
+		r.CodigoCupon = nil
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["nombreFantasia"]; ok {
 			return v
 		}
@@ -252,7 +293,9 @@ func (r *PedidoBatch) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for nombreFantasia")
+		r.NombreFantasia = NewUnionNullString()
+
+		r.NombreFantasia = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["importesPorPedido"]; ok {
