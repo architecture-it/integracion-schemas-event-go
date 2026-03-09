@@ -25,7 +25,7 @@ type Observation struct {
 	Tags []Tag `json:"tags"`
 }
 
-const ObservationAvroCRC64Fingerprint = "\xfd\xc2y\xa7.\fs*"
+const ObservationAvroCRC64Fingerprint = "\xb3\x06\xffڽ:p\r"
 
 func NewObservation() Observation {
 	r := Observation{}
@@ -79,11 +79,11 @@ func (r Observation) Serialize(w io.Writer) error {
 }
 
 func (r Observation) Schema() string {
-	return "{\"fields\":[{\"name\":\"command\",\"type\":\"string\"},{\"name\":\"containerId\",\"type\":\"string\"},{\"name\":\"tags\",\"type\":{\"items\":{\"fields\":[{\"name\":\"schemeId\",\"type\":\"string\"},{\"name\":\"epc\",\"type\":\"string\"},{\"default\":null,\"name\":\"packLevel\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"batch\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"expirationDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Tag\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.SCE.Shipping.Events.Record.Observation\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"command\",\"type\":\"string\"},{\"name\":\"containerId\",\"type\":\"string\"},{\"name\":\"tags\",\"type\":{\"items\":{\"fields\":[{\"name\":\"schemeId\",\"type\":\"string\"},{\"name\":\"epc\",\"type\":\"string\"},{\"default\":null,\"name\":\"packLevel\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"batch\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"expirationDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Tag\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.SCE.Shipping.Events.ShippingASNCommon.Observation\",\"type\":\"record\"}"
 }
 
 func (r Observation) SchemaName() string {
-	return "Andreani.SCE.Shipping.Events.Record.Observation"
+	return "Andreani.SCE.Shipping.Events.ShippingASNCommon.Observation"
 }
 
 func (_ Observation) SetBoolean(v bool)    { panic("Unsupported operation") }

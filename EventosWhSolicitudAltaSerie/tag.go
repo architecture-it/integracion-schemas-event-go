@@ -33,7 +33,7 @@ type Tag struct {
 	Serie *UnionNullString `json:"serie"`
 }
 
-const TagAvroCRC64Fingerprint = "\x87\xaf\xb53Q\xa2\xd6F"
+const TagAvroCRC64Fingerprint = "(\xb5\xc1\xccǨ\xe2\xd1"
 
 func NewTag() Tag {
 	r := Tag{}
@@ -106,11 +106,11 @@ func (r Tag) Serialize(w io.Writer) error {
 }
 
 func (r Tag) Schema() string {
-	return "{\"fields\":[{\"name\":\"schemeId\",\"type\":\"string\"},{\"name\":\"epc\",\"type\":\"string\"},{\"default\":null,\"name\":\"packLevel\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"batch\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"expirationDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SCE.Shipping.Events.Record.Tag\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"schemeId\",\"type\":\"string\"},{\"name\":\"epc\",\"type\":\"string\"},{\"default\":null,\"name\":\"packLevel\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"batch\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"expirationDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SCE.Shipping.Events.ShippingASNCommon.Tag\",\"type\":\"record\"}"
 }
 
 func (r Tag) SchemaName() string {
-	return "Andreani.SCE.Shipping.Events.Record.Tag"
+	return "Andreani.SCE.Shipping.Events.ShippingASNCommon.Tag"
 }
 
 func (_ Tag) SetBoolean(v bool)    { panic("Unsupported operation") }

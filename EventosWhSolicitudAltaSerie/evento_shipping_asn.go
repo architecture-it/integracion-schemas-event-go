@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type EventoShippingASN struct {
+	Identificacion Identificacion `json:"Identificacion"`
+
 	Asn string `json:"asn"`
 
 	TransactionId string `json:"transactionId"`
@@ -35,10 +37,12 @@ type EventoShippingASN struct {
 	Observations []Observation `json:"observations"`
 }
 
-const EventoShippingASNAvroCRC64Fingerprint = "\x8e\x12\x81\xf7Ĉ\xe1e"
+const EventoShippingASNAvroCRC64Fingerprint = "\xc0\xd0\x11zfRǁ"
 
 func NewEventoShippingASN() EventoShippingASN {
 	r := EventoShippingASN{}
+	r.Identificacion = NewIdentificacion()
+
 	r.Observations = make([]Observation, 0)
 
 	return r
@@ -69,6 +73,10 @@ func DeserializeEventoShippingASNFromSchema(r io.Reader, schema string) (EventoS
 
 func writeEventoShippingASN(r EventoShippingASN, w io.Writer) error {
 	var err error
+	err = writeIdentificacion(r.Identificacion, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Asn, w)
 	if err != nil {
 		return err
@@ -109,7 +117,7 @@ func (r EventoShippingASN) Serialize(w io.Writer) error {
 }
 
 func (r EventoShippingASN) Schema() string {
-	return "{\"fields\":[{\"name\":\"asn\",\"type\":\"string\"},{\"name\":\"transactionId\",\"type\":\"string\"},{\"name\":\"glnSource\",\"type\":\"string\"},{\"name\":\"glnNotifier\",\"type\":\"string\"},{\"name\":\"glnTarget\",\"type\":\"string\"},{\"name\":\"fileName\",\"type\":\"string\"},{\"name\":\"operationDateTime\",\"type\":\"string\"},{\"name\":\"observations\",\"type\":{\"items\":{\"fields\":[{\"name\":\"command\",\"type\":\"string\"},{\"name\":\"containerId\",\"type\":\"string\"},{\"name\":\"tags\",\"type\":{\"items\":{\"fields\":[{\"name\":\"schemeId\",\"type\":\"string\"},{\"name\":\"epc\",\"type\":\"string\"},{\"default\":null,\"name\":\"packLevel\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"batch\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"expirationDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Tag\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Observation\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.SCE.Shipping.Events.Record.EventoShippingASN\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.SCE.Shipping.Events.ShippingASNCommon\",\"type\":\"record\"}},{\"name\":\"asn\",\"type\":\"string\"},{\"name\":\"transactionId\",\"type\":\"string\"},{\"name\":\"glnSource\",\"type\":\"string\"},{\"name\":\"glnNotifier\",\"type\":\"string\"},{\"name\":\"glnTarget\",\"type\":\"string\"},{\"name\":\"fileName\",\"type\":\"string\"},{\"name\":\"operationDateTime\",\"type\":\"string\"},{\"name\":\"observations\",\"type\":{\"items\":{\"fields\":[{\"name\":\"command\",\"type\":\"string\"},{\"name\":\"containerId\",\"type\":\"string\"},{\"name\":\"tags\",\"type\":{\"items\":{\"fields\":[{\"name\":\"schemeId\",\"type\":\"string\"},{\"name\":\"epc\",\"type\":\"string\"},{\"default\":null,\"name\":\"packLevel\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"batch\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"expirationDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"gtin\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"serie\",\"type\":[\"null\",\"string\"]}],\"name\":\"Tag\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Observation\",\"namespace\":\"Andreani.SCE.Shipping.Events.ShippingASNCommon\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.SCE.Shipping.Events.Record.EventoShippingASN\",\"type\":\"record\"}"
 }
 
 func (r EventoShippingASN) SchemaName() string {
@@ -128,41 +136,48 @@ func (_ EventoShippingASN) SetUnionElem(v int64) { panic("Unsupported operation"
 func (r *EventoShippingASN) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Asn}
+		r.Identificacion = NewIdentificacion()
+
+		w := types.Record{Target: &r.Identificacion}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.TransactionId}
+		w := types.String{Target: &r.Asn}
 
 		return w
 
 	case 2:
-		w := types.String{Target: &r.GlnSource}
+		w := types.String{Target: &r.TransactionId}
 
 		return w
 
 	case 3:
-		w := types.String{Target: &r.GlnNotifier}
+		w := types.String{Target: &r.GlnSource}
 
 		return w
 
 	case 4:
-		w := types.String{Target: &r.GlnTarget}
+		w := types.String{Target: &r.GlnNotifier}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.FileName}
+		w := types.String{Target: &r.GlnTarget}
 
 		return w
 
 	case 6:
-		w := types.String{Target: &r.OperationDateTime}
+		w := types.String{Target: &r.FileName}
 
 		return w
 
 	case 7:
+		w := types.String{Target: &r.OperationDateTime}
+
+		return w
+
+	case 8:
 		r.Observations = make([]Observation, 0)
 
 		w := ArrayObservationWrapper{Target: &r.Observations}
@@ -197,6 +212,10 @@ func (_ EventoShippingASN) AvroCRC64Fingerprint() []byte {
 func (r EventoShippingASN) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["Identificacion"], err = json.Marshal(r.Identificacion)
+	if err != nil {
+		return nil, err
+	}
 	output["asn"], err = json.Marshal(r.Asn)
 	if err != nil {
 		return nil, err
@@ -239,6 +258,20 @@ func (r *EventoShippingASN) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["Identificacion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Identificacion); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Identificacion")
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["asn"]; ok {
 			return v
