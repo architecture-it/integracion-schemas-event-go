@@ -21,7 +21,7 @@ type MDAControlFraude struct {
 	Ticket TicketFraude `json:"Ticket"`
 }
 
-const MDAControlFraudeAvroCRC64Fingerprint = "\xb7\xee\x84\f\xa7\x03\xf4U"
+const MDAControlFraudeAvroCRC64Fingerprint = "\xb7\xb0h\nw\n\xd0\x13"
 
 func NewMDAControlFraude() MDAControlFraude {
 	r := MDAControlFraude{}
@@ -67,7 +67,7 @@ func (r MDAControlFraude) Serialize(w io.Writer) error {
 }
 
 func (r MDAControlFraude) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Solicitante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCreacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CorreoElectronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MesaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Adjuntos\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"TicketFraude\",\"namespace\":\"Andreani.EAM.Events.MDA\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.MDAControlFraude\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticket\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Solicitante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCreacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CorreoElectronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MesaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Adjuntos\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Tecnico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Subcategoria\",\"type\":[\"null\",\"string\"]}],\"name\":\"TicketFraude\",\"namespace\":\"Andreani.EAM.Events.MDA\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.MDAControlFraude\",\"type\":\"record\"}"
 }
 
 func (r MDAControlFraude) SchemaName() string {

@@ -37,9 +37,15 @@ type TicketFraude struct {
 	MesaOrigen *UnionNullString `json:"MesaOrigen"`
 
 	Adjuntos *UnionNullBool `json:"Adjuntos"`
+
+	Tecnico *UnionNullString `json:"Tecnico"`
+
+	Articulo *UnionNullString `json:"Articulo"`
+
+	Subcategoria *UnionNullString `json:"Subcategoria"`
 }
 
-const TicketFraudeAvroCRC64Fingerprint = "$\x91\xb7+V}\xf5\x99"
+const TicketFraudeAvroCRC64Fingerprint = "j\xedR)\x1a\xab\xc7\x05"
 
 func NewTicketFraude() TicketFraude {
 	r := TicketFraude{}
@@ -53,6 +59,9 @@ func NewTicketFraude() TicketFraude {
 	r.CorreoElectronico = nil
 	r.MesaOrigen = nil
 	r.Adjuntos = nil
+	r.Tecnico = nil
+	r.Articulo = nil
+	r.Subcategoria = nil
 	return r
 }
 
@@ -121,6 +130,18 @@ func writeTicketFraude(r TicketFraude, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Tecnico, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Articulo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Subcategoria, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -129,7 +150,7 @@ func (r TicketFraude) Serialize(w io.Writer) error {
 }
 
 func (r TicketFraude) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Solicitante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCreacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CorreoElectronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MesaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Adjuntos\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.EAM.Events.MDA.TicketFraude\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Solicitante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCreacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CorreoElectronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MesaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Adjuntos\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Tecnico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Subcategoria\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.TicketFraude\",\"type\":\"record\"}"
 }
 
 func (r TicketFraude) SchemaName() string {
@@ -187,6 +208,18 @@ func (r *TicketFraude) Get(i int) types.Field {
 		r.Adjuntos = NewUnionNullBool()
 
 		return r.Adjuntos
+	case 10:
+		r.Tecnico = NewUnionNullString()
+
+		return r.Tecnico
+	case 11:
+		r.Articulo = NewUnionNullString()
+
+		return r.Articulo
+	case 12:
+		r.Subcategoria = NewUnionNullString()
+
+		return r.Subcategoria
 	}
 	panic("Unknown field index")
 }
@@ -223,6 +256,15 @@ func (r *TicketFraude) SetDefault(i int) {
 	case 9:
 		r.Adjuntos = nil
 		return
+	case 10:
+		r.Tecnico = nil
+		return
+	case 11:
+		r.Articulo = nil
+		return
+	case 12:
+		r.Subcategoria = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -258,6 +300,15 @@ func (r *TicketFraude) NullField(i int) {
 		return
 	case 9:
 		r.Adjuntos = nil
+		return
+	case 10:
+		r.Tecnico = nil
+		return
+	case 11:
+		r.Articulo = nil
+		return
+	case 12:
+		r.Subcategoria = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -312,6 +363,18 @@ func (r TicketFraude) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Adjuntos"], err = json.Marshal(r.Adjuntos)
+	if err != nil {
+		return nil, err
+	}
+	output["Tecnico"], err = json.Marshal(r.Tecnico)
+	if err != nil {
+		return nil, err
+	}
+	output["Articulo"], err = json.Marshal(r.Articulo)
+	if err != nil {
+		return nil, err
+	}
+	output["Subcategoria"], err = json.Marshal(r.Subcategoria)
 	if err != nil {
 		return nil, err
 	}
@@ -484,6 +547,54 @@ func (r *TicketFraude) UnmarshalJSON(data []byte) error {
 		r.Adjuntos = NewUnionNullBool()
 
 		r.Adjuntos = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Tecnico"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Tecnico); err != nil {
+			return err
+		}
+	} else {
+		r.Tecnico = NewUnionNullString()
+
+		r.Tecnico = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Articulo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Articulo); err != nil {
+			return err
+		}
+	} else {
+		r.Articulo = NewUnionNullString()
+
+		r.Articulo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Subcategoria"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Subcategoria); err != nil {
+			return err
+		}
+	} else {
+		r.Subcategoria = NewUnionNullString()
+
+		r.Subcategoria = nil
 	}
 	return nil
 }
