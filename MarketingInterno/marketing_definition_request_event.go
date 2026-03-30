@@ -25,7 +25,7 @@ type MarketingDefinitionRequestEvent struct {
 	Accion int32 `json:"Accion"`
 }
 
-const MarketingDefinitionRequestEventAvroCRC64Fingerprint = "\x10\xbe\x0e6 \xf1[{"
+const MarketingDefinitionRequestEventAvroCRC64Fingerprint = "\x10\x1d\v\x93\xd2B7\xaf"
 
 func NewMarketingDefinitionRequestEvent() MarketingDefinitionRequestEvent {
 	r := MarketingDefinitionRequestEvent{}
@@ -81,11 +81,11 @@ func (r MarketingDefinitionRequestEvent) Serialize(w io.Writer) error {
 }
 
 func (r MarketingDefinitionRequestEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Parameters\",\"type\":{\"fields\":[{\"name\":\"IdCampana\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdEjecucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdFlujoNodo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdCliente\",\"type\":[\"null\",\"int\"]},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"ExecutionParameters\",\"namespace\":\"Andreani.MarketingInternoEvent.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"}},{\"name\":\"Campos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"CampoValue\",\"namespace\":\"Andreani.MarketingInternoEvent.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Accion\",\"type\":\"int\"}],\"name\":\"Andreani.MarketingInternoEvent.Events.Record.MarketingDefinitionRequestEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Parameters\",\"type\":{\"fields\":[{\"name\":\"IdCampana\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdEjecucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdFlujoNodo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdCliente\",\"type\":[\"null\",\"int\"]},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"ExecutionParameters\",\"namespace\":\"Andreani.MarketingInternoEvent.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"}},{\"name\":\"Campos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"CampoValue\",\"namespace\":\"Andreani.MarketingInternoEvent.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Accion\",\"type\":\"int\"}],\"name\":\"Andreani.MarketingInterno.Events.Record.MarketingDefinitionRequestEvent\",\"type\":\"record\"}"
 }
 
 func (r MarketingDefinitionRequestEvent) SchemaName() string {
-	return "Andreani.MarketingInternoEvent.Events.Record.MarketingDefinitionRequestEvent"
+	return "Andreani.MarketingInterno.Events.Record.MarketingDefinitionRequestEvent"
 }
 
 func (_ MarketingDefinitionRequestEvent) SetBoolean(v bool)    { panic("Unsupported operation") }
