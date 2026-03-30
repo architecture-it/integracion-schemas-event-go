@@ -23,7 +23,7 @@ type CampoValue struct {
 	Valor string `json:"Valor"`
 }
 
-const CampoValueAvroCRC64Fingerprint = "\xa8j+J\x1b\x96-;"
+const CampoValueAvroCRC64Fingerprint = "}\x86^\xf9&\xb7\xbf\x13"
 
 func NewCampoValue() CampoValue {
 	r := CampoValue{}
@@ -71,11 +71,11 @@ func (r CampoValue) Serialize(w io.Writer) error {
 }
 
 func (r CampoValue) Schema() string {
-	return "{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Andreani.MarketingInternoEvent.Events.MarketingDefinitionRequestEventCommon.CampoValue\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon.CampoValue\",\"type\":\"record\"}"
 }
 
 func (r CampoValue) SchemaName() string {
-	return "Andreani.MarketingInternoEvent.Events.MarketingDefinitionRequestEventCommon.CampoValue"
+	return "Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon.CampoValue"
 }
 
 func (_ CampoValue) SetBoolean(v bool)    { panic("Unsupported operation") }

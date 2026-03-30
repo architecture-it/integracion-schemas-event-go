@@ -29,7 +29,7 @@ type ExecutionParameters struct {
 	IdsAudiencias []int32 `json:"IdsAudiencias"`
 }
 
-const ExecutionParametersAvroCRC64Fingerprint = "s\xa1Uʢ\x92'\xb7"
+const ExecutionParametersAvroCRC64Fingerprint = "\xf3vR\xbb\xff\x91v{"
 
 func NewExecutionParameters() ExecutionParameters {
 	r := ExecutionParameters{}
@@ -96,11 +96,11 @@ func (r ExecutionParameters) Serialize(w io.Writer) error {
 }
 
 func (r ExecutionParameters) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdCampana\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdEjecucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdFlujoNodo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdCliente\",\"type\":[\"null\",\"int\"]},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"Andreani.MarketingInternoEvent.Events.MarketingDefinitionRequestEventCommon.ExecutionParameters\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdCampana\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdEjecucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdFlujoNodo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdCliente\",\"type\":[\"null\",\"int\"]},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon.ExecutionParameters\",\"type\":\"record\"}"
 }
 
 func (r ExecutionParameters) SchemaName() string {
-	return "Andreani.MarketingInternoEvent.Events.MarketingDefinitionRequestEventCommon.ExecutionParameters"
+	return "Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon.ExecutionParameters"
 }
 
 func (_ ExecutionParameters) SetBoolean(v bool)    { panic("Unsupported operation") }
