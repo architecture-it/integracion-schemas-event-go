@@ -24,6 +24,8 @@ type ContenedorModificado struct {
 
 	Destino DatosSucursal `json:"destino"`
 
+	TipoAccion *UnionNullString `json:"tipoAccion"`
+
 	Destinos *UnionNullArrayDatosSucursal `json:"destinos"`
 
 	Bultos *UnionNullArrayBulto `json:"bultos"`
@@ -31,9 +33,11 @@ type ContenedorModificado struct {
 	Contenedores *UnionNullArrayContenedor `json:"contenedores"`
 
 	Documentos *UnionNullArrayDocumento `json:"documentos"`
+
+	ElementosModificados *UnionNullArrayElementoModificado `json:"elementosModificados"`
 }
 
-const ContenedorModificadoAvroCRC64Fingerprint = "6\x1fI\xd0WS\x96W"
+const ContenedorModificadoAvroCRC64Fingerprint = "\xa3\xe5pj3J\x1b\xbd"
 
 func NewContenedorModificado() ContenedorModificado {
 	r := ContenedorModificado{}
@@ -43,10 +47,12 @@ func NewContenedorModificado() ContenedorModificado {
 
 	r.Destino = NewDatosSucursal()
 
+	r.TipoAccion = nil
 	r.Destinos = nil
 	r.Bultos = nil
 	r.Contenedores = nil
 	r.Documentos = nil
+	r.ElementosModificados = nil
 	return r
 }
 
@@ -87,6 +93,10 @@ func writeContenedorModificado(r ContenedorModificado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.TipoAccion, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullArrayDatosSucursal(r.Destinos, w)
 	if err != nil {
 		return err
@@ -103,6 +113,10 @@ func writeContenedorModificado(r ContenedorModificado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayElementoModificado(r.ElementosModificados, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -111,7 +125,7 @@ func (r ContenedorModificado) Serialize(w io.Writer) error {
 }
 
 func (r ContenedorModificado) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"name\":\"origen\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"destino\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"default\":null,\"name\":\"destinos\",\"type\":[\"null\",{\"items\":\"Integracion.Esquemas.Referencias.DatosSucursal\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Bulto\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"contenedores\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"documentos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeReferencia\",\"type\":\"string\"}],\"name\":\"Documento\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorModificado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"name\":\"origen\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"destino\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"default\":null,\"name\":\"tipoAccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinos\",\"type\":[\"null\",{\"items\":\"Integracion.Esquemas.Referencias.DatosSucursal\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Bulto\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"contenedores\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"documentos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeReferencia\",\"type\":\"string\"}],\"name\":\"Documento\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"elementosModificados\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"}],\"name\":\"ElementoModificado\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorModificado\",\"type\":\"record\"}"
 }
 
 func (r ContenedorModificado) SchemaName() string {
@@ -151,21 +165,29 @@ func (r *ContenedorModificado) Get(i int) types.Field {
 		return w
 
 	case 3:
+		r.TipoAccion = NewUnionNullString()
+
+		return r.TipoAccion
+	case 4:
 		r.Destinos = NewUnionNullArrayDatosSucursal()
 
 		return r.Destinos
-	case 4:
+	case 5:
 		r.Bultos = NewUnionNullArrayBulto()
 
 		return r.Bultos
-	case 5:
+	case 6:
 		r.Contenedores = NewUnionNullArrayContenedor()
 
 		return r.Contenedores
-	case 6:
+	case 7:
 		r.Documentos = NewUnionNullArrayDocumento()
 
 		return r.Documentos
+	case 8:
+		r.ElementosModificados = NewUnionNullArrayElementoModificado()
+
+		return r.ElementosModificados
 	}
 	panic("Unknown field index")
 }
@@ -173,16 +195,22 @@ func (r *ContenedorModificado) Get(i int) types.Field {
 func (r *ContenedorModificado) SetDefault(i int) {
 	switch i {
 	case 3:
-		r.Destinos = nil
+		r.TipoAccion = nil
 		return
 	case 4:
-		r.Bultos = nil
+		r.Destinos = nil
 		return
 	case 5:
-		r.Contenedores = nil
+		r.Bultos = nil
 		return
 	case 6:
+		r.Contenedores = nil
+		return
+	case 7:
 		r.Documentos = nil
+		return
+	case 8:
+		r.ElementosModificados = nil
 		return
 	}
 	panic("Unknown field index")
@@ -191,16 +219,22 @@ func (r *ContenedorModificado) SetDefault(i int) {
 func (r *ContenedorModificado) NullField(i int) {
 	switch i {
 	case 3:
-		r.Destinos = nil
+		r.TipoAccion = nil
 		return
 	case 4:
-		r.Bultos = nil
+		r.Destinos = nil
 		return
 	case 5:
-		r.Contenedores = nil
+		r.Bultos = nil
 		return
 	case 6:
+		r.Contenedores = nil
+		return
+	case 7:
 		r.Documentos = nil
+		return
+	case 8:
+		r.ElementosModificados = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -230,6 +264,10 @@ func (r ContenedorModificado) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["tipoAccion"], err = json.Marshal(r.TipoAccion)
+	if err != nil {
+		return nil, err
+	}
 	output["destinos"], err = json.Marshal(r.Destinos)
 	if err != nil {
 		return nil, err
@@ -243,6 +281,10 @@ func (r ContenedorModificado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["documentos"], err = json.Marshal(r.Documentos)
+	if err != nil {
+		return nil, err
+	}
+	output["elementosModificados"], err = json.Marshal(r.ElementosModificados)
 	if err != nil {
 		return nil, err
 	}
@@ -297,6 +339,22 @@ func (r *ContenedorModificado) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for destino")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["tipoAccion"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoAccion); err != nil {
+			return err
+		}
+	} else {
+		r.TipoAccion = NewUnionNullString()
+
+		r.TipoAccion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["destinos"]; ok {
@@ -361,6 +419,22 @@ func (r *ContenedorModificado) UnmarshalJSON(data []byte) error {
 		r.Documentos = NewUnionNullArrayDocumento()
 
 		r.Documentos = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["elementosModificados"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ElementosModificados); err != nil {
+			return err
+		}
+	} else {
+		r.ElementosModificados = NewUnionNullArrayElementoModificado()
+
+		r.ElementosModificados = nil
 	}
 	return nil
 }
