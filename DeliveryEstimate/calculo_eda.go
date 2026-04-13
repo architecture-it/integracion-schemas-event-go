@@ -35,6 +35,12 @@ const CalculoEdaAvroCRC64Fingerprint = "a\x12\xf6\xc7\x7f\x11\x9e\x89"
 
 func NewCalculoEda() CalculoEda {
 	r := CalculoEda{}
+	r.CodigoPostalSucursalOrigen = nil
+	r.CodigoPostalSucursalDistribucion = nil
+	r.CodigoPostalDestino = nil
+	r.LocalidadDestino = nil
+	r.LocalidadSucursalDistribucion = nil
+	r.LocalidadSucursalOrigen = nil
 	return r
 }
 
@@ -95,7 +101,7 @@ func (r CalculoEda) Serialize(w io.Writer) error {
 }
 
 func (r CalculoEda) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigoPostalSucursalOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostalSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadDestino\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"localidadSucursalOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEda\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"codigoPostalSucursalOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidadDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidadSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidadSucursalOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.CalculoEda\",\"type\":\"record\"}"
 }
 
 func (r CalculoEda) SchemaName() string {
@@ -143,6 +149,24 @@ func (r *CalculoEda) Get(i int) types.Field {
 
 func (r *CalculoEda) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.CodigoPostalSucursalOrigen = nil
+		return
+	case 1:
+		r.CodigoPostalSucursalDistribucion = nil
+		return
+	case 2:
+		r.CodigoPostalDestino = nil
+		return
+	case 3:
+		r.LocalidadDestino = nil
+		return
+	case 4:
+		r.LocalidadSucursalDistribucion = nil
+		return
+	case 5:
+		r.LocalidadSucursalOrigen = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -229,7 +253,9 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoPostalSucursalOrigen")
+		r.CodigoPostalSucursalOrigen = NewUnionNullString()
+
+		r.CodigoPostalSucursalOrigen = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoPostalSucursalDistribucion"]; ok {
@@ -243,7 +269,9 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoPostalSucursalDistribucion")
+		r.CodigoPostalSucursalDistribucion = NewUnionNullString()
+
+		r.CodigoPostalSucursalDistribucion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["codigoPostalDestino"]; ok {
@@ -257,7 +285,9 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for codigoPostalDestino")
+		r.CodigoPostalDestino = NewUnionNullString()
+
+		r.CodigoPostalDestino = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["localidadDestino"]; ok {
@@ -271,7 +301,9 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for localidadDestino")
+		r.LocalidadDestino = NewUnionNullString()
+
+		r.LocalidadDestino = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["localidadSucursalDistribucion"]; ok {
@@ -285,7 +317,9 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for localidadSucursalDistribucion")
+		r.LocalidadSucursalDistribucion = NewUnionNullString()
+
+		r.LocalidadSucursalDistribucion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["localidadSucursalOrigen"]; ok {
@@ -299,7 +333,9 @@ func (r *CalculoEda) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for localidadSucursalOrigen")
+		r.LocalidadSucursalOrigen = NewUnionNullString()
+
+		r.LocalidadSucursalOrigen = nil
 	}
 	return nil
 }
