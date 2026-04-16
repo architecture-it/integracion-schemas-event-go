@@ -31,9 +31,11 @@ type ContenedorCreado struct {
 	Contenedores *UnionNullArrayContenedor `json:"contenedores"`
 
 	Documentos *UnionNullArrayDocumento `json:"documentos"`
+
+	ReferenciasExternas *UnionNullArrayReferenciaExterna `json:"referenciasExternas"`
 }
 
-const ContenedorCreadoAvroCRC64Fingerprint = "\x81.\xf5\xde\x1b\xd7\x00\x93"
+const ContenedorCreadoAvroCRC64Fingerprint = "\xceF\x84c\xa2v`X"
 
 func NewContenedorCreado() ContenedorCreado {
 	r := ContenedorCreado{}
@@ -47,6 +49,7 @@ func NewContenedorCreado() ContenedorCreado {
 	r.Bultos = nil
 	r.Contenedores = nil
 	r.Documentos = nil
+	r.ReferenciasExternas = nil
 	return r
 }
 
@@ -103,6 +106,10 @@ func writeContenedorCreado(r ContenedorCreado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayReferenciaExterna(r.ReferenciasExternas, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -111,7 +118,7 @@ func (r ContenedorCreado) Serialize(w io.Writer) error {
 }
 
 func (r ContenedorCreado) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"name\":\"origen\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"destino\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"default\":null,\"name\":\"destinos\",\"type\":[\"null\",{\"items\":\"Integracion.Esquemas.Referencias.DatosSucursal\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Bulto\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"contenedores\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"documentos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeReferencia\",\"type\":\"string\"}],\"name\":\"Documento\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorCreado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"name\":\"origen\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"destino\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"default\":null,\"name\":\"destinos\",\"type\":[\"null\",{\"items\":\"Integracion.Esquemas.Referencias.DatosSucursal\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Bulto\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"contenedores\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"documentos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeReferencia\",\"type\":\"string\"}],\"name\":\"Documento\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"referenciasExternas\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"referencia\",\"type\":\"string\"}],\"name\":\"ReferenciaExterna\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorCreado\",\"type\":\"record\"}"
 }
 
 func (r ContenedorCreado) SchemaName() string {
@@ -166,6 +173,10 @@ func (r *ContenedorCreado) Get(i int) types.Field {
 		r.Documentos = NewUnionNullArrayDocumento()
 
 		return r.Documentos
+	case 7:
+		r.ReferenciasExternas = NewUnionNullArrayReferenciaExterna()
+
+		return r.ReferenciasExternas
 	}
 	panic("Unknown field index")
 }
@@ -184,6 +195,9 @@ func (r *ContenedorCreado) SetDefault(i int) {
 	case 6:
 		r.Documentos = nil
 		return
+	case 7:
+		r.ReferenciasExternas = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -201,6 +215,9 @@ func (r *ContenedorCreado) NullField(i int) {
 		return
 	case 6:
 		r.Documentos = nil
+		return
+	case 7:
+		r.ReferenciasExternas = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -243,6 +260,10 @@ func (r ContenedorCreado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["documentos"], err = json.Marshal(r.Documentos)
+	if err != nil {
+		return nil, err
+	}
+	output["referenciasExternas"], err = json.Marshal(r.ReferenciasExternas)
 	if err != nil {
 		return nil, err
 	}
@@ -361,6 +382,22 @@ func (r *ContenedorCreado) UnmarshalJSON(data []byte) error {
 		r.Documentos = NewUnionNullArrayDocumento()
 
 		r.Documentos = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["referenciasExternas"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ReferenciasExternas); err != nil {
+			return err
+		}
+	} else {
+		r.ReferenciasExternas = NewUnionNullArrayReferenciaExterna()
+
+		r.ReferenciasExternas = nil
 	}
 	return nil
 }

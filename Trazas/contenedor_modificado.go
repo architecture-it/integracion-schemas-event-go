@@ -34,10 +34,12 @@ type ContenedorModificado struct {
 
 	Documentos *UnionNullArrayDocumento `json:"documentos"`
 
+	ReferenciasExternas *UnionNullArrayReferenciaExterna `json:"referenciasExternas"`
+
 	ElementosModificados *UnionNullArrayElementoModificado `json:"elementosModificados"`
 }
 
-const ContenedorModificadoAvroCRC64Fingerprint = "\xa3\xe5pj3J\x1b\xbd"
+const ContenedorModificadoAvroCRC64Fingerprint = "\x10\x1eJ\xcf\x06\xfd\x1a\x8b"
 
 func NewContenedorModificado() ContenedorModificado {
 	r := ContenedorModificado{}
@@ -52,6 +54,7 @@ func NewContenedorModificado() ContenedorModificado {
 	r.Bultos = nil
 	r.Contenedores = nil
 	r.Documentos = nil
+	r.ReferenciasExternas = nil
 	r.ElementosModificados = nil
 	return r
 }
@@ -113,6 +116,10 @@ func writeContenedorModificado(r ContenedorModificado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayReferenciaExterna(r.ReferenciasExternas, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullArrayElementoModificado(r.ElementosModificados, w)
 	if err != nil {
 		return err
@@ -125,7 +132,7 @@ func (r ContenedorModificado) Serialize(w io.Writer) error {
 }
 
 func (r ContenedorModificado) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"name\":\"origen\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"destino\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"default\":null,\"name\":\"tipoAccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinos\",\"type\":[\"null\",{\"items\":\"Integracion.Esquemas.Referencias.DatosSucursal\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Bulto\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"contenedores\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"documentos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeReferencia\",\"type\":\"string\"}],\"name\":\"Documento\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"elementosModificados\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"}],\"name\":\"ElementoModificado\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorModificado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"name\":\"origen\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"destino\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"default\":null,\"name\":\"tipoAccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"destinos\",\"type\":[\"null\",{\"items\":\"Integracion.Esquemas.Referencias.DatosSucursal\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"bultos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Bulto\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"contenedores\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"documentos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numeroDeReferencia\",\"type\":\"string\"}],\"name\":\"Documento\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"referenciasExternas\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"referencia\",\"type\":\"string\"}],\"name\":\"ReferenciaExterna\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"elementosModificados\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"}],\"name\":\"ElementoModificado\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorModificado\",\"type\":\"record\"}"
 }
 
 func (r ContenedorModificado) SchemaName() string {
@@ -185,6 +192,10 @@ func (r *ContenedorModificado) Get(i int) types.Field {
 
 		return r.Documentos
 	case 8:
+		r.ReferenciasExternas = NewUnionNullArrayReferenciaExterna()
+
+		return r.ReferenciasExternas
+	case 9:
 		r.ElementosModificados = NewUnionNullArrayElementoModificado()
 
 		return r.ElementosModificados
@@ -210,6 +221,9 @@ func (r *ContenedorModificado) SetDefault(i int) {
 		r.Documentos = nil
 		return
 	case 8:
+		r.ReferenciasExternas = nil
+		return
+	case 9:
 		r.ElementosModificados = nil
 		return
 	}
@@ -234,6 +248,9 @@ func (r *ContenedorModificado) NullField(i int) {
 		r.Documentos = nil
 		return
 	case 8:
+		r.ReferenciasExternas = nil
+		return
+	case 9:
 		r.ElementosModificados = nil
 		return
 	}
@@ -281,6 +298,10 @@ func (r ContenedorModificado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["documentos"], err = json.Marshal(r.Documentos)
+	if err != nil {
+		return nil, err
+	}
+	output["referenciasExternas"], err = json.Marshal(r.ReferenciasExternas)
 	if err != nil {
 		return nil, err
 	}
@@ -419,6 +440,22 @@ func (r *ContenedorModificado) UnmarshalJSON(data []byte) error {
 		r.Documentos = NewUnionNullArrayDocumento()
 
 		r.Documentos = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["referenciasExternas"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ReferenciasExternas); err != nil {
+			return err
+		}
+	} else {
+		r.ReferenciasExternas = NewUnionNullArrayReferenciaExterna()
+
+		r.ReferenciasExternas = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["elementosModificados"]; ok {
