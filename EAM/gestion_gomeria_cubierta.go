@@ -21,7 +21,7 @@ type GestionGomeriaCubierta struct {
 	Cubierta Cubierta `json:"Cubierta"`
 }
 
-const GestionGomeriaCubiertaAvroCRC64Fingerprint = "\xafC\x9dZ\xb1rF\xfc"
+const GestionGomeriaCubiertaAvroCRC64Fingerprint = "a\xcdAuH.\xc30"
 
 func NewGestionGomeriaCubierta() GestionGomeriaCubierta {
 	r := GestionGomeriaCubierta{}
@@ -67,7 +67,7 @@ func (r GestionGomeriaCubierta) Serialize(w io.Writer) error {
 }
 
 func (r GestionGomeriaCubierta) Schema() string {
-	return "{\"fields\":[{\"name\":\"Cubierta\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Tipo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Clase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estaddo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Organizacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Creacion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"Modificacion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"ModificadoPor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Recapados\",\"type\":[\"null\",\"int\"]}],\"name\":\"Cubierta\",\"namespace\":\"Andreani.EAM.Events.GestionGomeria\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.GestionGomeriaCubierta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Cubierta\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"Codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Tipo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Clase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Organizacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Creacion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"Modificacion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"ModificadoPor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Recapados\",\"type\":[\"null\",\"int\"]}],\"name\":\"Cubierta\",\"namespace\":\"Andreani.EAM.Events.GestionGomeria\",\"type\":\"record\"}}],\"name\":\"Andreani.EAM.Events.Record.GestionGomeriaCubierta\",\"type\":\"record\"}"
 }
 
 func (r GestionGomeriaCubierta) SchemaName() string {

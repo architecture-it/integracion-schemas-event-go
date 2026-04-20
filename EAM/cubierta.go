@@ -28,7 +28,7 @@ type Cubierta struct {
 
 	Clase *UnionNullString `json:"Clase"`
 
-	Estaddo *UnionNullString `json:"Estaddo"`
+	Estado *UnionNullString `json:"Estado"`
 
 	Organizacion *UnionNullString `json:"Organizacion"`
 
@@ -41,7 +41,7 @@ type Cubierta struct {
 	Recapados *UnionNullInt `json:"Recapados"`
 }
 
-const CubiertaAvroCRC64Fingerprint = "v\x89\xc7H\xe5Y\xa1\xc3"
+const CubiertaAvroCRC64Fingerprint = "\x80\x87\x88i\x11C\x8c\x96"
 
 func NewCubierta() Cubierta {
 	r := Cubierta{}
@@ -50,7 +50,7 @@ func NewCubierta() Cubierta {
 	r.Descripcion = nil
 	r.Categoria = nil
 	r.Clase = nil
-	r.Estaddo = nil
+	r.Estado = nil
 	r.Organizacion = nil
 	r.Creacion = nil
 	r.Modificacion = nil
@@ -104,7 +104,7 @@ func writeCubierta(r Cubierta, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Estaddo, w)
+	err = writeUnionNullString(r.Estado, w)
 	if err != nil {
 		return err
 	}
@@ -136,7 +136,7 @@ func (r Cubierta) Serialize(w io.Writer) error {
 }
 
 func (r Cubierta) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Tipo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Clase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estaddo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Organizacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Creacion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"Modificacion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"ModificadoPor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Recapados\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.EAM.Events.GestionGomeria.Cubierta\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Tipo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Categoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Clase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Organizacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Creacion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"Modificacion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"ModificadoPor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Recapados\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.EAM.Events.GestionGomeria.Cubierta\",\"type\":\"record\"}"
 }
 
 func (r Cubierta) SchemaName() string {
@@ -175,9 +175,9 @@ func (r *Cubierta) Get(i int) types.Field {
 
 		return r.Clase
 	case 5:
-		r.Estaddo = NewUnionNullString()
+		r.Estado = NewUnionNullString()
 
-		return r.Estaddo
+		return r.Estado
 	case 6:
 		r.Organizacion = NewUnionNullString()
 
@@ -220,7 +220,7 @@ func (r *Cubierta) SetDefault(i int) {
 		r.Clase = nil
 		return
 	case 5:
-		r.Estaddo = nil
+		r.Estado = nil
 		return
 	case 6:
 		r.Organizacion = nil
@@ -259,7 +259,7 @@ func (r *Cubierta) NullField(i int) {
 		r.Clase = nil
 		return
 	case 5:
-		r.Estaddo = nil
+		r.Estado = nil
 		return
 	case 6:
 		r.Organizacion = nil
@@ -312,7 +312,7 @@ func (r Cubierta) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Estaddo"], err = json.Marshal(r.Estaddo)
+	output["Estado"], err = json.Marshal(r.Estado)
 	if err != nil {
 		return nil, err
 	}
@@ -427,20 +427,20 @@ func (r *Cubierta) UnmarshalJSON(data []byte) error {
 		r.Clase = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Estaddo"]; ok {
+		if v, ok := fields["Estado"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Estaddo); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Estado); err != nil {
 			return err
 		}
 	} else {
-		r.Estaddo = NewUnionNullString()
+		r.Estado = NewUnionNullString()
 
-		r.Estaddo = nil
+		r.Estado = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Organizacion"]; ok {
