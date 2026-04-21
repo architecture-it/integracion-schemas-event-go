@@ -26,6 +26,8 @@ type Request struct {
 
 	SucursalClienteID *UnionNullInt `json:"SucursalClienteID"`
 
+	SucursalIDCliente *UnionNullString `json:"SucursalIDCliente"`
+
 	Origen *UnionNullLugarDeRetiroOEntrega `json:"origen"`
 
 	Destino *UnionNullLugarDeRetiroOEntrega `json:"destino"`
@@ -61,12 +63,13 @@ type Request struct {
 	RemitoPdf *UnionNullBytes `json:"remitoPdf"`
 }
 
-const RequestAvroCRC64Fingerprint = "\xb7\xb6\x93Sr\xc0\xaa\x80"
+const RequestAvroCRC64Fingerprint = "~_;\xa2\xbd\xf4@\xb1"
 
 func NewRequest() Request {
 	r := Request{}
 	r.TipoServicio = nil
 	r.SucursalClienteID = nil
+	r.SucursalIDCliente = nil
 	r.CentroDeCosto = nil
 	r.ProductoAEntregar = nil
 	r.ProductoARetirar = nil
@@ -118,6 +121,10 @@ func writeRequest(r Request, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullInt(r.SucursalClienteID, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.SucursalIDCliente, w)
 	if err != nil {
 		return err
 	}
@@ -197,7 +204,7 @@ func (r Request) Serialize(w io.Writer) error {
 }
 
 func (r Request) Schema() string {
-	return "{\"fields\":[{\"name\":\"Bultos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"BultoRequest\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalClienteID\",\"type\":[\"null\",\"int\"]},{\"name\":\"origen\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"postal\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"abreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO -3166-2 (https://es.wikipedia.org/wiki/ISO_3166-2:AR)\",\"name\":\"codigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO 3166-1 alpha-2 (https://es.wikipedia.org/wiki/ISO_3166-1#Tabla_de_c.C3.B3digos_alfa-2_asignados_o_reservados)\",\"name\":\"codigoISOPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"casillaDeCorreo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"region\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosSucursal\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nomenclatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"casillaDeCorreo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"region\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionPostal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]}],\"name\":\"Sucursal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"GeoCoordenada\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"elevacion\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"poligono\",\"type\":[\"null\",\"int\"]}],\"name\":\"GeoCoordenada\",\"type\":\"record\"}]}],\"name\":\"LugarDeRetiroOEntrega\",\"type\":\"record\"}]},{\"name\":\"destino\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.LugarDeRetiroOEntrega\"]},{\"name\":\"idPedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"remitente\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"documentoTipo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"documentoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDeTelefonos\"]}],\"name\":\"Persona\",\"type\":\"record\"}]},{\"name\":\"destinatario\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Persona\",\"type\":\"array\"}]},{\"name\":\"remito\",\"type\":[\"null\",{\"fields\":[{\"name\":\"complementarios\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"numeroDeRemito\",\"type\":[\"null\",\"string\"]}],\"name\":\"Remito\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"centroDeCosto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"productoAEntregar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"productoARetirar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoProducto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoriaDeFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pagoDestino\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorACobrar\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"codigoVerificadorDeEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaYHorario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"fecha\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaDesde\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"FechaYHorario\",\"type\":\"record\"}]},{\"name\":\"PagoPendienteEnMostrador\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"remitoPdf\",\"type\":[\"null\",\"bytes\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.Request\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Bultos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclarado\",\"type\":\"double\"},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EAN\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentes\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"numeroAgrupador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesHijos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"numeroHijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"referencias\",\"type\":[\"null\",{\"fields\":[{\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDePropiedades\",\"type\":\"record\"}]}],\"name\":\"ComponenteHijo\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Componentes\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Metadato\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"NumeroDeEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"BultoRequest\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"Contrato\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoServicio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SucursalClienteID\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"SucursalIDCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"origen\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"postal\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"abreviaturaProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeDireccion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoCiudad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO -3166-2 (https://es.wikipedia.org/wiki/ISO_3166-2:AR)\",\"name\":\"codigoISOProvincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"segun ISO 3166-1 alpha-2 (https://es.wikipedia.org/wiki/ISO_3166-1#Tabla_de_c.C3.B3digos_alfa-2_asignados_o_reservados)\",\"name\":\"codigoISOPais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"casillaDeCorreo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"region\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]}],\"name\":\"Direccion\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosSucursal\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nomenclatura\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"direccion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"componentesDeDireccion\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"casillaDeCorreo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"departamento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"region\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionPostal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDePropiedades\"]},{\"default\":null,\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"fields\":[{\"name\":\"listaDeTelefonos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"ListaDeTelefonos\",\"type\":\"record\"}]}],\"name\":\"Sucursal\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"GeoCoordenada\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"elevacion\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"poligono\",\"type\":[\"null\",\"int\"]}],\"name\":\"GeoCoordenada\",\"type\":\"record\"}]}],\"name\":\"LugarDeRetiroOEntrega\",\"type\":\"record\"}]},{\"name\":\"destino\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.LugarDeRetiroOEntrega\"]},{\"name\":\"idPedido\",\"type\":[\"null\",\"string\"]},{\"name\":\"remitente\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nombreCompleto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"documentoTipo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"documentoNumero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefonos\",\"type\":[\"null\",\"Andreani.AltaOrdenEnvio.Events.Common.ListaDeTelefonos\"]}],\"name\":\"Persona\",\"type\":\"record\"}]},{\"name\":\"destinatario\",\"type\":[\"null\",{\"items\":\"Andreani.AltaOrdenEnvio.Events.Common.Persona\",\"type\":\"array\"}]},{\"name\":\"remito\",\"type\":[\"null\",{\"fields\":[{\"name\":\"complementarios\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"numeroDeRemito\",\"type\":[\"null\",\"string\"]}],\"name\":\"Remito\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"centroDeCosto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"productoAEntregar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"productoARetirar\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoProducto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"categoriaDeFacturacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pagoDestino\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"valorACobrar\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"codigoVerificadorDeEntrega\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"fechaYHorario\",\"type\":[\"null\",{\"fields\":[{\"name\":\"fecha\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaDesde\",\"type\":[\"null\",\"string\"]},{\"name\":\"horaHasta\",\"type\":[\"null\",\"string\"]}],\"name\":\"FechaYHorario\",\"type\":\"record\"}]},{\"name\":\"PagoPendienteEnMostrador\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"remitoPdf\",\"type\":[\"null\",\"bytes\"]}],\"name\":\"Andreani.AltaOrdenEnvio.Events.Common.Request\",\"type\":\"record\"}"
 }
 
 func (r Request) SchemaName() string {
@@ -233,70 +240,74 @@ func (r *Request) Get(i int) types.Field {
 
 		return r.SucursalClienteID
 	case 4:
+		r.SucursalIDCliente = NewUnionNullString()
+
+		return r.SucursalIDCliente
+	case 5:
 		r.Origen = NewUnionNullLugarDeRetiroOEntrega()
 
 		return r.Origen
-	case 5:
+	case 6:
 		r.Destino = NewUnionNullLugarDeRetiroOEntrega()
 
 		return r.Destino
-	case 6:
+	case 7:
 		r.IdPedido = NewUnionNullString()
 
 		return r.IdPedido
-	case 7:
+	case 8:
 		r.Remitente = NewUnionNullPersona()
 
 		return r.Remitente
-	case 8:
+	case 9:
 		r.Destinatario = NewUnionNullArrayPersona()
 
 		return r.Destinatario
-	case 9:
+	case 10:
 		r.Remito = NewUnionNullRemito()
 
 		return r.Remito
-	case 10:
+	case 11:
 		r.CentroDeCosto = NewUnionNullString()
 
 		return r.CentroDeCosto
-	case 11:
+	case 12:
 		r.ProductoAEntregar = NewUnionNullString()
 
 		return r.ProductoAEntregar
-	case 12:
+	case 13:
 		r.ProductoARetirar = NewUnionNullString()
 
 		return r.ProductoARetirar
-	case 13:
+	case 14:
 		r.TipoProducto = NewUnionNullString()
 
 		return r.TipoProducto
-	case 14:
+	case 15:
 		r.CategoriaDeFacturacion = NewUnionNullString()
 
 		return r.CategoriaDeFacturacion
-	case 15:
+	case 16:
 		r.PagoDestino = NewUnionNullInt()
 
 		return r.PagoDestino
-	case 16:
+	case 17:
 		r.ValorACobrar = NewUnionNullFloat()
 
 		return r.ValorACobrar
-	case 17:
+	case 18:
 		r.CodigoVerificadorDeEntrega = NewUnionNullString()
 
 		return r.CodigoVerificadorDeEntrega
-	case 18:
+	case 19:
 		r.FechaYHorario = NewUnionNullFechaYHorario()
 
 		return r.FechaYHorario
-	case 19:
+	case 20:
 		r.PagoPendienteEnMostrador = NewUnionNullBool()
 
 		return r.PagoPendienteEnMostrador
-	case 20:
+	case 21:
 		r.RemitoPdf = NewUnionNullBytes()
 
 		return r.RemitoPdf
@@ -312,34 +323,37 @@ func (r *Request) SetDefault(i int) {
 	case 3:
 		r.SucursalClienteID = nil
 		return
-	case 10:
-		r.CentroDeCosto = nil
+	case 4:
+		r.SucursalIDCliente = nil
 		return
 	case 11:
-		r.ProductoAEntregar = nil
+		r.CentroDeCosto = nil
 		return
 	case 12:
-		r.ProductoARetirar = nil
+		r.ProductoAEntregar = nil
 		return
 	case 13:
-		r.TipoProducto = nil
+		r.ProductoARetirar = nil
 		return
 	case 14:
-		r.CategoriaDeFacturacion = nil
+		r.TipoProducto = nil
 		return
 	case 15:
-		r.PagoDestino = nil
+		r.CategoriaDeFacturacion = nil
 		return
 	case 16:
-		r.ValorACobrar = nil
+		r.PagoDestino = nil
 		return
 	case 17:
-		r.CodigoVerificadorDeEntrega = nil
+		r.ValorACobrar = nil
 		return
 	case 18:
+		r.CodigoVerificadorDeEntrega = nil
+		return
+	case 19:
 		r.FechaYHorario = nil
 		return
-	case 20:
+	case 21:
 		r.RemitoPdf = nil
 		return
 	}
@@ -358,54 +372,57 @@ func (r *Request) NullField(i int) {
 		r.SucursalClienteID = nil
 		return
 	case 4:
-		r.Origen = nil
+		r.SucursalIDCliente = nil
 		return
 	case 5:
-		r.Destino = nil
+		r.Origen = nil
 		return
 	case 6:
-		r.IdPedido = nil
+		r.Destino = nil
 		return
 	case 7:
-		r.Remitente = nil
+		r.IdPedido = nil
 		return
 	case 8:
-		r.Destinatario = nil
+		r.Remitente = nil
 		return
 	case 9:
-		r.Remito = nil
+		r.Destinatario = nil
 		return
 	case 10:
-		r.CentroDeCosto = nil
+		r.Remito = nil
 		return
 	case 11:
-		r.ProductoAEntregar = nil
+		r.CentroDeCosto = nil
 		return
 	case 12:
-		r.ProductoARetirar = nil
+		r.ProductoAEntregar = nil
 		return
 	case 13:
-		r.TipoProducto = nil
+		r.ProductoARetirar = nil
 		return
 	case 14:
-		r.CategoriaDeFacturacion = nil
+		r.TipoProducto = nil
 		return
 	case 15:
-		r.PagoDestino = nil
+		r.CategoriaDeFacturacion = nil
 		return
 	case 16:
-		r.ValorACobrar = nil
+		r.PagoDestino = nil
 		return
 	case 17:
-		r.CodigoVerificadorDeEntrega = nil
+		r.ValorACobrar = nil
 		return
 	case 18:
-		r.FechaYHorario = nil
+		r.CodigoVerificadorDeEntrega = nil
 		return
 	case 19:
-		r.PagoPendienteEnMostrador = nil
+		r.FechaYHorario = nil
 		return
 	case 20:
+		r.PagoPendienteEnMostrador = nil
+		return
+	case 21:
 		r.RemitoPdf = nil
 		return
 	}
@@ -437,6 +454,10 @@ func (r Request) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["SucursalClienteID"], err = json.Marshal(r.SucursalClienteID)
+	if err != nil {
+		return nil, err
+	}
+	output["SucursalIDCliente"], err = json.Marshal(r.SucursalIDCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -577,6 +598,22 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 		r.SucursalClienteID = NewUnionNullInt()
 
 		r.SucursalClienteID = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["SucursalIDCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SucursalIDCliente); err != nil {
+			return err
+		}
+	} else {
+		r.SucursalIDCliente = NewUnionNullString()
+
+		r.SucursalIDCliente = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["origen"]; ok {
