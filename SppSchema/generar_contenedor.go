@@ -22,6 +22,8 @@ type GenerarContenedor struct {
 
 	Envios *UnionNullListaDeObjetos `json:"envios"`
 
+	EnviosConRemitente *UnionNullArrayEnvio `json:"enviosConRemitente"`
+
 	FechaProcesamiento string `json:"fechaProcesamiento"`
 
 	SistemaOrigen string `json:"sistemaOrigen"`
@@ -39,10 +41,11 @@ type GenerarContenedor struct {
 	NroPrecinto *UnionNullString `json:"NroPrecinto"`
 }
 
-const GenerarContenedorAvroCRC64Fingerprint = "\xe6f\x94\x88m.\xcd\xd7"
+const GenerarContenedorAvroCRC64Fingerprint = "̔F\xb5=B3\xd0"
 
 func NewGenerarContenedor() GenerarContenedor {
 	r := GenerarContenedor{}
+	r.EnviosConRemitente = nil
 	r.SucursalOrigen = NewDatosSucursal()
 
 	r.SucursalDestino = NewDatosSucursal()
@@ -82,6 +85,10 @@ func writeGenerarContenedor(r GenerarContenedor, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullListaDeObjetos(r.Envios, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullArrayEnvio(r.EnviosConRemitente, w)
 	if err != nil {
 		return err
 	}
@@ -125,7 +132,7 @@ func (r GenerarContenedor) Serialize(w io.Writer) error {
 }
 
 func (r GenerarContenedor) Schema() string {
-	return "{\"fields\":[{\"name\":\"contenedor\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":[\"null\",{\"fields\":[{\"name\":\"objetos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ListaDeObjetos\",\"type\":\"record\"}]},{\"name\":\"fechaProcesamiento\",\"type\":\"string\"},{\"name\":\"sistemaOrigen\",\"type\":\"string\"},{\"name\":\"sorter\",\"type\":\"string\"},{\"name\":\"sucursalOrigen\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}},{\"name\":\"sucursalDestino\",\"type\":\"Andreani.SppSchema.Events.DatosSucursal\"},{\"name\":\"medioDeExpedicion\",\"type\":{\"name\":\"TiposDePruebas\",\"symbols\":[\"ALSA\",\"CASA\",\"DMS\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"TipoContenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPrecinto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppSchema.Events.GenerarContenedor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contenedor\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":[\"null\",{\"fields\":[{\"name\":\"objetos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ListaDeObjetos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"enviosConRemitente\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"nroEnvio\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":{\"name\":\"Remitente\",\"symbols\":[\"DMS\",\"INTEGRA\"],\"type\":\"enum\"}}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"fechaProcesamiento\",\"type\":\"string\"},{\"name\":\"sistemaOrigen\",\"type\":\"string\"},{\"name\":\"sorter\",\"type\":\"string\"},{\"name\":\"sucursalOrigen\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}},{\"name\":\"sucursalDestino\",\"type\":\"Andreani.SppSchema.Events.DatosSucursal\"},{\"name\":\"medioDeExpedicion\",\"type\":{\"name\":\"TiposDePruebas\",\"symbols\":[\"ALSA\",\"CASA\",\"DMS\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"TipoContenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPrecinto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppSchema.Events.GenerarContenedor\",\"type\":\"record\"}"
 }
 
 func (r GenerarContenedor) SchemaName() string {
@@ -153,44 +160,48 @@ func (r *GenerarContenedor) Get(i int) types.Field {
 
 		return r.Envios
 	case 2:
+		r.EnviosConRemitente = NewUnionNullArrayEnvio()
+
+		return r.EnviosConRemitente
+	case 3:
 		w := types.String{Target: &r.FechaProcesamiento}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.String{Target: &r.SistemaOrigen}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.Sorter}
 
 		return w
 
-	case 5:
+	case 6:
 		r.SucursalOrigen = NewDatosSucursal()
 
 		w := types.Record{Target: &r.SucursalOrigen}
 
 		return w
 
-	case 6:
+	case 7:
 		r.SucursalDestino = NewDatosSucursal()
 
 		w := types.Record{Target: &r.SucursalDestino}
 
 		return w
 
-	case 7:
+	case 8:
 		w := TiposDePruebasWrapper{Target: &r.MedioDeExpedicion}
 
 		return w
 
-	case 8:
+	case 9:
 		r.TipoContenedor = NewUnionNullString()
 
 		return r.TipoContenedor
-	case 9:
+	case 10:
 		r.NroPrecinto = NewUnionNullString()
 
 		return r.NroPrecinto
@@ -200,10 +211,13 @@ func (r *GenerarContenedor) Get(i int) types.Field {
 
 func (r *GenerarContenedor) SetDefault(i int) {
 	switch i {
-	case 8:
-		r.TipoContenedor = nil
+	case 2:
+		r.EnviosConRemitente = nil
 		return
 	case 9:
+		r.TipoContenedor = nil
+		return
+	case 10:
 		r.NroPrecinto = nil
 		return
 	}
@@ -215,10 +229,13 @@ func (r *GenerarContenedor) NullField(i int) {
 	case 1:
 		r.Envios = nil
 		return
-	case 8:
-		r.TipoContenedor = nil
+	case 2:
+		r.EnviosConRemitente = nil
 		return
 	case 9:
+		r.TipoContenedor = nil
+		return
+	case 10:
 		r.NroPrecinto = nil
 		return
 	}
@@ -242,6 +259,10 @@ func (r GenerarContenedor) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["envios"], err = json.Marshal(r.Envios)
+	if err != nil {
+		return nil, err
+	}
+	output["enviosConRemitente"], err = json.Marshal(r.EnviosConRemitente)
 	if err != nil {
 		return nil, err
 	}
@@ -314,6 +335,22 @@ func (r *GenerarContenedor) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for envios")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["enviosConRemitente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EnviosConRemitente); err != nil {
+			return err
+		}
+	} else {
+		r.EnviosConRemitente = NewUnionNullArrayEnvio()
+
+		r.EnviosConRemitente = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["fechaProcesamiento"]; ok {
