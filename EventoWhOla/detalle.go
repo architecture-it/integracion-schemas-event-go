@@ -221,9 +221,13 @@ type Detalle struct {
 	ORDERTYPE *UnionNullString `json:"ORDERTYPE"`
 
 	PutawayZoneDescr *UnionNullString `json:"PutawayZoneDescr"`
+
+	Ccity *UnionNullString `json:"Ccity"`
+
+	Cstate *UnionNullString `json:"Cstate"`
 }
 
-const DetalleAvroCRC64Fingerprint = ")\x12\xfa_\xe0\xf9\x05\xf5"
+const DetalleAvroCRC64Fingerprint = "\\I\v\xb3\xd2]\xbe\xb9"
 
 func NewDetalle() Detalle {
 	r := Detalle{}
@@ -329,6 +333,8 @@ func NewDetalle() Detalle {
 	r.Ext_Udf_Str16 = nil
 	r.ORDERTYPE = nil
 	r.PutawayZoneDescr = nil
+	r.Ccity = nil
+	r.Cstate = nil
 	return r
 }
 
@@ -765,6 +771,14 @@ func writeDetalle(r Detalle, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Ccity, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Cstate, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -773,7 +787,7 @@ func (r Detalle) Serialize(w io.Writer) error {
 }
 
 func (r Detalle) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"TaskDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TaskType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StorerKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Sku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Lot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UOM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UOMQty\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Qty\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"FromLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LogicalFromLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FromID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ToLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LogicalToLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ToID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CaseID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickMethod\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Status\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StatusMsg\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Priority\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SourcePriority\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"HoldKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserPosition\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserKeyOverride\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StartTime\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EndTime\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SourceType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SourceKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrderKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrderLineNumber\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ListKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"WaveKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReasonKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Message01\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Message02\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Message03\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Door\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Route\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Stop\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PutawayZone\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Altsku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_STR1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE01\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE02\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE03\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE04\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE05\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE06\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE07\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE08\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE09\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE12\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR12\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaLoteWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OCDFLAG\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidadCantidadWosMaq\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"DESCR\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ALTSKU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SERIALKEY\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"STDCUBE\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"STDGROSSWGT\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"SNUM_MASK\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ORDERDATE\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"O_EXT_UDF_STR6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXTERNORDERKEY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"O_EXT_UDF_LKUP1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"O_EXT_UDF_LKUP2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PRIORITY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"C_ZIP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"C_COMPANY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXTERNALORDERKEY2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_STR11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SUSR5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EDITDATE\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Ext_Udf_Str5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Packkey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Stdnetwgt\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"OrderDetails\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Sku\",\"type\":[\"null\",\"string\"]}],\"name\":\"OrderDetail\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Ext_Udf_Str16\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ORDERTYPE\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PutawayZoneDescr\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhOla.Events.LanzadaWosPickingCommon.Detalle\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"TaskDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TaskType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StorerKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Sku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Lot\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UOM\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UOMQty\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Qty\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"FromLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LogicalFromLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FromID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ToLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LogicalToLoc\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ToID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CaseID\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickMethod\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Status\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StatusMsg\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Priority\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SourcePriority\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"HoldKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserPosition\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UserKeyOverride\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StartTime\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EndTime\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SourceType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SourceKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PickDetailKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrderKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrderLineNumber\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ListKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"WaveKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ReasonKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Message01\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Message02\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Message03\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Door\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Route\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Stop\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PutawayZone\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Altsku\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_STR1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE01\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE02\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE03\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE04\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE05\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE06\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE07\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE08\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE09\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LOTTABLE12\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CKEXT_UDF_STR12\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaLoteWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaSerieWos\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OCDFLAG\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidadCantidadWosMaq\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"DESCR\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ALTSKU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SERIALKEY\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"STDCUBE\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"STDGROSSWGT\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"SNUM_MASK\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_LKUP3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ORDERDATE\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"O_EXT_UDF_STR6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXTERNORDERKEY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"O_EXT_UDF_LKUP1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"O_EXT_UDF_LKUP2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PRIORITY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"C_ZIP\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"C_COMPANY\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXTERNALORDERKEY2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EXT_UDF_STR11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SUSR5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EDITDATE\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Ext_Udf_Str5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Packkey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Stdnetwgt\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"OrderDetails\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Sku\",\"type\":[\"null\",\"string\"]}],\"name\":\"OrderDetail\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Ext_Udf_Str16\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ORDERTYPE\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PutawayZoneDescr\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ccity\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cstate\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhOla.Events.LanzadaWosPickingCommon.Detalle\",\"type\":\"record\"}"
 }
 
 func (r Detalle) SchemaName() string {
@@ -1199,6 +1213,14 @@ func (r *Detalle) Get(i int) types.Field {
 		r.PutawayZoneDescr = NewUnionNullString()
 
 		return r.PutawayZoneDescr
+	case 102:
+		r.Ccity = NewUnionNullString()
+
+		return r.Ccity
+	case 103:
+		r.Cstate = NewUnionNullString()
+
+		return r.Cstate
 	}
 	panic("Unknown field index")
 }
@@ -1511,6 +1533,12 @@ func (r *Detalle) SetDefault(i int) {
 	case 101:
 		r.PutawayZoneDescr = nil
 		return
+	case 102:
+		r.Ccity = nil
+		return
+	case 103:
+		r.Cstate = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -1822,6 +1850,12 @@ func (r *Detalle) NullField(i int) {
 		return
 	case 101:
 		r.PutawayZoneDescr = nil
+		return
+	case 102:
+		r.Ccity = nil
+		return
+	case 103:
+		r.Cstate = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -2244,6 +2278,14 @@ func (r Detalle) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["PutawayZoneDescr"], err = json.Marshal(r.PutawayZoneDescr)
+	if err != nil {
+		return nil, err
+	}
+	output["Ccity"], err = json.Marshal(r.Ccity)
+	if err != nil {
+		return nil, err
+	}
+	output["Cstate"], err = json.Marshal(r.Cstate)
 	if err != nil {
 		return nil, err
 	}
@@ -3888,6 +3930,38 @@ func (r *Detalle) UnmarshalJSON(data []byte) error {
 		r.PutawayZoneDescr = NewUnionNullString()
 
 		r.PutawayZoneDescr = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Ccity"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Ccity); err != nil {
+			return err
+		}
+	} else {
+		r.Ccity = NewUnionNullString()
+
+		r.Ccity = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Cstate"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cstate); err != nil {
+			return err
+		}
+	} else {
+		r.Cstate = NewUnionNullString()
+
+		r.Cstate = nil
 	}
 	return nil
 }
