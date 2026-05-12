@@ -31,9 +31,11 @@ type EmailIncomingMessage struct {
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
 
 	RequestId *UnionNullString `json:"requestId"`
+
+	NameUser *UnionStringNull `json:"nameUser"`
 }
 
-const EmailIncomingMessageAvroCRC64Fingerprint = "ſ͡~\xaf\x15\n"
+const EmailIncomingMessageAvroCRC64Fingerprint = "C'\a\xe4y\xa0\xb1\xe4"
 
 func NewEmailIncomingMessage() EmailIncomingMessage {
 	r := EmailIncomingMessage{}
@@ -41,6 +43,10 @@ func NewEmailIncomingMessage() EmailIncomingMessage {
 	r.Attachments = nil
 	r.ReceivedTimestamp = nil
 	r.RequestId = nil
+	r.NameUser = NewUnionStringNull()
+
+	r.NameUser = NewUnionStringNull()
+	r.NameUser.String = ""
 	return r
 }
 
@@ -97,6 +103,10 @@ func writeEmailIncomingMessage(r EmailIncomingMessage, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionStringNull(r.NameUser, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -105,7 +115,7 @@ func (r EmailIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r EmailIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"hasAttachment\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"attachments\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Base64\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]}],\"name\":\"FileBase64Dto\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"hasAttachment\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"attachments\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Base64\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]}],\"name\":\"FileBase64Dto\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]},{\"default\":\"\",\"name\":\"nameUser\",\"type\":[\"string\",\"null\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r EmailIncomingMessage) SchemaName() string {
@@ -153,6 +163,10 @@ func (r *EmailIncomingMessage) Get(i int) types.Field {
 		r.RequestId = NewUnionNullString()
 
 		return r.RequestId
+	case 7:
+		r.NameUser = NewUnionStringNull()
+
+		return r.NameUser
 	}
 	panic("Unknown field index")
 }
@@ -170,6 +184,10 @@ func (r *EmailIncomingMessage) SetDefault(i int) {
 		return
 	case 6:
 		r.RequestId = nil
+		return
+	case 7:
+		r.NameUser = NewUnionStringNull()
+		r.NameUser.String = ""
 		return
 	}
 	panic("Unknown field index")
@@ -191,6 +209,9 @@ func (r *EmailIncomingMessage) NullField(i int) {
 		return
 	case 6:
 		r.RequestId = nil
+		return
+	case 7:
+		r.NameUser = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -233,6 +254,10 @@ func (r EmailIncomingMessage) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["requestId"], err = json.Marshal(r.RequestId)
+	if err != nil {
+		return nil, err
+	}
+	output["nameUser"], err = json.Marshal(r.NameUser)
 	if err != nil {
 		return nil, err
 	}
@@ -349,6 +374,23 @@ func (r *EmailIncomingMessage) UnmarshalJSON(data []byte) error {
 		r.RequestId = NewUnionNullString()
 
 		r.RequestId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["nameUser"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NameUser); err != nil {
+			return err
+		}
+	} else {
+		r.NameUser = NewUnionStringNull()
+
+		r.NameUser = NewUnionStringNull()
+		r.NameUser.String = ""
 	}
 	return nil
 }

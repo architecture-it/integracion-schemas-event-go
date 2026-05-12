@@ -27,14 +27,23 @@ type SocialMediaIncomingMessage struct {
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
 
 	RequestId *UnionNullString `json:"requestId"`
+
+	NameUser *UnionStringNull `json:"nameUser"`
+
+	Attachments *UnionNullArrayFileBase64Dto `json:"attachments"`
 }
 
-const SocialMediaIncomingMessageAvroCRC64Fingerprint = "\x9dS\x8b\xc5\xc8a\xc2\x0f"
+const SocialMediaIncomingMessageAvroCRC64Fingerprint = "s\xc1\x1ei\x00m*\x87"
 
 func NewSocialMediaIncomingMessage() SocialMediaIncomingMessage {
 	r := SocialMediaIncomingMessage{}
 	r.ReceivedTimestamp = nil
 	r.RequestId = nil
+	r.NameUser = NewUnionStringNull()
+
+	r.NameUser = NewUnionStringNull()
+	r.NameUser.String = ""
+	r.Attachments = nil
 	return r
 }
 
@@ -83,6 +92,14 @@ func writeSocialMediaIncomingMessage(r SocialMediaIncomingMessage, w io.Writer) 
 	if err != nil {
 		return err
 	}
+	err = writeUnionStringNull(r.NameUser, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullArrayFileBase64Dto(r.Attachments, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -91,7 +108,7 @@ func (r SocialMediaIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r SocialMediaIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"ConversationId\",\"type\":\"string\"},{\"name\":\"Platform\",\"type\":\"string\"},{\"name\":\"Message\",\"type\":\"string\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.SocialMediaIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"ConversationId\",\"type\":\"string\"},{\"name\":\"Platform\",\"type\":\"string\"},{\"name\":\"Message\",\"type\":\"string\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]},{\"default\":\"\",\"name\":\"nameUser\",\"type\":[\"string\",\"null\"]},{\"default\":null,\"name\":\"attachments\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Base64\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]}],\"name\":\"FileBase64Dto\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.SocialMediaIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r SocialMediaIncomingMessage) SchemaName() string {
@@ -132,6 +149,14 @@ func (r *SocialMediaIncomingMessage) Get(i int) types.Field {
 		r.RequestId = NewUnionNullString()
 
 		return r.RequestId
+	case 5:
+		r.NameUser = NewUnionStringNull()
+
+		return r.NameUser
+	case 6:
+		r.Attachments = NewUnionNullArrayFileBase64Dto()
+
+		return r.Attachments
 	}
 	panic("Unknown field index")
 }
@@ -144,6 +169,13 @@ func (r *SocialMediaIncomingMessage) SetDefault(i int) {
 	case 4:
 		r.RequestId = nil
 		return
+	case 5:
+		r.NameUser = NewUnionStringNull()
+		r.NameUser.String = ""
+		return
+	case 6:
+		r.Attachments = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -155,6 +187,12 @@ func (r *SocialMediaIncomingMessage) NullField(i int) {
 		return
 	case 4:
 		r.RequestId = nil
+		return
+	case 5:
+		r.NameUser = nil
+		return
+	case 6:
+		r.Attachments = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -189,6 +227,14 @@ func (r SocialMediaIncomingMessage) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["requestId"], err = json.Marshal(r.RequestId)
+	if err != nil {
+		return nil, err
+	}
+	output["nameUser"], err = json.Marshal(r.NameUser)
+	if err != nil {
+		return nil, err
+	}
+	output["attachments"], err = json.Marshal(r.Attachments)
 	if err != nil {
 		return nil, err
 	}
@@ -275,6 +321,39 @@ func (r *SocialMediaIncomingMessage) UnmarshalJSON(data []byte) error {
 		r.RequestId = NewUnionNullString()
 
 		r.RequestId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["nameUser"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NameUser); err != nil {
+			return err
+		}
+	} else {
+		r.NameUser = NewUnionStringNull()
+
+		r.NameUser = NewUnionStringNull()
+		r.NameUser.String = ""
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["attachments"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Attachments); err != nil {
+			return err
+		}
+	} else {
+		r.Attachments = NewUnionNullArrayFileBase64Dto()
+
+		r.Attachments = nil
 	}
 	return nil
 }
