@@ -30,15 +30,15 @@ type EmailMessage struct {
 
 	HasAttachment *UnionNullBool `json:"HasAttachment"`
 
-	Attachment *UnionNullString `json:"Attachment"`
+	Attachments *UnionNullArrayFileBase64Dto `json:"Attachments"`
 }
 
-const EmailMessageAvroCRC64Fingerprint = "\xa2Xv\xa3\xe7\x1f\x1a:"
+const EmailMessageAvroCRC64Fingerprint = "\xb9eC\xcc\xd8\r\x8c\xdc"
 
 func NewEmailMessage() EmailMessage {
 	r := EmailMessage{}
 	r.HasAttachment = nil
-	r.Attachment = nil
+	r.Attachments = nil
 	return r
 }
 
@@ -91,7 +91,7 @@ func writeEmailMessage(r EmailMessage, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Attachment, w)
+	err = writeUnionNullArrayFileBase64Dto(r.Attachments, w)
 	if err != nil {
 		return err
 	}
@@ -103,7 +103,7 @@ func (r EmailMessage) Serialize(w io.Writer) error {
 }
 
 func (r EmailMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Subject\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReceivedDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Sender\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"EmailAddress\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]}],\"name\":\"Sender\",\"type\":\"record\"}]},{\"name\":\"Body\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Content\",\"type\":[\"null\",\"string\"]}],\"name\":\"Body\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"HasAttachment\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Attachment\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Subject\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReceivedDateTime\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Sender\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"EmailAddress\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"Address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Name\",\"type\":[\"null\",\"string\"]}],\"name\":\"EmailAddress\",\"type\":\"record\"}]}],\"name\":\"Sender\",\"type\":\"record\"}]},{\"name\":\"Body\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Content\",\"type\":[\"null\",\"string\"]}],\"name\":\"Body\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"HasAttachment\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Attachments\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Base64\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]}],\"name\":\"FileBase64Dto\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailMessage\",\"type\":\"record\"}"
 }
 
 func (r EmailMessage) SchemaName() string {
@@ -147,9 +147,9 @@ func (r *EmailMessage) Get(i int) types.Field {
 
 		return r.HasAttachment
 	case 6:
-		r.Attachment = NewUnionNullString()
+		r.Attachments = NewUnionNullArrayFileBase64Dto()
 
-		return r.Attachment
+		return r.Attachments
 	}
 	panic("Unknown field index")
 }
@@ -160,7 +160,7 @@ func (r *EmailMessage) SetDefault(i int) {
 		r.HasAttachment = nil
 		return
 	case 6:
-		r.Attachment = nil
+		r.Attachments = nil
 		return
 	}
 	panic("Unknown field index")
@@ -184,7 +184,7 @@ func (r *EmailMessage) NullField(i int) {
 		r.HasAttachment = nil
 		return
 	case 6:
-		r.Attachment = nil
+		r.Attachments = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -226,7 +226,7 @@ func (r EmailMessage) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Attachment"], err = json.Marshal(r.Attachment)
+	output["Attachments"], err = json.Marshal(r.Attachments)
 	if err != nil {
 		return nil, err
 	}
@@ -327,20 +327,20 @@ func (r *EmailMessage) UnmarshalJSON(data []byte) error {
 		r.HasAttachment = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Attachment"]; ok {
+		if v, ok := fields["Attachments"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Attachment); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.Attachments); err != nil {
 			return err
 		}
 	} else {
-		r.Attachment = NewUnionNullString()
+		r.Attachments = NewUnionNullArrayFileBase64Dto()
 
-		r.Attachment = nil
+		r.Attachments = nil
 	}
 	return nil
 }

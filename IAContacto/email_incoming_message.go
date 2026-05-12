@@ -26,16 +26,19 @@ type EmailIncomingMessage struct {
 
 	HasAttachment bool `json:"hasAttachment"`
 
+	Attachments *UnionNullArrayFileBase64Dto `json:"attachments"`
+
 	ReceivedTimestamp *UnionNullLong `json:"receivedTimestamp"`
 
 	RequestId *UnionNullString `json:"requestId"`
 }
 
-const EmailIncomingMessageAvroCRC64Fingerprint = "^\xa5T>\x14\xb9C\xe2"
+const EmailIncomingMessageAvroCRC64Fingerprint = "ſ͡~\xaf\x15\n"
 
 func NewEmailIncomingMessage() EmailIncomingMessage {
 	r := EmailIncomingMessage{}
 	r.HasAttachment = false
+	r.Attachments = nil
 	r.ReceivedTimestamp = nil
 	r.RequestId = nil
 	return r
@@ -82,6 +85,10 @@ func writeEmailIncomingMessage(r EmailIncomingMessage, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayFileBase64Dto(r.Attachments, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullLong(r.ReceivedTimestamp, w)
 	if err != nil {
 		return err
@@ -98,7 +105,7 @@ func (r EmailIncomingMessage) Serialize(w io.Writer) error {
 }
 
 func (r EmailIncomingMessage) Schema() string {
-	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"hasAttachment\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailIncomingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"destinatario\",\"type\":\"string\"},{\"name\":\"asunto\",\"type\":[\"null\",\"string\"]},{\"name\":\"body\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"hasAttachment\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"attachments\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"Base64\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContentType\",\"type\":[\"null\",\"string\"]}],\"name\":\"FileBase64Dto\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.EmailIncomingMessage\",\"type\":\"record\"}"
 }
 
 func (r EmailIncomingMessage) SchemaName() string {
@@ -135,10 +142,14 @@ func (r *EmailIncomingMessage) Get(i int) types.Field {
 		return w
 
 	case 4:
+		r.Attachments = NewUnionNullArrayFileBase64Dto()
+
+		return r.Attachments
+	case 5:
 		r.ReceivedTimestamp = NewUnionNullLong()
 
 		return r.ReceivedTimestamp
-	case 5:
+	case 6:
 		r.RequestId = NewUnionNullString()
 
 		return r.RequestId
@@ -152,9 +163,12 @@ func (r *EmailIncomingMessage) SetDefault(i int) {
 		r.HasAttachment = false
 		return
 	case 4:
-		r.ReceivedTimestamp = nil
+		r.Attachments = nil
 		return
 	case 5:
+		r.ReceivedTimestamp = nil
+		return
+	case 6:
 		r.RequestId = nil
 		return
 	}
@@ -170,9 +184,12 @@ func (r *EmailIncomingMessage) NullField(i int) {
 		r.Body = nil
 		return
 	case 4:
-		r.ReceivedTimestamp = nil
+		r.Attachments = nil
 		return
 	case 5:
+		r.ReceivedTimestamp = nil
+		return
+	case 6:
 		r.RequestId = nil
 		return
 	}
@@ -204,6 +221,10 @@ func (r EmailIncomingMessage) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["hasAttachment"], err = json.Marshal(r.HasAttachment)
+	if err != nil {
+		return nil, err
+	}
+	output["attachments"], err = json.Marshal(r.Attachments)
 	if err != nil {
 		return nil, err
 	}
@@ -280,6 +301,22 @@ func (r *EmailIncomingMessage) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		r.HasAttachment = false
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["attachments"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Attachments); err != nil {
+			return err
+		}
+	} else {
+		r.Attachments = NewUnionNullArrayFileBase64Dto()
+
+		r.Attachments = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["receivedTimestamp"]; ok {
