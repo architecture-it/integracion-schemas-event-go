@@ -47,12 +47,15 @@ type AvisoInactividad struct {
 	IdTipoContacto int32 `json:"idTipoContacto"`
 
 	TipoContacto string `json:"tipoContacto"`
+
+	RecalculoEda *UnionNullRecalculoEda `json:"recalculoEda"`
 }
 
-const AvisoInactividadAvroCRC64Fingerprint = "\xaf\xd5m\x90:\xf3\x1a\xeb"
+const AvisoInactividadAvroCRC64Fingerprint = "o\xc0'.\xb1\x95\xe1\xf4"
 
 func NewAvisoInactividad() AvisoInactividad {
 	r := AvisoInactividad{}
+	r.RecalculoEda = nil
 	return r
 }
 
@@ -141,6 +144,10 @@ func writeAvisoInactividad(r AvisoInactividad, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullRecalculoEda(r.RecalculoEda, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -149,7 +156,7 @@ func (r AvisoInactividad) Serialize(w io.Writer) error {
 }
 
 func (r AvisoInactividad) Schema() string {
-	return "{\"fields\":[{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"diasInactivo\",\"type\":\"int\"},{\"name\":\"destinatarioNombre\",\"type\":\"string\"},{\"name\":\"destinatarioEmail\",\"type\":\"string\"},{\"name\":\"destinatarioTelefono\",\"type\":\"string\"},{\"name\":\"idMovimiento\",\"type\":\"int\"},{\"name\":\"movimiento\",\"type\":\"string\"},{\"name\":\"idSubMovimiento\",\"type\":\"int\"},{\"name\":\"subMovimiento\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"idTipoContacto\",\"type\":\"int\"},{\"name\":\"tipoContacto\",\"type\":\"string\"}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoInactividad\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"sistema\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"name\":\"diasInactivo\",\"type\":\"int\"},{\"name\":\"destinatarioNombre\",\"type\":\"string\"},{\"name\":\"destinatarioEmail\",\"type\":\"string\"},{\"name\":\"destinatarioTelefono\",\"type\":\"string\"},{\"name\":\"idMovimiento\",\"type\":\"int\"},{\"name\":\"movimiento\",\"type\":\"string\"},{\"name\":\"idSubMovimiento\",\"type\":\"int\"},{\"name\":\"subMovimiento\",\"type\":\"string\"},{\"name\":\"motivo\",\"type\":\"string\"},{\"name\":\"idTipoContacto\",\"type\":\"int\"},{\"name\":\"tipoContacto\",\"type\":\"string\"},{\"default\":null,\"name\":\"recalculoEda\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"tuvoRecalculo\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"FechaRecalculo\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"RecalculoEda\",\"type\":\"record\"}]}],\"name\":\"Andreani.Notificaciones.Events.Records.AvisoInactividad\",\"type\":\"record\"}"
 }
 
 func (r AvisoInactividad) SchemaName() string {
@@ -242,18 +249,28 @@ func (r *AvisoInactividad) Get(i int) types.Field {
 
 		return w
 
+	case 15:
+		r.RecalculoEda = NewUnionNullRecalculoEda()
+
+		return r.RecalculoEda
 	}
 	panic("Unknown field index")
 }
 
 func (r *AvisoInactividad) SetDefault(i int) {
 	switch i {
+	case 15:
+		r.RecalculoEda = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *AvisoInactividad) NullField(i int) {
 	switch i {
+	case 15:
+		r.RecalculoEda = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -327,6 +344,10 @@ func (r AvisoInactividad) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["tipoContacto"], err = json.Marshal(r.TipoContacto)
+	if err != nil {
+		return nil, err
+	}
+	output["recalculoEda"], err = json.Marshal(r.RecalculoEda)
 	if err != nil {
 		return nil, err
 	}
@@ -549,6 +570,22 @@ func (r *AvisoInactividad) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for tipoContacto")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["recalculoEda"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.RecalculoEda); err != nil {
+			return err
+		}
+	} else {
+		r.RecalculoEda = NewUnionNullRecalculoEda()
+
+		r.RecalculoEda = nil
 	}
 	return nil
 }
