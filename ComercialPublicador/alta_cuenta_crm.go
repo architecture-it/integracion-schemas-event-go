@@ -18,58 +18,62 @@ import (
 var _ = fmt.Printf
 
 type AltaCuentaCRM struct {
-	Guid_crm string `json:"guid_crm"`
-
 	Cuit *UnionNullString `json:"cuit"`
 
-	Numero_cuenta *UnionNullString `json:"numero_cuenta"`
+	NumeroCuenta *UnionNullString `json:"numeroCuenta"`
 
 	Pais *UnionNullString `json:"pais"`
 
 	Provincia *UnionNullString `json:"provincia"`
 
-	Razon_social *UnionNullString `json:"razon_social"`
+	RazonSocial *UnionNullString `json:"razonSocial"`
 
-	Nombre_fantasia *UnionNullString `json:"nombre_fantasia"`
+	NombreFantasia *UnionNullString `json:"nombreFantasia"`
 
-	Correo_electronico *UnionNullString `json:"correo_electronico"`
+	CorreoElectronico *UnionNullString `json:"correoElectronico"`
 
 	Telefono *UnionNullString `json:"telefono"`
 
-	Tipo_nif *UnionNullString `json:"tipo_nif"`
+	TipoNif *UnionNullString `json:"tipoNif"`
 
 	Calle *UnionNullString `json:"calle"`
 
-	Numero_calle *UnionNullString `json:"numero_calle"`
+	NumeroCalle *UnionNullString `json:"numeroCalle"`
 
 	Piso *UnionNullString `json:"piso"`
 
-	Condicion_impositiva *UnionNullString `json:"condicion_impositiva"`
+	CondicionImpositiva *UnionNullString `json:"condicionImpositiva"`
 
-	Descripcion_localidad *UnionNullString `json:"descripcion_localidad"`
+	DescripcionLocalidad *UnionNullString `json:"descripcionLocalidad"`
 
-	Enviar_sap *UnionNullInt `json:"enviar_sap"`
+	GuidCrm *UnionNullString `json:"guidCrm"`
+
+	EnviarSap *UnionNullString `json:"enviarSap"`
+
+	DatosAdicionales *UnionNullArrayMetadata `json:"datosAdicionales"`
 }
 
-const AltaCuentaCRMAvroCRC64Fingerprint = "4\xe4u\xfc\xf4fԃ"
+const AltaCuentaCRMAvroCRC64Fingerprint = "x\x82#\xadJ\f\xdaK"
 
 func NewAltaCuentaCRM() AltaCuentaCRM {
 	r := AltaCuentaCRM{}
 	r.Cuit = nil
-	r.Numero_cuenta = nil
+	r.NumeroCuenta = nil
 	r.Pais = nil
 	r.Provincia = nil
-	r.Razon_social = nil
-	r.Nombre_fantasia = nil
-	r.Correo_electronico = nil
+	r.RazonSocial = nil
+	r.NombreFantasia = nil
+	r.CorreoElectronico = nil
 	r.Telefono = nil
-	r.Tipo_nif = nil
+	r.TipoNif = nil
 	r.Calle = nil
-	r.Numero_calle = nil
+	r.NumeroCalle = nil
 	r.Piso = nil
-	r.Condicion_impositiva = nil
-	r.Descripcion_localidad = nil
-	r.Enviar_sap = nil
+	r.CondicionImpositiva = nil
+	r.DescripcionLocalidad = nil
+	r.GuidCrm = nil
+	r.EnviarSap = nil
+	r.DatosAdicionales = nil
 	return r
 }
 
@@ -98,15 +102,11 @@ func DeserializeAltaCuentaCRMFromSchema(r io.Reader, schema string) (AltaCuentaC
 
 func writeAltaCuentaCRM(r AltaCuentaCRM, w io.Writer) error {
 	var err error
-	err = vm.WriteString(r.Guid_crm, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullString(r.Cuit, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Numero_cuenta, w)
+	err = writeUnionNullString(r.NumeroCuenta, w)
 	if err != nil {
 		return err
 	}
@@ -118,15 +118,15 @@ func writeAltaCuentaCRM(r AltaCuentaCRM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Razon_social, w)
+	err = writeUnionNullString(r.RazonSocial, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Nombre_fantasia, w)
+	err = writeUnionNullString(r.NombreFantasia, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Correo_electronico, w)
+	err = writeUnionNullString(r.CorreoElectronico, w)
 	if err != nil {
 		return err
 	}
@@ -134,7 +134,7 @@ func writeAltaCuentaCRM(r AltaCuentaCRM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Tipo_nif, w)
+	err = writeUnionNullString(r.TipoNif, w)
 	if err != nil {
 		return err
 	}
@@ -142,7 +142,7 @@ func writeAltaCuentaCRM(r AltaCuentaCRM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Numero_calle, w)
+	err = writeUnionNullString(r.NumeroCalle, w)
 	if err != nil {
 		return err
 	}
@@ -150,15 +150,23 @@ func writeAltaCuentaCRM(r AltaCuentaCRM, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Condicion_impositiva, w)
+	err = writeUnionNullString(r.CondicionImpositiva, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Descripcion_localidad, w)
+	err = writeUnionNullString(r.DescripcionLocalidad, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullInt(r.Enviar_sap, w)
+	err = writeUnionNullString(r.GuidCrm, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.EnviarSap, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullArrayMetadata(r.DatosAdicionales, w)
 	if err != nil {
 		return err
 	}
@@ -170,7 +178,7 @@ func (r AltaCuentaCRM) Serialize(w io.Writer) error {
 }
 
 func (r AltaCuentaCRM) Schema() string {
-	return "{\"fields\":[{\"name\":\"guid_crm\",\"type\":\"string\"},{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero_cuenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"razon_social\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre_fantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"correo_electronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipo_nif\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero_calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"condicion_impositiva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion_localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"enviar_sap\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.ComercialPublicador.Events.Record.altaCuentaCRM\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"cuit\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroCuenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pais\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"razonSocial\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"correoElectronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoNif\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numeroCalle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"condicionImpositiva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcionLocalidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"guidCrm\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"enviarSap\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"datosAdicionales\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"key\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Metadata\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.ComercialPublicador.Events.Record.altaCuentaCRM\",\"type\":\"record\"}"
 }
 
 func (r AltaCuentaCRM) SchemaName() string {
@@ -189,120 +197,129 @@ func (_ AltaCuentaCRM) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *AltaCuentaCRM) Get(i int) types.Field {
 	switch i {
 	case 0:
-		w := types.String{Target: &r.Guid_crm}
-
-		return w
-
-	case 1:
 		r.Cuit = NewUnionNullString()
 
 		return r.Cuit
-	case 2:
-		r.Numero_cuenta = NewUnionNullString()
+	case 1:
+		r.NumeroCuenta = NewUnionNullString()
 
-		return r.Numero_cuenta
-	case 3:
+		return r.NumeroCuenta
+	case 2:
 		r.Pais = NewUnionNullString()
 
 		return r.Pais
-	case 4:
+	case 3:
 		r.Provincia = NewUnionNullString()
 
 		return r.Provincia
+	case 4:
+		r.RazonSocial = NewUnionNullString()
+
+		return r.RazonSocial
 	case 5:
-		r.Razon_social = NewUnionNullString()
+		r.NombreFantasia = NewUnionNullString()
 
-		return r.Razon_social
+		return r.NombreFantasia
 	case 6:
-		r.Nombre_fantasia = NewUnionNullString()
+		r.CorreoElectronico = NewUnionNullString()
 
-		return r.Nombre_fantasia
+		return r.CorreoElectronico
 	case 7:
-		r.Correo_electronico = NewUnionNullString()
-
-		return r.Correo_electronico
-	case 8:
 		r.Telefono = NewUnionNullString()
 
 		return r.Telefono
-	case 9:
-		r.Tipo_nif = NewUnionNullString()
+	case 8:
+		r.TipoNif = NewUnionNullString()
 
-		return r.Tipo_nif
-	case 10:
+		return r.TipoNif
+	case 9:
 		r.Calle = NewUnionNullString()
 
 		return r.Calle
-	case 11:
-		r.Numero_calle = NewUnionNullString()
+	case 10:
+		r.NumeroCalle = NewUnionNullString()
 
-		return r.Numero_calle
-	case 12:
+		return r.NumeroCalle
+	case 11:
 		r.Piso = NewUnionNullString()
 
 		return r.Piso
+	case 12:
+		r.CondicionImpositiva = NewUnionNullString()
+
+		return r.CondicionImpositiva
 	case 13:
-		r.Condicion_impositiva = NewUnionNullString()
+		r.DescripcionLocalidad = NewUnionNullString()
 
-		return r.Condicion_impositiva
+		return r.DescripcionLocalidad
 	case 14:
-		r.Descripcion_localidad = NewUnionNullString()
+		r.GuidCrm = NewUnionNullString()
 
-		return r.Descripcion_localidad
+		return r.GuidCrm
 	case 15:
-		r.Enviar_sap = NewUnionNullInt()
+		r.EnviarSap = NewUnionNullString()
 
-		return r.Enviar_sap
+		return r.EnviarSap
+	case 16:
+		r.DatosAdicionales = NewUnionNullArrayMetadata()
+
+		return r.DatosAdicionales
 	}
 	panic("Unknown field index")
 }
 
 func (r *AltaCuentaCRM) SetDefault(i int) {
 	switch i {
-	case 1:
+	case 0:
 		r.Cuit = nil
 		return
-	case 2:
-		r.Numero_cuenta = nil
+	case 1:
+		r.NumeroCuenta = nil
 		return
-	case 3:
+	case 2:
 		r.Pais = nil
 		return
-	case 4:
+	case 3:
 		r.Provincia = nil
 		return
+	case 4:
+		r.RazonSocial = nil
+		return
 	case 5:
-		r.Razon_social = nil
+		r.NombreFantasia = nil
 		return
 	case 6:
-		r.Nombre_fantasia = nil
+		r.CorreoElectronico = nil
 		return
 	case 7:
-		r.Correo_electronico = nil
-		return
-	case 8:
 		r.Telefono = nil
 		return
-	case 9:
-		r.Tipo_nif = nil
+	case 8:
+		r.TipoNif = nil
 		return
-	case 10:
+	case 9:
 		r.Calle = nil
 		return
-	case 11:
-		r.Numero_calle = nil
+	case 10:
+		r.NumeroCalle = nil
 		return
-	case 12:
+	case 11:
 		r.Piso = nil
 		return
+	case 12:
+		r.CondicionImpositiva = nil
+		return
 	case 13:
-		r.Condicion_impositiva = nil
+		r.DescripcionLocalidad = nil
 		return
 	case 14:
-		r.Descripcion_localidad = nil
+		r.GuidCrm = nil
 		return
 	case 15:
-		r.Enviar_sap = nil
+		r.EnviarSap = nil
+		return
+	case 16:
+		r.DatosAdicionales = nil
 		return
 	}
 	panic("Unknown field index")
@@ -310,50 +327,56 @@ func (r *AltaCuentaCRM) SetDefault(i int) {
 
 func (r *AltaCuentaCRM) NullField(i int) {
 	switch i {
-	case 1:
+	case 0:
 		r.Cuit = nil
 		return
-	case 2:
-		r.Numero_cuenta = nil
+	case 1:
+		r.NumeroCuenta = nil
 		return
-	case 3:
+	case 2:
 		r.Pais = nil
 		return
-	case 4:
+	case 3:
 		r.Provincia = nil
 		return
+	case 4:
+		r.RazonSocial = nil
+		return
 	case 5:
-		r.Razon_social = nil
+		r.NombreFantasia = nil
 		return
 	case 6:
-		r.Nombre_fantasia = nil
+		r.CorreoElectronico = nil
 		return
 	case 7:
-		r.Correo_electronico = nil
-		return
-	case 8:
 		r.Telefono = nil
 		return
-	case 9:
-		r.Tipo_nif = nil
+	case 8:
+		r.TipoNif = nil
 		return
-	case 10:
+	case 9:
 		r.Calle = nil
 		return
-	case 11:
-		r.Numero_calle = nil
+	case 10:
+		r.NumeroCalle = nil
 		return
-	case 12:
+	case 11:
 		r.Piso = nil
 		return
+	case 12:
+		r.CondicionImpositiva = nil
+		return
 	case 13:
-		r.Condicion_impositiva = nil
+		r.DescripcionLocalidad = nil
 		return
 	case 14:
-		r.Descripcion_localidad = nil
+		r.GuidCrm = nil
 		return
 	case 15:
-		r.Enviar_sap = nil
+		r.EnviarSap = nil
+		return
+	case 16:
+		r.DatosAdicionales = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -371,15 +394,11 @@ func (_ AltaCuentaCRM) AvroCRC64Fingerprint() []byte {
 func (r AltaCuentaCRM) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["guid_crm"], err = json.Marshal(r.Guid_crm)
-	if err != nil {
-		return nil, err
-	}
 	output["cuit"], err = json.Marshal(r.Cuit)
 	if err != nil {
 		return nil, err
 	}
-	output["numero_cuenta"], err = json.Marshal(r.Numero_cuenta)
+	output["numeroCuenta"], err = json.Marshal(r.NumeroCuenta)
 	if err != nil {
 		return nil, err
 	}
@@ -391,15 +410,15 @@ func (r AltaCuentaCRM) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["razon_social"], err = json.Marshal(r.Razon_social)
+	output["razonSocial"], err = json.Marshal(r.RazonSocial)
 	if err != nil {
 		return nil, err
 	}
-	output["nombre_fantasia"], err = json.Marshal(r.Nombre_fantasia)
+	output["nombreFantasia"], err = json.Marshal(r.NombreFantasia)
 	if err != nil {
 		return nil, err
 	}
-	output["correo_electronico"], err = json.Marshal(r.Correo_electronico)
+	output["correoElectronico"], err = json.Marshal(r.CorreoElectronico)
 	if err != nil {
 		return nil, err
 	}
@@ -407,7 +426,7 @@ func (r AltaCuentaCRM) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["tipo_nif"], err = json.Marshal(r.Tipo_nif)
+	output["tipoNif"], err = json.Marshal(r.TipoNif)
 	if err != nil {
 		return nil, err
 	}
@@ -415,7 +434,7 @@ func (r AltaCuentaCRM) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["numero_calle"], err = json.Marshal(r.Numero_calle)
+	output["numeroCalle"], err = json.Marshal(r.NumeroCalle)
 	if err != nil {
 		return nil, err
 	}
@@ -423,15 +442,23 @@ func (r AltaCuentaCRM) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["condicion_impositiva"], err = json.Marshal(r.Condicion_impositiva)
+	output["condicionImpositiva"], err = json.Marshal(r.CondicionImpositiva)
 	if err != nil {
 		return nil, err
 	}
-	output["descripcion_localidad"], err = json.Marshal(r.Descripcion_localidad)
+	output["descripcionLocalidad"], err = json.Marshal(r.DescripcionLocalidad)
 	if err != nil {
 		return nil, err
 	}
-	output["enviar_sap"], err = json.Marshal(r.Enviar_sap)
+	output["guidCrm"], err = json.Marshal(r.GuidCrm)
+	if err != nil {
+		return nil, err
+	}
+	output["enviarSap"], err = json.Marshal(r.EnviarSap)
+	if err != nil {
+		return nil, err
+	}
+	output["datosAdicionales"], err = json.Marshal(r.DatosAdicionales)
 	if err != nil {
 		return nil, err
 	}
@@ -445,20 +472,6 @@ func (r *AltaCuentaCRM) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
-	val = func() json.RawMessage {
-		if v, ok := fields["guid_crm"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Guid_crm); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for guid_crm")
-	}
 	val = func() json.RawMessage {
 		if v, ok := fields["cuit"]; ok {
 			return v
@@ -476,20 +489,20 @@ func (r *AltaCuentaCRM) UnmarshalJSON(data []byte) error {
 		r.Cuit = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numero_cuenta"]; ok {
+		if v, ok := fields["numeroCuenta"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Numero_cuenta); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroCuenta); err != nil {
 			return err
 		}
 	} else {
-		r.Numero_cuenta = NewUnionNullString()
+		r.NumeroCuenta = NewUnionNullString()
 
-		r.Numero_cuenta = nil
+		r.NumeroCuenta = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["pais"]; ok {
@@ -524,52 +537,52 @@ func (r *AltaCuentaCRM) UnmarshalJSON(data []byte) error {
 		r.Provincia = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["razon_social"]; ok {
+		if v, ok := fields["razonSocial"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Razon_social); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.RazonSocial); err != nil {
 			return err
 		}
 	} else {
-		r.Razon_social = NewUnionNullString()
+		r.RazonSocial = NewUnionNullString()
 
-		r.Razon_social = nil
+		r.RazonSocial = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["nombre_fantasia"]; ok {
+		if v, ok := fields["nombreFantasia"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Nombre_fantasia); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.NombreFantasia); err != nil {
 			return err
 		}
 	} else {
-		r.Nombre_fantasia = NewUnionNullString()
+		r.NombreFantasia = NewUnionNullString()
 
-		r.Nombre_fantasia = nil
+		r.NombreFantasia = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["correo_electronico"]; ok {
+		if v, ok := fields["correoElectronico"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Correo_electronico); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CorreoElectronico); err != nil {
 			return err
 		}
 	} else {
-		r.Correo_electronico = NewUnionNullString()
+		r.CorreoElectronico = NewUnionNullString()
 
-		r.Correo_electronico = nil
+		r.CorreoElectronico = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["telefono"]; ok {
@@ -588,20 +601,20 @@ func (r *AltaCuentaCRM) UnmarshalJSON(data []byte) error {
 		r.Telefono = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["tipo_nif"]; ok {
+		if v, ok := fields["tipoNif"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Tipo_nif); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoNif); err != nil {
 			return err
 		}
 	} else {
-		r.Tipo_nif = NewUnionNullString()
+		r.TipoNif = NewUnionNullString()
 
-		r.Tipo_nif = nil
+		r.TipoNif = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["calle"]; ok {
@@ -620,20 +633,20 @@ func (r *AltaCuentaCRM) UnmarshalJSON(data []byte) error {
 		r.Calle = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["numero_calle"]; ok {
+		if v, ok := fields["numeroCalle"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Numero_calle); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroCalle); err != nil {
 			return err
 		}
 	} else {
-		r.Numero_calle = NewUnionNullString()
+		r.NumeroCalle = NewUnionNullString()
 
-		r.Numero_calle = nil
+		r.NumeroCalle = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["piso"]; ok {
@@ -652,52 +665,84 @@ func (r *AltaCuentaCRM) UnmarshalJSON(data []byte) error {
 		r.Piso = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["condicion_impositiva"]; ok {
+		if v, ok := fields["condicionImpositiva"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Condicion_impositiva); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.CondicionImpositiva); err != nil {
 			return err
 		}
 	} else {
-		r.Condicion_impositiva = NewUnionNullString()
+		r.CondicionImpositiva = NewUnionNullString()
 
-		r.Condicion_impositiva = nil
+		r.CondicionImpositiva = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["descripcion_localidad"]; ok {
+		if v, ok := fields["descripcionLocalidad"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Descripcion_localidad); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionLocalidad); err != nil {
 			return err
 		}
 	} else {
-		r.Descripcion_localidad = NewUnionNullString()
+		r.DescripcionLocalidad = NewUnionNullString()
 
-		r.Descripcion_localidad = nil
+		r.DescripcionLocalidad = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["enviar_sap"]; ok {
+		if v, ok := fields["guidCrm"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Enviar_sap); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.GuidCrm); err != nil {
 			return err
 		}
 	} else {
-		r.Enviar_sap = NewUnionNullInt()
+		r.GuidCrm = NewUnionNullString()
 
-		r.Enviar_sap = nil
+		r.GuidCrm = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["enviarSap"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EnviarSap); err != nil {
+			return err
+		}
+	} else {
+		r.EnviarSap = NewUnionNullString()
+
+		r.EnviarSap = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["datosAdicionales"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DatosAdicionales); err != nil {
+			return err
+		}
+	} else {
+		r.DatosAdicionales = NewUnionNullArrayMetadata()
+
+		r.DatosAdicionales = nil
 	}
 	return nil
 }
