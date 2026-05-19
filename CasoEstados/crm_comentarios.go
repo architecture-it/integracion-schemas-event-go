@@ -18,16 +18,20 @@ import (
 var _ = fmt.Printf
 
 type CrmComentarios struct {
-	Cliente *UnionNullString `json:"cliente"`
+	Cliente *UnionNullString `json:"Cliente"`
 
 	NumeroDeCaso *UnionNullString `json:"NumeroDeCaso"`
 
 	Comentario *UnionNullString `json:"Comentario"`
 
 	IdVinculacion *UnionNullString `json:"IdVinculacion"`
+
+	IdComentario *UnionNullString `json:"IdComentario"`
+
+	TieneArchivo *UnionNullBool `json:"TieneArchivo"`
 }
 
-const CrmComentariosAvroCRC64Fingerprint = "i\x82\xc0c)s\xc2_"
+const CrmComentariosAvroCRC64Fingerprint = "\x81\x86\xc4\x1c\x84~\x1a\xab"
 
 func NewCrmComentarios() CrmComentarios {
 	r := CrmComentarios{}
@@ -75,6 +79,14 @@ func writeCrmComentarios(r CrmComentarios, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.IdComentario, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullBool(r.TieneArchivo, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -83,7 +95,7 @@ func (r CrmComentarios) Serialize(w io.Writer) error {
 }
 
 func (r CrmComentarios) Schema() string {
-	return "{\"fields\":[{\"name\":\"cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDeCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdVinculacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.CrmComentarios\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDeCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdVinculacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdComentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneArchivo\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.CrmComentarios\",\"type\":\"record\"}"
 }
 
 func (r CrmComentarios) SchemaName() string {
@@ -117,6 +129,14 @@ func (r *CrmComentarios) Get(i int) types.Field {
 		r.IdVinculacion = NewUnionNullString()
 
 		return r.IdVinculacion
+	case 4:
+		r.IdComentario = NewUnionNullString()
+
+		return r.IdComentario
+	case 5:
+		r.TieneArchivo = NewUnionNullBool()
+
+		return r.TieneArchivo
 	}
 	panic("Unknown field index")
 }
@@ -141,6 +161,12 @@ func (r *CrmComentarios) NullField(i int) {
 	case 3:
 		r.IdVinculacion = nil
 		return
+	case 4:
+		r.IdComentario = nil
+		return
+	case 5:
+		r.TieneArchivo = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -157,7 +183,7 @@ func (_ CrmComentarios) AvroCRC64Fingerprint() []byte {
 func (r CrmComentarios) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["cliente"], err = json.Marshal(r.Cliente)
+	output["Cliente"], err = json.Marshal(r.Cliente)
 	if err != nil {
 		return nil, err
 	}
@@ -173,6 +199,14 @@ func (r CrmComentarios) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["IdComentario"], err = json.Marshal(r.IdComentario)
+	if err != nil {
+		return nil, err
+	}
+	output["TieneArchivo"], err = json.Marshal(r.TieneArchivo)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -184,7 +218,7 @@ func (r *CrmComentarios) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["cliente"]; ok {
+		if v, ok := fields["Cliente"]; ok {
 			return v
 		}
 		return nil
@@ -195,7 +229,7 @@ func (r *CrmComentarios) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for cliente")
+		return fmt.Errorf("no value specified for Cliente")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["NumeroDeCaso"]; ok {
@@ -238,6 +272,34 @@ func (r *CrmComentarios) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for IdVinculacion")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdComentario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdComentario); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IdComentario")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TieneArchivo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TieneArchivo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for TieneArchivo")
 	}
 	return nil
 }
