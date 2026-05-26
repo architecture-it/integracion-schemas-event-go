@@ -22,14 +22,14 @@ type ContenedorDeSeries struct {
 
 	Asn string `json:"Asn"`
 
-	Series []Serie `json:"Series"`
+	Series []DetalleSerie `json:"Series"`
 }
 
-const ContenedorDeSeriesAvroCRC64Fingerprint = "\n9N\x05\x87\xeb\x91\xf7"
+const ContenedorDeSeriesAvroCRC64Fingerprint = "\xd6D\x1d\x93\xbb\xbe\xab="
 
 func NewContenedorDeSeries() ContenedorDeSeries {
 	r := ContenedorDeSeries{}
-	r.Series = make([]Serie, 0)
+	r.Series = make([]DetalleSerie, 0)
 
 	return r
 }
@@ -67,7 +67,7 @@ func writeContenedorDeSeries(r ContenedorDeSeries, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeArraySerie(r.Series, w)
+	err = writeArrayDetalleSerie(r.Series, w)
 	if err != nil {
 		return err
 	}
@@ -79,7 +79,7 @@ func (r ContenedorDeSeries) Serialize(w io.Writer) error {
 }
 
 func (r ContenedorDeSeries) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdContenedor\",\"type\":\"string\"},{\"name\":\"Asn\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"Serie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WosTraza.Events.AgrupadorasCommon.ContenedorDeSeries\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdContenedor\",\"type\":\"string\"},{\"name\":\"Asn\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"DetalleSerie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WosTraza.Events.AgrupadorasCommon.ContenedorDeSeries\",\"type\":\"record\"}"
 }
 
 func (r ContenedorDeSeries) SchemaName() string {
@@ -108,9 +108,9 @@ func (r *ContenedorDeSeries) Get(i int) types.Field {
 		return w
 
 	case 2:
-		r.Series = make([]Serie, 0)
+		r.Series = make([]DetalleSerie, 0)
 
-		w := ArraySerieWrapper{Target: &r.Series}
+		w := ArrayDetalleSerieWrapper{Target: &r.Series}
 
 		return w
 

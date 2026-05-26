@@ -21,7 +21,7 @@ type WosTrazaAgrupadoras struct {
 	Agrupadoras Agrupadoras `json:"Agrupadoras"`
 }
 
-const WosTrazaAgrupadorasAvroCRC64Fingerprint = "\x9b\xa42B\xdb(\t."
+const WosTrazaAgrupadorasAvroCRC64Fingerprint = "N\vW]\x9ac\xa3\x90"
 
 func NewWosTrazaAgrupadoras() WosTrazaAgrupadoras {
 	r := WosTrazaAgrupadoras{}
@@ -67,7 +67,7 @@ func (r WosTrazaAgrupadoras) Serialize(w io.Writer) error {
 }
 
 func (r WosTrazaAgrupadoras) Schema() string {
-	return "{\"fields\":[{\"name\":\"Agrupadoras\",\"type\":{\"fields\":[{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"ContratoWarehouse\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"ContenedoresDeSeries\",\"type\":{\"items\":{\"fields\":[{\"name\":\"IdContenedor\",\"type\":\"string\"},{\"name\":\"Asn\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"Serie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ContenedorDeSeries\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Agrupadoras\",\"namespace\":\"Andreani.WosTraza.Events.AgrupadorasCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.WosTraza.Events.Record.WosTrazaAgrupadoras\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Agrupadoras\",\"type\":{\"fields\":[{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"ContratoWarehouse\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"ContenedoresDeSeries\",\"type\":{\"items\":{\"fields\":[{\"name\":\"IdContenedor\",\"type\":\"string\"},{\"name\":\"Asn\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"DetalleSerie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ContenedorDeSeries\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Agrupadoras\",\"namespace\":\"Andreani.WosTraza.Events.AgrupadorasCommon\",\"type\":\"record\"}}],\"name\":\"Andreani.WosTraza.Events.Record.WosTrazaAgrupadoras\",\"type\":\"record\"}"
 }
 
 func (r WosTrazaAgrupadoras) SchemaName() string {

@@ -29,7 +29,7 @@ type Agrupadoras struct {
 	ContenedoresDeSeries []ContenedorDeSeries `json:"ContenedoresDeSeries"`
 }
 
-const AgrupadorasAvroCRC64Fingerprint = "\x0eQ\x8e\n\xa5՜m"
+const AgrupadorasAvroCRC64Fingerprint = "8Џ\x12V\t\x98)"
 
 func NewAgrupadoras() Agrupadoras {
 	r := Agrupadoras{}
@@ -91,7 +91,7 @@ func (r Agrupadoras) Serialize(w io.Writer) error {
 }
 
 func (r Agrupadoras) Schema() string {
-	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"ContratoWarehouse\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"ContenedoresDeSeries\",\"type\":{\"items\":{\"fields\":[{\"name\":\"IdContenedor\",\"type\":\"string\"},{\"name\":\"Asn\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"Serie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ContenedorDeSeries\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WosTraza.Events.AgrupadorasCommon.Agrupadoras\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"ContratoWarehouse\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"ContenedoresDeSeries\",\"type\":{\"items\":{\"fields\":[{\"name\":\"IdContenedor\",\"type\":\"string\"},{\"name\":\"Asn\",\"type\":\"string\"},{\"name\":\"Series\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Serie\",\"type\":\"string\"}],\"name\":\"DetalleSerie\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"ContenedorDeSeries\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.WosTraza.Events.AgrupadorasCommon.Agrupadoras\",\"type\":\"record\"}"
 }
 
 func (r Agrupadoras) SchemaName() string {
