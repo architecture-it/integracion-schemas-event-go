@@ -43,9 +43,11 @@ type TicketFraude struct {
 	Articulo *UnionNullString `json:"Articulo"`
 
 	Subcategoria *UnionNullString `json:"Subcategoria"`
+
+	DatosContacto *UnionNullString `json:"DatosContacto"`
 }
 
-const TicketFraudeAvroCRC64Fingerprint = "j\xedR)\x1a\xab\xc7\x05"
+const TicketFraudeAvroCRC64Fingerprint = "o\xb4\xfa]\x89\x80\xec\x04"
 
 func NewTicketFraude() TicketFraude {
 	r := TicketFraude{}
@@ -62,6 +64,7 @@ func NewTicketFraude() TicketFraude {
 	r.Tecnico = nil
 	r.Articulo = nil
 	r.Subcategoria = nil
+	r.DatosContacto = nil
 	return r
 }
 
@@ -142,6 +145,10 @@ func writeTicketFraude(r TicketFraude, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.DatosContacto, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -150,7 +157,7 @@ func (r TicketFraude) Serialize(w io.Writer) error {
 }
 
 func (r TicketFraude) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Solicitante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCreacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CorreoElectronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MesaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Adjuntos\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Tecnico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Subcategoria\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.TicketFraude\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"IdTicket\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Solicitante\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FechaCreacion\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"Asunto\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Planta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CorreoElectronico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"MesaOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Adjuntos\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"Tecnico\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Articulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Subcategoria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DatosContacto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EAM.Events.MDA.TicketFraude\",\"type\":\"record\"}"
 }
 
 func (r TicketFraude) SchemaName() string {
@@ -220,6 +227,10 @@ func (r *TicketFraude) Get(i int) types.Field {
 		r.Subcategoria = NewUnionNullString()
 
 		return r.Subcategoria
+	case 13:
+		r.DatosContacto = NewUnionNullString()
+
+		return r.DatosContacto
 	}
 	panic("Unknown field index")
 }
@@ -265,6 +276,9 @@ func (r *TicketFraude) SetDefault(i int) {
 	case 12:
 		r.Subcategoria = nil
 		return
+	case 13:
+		r.DatosContacto = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -309,6 +323,9 @@ func (r *TicketFraude) NullField(i int) {
 		return
 	case 12:
 		r.Subcategoria = nil
+		return
+	case 13:
+		r.DatosContacto = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -375,6 +392,10 @@ func (r TicketFraude) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Subcategoria"], err = json.Marshal(r.Subcategoria)
+	if err != nil {
+		return nil, err
+	}
+	output["DatosContacto"], err = json.Marshal(r.DatosContacto)
 	if err != nil {
 		return nil, err
 	}
@@ -595,6 +616,22 @@ func (r *TicketFraude) UnmarshalJSON(data []byte) error {
 		r.Subcategoria = NewUnionNullString()
 
 		r.Subcategoria = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DatosContacto"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DatosContacto); err != nil {
+			return err
+		}
+	} else {
+		r.DatosContacto = NewUnionNullString()
+
+		r.DatosContacto = nil
 	}
 	return nil
 }
