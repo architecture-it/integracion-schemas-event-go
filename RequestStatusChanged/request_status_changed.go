@@ -32,10 +32,10 @@ type RequestStatusChanged struct {
 
 	EmailsPostulant []string `json:"emailsPostulant"`
 
-	Metadata *UnionNullArrayMapString `json:"Metadata"`
+	Metadata *UnionNullArrayMapString `json:"metadata"`
 }
 
-const RequestStatusChangedAvroCRC64Fingerprint = "\xf9\x1e\xafL\xde\xf9\x82\xcb"
+const RequestStatusChangedAvroCRC64Fingerprint = "\x1c\xbfm\xbaD\xad\\\xcc"
 
 func NewRequestStatusChanged() RequestStatusChanged {
 	r := RequestStatusChanged{}
@@ -112,7 +112,7 @@ func (r RequestStatusChanged) Serialize(w io.Writer) error {
 }
 
 func (r RequestStatusChanged) Schema() string {
-	return "{\"fields\":[{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"occurredAt\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"previousStatus\",\"type\":\"string\"},{\"name\":\"currentStatus\",\"type\":\"string\"},{\"default\":null,\"name\":\"request\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"}],\"name\":\"RequestData\",\"namespace\":\"Andreani.RequestStatusChanged.Event.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"providerInfo\",\"type\":[\"null\",{\"fields\":[{\"name\":\"providerId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"startWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimatedStartWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"ProviderInfo\",\"namespace\":\"Andreani.RequestStatusChanged.Event.Common\",\"type\":\"record\"}]},{\"name\":\"emailsPostulant\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"Metadata\",\"type\":[\"null\",{\"items\":{\"type\":\"map\",\"values\":\"string\"},\"type\":\"array\"}]}],\"name\":\"Andreani.RequestStatusChanged.Event.RequestStatusChanged\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"occurredAt\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"previousStatus\",\"type\":\"string\"},{\"name\":\"currentStatus\",\"type\":\"string\"},{\"default\":null,\"name\":\"request\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"}],\"name\":\"RequestData\",\"namespace\":\"Andreani.RequestStatusChanged.Event.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"providerInfo\",\"type\":[\"null\",{\"fields\":[{\"name\":\"providerId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"startWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimatedStartWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"ProviderInfo\",\"namespace\":\"Andreani.RequestStatusChanged.Event.Common\",\"type\":\"record\"}]},{\"name\":\"emailsPostulant\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"items\":{\"type\":\"map\",\"values\":\"string\"},\"type\":\"array\"}]}],\"name\":\"Andreani.RequestStatusChanged.Event.RequestStatusChanged\",\"type\":\"record\"}"
 }
 
 func (r RequestStatusChanged) SchemaName() string {
@@ -243,7 +243,7 @@ func (r RequestStatusChanged) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Metadata"], err = json.Marshal(r.Metadata)
+	output["metadata"], err = json.Marshal(r.Metadata)
 	if err != nil {
 		return nil, err
 	}
@@ -360,7 +360,7 @@ func (r *RequestStatusChanged) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for emailsPostulant")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Metadata"]; ok {
+		if v, ok := fields["metadata"]; ok {
 			return v
 		}
 		return nil
