@@ -35,7 +35,7 @@ type RequestStatusChanged struct {
 	Metadata *UnionNullArrayMapString `json:"metadata"`
 }
 
-const RequestStatusChangedAvroCRC64Fingerprint = "\x1c\xbfm\xbaD\xad\\\xcc"
+const RequestStatusChangedAvroCRC64Fingerprint = "\xa8\v\b\xcaǵ\x1d`"
 
 func NewRequestStatusChanged() RequestStatusChanged {
 	r := RequestStatusChanged{}
@@ -112,11 +112,11 @@ func (r RequestStatusChanged) Serialize(w io.Writer) error {
 }
 
 func (r RequestStatusChanged) Schema() string {
-	return "{\"fields\":[{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"occurredAt\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"previousStatus\",\"type\":\"string\"},{\"name\":\"currentStatus\",\"type\":\"string\"},{\"default\":null,\"name\":\"request\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"}],\"name\":\"RequestData\",\"namespace\":\"Andreani.RequestStatusChanged.Event.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"providerInfo\",\"type\":[\"null\",{\"fields\":[{\"name\":\"providerId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"startWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimatedStartWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"ProviderInfo\",\"namespace\":\"Andreani.RequestStatusChanged.Event.Common\",\"type\":\"record\"}]},{\"name\":\"emailsPostulant\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"items\":{\"type\":\"map\",\"values\":\"string\"},\"type\":\"array\"}]}],\"name\":\"Andreani.RequestStatusChanged.Event.RequestStatusChanged\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"occurredAt\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"previousStatus\",\"type\":\"string\"},{\"name\":\"currentStatus\",\"type\":\"string\"},{\"default\":null,\"name\":\"request\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"}],\"name\":\"RequestData\",\"namespace\":\"Andreani.RequestStatusChanged.Events.Record.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"providerInfo\",\"type\":[\"null\",{\"fields\":[{\"name\":\"providerId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"startWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimatedStartWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"ProviderInfo\",\"namespace\":\"Andreani.RequestStatusChanged.Events.Record.Common\",\"type\":\"record\"}]},{\"name\":\"emailsPostulant\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"items\":{\"type\":\"map\",\"values\":\"string\"},\"type\":\"array\"}]}],\"name\":\"Andreani.RequestStatusChanged.Events.Record.RequestStatusChanged\",\"type\":\"record\"}"
 }
 
 func (r RequestStatusChanged) SchemaName() string {
-	return "Andreani.RequestStatusChanged.Event.RequestStatusChanged"
+	return "Andreani.RequestStatusChanged.Events.Record.RequestStatusChanged"
 }
 
 func (_ RequestStatusChanged) SetBoolean(v bool)    { panic("Unsupported operation") }

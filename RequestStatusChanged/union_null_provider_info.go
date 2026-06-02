@@ -84,7 +84,7 @@ func DeserializeUnionNullProviderInfoFromSchema(r io.Reader, schema string) (*Un
 }
 
 func (r *UnionNullProviderInfo) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"providerId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"startWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimatedStartWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"ProviderInfo\",\"namespace\":\"Andreani.RequestStatusChanged.Event.Common\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"providerId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"startWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimatedStartWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"ProviderInfo\",\"namespace\":\"Andreani.RequestStatusChanged.Events.Record.Common\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullProviderInfo) SetBoolean(v bool)   { panic("Unsupported operation") }
@@ -125,7 +125,7 @@ func (r *UnionNullProviderInfo) MarshalJSON() ([]byte, error) {
 
 	switch r.UnionType {
 	case UnionNullProviderInfoTypeEnumProviderInfo:
-		return json.Marshal(map[string]interface{}{"Andreani.RequestStatusChanged.Event.Common.ProviderInfo": r.ProviderInfo})
+		return json.Marshal(map[string]interface{}{"Andreani.RequestStatusChanged.Events.Record.Common.ProviderInfo": r.ProviderInfo})
 	}
 	return nil, fmt.Errorf("invalid value for *UnionNullProviderInfo")
 }
@@ -139,7 +139,7 @@ func (r *UnionNullProviderInfo) UnmarshalJSON(data []byte) error {
 	if len(fields) > 1 {
 		return fmt.Errorf("more than one type supplied for union")
 	}
-	if value, ok := fields["Andreani.RequestStatusChanged.Event.Common.ProviderInfo"]; ok {
+	if value, ok := fields["Andreani.RequestStatusChanged.Events.Record.Common.ProviderInfo"]; ok {
 		r.UnionType = 1
 		return json.Unmarshal([]byte(value), &r.ProviderInfo)
 	}
