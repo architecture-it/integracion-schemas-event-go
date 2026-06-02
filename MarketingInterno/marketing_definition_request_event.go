@@ -27,7 +27,7 @@ type MarketingDefinitionRequestEvent struct {
 	TraceLink *UnionNullString `json:"TraceLink"`
 }
 
-const MarketingDefinitionRequestEventAvroCRC64Fingerprint = "\xcc3ك\x10\x01\x05\""
+const MarketingDefinitionRequestEventAvroCRC64Fingerprint = "\x9fD{@\x96EL'"
 
 func NewMarketingDefinitionRequestEvent() MarketingDefinitionRequestEvent {
 	r := MarketingDefinitionRequestEvent{}
@@ -88,7 +88,7 @@ func (r MarketingDefinitionRequestEvent) Serialize(w io.Writer) error {
 }
 
 func (r MarketingDefinitionRequestEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Parameters\",\"type\":{\"fields\":[{\"name\":\"IdCampana\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdFlujoNodo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdCliente\",\"type\":[\"null\",\"int\"]},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"ExecutionParameters\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"}},{\"name\":\"Campos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"CampoValue\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Accion\",\"type\":\"int\"},{\"default\":null,\"name\":\"TraceLink\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.MarketingInterno.Events.Record.MarketingDefinitionRequestEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Parameters\",\"type\":{\"fields\":[{\"name\":\"IdCampana\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdEjecucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdFlujoNodo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdCliente\",\"type\":[\"null\",\"int\"]},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"ExecutionParameters\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"}},{\"name\":\"Campos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"CampoValue\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Accion\",\"type\":\"int\"},{\"default\":null,\"name\":\"TraceLink\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.MarketingInterno.Events.Record.MarketingDefinitionRequestEvent\",\"type\":\"record\"}"
 }
 
 func (r MarketingDefinitionRequestEvent) SchemaName() string {
