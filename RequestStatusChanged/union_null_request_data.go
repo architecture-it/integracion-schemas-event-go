@@ -84,7 +84,7 @@ func DeserializeUnionNullRequestDataFromSchema(r io.Reader, schema string) (*Uni
 }
 
 func (r *UnionNullRequestData) Schema() string {
-	return "[\"null\",{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"}],\"name\":\"RequestData\",\"namespace\":\"Andreani.RequestStatus.Event.Common\",\"type\":\"record\"}]"
+	return "[\"null\",{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"}],\"name\":\"RequestData\",\"namespace\":\"Andreani.RequestStatusChanged.Event.Common\",\"type\":\"record\"}]"
 }
 
 func (_ *UnionNullRequestData) SetBoolean(v bool)   { panic("Unsupported operation") }
@@ -125,7 +125,7 @@ func (r *UnionNullRequestData) MarshalJSON() ([]byte, error) {
 
 	switch r.UnionType {
 	case UnionNullRequestDataTypeEnumRequestData:
-		return json.Marshal(map[string]interface{}{"Andreani.RequestStatus.Event.Common.RequestData": r.RequestData})
+		return json.Marshal(map[string]interface{}{"Andreani.RequestStatusChanged.Event.Common.RequestData": r.RequestData})
 	}
 	return nil, fmt.Errorf("invalid value for *UnionNullRequestData")
 }
@@ -139,7 +139,7 @@ func (r *UnionNullRequestData) UnmarshalJSON(data []byte) error {
 	if len(fields) > 1 {
 		return fmt.Errorf("more than one type supplied for union")
 	}
-	if value, ok := fields["Andreani.RequestStatus.Event.Common.RequestData"]; ok {
+	if value, ok := fields["Andreani.RequestStatusChanged.Event.Common.RequestData"]; ok {
 		r.UnionType = 1
 		return json.Unmarshal([]byte(value), &r.RequestData)
 	}

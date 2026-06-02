@@ -41,7 +41,7 @@ type RequestData struct {
 	Level int32 `json:"level"`
 }
 
-const RequestDataAvroCRC64Fingerprint = "ϒ(\xaaRVi["
+const RequestDataAvroCRC64Fingerprint = "s\xact<\x9d\x80|\xe6"
 
 func NewRequestData() RequestData {
 	r := RequestData{}
@@ -126,11 +126,11 @@ func (r RequestData) Serialize(w io.Writer) error {
 }
 
 func (r RequestData) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"}],\"name\":\"Andreani.RequestStatus.Event.Common.RequestData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"}],\"name\":\"Andreani.RequestStatusChanged.Event.Common.RequestData\",\"type\":\"record\"}"
 }
 
 func (r RequestData) SchemaName() string {
-	return "Andreani.RequestStatus.Event.Common.RequestData"
+	return "Andreani.RequestStatusChanged.Event.Common.RequestData"
 }
 
 func (_ RequestData) SetBoolean(v bool)    { panic("Unsupported operation") }

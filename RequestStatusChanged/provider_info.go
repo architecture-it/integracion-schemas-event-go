@@ -27,7 +27,7 @@ type ProviderInfo struct {
 	EstimatedStartWork *UnionNullLong `json:"estimatedStartWork"`
 }
 
-const ProviderInfoAvroCRC64Fingerprint = "\xbd\x8f\xb7\x81u\xd2\xe2\xf0"
+const ProviderInfoAvroCRC64Fingerprint = "\x11m&q\x15v\x9e&"
 
 func NewProviderInfo() ProviderInfo {
 	r := ProviderInfo{}
@@ -85,11 +85,11 @@ func (r ProviderInfo) Serialize(w io.Writer) error {
 }
 
 func (r ProviderInfo) Schema() string {
-	return "{\"fields\":[{\"name\":\"providerId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"startWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimatedStartWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.RequestStatus.Event.Common.ProviderInfo\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"providerId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"startWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimatedStartWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"Andreani.RequestStatusChanged.Event.Common.ProviderInfo\",\"type\":\"record\"}"
 }
 
 func (r ProviderInfo) SchemaName() string {
-	return "Andreani.RequestStatus.Event.Common.ProviderInfo"
+	return "Andreani.RequestStatusChanged.Event.Common.ProviderInfo"
 }
 
 func (_ ProviderInfo) SetBoolean(v bool)    { panic("Unsupported operation") }
