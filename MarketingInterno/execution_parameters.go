@@ -20,8 +20,6 @@ var _ = fmt.Printf
 type ExecutionParameters struct {
 	IdCampana int32 `json:"IdCampana"`
 
-	IdEjecucion *UnionNullString `json:"IdEjecucion"`
-
 	IdFlujoNodo *UnionNullInt `json:"IdFlujoNodo"`
 
 	IdCliente *UnionNullInt `json:"IdCliente"`
@@ -29,11 +27,10 @@ type ExecutionParameters struct {
 	IdsAudiencias []int32 `json:"IdsAudiencias"`
 }
 
-const ExecutionParametersAvroCRC64Fingerprint = "\xf3vR\xbb\xff\x91v{"
+const ExecutionParametersAvroCRC64Fingerprint = "\x12H\x05:&#\x03\xc8"
 
 func NewExecutionParameters() ExecutionParameters {
 	r := ExecutionParameters{}
-	r.IdEjecucion = nil
 	r.IdFlujoNodo = nil
 	r.IdCliente = nil
 	r.IdsAudiencias = make([]int32, 0)
@@ -72,10 +69,6 @@ func writeExecutionParameters(r ExecutionParameters, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.IdEjecucion, w)
-	if err != nil {
-		return err
-	}
 	err = writeUnionNullInt(r.IdFlujoNodo, w)
 	if err != nil {
 		return err
@@ -96,7 +89,7 @@ func (r ExecutionParameters) Serialize(w io.Writer) error {
 }
 
 func (r ExecutionParameters) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdCampana\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdEjecucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdFlujoNodo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdCliente\",\"type\":[\"null\",\"int\"]},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon.ExecutionParameters\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdCampana\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdFlujoNodo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdCliente\",\"type\":[\"null\",\"int\"]},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon.ExecutionParameters\",\"type\":\"record\"}"
 }
 
 func (r ExecutionParameters) SchemaName() string {
@@ -120,18 +113,14 @@ func (r *ExecutionParameters) Get(i int) types.Field {
 		return w
 
 	case 1:
-		r.IdEjecucion = NewUnionNullString()
-
-		return r.IdEjecucion
-	case 2:
 		r.IdFlujoNodo = NewUnionNullInt()
 
 		return r.IdFlujoNodo
-	case 3:
+	case 2:
 		r.IdCliente = NewUnionNullInt()
 
 		return r.IdCliente
-	case 4:
+	case 3:
 		r.IdsAudiencias = make([]int32, 0)
 
 		w := ArrayIntWrapper{Target: &r.IdsAudiencias}
@@ -145,15 +134,12 @@ func (r *ExecutionParameters) Get(i int) types.Field {
 func (r *ExecutionParameters) SetDefault(i int) {
 	switch i {
 	case 1:
-		r.IdEjecucion = nil
-		return
-	case 2:
 		r.IdFlujoNodo = nil
 		return
-	case 3:
+	case 2:
 		r.IdCliente = nil
 		return
-	case 4:
+	case 3:
 		r.IdsAudiencias = make([]int32, 0)
 
 		return
@@ -164,12 +150,9 @@ func (r *ExecutionParameters) SetDefault(i int) {
 func (r *ExecutionParameters) NullField(i int) {
 	switch i {
 	case 1:
-		r.IdEjecucion = nil
-		return
-	case 2:
 		r.IdFlujoNodo = nil
 		return
-	case 3:
+	case 2:
 		r.IdCliente = nil
 		return
 	}
@@ -189,10 +172,6 @@ func (r ExecutionParameters) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["IdCampana"], err = json.Marshal(r.IdCampana)
-	if err != nil {
-		return nil, err
-	}
-	output["IdEjecucion"], err = json.Marshal(r.IdEjecucion)
 	if err != nil {
 		return nil, err
 	}
@@ -231,22 +210,6 @@ func (r *ExecutionParameters) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for IdCampana")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["IdEjecucion"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IdEjecucion); err != nil {
-			return err
-		}
-	} else {
-		r.IdEjecucion = NewUnionNullString()
-
-		r.IdEjecucion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["IdFlujoNodo"]; ok {
