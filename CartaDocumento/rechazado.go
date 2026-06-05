@@ -25,7 +25,7 @@ type Rechazado struct {
 	Submotivo *UnionNullString `json:"Submotivo"`
 }
 
-const RechazadoAvroCRC64Fingerprint = "&\xeb{\x14\x10\xf0Ӯ"
+const RechazadoAvroCRC64Fingerprint = "`\x17ذB\v\x88\x9a"
 
 func NewRechazado() Rechazado {
 	r := Rechazado{}
@@ -80,11 +80,11 @@ func (r Rechazado) Serialize(w io.Writer) error {
 }
 
 func (r Rechazado) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Submotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"CartaDocumento.Estado.Rechazado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Submotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Estado.Rechazado\",\"type\":\"record\"}"
 }
 
 func (r Rechazado) SchemaName() string {
-	return "CartaDocumento.Estado.Rechazado"
+	return "Andreani.CartaDocumento.Estado.Rechazado"
 }
 
 func (_ Rechazado) SetBoolean(v bool)    { panic("Unsupported operation") }

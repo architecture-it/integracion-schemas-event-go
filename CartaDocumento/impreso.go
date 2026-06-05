@@ -21,7 +21,7 @@ type Impreso struct {
 	Traza *UnionNullTrazaCartaDocumento `json:"Traza"`
 }
 
-const ImpresoAvroCRC64Fingerprint = "b\xfc\xb3S}\x105\xc1"
+const ImpresoAvroCRC64Fingerprint = "\xf0u\x8f\xbf\xb4\xea\xd9\x00"
 
 func NewImpreso() Impreso {
 	r := Impreso{}
@@ -66,11 +66,11 @@ func (r Impreso) Serialize(w io.Writer) error {
 }
 
 func (r Impreso) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"CartaDocumento.Estado.Impreso\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumento.Estado.Impreso\",\"type\":\"record\"}"
 }
 
 func (r Impreso) SchemaName() string {
-	return "CartaDocumento.Estado.Impreso"
+	return "Andreani.CartaDocumento.Estado.Impreso"
 }
 
 func (_ Impreso) SetBoolean(v bool)    { panic("Unsupported operation") }

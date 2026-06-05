@@ -33,7 +33,7 @@ type TrazaCartaDocumento struct {
 	CicloDelEnvio *UnionNullString `json:"CicloDelEnvio"`
 }
 
-const TrazaCartaDocumentoAvroCRC64Fingerprint = "\x02\x85\xe2\xd9v\x91[\x87"
+const TrazaCartaDocumentoAvroCRC64Fingerprint = "\x83E\xd2\xd6V\xfbp\xa7"
 
 func NewTrazaCartaDocumento() TrazaCartaDocumento {
 	r := TrazaCartaDocumento{}
@@ -105,11 +105,11 @@ func (r TrazaCartaDocumento) Serialize(w io.Writer) error {
 }
 
 func (r TrazaCartaDocumento) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CartaDocumento.Estado.TrazaCartaDocumento\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Estado.TrazaCartaDocumento\",\"type\":\"record\"}"
 }
 
 func (r TrazaCartaDocumento) SchemaName() string {
-	return "CartaDocumento.Estado.TrazaCartaDocumento"
+	return "Andreani.CartaDocumento.Estado.TrazaCartaDocumento"
 }
 
 func (_ TrazaCartaDocumento) SetBoolean(v bool)    { panic("Unsupported operation") }

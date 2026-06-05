@@ -21,7 +21,7 @@ type PendienteDeImpresion struct {
 	Traza *UnionNullTrazaCartaDocumento `json:"Traza"`
 }
 
-const PendienteDeImpresionAvroCRC64Fingerprint = "\x9e\n\x1d\xb9D\x12\x92y"
+const PendienteDeImpresionAvroCRC64Fingerprint = "_\x15GS/\x13\x112"
 
 func NewPendienteDeImpresion() PendienteDeImpresion {
 	r := PendienteDeImpresion{}
@@ -66,11 +66,11 @@ func (r PendienteDeImpresion) Serialize(w io.Writer) error {
 }
 
 func (r PendienteDeImpresion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"CartaDocumento.Estado.PendienteDeImpresion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumento.Estado.PendienteDeImpresion\",\"type\":\"record\"}"
 }
 
 func (r PendienteDeImpresion) SchemaName() string {
-	return "CartaDocumento.Estado.PendienteDeImpresion"
+	return "Andreani.CartaDocumento.Estado.PendienteDeImpresion"
 }
 
 func (_ PendienteDeImpresion) SetBoolean(v bool)    { panic("Unsupported operation") }
