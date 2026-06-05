@@ -182,15 +182,18 @@ type Cabecera struct {
 
 	ValidaSerieWOS *UnionNullString `json:"ValidaSerieWOS"`
 
+	ValidaAtributosFormato *UnionNullString `json:"ValidaAtributosFormato"`
+
 	ArticulosAlternativos *UnionNullArrayArticulosAlternativos `json:"ArticulosAlternativos"`
 
 	MascaraSeries *UnionNullString `json:"MascaraSeries"`
 }
 
-const CabeceraAvroCRC64Fingerprint = "o\x81\x15&\x8d\x98T\xa4"
+const CabeceraAvroCRC64Fingerprint = "\xf9not\xe0'N\xf7"
 
 func NewCabecera() Cabecera {
 	r := Cabecera{}
+	r.ValidaAtributosFormato = nil
 	r.ArticulosAlternativos = nil
 	r.MascaraSeries = nil
 	return r
@@ -549,6 +552,10 @@ func writeCabecera(r Cabecera, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ValidaAtributosFormato, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullArrayArticulosAlternativos(r.ArticulosAlternativos, w)
 	if err != nil {
 		return err
@@ -565,7 +572,7 @@ func (r Cabecera) Serialize(w io.Writer) error {
 }
 
 func (r Cabecera) Schema() string {
-	return "{\"fields\":[{\"name\":\"TipoRotacionABC\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"FinTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"InicioTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"Coleccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Color\",\"type\":[\"null\",\"string\"]},{\"name\":\"Atributos\",\"type\":[\"null\",\"string\"]},{\"name\":\"PrecioAsociadoAlSKU\",\"type\":[\"null\",\"float\"]},{\"name\":\"PaisOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"DigitosMinimosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"DigitosMaximosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"LimiteImpresion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContadorGeneracionSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"name\":\"Pavu\",\"type\":[\"null\",\"string\"]},{\"name\":\"Psicotropico\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temperatura\",\"type\":[\"null\",\"string\"]},{\"name\":\"Serializado\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoValidacionLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDatamatrix\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"PickeaTodos\",\"type\":[\"null\",\"string\"]},{\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraSerie\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlaSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"EventoLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"AltaPorAPI\",\"type\":[\"null\",\"string\"]},{\"name\":\"PropietarioEcommerce\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"SKUOriginalCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReservadoFFC\",\"type\":[\"null\",\"string\"]},{\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesRecepcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Notas\",\"type\":[\"null\",\"string\"]},{\"name\":\"InstruccionesPreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesExpedicion\",\"type\":[\"null\",\"string\"]},{\"name\":\"PackCodigoPaquete\",\"type\":\"string\"},{\"name\":\"PackDescripcionPaquete\",\"type\":\"string\"},{\"name\":\"PackCantUnidadMaestra\",\"type\":\"float\"},{\"name\":\"PackCantPorSubcajas\",\"type\":\"float\"},{\"name\":\"PackCantPorCajas\",\"type\":\"float\"},{\"name\":\"PackCantPorPallet\",\"type\":\"float\"},{\"name\":\"PackAlturaUnidad\",\"type\":\"float\"},{\"name\":\"PackLongitudUnidad\",\"type\":\"float\"},{\"name\":\"PackAnchoUnidad\",\"type\":\"float\"},{\"name\":\"PackPesoUnidad\",\"type\":\"float\"},{\"name\":\"PackAlturaSubcaja\",\"type\":\"float\"},{\"name\":\"PackLongSubcaja\",\"type\":\"float\"},{\"name\":\"PackAnchuraSubcaja\",\"type\":\"float\"},{\"name\":\"PackAlturaPorCaja\",\"type\":\"float\"},{\"name\":\"PackLongPorCaja\",\"type\":\"float\"},{\"name\":\"PackAnchuraPorCaja\",\"type\":\"float\"},{\"name\":\"PackPesoCaja\",\"type\":\"float\"},{\"name\":\"PackNievelesPorPallet\",\"type\":\"float\"},{\"name\":\"PackCajasPorNivel\",\"type\":\"float\"},{\"name\":\"PackAlturaPallet\",\"type\":\"float\"},{\"name\":\"PackLongPallet\",\"type\":\"float\"},{\"name\":\"PackAnchuraPallet\",\"type\":\"float\"},{\"name\":\"PrecioLinea\",\"type\":[\"null\",\"float\"]},{\"name\":\"UbicacionControlCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoRotacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"TipoValidacionVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"IndicadorVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEntrada\",\"type\":[\"null\",\"int\"]},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"Talle\",\"type\":[\"null\",\"string\"]},{\"name\":\"VolumenCentimetros\",\"type\":\"float\"},{\"name\":\"PesoBrutoKg\",\"type\":\"float\"},{\"name\":\"PesoNetoKg\",\"type\":\"float\"},{\"name\":\"CategoriaStock\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estilo\",\"type\":[\"null\",\"string\"]},{\"name\":\"Tema\",\"type\":[\"null\",\"string\"]},{\"name\":\"ConsumoAntesDeXDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"ConsumoVencimiento\",\"type\":[\"null\",\"int\"]},{\"name\":\"ValidaLoteWOS\",\"type\":[\"null\",\"string\"]},{\"name\":\"ValidaSerieWOS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ArticulosAlternativos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ArticuloAlternativo\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"}],\"name\":\"ArticulosAlternativos\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"MascaraSeries\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhArticulos.Events.EventoArticuloModificacion.Cabecera\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TipoRotacionABC\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneAcondi\",\"type\":[\"null\",\"string\"]},{\"name\":\"FinTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"InicioTemporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"Coleccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Color\",\"type\":[\"null\",\"string\"]},{\"name\":\"Atributos\",\"type\":[\"null\",\"string\"]},{\"name\":\"PrecioAsociadoAlSKU\",\"type\":[\"null\",\"float\"]},{\"name\":\"PaisOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"Descripcion\",\"type\":\"string\"},{\"name\":\"DigitosMinimosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"DigitosMaximosSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"LimiteImpresion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ContadorGeneracionSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"Rubro\",\"type\":[\"null\",\"string\"]},{\"name\":\"Pavu\",\"type\":[\"null\",\"string\"]},{\"name\":\"Psicotropico\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temperatura\",\"type\":[\"null\",\"string\"]},{\"name\":\"Serializado\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoValidacionLote\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoDatamatrix\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoEtiqueta\",\"type\":[\"null\",\"string\"]},{\"name\":\"PickeaTodos\",\"type\":[\"null\",\"string\"]},{\"name\":\"SerieDirigida\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraSerie\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlaSeries\",\"type\":[\"null\",\"string\"]},{\"name\":\"InformaLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"EventoLevantamientoCuarentena\",\"type\":[\"null\",\"string\"]},{\"name\":\"GeneraAgrupadora\",\"type\":[\"null\",\"string\"]},{\"name\":\"AltaPorAPI\",\"type\":[\"null\",\"string\"]},{\"name\":\"PropietarioEcommerce\",\"type\":[\"null\",\"string\"]},{\"name\":\"CodigoCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"SKUOriginalCliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"ReservadoFFC\",\"type\":[\"null\",\"string\"]},{\"name\":\"Usuario\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesRecepcion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Notas\",\"type\":[\"null\",\"string\"]},{\"name\":\"InstruccionesPreparacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"ControlSeriesExpedicion\",\"type\":[\"null\",\"string\"]},{\"name\":\"PackCodigoPaquete\",\"type\":\"string\"},{\"name\":\"PackDescripcionPaquete\",\"type\":\"string\"},{\"name\":\"PackCantUnidadMaestra\",\"type\":\"float\"},{\"name\":\"PackCantPorSubcajas\",\"type\":\"float\"},{\"name\":\"PackCantPorCajas\",\"type\":\"float\"},{\"name\":\"PackCantPorPallet\",\"type\":\"float\"},{\"name\":\"PackAlturaUnidad\",\"type\":\"float\"},{\"name\":\"PackLongitudUnidad\",\"type\":\"float\"},{\"name\":\"PackAnchoUnidad\",\"type\":\"float\"},{\"name\":\"PackPesoUnidad\",\"type\":\"float\"},{\"name\":\"PackAlturaSubcaja\",\"type\":\"float\"},{\"name\":\"PackLongSubcaja\",\"type\":\"float\"},{\"name\":\"PackAnchuraSubcaja\",\"type\":\"float\"},{\"name\":\"PackAlturaPorCaja\",\"type\":\"float\"},{\"name\":\"PackLongPorCaja\",\"type\":\"float\"},{\"name\":\"PackAnchuraPorCaja\",\"type\":\"float\"},{\"name\":\"PackPesoCaja\",\"type\":\"float\"},{\"name\":\"PackNievelesPorPallet\",\"type\":\"float\"},{\"name\":\"PackCajasPorNivel\",\"type\":\"float\"},{\"name\":\"PackAlturaPallet\",\"type\":\"float\"},{\"name\":\"PackLongPallet\",\"type\":\"float\"},{\"name\":\"PackAnchuraPallet\",\"type\":\"float\"},{\"name\":\"PrecioLinea\",\"type\":[\"null\",\"float\"]},{\"name\":\"UbicacionControlCalidad\",\"type\":[\"null\",\"string\"]},{\"name\":\"TipoRotacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"Temporada\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEnDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"TipoValidacionVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"IndicadorVidaUtil\",\"type\":[\"null\",\"string\"]},{\"name\":\"VidaUtilEntrada\",\"type\":[\"null\",\"int\"]},{\"name\":\"CodigoArticulo\",\"type\":\"string\"},{\"name\":\"Talle\",\"type\":[\"null\",\"string\"]},{\"name\":\"VolumenCentimetros\",\"type\":\"float\"},{\"name\":\"PesoBrutoKg\",\"type\":\"float\"},{\"name\":\"PesoNetoKg\",\"type\":\"float\"},{\"name\":\"CategoriaStock\",\"type\":[\"null\",\"string\"]},{\"name\":\"Estilo\",\"type\":[\"null\",\"string\"]},{\"name\":\"Tema\",\"type\":[\"null\",\"string\"]},{\"name\":\"ConsumoAntesDeXDias\",\"type\":[\"null\",\"int\"]},{\"name\":\"ConsumoVencimiento\",\"type\":[\"null\",\"int\"]},{\"name\":\"ValidaLoteWOS\",\"type\":[\"null\",\"string\"]},{\"name\":\"ValidaSerieWOS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ValidaAtributosFormato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ArticulosAlternativos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ArticuloAlternativo\",\"type\":\"string\"},{\"name\":\"Tipo\",\"type\":\"string\"}],\"name\":\"ArticulosAlternativos\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"MascaraSeries\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.EventoWhArticulos.Events.EventoArticuloModificacion.Cabecera\",\"type\":\"record\"}"
 }
 
 func (r Cabecera) SchemaName() string {
@@ -939,10 +946,14 @@ func (r *Cabecera) Get(i int) types.Field {
 
 		return r.ValidaSerieWOS
 	case 82:
+		r.ValidaAtributosFormato = NewUnionNullString()
+
+		return r.ValidaAtributosFormato
+	case 83:
 		r.ArticulosAlternativos = NewUnionNullArrayArticulosAlternativos()
 
 		return r.ArticulosAlternativos
-	case 83:
+	case 84:
 		r.MascaraSeries = NewUnionNullString()
 
 		return r.MascaraSeries
@@ -953,9 +964,12 @@ func (r *Cabecera) Get(i int) types.Field {
 func (r *Cabecera) SetDefault(i int) {
 	switch i {
 	case 82:
-		r.ArticulosAlternativos = nil
+		r.ValidaAtributosFormato = nil
 		return
 	case 83:
+		r.ArticulosAlternativos = nil
+		return
+	case 84:
 		r.MascaraSeries = nil
 		return
 	}
@@ -1130,9 +1144,12 @@ func (r *Cabecera) NullField(i int) {
 		r.ValidaSerieWOS = nil
 		return
 	case 82:
-		r.ArticulosAlternativos = nil
+		r.ValidaAtributosFormato = nil
 		return
 	case 83:
+		r.ArticulosAlternativos = nil
+		return
+	case 84:
 		r.MascaraSeries = nil
 		return
 	}
@@ -1476,6 +1493,10 @@ func (r Cabecera) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ValidaSerieWOS"], err = json.Marshal(r.ValidaSerieWOS)
+	if err != nil {
+		return nil, err
+	}
+	output["ValidaAtributosFormato"], err = json.Marshal(r.ValidaAtributosFormato)
 	if err != nil {
 		return nil, err
 	}
@@ -2644,6 +2665,22 @@ func (r *Cabecera) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for ValidaSerieWOS")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ValidaAtributosFormato"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ValidaAtributosFormato); err != nil {
+			return err
+		}
+	} else {
+		r.ValidaAtributosFormato = NewUnionNullString()
+
+		r.ValidaAtributosFormato = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ArticulosAlternativos"]; ok {
