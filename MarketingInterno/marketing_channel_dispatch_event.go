@@ -30,6 +30,8 @@ type MarketingChannelDispatchEvent struct {
 
 	IdCliente int32 `json:"IdCliente"`
 
+	IdAudiencia *UnionNullInt `json:"IdAudiencia"`
+
 	Email *UnionNullString `json:"Email"`
 
 	Telefono *UnionNullString `json:"Telefono"`
@@ -39,10 +41,11 @@ type MarketingChannelDispatchEvent struct {
 	EsUltimo bool `json:"EsUltimo"`
 }
 
-const MarketingChannelDispatchEventAvroCRC64Fingerprint = "\x93\xa5~\xd0O\x81,\xb0"
+const MarketingChannelDispatchEventAvroCRC64Fingerprint = "\xcds\x13k\xdd\xd9!\x80"
 
 func NewMarketingChannelDispatchEvent() MarketingChannelDispatchEvent {
 	r := MarketingChannelDispatchEvent{}
+	r.IdAudiencia = nil
 	r.Email = nil
 	r.Telefono = nil
 	r.Campos = make([]CampoValue, 0)
@@ -99,6 +102,10 @@ func writeMarketingChannelDispatchEvent(r MarketingChannelDispatchEvent, w io.Wr
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullInt(r.IdAudiencia, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Email, w)
 	if err != nil {
 		return err
@@ -123,7 +130,7 @@ func (r MarketingChannelDispatchEvent) Serialize(w io.Writer) error {
 }
 
 func (r MarketingChannelDispatchEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"EventoId\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"int\"},{\"name\":\"IdCampana\",\"type\":\"int\"},{\"name\":\"IdEjecucion\",\"type\":\"string\"},{\"name\":\"IdFlujoNodo\",\"type\":\"int\"},{\"name\":\"IdCliente\",\"type\":\"int\"},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"Campos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"CampoValue\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"EsUltimo\",\"type\":\"boolean\"}],\"name\":\"Andreani.MarketingInterno.Events.Record.MarketingChannelDispatchEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"EventoId\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"int\"},{\"name\":\"IdCampana\",\"type\":\"int\"},{\"name\":\"IdEjecucion\",\"type\":\"string\"},{\"name\":\"IdFlujoNodo\",\"type\":\"int\"},{\"name\":\"IdCliente\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdAudiencia\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"Campos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"CampoValue\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"EsUltimo\",\"type\":\"boolean\"}],\"name\":\"Andreani.MarketingInterno.Events.Record.MarketingChannelDispatchEvent\",\"type\":\"record\"}"
 }
 
 func (r MarketingChannelDispatchEvent) SchemaName() string {
@@ -172,21 +179,25 @@ func (r *MarketingChannelDispatchEvent) Get(i int) types.Field {
 		return w
 
 	case 6:
+		r.IdAudiencia = NewUnionNullInt()
+
+		return r.IdAudiencia
+	case 7:
 		r.Email = NewUnionNullString()
 
 		return r.Email
-	case 7:
+	case 8:
 		r.Telefono = NewUnionNullString()
 
 		return r.Telefono
-	case 8:
+	case 9:
 		r.Campos = make([]CampoValue, 0)
 
 		w := ArrayCampoValueWrapper{Target: &r.Campos}
 
 		return w
 
-	case 9:
+	case 10:
 		w := types.Boolean{Target: &r.EsUltimo}
 
 		return w
@@ -198,9 +209,12 @@ func (r *MarketingChannelDispatchEvent) Get(i int) types.Field {
 func (r *MarketingChannelDispatchEvent) SetDefault(i int) {
 	switch i {
 	case 6:
-		r.Email = nil
+		r.IdAudiencia = nil
 		return
 	case 7:
+		r.Email = nil
+		return
+	case 8:
 		r.Telefono = nil
 		return
 	}
@@ -210,9 +224,12 @@ func (r *MarketingChannelDispatchEvent) SetDefault(i int) {
 func (r *MarketingChannelDispatchEvent) NullField(i int) {
 	switch i {
 	case 6:
-		r.Email = nil
+		r.IdAudiencia = nil
 		return
 	case 7:
+		r.Email = nil
+		return
+	case 8:
 		r.Telefono = nil
 		return
 	}
@@ -254,6 +271,10 @@ func (r MarketingChannelDispatchEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["IdCliente"], err = json.Marshal(r.IdCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["IdAudiencia"], err = json.Marshal(r.IdAudiencia)
 	if err != nil {
 		return nil, err
 	}
@@ -366,6 +387,22 @@ func (r *MarketingChannelDispatchEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for IdCliente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdAudiencia"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdAudiencia); err != nil {
+			return err
+		}
+	} else {
+		r.IdAudiencia = NewUnionNullInt()
+
+		r.IdAudiencia = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Email"]; ok {
