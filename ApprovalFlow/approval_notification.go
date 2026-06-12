@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type ApprovalNotification struct {
+	System *UnionStringNull `json:"system"`
+
 	RequestId string `json:"requestId"`
 
 	Transition Transition `json:"transition"`
@@ -29,10 +31,14 @@ type ApprovalNotification struct {
 	Context Context `json:"context"`
 }
 
-const ApprovalNotificationAvroCRC64Fingerprint = "\xe8X2\x81\x03\xe8g\xb1"
+const ApprovalNotificationAvroCRC64Fingerprint = "\xc5(g\x0f\x83\x7f)4"
 
 func NewApprovalNotification() ApprovalNotification {
 	r := ApprovalNotification{}
+	r.System = NewUnionStringNull()
+
+	r.System = NewUnionStringNull()
+	r.System.String = "approval"
 	r.Transition = NewTransition()
 
 	r.State = NewState()
@@ -69,6 +75,10 @@ func DeserializeApprovalNotificationFromSchema(r io.Reader, schema string) (Appr
 
 func writeApprovalNotification(r ApprovalNotification, w io.Writer) error {
 	var err error
+	err = writeUnionStringNull(r.System, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.RequestId, w)
 	if err != nil {
 		return err
@@ -97,7 +107,7 @@ func (r ApprovalNotification) Serialize(w io.Writer) error {
 }
 
 func (r ApprovalNotification) Schema() string {
-	return "{\"fields\":[{\"name\":\"requestId\",\"type\":\"string\"},{\"name\":\"transition\",\"type\":{\"fields\":[{\"name\":\"action\",\"type\":\"string\"},{\"name\":\"actionedBy\",\"type\":\"string\"},{\"default\":null,\"name\":\"reason\",\"type\":[\"null\",\"string\"]},{\"name\":\"actionDate\",\"type\":\"string\"}],\"name\":\"Transition\",\"type\":\"record\"}},{\"name\":\"state\",\"type\":{\"fields\":[{\"name\":\"globalStatus\",\"type\":\"string\"},{\"name\":\"currentStepOrder\",\"type\":\"int\"},{\"name\":\"totalSteps\",\"type\":\"int\"},{\"name\":\"currentStepName\",\"type\":\"string\"},{\"name\":\"isFinalState\",\"type\":\"boolean\"},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"State\",\"type\":\"record\"}},{\"name\":\"routing\",\"type\":{\"fields\":[{\"name\":\"toApproverEmails\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"requesterEmail\",\"type\":\"string\"},{\"name\":\"ccEmails\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"channels\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Routing\",\"type\":\"record\"}},{\"name\":\"context\",\"type\":{\"fields\":[{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"name\":\"resourceType\",\"type\":[\"null\",\"string\"]},{\"name\":\"resourceMetadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]},{\"name\":\"detailUrl\",\"type\":[\"null\",\"string\"]}],\"name\":\"Context\",\"type\":\"record\"}}],\"name\":\"Andreani.ApprovalFlow.Events.ApprovalNotification\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":\"approval\",\"name\":\"system\",\"type\":[\"string\",\"null\"]},{\"name\":\"requestId\",\"type\":\"string\"},{\"name\":\"transition\",\"type\":{\"fields\":[{\"name\":\"action\",\"type\":\"string\"},{\"name\":\"actionedBy\",\"type\":\"string\"},{\"default\":null,\"name\":\"reason\",\"type\":[\"null\",\"string\"]},{\"name\":\"actionDate\",\"type\":\"string\"}],\"name\":\"Transition\",\"type\":\"record\"}},{\"name\":\"state\",\"type\":{\"fields\":[{\"name\":\"globalStatus\",\"type\":\"string\"},{\"name\":\"currentStepOrder\",\"type\":\"int\"},{\"name\":\"totalSteps\",\"type\":\"int\"},{\"name\":\"currentStepName\",\"type\":\"string\"},{\"name\":\"isFinalState\",\"type\":\"boolean\"},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"State\",\"type\":\"record\"}},{\"name\":\"routing\",\"type\":{\"fields\":[{\"name\":\"toApproverEmails\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"requesterEmail\",\"type\":\"string\"},{\"name\":\"ccEmails\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"name\":\"channels\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Routing\",\"type\":\"record\"}},{\"name\":\"context\",\"type\":{\"fields\":[{\"name\":\"title\",\"type\":\"string\"},{\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"name\":\"resourceType\",\"type\":[\"null\",\"string\"]},{\"name\":\"resourceMetadata\",\"type\":[\"null\",{\"type\":\"map\",\"values\":\"string\"}]},{\"name\":\"detailUrl\",\"type\":[\"null\",\"string\"]}],\"name\":\"Context\",\"type\":\"record\"}}],\"name\":\"Andreani.ApprovalFlow.Events.ApprovalNotification\",\"type\":\"record\"}"
 }
 
 func (r ApprovalNotification) SchemaName() string {
@@ -116,32 +126,36 @@ func (_ ApprovalNotification) SetUnionElem(v int64) { panic("Unsupported operati
 func (r *ApprovalNotification) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.System = NewUnionStringNull()
+
+		return r.System
+	case 1:
 		w := types.String{Target: &r.RequestId}
 
 		return w
 
-	case 1:
+	case 2:
 		r.Transition = NewTransition()
 
 		w := types.Record{Target: &r.Transition}
 
 		return w
 
-	case 2:
+	case 3:
 		r.State = NewState()
 
 		w := types.Record{Target: &r.State}
 
 		return w
 
-	case 3:
+	case 4:
 		r.Routing = NewRouting()
 
 		w := types.Record{Target: &r.Routing}
 
 		return w
 
-	case 4:
+	case 5:
 		r.Context = NewContext()
 
 		w := types.Record{Target: &r.Context}
@@ -154,12 +168,19 @@ func (r *ApprovalNotification) Get(i int) types.Field {
 
 func (r *ApprovalNotification) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.System = NewUnionStringNull()
+		r.System.String = "approval"
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ApprovalNotification) NullField(i int) {
 	switch i {
+	case 0:
+		r.System = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -176,6 +197,10 @@ func (_ ApprovalNotification) AvroCRC64Fingerprint() []byte {
 func (r ApprovalNotification) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["system"], err = json.Marshal(r.System)
+	if err != nil {
+		return nil, err
+	}
 	output["requestId"], err = json.Marshal(r.RequestId)
 	if err != nil {
 		return nil, err
@@ -206,6 +231,23 @@ func (r *ApprovalNotification) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["system"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.System); err != nil {
+			return err
+		}
+	} else {
+		r.System = NewUnionStringNull()
+
+		r.System = NewUnionStringNull()
+		r.System.String = "approval"
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["requestId"]; ok {
 			return v
