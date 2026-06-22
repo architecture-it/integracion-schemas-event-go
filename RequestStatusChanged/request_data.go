@@ -39,13 +39,19 @@ type RequestData struct {
 	Priority string `json:"priority"`
 
 	Level int32 `json:"level"`
+
+	Title *UnionNullString `json:"title"`
+
+	Description *UnionNullString `json:"description"`
 }
 
-const RequestDataAvroCRC64Fingerprint = "\xf3w\\\x97;\xdf\xf0\x8a"
+const RequestDataAvroCRC64Fingerprint = "\xc0\xf6\xce\xdcҼ\xb9\xf2"
 
 func NewRequestData() RequestData {
 	r := RequestData{}
 	r.AssignedProvider = nil
+	r.Title = nil
+	r.Description = nil
 	return r
 }
 
@@ -118,6 +124,14 @@ func writeRequestData(r RequestData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Title, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Description, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -126,7 +140,7 @@ func (r RequestData) Serialize(w io.Writer) error {
 }
 
 func (r RequestData) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"}],\"name\":\"Andreani.RequestStatusChanged.Events.Record.Common.RequestData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"},{\"default\":null,\"name\":\"title\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.RequestStatusChanged.Events.Record.Common.RequestData\",\"type\":\"record\"}"
 }
 
 func (r RequestData) SchemaName() string {
@@ -198,6 +212,14 @@ func (r *RequestData) Get(i int) types.Field {
 
 		return w
 
+	case 11:
+		r.Title = NewUnionNullString()
+
+		return r.Title
+	case 12:
+		r.Description = NewUnionNullString()
+
+		return r.Description
 	}
 	panic("Unknown field index")
 }
@@ -207,6 +229,12 @@ func (r *RequestData) SetDefault(i int) {
 	case 4:
 		r.AssignedProvider = nil
 		return
+	case 11:
+		r.Title = nil
+		return
+	case 12:
+		r.Description = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -215,6 +243,12 @@ func (r *RequestData) NullField(i int) {
 	switch i {
 	case 4:
 		r.AssignedProvider = nil
+		return
+	case 11:
+		r.Title = nil
+		return
+	case 12:
+		r.Description = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -273,6 +307,14 @@ func (r RequestData) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["level"], err = json.Marshal(r.Level)
+	if err != nil {
+		return nil, err
+	}
+	output["title"], err = json.Marshal(r.Title)
+	if err != nil {
+		return nil, err
+	}
+	output["description"], err = json.Marshal(r.Description)
 	if err != nil {
 		return nil, err
 	}
@@ -441,6 +483,38 @@ func (r *RequestData) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for level")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["title"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Title); err != nil {
+			return err
+		}
+	} else {
+		r.Title = NewUnionNullString()
+
+		r.Title = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["description"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Description); err != nil {
+			return err
+		}
+	} else {
+		r.Description = NewUnionNullString()
+
+		r.Description = nil
 	}
 	return nil
 }
