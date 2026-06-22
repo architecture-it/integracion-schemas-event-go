@@ -18,10 +18,10 @@ import (
 var _ = fmt.Printf
 
 type Impreso struct {
-	Traza *UnionNullTrazaCartaDocumento `json:"Traza"`
+	Traza *UnionNullTrazaCartaDocumento `json:"traza"`
 }
 
-const ImpresoAvroCRC64Fingerprint = "r\xdbm4\xdf\x7fr<"
+const ImpresoAvroCRC64Fingerprint = "\xd6\xe9&('l\xf4\xf3"
 
 func NewImpreso() Impreso {
 	r := Impreso{}
@@ -66,7 +66,7 @@ func (r Impreso) Serialize(w io.Writer) error {
 }
 
 func (r Impreso) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Impreso\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Impreso\",\"type\":\"record\"}"
 }
 
 func (r Impreso) SchemaName() string {
@@ -122,7 +122,7 @@ func (_ Impreso) AvroCRC64Fingerprint() []byte {
 func (r Impreso) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Traza"], err = json.Marshal(r.Traza)
+	output["traza"], err = json.Marshal(r.Traza)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +137,7 @@ func (r *Impreso) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["Traza"]; ok {
+		if v, ok := fields["traza"]; ok {
 			return v
 		}
 		return nil

@@ -18,10 +18,10 @@ import (
 var _ = fmt.Printf
 
 type PendienteDeImpresion struct {
-	Traza *UnionNullTrazaCartaDocumento `json:"Traza"`
+	Traza *UnionNullTrazaCartaDocumento `json:"traza"`
 }
 
-const PendienteDeImpresionAvroCRC64Fingerprint = "\xcb\x02\x95&.\xccח"
+const PendienteDeImpresionAvroCRC64Fingerprint = "o0\xde:\xd6\xdfQX"
 
 func NewPendienteDeImpresion() PendienteDeImpresion {
 	r := PendienteDeImpresion{}
@@ -66,7 +66,7 @@ func (r PendienteDeImpresion) Serialize(w io.Writer) error {
 }
 
 func (r PendienteDeImpresion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumento.Events.Record.PendienteDeImpresion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumento.Events.Record.PendienteDeImpresion\",\"type\":\"record\"}"
 }
 
 func (r PendienteDeImpresion) SchemaName() string {
@@ -122,7 +122,7 @@ func (_ PendienteDeImpresion) AvroCRC64Fingerprint() []byte {
 func (r PendienteDeImpresion) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Traza"], err = json.Marshal(r.Traza)
+	output["traza"], err = json.Marshal(r.Traza)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +137,7 @@ func (r *PendienteDeImpresion) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["Traza"]; ok {
+		if v, ok := fields["traza"]; ok {
 			return v
 		}
 		return nil

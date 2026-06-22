@@ -18,14 +18,14 @@ import (
 var _ = fmt.Printf
 
 type Rechazado struct {
-	Traza *UnionNullTrazaCartaDocumento `json:"Traza"`
+	Traza *UnionNullTrazaCartaDocumento `json:"traza"`
 
 	Motivo *UnionNullString `json:"Motivo"`
 
 	Submotivo *UnionNullString `json:"Submotivo"`
 }
 
-const RechazadoAvroCRC64Fingerprint = "e%\xef.\x9f\x00\xa9\x13"
+const RechazadoAvroCRC64Fingerprint = "\x8b\x00\x93\xd6om/\xa6"
 
 func NewRechazado() Rechazado {
 	r := Rechazado{}
@@ -80,7 +80,7 @@ func (r Rechazado) Serialize(w io.Writer) error {
 }
 
 func (r Rechazado) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"Traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Submotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Rechazado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Submotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Rechazado\",\"type\":\"record\"}"
 }
 
 func (r Rechazado) SchemaName() string {
@@ -156,7 +156,7 @@ func (_ Rechazado) AvroCRC64Fingerprint() []byte {
 func (r Rechazado) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Traza"], err = json.Marshal(r.Traza)
+	output["traza"], err = json.Marshal(r.Traza)
 	if err != nil {
 		return nil, err
 	}
@@ -179,7 +179,7 @@ func (r *Rechazado) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["Traza"]; ok {
+		if v, ok := fields["traza"]; ok {
 			return v
 		}
 		return nil
