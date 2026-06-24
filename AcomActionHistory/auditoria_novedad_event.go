@@ -25,12 +25,21 @@ type AuditoriaNovedadEvent struct {
 	Modulo string `json:"Modulo"`
 
 	DetalleMovimiento string `json:"DetalleMovimiento"`
+
+	Titulo *UnionNullString `json:"Titulo"`
+
+	UrlPath *UnionNullString `json:"UrlPath"`
+
+	UrlLabel *UnionNullString `json:"UrlLabel"`
 }
 
-const AuditoriaNovedadEventAvroCRC64Fingerprint = "_\xc5\xc2F\xc3D\xe6{"
+const AuditoriaNovedadEventAvroCRC64Fingerprint = "\xae\x81\xb2\xbcr\x96Q\x1c"
 
 func NewAuditoriaNovedadEvent() AuditoriaNovedadEvent {
 	r := AuditoriaNovedadEvent{}
+	r.Titulo = nil
+	r.UrlPath = nil
+	r.UrlLabel = nil
 	return r
 }
 
@@ -75,6 +84,18 @@ func writeAuditoriaNovedadEvent(r AuditoriaNovedadEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Titulo, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.UrlPath, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.UrlLabel, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -83,7 +104,7 @@ func (r AuditoriaNovedadEvent) Serialize(w io.Writer) error {
 }
 
 func (r AuditoriaNovedadEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Mail\",\"type\":\"string\"},{\"name\":\"Modulo\",\"type\":\"string\"},{\"name\":\"DetalleMovimiento\",\"type\":\"string\"}],\"name\":\"Andreani.AcomActionHistory.Events.Record.AuditoriaNovedadEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"Mail\",\"type\":\"string\"},{\"name\":\"Modulo\",\"type\":\"string\"},{\"name\":\"DetalleMovimiento\",\"type\":\"string\"},{\"default\":null,\"name\":\"Titulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UrlPath\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UrlLabel\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AcomActionHistory.Events.Record.AuditoriaNovedadEvent\",\"type\":\"record\"}"
 }
 
 func (r AuditoriaNovedadEvent) SchemaName() string {
@@ -121,18 +142,48 @@ func (r *AuditoriaNovedadEvent) Get(i int) types.Field {
 
 		return w
 
+	case 4:
+		r.Titulo = NewUnionNullString()
+
+		return r.Titulo
+	case 5:
+		r.UrlPath = NewUnionNullString()
+
+		return r.UrlPath
+	case 6:
+		r.UrlLabel = NewUnionNullString()
+
+		return r.UrlLabel
 	}
 	panic("Unknown field index")
 }
 
 func (r *AuditoriaNovedadEvent) SetDefault(i int) {
 	switch i {
+	case 4:
+		r.Titulo = nil
+		return
+	case 5:
+		r.UrlPath = nil
+		return
+	case 6:
+		r.UrlLabel = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *AuditoriaNovedadEvent) NullField(i int) {
 	switch i {
+	case 4:
+		r.Titulo = nil
+		return
+	case 5:
+		r.UrlPath = nil
+		return
+	case 6:
+		r.UrlLabel = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -162,6 +213,18 @@ func (r AuditoriaNovedadEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["DetalleMovimiento"], err = json.Marshal(r.DetalleMovimiento)
+	if err != nil {
+		return nil, err
+	}
+	output["Titulo"], err = json.Marshal(r.Titulo)
+	if err != nil {
+		return nil, err
+	}
+	output["UrlPath"], err = json.Marshal(r.UrlPath)
+	if err != nil {
+		return nil, err
+	}
+	output["UrlLabel"], err = json.Marshal(r.UrlLabel)
 	if err != nil {
 		return nil, err
 	}
@@ -230,6 +293,54 @@ func (r *AuditoriaNovedadEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for DetalleMovimiento")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Titulo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Titulo); err != nil {
+			return err
+		}
+	} else {
+		r.Titulo = NewUnionNullString()
+
+		r.Titulo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["UrlPath"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlPath); err != nil {
+			return err
+		}
+	} else {
+		r.UrlPath = NewUnionNullString()
+
+		r.UrlPath = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["UrlLabel"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlLabel); err != nil {
+			return err
+		}
+	} else {
+		r.UrlLabel = NewUnionNullString()
+
+		r.UrlLabel = nil
 	}
 	return nil
 }
