@@ -20,12 +20,12 @@ var _ = fmt.Printf
 type Rechazado struct {
 	Traza *UnionNullTrazaCartaDocumento `json:"traza"`
 
-	Motivo *UnionNullString `json:"Motivo"`
+	Motivo *UnionNullString `json:"motivo"`
 
-	Submotivo *UnionNullString `json:"Submotivo"`
+	Submotivo *UnionNullString `json:"submotivo"`
 }
 
-const RechazadoAvroCRC64Fingerprint = "\x8b\x00\x93\xd6om/\xa6"
+const RechazadoAvroCRC64Fingerprint = "-\x90\xd3\xd0>\xf7a\x85"
 
 func NewRechazado() Rechazado {
 	r := Rechazado{}
@@ -80,7 +80,7 @@ func (r Rechazado) Serialize(w io.Writer) error {
 }
 
 func (r Rechazado) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Submotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Rechazado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"submotivo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Rechazado\",\"type\":\"record\"}"
 }
 
 func (r Rechazado) SchemaName() string {
@@ -160,11 +160,11 @@ func (r Rechazado) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Motivo"], err = json.Marshal(r.Motivo)
+	output["motivo"], err = json.Marshal(r.Motivo)
 	if err != nil {
 		return nil, err
 	}
-	output["Submotivo"], err = json.Marshal(r.Submotivo)
+	output["submotivo"], err = json.Marshal(r.Submotivo)
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +195,7 @@ func (r *Rechazado) UnmarshalJSON(data []byte) error {
 		r.Traza = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Motivo"]; ok {
+		if v, ok := fields["motivo"]; ok {
 			return v
 		}
 		return nil
@@ -211,7 +211,7 @@ func (r *Rechazado) UnmarshalJSON(data []byte) error {
 		r.Motivo = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Submotivo"]; ok {
+		if v, ok := fields["submotivo"]; ok {
 			return v
 		}
 		return nil

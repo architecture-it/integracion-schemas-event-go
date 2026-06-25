@@ -21,7 +21,7 @@ type PendienteDeImpresion struct {
 	Traza *UnionNullTrazaCartaDocumento `json:"traza"`
 }
 
-const PendienteDeImpresionAvroCRC64Fingerprint = "o0\xde:\xd6\xdfQX"
+const PendienteDeImpresionAvroCRC64Fingerprint = "B\x98,\xa3I\xc4\xe8Z"
 
 func NewPendienteDeImpresion() PendienteDeImpresion {
 	r := PendienteDeImpresion{}
@@ -66,7 +66,7 @@ func (r PendienteDeImpresion) Serialize(w io.Writer) error {
 }
 
 func (r PendienteDeImpresion) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumento.Events.Record.PendienteDeImpresion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumento.Events.Record.PendienteDeImpresion\",\"type\":\"record\"}"
 }
 
 func (r PendienteDeImpresion) SchemaName() string {

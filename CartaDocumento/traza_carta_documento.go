@@ -20,20 +20,20 @@ var _ = fmt.Printf
 type TrazaCartaDocumento struct {
 	CodigoDeEnvio string `json:"codigoDeEnvio"`
 
-	Nombre *UnionNullString `json:"Nombre"`
+	Nombre *UnionNullString `json:"nombre"`
 
 	Cuando int64 `json:"Cuando"`
 
 	CodigoDeContratoInterno string `json:"CodigoDeContratoInterno"`
 
-	EstadoDelEnvio *UnionNullString `json:"EstadoDelEnvio"`
+	EstadoDelEnvio *UnionNullString `json:"estadoDelEnvio"`
 
-	Comentario *UnionNullString `json:"Comentario"`
+	Comentario *UnionNullString `json:"comentario"`
 
-	CicloDelEnvio *UnionNullString `json:"CicloDelEnvio"`
+	CicloDelEnvio *UnionNullString `json:"cicloDelEnvio"`
 }
 
-const TrazaCartaDocumentoAvroCRC64Fingerprint = "\x1a\xf4\x1f\xbf\x16\xd1\xe3t"
+const TrazaCartaDocumentoAvroCRC64Fingerprint = "m\x13\xae\x04\xa1U\xea\xe8"
 
 func NewTrazaCartaDocumento() TrazaCartaDocumento {
 	r := TrazaCartaDocumento{}
@@ -105,7 +105,7 @@ func (r TrazaCartaDocumento) Serialize(w io.Writer) error {
 }
 
 func (r TrazaCartaDocumento) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Events.Record.TrazaCartaDocumento\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CartaDocumento.Events.Record.TrazaCartaDocumento\",\"type\":\"record\"}"
 }
 
 func (r TrazaCartaDocumento) SchemaName() string {
@@ -210,7 +210,7 @@ func (r TrazaCartaDocumento) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["Nombre"], err = json.Marshal(r.Nombre)
+	output["nombre"], err = json.Marshal(r.Nombre)
 	if err != nil {
 		return nil, err
 	}
@@ -222,15 +222,15 @@ func (r TrazaCartaDocumento) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["EstadoDelEnvio"], err = json.Marshal(r.EstadoDelEnvio)
+	output["estadoDelEnvio"], err = json.Marshal(r.EstadoDelEnvio)
 	if err != nil {
 		return nil, err
 	}
-	output["Comentario"], err = json.Marshal(r.Comentario)
+	output["comentario"], err = json.Marshal(r.Comentario)
 	if err != nil {
 		return nil, err
 	}
-	output["CicloDelEnvio"], err = json.Marshal(r.CicloDelEnvio)
+	output["cicloDelEnvio"], err = json.Marshal(r.CicloDelEnvio)
 	if err != nil {
 		return nil, err
 	}
@@ -259,7 +259,7 @@ func (r *TrazaCartaDocumento) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for codigoDeEnvio")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Nombre"]; ok {
+		if v, ok := fields["nombre"]; ok {
 			return v
 		}
 		return nil
@@ -303,7 +303,7 @@ func (r *TrazaCartaDocumento) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for CodigoDeContratoInterno")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["EstadoDelEnvio"]; ok {
+		if v, ok := fields["estadoDelEnvio"]; ok {
 			return v
 		}
 		return nil
@@ -319,7 +319,7 @@ func (r *TrazaCartaDocumento) UnmarshalJSON(data []byte) error {
 		r.EstadoDelEnvio = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["Comentario"]; ok {
+		if v, ok := fields["comentario"]; ok {
 			return v
 		}
 		return nil
@@ -335,7 +335,7 @@ func (r *TrazaCartaDocumento) UnmarshalJSON(data []byte) error {
 		r.Comentario = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["CicloDelEnvio"]; ok {
+		if v, ok := fields["cicloDelEnvio"]; ok {
 			return v
 		}
 		return nil

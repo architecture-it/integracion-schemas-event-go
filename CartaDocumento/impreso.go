@@ -21,7 +21,7 @@ type Impreso struct {
 	Traza *UnionNullTrazaCartaDocumento `json:"traza"`
 }
 
-const ImpresoAvroCRC64Fingerprint = "\xd6\xe9&('l\xf4\xf3"
+const ImpresoAvroCRC64Fingerprint = "\xfbAԱ\xb8wM\xf1"
 
 func NewImpreso() Impreso {
 	r := Impreso{}
@@ -66,7 +66,7 @@ func (r Impreso) Serialize(w io.Writer) error {
 }
 
 func (r Impreso) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"EstadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Impreso\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"Cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"CodigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"TrazaCartaDocumento\",\"type\":\"record\"}]}],\"name\":\"Andreani.CartaDocumento.Events.Record.Impreso\",\"type\":\"record\"}"
 }
 
 func (r Impreso) SchemaName() string {
