@@ -32,10 +32,14 @@ type Order struct {
 
 	City string `json:"city"`
 
+	Address string `json:"address"`
+
+	AddressNumber string `json:"addressNumber"`
+
 	PostalCode string `json:"postalCode"`
 }
 
-const OrderAvroCRC64Fingerprint = "\xa0\r(\xe4\x8c\xe5\xd37"
+const OrderAvroCRC64Fingerprint = "\x847G\x11*\x05\xb2\x8e"
 
 func NewOrder() Order {
 	r := Order{}
@@ -95,6 +99,14 @@ func writeOrder(r Order, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Address, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.AddressNumber, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.PostalCode, w)
 	if err != nil {
 		return err
@@ -107,7 +119,7 @@ func (r Order) Serialize(w io.Writer) error {
 }
 
 func (r Order) Schema() string {
-	return "{\"fields\":[{\"name\":\"orderWh\",\"type\":\"string\"},{\"name\":\"externalOrder\",\"type\":\"string\"},{\"name\":\"contract\",\"type\":\"string\"},{\"name\":\"company\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"}],\"name\":\"Andreani.WosExportacion.Events.PackingListCommon.Order\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"orderWh\",\"type\":\"string\"},{\"name\":\"externalOrder\",\"type\":\"string\"},{\"name\":\"contract\",\"type\":\"string\"},{\"name\":\"company\",\"type\":\"string\"},{\"name\":\"country\",\"type\":\"string\"},{\"name\":\"state\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"address\",\"type\":\"string\"},{\"name\":\"addressNumber\",\"type\":\"string\"},{\"name\":\"postalCode\",\"type\":\"string\"}],\"name\":\"Andreani.WosExportacion.Events.PackingListCommon.Order\",\"type\":\"record\"}"
 }
 
 func (r Order) SchemaName() string {
@@ -161,6 +173,16 @@ func (r *Order) Get(i int) types.Field {
 		return w
 
 	case 7:
+		w := types.String{Target: &r.Address}
+
+		return w
+
+	case 8:
+		w := types.String{Target: &r.AddressNumber}
+
+		return w
+
+	case 9:
 		w := types.String{Target: &r.PostalCode}
 
 		return w
@@ -218,6 +240,14 @@ func (r Order) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["city"], err = json.Marshal(r.City)
+	if err != nil {
+		return nil, err
+	}
+	output["address"], err = json.Marshal(r.Address)
+	if err != nil {
+		return nil, err
+	}
+	output["addressNumber"], err = json.Marshal(r.AddressNumber)
 	if err != nil {
 		return nil, err
 	}
@@ -332,6 +362,34 @@ func (r *Order) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for city")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["address"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Address); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for address")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["addressNumber"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.AddressNumber); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for addressNumber")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["postalCode"]; ok {
