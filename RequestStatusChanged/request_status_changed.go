@@ -33,9 +33,11 @@ type RequestStatusChanged struct {
 	EmailsPostulant []string `json:"emailsPostulant"`
 
 	Metadata *UnionNullArrayMapString `json:"metadata"`
+
+	Metadatos *UnionNullArrayMetadato `json:"metadatos"`
 }
 
-const RequestStatusChangedAvroCRC64Fingerprint = "}&\xb2\xac\xbc\x8ea\xba"
+const RequestStatusChangedAvroCRC64Fingerprint = "\xac\xfd\x8c\xc92\x06v\f"
 
 func NewRequestStatusChanged() RequestStatusChanged {
 	r := RequestStatusChanged{}
@@ -44,6 +46,7 @@ func NewRequestStatusChanged() RequestStatusChanged {
 	r.EmailsPostulant = make([]string, 0)
 
 	r.Metadata = nil
+	r.Metadatos = nil
 	return r
 }
 
@@ -104,6 +107,10 @@ func writeRequestStatusChanged(r RequestStatusChanged, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayMetadato(r.Metadatos, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -112,7 +119,7 @@ func (r RequestStatusChanged) Serialize(w io.Writer) error {
 }
 
 func (r RequestStatusChanged) Schema() string {
-	return "{\"fields\":[{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"occurredAt\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"previousStatus\",\"type\":\"string\"},{\"name\":\"currentStatus\",\"type\":\"string\"},{\"default\":null,\"name\":\"request\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"},{\"default\":null,\"name\":\"title\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]}],\"name\":\"RequestData\",\"namespace\":\"Andreani.RequestStatusChanged.Events.Record.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"providerInfo\",\"type\":[\"null\",{\"fields\":[{\"name\":\"providerId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"startWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimatedStartWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"ProviderInfo\",\"namespace\":\"Andreani.RequestStatusChanged.Events.Record.Common\",\"type\":\"record\"}]},{\"name\":\"emailsPostulant\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"items\":{\"type\":\"map\",\"values\":\"string\"},\"type\":\"array\"}]}],\"name\":\"Andreani.RequestStatusChanged.Events.Record.RequestStatusChanged\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"occurredAt\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"previousStatus\",\"type\":\"string\"},{\"name\":\"currentStatus\",\"type\":\"string\"},{\"default\":null,\"name\":\"request\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"},{\"default\":null,\"name\":\"title\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"owner\",\"type\":[\"null\",\"string\"]}],\"name\":\"RequestData\",\"namespace\":\"Andreani.RequestStatusChanged.Events.Record.Common\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"providerInfo\",\"type\":[\"null\",{\"fields\":[{\"name\":\"providerId\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"default\":null,\"name\":\"startWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimatedStartWork\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]}],\"name\":\"ProviderInfo\",\"namespace\":\"Andreani.RequestStatusChanged.Events.Record.Common\",\"type\":\"record\"}]},{\"name\":\"emailsPostulant\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"items\":{\"type\":\"map\",\"values\":\"string\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"metadatos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"namespace\":\"Andreani.RequestStatusChanged.Events.Record.Common\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.RequestStatusChanged.Events.Record.RequestStatusChanged\",\"type\":\"record\"}"
 }
 
 func (r RequestStatusChanged) SchemaName() string {
@@ -169,6 +176,10 @@ func (r *RequestStatusChanged) Get(i int) types.Field {
 		r.Metadata = NewUnionNullArrayMapString()
 
 		return r.Metadata
+	case 8:
+		r.Metadatos = NewUnionNullArrayMetadato()
+
+		return r.Metadatos
 	}
 	panic("Unknown field index")
 }
@@ -184,6 +195,9 @@ func (r *RequestStatusChanged) SetDefault(i int) {
 	case 7:
 		r.Metadata = nil
 		return
+	case 8:
+		r.Metadatos = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -198,6 +212,9 @@ func (r *RequestStatusChanged) NullField(i int) {
 		return
 	case 7:
 		r.Metadata = nil
+		return
+	case 8:
+		r.Metadatos = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -244,6 +261,10 @@ func (r RequestStatusChanged) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["metadata"], err = json.Marshal(r.Metadata)
+	if err != nil {
+		return nil, err
+	}
+	output["metadatos"], err = json.Marshal(r.Metadatos)
 	if err != nil {
 		return nil, err
 	}
@@ -374,6 +395,22 @@ func (r *RequestStatusChanged) UnmarshalJSON(data []byte) error {
 		r.Metadata = NewUnionNullArrayMapString()
 
 		r.Metadata = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["metadatos"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Metadatos); err != nil {
+			return err
+		}
+	} else {
+		r.Metadatos = NewUnionNullArrayMetadato()
+
+		r.Metadatos = nil
 	}
 	return nil
 }

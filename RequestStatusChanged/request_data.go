@@ -43,15 +43,18 @@ type RequestData struct {
 	Title *UnionNullString `json:"title"`
 
 	Description *UnionNullString `json:"description"`
+
+	Owner *UnionNullString `json:"owner"`
 }
 
-const RequestDataAvroCRC64Fingerprint = "\xc0\xf6\xce\xdcҼ\xb9\xf2"
+const RequestDataAvroCRC64Fingerprint = "%W/w\xa0Q\xa2S"
 
 func NewRequestData() RequestData {
 	r := RequestData{}
 	r.AssignedProvider = nil
 	r.Title = nil
 	r.Description = nil
+	r.Owner = nil
 	return r
 }
 
@@ -132,6 +135,10 @@ func writeRequestData(r RequestData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Owner, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -140,7 +147,7 @@ func (r RequestData) Serialize(w io.Writer) error {
 }
 
 func (r RequestData) Schema() string {
-	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"},{\"default\":null,\"name\":\"title\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.RequestStatusChanged.Events.Record.Common.RequestData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Id\",\"type\":\"string\"},{\"name\":\"templateId\",\"type\":\"string\"},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"requestor\",\"type\":\"string\"},{\"default\":null,\"name\":\"assignedProvider\",\"type\":[\"null\",\"string\"]},{\"name\":\"awaitProposalDays\",\"type\":\"int\"},{\"name\":\"startDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"dueDate\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"projectId\",\"type\":\"int\"},{\"name\":\"priority\",\"type\":\"string\"},{\"name\":\"level\",\"type\":\"int\"},{\"default\":null,\"name\":\"title\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"owner\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.RequestStatusChanged.Events.Record.Common.RequestData\",\"type\":\"record\"}"
 }
 
 func (r RequestData) SchemaName() string {
@@ -220,6 +227,10 @@ func (r *RequestData) Get(i int) types.Field {
 		r.Description = NewUnionNullString()
 
 		return r.Description
+	case 13:
+		r.Owner = NewUnionNullString()
+
+		return r.Owner
 	}
 	panic("Unknown field index")
 }
@@ -235,6 +246,9 @@ func (r *RequestData) SetDefault(i int) {
 	case 12:
 		r.Description = nil
 		return
+	case 13:
+		r.Owner = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -249,6 +263,9 @@ func (r *RequestData) NullField(i int) {
 		return
 	case 12:
 		r.Description = nil
+		return
+	case 13:
+		r.Owner = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -315,6 +332,10 @@ func (r RequestData) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["description"], err = json.Marshal(r.Description)
+	if err != nil {
+		return nil, err
+	}
+	output["owner"], err = json.Marshal(r.Owner)
 	if err != nil {
 		return nil, err
 	}
@@ -515,6 +536,22 @@ func (r *RequestData) UnmarshalJSON(data []byte) error {
 		r.Description = NewUnionNullString()
 
 		r.Description = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["owner"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Owner); err != nil {
+			return err
+		}
+	} else {
+		r.Owner = NewUnionNullString()
+
+		r.Owner = nil
 	}
 	return nil
 }
