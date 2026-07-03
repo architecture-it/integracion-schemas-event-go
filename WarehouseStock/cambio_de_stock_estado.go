@@ -26,6 +26,7 @@ const (
 	CambioDeStockEstadoCreado     CambioDeStockEstado = 4
 	CambioDeStockEstadoConfirmado CambioDeStockEstado = 5
 	CambioDeStockEstadoExpedido   CambioDeStockEstado = 6
+	CambioDeStockEstadoLiberado   CambioDeStockEstado = 7
 )
 
 func (e CambioDeStockEstado) String() string {
@@ -44,6 +45,8 @@ func (e CambioDeStockEstado) String() string {
 		return "Confirmado"
 	case CambioDeStockEstadoExpedido:
 		return "Expedido"
+	case CambioDeStockEstadoLiberado:
+		return "Liberado"
 	}
 	return "unknown"
 }
@@ -68,6 +71,8 @@ func NewCambioDeStockEstadoValue(raw string) (r CambioDeStockEstado, err error) 
 		return CambioDeStockEstadoConfirmado, nil
 	case "Expedido":
 		return CambioDeStockEstadoExpedido, nil
+	case "Liberado":
+		return CambioDeStockEstadoLiberado, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for CambioDeStockEstado: '%s'", raw)

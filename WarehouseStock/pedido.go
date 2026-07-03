@@ -25,7 +25,7 @@ type Pedido struct {
 	Estado *UnionNullCambioDeStockEstado `json:"Estado"`
 }
 
-const PedidoAvroCRC64Fingerprint = "BdO\f\aƬR"
+const PedidoAvroCRC64Fingerprint = "\x96$\x1e\xd5\x1f\xfa\xf1\x91"
 
 func NewPedido() Pedido {
 	r := Pedido{}
@@ -80,7 +80,7 @@ func (r Pedido) Serialize(w io.Writer) error {
 }
 
 func (r Pedido) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"PedidoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PedidoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Creado\",\"Confirmado\",\"Expedido\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.WarehouseStock.Events.StockCommon.Pedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"PedidoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PedidoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Creado\",\"Confirmado\",\"Expedido\",\"Liberado\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.WarehouseStock.Events.StockCommon.Pedido\",\"type\":\"record\"}"
 }
 
 func (r Pedido) SchemaName() string {
