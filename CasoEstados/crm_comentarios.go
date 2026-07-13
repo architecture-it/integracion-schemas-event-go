@@ -22,6 +22,10 @@ type CrmComentarios struct {
 
 	NumeroDeCaso *UnionNullString `json:"NumeroDeCaso"`
 
+	And_numerodeenvio *UnionNullString `json:"And_numerodeenvio"`
+
+	And_numerodecontrato *UnionNullString `json:"And_numerodecontrato"`
+
 	Comentario *UnionNullString `json:"Comentario"`
 
 	IdVinculacion *UnionNullString `json:"IdVinculacion"`
@@ -29,9 +33,11 @@ type CrmComentarios struct {
 	IdComentario *UnionNullString `json:"IdComentario"`
 
 	TieneArchivo *UnionNullBool `json:"TieneArchivo"`
+
+	IdCorrelacionCliente *UnionNullString `json:"IdCorrelacionCliente"`
 }
 
-const CrmComentariosAvroCRC64Fingerprint = "\x81\x86\xc4\x1c\x84~\x1a\xab"
+const CrmComentariosAvroCRC64Fingerprint = "U\x0e\xb6\xaf\xaa\xf3\x01^"
 
 func NewCrmComentarios() CrmComentarios {
 	r := CrmComentarios{}
@@ -71,6 +77,14 @@ func writeCrmComentarios(r CrmComentarios, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.And_numerodeenvio, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.And_numerodecontrato, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.Comentario, w)
 	if err != nil {
 		return err
@@ -87,6 +101,10 @@ func writeCrmComentarios(r CrmComentarios, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.IdCorrelacionCliente, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -95,7 +113,7 @@ func (r CrmComentarios) Serialize(w io.Writer) error {
 }
 
 func (r CrmComentarios) Schema() string {
-	return "{\"fields\":[{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDeCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdVinculacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdComentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneArchivo\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.CrmComentarios\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDeCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodecontrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdVinculacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdComentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneArchivo\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"IdCorrelacionCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.CrmComentarios\",\"type\":\"record\"}"
 }
 
 func (r CrmComentarios) SchemaName() string {
@@ -122,21 +140,33 @@ func (r *CrmComentarios) Get(i int) types.Field {
 
 		return r.NumeroDeCaso
 	case 2:
+		r.And_numerodeenvio = NewUnionNullString()
+
+		return r.And_numerodeenvio
+	case 3:
+		r.And_numerodecontrato = NewUnionNullString()
+
+		return r.And_numerodecontrato
+	case 4:
 		r.Comentario = NewUnionNullString()
 
 		return r.Comentario
-	case 3:
+	case 5:
 		r.IdVinculacion = NewUnionNullString()
 
 		return r.IdVinculacion
-	case 4:
+	case 6:
 		r.IdComentario = NewUnionNullString()
 
 		return r.IdComentario
-	case 5:
+	case 7:
 		r.TieneArchivo = NewUnionNullBool()
 
 		return r.TieneArchivo
+	case 8:
+		r.IdCorrelacionCliente = NewUnionNullString()
+
+		return r.IdCorrelacionCliente
 	}
 	panic("Unknown field index")
 }
@@ -156,16 +186,25 @@ func (r *CrmComentarios) NullField(i int) {
 		r.NumeroDeCaso = nil
 		return
 	case 2:
-		r.Comentario = nil
+		r.And_numerodeenvio = nil
 		return
 	case 3:
-		r.IdVinculacion = nil
+		r.And_numerodecontrato = nil
 		return
 	case 4:
-		r.IdComentario = nil
+		r.Comentario = nil
 		return
 	case 5:
+		r.IdVinculacion = nil
+		return
+	case 6:
+		r.IdComentario = nil
+		return
+	case 7:
 		r.TieneArchivo = nil
+		return
+	case 8:
+		r.IdCorrelacionCliente = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -191,6 +230,14 @@ func (r CrmComentarios) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["And_numerodeenvio"], err = json.Marshal(r.And_numerodeenvio)
+	if err != nil {
+		return nil, err
+	}
+	output["And_numerodecontrato"], err = json.Marshal(r.And_numerodecontrato)
+	if err != nil {
+		return nil, err
+	}
 	output["Comentario"], err = json.Marshal(r.Comentario)
 	if err != nil {
 		return nil, err
@@ -204,6 +251,10 @@ func (r CrmComentarios) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["TieneArchivo"], err = json.Marshal(r.TieneArchivo)
+	if err != nil {
+		return nil, err
+	}
+	output["IdCorrelacionCliente"], err = json.Marshal(r.IdCorrelacionCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -244,6 +295,34 @@ func (r *CrmComentarios) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for NumeroDeCaso")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["And_numerodeenvio"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.And_numerodeenvio); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for And_numerodeenvio")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["And_numerodecontrato"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.And_numerodecontrato); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for And_numerodecontrato")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Comentario"]; ok {
@@ -300,6 +379,20 @@ func (r *CrmComentarios) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for TieneArchivo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdCorrelacionCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdCorrelacionCliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IdCorrelacionCliente")
 	}
 	return nil
 }

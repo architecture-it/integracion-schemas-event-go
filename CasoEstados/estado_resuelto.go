@@ -24,6 +24,8 @@ type EstadoResuelto struct {
 
 	And_numerodeenvio *UnionNullString `json:"And_numerodeenvio"`
 
+	And_numerodecontrato *UnionNullString `json:"And_numerodecontrato"`
+
 	Title string `json:"Title"`
 
 	Description *UnionNullString `json:"Description"`
@@ -51,9 +53,11 @@ type EstadoResuelto struct {
 	CorreoDestinatario *UnionNullString `json:"CorreoDestinatario"`
 
 	CorreoReclamante *UnionNullString `json:"CorreoReclamante"`
+
+	IdCorrelacionCliente *UnionNullString `json:"IdCorrelacionCliente"`
 }
 
-const EstadoResueltoAvroCRC64Fingerprint = "GBy\x1f1;\xcas"
+const EstadoResueltoAvroCRC64Fingerprint = "u``\xee\xad\x15\x00|"
 
 func NewEstadoResuelto() EstadoResuelto {
 	r := EstadoResuelto{}
@@ -94,6 +98,10 @@ func writeEstadoResuelto(r EstadoResuelto, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullString(r.And_numerodeenvio, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.And_numerodecontrato, w)
 	if err != nil {
 		return err
 	}
@@ -153,6 +161,10 @@ func writeEstadoResuelto(r EstadoResuelto, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.IdCorrelacionCliente, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -161,7 +173,7 @@ func (r EstadoResuelto) Serialize(w io.Writer) error {
 }
 
 func (r EstadoResuelto) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Modifiedon\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"cac_comentarioresolucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoReclamante\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoResuelto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodecontrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Modifiedon\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"cac_comentarioresolucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoReclamante\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdCorrelacionCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoResuelto\",\"type\":\"record\"}"
 }
 
 func (r EstadoResuelto) SchemaName() string {
@@ -194,66 +206,74 @@ func (r *EstadoResuelto) Get(i int) types.Field {
 
 		return r.And_numerodeenvio
 	case 3:
+		r.And_numerodecontrato = NewUnionNullString()
+
+		return r.And_numerodecontrato
+	case 4:
 		w := types.String{Target: &r.Title}
 
 		return w
 
-	case 4:
+	case 5:
 		r.Description = NewUnionNullString()
 
 		return r.Description
-	case 5:
+	case 6:
 		w := types.String{Target: &r.Createdon}
 
 		return w
 
-	case 6:
+	case 7:
 		r.Cac_numerodeenvioincorrecto = NewUnionNullString()
 
 		return r.Cac_numerodeenvioincorrecto
-	case 7:
+	case 8:
 		w := types.String{Target: &r.Customername}
 
 		return w
 
-	case 8:
+	case 9:
 		r.Cac_areainterna = NewUnionNullString()
 
 		return r.Cac_areainterna
-	case 9:
+	case 10:
 		w := types.String{Target: &r.StatusCodeName}
 
 		return w
 
-	case 10:
+	case 11:
 		w := types.String{Target: &r.Modifiedon}
 
 		return w
 
-	case 11:
+	case 12:
 		r.IncidentId = NewUnionNullString()
 
 		return r.IncidentId
-	case 12:
+	case 13:
 		r.Origen = NewUnionNullString()
 
 		return r.Origen
-	case 13:
+	case 14:
 		r.Cac_comentarioresolucion = NewUnionNullString()
 
 		return r.Cac_comentarioresolucion
-	case 14:
+	case 15:
 		r.CorreoRemitente = NewUnionNullString()
 
 		return r.CorreoRemitente
-	case 15:
+	case 16:
 		r.CorreoDestinatario = NewUnionNullString()
 
 		return r.CorreoDestinatario
-	case 16:
+	case 17:
 		r.CorreoReclamante = NewUnionNullString()
 
 		return r.CorreoReclamante
+	case 18:
+		r.IdCorrelacionCliente = NewUnionNullString()
+
+		return r.IdCorrelacionCliente
 	}
 	panic("Unknown field index")
 }
@@ -269,32 +289,38 @@ func (r *EstadoResuelto) NullField(i int) {
 	case 2:
 		r.And_numerodeenvio = nil
 		return
-	case 4:
+	case 3:
+		r.And_numerodecontrato = nil
+		return
+	case 5:
 		r.Description = nil
 		return
-	case 6:
+	case 7:
 		r.Cac_numerodeenvioincorrecto = nil
 		return
-	case 8:
+	case 9:
 		r.Cac_areainterna = nil
 		return
-	case 11:
+	case 12:
 		r.IncidentId = nil
 		return
-	case 12:
+	case 13:
 		r.Origen = nil
 		return
-	case 13:
+	case 14:
 		r.Cac_comentarioresolucion = nil
 		return
-	case 14:
+	case 15:
 		r.CorreoRemitente = nil
 		return
-	case 15:
+	case 16:
 		r.CorreoDestinatario = nil
 		return
-	case 16:
+	case 17:
 		r.CorreoReclamante = nil
+		return
+	case 18:
+		r.IdCorrelacionCliente = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -321,6 +347,10 @@ func (r EstadoResuelto) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["And_numerodeenvio"], err = json.Marshal(r.And_numerodeenvio)
+	if err != nil {
+		return nil, err
+	}
+	output["And_numerodecontrato"], err = json.Marshal(r.And_numerodecontrato)
 	if err != nil {
 		return nil, err
 	}
@@ -380,6 +410,10 @@ func (r EstadoResuelto) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["IdCorrelacionCliente"], err = json.Marshal(r.IdCorrelacionCliente)
+	if err != nil {
+		return nil, err
+	}
 	return json.Marshal(output)
 }
 
@@ -431,6 +465,20 @@ func (r *EstadoResuelto) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for And_numerodeenvio")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["And_numerodecontrato"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.And_numerodecontrato); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for And_numerodecontrato")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Title"]; ok {
@@ -627,6 +675,20 @@ func (r *EstadoResuelto) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for CorreoReclamante")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdCorrelacionCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdCorrelacionCliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for IdCorrelacionCliente")
 	}
 	return nil
 }
