@@ -24,15 +24,16 @@ type ProcesarBultoCommand struct {
 
 	IdBultoOrigen string `json:"IdBultoOrigen"`
 
-	Impresora string `json:"Impresora"`
+	Impresora *UnionNullString `json:"Impresora"`
 
 	DetalleBulto DetalleBulto `json:"DetalleBulto"`
 }
 
-const ProcesarBultoCommandAvroCRC64Fingerprint = "0C\xbb\x9f\xbd\x9a\x80\xc3"
+const ProcesarBultoCommandAvroCRC64Fingerprint = "r\xa1\x1c6\x99/\\\x89"
 
 func NewProcesarBultoCommand() ProcesarBultoCommand {
 	r := ProcesarBultoCommand{}
+	r.Impresora = nil
 	r.DetalleBulto = NewDetalleBulto()
 
 	return r
@@ -75,7 +76,7 @@ func writeProcesarBultoCommand(r ProcesarBultoCommand, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Impresora, w)
+	err = writeUnionNullString(r.Impresora, w)
 	if err != nil {
 		return err
 	}
@@ -91,7 +92,7 @@ func (r ProcesarBultoCommand) Serialize(w io.Writer) error {
 }
 
 func (r ProcesarBultoCommand) Schema() string {
-	return "{\"fields\":[{\"name\":\"TipoComando\",\"type\":\"string\"},{\"name\":\"Interno\",\"type\":\"string\"},{\"name\":\"IdBultoOrigen\",\"type\":\"string\"},{\"name\":\"Impresora\",\"type\":\"string\"},{\"name\":\"DetalleBulto\",\"type\":{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"FinPedido\",\"type\":\"boolean\"},{\"name\":\"Retornable\",\"type\":\"boolean\"},{\"name\":\"ValorACobrar\",\"type\":\"double\"},{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"Origen\",\"type\":{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"ComponenteDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"Destino\",\"type\":\"Andreani.CalidadCertificadaContracts.Events.Common.Direccion\"},{\"name\":\"Remitente\",\"type\":{\"fields\":[{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"DocumentoTipo\",\"type\":\"string\"},{\"name\":\"DocumentoNumero\",\"type\":\"string\"},{\"name\":\"Telefonos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Persona\",\"type\":\"record\"}},{\"name\":\"Destinatarios\",\"type\":{\"items\":\"Andreani.CalidadCertificadaContracts.Events.Common.Persona\",\"type\":\"array\"}},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"DetalleBulto\",\"namespace\":\"Andreani.CalidadCertificadaContracts.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.CalidadCertificadaContracts.Events.Record.ProcesarBultoCommand\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TipoComando\",\"type\":\"string\"},{\"name\":\"Interno\",\"type\":\"string\"},{\"name\":\"IdBultoOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"Impresora\",\"type\":[\"null\",\"string\"]},{\"name\":\"DetalleBulto\",\"type\":{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"FinPedido\",\"type\":\"boolean\"},{\"name\":\"Retornable\",\"type\":\"boolean\"},{\"name\":\"ValorACobrar\",\"type\":\"double\"},{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"Origen\",\"type\":{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"ComponenteDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"Destino\",\"type\":\"Andreani.CalidadCertificadaContracts.Events.Common.Direccion\"},{\"name\":\"Remitente\",\"type\":{\"fields\":[{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"DocumentoTipo\",\"type\":\"string\"},{\"name\":\"DocumentoNumero\",\"type\":\"string\"},{\"name\":\"Telefonos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Persona\",\"type\":\"record\"}},{\"name\":\"Destinatarios\",\"type\":{\"items\":\"Andreani.CalidadCertificadaContracts.Events.Common.Persona\",\"type\":\"array\"}},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"DetalleBulto\",\"namespace\":\"Andreani.CalidadCertificadaContracts.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.CalidadCertificadaContracts.Events.Record.ProcesarBultoCommand\",\"type\":\"record\"}"
 }
 
 func (r ProcesarBultoCommand) SchemaName() string {
@@ -125,10 +126,9 @@ func (r *ProcesarBultoCommand) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.String{Target: &r.Impresora}
+		r.Impresora = NewUnionNullString()
 
-		return w
-
+		return r.Impresora
 	case 4:
 		r.DetalleBulto = NewDetalleBulto()
 
@@ -142,12 +142,18 @@ func (r *ProcesarBultoCommand) Get(i int) types.Field {
 
 func (r *ProcesarBultoCommand) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.Impresora = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ProcesarBultoCommand) NullField(i int) {
 	switch i {
+	case 3:
+		r.Impresora = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -248,7 +254,9 @@ func (r *ProcesarBultoCommand) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Impresora")
+		r.Impresora = NewUnionNullString()
+
+		r.Impresora = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["DetalleBulto"]; ok {
