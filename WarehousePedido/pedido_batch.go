@@ -31,7 +31,7 @@ type PedidoBatch struct {
 	ImportesPorPedido *UnionNullArrayPedidoImportesPago `json:"importesPorPedido"`
 }
 
-const PedidoBatchAvroCRC64Fingerprint = "U\xd3\xf4\x85{\xab&\xc6"
+const PedidoBatchAvroCRC64Fingerprint = "\x13\xe2\x06\xb5\xe0\x00,\xb1"
 
 func NewPedidoBatch() PedidoBatch {
 	r := PedidoBatch{}
@@ -98,7 +98,7 @@ func (r PedidoBatch) Serialize(w io.Writer) error {
 }
 
 func (r PedidoBatch) Schema() string {
-	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoCupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importesPorPedido\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"default\":null,\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoImportesPago\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"batchId\",\"type\":\"string\"},{\"name\":\"idPagoExterno\",\"type\":\"string\"},{\"name\":\"proveedorPago\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoCupon\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombreFantasia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importesPorPedido\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"default\":null,\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeEnvioIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeAlmacenamientoIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeAlmacenamientoSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]}],\"name\":\"PedidoImportesPago\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoBatch\",\"type\":\"record\"}"
 }
 
 func (r PedidoBatch) SchemaName() string {
