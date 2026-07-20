@@ -23,12 +23,18 @@ type EliminarPedidoCommand struct {
 	Interno string `json:"Interno"`
 
 	IdBultoOrigen string `json:"IdBultoOrigen"`
+
+	Impresora *UnionNullString `json:"Impresora"`
+
+	DetalleBulto *UnionNullDetalleBulto `json:"DetalleBulto"`
 }
 
-const EliminarPedidoCommandAvroCRC64Fingerprint = "\xd3s\x82\x9ai\xfe\xa7O"
+const EliminarPedidoCommandAvroCRC64Fingerprint = "\xa6D\x18)\xcfe^\xd4"
 
 func NewEliminarPedidoCommand() EliminarPedidoCommand {
 	r := EliminarPedidoCommand{}
+	r.Impresora = nil
+	r.DetalleBulto = nil
 	return r
 }
 
@@ -69,6 +75,14 @@ func writeEliminarPedidoCommand(r EliminarPedidoCommand, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Impresora, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullDetalleBulto(r.DetalleBulto, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -77,7 +91,7 @@ func (r EliminarPedidoCommand) Serialize(w io.Writer) error {
 }
 
 func (r EliminarPedidoCommand) Schema() string {
-	return "{\"fields\":[{\"name\":\"TipoComando\",\"type\":\"string\"},{\"name\":\"Interno\",\"type\":\"string\"},{\"name\":\"IdBultoOrigen\",\"type\":\"string\"}],\"name\":\"Andreani.CalidadCertificadaContracts.Events.Record.EliminarPedidoCommand\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TipoComando\",\"type\":\"string\"},{\"name\":\"Interno\",\"type\":\"string\"},{\"name\":\"IdBultoOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"Impresora\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DetalleBulto\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"FinPedido\",\"type\":\"boolean\"},{\"name\":\"Retornable\",\"type\":\"boolean\"},{\"name\":\"ValorACobrar\",\"type\":\"double\"},{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"Origen\",\"type\":{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"ComponenteDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"Destino\",\"type\":\"Andreani.CalidadCertificadaContracts.Events.Common.Direccion\"},{\"name\":\"Remitente\",\"type\":{\"fields\":[{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"DocumentoTipo\",\"type\":\"string\"},{\"name\":\"DocumentoNumero\",\"type\":\"string\"},{\"name\":\"Telefonos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Persona\",\"type\":\"record\"}},{\"name\":\"Destinatarios\",\"type\":{\"items\":\"Andreani.CalidadCertificadaContracts.Events.Common.Persona\",\"type\":\"array\"}},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"DetalleBulto\",\"namespace\":\"Andreani.CalidadCertificadaContracts.Events.Common\",\"type\":\"record\"}]}],\"name\":\"Andreani.CalidadCertificadaContracts.Events.Record.EliminarPedidoCommand\",\"type\":\"record\"}"
 }
 
 func (r EliminarPedidoCommand) SchemaName() string {
@@ -110,18 +124,38 @@ func (r *EliminarPedidoCommand) Get(i int) types.Field {
 
 		return w
 
+	case 3:
+		r.Impresora = NewUnionNullString()
+
+		return r.Impresora
+	case 4:
+		r.DetalleBulto = NewUnionNullDetalleBulto()
+
+		return r.DetalleBulto
 	}
 	panic("Unknown field index")
 }
 
 func (r *EliminarPedidoCommand) SetDefault(i int) {
 	switch i {
+	case 3:
+		r.Impresora = nil
+		return
+	case 4:
+		r.DetalleBulto = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *EliminarPedidoCommand) NullField(i int) {
 	switch i {
+	case 3:
+		r.Impresora = nil
+		return
+	case 4:
+		r.DetalleBulto = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -147,6 +181,14 @@ func (r EliminarPedidoCommand) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["IdBultoOrigen"], err = json.Marshal(r.IdBultoOrigen)
+	if err != nil {
+		return nil, err
+	}
+	output["Impresora"], err = json.Marshal(r.Impresora)
+	if err != nil {
+		return nil, err
+	}
+	output["DetalleBulto"], err = json.Marshal(r.DetalleBulto)
 	if err != nil {
 		return nil, err
 	}
@@ -201,6 +243,38 @@ func (r *EliminarPedidoCommand) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for IdBultoOrigen")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Impresora"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Impresora); err != nil {
+			return err
+		}
+	} else {
+		r.Impresora = NewUnionNullString()
+
+		r.Impresora = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DetalleBulto"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DetalleBulto); err != nil {
+			return err
+		}
+	} else {
+		r.DetalleBulto = NewUnionNullDetalleBulto()
+
+		r.DetalleBulto = nil
 	}
 	return nil
 }
