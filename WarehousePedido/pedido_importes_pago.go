@@ -25,7 +25,7 @@ type PedidoImportesPago struct {
 
 	ImporteEnvioSinIva *UnionNullString `json:"importeEnvioSinIva"`
 
-	ImporteEnvioIva *UnionNullString `json:"importeEnvioIva"`
+	ImporteIva *UnionNullString `json:"importeIva"`
 
 	ImporteAlmacenamientoIva *UnionNullString `json:"importeAlmacenamientoIva"`
 
@@ -36,13 +36,13 @@ type PedidoImportesPago struct {
 	DescuentoTotal *UnionNullString `json:"descuentoTotal"`
 }
 
-const PedidoImportesPagoAvroCRC64Fingerprint = "ePރ\av\n "
+const PedidoImportesPagoAvroCRC64Fingerprint = "\xb0ps!\xbc$\xd3\xee"
 
 func NewPedidoImportesPago() PedidoImportesPago {
 	r := PedidoImportesPago{}
 	r.ImporteDelSeguro = nil
 	r.ImporteEnvioSinIva = nil
-	r.ImporteEnvioIva = nil
+	r.ImporteIva = nil
 	r.ImporteAlmacenamientoIva = nil
 	r.ImporteAlmacenamientoSinIva = nil
 	r.ImporteFinal = nil
@@ -87,7 +87,7 @@ func writePedidoImportesPago(r PedidoImportesPago, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.ImporteEnvioIva, w)
+	err = writeUnionNullString(r.ImporteIva, w)
 	if err != nil {
 		return err
 	}
@@ -115,7 +115,7 @@ func (r PedidoImportesPago) Serialize(w io.Writer) error {
 }
 
 func (r PedidoImportesPago) Schema() string {
-	return "{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"default\":null,\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeEnvioIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeAlmacenamientoIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeAlmacenamientoSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoImportesPago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"default\":null,\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeAlmacenamientoIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeAlmacenamientoSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoImportesPago\",\"type\":\"record\"}"
 }
 
 func (r PedidoImportesPago) SchemaName() string {
@@ -147,9 +147,9 @@ func (r *PedidoImportesPago) Get(i int) types.Field {
 
 		return r.ImporteEnvioSinIva
 	case 3:
-		r.ImporteEnvioIva = NewUnionNullString()
+		r.ImporteIva = NewUnionNullString()
 
-		return r.ImporteEnvioIva
+		return r.ImporteIva
 	case 4:
 		r.ImporteAlmacenamientoIva = NewUnionNullString()
 
@@ -179,7 +179,7 @@ func (r *PedidoImportesPago) SetDefault(i int) {
 		r.ImporteEnvioSinIva = nil
 		return
 	case 3:
-		r.ImporteEnvioIva = nil
+		r.ImporteIva = nil
 		return
 	case 4:
 		r.ImporteAlmacenamientoIva = nil
@@ -206,7 +206,7 @@ func (r *PedidoImportesPago) NullField(i int) {
 		r.ImporteEnvioSinIva = nil
 		return
 	case 3:
-		r.ImporteEnvioIva = nil
+		r.ImporteIva = nil
 		return
 	case 4:
 		r.ImporteAlmacenamientoIva = nil
@@ -248,7 +248,7 @@ func (r PedidoImportesPago) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["importeEnvioIva"], err = json.Marshal(r.ImporteEnvioIva)
+	output["importeIva"], err = json.Marshal(r.ImporteIva)
 	if err != nil {
 		return nil, err
 	}
@@ -325,20 +325,20 @@ func (r *PedidoImportesPago) UnmarshalJSON(data []byte) error {
 		r.ImporteEnvioSinIva = nil
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["importeEnvioIva"]; ok {
+		if v, ok := fields["importeIva"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ImporteEnvioIva); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ImporteIva); err != nil {
 			return err
 		}
 	} else {
-		r.ImporteEnvioIva = NewUnionNullString()
+		r.ImporteIva = NewUnionNullString()
 
-		r.ImporteEnvioIva = nil
+		r.ImporteIva = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["importeAlmacenamientoIva"]; ok {
