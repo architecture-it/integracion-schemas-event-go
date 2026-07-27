@@ -20,6 +20,8 @@ var _ = fmt.Printf
 type DistribucionPedidoData struct {
 	NumeroPedido *UnionNullString `json:"NumeroPedido"`
 
+	Cliente *UnionNullClienteData `json:"Cliente"`
+
 	Distribuidor *UnionNullDistribuidorData `json:"Distribuidor"`
 
 	UnidadOperativa *UnionNullUnidadOperativaData `json:"UnidadOperativa"`
@@ -35,11 +37,12 @@ type DistribucionPedidoData struct {
 	Referencias *UnionNullArrayMetadato `json:"Referencias"`
 }
 
-const DistribucionPedidoDataAvroCRC64Fingerprint = "\xee\xaa\fAvb(B"
+const DistribucionPedidoDataAvroCRC64Fingerprint = "\xf0\x18Z\x1c\x93ez\xcc"
 
 func NewDistribucionPedidoData() DistribucionPedidoData {
 	r := DistribucionPedidoData{}
 	r.NumeroPedido = nil
+	r.Cliente = nil
 	r.Distribuidor = nil
 	r.UnidadOperativa = nil
 	r.Destinatario = nil
@@ -79,6 +82,10 @@ func writeDistribucionPedidoData(r DistribucionPedidoData, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullClienteData(r.Cliente, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullDistribuidorData(r.Distribuidor, w)
 	if err != nil {
 		return err
@@ -115,7 +122,7 @@ func (r DistribucionPedidoData) Serialize(w io.Writer) error {
 }
 
 func (r DistribucionPedidoData) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"NumeroPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Distribuidor\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"apellido\",\"type\":[\"null\",\"string\"]}],\"name\":\"DistribuidorData\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"UnidadOperativa\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"UnidadOperativaData\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"celular\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]}],\"name\":\"DestinatarioData\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Direccion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"unidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"observaciones\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionData\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Articulos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"string\"]}],\"name\":\"ArticuloData\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.DistribucionPedido.Events.Common.DistribucionPedidoData\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"NumeroPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Cliente\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]}],\"name\":\"ClienteData\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Distribuidor\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"apellido\",\"type\":[\"null\",\"string\"]}],\"name\":\"DistribuidorData\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"UnidadOperativa\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]}],\"name\":\"UnidadOperativaData\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"celular\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"email\",\"type\":[\"null\",\"string\"]}],\"name\":\"DestinatarioData\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Direccion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"calle\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"numero\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"piso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"unidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidad\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"provincia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"longitud\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"observaciones\",\"type\":[\"null\",\"string\"]}],\"name\":\"DireccionData\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Articulos\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidad\",\"type\":[\"null\",\"string\"]}],\"name\":\"ArticuloData\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"Contrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Referencias\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"name\":\"contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.DistribucionPedido.Events.Common.DistribucionPedidoData\",\"type\":\"record\"}"
 }
 
 func (r DistribucionPedidoData) SchemaName() string {
@@ -138,30 +145,34 @@ func (r *DistribucionPedidoData) Get(i int) types.Field {
 
 		return r.NumeroPedido
 	case 1:
+		r.Cliente = NewUnionNullClienteData()
+
+		return r.Cliente
+	case 2:
 		r.Distribuidor = NewUnionNullDistribuidorData()
 
 		return r.Distribuidor
-	case 2:
+	case 3:
 		r.UnidadOperativa = NewUnionNullUnidadOperativaData()
 
 		return r.UnidadOperativa
-	case 3:
+	case 4:
 		r.Destinatario = NewUnionNullDestinatarioData()
 
 		return r.Destinatario
-	case 4:
+	case 5:
 		r.Direccion = NewUnionNullDireccionData()
 
 		return r.Direccion
-	case 5:
+	case 6:
 		r.Articulos = NewUnionNullArrayArticuloData()
 
 		return r.Articulos
-	case 6:
+	case 7:
 		r.Contrato = NewUnionNullString()
 
 		return r.Contrato
-	case 7:
+	case 8:
 		r.Referencias = NewUnionNullArrayMetadato()
 
 		return r.Referencias
@@ -175,24 +186,27 @@ func (r *DistribucionPedidoData) SetDefault(i int) {
 		r.NumeroPedido = nil
 		return
 	case 1:
-		r.Distribuidor = nil
+		r.Cliente = nil
 		return
 	case 2:
-		r.UnidadOperativa = nil
+		r.Distribuidor = nil
 		return
 	case 3:
-		r.Destinatario = nil
+		r.UnidadOperativa = nil
 		return
 	case 4:
-		r.Direccion = nil
+		r.Destinatario = nil
 		return
 	case 5:
-		r.Articulos = nil
+		r.Direccion = nil
 		return
 	case 6:
-		r.Contrato = nil
+		r.Articulos = nil
 		return
 	case 7:
+		r.Contrato = nil
+		return
+	case 8:
 		r.Referencias = nil
 		return
 	}
@@ -205,24 +219,27 @@ func (r *DistribucionPedidoData) NullField(i int) {
 		r.NumeroPedido = nil
 		return
 	case 1:
-		r.Distribuidor = nil
+		r.Cliente = nil
 		return
 	case 2:
-		r.UnidadOperativa = nil
+		r.Distribuidor = nil
 		return
 	case 3:
-		r.Destinatario = nil
+		r.UnidadOperativa = nil
 		return
 	case 4:
-		r.Direccion = nil
+		r.Destinatario = nil
 		return
 	case 5:
-		r.Articulos = nil
+		r.Direccion = nil
 		return
 	case 6:
-		r.Contrato = nil
+		r.Articulos = nil
 		return
 	case 7:
+		r.Contrato = nil
+		return
+	case 8:
 		r.Referencias = nil
 		return
 	}
@@ -242,6 +259,10 @@ func (r DistribucionPedidoData) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["NumeroPedido"], err = json.Marshal(r.NumeroPedido)
+	if err != nil {
+		return nil, err
+	}
+	output["Cliente"], err = json.Marshal(r.Cliente)
 	if err != nil {
 		return nil, err
 	}
@@ -298,6 +319,22 @@ func (r *DistribucionPedidoData) UnmarshalJSON(data []byte) error {
 		r.NumeroPedido = NewUnionNullString()
 
 		r.NumeroPedido = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Cliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cliente); err != nil {
+			return err
+		}
+	} else {
+		r.Cliente = NewUnionNullClienteData()
+
+		r.Cliente = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Distribuidor"]; ok {
