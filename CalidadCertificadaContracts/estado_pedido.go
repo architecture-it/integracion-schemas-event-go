@@ -24,6 +24,7 @@ const (
 	EstadoPedidoCancelando EstadoPedido = 2
 	EstadoPedidoCancelado  EstadoPedido = 3
 	EstadoPedidoError      EstadoPedido = 4
+	EstadoPedidoFinalizado EstadoPedido = 5
 )
 
 func (e EstadoPedido) String() string {
@@ -38,6 +39,8 @@ func (e EstadoPedido) String() string {
 		return "Cancelado"
 	case EstadoPedidoError:
 		return "Error"
+	case EstadoPedidoFinalizado:
+		return "Finalizado"
 	}
 	return "unknown"
 }
@@ -58,6 +61,8 @@ func NewEstadoPedidoValue(raw string) (r EstadoPedido, err error) {
 		return EstadoPedidoCancelado, nil
 	case "Error":
 		return EstadoPedidoError, nil
+	case "Finalizado":
+		return EstadoPedidoFinalizado, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for EstadoPedido: '%s'", raw)
