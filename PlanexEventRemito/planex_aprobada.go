@@ -18,19 +18,21 @@ import (
 var _ = fmt.Printf
 
 type PlanexAprobada struct {
-	Identificacion Identificacion `json:"Identificacion"`
+	TemplateType string `json:"TemplateType"`
+
+	OperationId string `json:"OperationId"`
+
+	Cliente string `json:"Cliente"`
 
 	ResultadoMetadata string `json:"ResultadoMetadata"`
 
 	MetadataInput string `json:"MetadataInput"`
 }
 
-const PlanexAprobadaAvroCRC64Fingerprint = "\x96\xff\x9f1\x00\x14w\xba"
+const PlanexAprobadaAvroCRC64Fingerprint = "\f\x8c\x98\x89\xb4\xca\vj"
 
 func NewPlanexAprobada() PlanexAprobada {
 	r := PlanexAprobada{}
-	r.Identificacion = NewIdentificacion()
-
 	return r
 }
 
@@ -59,7 +61,15 @@ func DeserializePlanexAprobadaFromSchema(r io.Reader, schema string) (PlanexApro
 
 func writePlanexAprobada(r PlanexAprobada, w io.Writer) error {
 	var err error
-	err = writeIdentificacion(r.Identificacion, w)
+	err = vm.WriteString(r.TemplateType, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.OperationId, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteString(r.Cliente, w)
 	if err != nil {
 		return err
 	}
@@ -79,11 +89,11 @@ func (r PlanexAprobada) Serialize(w io.Writer) error {
 }
 
 func (r PlanexAprobada) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"TemplateType\",\"type\":\"string\"},{\"name\":\"OperationId\",\"type\":\"string\"},{\"name\":\"Cliente\",\"type\":\"string\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.PlanexEvent.Remito.Common\",\"type\":\"record\"}},{\"name\":\"ResultadoMetadata\",\"type\":\"string\"},{\"name\":\"MetadataInput\",\"type\":\"string\"}],\"name\":\"Andreani.PlanexEvent.Remito.Record.PlanexAprobada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"TemplateType\",\"type\":\"string\"},{\"name\":\"OperationId\",\"type\":\"string\"},{\"name\":\"Cliente\",\"type\":\"string\"},{\"name\":\"ResultadoMetadata\",\"type\":\"string\"},{\"name\":\"MetadataInput\",\"type\":\"string\"}],\"name\":\"Andreani.PlanexEventRemito.Events.PlanexAprobada\",\"type\":\"record\"}"
 }
 
 func (r PlanexAprobada) SchemaName() string {
-	return "Andreani.PlanexEvent.Remito.Record.PlanexAprobada"
+	return "Andreani.PlanexEventRemito.Events.PlanexAprobada"
 }
 
 func (_ PlanexAprobada) SetBoolean(v bool)    { panic("Unsupported operation") }
@@ -98,18 +108,26 @@ func (_ PlanexAprobada) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *PlanexAprobada) Get(i int) types.Field {
 	switch i {
 	case 0:
-		r.Identificacion = NewIdentificacion()
-
-		w := types.Record{Target: &r.Identificacion}
+		w := types.String{Target: &r.TemplateType}
 
 		return w
 
 	case 1:
-		w := types.String{Target: &r.ResultadoMetadata}
+		w := types.String{Target: &r.OperationId}
 
 		return w
 
 	case 2:
+		w := types.String{Target: &r.Cliente}
+
+		return w
+
+	case 3:
+		w := types.String{Target: &r.ResultadoMetadata}
+
+		return w
+
+	case 4:
 		w := types.String{Target: &r.MetadataInput}
 
 		return w
@@ -142,7 +160,15 @@ func (_ PlanexAprobada) AvroCRC64Fingerprint() []byte {
 func (r PlanexAprobada) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
-	output["Identificacion"], err = json.Marshal(r.Identificacion)
+	output["TemplateType"], err = json.Marshal(r.TemplateType)
+	if err != nil {
+		return nil, err
+	}
+	output["OperationId"], err = json.Marshal(r.OperationId)
+	if err != nil {
+		return nil, err
+	}
+	output["Cliente"], err = json.Marshal(r.Cliente)
 	if err != nil {
 		return nil, err
 	}
@@ -165,18 +191,46 @@ func (r *PlanexAprobada) UnmarshalJSON(data []byte) error {
 
 	var val json.RawMessage
 	val = func() json.RawMessage {
-		if v, ok := fields["Identificacion"]; ok {
+		if v, ok := fields["TemplateType"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Identificacion); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.TemplateType); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for Identificacion")
+		return fmt.Errorf("no value specified for TemplateType")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["OperationId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.OperationId); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for OperationId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Cliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Cliente); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for Cliente")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["ResultadoMetadata"]; ok {
