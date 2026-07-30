@@ -19,14 +19,21 @@ var _ = fmt.Printf
 type PasoSaga int32
 
 const (
-	PasoSagaRecibido                PasoSaga = 0
-	PasoSagaOrdenSolicitada         PasoSaga = 1
-	PasoSagaOrdenConfirmada         PasoSaga = 2
-	PasoSagaActualizacionSolicitada PasoSaga = 3
-	PasoSagaActualizacionConfirmada PasoSaga = 4
-	PasoSagaEtiquetaObtenida        PasoSaga = 5
-	PasoSagaImpreso                 PasoSaga = 6
-	PasoSagaFinalizado              PasoSaga = 7
+	PasoSagaRecibido                  PasoSaga = 0
+	PasoSagaOrdenSolicitada           PasoSaga = 1
+	PasoSagaOrdenConfirmada           PasoSaga = 2
+	PasoSagaActualizacionSolicitada   PasoSaga = 3
+	PasoSagaActualizacionConfirmada   PasoSaga = 4
+	PasoSagaEtiquetaObtenida          PasoSaga = 5
+	PasoSagaImpreso                   PasoSaga = 6
+	PasoSagaFinalizado                PasoSaga = 7
+	PasoSagaCancelandoBulto           PasoSaga = 8
+	PasoSagaCancelarBultoDms          PasoSaga = 9
+	PasoSagaConfirmarCancelacionBulto PasoSaga = 10
+	PasoSagaMarcarBultoEliminado      PasoSaga = 11
+	PasoSagaEliminarDatosDms          PasoSaga = 12
+	PasoSagaReencolarBultos           PasoSaga = 13
+	PasoSagaCancelacionFinalizada     PasoSaga = 14
 )
 
 func (e PasoSaga) String() string {
@@ -47,6 +54,20 @@ func (e PasoSaga) String() string {
 		return "Impreso"
 	case PasoSagaFinalizado:
 		return "Finalizado"
+	case PasoSagaCancelandoBulto:
+		return "CancelandoBulto"
+	case PasoSagaCancelarBultoDms:
+		return "CancelarBultoDms"
+	case PasoSagaConfirmarCancelacionBulto:
+		return "ConfirmarCancelacionBulto"
+	case PasoSagaMarcarBultoEliminado:
+		return "MarcarBultoEliminado"
+	case PasoSagaEliminarDatosDms:
+		return "EliminarDatosDms"
+	case PasoSagaReencolarBultos:
+		return "ReencolarBultos"
+	case PasoSagaCancelacionFinalizada:
+		return "CancelacionFinalizada"
 	}
 	return "unknown"
 }
@@ -73,6 +94,20 @@ func NewPasoSagaValue(raw string) (r PasoSaga, err error) {
 		return PasoSagaImpreso, nil
 	case "Finalizado":
 		return PasoSagaFinalizado, nil
+	case "CancelandoBulto":
+		return PasoSagaCancelandoBulto, nil
+	case "CancelarBultoDms":
+		return PasoSagaCancelarBultoDms, nil
+	case "ConfirmarCancelacionBulto":
+		return PasoSagaConfirmarCancelacionBulto, nil
+	case "MarcarBultoEliminado":
+		return PasoSagaMarcarBultoEliminado, nil
+	case "EliminarDatosDms":
+		return PasoSagaEliminarDatosDms, nil
+	case "ReencolarBultos":
+		return PasoSagaReencolarBultos, nil
+	case "CancelacionFinalizada":
+		return PasoSagaCancelacionFinalizada, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for PasoSaga: '%s'", raw)
