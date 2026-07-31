@@ -19,13 +19,14 @@ var _ = fmt.Printf
 type EstadoBultoOrigen int32
 
 const (
-	EstadoBultoOrigenPendiente         EstadoBultoOrigen = 0
-	EstadoBultoOrigenEnProceso         EstadoBultoOrigen = 1
-	EstadoBultoOrigenOk                EstadoBultoOrigen = 2
-	EstadoBultoOrigenError             EstadoBultoOrigen = 3
-	EstadoBultoOrigenBultoError        EstadoBultoOrigen = 4
-	EstadoBultoOrigenPendienteEliminar EstadoBultoOrigen = 5
-	EstadoBultoOrigenBultoEliminado    EstadoBultoOrigen = 6
+	EstadoBultoOrigenPendiente            EstadoBultoOrigen = 0
+	EstadoBultoOrigenEnProceso            EstadoBultoOrigen = 1
+	EstadoBultoOrigenOk                   EstadoBultoOrigen = 2
+	EstadoBultoOrigenError                EstadoBultoOrigen = 3
+	EstadoBultoOrigenBultoError           EstadoBultoOrigen = 4
+	EstadoBultoOrigenPendienteEliminar    EstadoBultoOrigen = 5
+	EstadoBultoOrigenBultoEliminado       EstadoBultoOrigen = 6
+	EstadoBultoOrigenErrorEliminandoBulto EstadoBultoOrigen = 7
 )
 
 func (e EstadoBultoOrigen) String() string {
@@ -44,6 +45,8 @@ func (e EstadoBultoOrigen) String() string {
 		return "PendienteEliminar"
 	case EstadoBultoOrigenBultoEliminado:
 		return "BultoEliminado"
+	case EstadoBultoOrigenErrorEliminandoBulto:
+		return "ErrorEliminandoBulto"
 	}
 	return "unknown"
 }
@@ -68,6 +71,8 @@ func NewEstadoBultoOrigenValue(raw string) (r EstadoBultoOrigen, err error) {
 		return EstadoBultoOrigenPendienteEliminar, nil
 	case "BultoEliminado":
 		return EstadoBultoOrigenBultoEliminado, nil
+	case "ErrorEliminandoBulto":
+		return EstadoBultoOrigenErrorEliminandoBulto, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for EstadoBultoOrigen: '%s'", raw)
