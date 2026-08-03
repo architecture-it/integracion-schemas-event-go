@@ -49,9 +49,11 @@ type TripEvent struct {
 	StatusCode *UnionNullString `json:"StatusCode"`
 
 	TripType *UnionNullString `json:"TripType"`
+
+	UrlRemitosHdr *UnionNullString `json:"UrlRemitosHdr"`
 }
 
-const TripEventAvroCRC64Fingerprint = "\x12\xfa\x05\xf1_\xb6\x14\xfa"
+const TripEventAvroCRC64Fingerprint = "o\xaeH\x97\xf3L\x18\xf7"
 
 func NewTripEvent() TripEvent {
 	r := TripEvent{}
@@ -71,6 +73,7 @@ func NewTripEvent() TripEvent {
 	r.TripStatus = nil
 	r.StatusCode = nil
 	r.TripType = nil
+	r.UrlRemitosHdr = nil
 	return r
 }
 
@@ -163,6 +166,10 @@ func writeTripEvent(r TripEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.UrlRemitosHdr, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -171,7 +178,7 @@ func (r TripEvent) Serialize(w io.Writer) error {
 }
 
 func (r TripEvent) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"TripId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OriginOU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinationOU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FirstDriverDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SecondDriverDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrimaryVehicleDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrimaryVechicleType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FirstSemiDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SecondSemiDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CloseDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Seals\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"CargoInsuredValue\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"NumberOfCustodyVehicles\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TripStatus\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StatusCode\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TripType\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DMSRoutes.Events.Record.TripEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"TripId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OriginOU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DestinationOU\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FirstDriverDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SecondDriverDNI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrimaryVehicleDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PrimaryVechicleType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FirstSemiDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SecondSemiDomain\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CloseDate\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Seals\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"CargoInsuredValue\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"NumberOfCustodyVehicles\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TripStatus\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"StatusCode\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TripType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UrlRemitosHdr\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DMSRoutes.Events.Record.TripEvent\",\"type\":\"record\"}"
 }
 
 func (r TripEvent) SchemaName() string {
@@ -253,6 +260,10 @@ func (r *TripEvent) Get(i int) types.Field {
 		r.TripType = NewUnionNullString()
 
 		return r.TripType
+	case 16:
+		r.UrlRemitosHdr = NewUnionNullString()
+
+		return r.UrlRemitosHdr
 	}
 	panic("Unknown field index")
 }
@@ -307,6 +318,9 @@ func (r *TripEvent) SetDefault(i int) {
 	case 15:
 		r.TripType = nil
 		return
+	case 16:
+		r.UrlRemitosHdr = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -360,6 +374,9 @@ func (r *TripEvent) NullField(i int) {
 		return
 	case 15:
 		r.TripType = nil
+		return
+	case 16:
+		r.UrlRemitosHdr = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -438,6 +455,10 @@ func (r TripEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["TripType"], err = json.Marshal(r.TripType)
+	if err != nil {
+		return nil, err
+	}
+	output["UrlRemitosHdr"], err = json.Marshal(r.UrlRemitosHdr)
 	if err != nil {
 		return nil, err
 	}
@@ -706,6 +727,22 @@ func (r *TripEvent) UnmarshalJSON(data []byte) error {
 		r.TripType = NewUnionNullString()
 
 		r.TripType = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["UrlRemitosHdr"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlRemitosHdr); err != nil {
+			return err
+		}
+	} else {
+		r.UrlRemitosHdr = NewUnionNullString()
+
+		r.UrlRemitosHdr = nil
 	}
 	return nil
 }
