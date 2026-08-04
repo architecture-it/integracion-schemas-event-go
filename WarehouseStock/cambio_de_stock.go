@@ -24,6 +24,8 @@ type CambioDeStock struct {
 
 	TipoEvento *UnionNullTipoEvento `json:"TipoEvento"`
 
+	TransaccionIdArticulo *UnionNullString `json:"TransaccionIdArticulo"`
+
 	FechaHoraEventoNegocio int64 `json:"FechaHoraEventoNegocio"`
 
 	Propietario string `json:"Propietario"`
@@ -45,7 +47,7 @@ type CambioDeStock struct {
 	Sincronizacion *UnionNullSincronizacion `json:"Sincronizacion"`
 }
 
-const CambioDeStockAvroCRC64Fingerprint = "\x13\xd2ƞ\xdb\xf2߲"
+const CambioDeStockAvroCRC64Fingerprint = "\x02\xd5;\x17\xf8\x9c/\xc4"
 
 func NewCambioDeStock() CambioDeStock {
 	r := CambioDeStock{}
@@ -91,6 +93,10 @@ func writeCambioDeStock(r CambioDeStock, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullTipoEvento(r.TipoEvento, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.TransaccionIdArticulo, w)
 	if err != nil {
 		return err
 	}
@@ -142,7 +148,7 @@ func (r CambioDeStock) Serialize(w io.Writer) error {
 }
 
 func (r CambioDeStock) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdEvento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEvento\",\"type\":[\"null\",{\"name\":\"TipoEvento\",\"symbols\":[\"Pedido\",\"Abastecimiento\",\"Ajuste\",\"Sincronizacion\"],\"type\":\"enum\"}]},{\"name\":\"FechaHoraEventoNegocio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"float\"},{\"default\":null,\"name\":\"Pedido\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"PedidoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PedidoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Creado\",\"Confirmado\",\"Expedido\",\"Liberado\"],\"type\":\"enum\"}]}],\"name\":\"Pedido\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Abastecimiento\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"AbastecimientoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AbastecimientoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"Andreani.WarehouseStock.Events.StockCommon.CambioDeStockEstado\"]}],\"name\":\"Abastecimiento\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Ajuste\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockEnTransito\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAnteriorAjuste\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LineaInterna\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ajuste\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Sincronizacion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockNoDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAsignado\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockPickeado\",\"type\":[\"null\",\"float\"]}],\"name\":\"Sincronizacion\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]}],\"name\":\"Andreani.WarehouseStock.Events.Record.CambioDeStock\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdEvento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEvento\",\"type\":[\"null\",{\"name\":\"TipoEvento\",\"symbols\":[\"Pedido\",\"Abastecimiento\",\"Ajuste\",\"Sincronizacion\"],\"type\":\"enum\"}]},{\"name\":\"TransaccionIdArticulo\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaHoraEventoNegocio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"float\"},{\"default\":null,\"name\":\"Pedido\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"PedidoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PedidoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Creado\",\"Confirmado\",\"Expedido\",\"Liberado\"],\"type\":\"enum\"}]}],\"name\":\"Pedido\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Abastecimiento\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"AbastecimientoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AbastecimientoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"Andreani.WarehouseStock.Events.StockCommon.CambioDeStockEstado\"]}],\"name\":\"Abastecimiento\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Ajuste\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockEnTransito\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAnteriorAjuste\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LineaInterna\",\"type\":[\"null\",\"string\"]}],\"name\":\"Ajuste\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Sincronizacion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockNoDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAsignado\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockPickeado\",\"type\":[\"null\",\"float\"]}],\"name\":\"Sincronizacion\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]}],\"name\":\"Andreani.WarehouseStock.Events.Record.CambioDeStock\",\"type\":\"record\"}"
 }
 
 func (r CambioDeStock) SchemaName() string {
@@ -173,48 +179,52 @@ func (r *CambioDeStock) Get(i int) types.Field {
 
 		return r.TipoEvento
 	case 3:
+		r.TransaccionIdArticulo = NewUnionNullString()
+
+		return r.TransaccionIdArticulo
+	case 4:
 		w := types.Long{Target: &r.FechaHoraEventoNegocio}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.Propietario}
 
 		return w
 
-	case 5:
+	case 6:
 		w := types.String{Target: &r.Instancia}
 
 		return w
 
-	case 6:
+	case 7:
 		w := types.String{Target: &r.Almacen}
 
 		return w
 
-	case 7:
+	case 8:
 		w := types.String{Target: &r.SKU}
 
 		return w
 
-	case 8:
+	case 9:
 		w := types.Float{Target: &r.Cantidad}
 
 		return w
 
-	case 9:
+	case 10:
 		r.Pedido = NewUnionNullPedido()
 
 		return r.Pedido
-	case 10:
+	case 11:
 		r.Abastecimiento = NewUnionNullAbastecimiento()
 
 		return r.Abastecimiento
-	case 11:
+	case 12:
 		r.Ajuste = NewUnionNullAjuste()
 
 		return r.Ajuste
-	case 12:
+	case 13:
 		r.Sincronizacion = NewUnionNullSincronizacion()
 
 		return r.Sincronizacion
@@ -227,16 +237,16 @@ func (r *CambioDeStock) SetDefault(i int) {
 	case 2:
 		r.TipoEvento = nil
 		return
-	case 9:
+	case 10:
 		r.Pedido = nil
 		return
-	case 10:
+	case 11:
 		r.Abastecimiento = nil
 		return
-	case 11:
+	case 12:
 		r.Ajuste = nil
 		return
-	case 12:
+	case 13:
 		r.Sincronizacion = nil
 		return
 	}
@@ -254,16 +264,19 @@ func (r *CambioDeStock) NullField(i int) {
 	case 2:
 		r.TipoEvento = nil
 		return
-	case 9:
-		r.Pedido = nil
+	case 3:
+		r.TransaccionIdArticulo = nil
 		return
 	case 10:
-		r.Abastecimiento = nil
+		r.Pedido = nil
 		return
 	case 11:
-		r.Ajuste = nil
+		r.Abastecimiento = nil
 		return
 	case 12:
+		r.Ajuste = nil
+		return
+	case 13:
 		r.Sincronizacion = nil
 		return
 	}
@@ -291,6 +304,10 @@ func (r CambioDeStock) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["TipoEvento"], err = json.Marshal(r.TipoEvento)
+	if err != nil {
+		return nil, err
+	}
+	output["TransaccionIdArticulo"], err = json.Marshal(r.TransaccionIdArticulo)
 	if err != nil {
 		return nil, err
 	}
@@ -387,6 +404,20 @@ func (r *CambioDeStock) UnmarshalJSON(data []byte) error {
 		r.TipoEvento = NewUnionNullTipoEvento()
 
 		r.TipoEvento = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TransaccionIdArticulo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TransaccionIdArticulo); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for TransaccionIdArticulo")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["FechaHoraEventoNegocio"]; ok {
