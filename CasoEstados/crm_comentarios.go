@@ -40,7 +40,11 @@ type CrmComentarios struct {
 
 	CorreoContactoCaso *UnionNullString `json:"CorreoContactoCaso"`
 
+	TituloDelCaso *UnionNullString `json:"TituloDelCaso"`
+
 	NotificarCliente *UnionNullBool `json:"NotificarCliente"`
+
+	TipoDeCuenta *UnionNullString `json:"TipoDeCuenta"`
 
 	UrlCliente *UnionNullString `json:"UrlCliente"`
 
@@ -49,13 +53,15 @@ type CrmComentarios struct {
 	DescripcionDelComentario *UnionNullString `json:"DescripcionDelComentario"`
 }
 
-const CrmComentariosAvroCRC64Fingerprint = "\x13\x81>\xe6CI\xec\xff"
+const CrmComentariosAvroCRC64Fingerprint = "o\x04\x1c_\xafs\x19\x19"
 
 func NewCrmComentarios() CrmComentarios {
 	r := CrmComentarios{}
 	r.NombreContactoCaso = nil
 	r.CorreoContactoCaso = nil
+	r.TituloDelCaso = nil
 	r.NotificarCliente = nil
+	r.TipoDeCuenta = nil
 	r.UrlCliente = nil
 	r.QuienCreoElComentario = nil
 	r.DescripcionDelComentario = nil
@@ -131,7 +137,15 @@ func writeCrmComentarios(r CrmComentarios, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.TituloDelCaso, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullBool(r.NotificarCliente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.TipoDeCuenta, w)
 	if err != nil {
 		return err
 	}
@@ -155,7 +169,7 @@ func (r CrmComentarios) Serialize(w io.Writer) error {
 }
 
 func (r CrmComentarios) Schema() string {
-	return "{\"fields\":[{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDeCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodecontrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdVinculacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdComentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneArchivo\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"IdCorrelacionCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreContactoCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CorreoContactoCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotificarCliente\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"UrlCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"QuienCreoElComentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionDelComentario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.CrmComentarios\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDeCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodecontrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdVinculacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdComentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneArchivo\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"IdCorrelacionCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreContactoCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CorreoContactoCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TituloDelCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotificarCliente\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"TipoDeCuenta\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"UrlCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"QuienCreoElComentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionDelComentario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.CrmComentarios\",\"type\":\"record\"}"
 }
 
 func (r CrmComentarios) SchemaName() string {
@@ -218,18 +232,26 @@ func (r *CrmComentarios) Get(i int) types.Field {
 
 		return r.CorreoContactoCaso
 	case 11:
+		r.TituloDelCaso = NewUnionNullString()
+
+		return r.TituloDelCaso
+	case 12:
 		r.NotificarCliente = NewUnionNullBool()
 
 		return r.NotificarCliente
-	case 12:
+	case 13:
+		r.TipoDeCuenta = NewUnionNullString()
+
+		return r.TipoDeCuenta
+	case 14:
 		r.UrlCliente = NewUnionNullString()
 
 		return r.UrlCliente
-	case 13:
+	case 15:
 		r.QuienCreoElComentario = NewUnionNullString()
 
 		return r.QuienCreoElComentario
-	case 14:
+	case 16:
 		r.DescripcionDelComentario = NewUnionNullString()
 
 		return r.DescripcionDelComentario
@@ -246,15 +268,21 @@ func (r *CrmComentarios) SetDefault(i int) {
 		r.CorreoContactoCaso = nil
 		return
 	case 11:
-		r.NotificarCliente = nil
+		r.TituloDelCaso = nil
 		return
 	case 12:
-		r.UrlCliente = nil
+		r.NotificarCliente = nil
 		return
 	case 13:
-		r.QuienCreoElComentario = nil
+		r.TipoDeCuenta = nil
 		return
 	case 14:
+		r.UrlCliente = nil
+		return
+	case 15:
+		r.QuienCreoElComentario = nil
+		return
+	case 16:
 		r.DescripcionDelComentario = nil
 		return
 	}
@@ -297,15 +325,21 @@ func (r *CrmComentarios) NullField(i int) {
 		r.CorreoContactoCaso = nil
 		return
 	case 11:
-		r.NotificarCliente = nil
+		r.TituloDelCaso = nil
 		return
 	case 12:
-		r.UrlCliente = nil
+		r.NotificarCliente = nil
 		return
 	case 13:
-		r.QuienCreoElComentario = nil
+		r.TipoDeCuenta = nil
 		return
 	case 14:
+		r.UrlCliente = nil
+		return
+	case 15:
+		r.QuienCreoElComentario = nil
+		return
+	case 16:
 		r.DescripcionDelComentario = nil
 		return
 	}
@@ -368,7 +402,15 @@ func (r CrmComentarios) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["TituloDelCaso"], err = json.Marshal(r.TituloDelCaso)
+	if err != nil {
+		return nil, err
+	}
 	output["NotificarCliente"], err = json.Marshal(r.NotificarCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["TipoDeCuenta"], err = json.Marshal(r.TipoDeCuenta)
 	if err != nil {
 		return nil, err
 	}
@@ -553,6 +595,22 @@ func (r *CrmComentarios) UnmarshalJSON(data []byte) error {
 		r.CorreoContactoCaso = nil
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["TituloDelCaso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TituloDelCaso); err != nil {
+			return err
+		}
+	} else {
+		r.TituloDelCaso = NewUnionNullString()
+
+		r.TituloDelCaso = nil
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["NotificarCliente"]; ok {
 			return v
 		}
@@ -567,6 +625,22 @@ func (r *CrmComentarios) UnmarshalJSON(data []byte) error {
 		r.NotificarCliente = NewUnionNullBool()
 
 		r.NotificarCliente = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TipoDeCuenta"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoDeCuenta); err != nil {
+			return err
+		}
+	} else {
+		r.TipoDeCuenta = NewUnionNullString()
+
+		r.TipoDeCuenta = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["UrlCliente"]; ok {
