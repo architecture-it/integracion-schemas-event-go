@@ -35,12 +35,30 @@ type CrmComentarios struct {
 	TieneArchivo *UnionNullBool `json:"TieneArchivo"`
 
 	IdCorrelacionCliente *UnionNullString `json:"IdCorrelacionCliente"`
+
+	NombreContactoCaso *UnionNullString `json:"NombreContactoCaso"`
+
+	CorreoContactoCaso *UnionNullString `json:"CorreoContactoCaso"`
+
+	NotificarCliente *UnionNullBool `json:"NotificarCliente"`
+
+	UrlCliente *UnionNullString `json:"UrlCliente"`
+
+	QuienCreoElComentario *UnionNullString `json:"QuienCreoElComentario"`
+
+	DescripcionDelComentario *UnionNullString `json:"DescripcionDelComentario"`
 }
 
-const CrmComentariosAvroCRC64Fingerprint = "U\x0e\xb6\xaf\xaa\xf3\x01^"
+const CrmComentariosAvroCRC64Fingerprint = "\x13\x81>\xe6CI\xec\xff"
 
 func NewCrmComentarios() CrmComentarios {
 	r := CrmComentarios{}
+	r.NombreContactoCaso = nil
+	r.CorreoContactoCaso = nil
+	r.NotificarCliente = nil
+	r.UrlCliente = nil
+	r.QuienCreoElComentario = nil
+	r.DescripcionDelComentario = nil
 	return r
 }
 
@@ -105,6 +123,30 @@ func writeCrmComentarios(r CrmComentarios, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.NombreContactoCaso, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CorreoContactoCaso, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullBool(r.NotificarCliente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.UrlCliente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.QuienCreoElComentario, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.DescripcionDelComentario, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -113,7 +155,7 @@ func (r CrmComentarios) Serialize(w io.Writer) error {
 }
 
 func (r CrmComentarios) Schema() string {
-	return "{\"fields\":[{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDeCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodecontrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdVinculacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdComentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneArchivo\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"IdCorrelacionCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.CrmComentarios\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Cliente\",\"type\":[\"null\",\"string\"]},{\"name\":\"NumeroDeCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodecontrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"Comentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdVinculacion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdComentario\",\"type\":[\"null\",\"string\"]},{\"name\":\"TieneArchivo\",\"type\":[\"null\",\"boolean\"]},{\"name\":\"IdCorrelacionCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreContactoCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CorreoContactoCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotificarCliente\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"UrlCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"QuienCreoElComentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DescripcionDelComentario\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.CrmComentarios\",\"type\":\"record\"}"
 }
 
 func (r CrmComentarios) SchemaName() string {
@@ -167,12 +209,54 @@ func (r *CrmComentarios) Get(i int) types.Field {
 		r.IdCorrelacionCliente = NewUnionNullString()
 
 		return r.IdCorrelacionCliente
+	case 9:
+		r.NombreContactoCaso = NewUnionNullString()
+
+		return r.NombreContactoCaso
+	case 10:
+		r.CorreoContactoCaso = NewUnionNullString()
+
+		return r.CorreoContactoCaso
+	case 11:
+		r.NotificarCliente = NewUnionNullBool()
+
+		return r.NotificarCliente
+	case 12:
+		r.UrlCliente = NewUnionNullString()
+
+		return r.UrlCliente
+	case 13:
+		r.QuienCreoElComentario = NewUnionNullString()
+
+		return r.QuienCreoElComentario
+	case 14:
+		r.DescripcionDelComentario = NewUnionNullString()
+
+		return r.DescripcionDelComentario
 	}
 	panic("Unknown field index")
 }
 
 func (r *CrmComentarios) SetDefault(i int) {
 	switch i {
+	case 9:
+		r.NombreContactoCaso = nil
+		return
+	case 10:
+		r.CorreoContactoCaso = nil
+		return
+	case 11:
+		r.NotificarCliente = nil
+		return
+	case 12:
+		r.UrlCliente = nil
+		return
+	case 13:
+		r.QuienCreoElComentario = nil
+		return
+	case 14:
+		r.DescripcionDelComentario = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -205,6 +289,24 @@ func (r *CrmComentarios) NullField(i int) {
 		return
 	case 8:
 		r.IdCorrelacionCliente = nil
+		return
+	case 9:
+		r.NombreContactoCaso = nil
+		return
+	case 10:
+		r.CorreoContactoCaso = nil
+		return
+	case 11:
+		r.NotificarCliente = nil
+		return
+	case 12:
+		r.UrlCliente = nil
+		return
+	case 13:
+		r.QuienCreoElComentario = nil
+		return
+	case 14:
+		r.DescripcionDelComentario = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -255,6 +357,30 @@ func (r CrmComentarios) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["IdCorrelacionCliente"], err = json.Marshal(r.IdCorrelacionCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["NombreContactoCaso"], err = json.Marshal(r.NombreContactoCaso)
+	if err != nil {
+		return nil, err
+	}
+	output["CorreoContactoCaso"], err = json.Marshal(r.CorreoContactoCaso)
+	if err != nil {
+		return nil, err
+	}
+	output["NotificarCliente"], err = json.Marshal(r.NotificarCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["UrlCliente"], err = json.Marshal(r.UrlCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["QuienCreoElComentario"], err = json.Marshal(r.QuienCreoElComentario)
+	if err != nil {
+		return nil, err
+	}
+	output["DescripcionDelComentario"], err = json.Marshal(r.DescripcionDelComentario)
 	if err != nil {
 		return nil, err
 	}
@@ -393,6 +519,102 @@ func (r *CrmComentarios) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for IdCorrelacionCliente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NombreContactoCaso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NombreContactoCaso); err != nil {
+			return err
+		}
+	} else {
+		r.NombreContactoCaso = NewUnionNullString()
+
+		r.NombreContactoCaso = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CorreoContactoCaso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CorreoContactoCaso); err != nil {
+			return err
+		}
+	} else {
+		r.CorreoContactoCaso = NewUnionNullString()
+
+		r.CorreoContactoCaso = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NotificarCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NotificarCliente); err != nil {
+			return err
+		}
+	} else {
+		r.NotificarCliente = NewUnionNullBool()
+
+		r.NotificarCliente = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["UrlCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlCliente); err != nil {
+			return err
+		}
+	} else {
+		r.UrlCliente = NewUnionNullString()
+
+		r.UrlCliente = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["QuienCreoElComentario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.QuienCreoElComentario); err != nil {
+			return err
+		}
+	} else {
+		r.QuienCreoElComentario = NewUnionNullString()
+
+		r.QuienCreoElComentario = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["DescripcionDelComentario"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DescripcionDelComentario); err != nil {
+			return err
+		}
+	} else {
+		r.DescripcionDelComentario = NewUnionNullString()
+
+		r.DescripcionDelComentario = nil
 	}
 	return nil
 }

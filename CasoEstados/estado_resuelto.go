@@ -55,12 +55,27 @@ type EstadoResuelto struct {
 	CorreoReclamante *UnionNullString `json:"CorreoReclamante"`
 
 	IdCorrelacionCliente *UnionNullString `json:"IdCorrelacionCliente"`
+
+	NombreContactoCaso *UnionNullString `json:"NombreContactoCaso"`
+
+	CorreoContactoCaso *UnionNullString `json:"CorreoContactoCaso"`
+
+	NotificarCliente *UnionNullBool `json:"NotificarCliente"`
+
+	UrlCliente *UnionNullString `json:"UrlCliente"`
+
+	TipoDeCuenta *UnionNullString `json:"TipoDeCuenta"`
 }
 
-const EstadoResueltoAvroCRC64Fingerprint = "u``\xee\xad\x15\x00|"
+const EstadoResueltoAvroCRC64Fingerprint = "~\u0604>]\xe5\x11\x03"
 
 func NewEstadoResuelto() EstadoResuelto {
 	r := EstadoResuelto{}
+	r.NombreContactoCaso = nil
+	r.CorreoContactoCaso = nil
+	r.NotificarCliente = nil
+	r.UrlCliente = nil
+	r.TipoDeCuenta = nil
 	return r
 }
 
@@ -165,6 +180,26 @@ func writeEstadoResuelto(r EstadoResuelto, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.NombreContactoCaso, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.CorreoContactoCaso, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullBool(r.NotificarCliente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.UrlCliente, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.TipoDeCuenta, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -173,7 +208,7 @@ func (r EstadoResuelto) Serialize(w io.Writer) error {
 }
 
 func (r EstadoResuelto) Schema() string {
-	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodecontrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Modifiedon\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"cac_comentarioresolucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoReclamante\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdCorrelacionCliente\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoResuelto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Ticketnumber\",\"type\":\"string\"},{\"name\":\"Subjectid\",\"type\":\"string\"},{\"name\":\"And_numerodeenvio\",\"type\":[\"null\",\"string\"]},{\"name\":\"And_numerodecontrato\",\"type\":[\"null\",\"string\"]},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"Description\",\"type\":[\"null\",\"string\"]},{\"name\":\"Createdon\",\"type\":\"string\"},{\"name\":\"Cac_numerodeenvioincorrecto\",\"type\":[\"null\",\"string\"]},{\"name\":\"Customername\",\"type\":\"string\"},{\"name\":\"Cac_areainterna\",\"type\":[\"null\",\"string\"]},{\"name\":\"StatusCodeName\",\"type\":\"string\"},{\"name\":\"Modifiedon\",\"type\":\"string\"},{\"name\":\"IncidentId\",\"type\":[\"null\",\"string\"]},{\"name\":\"Origen\",\"type\":[\"null\",\"string\"]},{\"name\":\"cac_comentarioresolucion\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoRemitente\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoDestinatario\",\"type\":[\"null\",\"string\"]},{\"name\":\"CorreoReclamante\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdCorrelacionCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NombreContactoCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CorreoContactoCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NotificarCliente\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"UrlCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeCuenta\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.CasoEstados.Events.Record.EstadoResuelto\",\"type\":\"record\"}"
 }
 
 func (r EstadoResuelto) SchemaName() string {
@@ -274,12 +309,47 @@ func (r *EstadoResuelto) Get(i int) types.Field {
 		r.IdCorrelacionCliente = NewUnionNullString()
 
 		return r.IdCorrelacionCliente
+	case 19:
+		r.NombreContactoCaso = NewUnionNullString()
+
+		return r.NombreContactoCaso
+	case 20:
+		r.CorreoContactoCaso = NewUnionNullString()
+
+		return r.CorreoContactoCaso
+	case 21:
+		r.NotificarCliente = NewUnionNullBool()
+
+		return r.NotificarCliente
+	case 22:
+		r.UrlCliente = NewUnionNullString()
+
+		return r.UrlCliente
+	case 23:
+		r.TipoDeCuenta = NewUnionNullString()
+
+		return r.TipoDeCuenta
 	}
 	panic("Unknown field index")
 }
 
 func (r *EstadoResuelto) SetDefault(i int) {
 	switch i {
+	case 19:
+		r.NombreContactoCaso = nil
+		return
+	case 20:
+		r.CorreoContactoCaso = nil
+		return
+	case 21:
+		r.NotificarCliente = nil
+		return
+	case 22:
+		r.UrlCliente = nil
+		return
+	case 23:
+		r.TipoDeCuenta = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -321,6 +391,21 @@ func (r *EstadoResuelto) NullField(i int) {
 		return
 	case 18:
 		r.IdCorrelacionCliente = nil
+		return
+	case 19:
+		r.NombreContactoCaso = nil
+		return
+	case 20:
+		r.CorreoContactoCaso = nil
+		return
+	case 21:
+		r.NotificarCliente = nil
+		return
+	case 22:
+		r.UrlCliente = nil
+		return
+	case 23:
+		r.TipoDeCuenta = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -411,6 +496,26 @@ func (r EstadoResuelto) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["IdCorrelacionCliente"], err = json.Marshal(r.IdCorrelacionCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["NombreContactoCaso"], err = json.Marshal(r.NombreContactoCaso)
+	if err != nil {
+		return nil, err
+	}
+	output["CorreoContactoCaso"], err = json.Marshal(r.CorreoContactoCaso)
+	if err != nil {
+		return nil, err
+	}
+	output["NotificarCliente"], err = json.Marshal(r.NotificarCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["UrlCliente"], err = json.Marshal(r.UrlCliente)
+	if err != nil {
+		return nil, err
+	}
+	output["TipoDeCuenta"], err = json.Marshal(r.TipoDeCuenta)
 	if err != nil {
 		return nil, err
 	}
@@ -689,6 +794,86 @@ func (r *EstadoResuelto) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for IdCorrelacionCliente")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NombreContactoCaso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NombreContactoCaso); err != nil {
+			return err
+		}
+	} else {
+		r.NombreContactoCaso = NewUnionNullString()
+
+		r.NombreContactoCaso = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CorreoContactoCaso"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CorreoContactoCaso); err != nil {
+			return err
+		}
+	} else {
+		r.CorreoContactoCaso = NewUnionNullString()
+
+		r.CorreoContactoCaso = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["NotificarCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NotificarCliente); err != nil {
+			return err
+		}
+	} else {
+		r.NotificarCliente = NewUnionNullBool()
+
+		r.NotificarCliente = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["UrlCliente"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlCliente); err != nil {
+			return err
+		}
+	} else {
+		r.UrlCliente = NewUnionNullString()
+
+		r.UrlCliente = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TipoDeCuenta"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoDeCuenta); err != nil {
+			return err
+		}
+	} else {
+		r.TipoDeCuenta = NewUnionNullString()
+
+		r.TipoDeCuenta = nil
 	}
 	return nil
 }
