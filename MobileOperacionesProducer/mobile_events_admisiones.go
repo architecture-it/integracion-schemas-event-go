@@ -28,16 +28,16 @@ type MobileEventsAdmisiones struct {
 
 	Sucursal string `json:"sucursal"`
 
-	CodigoSucursal string `json:"codigoSucursal"`
-
 	Usuario UsuarioAdmisionEvent `json:"usuario"`
 
 	FechaGeneracion *UnionNullString `json:"fechaGeneracion"`
 
 	Linking *UnionNullArrayMetadato `json:"linking"`
+
+	CodigoSucursal string `json:"codigoSucursal"`
 }
 
-const MobileEventsAdmisionesAvroCRC64Fingerprint = "\x8ab\xc0I\x88\xa4>\x11"
+const MobileEventsAdmisionesAvroCRC64Fingerprint = "\xc1\x83\xf2s\x16\x9f$L"
 
 func NewMobileEventsAdmisiones() MobileEventsAdmisiones {
 	r := MobileEventsAdmisiones{}
@@ -95,10 +95,6 @@ func writeMobileEventsAdmisiones(r MobileEventsAdmisiones, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoSucursal, w)
-	if err != nil {
-		return err
-	}
 	err = writeUsuarioAdmisionEvent(r.Usuario, w)
 	if err != nil {
 		return err
@@ -111,6 +107,10 @@ func writeMobileEventsAdmisiones(r MobileEventsAdmisiones, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.CodigoSucursal, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -119,7 +119,7 @@ func (r MobileEventsAdmisiones) Serialize(w io.Writer) error {
 }
 
 func (r MobileEventsAdmisiones) Schema() string {
-	return "{\"fields\":[{\"name\":\"nombreCliente\",\"type\":\"string\"},{\"name\":\"apellidoCliente\",\"type\":\"string\"},{\"name\":\"emailCliente\",\"type\":\"string\"},{\"name\":\"enviosAdmitidos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"sucursal\",\"type\":\"string\"},{\"name\":\"codigoSucursal\",\"type\":\"string\"},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"}],\"name\":\"UsuarioAdmisionEvent\",\"type\":\"record\"}},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.MobileEventsAdmisiones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"nombreCliente\",\"type\":\"string\"},{\"name\":\"apellidoCliente\",\"type\":\"string\"},{\"name\":\"emailCliente\",\"type\":\"string\"},{\"name\":\"enviosAdmitidos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"sucursal\",\"type\":\"string\"},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"}],\"name\":\"UsuarioAdmisionEvent\",\"type\":\"record\"}},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"codigoSucursal\",\"type\":\"string\"}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.MobileEventsAdmisiones\",\"type\":\"record\"}"
 }
 
 func (r MobileEventsAdmisiones) SchemaName() string {
@@ -165,35 +165,35 @@ func (r *MobileEventsAdmisiones) Get(i int) types.Field {
 		return w
 
 	case 5:
-		w := types.String{Target: &r.CodigoSucursal}
-
-		return w
-
-	case 6:
 		r.Usuario = NewUsuarioAdmisionEvent()
 
 		w := types.Record{Target: &r.Usuario}
 
 		return w
 
-	case 7:
+	case 6:
 		r.FechaGeneracion = NewUnionNullString()
 
 		return r.FechaGeneracion
-	case 8:
+	case 7:
 		r.Linking = NewUnionNullArrayMetadato()
 
 		return r.Linking
+	case 8:
+		w := types.String{Target: &r.CodigoSucursal}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
 
 func (r *MobileEventsAdmisiones) SetDefault(i int) {
 	switch i {
-	case 7:
+	case 6:
 		r.FechaGeneracion = nil
 		return
-	case 8:
+	case 7:
 		r.Linking = nil
 		return
 	}
@@ -202,10 +202,10 @@ func (r *MobileEventsAdmisiones) SetDefault(i int) {
 
 func (r *MobileEventsAdmisiones) NullField(i int) {
 	switch i {
-	case 7:
+	case 6:
 		r.FechaGeneracion = nil
 		return
-	case 8:
+	case 7:
 		r.Linking = nil
 		return
 	}
@@ -244,10 +244,6 @@ func (r MobileEventsAdmisiones) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["codigoSucursal"], err = json.Marshal(r.CodigoSucursal)
-	if err != nil {
-		return nil, err
-	}
 	output["usuario"], err = json.Marshal(r.Usuario)
 	if err != nil {
 		return nil, err
@@ -257,6 +253,10 @@ func (r MobileEventsAdmisiones) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["linking"], err = json.Marshal(r.Linking)
+	if err != nil {
+		return nil, err
+	}
+	output["codigoSucursal"], err = json.Marshal(r.CodigoSucursal)
 	if err != nil {
 		return nil, err
 	}
@@ -341,20 +341,6 @@ func (r *MobileEventsAdmisiones) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for sucursal")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["codigoSucursal"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoSucursal); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for codigoSucursal")
-	}
-	val = func() json.RawMessage {
 		if v, ok := fields["usuario"]; ok {
 			return v
 		}
@@ -399,6 +385,20 @@ func (r *MobileEventsAdmisiones) UnmarshalJSON(data []byte) error {
 		r.Linking = NewUnionNullArrayMetadato()
 
 		r.Linking = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["codigoSucursal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoSucursal); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for codigoSucursal")
 	}
 	return nil
 }
