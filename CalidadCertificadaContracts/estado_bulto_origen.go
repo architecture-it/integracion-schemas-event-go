@@ -27,6 +27,7 @@ const (
 	EstadoBultoOrigenPendienteEliminar    EstadoBultoOrigen = 5
 	EstadoBultoOrigenBultoEliminado       EstadoBultoOrigen = 6
 	EstadoBultoOrigenErrorEliminandoBulto EstadoBultoOrigen = 7
+	EstadoBultoOrigenContenedorCompletado EstadoBultoOrigen = 8
 )
 
 func (e EstadoBultoOrigen) String() string {
@@ -47,6 +48,8 @@ func (e EstadoBultoOrigen) String() string {
 		return "BultoEliminado"
 	case EstadoBultoOrigenErrorEliminandoBulto:
 		return "ErrorEliminandoBulto"
+	case EstadoBultoOrigenContenedorCompletado:
+		return "ContenedorCompletado"
 	}
 	return "unknown"
 }
@@ -73,6 +76,8 @@ func NewEstadoBultoOrigenValue(raw string) (r EstadoBultoOrigen, err error) {
 		return EstadoBultoOrigenBultoEliminado, nil
 	case "ErrorEliminandoBulto":
 		return EstadoBultoOrigenErrorEliminandoBulto, nil
+	case "ContenedorCompletado":
+		return EstadoBultoOrigenContenedorCompletado, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for EstadoBultoOrigen: '%s'", raw)

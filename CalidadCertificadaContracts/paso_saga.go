@@ -34,6 +34,9 @@ const (
 	PasoSagaEliminarDatosDms          PasoSaga = 12
 	PasoSagaReencolarBultos           PasoSaga = 13
 	PasoSagaCancelacionFinalizada     PasoSaga = 14
+	PasoSagaContenedorSolicitado      PasoSaga = 15
+	PasoSagaContenedorImpreso         PasoSaga = 16
+	PasoSagaContenedorFinalizado      PasoSaga = 17
 )
 
 func (e PasoSaga) String() string {
@@ -68,6 +71,12 @@ func (e PasoSaga) String() string {
 		return "ReencolarBultos"
 	case PasoSagaCancelacionFinalizada:
 		return "CancelacionFinalizada"
+	case PasoSagaContenedorSolicitado:
+		return "ContenedorSolicitado"
+	case PasoSagaContenedorImpreso:
+		return "ContenedorImpreso"
+	case PasoSagaContenedorFinalizado:
+		return "ContenedorFinalizado"
 	}
 	return "unknown"
 }
@@ -108,6 +117,12 @@ func NewPasoSagaValue(raw string) (r PasoSaga, err error) {
 		return PasoSagaReencolarBultos, nil
 	case "CancelacionFinalizada":
 		return PasoSagaCancelacionFinalizada, nil
+	case "ContenedorSolicitado":
+		return PasoSagaContenedorSolicitado, nil
+	case "ContenedorImpreso":
+		return PasoSagaContenedorImpreso, nil
+	case "ContenedorFinalizado":
+		return PasoSagaContenedorFinalizado, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for PasoSaga: '%s'", raw)
