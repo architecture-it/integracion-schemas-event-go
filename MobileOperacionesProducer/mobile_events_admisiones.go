@@ -22,7 +22,7 @@ type MobileEventsAdmisiones struct {
 
 	ApellidoCliente string `json:"apellidoCliente"`
 
-	EmailCliente string `json:"emailCliente"`
+	EmailsCliente []string `json:"emailsCliente"`
 
 	EnviosAdmitidos []string `json:"enviosAdmitidos"`
 
@@ -37,10 +37,12 @@ type MobileEventsAdmisiones struct {
 	CodigoSucursal string `json:"codigoSucursal"`
 }
 
-const MobileEventsAdmisionesAvroCRC64Fingerprint = "\xc1\x83\xf2s\x16\x9f$L"
+const MobileEventsAdmisionesAvroCRC64Fingerprint = "\xdb\xc5>?\xc4\x00\x1an"
 
 func NewMobileEventsAdmisiones() MobileEventsAdmisiones {
 	r := MobileEventsAdmisiones{}
+	r.EmailsCliente = make([]string, 0)
+
 	r.EnviosAdmitidos = make([]string, 0)
 
 	r.Usuario = NewUsuarioAdmisionEvent()
@@ -83,7 +85,7 @@ func writeMobileEventsAdmisiones(r MobileEventsAdmisiones, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.EmailCliente, w)
+	err = writeArrayString(r.EmailsCliente, w)
 	if err != nil {
 		return err
 	}
@@ -119,7 +121,7 @@ func (r MobileEventsAdmisiones) Serialize(w io.Writer) error {
 }
 
 func (r MobileEventsAdmisiones) Schema() string {
-	return "{\"fields\":[{\"name\":\"nombreCliente\",\"type\":\"string\"},{\"name\":\"apellidoCliente\",\"type\":\"string\"},{\"name\":\"emailCliente\",\"type\":\"string\"},{\"name\":\"enviosAdmitidos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"sucursal\",\"type\":\"string\"},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"}],\"name\":\"UsuarioAdmisionEvent\",\"type\":\"record\"}},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"codigoSucursal\",\"type\":\"string\"}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.MobileEventsAdmisiones\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"nombreCliente\",\"type\":\"string\"},{\"name\":\"apellidoCliente\",\"type\":\"string\"},{\"name\":\"emailsCliente\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"enviosAdmitidos\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"sucursal\",\"type\":\"string\"},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"}],\"name\":\"UsuarioAdmisionEvent\",\"type\":\"record\"}},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"codigoSucursal\",\"type\":\"string\"}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.MobileEventsAdmisiones\",\"type\":\"record\"}"
 }
 
 func (r MobileEventsAdmisiones) SchemaName() string {
@@ -148,7 +150,9 @@ func (r *MobileEventsAdmisiones) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.String{Target: &r.EmailCliente}
+		r.EmailsCliente = make([]string, 0)
+
+		w := ArrayStringWrapper{Target: &r.EmailsCliente}
 
 		return w
 
@@ -232,7 +236,7 @@ func (r MobileEventsAdmisiones) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["emailCliente"], err = json.Marshal(r.EmailCliente)
+	output["emailsCliente"], err = json.Marshal(r.EmailsCliente)
 	if err != nil {
 		return nil, err
 	}
@@ -299,18 +303,18 @@ func (r *MobileEventsAdmisiones) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for apellidoCliente")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["emailCliente"]; ok {
+		if v, ok := fields["emailsCliente"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.EmailCliente); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.EmailsCliente); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for emailCliente")
+		return fmt.Errorf("no value specified for emailsCliente")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["enviosAdmitidos"]; ok {
