@@ -25,9 +25,11 @@ type DisculpaEda struct {
 	CasoAsociado *UnionNullString `json:"casoAsociado"`
 
 	Eda EDA `json:"eda"`
+
+	DestinatarioNombre *UnionNullString `json:"destinatarioNombre"`
 }
 
-const DisculpaEdaAvroCRC64Fingerprint = "\xa6V^\xe4\x82\xc4\x11\xcf"
+const DisculpaEdaAvroCRC64Fingerprint = "\x9c\x85\xf0\x93\xf5y\xc1/"
 
 func NewDisculpaEda() DisculpaEda {
 	r := DisculpaEda{}
@@ -35,6 +37,7 @@ func NewDisculpaEda() DisculpaEda {
 	r.CasoAsociado = nil
 	r.Eda = NewEDA()
 
+	r.DestinatarioNombre = nil
 	return r
 }
 
@@ -79,6 +82,10 @@ func writeDisculpaEda(r DisculpaEda, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.DestinatarioNombre, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -87,7 +94,7 @@ func (r DisculpaEda) Serialize(w io.Writer) error {
 }
 
 func (r DisculpaEda) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"destinatarioMail\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"casoAsociado\",\"type\":[\"null\",\"string\"]},{\"name\":\"eda\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"diasHabiles\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"eda\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sistema\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"calculoEda\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"codigoPostalSucursalOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidadDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidadSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidadSucursalOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionDescripcionI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comunicacionEDA\",\"type\":[\"null\",\"string\"]}],\"name\":\"EDA\",\"type\":\"record\"}}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.DisculpaEda\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"destinatarioMail\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"casoAsociado\",\"type\":[\"null\",\"string\"]},{\"name\":\"eda\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"diasHabiles\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"eda\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sistema\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"name\":\"calculoEda\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"codigoPostalSucursalOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoPostalDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidadDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidadSucursalDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"localidadSucursalOrigen\",\"type\":[\"null\",\"string\"]}],\"name\":\"CalculoEda\",\"type\":\"record\"}},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"fechaAlta\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"estimacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionDescripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estimacionDescripcionI\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comunicacionEDA\",\"type\":[\"null\",\"string\"]}],\"name\":\"EDA\",\"type\":\"record\"}},{\"default\":null,\"name\":\"destinatarioNombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.DeliveryEstimate.Events.Records.DisculpaEda\",\"type\":\"record\"}"
 }
 
 func (r DisculpaEda) SchemaName() string {
@@ -124,6 +131,10 @@ func (r *DisculpaEda) Get(i int) types.Field {
 
 		return w
 
+	case 4:
+		r.DestinatarioNombre = NewUnionNullString()
+
+		return r.DestinatarioNombre
 	}
 	panic("Unknown field index")
 }
@@ -135,6 +146,9 @@ func (r *DisculpaEda) SetDefault(i int) {
 		return
 	case 2:
 		r.CasoAsociado = nil
+		return
+	case 4:
+		r.DestinatarioNombre = nil
 		return
 	}
 	panic("Unknown field index")
@@ -150,6 +164,9 @@ func (r *DisculpaEda) NullField(i int) {
 		return
 	case 2:
 		r.CasoAsociado = nil
+		return
+	case 4:
+		r.DestinatarioNombre = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -180,6 +197,10 @@ func (r DisculpaEda) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["eda"], err = json.Marshal(r.Eda)
+	if err != nil {
+		return nil, err
+	}
+	output["destinatarioNombre"], err = json.Marshal(r.DestinatarioNombre)
 	if err != nil {
 		return nil, err
 	}
@@ -252,6 +273,22 @@ func (r *DisculpaEda) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for eda")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["destinatarioNombre"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.DestinatarioNombre); err != nil {
+			return err
+		}
+	} else {
+		r.DestinatarioNombre = NewUnionNullString()
+
+		r.DestinatarioNombre = nil
 	}
 	return nil
 }
