@@ -34,6 +34,8 @@ type GenerarContenedor struct {
 
 	SucursalDestino DatosSucursal `json:"sucursalDestino"`
 
+	SucursalAbastecedora *UnionNullDatosSucursal `json:"sucursalAbastecedora"`
+
 	MedioDeExpedicion TiposDePruebas `json:"medioDeExpedicion"`
 
 	TipoContenedor *UnionNullString `json:"TipoContenedor"`
@@ -41,7 +43,7 @@ type GenerarContenedor struct {
 	NroPrecinto *UnionNullString `json:"NroPrecinto"`
 }
 
-const GenerarContenedorAvroCRC64Fingerprint = "̔F\xb5=B3\xd0"
+const GenerarContenedorAvroCRC64Fingerprint = "k+,ǁx\xb2\xb3"
 
 func NewGenerarContenedor() GenerarContenedor {
 	r := GenerarContenedor{}
@@ -112,6 +114,10 @@ func writeGenerarContenedor(r GenerarContenedor, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullDatosSucursal(r.SucursalAbastecedora, w)
+	if err != nil {
+		return err
+	}
 	err = writeTiposDePruebas(r.MedioDeExpedicion, w)
 	if err != nil {
 		return err
@@ -132,7 +138,7 @@ func (r GenerarContenedor) Serialize(w io.Writer) error {
 }
 
 func (r GenerarContenedor) Schema() string {
-	return "{\"fields\":[{\"name\":\"contenedor\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":[\"null\",{\"fields\":[{\"name\":\"objetos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ListaDeObjetos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"enviosConRemitente\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"nroEnvio\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":{\"name\":\"Remitente\",\"symbols\":[\"DMS\",\"INTEGRA\"],\"type\":\"enum\"}}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"fechaProcesamiento\",\"type\":\"string\"},{\"name\":\"sistemaOrigen\",\"type\":\"string\"},{\"name\":\"sorter\",\"type\":\"string\"},{\"name\":\"sucursalOrigen\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}},{\"name\":\"sucursalDestino\",\"type\":\"Andreani.SppSchema.Events.DatosSucursal\"},{\"name\":\"medioDeExpedicion\",\"type\":{\"name\":\"TiposDePruebas\",\"symbols\":[\"ALSA\",\"CASA\",\"DMS\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"TipoContenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPrecinto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppSchema.Events.GenerarContenedor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contenedor\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":[\"null\",{\"fields\":[{\"name\":\"objetos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ListaDeObjetos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"enviosConRemitente\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"nroEnvio\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":{\"name\":\"Remitente\",\"symbols\":[\"DMS\",\"INTEGRA\"],\"type\":\"enum\"}}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"fechaProcesamiento\",\"type\":\"string\"},{\"name\":\"sistemaOrigen\",\"type\":\"string\"},{\"name\":\"sorter\",\"type\":\"string\"},{\"name\":\"sucursalOrigen\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}},{\"name\":\"sucursalDestino\",\"type\":\"Andreani.SppSchema.Events.DatosSucursal\"},{\"name\":\"sucursalAbastecedora\",\"type\":[\"null\",\"Andreani.SppSchema.Events.DatosSucursal\"]},{\"name\":\"medioDeExpedicion\",\"type\":{\"name\":\"TiposDePruebas\",\"symbols\":[\"ALSA\",\"CASA\",\"DMS\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"TipoContenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPrecinto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppSchema.Events.GenerarContenedor\",\"type\":\"record\"}"
 }
 
 func (r GenerarContenedor) SchemaName() string {
@@ -193,15 +199,19 @@ func (r *GenerarContenedor) Get(i int) types.Field {
 		return w
 
 	case 8:
+		r.SucursalAbastecedora = NewUnionNullDatosSucursal()
+
+		return r.SucursalAbastecedora
+	case 9:
 		w := TiposDePruebasWrapper{Target: &r.MedioDeExpedicion}
 
 		return w
 
-	case 9:
+	case 10:
 		r.TipoContenedor = NewUnionNullString()
 
 		return r.TipoContenedor
-	case 10:
+	case 11:
 		r.NroPrecinto = NewUnionNullString()
 
 		return r.NroPrecinto
@@ -214,10 +224,10 @@ func (r *GenerarContenedor) SetDefault(i int) {
 	case 2:
 		r.EnviosConRemitente = nil
 		return
-	case 9:
+	case 10:
 		r.TipoContenedor = nil
 		return
-	case 10:
+	case 11:
 		r.NroPrecinto = nil
 		return
 	}
@@ -232,10 +242,13 @@ func (r *GenerarContenedor) NullField(i int) {
 	case 2:
 		r.EnviosConRemitente = nil
 		return
-	case 9:
-		r.TipoContenedor = nil
+	case 8:
+		r.SucursalAbastecedora = nil
 		return
 	case 10:
+		r.TipoContenedor = nil
+		return
+	case 11:
 		r.NroPrecinto = nil
 		return
 	}
@@ -283,6 +296,10 @@ func (r GenerarContenedor) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["sucursalDestino"], err = json.Marshal(r.SucursalDestino)
+	if err != nil {
+		return nil, err
+	}
+	output["sucursalAbastecedora"], err = json.Marshal(r.SucursalAbastecedora)
 	if err != nil {
 		return nil, err
 	}
@@ -421,6 +438,20 @@ func (r *GenerarContenedor) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for sucursalDestino")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["sucursalAbastecedora"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SucursalAbastecedora); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for sucursalAbastecedora")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["medioDeExpedicion"]; ok {
