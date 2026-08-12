@@ -31,11 +31,9 @@ type Destinatario struct {
 	Celular *UnionNullString `json:"Celular"`
 
 	Email *UnionNullString `json:"Email"`
-
-	IdDestinatarioMaestroDms *UnionNullString `json:"IdDestinatarioMaestroDms"`
 }
 
-const DestinatarioAvroCRC64Fingerprint = "\x8d-\xd6\xde\xd85\xab\xb8"
+const DestinatarioAvroCRC64Fingerprint = "\x15\x03\xa5\xc5*\r\x03\x1f"
 
 func NewDestinatario() Destinatario {
 	r := Destinatario{}
@@ -45,7 +43,6 @@ func NewDestinatario() Destinatario {
 	r.Telefono = nil
 	r.Celular = nil
 	r.Email = nil
-	r.IdDestinatarioMaestroDms = nil
 	return r
 }
 
@@ -102,10 +99,6 @@ func writeDestinatario(r Destinatario, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.IdDestinatarioMaestroDms, w)
-	if err != nil {
-		return err
-	}
 	return err
 }
 
@@ -114,7 +107,7 @@ func (r Destinatario) Serialize(w io.Writer) error {
 }
 
 func (r Destinatario) Schema() string {
-	return "{\"fields\":[{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Celular\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdDestinatarioMaestroDms\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Destinatario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Dni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Celular\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Destinatario\",\"type\":\"record\"}"
 }
 
 func (r Destinatario) SchemaName() string {
@@ -161,10 +154,6 @@ func (r *Destinatario) Get(i int) types.Field {
 		r.Email = NewUnionNullString()
 
 		return r.Email
-	case 7:
-		r.IdDestinatarioMaestroDms = NewUnionNullString()
-
-		return r.IdDestinatarioMaestroDms
 	}
 	panic("Unknown field index")
 }
@@ -189,9 +178,6 @@ func (r *Destinatario) SetDefault(i int) {
 	case 6:
 		r.Email = nil
 		return
-	case 7:
-		r.IdDestinatarioMaestroDms = nil
-		return
 	}
 	panic("Unknown field index")
 }
@@ -215,9 +201,6 @@ func (r *Destinatario) NullField(i int) {
 		return
 	case 6:
 		r.Email = nil
-		return
-	case 7:
-		r.IdDestinatarioMaestroDms = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -260,10 +243,6 @@ func (r Destinatario) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Email"], err = json.Marshal(r.Email)
-	if err != nil {
-		return nil, err
-	}
-	output["IdDestinatarioMaestroDms"], err = json.Marshal(r.IdDestinatarioMaestroDms)
 	if err != nil {
 		return nil, err
 	}
@@ -386,22 +365,6 @@ func (r *Destinatario) UnmarshalJSON(data []byte) error {
 		r.Email = NewUnionNullString()
 
 		r.Email = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["IdDestinatarioMaestroDms"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IdDestinatarioMaestroDms); err != nil {
-			return err
-		}
-	} else {
-		r.IdDestinatarioMaestroDms = NewUnionNullString()
-
-		r.IdDestinatarioMaestroDms = nil
 	}
 	return nil
 }
