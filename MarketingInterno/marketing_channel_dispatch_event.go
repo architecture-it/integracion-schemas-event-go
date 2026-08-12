@@ -39,9 +39,11 @@ type MarketingChannelDispatchEvent struct {
 	Campos []CampoValue `json:"Campos"`
 
 	EsUltimo bool `json:"EsUltimo"`
+
+	ComunicacionEnHorarioLaboral bool `json:"ComunicacionEnHorarioLaboral"`
 }
 
-const MarketingChannelDispatchEventAvroCRC64Fingerprint = "\x9d\xd6\xc9\xc0u7<\x90"
+const MarketingChannelDispatchEventAvroCRC64Fingerprint = "\xf0 \\\xbb\xd0\xfb\x1a\xb4"
 
 func NewMarketingChannelDispatchEvent() MarketingChannelDispatchEvent {
 	r := MarketingChannelDispatchEvent{}
@@ -53,6 +55,7 @@ func NewMarketingChannelDispatchEvent() MarketingChannelDispatchEvent {
 	r.Telefono = nil
 	r.Campos = make([]CampoValue, 0)
 
+	r.ComunicacionEnHorarioLaboral = false
 	return r
 }
 
@@ -125,6 +128,10 @@ func writeMarketingChannelDispatchEvent(r MarketingChannelDispatchEvent, w io.Wr
 	if err != nil {
 		return err
 	}
+	err = vm.WriteBool(r.ComunicacionEnHorarioLaboral, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -133,7 +140,7 @@ func (r MarketingChannelDispatchEvent) Serialize(w io.Writer) error {
 }
 
 func (r MarketingChannelDispatchEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"EventoId\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"int\"},{\"name\":\"IdCampana\",\"type\":\"int\"},{\"name\":\"IdEjecucion\",\"type\":\"string\"},{\"name\":\"IdFlujoNodo\",\"type\":\"int\"},{\"name\":\"IdCliente\",\"type\":\"int\"},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"Campos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"CampoValue\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"EsUltimo\",\"type\":\"boolean\"}],\"name\":\"Andreani.MarketingInterno.Events.Record.MarketingChannelDispatchEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"EventoId\",\"type\":\"string\"},{\"name\":\"Canal\",\"type\":\"int\"},{\"name\":\"IdCampana\",\"type\":\"int\"},{\"name\":\"IdEjecucion\",\"type\":\"string\"},{\"name\":\"IdFlujoNodo\",\"type\":\"int\"},{\"name\":\"IdCliente\",\"type\":\"int\"},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Telefono\",\"type\":[\"null\",\"string\"]},{\"name\":\"Campos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"CampoValue\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"EsUltimo\",\"type\":\"boolean\"},{\"default\":false,\"name\":\"ComunicacionEnHorarioLaboral\",\"type\":\"boolean\"}],\"name\":\"Andreani.MarketingInterno.Events.Record.MarketingChannelDispatchEvent\",\"type\":\"record\"}"
 }
 
 func (r MarketingChannelDispatchEvent) SchemaName() string {
@@ -208,6 +215,11 @@ func (r *MarketingChannelDispatchEvent) Get(i int) types.Field {
 
 		return w
 
+	case 11:
+		w := types.Boolean{Target: &r.ComunicacionEnHorarioLaboral}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -223,6 +235,9 @@ func (r *MarketingChannelDispatchEvent) SetDefault(i int) {
 		return
 	case 8:
 		r.Telefono = nil
+		return
+	case 11:
+		r.ComunicacionEnHorarioLaboral = false
 		return
 	}
 	panic("Unknown field index")
@@ -295,6 +310,10 @@ func (r MarketingChannelDispatchEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["EsUltimo"], err = json.Marshal(r.EsUltimo)
+	if err != nil {
+		return nil, err
+	}
+	output["ComunicacionEnHorarioLaboral"], err = json.Marshal(r.ComunicacionEnHorarioLaboral)
 	if err != nil {
 		return nil, err
 	}
@@ -468,6 +487,20 @@ func (r *MarketingChannelDispatchEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for EsUltimo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ComunicacionEnHorarioLaboral"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ComunicacionEnHorarioLaboral); err != nil {
+			return err
+		}
+	} else {
+		r.ComunicacionEnHorarioLaboral = false
 	}
 	return nil
 }
