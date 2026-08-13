@@ -25,9 +25,11 @@ type MarketingDefinitionRequestEvent struct {
 	Accion int32 `json:"Accion"`
 
 	TraceLink *UnionNullString `json:"TraceLink"`
+
+	ComunicacionEnHorarioLaboral bool `json:"ComunicacionEnHorarioLaboral"`
 }
 
-const MarketingDefinitionRequestEventAvroCRC64Fingerprint = "\x9fD{@\x96EL'"
+const MarketingDefinitionRequestEventAvroCRC64Fingerprint = "\xda\xfd\xef\xc6\x06\xc5\x00\x94"
 
 func NewMarketingDefinitionRequestEvent() MarketingDefinitionRequestEvent {
 	r := MarketingDefinitionRequestEvent{}
@@ -36,6 +38,7 @@ func NewMarketingDefinitionRequestEvent() MarketingDefinitionRequestEvent {
 	r.Campos = make([]CampoValue, 0)
 
 	r.TraceLink = nil
+	r.ComunicacionEnHorarioLaboral = false
 	return r
 }
 
@@ -80,6 +83,10 @@ func writeMarketingDefinitionRequestEvent(r MarketingDefinitionRequestEvent, w i
 	if err != nil {
 		return err
 	}
+	err = vm.WriteBool(r.ComunicacionEnHorarioLaboral, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -88,7 +95,7 @@ func (r MarketingDefinitionRequestEvent) Serialize(w io.Writer) error {
 }
 
 func (r MarketingDefinitionRequestEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"Parameters\",\"type\":{\"fields\":[{\"name\":\"IdCampana\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdEjecucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdFlujoNodo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdCliente\",\"type\":[\"null\",\"int\"]},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"ExecutionParameters\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"}},{\"name\":\"Campos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"CampoValue\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Accion\",\"type\":\"int\"},{\"default\":null,\"name\":\"TraceLink\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.MarketingInterno.Events.Record.MarketingDefinitionRequestEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Parameters\",\"type\":{\"fields\":[{\"name\":\"IdCampana\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdEjecucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdFlujoNodo\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"IdCliente\",\"type\":[\"null\",\"int\"]},{\"default\":[],\"name\":\"IdsAudiencias\",\"type\":{\"items\":\"int\",\"type\":\"array\"}}],\"name\":\"ExecutionParameters\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"}},{\"name\":\"Campos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Codigo\",\"type\":\"int\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"CampoValue\",\"namespace\":\"Andreani.MarketingInterno.Events.MarketingDefinitionRequestEventCommon\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"Accion\",\"type\":\"int\"},{\"default\":null,\"name\":\"TraceLink\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"ComunicacionEnHorarioLaboral\",\"type\":\"boolean\"}],\"name\":\"Andreani.MarketingInterno.Events.Record.MarketingDefinitionRequestEvent\",\"type\":\"record\"}"
 }
 
 func (r MarketingDefinitionRequestEvent) SchemaName() string {
@@ -129,6 +136,11 @@ func (r *MarketingDefinitionRequestEvent) Get(i int) types.Field {
 		r.TraceLink = NewUnionNullString()
 
 		return r.TraceLink
+	case 4:
+		w := types.Boolean{Target: &r.ComunicacionEnHorarioLaboral}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -137,6 +149,9 @@ func (r *MarketingDefinitionRequestEvent) SetDefault(i int) {
 	switch i {
 	case 3:
 		r.TraceLink = nil
+		return
+	case 4:
+		r.ComunicacionEnHorarioLaboral = false
 		return
 	}
 	panic("Unknown field index")
@@ -178,6 +193,10 @@ func (r MarketingDefinitionRequestEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["TraceLink"], err = json.Marshal(r.TraceLink)
+	if err != nil {
+		return nil, err
+	}
+	output["ComunicacionEnHorarioLaboral"], err = json.Marshal(r.ComunicacionEnHorarioLaboral)
 	if err != nil {
 		return nil, err
 	}
@@ -248,6 +267,20 @@ func (r *MarketingDefinitionRequestEvent) UnmarshalJSON(data []byte) error {
 		r.TraceLink = NewUnionNullString()
 
 		r.TraceLink = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ComunicacionEnHorarioLaboral"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ComunicacionEnHorarioLaboral); err != nil {
+			return err
+		}
+	} else {
+		r.ComunicacionEnHorarioLaboral = false
 	}
 	return nil
 }
