@@ -26,7 +26,9 @@ type DetalleBulto struct {
 
 	Instancia string `json:"Instancia"`
 
-	FinPedido *UnionNullInt `json:"FinPedido"`
+	FinPedido bool `json:"FinPedido"`
+
+	CierrePedidoTotal *UnionNullInt `json:"CierrePedidoTotal"`
 
 	Retornable bool `json:"Retornable"`
 
@@ -57,11 +59,11 @@ type DetalleBulto struct {
 	Referencias []Referencia `json:"Referencias"`
 }
 
-const DetalleBultoAvroCRC64Fingerprint = "\x04O\xfdZ\f$\xefP"
+const DetalleBultoAvroCRC64Fingerprint = "D\xa5x7\\\xd1ބ"
 
 func NewDetalleBulto() DetalleBulto {
 	r := DetalleBulto{}
-	r.FinPedido = nil
+	r.CierrePedidoTotal = nil
 	r.Origen = NewDireccion()
 
 	r.Destino = NewDireccion()
@@ -116,7 +118,11 @@ func writeDetalleBulto(r DetalleBulto, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullInt(r.FinPedido, w)
+	err = vm.WriteBool(r.FinPedido, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullInt(r.CierrePedidoTotal, w)
 	if err != nil {
 		return err
 	}
@@ -184,7 +190,7 @@ func (r DetalleBulto) Serialize(w io.Writer) error {
 }
 
 func (r DetalleBulto) Schema() string {
-	return "{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"FinPedido\",\"type\":[\"null\",\"int\"]},{\"name\":\"Retornable\",\"type\":\"boolean\"},{\"name\":\"ValorACobrar\",\"type\":\"double\"},{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"Origen\",\"type\":{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"ComponenteDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"Destino\",\"type\":\"Andreani.CalidadCertificadaContracts.Events.Common.Direccion\"},{\"name\":\"Remitente\",\"type\":{\"fields\":[{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"DocumentoTipo\",\"type\":\"string\"},{\"name\":\"DocumentoNumero\",\"type\":\"string\"},{\"name\":\"Telefonos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Persona\",\"type\":\"record\"}},{\"name\":\"Destinatarios\",\"type\":{\"items\":\"Andreani.CalidadCertificadaContracts.Events.Common.Persona\",\"type\":\"array\"}},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificadaContracts.Events.Common.DetalleBulto\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Contrato\",\"type\":\"string\"},{\"name\":\"NumeroRemito\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"FinPedido\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"CierrePedidoTotal\",\"type\":[\"null\",\"int\"]},{\"name\":\"Retornable\",\"type\":\"boolean\"},{\"name\":\"ValorACobrar\",\"type\":\"double\"},{\"name\":\"Kilos\",\"type\":\"double\"},{\"name\":\"LargoCm\",\"type\":\"double\"},{\"name\":\"AltoCm\",\"type\":\"double\"},{\"name\":\"AnchoCm\",\"type\":\"double\"},{\"name\":\"VolumenCm\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoConImpuestos\",\"type\":\"double\"},{\"name\":\"ValorDeclaradoSinImpuestos\",\"type\":\"double\"},{\"name\":\"Origen\",\"type\":{\"fields\":[{\"name\":\"CodigoPostal\",\"type\":\"string\"},{\"name\":\"Calle\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"},{\"name\":\"Localidad\",\"type\":\"string\"},{\"name\":\"Region\",\"type\":\"string\"},{\"name\":\"Pais\",\"type\":\"string\"},{\"name\":\"ComponentesDeDireccion\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Valor\",\"type\":\"string\"}],\"name\":\"ComponenteDireccion\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Direccion\",\"type\":\"record\"}},{\"name\":\"Destino\",\"type\":\"Andreani.CalidadCertificadaContracts.Events.Common.Direccion\"},{\"name\":\"Remitente\",\"type\":{\"fields\":[{\"name\":\"NombreCompleto\",\"type\":\"string\"},{\"name\":\"Email\",\"type\":\"string\"},{\"name\":\"DocumentoTipo\",\"type\":\"string\"},{\"name\":\"DocumentoNumero\",\"type\":\"string\"},{\"name\":\"Telefonos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Tipo\",\"type\":\"string\"},{\"name\":\"Numero\",\"type\":\"string\"}],\"name\":\"Telefono\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Persona\",\"type\":\"record\"}},{\"name\":\"Destinatarios\",\"type\":{\"items\":\"Andreani.CalidadCertificadaContracts.Events.Common.Persona\",\"type\":\"array\"}},{\"name\":\"Referencias\",\"type\":{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Referencia\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.CalidadCertificadaContracts.Events.Common.DetalleBulto\",\"type\":\"record\"}"
 }
 
 func (r DetalleBulto) SchemaName() string {
@@ -223,83 +229,88 @@ func (r *DetalleBulto) Get(i int) types.Field {
 		return w
 
 	case 4:
-		r.FinPedido = NewUnionNullInt()
+		w := types.Boolean{Target: &r.FinPedido}
 
-		return r.FinPedido
+		return w
+
 	case 5:
+		r.CierrePedidoTotal = NewUnionNullInt()
+
+		return r.CierrePedidoTotal
+	case 6:
 		w := types.Boolean{Target: &r.Retornable}
 
 		return w
 
-	case 6:
+	case 7:
 		w := types.Double{Target: &r.ValorACobrar}
 
 		return w
 
-	case 7:
+	case 8:
 		w := types.Double{Target: &r.Kilos}
 
 		return w
 
-	case 8:
+	case 9:
 		w := types.Double{Target: &r.LargoCm}
 
 		return w
 
-	case 9:
+	case 10:
 		w := types.Double{Target: &r.AltoCm}
 
 		return w
 
-	case 10:
+	case 11:
 		w := types.Double{Target: &r.AnchoCm}
 
 		return w
 
-	case 11:
+	case 12:
 		w := types.Double{Target: &r.VolumenCm}
 
 		return w
 
-	case 12:
+	case 13:
 		w := types.Double{Target: &r.ValorDeclaradoConImpuestos}
 
 		return w
 
-	case 13:
+	case 14:
 		w := types.Double{Target: &r.ValorDeclaradoSinImpuestos}
 
 		return w
 
-	case 14:
+	case 15:
 		r.Origen = NewDireccion()
 
 		w := types.Record{Target: &r.Origen}
 
 		return w
 
-	case 15:
+	case 16:
 		r.Destino = NewDireccion()
 
 		w := types.Record{Target: &r.Destino}
 
 		return w
 
-	case 16:
+	case 17:
 		r.Remitente = NewPersona()
 
 		w := types.Record{Target: &r.Remitente}
 
 		return w
 
-	case 17:
+	case 18:
 		r.Destinatarios = make([]Persona, 0)
 
 		w := ArrayPersonaWrapper{Target: &r.Destinatarios}
 
 		return w
 
-	case 18:
+	case 19:
 		r.Referencias = make([]Referencia, 0)
 
 		w := ArrayReferenciaWrapper{Target: &r.Referencias}
@@ -312,8 +323,8 @@ func (r *DetalleBulto) Get(i int) types.Field {
 
 func (r *DetalleBulto) SetDefault(i int) {
 	switch i {
-	case 4:
-		r.FinPedido = nil
+	case 5:
+		r.CierrePedidoTotal = nil
 		return
 	}
 	panic("Unknown field index")
@@ -321,8 +332,8 @@ func (r *DetalleBulto) SetDefault(i int) {
 
 func (r *DetalleBulto) NullField(i int) {
 	switch i {
-	case 4:
-		r.FinPedido = nil
+	case 5:
+		r.CierrePedidoTotal = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -357,6 +368,10 @@ func (r DetalleBulto) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["FinPedido"], err = json.Marshal(r.FinPedido)
+	if err != nil {
+		return nil, err
+	}
+	output["CierrePedidoTotal"], err = json.Marshal(r.CierrePedidoTotal)
 	if err != nil {
 		return nil, err
 	}
@@ -494,9 +509,23 @@ func (r *DetalleBulto) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.FinPedido = NewUnionNullInt()
+		return fmt.Errorf("no value specified for FinPedido")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CierrePedidoTotal"]; ok {
+			return v
+		}
+		return nil
+	}()
 
-		r.FinPedido = nil
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CierrePedidoTotal); err != nil {
+			return err
+		}
+	} else {
+		r.CierrePedidoTotal = NewUnionNullInt()
+
+		r.CierrePedidoTotal = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Retornable"]; ok {
