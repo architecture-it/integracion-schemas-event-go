@@ -84,7 +84,7 @@ func DeserializeUnionNullTipoEventoFromSchema(r io.Reader, schema string) (*Unio
 }
 
 func (r *UnionNullTipoEvento) Schema() string {
-	return "[\"null\",{\"name\":\"TipoEvento\",\"symbols\":[\"Pedido\",\"Abastecimiento\",\"Ajuste\",\"Sincronizacion\"],\"type\":\"enum\"}]"
+	return "[\"null\",{\"name\":\"TipoEvento\",\"symbols\":[\"Pedido\",\"Abastecimiento\",\"AjusteInventario\",\"Sincronizacion\"],\"type\":\"enum\"}]"
 }
 
 func (_ *UnionNullTipoEvento) SetBoolean(v bool)   { panic("Unsupported operation") }

@@ -31,9 +31,11 @@ type Ajuste struct {
 	CodigoOrigen *UnionNullString `json:"CodigoOrigen"`
 
 	LineaInterna *UnionNullString `json:"LineaInterna"`
+
+	Estado *UnionNullCambioDeStockEstado `json:"Estado"`
 }
 
-const AjusteAvroCRC64Fingerprint = "\x8dI\x84댮\n\xb1"
+const AjusteAvroCRC64Fingerprint = "\x05\xc232\xa5]\xf1("
 
 func NewAjuste() Ajuste {
 	r := Ajuste{}
@@ -44,6 +46,7 @@ func NewAjuste() Ajuste {
 	r.Motivo = nil
 	r.CodigoOrigen = nil
 	r.LineaInterna = nil
+	r.Estado = nil
 	return r
 }
 
@@ -100,6 +103,10 @@ func writeAjuste(r Ajuste, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullCambioDeStockEstado(r.Estado, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -108,7 +115,7 @@ func (r Ajuste) Serialize(w io.Writer) error {
 }
 
 func (r Ajuste) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockEnTransito\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAnteriorAjuste\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LineaInterna\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehouseStock.Events.StockCommon.Ajuste\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockEnTransito\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAnteriorAjuste\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LineaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Creado\",\"Confirmado\",\"Expedido\",\"Liberado\",\"Procesado\"],\"type\":\"enum\"}]}],\"name\":\"Andreani.WarehouseStock.Events.StockCommon.Ajuste\",\"type\":\"record\"}"
 }
 
 func (r Ajuste) SchemaName() string {
@@ -154,6 +161,10 @@ func (r *Ajuste) Get(i int) types.Field {
 		r.LineaInterna = NewUnionNullString()
 
 		return r.LineaInterna
+	case 7:
+		r.Estado = NewUnionNullCambioDeStockEstado()
+
+		return r.Estado
 	}
 	panic("Unknown field index")
 }
@@ -181,6 +192,9 @@ func (r *Ajuste) SetDefault(i int) {
 	case 6:
 		r.LineaInterna = nil
 		return
+	case 7:
+		r.Estado = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -207,6 +221,9 @@ func (r *Ajuste) NullField(i int) {
 		return
 	case 6:
 		r.LineaInterna = nil
+		return
+	case 7:
+		r.Estado = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -249,6 +266,10 @@ func (r Ajuste) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["LineaInterna"], err = json.Marshal(r.LineaInterna)
+	if err != nil {
+		return nil, err
+	}
+	output["Estado"], err = json.Marshal(r.Estado)
 	if err != nil {
 		return nil, err
 	}
@@ -373,6 +394,22 @@ func (r *Ajuste) UnmarshalJSON(data []byte) error {
 		r.LineaInterna = NewUnionNullString()
 
 		r.LineaInterna = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Estado"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Estado); err != nil {
+			return err
+		}
+	} else {
+		r.Estado = NewUnionNullCambioDeStockEstado()
+
+		r.Estado = nil
 	}
 	return nil
 }

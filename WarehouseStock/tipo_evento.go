@@ -19,10 +19,10 @@ var _ = fmt.Printf
 type TipoEvento int32
 
 const (
-	TipoEventoPedido         TipoEvento = 0
-	TipoEventoAbastecimiento TipoEvento = 1
-	TipoEventoAjuste         TipoEvento = 2
-	TipoEventoSincronizacion TipoEvento = 3
+	TipoEventoPedido           TipoEvento = 0
+	TipoEventoAbastecimiento   TipoEvento = 1
+	TipoEventoAjusteInventario TipoEvento = 2
+	TipoEventoSincronizacion   TipoEvento = 3
 )
 
 func (e TipoEvento) String() string {
@@ -31,8 +31,8 @@ func (e TipoEvento) String() string {
 		return "Pedido"
 	case TipoEventoAbastecimiento:
 		return "Abastecimiento"
-	case TipoEventoAjuste:
-		return "Ajuste"
+	case TipoEventoAjusteInventario:
+		return "AjusteInventario"
 	case TipoEventoSincronizacion:
 		return "Sincronizacion"
 	}
@@ -49,8 +49,8 @@ func NewTipoEventoValue(raw string) (r TipoEvento, err error) {
 		return TipoEventoPedido, nil
 	case "Abastecimiento":
 		return TipoEventoAbastecimiento, nil
-	case "Ajuste":
-		return TipoEventoAjuste, nil
+	case "AjusteInventario":
+		return TipoEventoAjusteInventario, nil
 	case "Sincronizacion":
 		return TipoEventoSincronizacion, nil
 	}
