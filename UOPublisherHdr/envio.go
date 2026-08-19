@@ -30,6 +30,8 @@ type Envio struct {
 
 	DireccionId int32 `json:"DireccionId"`
 
+	UrlRemito *UnionNullString `json:"UrlRemito"`
+
 	TipoDeServicioId *UnionNullInt `json:"TipoDeServicioId"`
 
 	ContratoId *UnionNullString `json:"ContratoId"`
@@ -39,6 +41,8 @@ type Envio struct {
 	ProximaFase *UnionNullString `json:"ProximaFase"`
 
 	DeclarationState *UnionNullInt `json:"DeclarationState"`
+
+	TipoLogistica *UnionNullString `json:"TipoLogistica"`
 
 	Componentes *UnionNullArrayPieceComponent `json:"Componentes"`
 
@@ -53,15 +57,17 @@ type Envio struct {
 	EsContenedor *UnionNullBool `json:"EsContenedor"`
 }
 
-const EnvioAvroCRC64Fingerprint = "\x1d\x8dC\xa2\x12}\x92\xf8"
+const EnvioAvroCRC64Fingerprint = "\xf0\x91N\x10χ\x9f\x92"
 
 func NewEnvio() Envio {
 	r := Envio{}
+	r.UrlRemito = nil
 	r.TipoDeServicioId = nil
 	r.ContratoId = nil
 	r.FranjaHoraria = nil
 	r.ProximaFase = nil
 	r.DeclarationState = nil
+	r.TipoLogistica = nil
 	r.Componentes = nil
 	r.BultoData = nil
 	r.RetiroDeValor = nil
@@ -120,6 +126,10 @@ func writeEnvio(r Envio, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.UrlRemito, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullInt(r.TipoDeServicioId, w)
 	if err != nil {
 		return err
@@ -137,6 +147,10 @@ func writeEnvio(r Envio, w io.Writer) error {
 		return err
 	}
 	err = writeUnionNullInt(r.DeclarationState, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.TipoLogistica, w)
 	if err != nil {
 		return err
 	}
@@ -172,7 +186,7 @@ func (r Envio) Serialize(w io.Writer) error {
 }
 
 func (r Envio) Schema() string {
-	return "{\"fields\":[{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"OrdenEscaneo\",\"type\":\"int\"},{\"name\":\"OrdenEntrega\",\"type\":\"int\"},{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"TipoDeServicioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ContratoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FranjaHoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProximaFase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeclarationState\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"Componentes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ComponentCode\",\"type\":\"string\"},{\"name\":\"ComponentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"BultoData\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"}],\"name\":\"BultoData\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"RetiroDeValor\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Monto\",\"type\":\"double\"},{\"name\":\"PagoExacto\",\"type\":\"boolean\"}],\"name\":\"RetiroDeValor\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Metadato\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoDeDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EsContenedor\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Envio\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"NumeroDeEnvio\",\"type\":\"string\"},{\"name\":\"OrdenEscaneo\",\"type\":\"int\"},{\"name\":\"OrdenEntrega\",\"type\":\"int\"},{\"name\":\"ClienteId\",\"type\":\"int\"},{\"name\":\"DestinatarioId\",\"type\":\"int\"},{\"name\":\"DireccionId\",\"type\":\"int\"},{\"default\":null,\"name\":\"UrlRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoDeServicioId\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"ContratoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FranjaHoraria\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ProximaFase\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DeclarationState\",\"type\":[\"null\",\"int\"]},{\"default\":null,\"name\":\"TipoLogistica\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Componentes\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"ComponentCode\",\"type\":\"string\"},{\"name\":\"ComponentValue\",\"type\":\"string\"}],\"name\":\"PieceComponent\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"BultoData\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Numero\",\"type\":\"int\"},{\"name\":\"Codigo\",\"type\":\"string\"}],\"name\":\"BultoData\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"RetiroDeValor\",\"type\":[\"null\",{\"fields\":[{\"name\":\"Monto\",\"type\":\"double\"},{\"name\":\"PagoExacto\",\"type\":\"boolean\"}],\"name\":\"RetiroDeValor\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Metadato\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"Meta\",\"type\":\"string\"},{\"name\":\"Contenido\",\"type\":\"string\"}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"TipoDeDistribucion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"EsContenedor\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.UOPublisherHdr.Events.Common.Envio\",\"type\":\"record\"}"
 }
 
 func (r Envio) SchemaName() string {
@@ -221,46 +235,54 @@ func (r *Envio) Get(i int) types.Field {
 		return w
 
 	case 6:
+		r.UrlRemito = NewUnionNullString()
+
+		return r.UrlRemito
+	case 7:
 		r.TipoDeServicioId = NewUnionNullInt()
 
 		return r.TipoDeServicioId
-	case 7:
+	case 8:
 		r.ContratoId = NewUnionNullString()
 
 		return r.ContratoId
-	case 8:
+	case 9:
 		r.FranjaHoraria = NewUnionNullString()
 
 		return r.FranjaHoraria
-	case 9:
+	case 10:
 		r.ProximaFase = NewUnionNullString()
 
 		return r.ProximaFase
-	case 10:
+	case 11:
 		r.DeclarationState = NewUnionNullInt()
 
 		return r.DeclarationState
-	case 11:
+	case 12:
+		r.TipoLogistica = NewUnionNullString()
+
+		return r.TipoLogistica
+	case 13:
 		r.Componentes = NewUnionNullArrayPieceComponent()
 
 		return r.Componentes
-	case 12:
+	case 14:
 		r.BultoData = NewUnionNullArrayBultoData()
 
 		return r.BultoData
-	case 13:
+	case 15:
 		r.RetiroDeValor = NewUnionNullRetiroDeValor()
 
 		return r.RetiroDeValor
-	case 14:
+	case 16:
 		r.Metadato = NewUnionNullArrayMetadato()
 
 		return r.Metadato
-	case 15:
+	case 17:
 		r.TipoDeDistribucion = NewUnionNullString()
 
 		return r.TipoDeDistribucion
-	case 16:
+	case 18:
 		r.EsContenedor = NewUnionNullBool()
 
 		return r.EsContenedor
@@ -271,36 +293,42 @@ func (r *Envio) Get(i int) types.Field {
 func (r *Envio) SetDefault(i int) {
 	switch i {
 	case 6:
-		r.TipoDeServicioId = nil
+		r.UrlRemito = nil
 		return
 	case 7:
-		r.ContratoId = nil
+		r.TipoDeServicioId = nil
 		return
 	case 8:
-		r.FranjaHoraria = nil
+		r.ContratoId = nil
 		return
 	case 9:
-		r.ProximaFase = nil
+		r.FranjaHoraria = nil
 		return
 	case 10:
-		r.DeclarationState = nil
+		r.ProximaFase = nil
 		return
 	case 11:
-		r.Componentes = nil
+		r.DeclarationState = nil
 		return
 	case 12:
-		r.BultoData = nil
+		r.TipoLogistica = nil
 		return
 	case 13:
-		r.RetiroDeValor = nil
+		r.Componentes = nil
 		return
 	case 14:
-		r.Metadato = nil
+		r.BultoData = nil
 		return
 	case 15:
-		r.TipoDeDistribucion = nil
+		r.RetiroDeValor = nil
 		return
 	case 16:
+		r.Metadato = nil
+		return
+	case 17:
+		r.TipoDeDistribucion = nil
+		return
+	case 18:
 		r.EsContenedor = nil
 		return
 	}
@@ -310,36 +338,42 @@ func (r *Envio) SetDefault(i int) {
 func (r *Envio) NullField(i int) {
 	switch i {
 	case 6:
-		r.TipoDeServicioId = nil
+		r.UrlRemito = nil
 		return
 	case 7:
-		r.ContratoId = nil
+		r.TipoDeServicioId = nil
 		return
 	case 8:
-		r.FranjaHoraria = nil
+		r.ContratoId = nil
 		return
 	case 9:
-		r.ProximaFase = nil
+		r.FranjaHoraria = nil
 		return
 	case 10:
-		r.DeclarationState = nil
+		r.ProximaFase = nil
 		return
 	case 11:
-		r.Componentes = nil
+		r.DeclarationState = nil
 		return
 	case 12:
-		r.BultoData = nil
+		r.TipoLogistica = nil
 		return
 	case 13:
-		r.RetiroDeValor = nil
+		r.Componentes = nil
 		return
 	case 14:
-		r.Metadato = nil
+		r.BultoData = nil
 		return
 	case 15:
-		r.TipoDeDistribucion = nil
+		r.RetiroDeValor = nil
 		return
 	case 16:
+		r.Metadato = nil
+		return
+	case 17:
+		r.TipoDeDistribucion = nil
+		return
+	case 18:
 		r.EsContenedor = nil
 		return
 	}
@@ -382,6 +416,10 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["UrlRemito"], err = json.Marshal(r.UrlRemito)
+	if err != nil {
+		return nil, err
+	}
 	output["TipoDeServicioId"], err = json.Marshal(r.TipoDeServicioId)
 	if err != nil {
 		return nil, err
@@ -399,6 +437,10 @@ func (r Envio) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["DeclarationState"], err = json.Marshal(r.DeclarationState)
+	if err != nil {
+		return nil, err
+	}
+	output["TipoLogistica"], err = json.Marshal(r.TipoLogistica)
 	if err != nil {
 		return nil, err
 	}
@@ -521,6 +563,22 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for DireccionId")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["UrlRemito"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.UrlRemito); err != nil {
+			return err
+		}
+	} else {
+		r.UrlRemito = NewUnionNullString()
+
+		r.UrlRemito = nil
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["TipoDeServicioId"]; ok {
 			return v
 		}
@@ -599,6 +657,22 @@ func (r *Envio) UnmarshalJSON(data []byte) error {
 		r.DeclarationState = NewUnionNullInt()
 
 		r.DeclarationState = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["TipoLogistica"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoLogistica); err != nil {
+			return err
+		}
+	} else {
+		r.TipoLogistica = NewUnionNullString()
+
+		r.TipoLogistica = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Componentes"]; ok {
