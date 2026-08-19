@@ -17,9 +17,9 @@ import (
 
 var _ = fmt.Printf
 
-// Source: [dbo_genai].[Application]. WARNING: this id is a GenAI-local IDENTITY and is NOT the Wizard application id that InfraOps needs for ResourceRequest.payload.apps[]. Consumers must resolve the Wizard application by 'name' against [dbo].[Application].name until a wizardApplicationId column exists.
+// Source: [dbo_genai].[Application]. Since v1.23.4 this table mirrors the Wizard application (it gained templateId, pipelineId, statusId, isMigration, jsonData), so its id is expected to match [dbo].[Application].id - CONFIRM WITH DATA before relying on it. Until confirmed, consumers should still resolve the Wizard application by 'name'.
 type ApplicationRef struct {
-	// Application.id (GenAI-local)
+	// Application.id. Desde v1.23.4 [dbo_genai].[Application] replica la del Wizard (templateId, pipelineId, statusId, isMigration, jsonData), por lo que este id deberia coincidir con [dbo].[Application].id - pendiente de confirmar con datos.
 	Id int32 `json:"id"`
 	// Application.name - the resolution key towards the Wizard application
 	Name string `json:"name"`
@@ -86,7 +86,7 @@ func (r ApplicationRef) Serialize(w io.Writer) error {
 }
 
 func (r ApplicationRef) Schema() string {
-	return "{\"doc\":\"Source: [dbo_genai].[Application]. WARNING: this id is a GenAI-local IDENTITY and is NOT the Wizard application id that InfraOps needs for ResourceRequest.payload.apps[]. Consumers must resolve the Wizard application by 'name' against [dbo].[Application].name until a wizardApplicationId column exists.\",\"fields\":[{\"doc\":\"Application.id (GenAI-local)\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Application.name - the resolution key towards the Wizard application\",\"name\":\"name\",\"type\":\"string\"},{\"doc\":\"Application.ownerMail\",\"name\":\"ownerMail\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Reserved. Populate once GenAI stores the Wizard application id; null means the consumer must resolve by name.\",\"name\":\"wizardApplicationId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.GenAiCatalog.Events.Common.ApplicationRef\",\"type\":\"record\"}"
+	return "{\"doc\":\"Source: [dbo_genai].[Application]. Since v1.23.4 this table mirrors the Wizard application (it gained templateId, pipelineId, statusId, isMigration, jsonData), so its id is expected to match [dbo].[Application].id - CONFIRM WITH DATA before relying on it. Until confirmed, consumers should still resolve the Wizard application by 'name'.\",\"fields\":[{\"doc\":\"Application.id. Desde v1.23.4 [dbo_genai].[Application] replica la del Wizard (templateId, pipelineId, statusId, isMigration, jsonData), por lo que este id deberia coincidir con [dbo].[Application].id - pendiente de confirmar con datos.\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Application.name - the resolution key towards the Wizard application\",\"name\":\"name\",\"type\":\"string\"},{\"doc\":\"Application.ownerMail\",\"name\":\"ownerMail\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Reserved. Populate once GenAI stores the Wizard application id; null means the consumer must resolve by name.\",\"name\":\"wizardApplicationId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.GenAiCatalog.Events.Common.ApplicationRef\",\"type\":\"record\"}"
 }
 
 func (r ApplicationRef) SchemaName() string {

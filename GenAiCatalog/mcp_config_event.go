@@ -17,40 +17,32 @@ import (
 
 var _ = fmt.Printf
 
-// An environment-scoped MCP configuration reached a state that requires downstream provisioning. Emitted from [dbo_genai].[MCPConfig] joined to MCP/Application/Project/Environment. Message key = mcpId. Idempotency key and LiteLLM key_alias = genaiKey. Note MCPConfig has no tierId, so no tier/model/provider block: an MCP exposes tools, it does not consume a model.
+// An MCP environment requires downstream provisioning. Emitted from [dbo_genai].[mcpEnvironment] joined to MCP/Application/Project/Environment. Message key = mcpId. Idempotency key and LiteLLM key_alias = genaiKey. No tier/model/provider: an MCP exposes tools, it does not consume a model.
 type McpConfigEvent struct {
 	EventType CatalogEventType `json:"eventType"`
-	// MCPConfig.genaiKey (uniqueidentifier, UNIQUE) - correlation id, ResourceRequest.externalRef and LiteLLM key_alias. Unique per config row, so it rotates on every config version.
+	// mcpEnvironment.genaiKey
 	GenaiKey string `json:"genaiKey"`
-	// MCPConfig.id
-	ConfigId int32 `json:"configId"`
-	// MCP.id - the message key
-	McpId int32 `json:"mcpId"`
-	// MCP.code - unique per (projectId, applicationId, code) among non-deleted rows
+	// mcpEnvironment.id
+	McpEnvironmentId int64 `json:"mcpEnvironmentId"`
+	// mcpEnvironment.mcpId -> MCP.id. Message key.
+	McpId int64 `json:"mcpId"`
+	// MCP.code
 	McpCode string `json:"mcpCode"`
-	// MCPConfig.version
-	Version string `json:"version"`
-
-	IsLatest bool `json:"isLatest"`
-
-	IsActive bool `json:"isActive"`
-
-	IsDeprecated bool `json:"isDeprecated"`
 	// MCP.isPrivate
 	IsPrivate bool `json:"isPrivate"`
+	// MCP.isDeprecated - mcpEnvironment carries no lifecycle flags of its own.
+	IsDeprecated bool `json:"isDeprecated"`
 	// Resource catalog discriminator for InfraOps.
 	ResourceKind string `json:"resourceKind"`
-	// MCPConfig.resourceId
-	ResourceId *UnionNullLong `json:"resourceId"`
-	// MCPConfig.endpoint
-	Endpoint *UnionNullString `json:"endpoint"`
-	// MCPConfig.transport - e.g. 'http', 'sse', 'stdio'
+	// mcpEnvironment.resourceId. NOT NULL: 0 means no InfraOps resource assigned yet.
+	ResourceId int64 `json:"resourceId"`
+	// mcpEnvironment.connectionUrl
+	ConnectionUrl *UnionNullString `json:"connectionUrl"`
+	// mcpEnvironment.hostUrl
+	HostUrl *UnionNullString `json:"hostUrl"`
+	// mcpEnvironment.transport - e.g. 'http', 'sse', 'stdio'
 	Transport *UnionNullString `json:"transport"`
-	// MCPConfig.authenticationType. The matching authenticationJson/headersJson columns are deliberately NOT published - they can hold credentials.
-	AuthenticationType *UnionNullString `json:"authenticationType"`
-	// MCPConfig.timeoutMs
-	TimeoutMs *UnionNullInt `json:"timeoutMs"`
-	// Count of non-deleted [dbo_genai].[MCPTool] rows for this config. The tool schemas themselves are nvarchar(max) and stay in the database.
+	// Count of non-deleted [dbo_genai].[MCPTool] rows for this environment. The mcpEnvironment.authorizationJson column is deliberately NOT published - it can hold credentials.
 	ToolsCount int32 `json:"toolsCount"`
 
 	Project ProjectRef `json:"project"`
@@ -58,21 +50,20 @@ type McpConfigEvent struct {
 	Application ApplicationRef `json:"application"`
 
 	Environment EnvironmentRef `json:"environment"`
-
+	// Audit of the parent MCP: mcpEnvironment carries no audit columns.
 	Audit AuditRef `json:"audit"`
 }
 
-const McpConfigEventAvroCRC64Fingerprint = "Sv\xe5w!W\xfbk"
+const McpConfigEventAvroCRC64Fingerprint = "\xf1\xa6\xdbd\x9a\xec\\B"
 
 func NewMcpConfigEvent() McpConfigEvent {
 	r := McpConfigEvent{}
 	r.EventType = CatalogEventTypeCREATED
 	r.ResourceKind = "genai-mcp"
-	r.ResourceId = nil
-	r.Endpoint = nil
+	r.ResourceId = 0
+	r.ConnectionUrl = nil
+	r.HostUrl = nil
 	r.Transport = nil
-	r.AuthenticationType = nil
-	r.TimeoutMs = nil
 	r.ToolsCount = 0
 	r.Project = NewProjectRef()
 
@@ -118,11 +109,11 @@ func writeMcpConfigEvent(r McpConfigEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.ConfigId, w)
+	err = vm.WriteLong(r.McpEnvironmentId, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteInt(r.McpId, w)
+	err = vm.WriteLong(r.McpId, w)
 	if err != nil {
 		return err
 	}
@@ -130,15 +121,7 @@ func writeMcpConfigEvent(r McpConfigEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Version, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteBool(r.IsLatest, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteBool(r.IsActive, w)
+	err = vm.WriteBool(r.IsPrivate, w)
 	if err != nil {
 		return err
 	}
@@ -146,31 +129,23 @@ func writeMcpConfigEvent(r McpConfigEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteBool(r.IsPrivate, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.ResourceKind, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullLong(r.ResourceId, w)
+	err = vm.WriteLong(r.ResourceId, w)
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullString(r.Endpoint, w)
+	err = writeUnionNullString(r.ConnectionUrl, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.HostUrl, w)
 	if err != nil {
 		return err
 	}
 	err = writeUnionNullString(r.Transport, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullString(r.AuthenticationType, w)
-	if err != nil {
-		return err
-	}
-	err = writeUnionNullInt(r.TimeoutMs, w)
 	if err != nil {
 		return err
 	}
@@ -202,7 +177,7 @@ func (r McpConfigEvent) Serialize(w io.Writer) error {
 }
 
 func (r McpConfigEvent) Schema() string {
-	return "{\"doc\":\"An environment-scoped MCP configuration reached a state that requires downstream provisioning. Emitted from [dbo_genai].[MCPConfig] joined to MCP/Application/Project/Environment. Message key = mcpId. Idempotency key and LiteLLM key_alias = genaiKey. Note MCPConfig has no tierId, so no tier/model/provider block: an MCP exposes tools, it does not consume a model.\",\"fields\":[{\"default\":\"CREATED\",\"name\":\"eventType\",\"type\":{\"doc\":\"Mirrors the numeric EEventType convention already parsed by the InfraOps subscriber (Created=1, Updated=2, Deleted=3). Duplicated in the payload so the event survives header loss on republish.\",\"name\":\"CatalogEventType\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}},{\"doc\":\"MCPConfig.genaiKey (uniqueidentifier, UNIQUE) - correlation id, ResourceRequest.externalRef and LiteLLM key_alias. Unique per config row, so it rotates on every config version.\",\"name\":\"genaiKey\",\"type\":\"string\"},{\"doc\":\"MCPConfig.id\",\"name\":\"configId\",\"type\":\"int\"},{\"doc\":\"MCP.id - the message key\",\"name\":\"mcpId\",\"type\":\"int\"},{\"doc\":\"MCP.code - unique per (projectId, applicationId, code) among non-deleted rows\",\"name\":\"mcpCode\",\"type\":\"string\"},{\"doc\":\"MCPConfig.version\",\"name\":\"version\",\"type\":\"string\"},{\"name\":\"isLatest\",\"type\":\"boolean\"},{\"name\":\"isActive\",\"type\":\"boolean\"},{\"name\":\"isDeprecated\",\"type\":\"boolean\"},{\"doc\":\"MCP.isPrivate\",\"name\":\"isPrivate\",\"type\":\"boolean\"},{\"default\":\"genai-mcp\",\"doc\":\"Resource catalog discriminator for InfraOps.\",\"name\":\"resourceKind\",\"type\":\"string\"},{\"default\":null,\"doc\":\"MCPConfig.resourceId\",\"name\":\"resourceId\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"doc\":\"MCPConfig.endpoint\",\"name\":\"endpoint\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"MCPConfig.transport - e.g. 'http', 'sse', 'stdio'\",\"name\":\"transport\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"MCPConfig.authenticationType. The matching authenticationJson/headersJson columns are deliberately NOT published - they can hold credentials.\",\"name\":\"authenticationType\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"MCPConfig.timeoutMs\",\"name\":\"timeoutMs\",\"type\":[\"null\",\"int\"]},{\"default\":0,\"doc\":\"Count of non-deleted [dbo_genai].[MCPTool] rows for this config. The tool schemas themselves are nvarchar(max) and stay in the database.\",\"name\":\"toolsCount\",\"type\":\"int\"},{\"name\":\"project\",\"type\":{\"doc\":\"Source: [dbo_genai].[Project].\",\"fields\":[{\"doc\":\"Project.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Project.name\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Project.acronym\",\"name\":\"acronym\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.ownerMail\",\"name\":\"ownerMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.productId - FK to dbo.Product in the Wizard schema.\",\"name\":\"productId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ProjectRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"application\",\"type\":{\"doc\":\"Source: [dbo_genai].[Application]. WARNING: this id is a GenAI-local IDENTITY and is NOT the Wizard application id that InfraOps needs for ResourceRequest.payload.apps[]. Consumers must resolve the Wizard application by 'name' against [dbo].[Application].name until a wizardApplicationId column exists.\",\"fields\":[{\"doc\":\"Application.id (GenAI-local)\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Application.name - the resolution key towards the Wizard application\",\"name\":\"name\",\"type\":\"string\"},{\"doc\":\"Application.ownerMail\",\"name\":\"ownerMail\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Reserved. Populate once GenAI stores the Wizard application id; null means the consumer must resolve by name.\",\"name\":\"wizardApplicationId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ApplicationRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"environment\",\"type\":{\"doc\":\"Source: [dbo_genai].[Environment]. Seeded values: 1=Development, 2=Test, 3=QA, 4=Production, 5=unknown-environment. Consumers must match InfraOps by NAME ([dbo_infraops].[EnvironmentType].name), never by id - the two id spaces are unrelated.\",\"fields\":[{\"doc\":\"Environment.id (GenAI-local)\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Environment.name\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"EnvironmentRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"audit\",\"type\":{\"doc\":\"Audit columns of the source configuration row. Timestamps are ISO 8601 UTC strings.\",\"fields\":[{\"doc\":\"ISO 8601 UTC\",\"name\":\"createdAt\",\"type\":\"string\"},{\"name\":\"createdBy\",\"type\":\"string\"},{\"default\":null,\"doc\":\"ISO 8601 UTC\",\"name\":\"updatedAt\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"updatedBy\",\"type\":[\"null\",\"string\"]}],\"name\":\"AuditRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.GenAiCatalog.Events.Record.McpConfigEvent\",\"type\":\"record\"}"
+	return "{\"doc\":\"An MCP environment requires downstream provisioning. Emitted from [dbo_genai].[mcpEnvironment] joined to MCP/Application/Project/Environment. Message key = mcpId. Idempotency key and LiteLLM key_alias = genaiKey. No tier/model/provider: an MCP exposes tools, it does not consume a model.\",\"fields\":[{\"default\":\"CREATED\",\"name\":\"eventType\",\"type\":{\"doc\":\"Mirrors the numeric EEventType convention already parsed by the InfraOps subscriber (Created=1, Updated=2, Deleted=3). Duplicated in the payload so the event survives header loss on republish.\",\"name\":\"CatalogEventType\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}},{\"doc\":\"mcpEnvironment.genaiKey\",\"name\":\"genaiKey\",\"type\":\"string\"},{\"doc\":\"mcpEnvironment.id\",\"name\":\"mcpEnvironmentId\",\"type\":\"long\"},{\"doc\":\"mcpEnvironment.mcpId -\\u003e MCP.id. Message key.\",\"name\":\"mcpId\",\"type\":\"long\"},{\"doc\":\"MCP.code\",\"name\":\"mcpCode\",\"type\":\"string\"},{\"doc\":\"MCP.isPrivate\",\"name\":\"isPrivate\",\"type\":\"boolean\"},{\"doc\":\"MCP.isDeprecated - mcpEnvironment carries no lifecycle flags of its own.\",\"name\":\"isDeprecated\",\"type\":\"boolean\"},{\"default\":\"genai-mcp\",\"doc\":\"Resource catalog discriminator for InfraOps.\",\"name\":\"resourceKind\",\"type\":\"string\"},{\"default\":0,\"doc\":\"mcpEnvironment.resourceId. NOT NULL: 0 means no InfraOps resource assigned yet.\",\"name\":\"resourceId\",\"type\":\"long\"},{\"default\":null,\"doc\":\"mcpEnvironment.connectionUrl\",\"name\":\"connectionUrl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"mcpEnvironment.hostUrl\",\"name\":\"hostUrl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"mcpEnvironment.transport - e.g. 'http', 'sse', 'stdio'\",\"name\":\"transport\",\"type\":[\"null\",\"string\"]},{\"default\":0,\"doc\":\"Count of non-deleted [dbo_genai].[MCPTool] rows for this environment. The mcpEnvironment.authorizationJson column is deliberately NOT published - it can hold credentials.\",\"name\":\"toolsCount\",\"type\":\"int\"},{\"name\":\"project\",\"type\":{\"doc\":\"Source: [dbo_genai].[Project].\",\"fields\":[{\"doc\":\"Project.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Project.name\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Project.acronym\",\"name\":\"acronym\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.ownerMail\",\"name\":\"ownerMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.productId - FK to dbo.Product in the Wizard schema.\",\"name\":\"productId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ProjectRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"application\",\"type\":{\"doc\":\"Source: [dbo_genai].[Application]. Since v1.23.4 this table mirrors the Wizard application (it gained templateId, pipelineId, statusId, isMigration, jsonData), so its id is expected to match [dbo].[Application].id - CONFIRM WITH DATA before relying on it. Until confirmed, consumers should still resolve the Wizard application by 'name'.\",\"fields\":[{\"doc\":\"Application.id. Desde v1.23.4 [dbo_genai].[Application] replica la del Wizard (templateId, pipelineId, statusId, isMigration, jsonData), por lo que este id deberia coincidir con [dbo].[Application].id - pendiente de confirmar con datos.\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Application.name - the resolution key towards the Wizard application\",\"name\":\"name\",\"type\":\"string\"},{\"doc\":\"Application.ownerMail\",\"name\":\"ownerMail\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Reserved. Populate once GenAI stores the Wizard application id; null means the consumer must resolve by name.\",\"name\":\"wizardApplicationId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ApplicationRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"environment\",\"type\":{\"doc\":\"Source: [dbo_genai].[Environment]. Seeded values: 1=Development, 2=Test, 3=QA, 4=Production, 5=unknown-environment. Consumers must match InfraOps by NAME ([dbo_infraops].[EnvironmentType].name), never by id - the two id spaces are unrelated.\",\"fields\":[{\"doc\":\"Environment.id (GenAI-local)\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Environment.name\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"EnvironmentRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"doc\":\"Audit of the parent MCP: mcpEnvironment carries no audit columns.\",\"name\":\"audit\",\"type\":{\"doc\":\"Audit columns of the source configuration row. Timestamps are ISO 8601 UTC strings.\",\"fields\":[{\"doc\":\"ISO 8601 UTC\",\"name\":\"createdAt\",\"type\":\"string\"},{\"name\":\"createdBy\",\"type\":\"string\"},{\"default\":null,\"doc\":\"ISO 8601 UTC\",\"name\":\"updatedAt\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"updatedBy\",\"type\":[\"null\",\"string\"]}],\"name\":\"AuditRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.GenAiCatalog.Events.Record.McpConfigEvent\",\"type\":\"record\"}"
 }
 
 func (r McpConfigEvent) SchemaName() string {
@@ -231,12 +206,12 @@ func (r *McpConfigEvent) Get(i int) types.Field {
 		return w
 
 	case 2:
-		w := types.Int{Target: &r.ConfigId}
+		w := types.Long{Target: &r.McpEnvironmentId}
 
 		return w
 
 	case 3:
-		w := types.Int{Target: &r.McpId}
+		w := types.Long{Target: &r.McpId}
 
 		return w
 
@@ -246,82 +221,64 @@ func (r *McpConfigEvent) Get(i int) types.Field {
 		return w
 
 	case 5:
-		w := types.String{Target: &r.Version}
-
-		return w
-
-	case 6:
-		w := types.Boolean{Target: &r.IsLatest}
-
-		return w
-
-	case 7:
-		w := types.Boolean{Target: &r.IsActive}
-
-		return w
-
-	case 8:
-		w := types.Boolean{Target: &r.IsDeprecated}
-
-		return w
-
-	case 9:
 		w := types.Boolean{Target: &r.IsPrivate}
 
 		return w
 
-	case 10:
+	case 6:
+		w := types.Boolean{Target: &r.IsDeprecated}
+
+		return w
+
+	case 7:
 		w := types.String{Target: &r.ResourceKind}
 
 		return w
 
+	case 8:
+		w := types.Long{Target: &r.ResourceId}
+
+		return w
+
+	case 9:
+		r.ConnectionUrl = NewUnionNullString()
+
+		return r.ConnectionUrl
+	case 10:
+		r.HostUrl = NewUnionNullString()
+
+		return r.HostUrl
 	case 11:
-		r.ResourceId = NewUnionNullLong()
-
-		return r.ResourceId
-	case 12:
-		r.Endpoint = NewUnionNullString()
-
-		return r.Endpoint
-	case 13:
 		r.Transport = NewUnionNullString()
 
 		return r.Transport
-	case 14:
-		r.AuthenticationType = NewUnionNullString()
-
-		return r.AuthenticationType
-	case 15:
-		r.TimeoutMs = NewUnionNullInt()
-
-		return r.TimeoutMs
-	case 16:
+	case 12:
 		w := types.Int{Target: &r.ToolsCount}
 
 		return w
 
-	case 17:
+	case 13:
 		r.Project = NewProjectRef()
 
 		w := types.Record{Target: &r.Project}
 
 		return w
 
-	case 18:
+	case 14:
 		r.Application = NewApplicationRef()
 
 		w := types.Record{Target: &r.Application}
 
 		return w
 
-	case 19:
+	case 15:
 		r.Environment = NewEnvironmentRef()
 
 		w := types.Record{Target: &r.Environment}
 
 		return w
 
-	case 20:
+	case 16:
 		r.Audit = NewAuditRef()
 
 		w := types.Record{Target: &r.Audit}
@@ -337,25 +294,22 @@ func (r *McpConfigEvent) SetDefault(i int) {
 	case 0:
 		r.EventType = CatalogEventTypeCREATED
 		return
-	case 10:
+	case 7:
 		r.ResourceKind = "genai-mcp"
 		return
+	case 8:
+		r.ResourceId = 0
+		return
+	case 9:
+		r.ConnectionUrl = nil
+		return
+	case 10:
+		r.HostUrl = nil
+		return
 	case 11:
-		r.ResourceId = nil
-		return
-	case 12:
-		r.Endpoint = nil
-		return
-	case 13:
 		r.Transport = nil
 		return
-	case 14:
-		r.AuthenticationType = nil
-		return
-	case 15:
-		r.TimeoutMs = nil
-		return
-	case 16:
+	case 12:
 		r.ToolsCount = 0
 		return
 	}
@@ -364,20 +318,14 @@ func (r *McpConfigEvent) SetDefault(i int) {
 
 func (r *McpConfigEvent) NullField(i int) {
 	switch i {
+	case 9:
+		r.ConnectionUrl = nil
+		return
+	case 10:
+		r.HostUrl = nil
+		return
 	case 11:
-		r.ResourceId = nil
-		return
-	case 12:
-		r.Endpoint = nil
-		return
-	case 13:
 		r.Transport = nil
-		return
-	case 14:
-		r.AuthenticationType = nil
-		return
-	case 15:
-		r.TimeoutMs = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -403,7 +351,7 @@ func (r McpConfigEvent) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["configId"], err = json.Marshal(r.ConfigId)
+	output["mcpEnvironmentId"], err = json.Marshal(r.McpEnvironmentId)
 	if err != nil {
 		return nil, err
 	}
@@ -415,23 +363,11 @@ func (r McpConfigEvent) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["version"], err = json.Marshal(r.Version)
-	if err != nil {
-		return nil, err
-	}
-	output["isLatest"], err = json.Marshal(r.IsLatest)
-	if err != nil {
-		return nil, err
-	}
-	output["isActive"], err = json.Marshal(r.IsActive)
+	output["isPrivate"], err = json.Marshal(r.IsPrivate)
 	if err != nil {
 		return nil, err
 	}
 	output["isDeprecated"], err = json.Marshal(r.IsDeprecated)
-	if err != nil {
-		return nil, err
-	}
-	output["isPrivate"], err = json.Marshal(r.IsPrivate)
 	if err != nil {
 		return nil, err
 	}
@@ -443,19 +379,15 @@ func (r McpConfigEvent) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["endpoint"], err = json.Marshal(r.Endpoint)
+	output["connectionUrl"], err = json.Marshal(r.ConnectionUrl)
+	if err != nil {
+		return nil, err
+	}
+	output["hostUrl"], err = json.Marshal(r.HostUrl)
 	if err != nil {
 		return nil, err
 	}
 	output["transport"], err = json.Marshal(r.Transport)
-	if err != nil {
-		return nil, err
-	}
-	output["authenticationType"], err = json.Marshal(r.AuthenticationType)
-	if err != nil {
-		return nil, err
-	}
-	output["timeoutMs"], err = json.Marshal(r.TimeoutMs)
 	if err != nil {
 		return nil, err
 	}
@@ -518,18 +450,18 @@ func (r *McpConfigEvent) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for genaiKey")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["configId"]; ok {
+		if v, ok := fields["mcpEnvironmentId"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ConfigId); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.McpEnvironmentId); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for configId")
+		return fmt.Errorf("no value specified for mcpEnvironmentId")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["mcpId"]; ok {
@@ -560,46 +492,18 @@ func (r *McpConfigEvent) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for mcpCode")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["version"]; ok {
+		if v, ok := fields["isPrivate"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Version); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.IsPrivate); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for version")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["isLatest"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IsLatest); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for isLatest")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["isActive"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IsActive); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for isActive")
+		return fmt.Errorf("no value specified for isPrivate")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["isDeprecated"]; ok {
@@ -614,20 +518,6 @@ func (r *McpConfigEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for isDeprecated")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["isPrivate"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.IsPrivate); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for isPrivate")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["resourceKind"]; ok {
@@ -655,25 +545,39 @@ func (r *McpConfigEvent) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		r.ResourceId = NewUnionNullLong()
-
-		r.ResourceId = nil
+		r.ResourceId = 0
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["endpoint"]; ok {
+		if v, ok := fields["connectionUrl"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Endpoint); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.ConnectionUrl); err != nil {
 			return err
 		}
 	} else {
-		r.Endpoint = NewUnionNullString()
+		r.ConnectionUrl = NewUnionNullString()
 
-		r.Endpoint = nil
+		r.ConnectionUrl = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["hostUrl"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.HostUrl); err != nil {
+			return err
+		}
+	} else {
+		r.HostUrl = NewUnionNullString()
+
+		r.HostUrl = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["transport"]; ok {
@@ -690,38 +594,6 @@ func (r *McpConfigEvent) UnmarshalJSON(data []byte) error {
 		r.Transport = NewUnionNullString()
 
 		r.Transport = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["authenticationType"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.AuthenticationType); err != nil {
-			return err
-		}
-	} else {
-		r.AuthenticationType = NewUnionNullString()
-
-		r.AuthenticationType = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["timeoutMs"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.TimeoutMs); err != nil {
-			return err
-		}
-	} else {
-		r.TimeoutMs = NewUnionNullInt()
-
-		r.TimeoutMs = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["toolsCount"]; ok {
