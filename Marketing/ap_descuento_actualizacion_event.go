@@ -47,14 +47,20 @@ type ApDescuentoActualizacionEvent struct {
 	FechaAuditoria int64 `json:"FechaAuditoria"`
 
 	UsuarioAuditoria string `json:"UsuarioAuditoria"`
+
+	CantidadCpsOrigen int32 `json:"CantidadCpsOrigen"`
+
+	CantidadCpsDestino int32 `json:"CantidadCpsDestino"`
 }
 
-const ApDescuentoActualizacionEventAvroCRC64Fingerprint = "\x97\x1e\x97_\b\xb0t\x9c"
+const ApDescuentoActualizacionEventAvroCRC64Fingerprint = "\x85\x84Kݡ\x06\xb0\xb0"
 
 func NewApDescuentoActualizacionEvent() ApDescuentoActualizacionEvent {
 	r := ApDescuentoActualizacionEvent{}
 	r.FechaInicio = nil
 	r.FechaFin = nil
+	r.CantidadCpsOrigen = 0
+	r.CantidadCpsDestino = 0
 	return r
 }
 
@@ -143,6 +149,14 @@ func writeApDescuentoActualizacionEvent(r ApDescuentoActualizacionEvent, w io.Wr
 	if err != nil {
 		return err
 	}
+	err = vm.WriteInt(r.CantidadCpsOrigen, w)
+	if err != nil {
+		return err
+	}
+	err = vm.WriteInt(r.CantidadCpsDestino, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -151,7 +165,7 @@ func (r ApDescuentoActualizacionEvent) Serialize(w io.Writer) error {
 }
 
 func (r ApDescuentoActualizacionEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdDescuento\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"TipoEvento\",\"type\":\"string\"},{\"name\":\"TipoDescuento\",\"type\":\"string\"},{\"name\":\"Porcentaje\",\"type\":\"int\"},{\"default\":null,\"name\":\"FechaInicio\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaFin\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Activo\",\"type\":\"boolean\"},{\"name\":\"AplicaATodosLosServicios\",\"type\":\"boolean\"},{\"name\":\"CantidadServiciosAsociados\",\"type\":\"int\"},{\"name\":\"AplicaATodosLosClientes\",\"type\":\"boolean\"},{\"name\":\"CantidadClientesAsociados\",\"type\":\"int\"},{\"name\":\"CantidadAudienciasAsociadas\",\"type\":\"int\"},{\"name\":\"FechaAuditoria\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"UsuarioAuditoria\",\"type\":\"string\"}],\"name\":\"Andreani.Marketing.Events.Record.ApDescuentoActualizacionEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdDescuento\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"TipoEvento\",\"type\":\"string\"},{\"name\":\"TipoDescuento\",\"type\":\"string\"},{\"name\":\"Porcentaje\",\"type\":\"int\"},{\"default\":null,\"name\":\"FechaInicio\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaFin\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Activo\",\"type\":\"boolean\"},{\"name\":\"AplicaATodosLosServicios\",\"type\":\"boolean\"},{\"name\":\"CantidadServiciosAsociados\",\"type\":\"int\"},{\"name\":\"AplicaATodosLosClientes\",\"type\":\"boolean\"},{\"name\":\"CantidadClientesAsociados\",\"type\":\"int\"},{\"name\":\"CantidadAudienciasAsociadas\",\"type\":\"int\"},{\"name\":\"FechaAuditoria\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"UsuarioAuditoria\",\"type\":\"string\"},{\"default\":0,\"name\":\"CantidadCpsOrigen\",\"type\":\"int\"},{\"default\":0,\"name\":\"CantidadCpsDestino\",\"type\":\"int\"}],\"name\":\"Andreani.Marketing.Events.Record.ApDescuentoActualizacionEvent\",\"type\":\"record\"}"
 }
 
 func (r ApDescuentoActualizacionEvent) SchemaName() string {
@@ -242,6 +256,16 @@ func (r *ApDescuentoActualizacionEvent) Get(i int) types.Field {
 
 		return w
 
+	case 15:
+		w := types.Int{Target: &r.CantidadCpsOrigen}
+
+		return w
+
+	case 16:
+		w := types.Int{Target: &r.CantidadCpsDestino}
+
+		return w
+
 	}
 	panic("Unknown field index")
 }
@@ -253,6 +277,12 @@ func (r *ApDescuentoActualizacionEvent) SetDefault(i int) {
 		return
 	case 6:
 		r.FechaFin = nil
+		return
+	case 15:
+		r.CantidadCpsOrigen = 0
+		return
+	case 16:
+		r.CantidadCpsDestino = 0
 		return
 	}
 	panic("Unknown field index")
@@ -341,6 +371,14 @@ func (r ApDescuentoActualizacionEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["UsuarioAuditoria"], err = json.Marshal(r.UsuarioAuditoria)
+	if err != nil {
+		return nil, err
+	}
+	output["CantidadCpsOrigen"], err = json.Marshal(r.CantidadCpsOrigen)
+	if err != nil {
+		return nil, err
+	}
+	output["CantidadCpsDestino"], err = json.Marshal(r.CantidadCpsDestino)
 	if err != nil {
 		return nil, err
 	}
@@ -567,6 +605,34 @@ func (r *ApDescuentoActualizacionEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for UsuarioAuditoria")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CantidadCpsOrigen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantidadCpsOrigen); err != nil {
+			return err
+		}
+	} else {
+		r.CantidadCpsOrigen = 0
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["CantidadCpsDestino"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CantidadCpsDestino); err != nil {
+			return err
+		}
+	} else {
+		r.CantidadCpsDestino = 0
 	}
 	return nil
 }
