@@ -326,10 +326,100 @@ type EventoWhPedidoActualizacion struct {
 
 	BOLPrinted string `json:"BOLPrinted"`
 
+	ExtUdfLkup1 *UnionNullString `json:"ExtUdfLkup1"`
+
+	ExtUdfLkup2 *UnionNullString `json:"ExtUdfLkup2"`
+
+	ExtUdfLkup3 *UnionNullString `json:"ExtUdfLkup3"`
+
+	ExtUdfLkup4 *UnionNullString `json:"ExtUdfLkup4"`
+
+	ExtUdfLkup5 *UnionNullString `json:"ExtUdfLkup5"`
+
+	ExtUdfLkup6 *UnionNullString `json:"ExtUdfLkup6"`
+
+	ExtUdfLkup7 *UnionNullString `json:"ExtUdfLkup7"`
+
+	ExtUdfLkup8 *UnionNullString `json:"ExtUdfLkup8"`
+
+	ExtUdfLkup9 *UnionNullString `json:"ExtUdfLkup9"`
+
+	ExtUdfLkup10 *UnionNullString `json:"ExtUdfLkup10"`
+
+	ExtUdfStr1 *UnionNullString `json:"ExtUdfStr1"`
+
+	ExtUdfStr2 *UnionNullString `json:"ExtUdfStr2"`
+
+	ExtUdfStr3 *UnionNullString `json:"ExtUdfStr3"`
+
+	ExtUdfStr4 *UnionNullString `json:"ExtUdfStr4"`
+
+	ExtUdfStr5 *UnionNullString `json:"ExtUdfStr5"`
+
+	ExtUdfStr6 *UnionNullString `json:"ExtUdfStr6"`
+
+	ExtUdfStr7 *UnionNullString `json:"ExtUdfStr7"`
+
+	ExtUdfStr8 *UnionNullString `json:"ExtUdfStr8"`
+
+	ExtUdfStr9 *UnionNullString `json:"ExtUdfStr9"`
+
+	ExtUdfStr10 *UnionNullString `json:"ExtUdfStr10"`
+
+	ExtUdfStr11 *UnionNullString `json:"ExtUdfStr11"`
+
+	ExtUdfStr12 *UnionNullString `json:"ExtUdfStr12"`
+
+	ExtUdfStr13 *UnionNullString `json:"ExtUdfStr13"`
+
+	ExtUdfStr14 *UnionNullString `json:"ExtUdfStr14"`
+
+	ExtUdfStr15 *UnionNullString `json:"ExtUdfStr15"`
+
+	ExtUdfStr16 *UnionNullString `json:"ExtUdfStr16"`
+
+	ExtUdfStr17 *UnionNullString `json:"ExtUdfStr17"`
+
+	ExtUdfStr18 *UnionNullString `json:"ExtUdfStr18"`
+
+	ExtUdfStr19 *UnionNullString `json:"ExtUdfStr19"`
+
+	ExtUdfStr20 *UnionNullString `json:"ExtUdfStr20"`
+
+	ExtUdfStr21 *UnionNullString `json:"ExtUdfStr21"`
+
+	ExtUdfStr22 *UnionNullString `json:"ExtUdfStr22"`
+
+	ExtUdfStr23 *UnionNullString `json:"ExtUdfStr23"`
+
+	ExtUdfStr24 *UnionNullString `json:"ExtUdfStr24"`
+
+	ExtUdfStr25 *UnionNullString `json:"ExtUdfStr25"`
+
+	ExtUdfStr26 *UnionNullString `json:"ExtUdfStr26"`
+
+	ExtUdfStr27 *UnionNullString `json:"ExtUdfStr27"`
+
+	ExtUdfStr28 *UnionNullString `json:"ExtUdfStr28"`
+
+	ExtUdfStr29 *UnionNullString `json:"ExtUdfStr29"`
+
+	ExtUdfStr30 *UnionNullString `json:"ExtUdfStr30"`
+
+	ExtUdfStr31 *UnionNullString `json:"ExtUdfStr31"`
+
+	ExtUdfStr32 *UnionNullString `json:"ExtUdfStr32"`
+
+	ExtUdfStr33 *UnionNullString `json:"ExtUdfStr33"`
+
+	ExtUdfStr34 *UnionNullString `json:"ExtUdfStr34"`
+
+	ExtUdfStr35 *UnionNullString `json:"ExtUdfStr35"`
+
 	Detalles []PedidoDetalle `json:"Detalles"`
 }
 
-const EventoWhPedidoActualizacionAvroCRC64Fingerprint = "|ت\xb5\x97\xb9\x99\b"
+const EventoWhPedidoActualizacionAvroCRC64Fingerprint = "\xe2\xc2\xc1'ߔM\x8c"
 
 func NewEventoWhPedidoActualizacion() EventoWhPedidoActualizacion {
 	r := EventoWhPedidoActualizacion{}
@@ -489,6 +579,51 @@ func NewEventoWhPedidoActualizacion() EventoWhPedidoActualizacion {
 	r.SPSAPIStrategyKey = ""
 	r.BOLNumber = ""
 	r.BOLPrinted = ""
+	r.ExtUdfLkup1 = nil
+	r.ExtUdfLkup2 = nil
+	r.ExtUdfLkup3 = nil
+	r.ExtUdfLkup4 = nil
+	r.ExtUdfLkup5 = nil
+	r.ExtUdfLkup6 = nil
+	r.ExtUdfLkup7 = nil
+	r.ExtUdfLkup8 = nil
+	r.ExtUdfLkup9 = nil
+	r.ExtUdfLkup10 = nil
+	r.ExtUdfStr1 = nil
+	r.ExtUdfStr2 = nil
+	r.ExtUdfStr3 = nil
+	r.ExtUdfStr4 = nil
+	r.ExtUdfStr5 = nil
+	r.ExtUdfStr6 = nil
+	r.ExtUdfStr7 = nil
+	r.ExtUdfStr8 = nil
+	r.ExtUdfStr9 = nil
+	r.ExtUdfStr10 = nil
+	r.ExtUdfStr11 = nil
+	r.ExtUdfStr12 = nil
+	r.ExtUdfStr13 = nil
+	r.ExtUdfStr14 = nil
+	r.ExtUdfStr15 = nil
+	r.ExtUdfStr16 = nil
+	r.ExtUdfStr17 = nil
+	r.ExtUdfStr18 = nil
+	r.ExtUdfStr19 = nil
+	r.ExtUdfStr20 = nil
+	r.ExtUdfStr21 = nil
+	r.ExtUdfStr22 = nil
+	r.ExtUdfStr23 = nil
+	r.ExtUdfStr24 = nil
+	r.ExtUdfStr25 = nil
+	r.ExtUdfStr26 = nil
+	r.ExtUdfStr27 = nil
+	r.ExtUdfStr28 = nil
+	r.ExtUdfStr29 = nil
+	r.ExtUdfStr30 = nil
+	r.ExtUdfStr31 = nil
+	r.ExtUdfStr32 = nil
+	r.ExtUdfStr33 = nil
+	r.ExtUdfStr34 = nil
+	r.ExtUdfStr35 = nil
 	r.Detalles = make([]PedidoDetalle, 0)
 
 	r.Detalles = make([]PedidoDetalle, 0)
@@ -1137,6 +1272,186 @@ func writeEventoWhPedidoActualizacion(r EventoWhPedidoActualizacion, w io.Writer
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ExtUdfLkup1, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfLkup2, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfLkup3, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfLkup4, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfLkup5, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfLkup6, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfLkup7, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfLkup8, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfLkup9, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfLkup10, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr1, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr2, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr3, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr4, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr5, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr6, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr7, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr8, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr9, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr10, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr11, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr12, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr13, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr14, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr15, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr16, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr17, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr18, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr19, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr20, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr21, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr22, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr23, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr24, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr25, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr26, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr27, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr28, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr29, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr30, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr31, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr32, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr33, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr34, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ExtUdfStr35, w)
+	if err != nil {
+		return err
+	}
 	err = writeArrayPedidoDetalle(r.Detalles, w)
 	if err != nil {
 		return err
@@ -1149,7 +1464,7 @@ func (r EventoWhPedidoActualizacion) Serialize(w io.Writer) error {
 }
 
 func (r EventoWhPedidoActualizacion) Schema() string {
-	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Id\",\"type\":\"string\"},{\"default\":\"SCE\",\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"name\":\"TransmitLogKey\",\"type\":\"string\"},{\"name\":\"SerialKey\",\"type\":\"long\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhSceEventUpdate.Events.Common\",\"type\":\"record\"}},{\"name\":\"Fragmento\",\"type\":{\"fields\":[{\"name\":\"Indice\",\"type\":\"int\"},{\"name\":\"Total\",\"type\":\"int\"},{\"name\":\"CantidadTotalLineas\",\"type\":\"int\"}],\"name\":\"Fragmento\",\"namespace\":\"Andreani.EventoWhSceEventUpdate.Events.Common\",\"type\":\"record\"}},{\"default\":\"\",\"name\":\"OrderKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"StorerKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternOrderKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DeliveryDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Priority\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ConsigneeKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Contact1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Contact2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Company\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Address1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Address2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Address3\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Address4\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_City\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_State\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Zip\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Country\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_ISOCntryCode\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Phone1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Phone2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Fax1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Fax2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Email1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Email2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Vat\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BillToKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Contact1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Contact2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Company\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Address1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Address2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Address3\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Address4\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_City\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_State\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Zip\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Country\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_ISOCntryCode\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Phone1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Phone2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Fax1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Fax2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_VAT\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BuyerPO\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"IncoTerm\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PmtTerm\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Door\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Route\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Stop\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OpenQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Status\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DischargePlace\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DeliveryPlace\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"IntermodalVehicle\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CountryOfOrigin\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"UpdateSource\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Type\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderGroup\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Notes\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"EffectiveDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Item_Number\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ContainerType\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ContainerQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BilledContainerQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ChepPalletIndicator\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TransportationMode\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TransportationService\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternalOrderKey2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr3\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr4\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr5\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Notes2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OHType\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"LoadID\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SortationLocation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BatchFlag\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BulkCartonGroup\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CountryDestination\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Stage\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DC_Id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Split_Orders\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Appt_Status\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShipTogether\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DeliveryDate2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequestedShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ActualShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Deliver_Date\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderValue\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternalLoadId\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DestinationNestId\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ReferenceNum\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"LabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"StdSSCCLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"StdGTINLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RFIDSSCCLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RFIDGTINLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RFIDFlag\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierCode\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierAddress1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierAddress2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierCity\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierState\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierZip\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierCountry\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierPhone\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DriverName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TrailerNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TrailerOwner\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DepDateTime\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CaseLabelType\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderBreak\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Suspendedindicator\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"EarliestShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PromisedShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PlannedShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ScheduledShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"EarliestDeliveryDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PromisedDelvDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PlannedDelvDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ScheduledDelvDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ActualDelvDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierRouteDocument\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierRouteAccountingEntity\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierRouteLocation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierRouteVersion\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMHouseAirWayBillNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMMasterAirWayBillNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMBookingNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMHouseOceanBOLNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMMasterOceanBOLNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMEquipmentNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMSealNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMLicensePlateNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMEquipmentType\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMEquipmentLength\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMEquipmentAttribute\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMAirServiceLevel\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMOceanServiceLevel\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMOceanTariffService\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMPortOfLoading\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMPortOfDischarge\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMRoutedVia\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMServiceAttribute\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMFreightCostCurrency\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMFreightChargeCurrency\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SPSAPIStrategyKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BOLNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BOLPrinted\",\"type\":\"string\"},{\"default\":[],\"name\":\"Detalles\",\"type\":{\"items\":{\"fields\":[{\"default\":\"\",\"name\":\"OrderKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderLineNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderDetailSysID\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternOrderKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternLineNo\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Sku\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TariffKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"StorerKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ManufacturerSku\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RetailSku\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"AltSku\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OriginalQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OpenQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShippedQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"AdjustedQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"QtyPreallocated\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"QtyAllocated\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"QtyPicked\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"UOM\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PackKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PickCode\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CartonGroup\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lot\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ID\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Facility\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Status\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"UnitPrice\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Tax01\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Tax02\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExtendedPrice\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"UpdateSource\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable01\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable02\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable03\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable04\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable05\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable06\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable07\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable08\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable09\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable10\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"EffectiveDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr3\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr4\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr5\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Notes\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"WorkOrderKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Descr\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"AllocateStrategyKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PreAllocateStrategyKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"AllocateStrategyType\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SkuRotation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShelfLife\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Rotation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Pallet_Id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Product_Weight\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Product_Cube\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrigCaseQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrigPalletQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OkToSubstitute\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"IsSubstitute\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OriginalSku\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RunInQTY\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RunOutQTY\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RunInUOM\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RunOutUOM\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OriginalLineNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ActualShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PickingInstructions\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CartonBreak\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CartonQtyBreak\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"QtyInTransit\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OppRequest\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"WPReleased\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BuyerPo\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShipGroup01\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShipGroup02\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShipGroup03\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternalLot\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"STDSSCCLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"STDGTINLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RFIDGTINLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RFIDSSCCLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"GenerateContainerDetail\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"FulfillQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionDocument\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionAccountingEntity\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionLocation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionVersion\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionScheduleLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderDocument\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderAccountingEntity\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderLocation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderVersion\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderScheduleLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderDocument\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderAccountingEntity\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderLocation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderVersion\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderScheduleLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"IdRequired\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BackflushIndicator\",\"type\":\"string\"}],\"name\":\"PedidoDetalle\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.EventoWhSceEventUpdate.Events.Record.EventoWhPedidoActualizacion\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Identificacion\",\"type\":{\"fields\":[{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Id\",\"type\":\"string\"},{\"default\":\"SCE\",\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"Proceso\",\"type\":\"string\"},{\"name\":\"Evento\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"name\":\"TransmitLogKey\",\"type\":\"string\"},{\"name\":\"SerialKey\",\"type\":\"long\"}],\"name\":\"Identificacion\",\"namespace\":\"Andreani.EventoWhSceEventUpdate.Events.Common\",\"type\":\"record\"}},{\"name\":\"Fragmento\",\"type\":{\"fields\":[{\"name\":\"Indice\",\"type\":\"int\"},{\"name\":\"Total\",\"type\":\"int\"},{\"name\":\"CantidadTotalLineas\",\"type\":\"int\"}],\"name\":\"Fragmento\",\"namespace\":\"Andreani.EventoWhSceEventUpdate.Events.Common\",\"type\":\"record\"}},{\"default\":\"\",\"name\":\"OrderKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"StorerKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternOrderKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DeliveryDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Priority\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ConsigneeKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Contact1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Contact2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Company\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Address1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Address2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Address3\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Address4\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_City\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_State\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Zip\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Country\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_ISOCntryCode\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Phone1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Phone2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Fax1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Fax2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Email1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Email2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"C_Vat\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BillToKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Contact1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Contact2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Company\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Address1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Address2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Address3\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Address4\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_City\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_State\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Zip\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Country\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_ISOCntryCode\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Phone1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Phone2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Fax1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_Fax2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"B_VAT\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BuyerPO\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"IncoTerm\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PmtTerm\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Door\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Route\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Stop\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OpenQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Status\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DischargePlace\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DeliveryPlace\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"IntermodalVehicle\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CountryOfOrigin\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"UpdateSource\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Type\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderGroup\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Notes\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"EffectiveDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Item_Number\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ContainerType\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ContainerQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BilledContainerQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ChepPalletIndicator\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TransportationMode\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TransportationService\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternalOrderKey2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr3\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr4\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr5\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Notes2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OHType\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"LoadID\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SortationLocation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BatchFlag\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BulkCartonGroup\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CountryDestination\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Stage\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DC_Id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Split_Orders\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Appt_Status\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShipTogether\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DeliveryDate2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequestedShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ActualShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Deliver_Date\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderValue\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternalLoadId\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DestinationNestId\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ReferenceNum\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"LabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"StdSSCCLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"StdGTINLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RFIDSSCCLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RFIDGTINLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RFIDFlag\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierCode\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierAddress1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierAddress2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierCity\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierState\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierZip\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierCountry\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierPhone\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DriverName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TrailerNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TrailerOwner\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"DepDateTime\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CaseLabelType\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderBreak\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Suspendedindicator\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"EarliestShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PromisedShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PlannedShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ScheduledShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"EarliestDeliveryDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PromisedDelvDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PlannedDelvDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ScheduledDelvDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ActualDelvDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierRouteDocument\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierRouteAccountingEntity\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierRouteLocation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CarrierRouteVersion\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMHouseAirWayBillNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMMasterAirWayBillNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMBookingNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMHouseOceanBOLNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMMasterOceanBOLNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMEquipmentNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMSealNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMLicensePlateNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMEquipmentType\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMEquipmentLength\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMEquipmentAttribute\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMAirServiceLevel\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMOceanServiceLevel\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMOceanTariffService\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMPortOfLoading\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMPortOfDischarge\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMRoutedVia\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMServiceAttribute\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMFreightCostCurrency\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TMFreightChargeCurrency\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SPSAPIStrategyKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BOLNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BOLPrinted\",\"type\":\"string\"},{\"default\":null,\"name\":\"ExtUdfLkup1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfLkup2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfLkup3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfLkup4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfLkup5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfLkup6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfLkup7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfLkup8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfLkup9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfLkup10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr1\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr2\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr3\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr4\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr5\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr6\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr7\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr8\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr9\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr10\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr11\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr12\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr13\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr14\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr15\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr16\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr17\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr18\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr19\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr20\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr21\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr22\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr23\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr24\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr25\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr26\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr27\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr28\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr29\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr30\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr31\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr32\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr33\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr34\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ExtUdfStr35\",\"type\":[\"null\",\"string\"]},{\"default\":[],\"name\":\"Detalles\",\"type\":{\"items\":{\"fields\":[{\"default\":\"\",\"name\":\"OrderKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderLineNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrderDetailSysID\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternOrderKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternLineNo\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Sku\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"TariffKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"StorerKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ManufacturerSku\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RetailSku\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"AltSku\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OriginalQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OpenQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShippedQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"AdjustedQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"QtyPreallocated\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"QtyAllocated\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"QtyPicked\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"UOM\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PackKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PickCode\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CartonGroup\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lot\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ID\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Facility\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Status\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"UnitPrice\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Tax01\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Tax02\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExtendedPrice\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"UpdateSource\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable01\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable02\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable03\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable04\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable05\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable06\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable07\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable08\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable09\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Lottable10\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"EffectiveDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr1\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr2\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr3\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr4\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SUsr5\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Notes\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"WorkOrderKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Descr\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"AllocateStrategyKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PreAllocateStrategyKey\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"AllocateStrategyType\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SkuRotation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShelfLife\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Rotation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Pallet_Id\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Product_Weight\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"Product_Cube\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrigCaseQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OrigPalletQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OkToSubstitute\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"IsSubstitute\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OriginalSku\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RunInQTY\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RunOutQTY\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RunInUOM\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RunOutUOM\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OriginalLineNumber\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ActualShipDate\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PickingInstructions\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CartonBreak\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"CartonQtyBreak\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"QtyInTransit\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"OppRequest\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"WPReleased\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BuyerPo\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShipGroup01\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShipGroup02\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ShipGroup03\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"ExternalLot\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"STDSSCCLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"STDGTINLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RFIDGTINLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RFIDSSCCLabelName\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"GenerateContainerDetail\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"FulfillQty\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionDocument\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionAccountingEntity\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionLocation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionVersion\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"RequisitionScheduleLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderDocument\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderAccountingEntity\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderLocation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderVersion\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"PurchaseOrderScheduleLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderDocument\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderAccountingEntity\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderLocation\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderVersion\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"SalesOrderScheduleLine\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"IdRequired\",\"type\":\"string\"},{\"default\":\"\",\"name\":\"BackflushIndicator\",\"type\":\"string\"}],\"name\":\"PedidoDetalle\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.EventoWhSceEventUpdate.Events.Record.EventoWhPedidoActualizacion\",\"type\":\"record\"}"
 }
 
 func (r EventoWhPedidoActualizacion) SchemaName() string {
@@ -1942,6 +2257,186 @@ func (r *EventoWhPedidoActualizacion) Get(i int) types.Field {
 		return w
 
 	case 154:
+		r.ExtUdfLkup1 = NewUnionNullString()
+
+		return r.ExtUdfLkup1
+	case 155:
+		r.ExtUdfLkup2 = NewUnionNullString()
+
+		return r.ExtUdfLkup2
+	case 156:
+		r.ExtUdfLkup3 = NewUnionNullString()
+
+		return r.ExtUdfLkup3
+	case 157:
+		r.ExtUdfLkup4 = NewUnionNullString()
+
+		return r.ExtUdfLkup4
+	case 158:
+		r.ExtUdfLkup5 = NewUnionNullString()
+
+		return r.ExtUdfLkup5
+	case 159:
+		r.ExtUdfLkup6 = NewUnionNullString()
+
+		return r.ExtUdfLkup6
+	case 160:
+		r.ExtUdfLkup7 = NewUnionNullString()
+
+		return r.ExtUdfLkup7
+	case 161:
+		r.ExtUdfLkup8 = NewUnionNullString()
+
+		return r.ExtUdfLkup8
+	case 162:
+		r.ExtUdfLkup9 = NewUnionNullString()
+
+		return r.ExtUdfLkup9
+	case 163:
+		r.ExtUdfLkup10 = NewUnionNullString()
+
+		return r.ExtUdfLkup10
+	case 164:
+		r.ExtUdfStr1 = NewUnionNullString()
+
+		return r.ExtUdfStr1
+	case 165:
+		r.ExtUdfStr2 = NewUnionNullString()
+
+		return r.ExtUdfStr2
+	case 166:
+		r.ExtUdfStr3 = NewUnionNullString()
+
+		return r.ExtUdfStr3
+	case 167:
+		r.ExtUdfStr4 = NewUnionNullString()
+
+		return r.ExtUdfStr4
+	case 168:
+		r.ExtUdfStr5 = NewUnionNullString()
+
+		return r.ExtUdfStr5
+	case 169:
+		r.ExtUdfStr6 = NewUnionNullString()
+
+		return r.ExtUdfStr6
+	case 170:
+		r.ExtUdfStr7 = NewUnionNullString()
+
+		return r.ExtUdfStr7
+	case 171:
+		r.ExtUdfStr8 = NewUnionNullString()
+
+		return r.ExtUdfStr8
+	case 172:
+		r.ExtUdfStr9 = NewUnionNullString()
+
+		return r.ExtUdfStr9
+	case 173:
+		r.ExtUdfStr10 = NewUnionNullString()
+
+		return r.ExtUdfStr10
+	case 174:
+		r.ExtUdfStr11 = NewUnionNullString()
+
+		return r.ExtUdfStr11
+	case 175:
+		r.ExtUdfStr12 = NewUnionNullString()
+
+		return r.ExtUdfStr12
+	case 176:
+		r.ExtUdfStr13 = NewUnionNullString()
+
+		return r.ExtUdfStr13
+	case 177:
+		r.ExtUdfStr14 = NewUnionNullString()
+
+		return r.ExtUdfStr14
+	case 178:
+		r.ExtUdfStr15 = NewUnionNullString()
+
+		return r.ExtUdfStr15
+	case 179:
+		r.ExtUdfStr16 = NewUnionNullString()
+
+		return r.ExtUdfStr16
+	case 180:
+		r.ExtUdfStr17 = NewUnionNullString()
+
+		return r.ExtUdfStr17
+	case 181:
+		r.ExtUdfStr18 = NewUnionNullString()
+
+		return r.ExtUdfStr18
+	case 182:
+		r.ExtUdfStr19 = NewUnionNullString()
+
+		return r.ExtUdfStr19
+	case 183:
+		r.ExtUdfStr20 = NewUnionNullString()
+
+		return r.ExtUdfStr20
+	case 184:
+		r.ExtUdfStr21 = NewUnionNullString()
+
+		return r.ExtUdfStr21
+	case 185:
+		r.ExtUdfStr22 = NewUnionNullString()
+
+		return r.ExtUdfStr22
+	case 186:
+		r.ExtUdfStr23 = NewUnionNullString()
+
+		return r.ExtUdfStr23
+	case 187:
+		r.ExtUdfStr24 = NewUnionNullString()
+
+		return r.ExtUdfStr24
+	case 188:
+		r.ExtUdfStr25 = NewUnionNullString()
+
+		return r.ExtUdfStr25
+	case 189:
+		r.ExtUdfStr26 = NewUnionNullString()
+
+		return r.ExtUdfStr26
+	case 190:
+		r.ExtUdfStr27 = NewUnionNullString()
+
+		return r.ExtUdfStr27
+	case 191:
+		r.ExtUdfStr28 = NewUnionNullString()
+
+		return r.ExtUdfStr28
+	case 192:
+		r.ExtUdfStr29 = NewUnionNullString()
+
+		return r.ExtUdfStr29
+	case 193:
+		r.ExtUdfStr30 = NewUnionNullString()
+
+		return r.ExtUdfStr30
+	case 194:
+		r.ExtUdfStr31 = NewUnionNullString()
+
+		return r.ExtUdfStr31
+	case 195:
+		r.ExtUdfStr32 = NewUnionNullString()
+
+		return r.ExtUdfStr32
+	case 196:
+		r.ExtUdfStr33 = NewUnionNullString()
+
+		return r.ExtUdfStr33
+	case 197:
+		r.ExtUdfStr34 = NewUnionNullString()
+
+		return r.ExtUdfStr34
+	case 198:
+		r.ExtUdfStr35 = NewUnionNullString()
+
+		return r.ExtUdfStr35
+	case 199:
 		r.Detalles = make([]PedidoDetalle, 0)
 
 		w := ArrayPedidoDetalleWrapper{Target: &r.Detalles}
@@ -2411,6 +2906,141 @@ func (r *EventoWhPedidoActualizacion) SetDefault(i int) {
 		r.BOLPrinted = ""
 		return
 	case 154:
+		r.ExtUdfLkup1 = nil
+		return
+	case 155:
+		r.ExtUdfLkup2 = nil
+		return
+	case 156:
+		r.ExtUdfLkup3 = nil
+		return
+	case 157:
+		r.ExtUdfLkup4 = nil
+		return
+	case 158:
+		r.ExtUdfLkup5 = nil
+		return
+	case 159:
+		r.ExtUdfLkup6 = nil
+		return
+	case 160:
+		r.ExtUdfLkup7 = nil
+		return
+	case 161:
+		r.ExtUdfLkup8 = nil
+		return
+	case 162:
+		r.ExtUdfLkup9 = nil
+		return
+	case 163:
+		r.ExtUdfLkup10 = nil
+		return
+	case 164:
+		r.ExtUdfStr1 = nil
+		return
+	case 165:
+		r.ExtUdfStr2 = nil
+		return
+	case 166:
+		r.ExtUdfStr3 = nil
+		return
+	case 167:
+		r.ExtUdfStr4 = nil
+		return
+	case 168:
+		r.ExtUdfStr5 = nil
+		return
+	case 169:
+		r.ExtUdfStr6 = nil
+		return
+	case 170:
+		r.ExtUdfStr7 = nil
+		return
+	case 171:
+		r.ExtUdfStr8 = nil
+		return
+	case 172:
+		r.ExtUdfStr9 = nil
+		return
+	case 173:
+		r.ExtUdfStr10 = nil
+		return
+	case 174:
+		r.ExtUdfStr11 = nil
+		return
+	case 175:
+		r.ExtUdfStr12 = nil
+		return
+	case 176:
+		r.ExtUdfStr13 = nil
+		return
+	case 177:
+		r.ExtUdfStr14 = nil
+		return
+	case 178:
+		r.ExtUdfStr15 = nil
+		return
+	case 179:
+		r.ExtUdfStr16 = nil
+		return
+	case 180:
+		r.ExtUdfStr17 = nil
+		return
+	case 181:
+		r.ExtUdfStr18 = nil
+		return
+	case 182:
+		r.ExtUdfStr19 = nil
+		return
+	case 183:
+		r.ExtUdfStr20 = nil
+		return
+	case 184:
+		r.ExtUdfStr21 = nil
+		return
+	case 185:
+		r.ExtUdfStr22 = nil
+		return
+	case 186:
+		r.ExtUdfStr23 = nil
+		return
+	case 187:
+		r.ExtUdfStr24 = nil
+		return
+	case 188:
+		r.ExtUdfStr25 = nil
+		return
+	case 189:
+		r.ExtUdfStr26 = nil
+		return
+	case 190:
+		r.ExtUdfStr27 = nil
+		return
+	case 191:
+		r.ExtUdfStr28 = nil
+		return
+	case 192:
+		r.ExtUdfStr29 = nil
+		return
+	case 193:
+		r.ExtUdfStr30 = nil
+		return
+	case 194:
+		r.ExtUdfStr31 = nil
+		return
+	case 195:
+		r.ExtUdfStr32 = nil
+		return
+	case 196:
+		r.ExtUdfStr33 = nil
+		return
+	case 197:
+		r.ExtUdfStr34 = nil
+		return
+	case 198:
+		r.ExtUdfStr35 = nil
+		return
+	case 199:
 		r.Detalles = make([]PedidoDetalle, 0)
 
 		return
@@ -2420,6 +3050,141 @@ func (r *EventoWhPedidoActualizacion) SetDefault(i int) {
 
 func (r *EventoWhPedidoActualizacion) NullField(i int) {
 	switch i {
+	case 154:
+		r.ExtUdfLkup1 = nil
+		return
+	case 155:
+		r.ExtUdfLkup2 = nil
+		return
+	case 156:
+		r.ExtUdfLkup3 = nil
+		return
+	case 157:
+		r.ExtUdfLkup4 = nil
+		return
+	case 158:
+		r.ExtUdfLkup5 = nil
+		return
+	case 159:
+		r.ExtUdfLkup6 = nil
+		return
+	case 160:
+		r.ExtUdfLkup7 = nil
+		return
+	case 161:
+		r.ExtUdfLkup8 = nil
+		return
+	case 162:
+		r.ExtUdfLkup9 = nil
+		return
+	case 163:
+		r.ExtUdfLkup10 = nil
+		return
+	case 164:
+		r.ExtUdfStr1 = nil
+		return
+	case 165:
+		r.ExtUdfStr2 = nil
+		return
+	case 166:
+		r.ExtUdfStr3 = nil
+		return
+	case 167:
+		r.ExtUdfStr4 = nil
+		return
+	case 168:
+		r.ExtUdfStr5 = nil
+		return
+	case 169:
+		r.ExtUdfStr6 = nil
+		return
+	case 170:
+		r.ExtUdfStr7 = nil
+		return
+	case 171:
+		r.ExtUdfStr8 = nil
+		return
+	case 172:
+		r.ExtUdfStr9 = nil
+		return
+	case 173:
+		r.ExtUdfStr10 = nil
+		return
+	case 174:
+		r.ExtUdfStr11 = nil
+		return
+	case 175:
+		r.ExtUdfStr12 = nil
+		return
+	case 176:
+		r.ExtUdfStr13 = nil
+		return
+	case 177:
+		r.ExtUdfStr14 = nil
+		return
+	case 178:
+		r.ExtUdfStr15 = nil
+		return
+	case 179:
+		r.ExtUdfStr16 = nil
+		return
+	case 180:
+		r.ExtUdfStr17 = nil
+		return
+	case 181:
+		r.ExtUdfStr18 = nil
+		return
+	case 182:
+		r.ExtUdfStr19 = nil
+		return
+	case 183:
+		r.ExtUdfStr20 = nil
+		return
+	case 184:
+		r.ExtUdfStr21 = nil
+		return
+	case 185:
+		r.ExtUdfStr22 = nil
+		return
+	case 186:
+		r.ExtUdfStr23 = nil
+		return
+	case 187:
+		r.ExtUdfStr24 = nil
+		return
+	case 188:
+		r.ExtUdfStr25 = nil
+		return
+	case 189:
+		r.ExtUdfStr26 = nil
+		return
+	case 190:
+		r.ExtUdfStr27 = nil
+		return
+	case 191:
+		r.ExtUdfStr28 = nil
+		return
+	case 192:
+		r.ExtUdfStr29 = nil
+		return
+	case 193:
+		r.ExtUdfStr30 = nil
+		return
+	case 194:
+		r.ExtUdfStr31 = nil
+		return
+	case 195:
+		r.ExtUdfStr32 = nil
+		return
+	case 196:
+		r.ExtUdfStr33 = nil
+		return
+	case 197:
+		r.ExtUdfStr34 = nil
+		return
+	case 198:
+		r.ExtUdfStr35 = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -3051,6 +3816,186 @@ func (r EventoWhPedidoActualizacion) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["BOLPrinted"], err = json.Marshal(r.BOLPrinted)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfLkup1"], err = json.Marshal(r.ExtUdfLkup1)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfLkup2"], err = json.Marshal(r.ExtUdfLkup2)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfLkup3"], err = json.Marshal(r.ExtUdfLkup3)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfLkup4"], err = json.Marshal(r.ExtUdfLkup4)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfLkup5"], err = json.Marshal(r.ExtUdfLkup5)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfLkup6"], err = json.Marshal(r.ExtUdfLkup6)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfLkup7"], err = json.Marshal(r.ExtUdfLkup7)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfLkup8"], err = json.Marshal(r.ExtUdfLkup8)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfLkup9"], err = json.Marshal(r.ExtUdfLkup9)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfLkup10"], err = json.Marshal(r.ExtUdfLkup10)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr1"], err = json.Marshal(r.ExtUdfStr1)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr2"], err = json.Marshal(r.ExtUdfStr2)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr3"], err = json.Marshal(r.ExtUdfStr3)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr4"], err = json.Marshal(r.ExtUdfStr4)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr5"], err = json.Marshal(r.ExtUdfStr5)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr6"], err = json.Marshal(r.ExtUdfStr6)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr7"], err = json.Marshal(r.ExtUdfStr7)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr8"], err = json.Marshal(r.ExtUdfStr8)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr9"], err = json.Marshal(r.ExtUdfStr9)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr10"], err = json.Marshal(r.ExtUdfStr10)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr11"], err = json.Marshal(r.ExtUdfStr11)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr12"], err = json.Marshal(r.ExtUdfStr12)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr13"], err = json.Marshal(r.ExtUdfStr13)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr14"], err = json.Marshal(r.ExtUdfStr14)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr15"], err = json.Marshal(r.ExtUdfStr15)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr16"], err = json.Marshal(r.ExtUdfStr16)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr17"], err = json.Marshal(r.ExtUdfStr17)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr18"], err = json.Marshal(r.ExtUdfStr18)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr19"], err = json.Marshal(r.ExtUdfStr19)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr20"], err = json.Marshal(r.ExtUdfStr20)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr21"], err = json.Marshal(r.ExtUdfStr21)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr22"], err = json.Marshal(r.ExtUdfStr22)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr23"], err = json.Marshal(r.ExtUdfStr23)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr24"], err = json.Marshal(r.ExtUdfStr24)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr25"], err = json.Marshal(r.ExtUdfStr25)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr26"], err = json.Marshal(r.ExtUdfStr26)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr27"], err = json.Marshal(r.ExtUdfStr27)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr28"], err = json.Marshal(r.ExtUdfStr28)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr29"], err = json.Marshal(r.ExtUdfStr29)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr30"], err = json.Marshal(r.ExtUdfStr30)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr31"], err = json.Marshal(r.ExtUdfStr31)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr32"], err = json.Marshal(r.ExtUdfStr32)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr33"], err = json.Marshal(r.ExtUdfStr33)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr34"], err = json.Marshal(r.ExtUdfStr34)
+	if err != nil {
+		return nil, err
+	}
+	output["ExtUdfStr35"], err = json.Marshal(r.ExtUdfStr35)
 	if err != nil {
 		return nil, err
 	}
@@ -5223,6 +6168,726 @@ func (r *EventoWhPedidoActualizacion) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		r.BOLPrinted = ""
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfLkup1"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfLkup1); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfLkup1 = NewUnionNullString()
+
+		r.ExtUdfLkup1 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfLkup2"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfLkup2); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfLkup2 = NewUnionNullString()
+
+		r.ExtUdfLkup2 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfLkup3"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfLkup3); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfLkup3 = NewUnionNullString()
+
+		r.ExtUdfLkup3 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfLkup4"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfLkup4); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfLkup4 = NewUnionNullString()
+
+		r.ExtUdfLkup4 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfLkup5"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfLkup5); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfLkup5 = NewUnionNullString()
+
+		r.ExtUdfLkup5 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfLkup6"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfLkup6); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfLkup6 = NewUnionNullString()
+
+		r.ExtUdfLkup6 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfLkup7"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfLkup7); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfLkup7 = NewUnionNullString()
+
+		r.ExtUdfLkup7 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfLkup8"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfLkup8); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfLkup8 = NewUnionNullString()
+
+		r.ExtUdfLkup8 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfLkup9"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfLkup9); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfLkup9 = NewUnionNullString()
+
+		r.ExtUdfLkup9 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfLkup10"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfLkup10); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfLkup10 = NewUnionNullString()
+
+		r.ExtUdfLkup10 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr1"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr1); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr1 = NewUnionNullString()
+
+		r.ExtUdfStr1 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr2"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr2); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr2 = NewUnionNullString()
+
+		r.ExtUdfStr2 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr3"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr3); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr3 = NewUnionNullString()
+
+		r.ExtUdfStr3 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr4"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr4); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr4 = NewUnionNullString()
+
+		r.ExtUdfStr4 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr5"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr5); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr5 = NewUnionNullString()
+
+		r.ExtUdfStr5 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr6"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr6); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr6 = NewUnionNullString()
+
+		r.ExtUdfStr6 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr7"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr7); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr7 = NewUnionNullString()
+
+		r.ExtUdfStr7 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr8"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr8); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr8 = NewUnionNullString()
+
+		r.ExtUdfStr8 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr9"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr9); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr9 = NewUnionNullString()
+
+		r.ExtUdfStr9 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr10"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr10); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr10 = NewUnionNullString()
+
+		r.ExtUdfStr10 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr11"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr11); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr11 = NewUnionNullString()
+
+		r.ExtUdfStr11 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr12"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr12); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr12 = NewUnionNullString()
+
+		r.ExtUdfStr12 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr13"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr13); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr13 = NewUnionNullString()
+
+		r.ExtUdfStr13 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr14"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr14); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr14 = NewUnionNullString()
+
+		r.ExtUdfStr14 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr15"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr15); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr15 = NewUnionNullString()
+
+		r.ExtUdfStr15 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr16"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr16); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr16 = NewUnionNullString()
+
+		r.ExtUdfStr16 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr17"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr17); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr17 = NewUnionNullString()
+
+		r.ExtUdfStr17 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr18"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr18); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr18 = NewUnionNullString()
+
+		r.ExtUdfStr18 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr19"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr19); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr19 = NewUnionNullString()
+
+		r.ExtUdfStr19 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr20"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr20); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr20 = NewUnionNullString()
+
+		r.ExtUdfStr20 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr21"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr21); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr21 = NewUnionNullString()
+
+		r.ExtUdfStr21 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr22"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr22); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr22 = NewUnionNullString()
+
+		r.ExtUdfStr22 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr23"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr23); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr23 = NewUnionNullString()
+
+		r.ExtUdfStr23 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr24"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr24); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr24 = NewUnionNullString()
+
+		r.ExtUdfStr24 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr25"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr25); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr25 = NewUnionNullString()
+
+		r.ExtUdfStr25 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr26"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr26); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr26 = NewUnionNullString()
+
+		r.ExtUdfStr26 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr27"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr27); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr27 = NewUnionNullString()
+
+		r.ExtUdfStr27 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr28"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr28); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr28 = NewUnionNullString()
+
+		r.ExtUdfStr28 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr29"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr29); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr29 = NewUnionNullString()
+
+		r.ExtUdfStr29 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr30"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr30); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr30 = NewUnionNullString()
+
+		r.ExtUdfStr30 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr31"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr31); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr31 = NewUnionNullString()
+
+		r.ExtUdfStr31 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr32"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr32); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr32 = NewUnionNullString()
+
+		r.ExtUdfStr32 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr33"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr33); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr33 = NewUnionNullString()
+
+		r.ExtUdfStr33 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr34"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr34); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr34 = NewUnionNullString()
+
+		r.ExtUdfStr34 = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ExtUdfStr35"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExtUdfStr35); err != nil {
+			return err
+		}
+	} else {
+		r.ExtUdfStr35 = NewUnionNullString()
+
+		r.ExtUdfStr35 = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Detalles"]; ok {
