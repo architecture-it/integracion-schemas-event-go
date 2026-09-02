@@ -55,6 +55,7 @@ func NewGenerarContenedor() GenerarContenedor {
 
 	r.SucursalDestino = NewDatosSucursal()
 
+	r.SucursalAbastecedora = nil
 	r.TipoContenedor = nil
 	r.NroPrecinto = nil
 	return r
@@ -145,7 +146,7 @@ func (r GenerarContenedor) Serialize(w io.Writer) error {
 }
 
 func (r GenerarContenedor) Schema() string {
-	return "{\"fields\":[{\"name\":\"contenedor\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":[\"null\",{\"fields\":[{\"name\":\"objetos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ListaDeObjetos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"enviosConRemitente\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"nroEnvio\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":{\"name\":\"Remitente\",\"symbols\":[\"DMS\",\"INTEGRA\"],\"type\":\"enum\"}}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"fechaProcesamiento\",\"type\":\"string\"},{\"name\":\"sistemaOrigen\",\"type\":\"string\"},{\"name\":\"sorter\",\"type\":\"string\"},{\"default\":null,\"name\":\"rampa\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalOrigen\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}},{\"name\":\"sucursalDestino\",\"type\":\"Andreani.SppSchema.Events.DatosSucursal\"},{\"name\":\"sucursalAbastecedora\",\"type\":[\"null\",\"Andreani.SppSchema.Events.DatosSucursal\"]},{\"name\":\"medioDeExpedicion\",\"type\":{\"name\":\"TiposDePruebas\",\"symbols\":[\"ALSA\",\"CASA\",\"DMS\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"TipoContenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPrecinto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppSchema.Events.GenerarContenedor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"contenedor\",\"type\":\"string\"},{\"name\":\"envios\",\"type\":[\"null\",{\"fields\":[{\"name\":\"objetos\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]}],\"name\":\"ListaDeObjetos\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"enviosConRemitente\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"nroEnvio\",\"type\":\"string\"},{\"name\":\"remitente\",\"type\":{\"name\":\"Remitente\",\"symbols\":[\"DMS\",\"INTEGRA\"],\"type\":\"enum\"}}],\"name\":\"Envio\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"fechaProcesamiento\",\"type\":\"string\"},{\"name\":\"sistemaOrigen\",\"type\":\"string\"},{\"name\":\"sorter\",\"type\":\"string\"},{\"default\":null,\"name\":\"rampa\",\"type\":[\"null\",\"string\"]},{\"name\":\"sucursalOrigen\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombre\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}},{\"name\":\"sucursalDestino\",\"type\":\"Andreani.SppSchema.Events.DatosSucursal\"},{\"default\":null,\"name\":\"sucursalAbastecedora\",\"type\":[\"null\",\"Andreani.SppSchema.Events.DatosSucursal\"]},{\"name\":\"medioDeExpedicion\",\"type\":{\"name\":\"TiposDePruebas\",\"symbols\":[\"ALSA\",\"CASA\",\"DMS\"],\"type\":\"enum\"}},{\"default\":null,\"name\":\"TipoContenedor\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroPrecinto\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.SppSchema.Events.GenerarContenedor\",\"type\":\"record\"}"
 }
 
 func (r GenerarContenedor) SchemaName() string {
@@ -237,6 +238,9 @@ func (r *GenerarContenedor) SetDefault(i int) {
 		return
 	case 6:
 		r.Rampa = nil
+		return
+	case 9:
+		r.SucursalAbastecedora = nil
 		return
 	case 11:
 		r.TipoContenedor = nil
@@ -488,7 +492,9 @@ func (r *GenerarContenedor) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for sucursalAbastecedora")
+		r.SucursalAbastecedora = NewUnionNullDatosSucursal()
+
+		r.SucursalAbastecedora = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["medioDeExpedicion"]; ok {
