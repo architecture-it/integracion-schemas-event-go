@@ -33,6 +33,11 @@ const MessageAvroCRC64Fingerprint = "-2\xdbjA&B\""
 
 func NewMessage() Message {
 	r := Message{}
+	r.Role = nil
+	r.Content = nil
+	r.Intention = nil
+	r.Emotion = nil
+	r.Urgency = nil
 	return r
 }
 
@@ -89,7 +94,7 @@ func (r Message) Serialize(w io.Writer) error {
 }
 
 func (r Message) Schema() string {
-	return "{\"fields\":[{\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.Message\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"role\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"content\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"intention\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"emotion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"urgency\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.Message\",\"type\":\"record\"}"
 }
 
 func (r Message) SchemaName() string {
@@ -133,6 +138,21 @@ func (r *Message) Get(i int) types.Field {
 
 func (r *Message) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Role = nil
+		return
+	case 1:
+		r.Content = nil
+		return
+	case 2:
+		r.Intention = nil
+		return
+	case 3:
+		r.Emotion = nil
+		return
+	case 4:
+		r.Urgency = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -212,7 +232,9 @@ func (r *Message) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for role")
+		r.Role = NewUnionNullString()
+
+		r.Role = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["content"]; ok {
@@ -226,7 +248,9 @@ func (r *Message) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for content")
+		r.Content = NewUnionNullString()
+
+		r.Content = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["intention"]; ok {
@@ -240,7 +264,9 @@ func (r *Message) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for intention")
+		r.Intention = NewUnionNullString()
+
+		r.Intention = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["emotion"]; ok {
@@ -254,7 +280,9 @@ func (r *Message) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for emotion")
+		r.Emotion = NewUnionNullString()
+
+		r.Emotion = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["urgency"]; ok {
@@ -268,7 +296,9 @@ func (r *Message) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for urgency")
+		r.Urgency = NewUnionNullString()
+
+		r.Urgency = nil
 	}
 	return nil
 }

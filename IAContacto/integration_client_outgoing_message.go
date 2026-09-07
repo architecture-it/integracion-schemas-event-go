@@ -87,7 +87,7 @@ func (r IntegrationClientOutgoingMessage) Serialize(w io.Writer) error {
 }
 
 func (r IntegrationClientOutgoingMessage) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"assistantResponse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"incidentsCreated\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.IntegrationClientOutgoingMessage\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"receivedTimestamp\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"assistantResponse\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"incidentsCreated\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"AsuntoDelCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroCaso\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]}],\"name\":\"CasoInfo\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"requestId\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.IAContacto.Events.Record.IntegrationClientOutgoingMessage\",\"type\":\"record\"}"
 }
 
 func (r IntegrationClientOutgoingMessage) SchemaName() string {
