@@ -49,9 +49,11 @@ type PedidoPendiente struct {
 	FacturaInterna *UnionNullString `json:"FacturaInterna"`
 
 	FacturaLegal *UnionNullString `json:"FacturaLegal"`
+
+	Remito *UnionNullString `json:"Remito"`
 }
 
-const PedidoPendienteAvroCRC64Fingerprint = "\xb5F\x97\xdaP\x96[\xa7"
+const PedidoPendienteAvroCRC64Fingerprint = "\xdb\xdb\xee\xd9\x1d\xc1OR"
 
 func NewPedidoPendiente() PedidoPendiente {
 	r := PedidoPendiente{}
@@ -69,6 +71,7 @@ func NewPedidoPendiente() PedidoPendiente {
 	r.ContratoServicioAlmacenes = nil
 	r.FacturaInterna = nil
 	r.FacturaLegal = nil
+	r.Remito = nil
 	return r
 }
 
@@ -161,6 +164,10 @@ func writePedidoPendiente(r PedidoPendiente, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Remito, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -169,7 +176,7 @@ func (r PedidoPendiente) Serialize(w io.Writer) error {
 }
 
 func (r PedidoPendiente) Schema() string {
-	return "{\"fields\":[{\"name\":\"FechaConsumo\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"ContratoTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrdenWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrdenCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LinkImpresionEtiquetaPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LinkImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoServicioAlmacenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaLegal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AcomYpfFacturacion.Events.Record.PedidoPendiente\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"FechaConsumo\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaHoraGeneracion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"ContratoTMS\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"IdExterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrdenWH\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"OrdenCliente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoDestinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Propietario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LinkImpresionEtiquetaPedido\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LinkImpresionRemito\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Mail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NumeroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"ContratoServicioAlmacenes\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"FacturaLegal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remito\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.AcomYpfFacturacion.Events.Record.PedidoPendiente\",\"type\":\"record\"}"
 }
 
 func (r PedidoPendiente) SchemaName() string {
@@ -253,6 +260,10 @@ func (r *PedidoPendiente) Get(i int) types.Field {
 		r.FacturaLegal = NewUnionNullString()
 
 		return r.FacturaLegal
+	case 16:
+		r.Remito = NewUnionNullString()
+
+		return r.Remito
 	}
 	panic("Unknown field index")
 }
@@ -301,6 +312,9 @@ func (r *PedidoPendiente) SetDefault(i int) {
 	case 15:
 		r.FacturaLegal = nil
 		return
+	case 16:
+		r.Remito = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -348,6 +362,9 @@ func (r *PedidoPendiente) NullField(i int) {
 		return
 	case 15:
 		r.FacturaLegal = nil
+		return
+	case 16:
+		r.Remito = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -426,6 +443,10 @@ func (r PedidoPendiente) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["FacturaLegal"], err = json.Marshal(r.FacturaLegal)
+	if err != nil {
+		return nil, err
+	}
+	output["Remito"], err = json.Marshal(r.Remito)
 	if err != nil {
 		return nil, err
 	}
@@ -690,6 +711,22 @@ func (r *PedidoPendiente) UnmarshalJSON(data []byte) error {
 		r.FacturaLegal = NewUnionNullString()
 
 		r.FacturaLegal = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Remito"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Remito); err != nil {
+			return err
+		}
+	} else {
+		r.Remito = NewUnionNullString()
+
+		r.Remito = nil
 	}
 	return nil
 }
