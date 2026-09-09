@@ -51,9 +51,11 @@ type ApDescuentoActualizacionEvent struct {
 	CantidadCpsOrigen int32 `json:"CantidadCpsOrigen"`
 
 	CantidadCpsDestino int32 `json:"CantidadCpsDestino"`
+
+	IdSucursalOrigen *UnionNullInt `json:"IdSucursalOrigen"`
 }
 
-const ApDescuentoActualizacionEventAvroCRC64Fingerprint = "\x85\x84Kݡ\x06\xb0\xb0"
+const ApDescuentoActualizacionEventAvroCRC64Fingerprint = "\xf7f\n\x86\t\xbaI\xef"
 
 func NewApDescuentoActualizacionEvent() ApDescuentoActualizacionEvent {
 	r := ApDescuentoActualizacionEvent{}
@@ -61,6 +63,7 @@ func NewApDescuentoActualizacionEvent() ApDescuentoActualizacionEvent {
 	r.FechaFin = nil
 	r.CantidadCpsOrigen = 0
 	r.CantidadCpsDestino = 0
+	r.IdSucursalOrigen = nil
 	return r
 }
 
@@ -157,6 +160,10 @@ func writeApDescuentoActualizacionEvent(r ApDescuentoActualizacionEvent, w io.Wr
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullInt(r.IdSucursalOrigen, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -165,7 +172,7 @@ func (r ApDescuentoActualizacionEvent) Serialize(w io.Writer) error {
 }
 
 func (r ApDescuentoActualizacionEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdDescuento\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"TipoEvento\",\"type\":\"string\"},{\"name\":\"TipoDescuento\",\"type\":\"string\"},{\"name\":\"Porcentaje\",\"type\":\"int\"},{\"default\":null,\"name\":\"FechaInicio\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaFin\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Activo\",\"type\":\"boolean\"},{\"name\":\"AplicaATodosLosServicios\",\"type\":\"boolean\"},{\"name\":\"CantidadServiciosAsociados\",\"type\":\"int\"},{\"name\":\"AplicaATodosLosClientes\",\"type\":\"boolean\"},{\"name\":\"CantidadClientesAsociados\",\"type\":\"int\"},{\"name\":\"CantidadAudienciasAsociadas\",\"type\":\"int\"},{\"name\":\"FechaAuditoria\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"UsuarioAuditoria\",\"type\":\"string\"},{\"default\":0,\"name\":\"CantidadCpsOrigen\",\"type\":\"int\"},{\"default\":0,\"name\":\"CantidadCpsDestino\",\"type\":\"int\"}],\"name\":\"Andreani.Marketing.Events.Record.ApDescuentoActualizacionEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdDescuento\",\"type\":\"int\"},{\"name\":\"Nombre\",\"type\":\"string\"},{\"name\":\"TipoEvento\",\"type\":\"string\"},{\"name\":\"TipoDescuento\",\"type\":\"string\"},{\"name\":\"Porcentaje\",\"type\":\"int\"},{\"default\":null,\"name\":\"FechaInicio\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"FechaFin\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"name\":\"Activo\",\"type\":\"boolean\"},{\"name\":\"AplicaATodosLosServicios\",\"type\":\"boolean\"},{\"name\":\"CantidadServiciosAsociados\",\"type\":\"int\"},{\"name\":\"AplicaATodosLosClientes\",\"type\":\"boolean\"},{\"name\":\"CantidadClientesAsociados\",\"type\":\"int\"},{\"name\":\"CantidadAudienciasAsociadas\",\"type\":\"int\"},{\"name\":\"FechaAuditoria\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"UsuarioAuditoria\",\"type\":\"string\"},{\"default\":0,\"name\":\"CantidadCpsOrigen\",\"type\":\"int\"},{\"default\":0,\"name\":\"CantidadCpsDestino\",\"type\":\"int\"},{\"default\":null,\"name\":\"IdSucursalOrigen\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.Marketing.Events.Record.ApDescuentoActualizacionEvent\",\"type\":\"record\"}"
 }
 
 func (r ApDescuentoActualizacionEvent) SchemaName() string {
@@ -266,6 +273,10 @@ func (r *ApDescuentoActualizacionEvent) Get(i int) types.Field {
 
 		return w
 
+	case 17:
+		r.IdSucursalOrigen = NewUnionNullInt()
+
+		return r.IdSucursalOrigen
 	}
 	panic("Unknown field index")
 }
@@ -284,6 +295,9 @@ func (r *ApDescuentoActualizacionEvent) SetDefault(i int) {
 	case 16:
 		r.CantidadCpsDestino = 0
 		return
+	case 17:
+		r.IdSucursalOrigen = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -295,6 +309,9 @@ func (r *ApDescuentoActualizacionEvent) NullField(i int) {
 		return
 	case 6:
 		r.FechaFin = nil
+		return
+	case 17:
+		r.IdSucursalOrigen = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -379,6 +396,10 @@ func (r ApDescuentoActualizacionEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["CantidadCpsDestino"], err = json.Marshal(r.CantidadCpsDestino)
+	if err != nil {
+		return nil, err
+	}
+	output["IdSucursalOrigen"], err = json.Marshal(r.IdSucursalOrigen)
 	if err != nil {
 		return nil, err
 	}
@@ -633,6 +654,22 @@ func (r *ApDescuentoActualizacionEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		r.CantidadCpsDestino = 0
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["IdSucursalOrigen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.IdSucursalOrigen); err != nil {
+			return err
+		}
+	} else {
+		r.IdSucursalOrigen = NewUnionNullInt()
+
+		r.IdSucursalOrigen = nil
 	}
 	return nil
 }
