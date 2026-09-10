@@ -34,16 +34,19 @@ type TrazaContendor struct {
 
 	Prefijo *UnionNullString `json:"prefijo"`
 
+	TipoIntegra *UnionNullString `json:"tipoIntegra"`
+
 	SucursalAsociadaAlEvento *UnionNullDatosSucursal `json:"sucursalAsociadaAlEvento"`
 }
 
-const TrazaContendorAvroCRC64Fingerprint = "\x1a}\x9cIŠ\\\xa1"
+const TrazaContendorAvroCRC64Fingerprint = "\x8a\bѱ\x13\x15_G"
 
 func NewTrazaContendor() TrazaContendor {
 	r := TrazaContendor{}
 	r.Operador = nil
 	r.Comentario = nil
 	r.Prefijo = nil
+	r.TipoIntegra = nil
 	r.SucursalAsociadaAlEvento = nil
 	return r
 }
@@ -105,6 +108,10 @@ func writeTrazaContendor(r TrazaContendor, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.TipoIntegra, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullDatosSucursal(r.SucursalAsociadaAlEvento, w)
 	if err != nil {
 		return err
@@ -117,7 +124,7 @@ func (r TrazaContendor) Serialize(w io.Writer) error {
 }
 
 func (r TrazaContendor) Schema() string {
-	return "{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Referencias.TrazaContendor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Referencias.TrazaContendor\",\"type\":\"record\"}"
 }
 
 func (r TrazaContendor) SchemaName() string {
@@ -173,6 +180,10 @@ func (r *TrazaContendor) Get(i int) types.Field {
 
 		return r.Prefijo
 	case 8:
+		r.TipoIntegra = NewUnionNullString()
+
+		return r.TipoIntegra
+	case 9:
 		r.SucursalAsociadaAlEvento = NewUnionNullDatosSucursal()
 
 		return r.SucursalAsociadaAlEvento
@@ -192,6 +203,9 @@ func (r *TrazaContendor) SetDefault(i int) {
 		r.Prefijo = nil
 		return
 	case 8:
+		r.TipoIntegra = nil
+		return
+	case 9:
 		r.SucursalAsociadaAlEvento = nil
 		return
 	}
@@ -210,6 +224,9 @@ func (r *TrazaContendor) NullField(i int) {
 		r.Prefijo = nil
 		return
 	case 8:
+		r.TipoIntegra = nil
+		return
+	case 9:
 		r.SucursalAsociadaAlEvento = nil
 		return
 	}
@@ -257,6 +274,10 @@ func (r TrazaContendor) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["prefijo"], err = json.Marshal(r.Prefijo)
+	if err != nil {
+		return nil, err
+	}
+	output["tipoIntegra"], err = json.Marshal(r.TipoIntegra)
 	if err != nil {
 		return nil, err
 	}
@@ -391,6 +412,22 @@ func (r *TrazaContendor) UnmarshalJSON(data []byte) error {
 		r.Prefijo = NewUnionNullString()
 
 		r.Prefijo = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["tipoIntegra"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoIntegra); err != nil {
+			return err
+		}
+	} else {
+		r.TipoIntegra = NewUnionNullString()
+
+		r.TipoIntegra = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["sucursalAsociadaAlEvento"]; ok {
