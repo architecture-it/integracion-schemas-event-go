@@ -22,6 +22,8 @@ type McpConfigEvent struct {
 	EventType CatalogEventType `json:"eventType"`
 	// mcpEnvironment.genaiKey
 	GenaiKey string `json:"genaiKey"`
+	// Branding.Name
+	Name *UnionNullString `json:"name"`
 	// mcpEnvironment.id
 	McpEnvironmentId int64 `json:"mcpEnvironmentId"`
 	// mcpEnvironment.mcpId -> MCP.id. Message key.
@@ -54,11 +56,12 @@ type McpConfigEvent struct {
 	Audit AuditRef `json:"audit"`
 }
 
-const McpConfigEventAvroCRC64Fingerprint = "\xf1\xa6\xdbd\x9a\xec\\B"
+const McpConfigEventAvroCRC64Fingerprint = "w\xdf\xe9\a\x96\xfay\x8f"
 
 func NewMcpConfigEvent() McpConfigEvent {
 	r := McpConfigEvent{}
 	r.EventType = CatalogEventTypeCREATED
+	r.Name = nil
 	r.ResourceKind = "genai-mcp"
 	r.ResourceId = 0
 	r.ConnectionUrl = nil
@@ -106,6 +109,10 @@ func writeMcpConfigEvent(r McpConfigEvent, w io.Writer) error {
 		return err
 	}
 	err = vm.WriteString(r.GenaiKey, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Name, w)
 	if err != nil {
 		return err
 	}
@@ -177,7 +184,7 @@ func (r McpConfigEvent) Serialize(w io.Writer) error {
 }
 
 func (r McpConfigEvent) Schema() string {
-	return "{\"doc\":\"An MCP environment requires downstream provisioning. Emitted from [dbo_genai].[mcpEnvironment] joined to MCP/Application/Project/Environment. Message key = mcpId. Idempotency key and LiteLLM key_alias = genaiKey. No tier/model/provider: an MCP exposes tools, it does not consume a model.\",\"fields\":[{\"default\":\"CREATED\",\"name\":\"eventType\",\"type\":{\"doc\":\"Mirrors the numeric EEventType convention already parsed by the InfraOps subscriber (Created=1, Updated=2, Deleted=3). Duplicated in the payload so the event survives header loss on republish.\",\"name\":\"CatalogEventType\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}},{\"doc\":\"mcpEnvironment.genaiKey\",\"name\":\"genaiKey\",\"type\":\"string\"},{\"doc\":\"mcpEnvironment.id\",\"name\":\"mcpEnvironmentId\",\"type\":\"long\"},{\"doc\":\"mcpEnvironment.mcpId -\\u003e MCP.id. Message key.\",\"name\":\"mcpId\",\"type\":\"long\"},{\"doc\":\"MCP.code\",\"name\":\"mcpCode\",\"type\":\"string\"},{\"doc\":\"MCP.isPrivate\",\"name\":\"isPrivate\",\"type\":\"boolean\"},{\"doc\":\"MCP.isDeprecated - mcpEnvironment carries no lifecycle flags of its own.\",\"name\":\"isDeprecated\",\"type\":\"boolean\"},{\"default\":\"genai-mcp\",\"doc\":\"Resource catalog discriminator for InfraOps.\",\"name\":\"resourceKind\",\"type\":\"string\"},{\"default\":0,\"doc\":\"mcpEnvironment.resourceId. NOT NULL: 0 means no InfraOps resource assigned yet.\",\"name\":\"resourceId\",\"type\":\"long\"},{\"default\":null,\"doc\":\"mcpEnvironment.connectionUrl\",\"name\":\"connectionUrl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"mcpEnvironment.hostUrl\",\"name\":\"hostUrl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"mcpEnvironment.transport - e.g. 'http', 'sse', 'stdio'\",\"name\":\"transport\",\"type\":[\"null\",\"string\"]},{\"default\":0,\"doc\":\"Count of non-deleted [dbo_genai].[MCPTool] rows for this environment. The mcpEnvironment.authorizationJson column is deliberately NOT published - it can hold credentials.\",\"name\":\"toolsCount\",\"type\":\"int\"},{\"name\":\"project\",\"type\":{\"doc\":\"Source: [dbo_genai].[Project].\",\"fields\":[{\"doc\":\"Project.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Project.name\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Project.acronym\",\"name\":\"acronym\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.ownerMail\",\"name\":\"ownerMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.productId - FK to dbo.Product in the Wizard schema.\",\"name\":\"productId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ProjectRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"application\",\"type\":{\"doc\":\"Source: [dbo_genai].[Application]. Since v1.23.4 this table mirrors the Wizard application (it gained templateId, pipelineId, statusId, isMigration, jsonData), so its id is expected to match [dbo].[Application].id - CONFIRM WITH DATA before relying on it. Until confirmed, consumers should still resolve the Wizard application by 'name'.\",\"fields\":[{\"doc\":\"Application.id. Desde v1.23.4 [dbo_genai].[Application] replica la del Wizard (templateId, pipelineId, statusId, isMigration, jsonData), por lo que este id deberia coincidir con [dbo].[Application].id - pendiente de confirmar con datos.\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Application.name - the resolution key towards the Wizard application\",\"name\":\"name\",\"type\":\"string\"},{\"doc\":\"Application.ownerMail\",\"name\":\"ownerMail\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Reserved. Populate once GenAI stores the Wizard application id; null means the consumer must resolve by name.\",\"name\":\"wizardApplicationId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ApplicationRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"environment\",\"type\":{\"doc\":\"Source: [dbo_genai].[Environment]. Seeded values: 1=Development, 2=Test, 3=QA, 4=Production, 5=unknown-environment. Consumers must match InfraOps by NAME ([dbo_infraops].[EnvironmentType].name), never by id - the two id spaces are unrelated.\",\"fields\":[{\"doc\":\"Environment.id (GenAI-local)\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Environment.name\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"EnvironmentRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"doc\":\"Audit of the parent MCP: mcpEnvironment carries no audit columns.\",\"name\":\"audit\",\"type\":{\"doc\":\"Audit columns of the source configuration row. Timestamps are ISO 8601 UTC strings.\",\"fields\":[{\"doc\":\"ISO 8601 UTC\",\"name\":\"createdAt\",\"type\":\"string\"},{\"name\":\"createdBy\",\"type\":\"string\"},{\"default\":null,\"doc\":\"ISO 8601 UTC\",\"name\":\"updatedAt\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"updatedBy\",\"type\":[\"null\",\"string\"]}],\"name\":\"AuditRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.GenAiCatalog.Events.Record.McpConfigEvent\",\"type\":\"record\"}"
+	return "{\"doc\":\"An MCP environment requires downstream provisioning. Emitted from [dbo_genai].[mcpEnvironment] joined to MCP/Application/Project/Environment. Message key = mcpId. Idempotency key and LiteLLM key_alias = genaiKey. No tier/model/provider: an MCP exposes tools, it does not consume a model.\",\"fields\":[{\"default\":\"CREATED\",\"name\":\"eventType\",\"type\":{\"doc\":\"Mirrors the numeric EEventType convention already parsed by the InfraOps subscriber (Created=1, Updated=2, Deleted=3). Duplicated in the payload so the event survives header loss on republish.\",\"name\":\"CatalogEventType\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}},{\"doc\":\"mcpEnvironment.genaiKey\",\"name\":\"genaiKey\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Branding.Name\",\"name\":\"name\",\"type\":[\"null\",\"string\"]},{\"doc\":\"mcpEnvironment.id\",\"name\":\"mcpEnvironmentId\",\"type\":\"long\"},{\"doc\":\"mcpEnvironment.mcpId -\\u003e MCP.id. Message key.\",\"name\":\"mcpId\",\"type\":\"long\"},{\"doc\":\"MCP.code\",\"name\":\"mcpCode\",\"type\":\"string\"},{\"doc\":\"MCP.isPrivate\",\"name\":\"isPrivate\",\"type\":\"boolean\"},{\"doc\":\"MCP.isDeprecated - mcpEnvironment carries no lifecycle flags of its own.\",\"name\":\"isDeprecated\",\"type\":\"boolean\"},{\"default\":\"genai-mcp\",\"doc\":\"Resource catalog discriminator for InfraOps.\",\"name\":\"resourceKind\",\"type\":\"string\"},{\"default\":0,\"doc\":\"mcpEnvironment.resourceId. NOT NULL: 0 means no InfraOps resource assigned yet.\",\"name\":\"resourceId\",\"type\":\"long\"},{\"default\":null,\"doc\":\"mcpEnvironment.connectionUrl\",\"name\":\"connectionUrl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"mcpEnvironment.hostUrl\",\"name\":\"hostUrl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"mcpEnvironment.transport - e.g. 'http', 'sse', 'stdio'\",\"name\":\"transport\",\"type\":[\"null\",\"string\"]},{\"default\":0,\"doc\":\"Count of non-deleted [dbo_genai].[MCPTool] rows for this environment. The mcpEnvironment.authorizationJson column is deliberately NOT published - it can hold credentials.\",\"name\":\"toolsCount\",\"type\":\"int\"},{\"name\":\"project\",\"type\":{\"doc\":\"Source: [dbo_genai].[Project].\",\"fields\":[{\"doc\":\"Project.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Project.name\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Project.acronym\",\"name\":\"acronym\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.ownerMail\",\"name\":\"ownerMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.productId - FK to dbo.Product in the Wizard schema.\",\"name\":\"productId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ProjectRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"application\",\"type\":{\"doc\":\"Source: [dbo_genai].[Application]. Since v1.23.4 this table mirrors the Wizard application (it gained templateId, pipelineId, statusId, isMigration, jsonData), so its id is expected to match [dbo].[Application].id - CONFIRM WITH DATA before relying on it. Until confirmed, consumers should still resolve the Wizard application by 'name'.\",\"fields\":[{\"doc\":\"Application.id. Desde v1.23.4 [dbo_genai].[Application] replica la del Wizard (templateId, pipelineId, statusId, isMigration, jsonData), por lo que este id deberia coincidir con [dbo].[Application].id - pendiente de confirmar con datos.\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Application.name - the resolution key towards the Wizard application\",\"name\":\"name\",\"type\":\"string\"},{\"doc\":\"Application.ownerMail\",\"name\":\"ownerMail\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Reserved. Populate once GenAI stores the Wizard application id; null means the consumer must resolve by name.\",\"name\":\"wizardApplicationId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ApplicationRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"environment\",\"type\":{\"doc\":\"Source: [dbo_genai].[Environment]. Seeded values: 1=Development, 2=Test, 3=QA, 4=Production, 5=unknown-environment. Consumers must match InfraOps by NAME ([dbo_infraops].[EnvironmentType].name), never by id - the two id spaces are unrelated.\",\"fields\":[{\"doc\":\"Environment.id (GenAI-local)\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Environment.name\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"EnvironmentRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"doc\":\"Audit of the parent MCP: mcpEnvironment carries no audit columns.\",\"name\":\"audit\",\"type\":{\"doc\":\"Audit columns of the source configuration row. Timestamps are ISO 8601 UTC strings.\",\"fields\":[{\"doc\":\"ISO 8601 UTC\",\"name\":\"createdAt\",\"type\":\"string\"},{\"name\":\"createdBy\",\"type\":\"string\"},{\"default\":null,\"doc\":\"ISO 8601 UTC\",\"name\":\"updatedAt\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"updatedBy\",\"type\":[\"null\",\"string\"]}],\"name\":\"AuditRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.GenAiCatalog.Events.Record.McpConfigEvent\",\"type\":\"record\"}"
 }
 
 func (r McpConfigEvent) SchemaName() string {
@@ -206,79 +213,83 @@ func (r *McpConfigEvent) Get(i int) types.Field {
 		return w
 
 	case 2:
+		r.Name = NewUnionNullString()
+
+		return r.Name
+	case 3:
 		w := types.Long{Target: &r.McpEnvironmentId}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.Long{Target: &r.McpId}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.McpCode}
 
 		return w
 
-	case 5:
+	case 6:
 		w := types.Boolean{Target: &r.IsPrivate}
 
 		return w
 
-	case 6:
+	case 7:
 		w := types.Boolean{Target: &r.IsDeprecated}
 
 		return w
 
-	case 7:
+	case 8:
 		w := types.String{Target: &r.ResourceKind}
 
 		return w
 
-	case 8:
+	case 9:
 		w := types.Long{Target: &r.ResourceId}
 
 		return w
 
-	case 9:
+	case 10:
 		r.ConnectionUrl = NewUnionNullString()
 
 		return r.ConnectionUrl
-	case 10:
+	case 11:
 		r.HostUrl = NewUnionNullString()
 
 		return r.HostUrl
-	case 11:
+	case 12:
 		r.Transport = NewUnionNullString()
 
 		return r.Transport
-	case 12:
+	case 13:
 		w := types.Int{Target: &r.ToolsCount}
 
 		return w
 
-	case 13:
+	case 14:
 		r.Project = NewProjectRef()
 
 		w := types.Record{Target: &r.Project}
 
 		return w
 
-	case 14:
+	case 15:
 		r.Application = NewApplicationRef()
 
 		w := types.Record{Target: &r.Application}
 
 		return w
 
-	case 15:
+	case 16:
 		r.Environment = NewEnvironmentRef()
 
 		w := types.Record{Target: &r.Environment}
 
 		return w
 
-	case 16:
+	case 17:
 		r.Audit = NewAuditRef()
 
 		w := types.Record{Target: &r.Audit}
@@ -294,22 +305,25 @@ func (r *McpConfigEvent) SetDefault(i int) {
 	case 0:
 		r.EventType = CatalogEventTypeCREATED
 		return
-	case 7:
-		r.ResourceKind = "genai-mcp"
+	case 2:
+		r.Name = nil
 		return
 	case 8:
-		r.ResourceId = 0
+		r.ResourceKind = "genai-mcp"
 		return
 	case 9:
-		r.ConnectionUrl = nil
+		r.ResourceId = 0
 		return
 	case 10:
-		r.HostUrl = nil
+		r.ConnectionUrl = nil
 		return
 	case 11:
-		r.Transport = nil
+		r.HostUrl = nil
 		return
 	case 12:
+		r.Transport = nil
+		return
+	case 13:
 		r.ToolsCount = 0
 		return
 	}
@@ -318,13 +332,16 @@ func (r *McpConfigEvent) SetDefault(i int) {
 
 func (r *McpConfigEvent) NullField(i int) {
 	switch i {
-	case 9:
-		r.ConnectionUrl = nil
+	case 2:
+		r.Name = nil
 		return
 	case 10:
-		r.HostUrl = nil
+		r.ConnectionUrl = nil
 		return
 	case 11:
+		r.HostUrl = nil
+		return
+	case 12:
 		r.Transport = nil
 		return
 	}
@@ -348,6 +365,10 @@ func (r McpConfigEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["genaiKey"], err = json.Marshal(r.GenaiKey)
+	if err != nil {
+		return nil, err
+	}
+	output["name"], err = json.Marshal(r.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -448,6 +469,22 @@ func (r *McpConfigEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for genaiKey")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["name"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Name); err != nil {
+			return err
+		}
+	} else {
+		r.Name = NewUnionNullString()
+
+		r.Name = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["mcpEnvironmentId"]; ok {

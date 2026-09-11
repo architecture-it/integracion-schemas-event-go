@@ -22,6 +22,8 @@ type AgentConfigEvent struct {
 	EventType CatalogEventType `json:"eventType"`
 	// AgentEvironment.genaiKey (uniqueidentifier, UNIQUE) - cross-context correlation id, ResourceRequest.externalRef and LiteLLM key_alias. Stable across config versions.
 	GenaiKey string `json:"genaiKey"`
+	// Branding.Name
+	Name *UnionNullString `json:"name"`
 	// AgentEvironment.id
 	AgentEnvironmentId int64 `json:"agentEnvironmentId"`
 	// AgentEvironment.agentId -> AgentIA.id. Message key.
@@ -64,11 +66,12 @@ type AgentConfigEvent struct {
 	Audit AuditRef `json:"audit"`
 }
 
-const AgentConfigEventAvroCRC64Fingerprint = "@\x93N\xe8y\bs\xd2"
+const AgentConfigEventAvroCRC64Fingerprint = "\xb1J\xe79\x8e\xaaM5"
 
 func NewAgentConfigEvent() AgentConfigEvent {
 	r := AgentConfigEvent{}
 	r.EventType = CatalogEventTypeCREATED
+	r.Name = nil
 	r.ResourceKind = "genai-agent"
 	r.ResourceId = 0
 	r.ConnectionUrl = nil
@@ -119,6 +122,10 @@ func writeAgentConfigEvent(r AgentConfigEvent, w io.Writer) error {
 		return err
 	}
 	err = vm.WriteString(r.GenaiKey, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.Name, w)
 	if err != nil {
 		return err
 	}
@@ -210,7 +217,7 @@ func (r AgentConfigEvent) Serialize(w io.Writer) error {
 }
 
 func (r AgentConfigEvent) Schema() string {
-	return "{\"doc\":\"An agent environment requires downstream provisioning. Emitted from [dbo_genai].[AgentEvironment] joined to AgentIA/Application/Project/Environment and to its current AgentConfig (isLatest). Message key = agentId. Idempotency key and LiteLLM key_alias = genaiKey.\",\"fields\":[{\"default\":\"CREATED\",\"name\":\"eventType\",\"type\":{\"doc\":\"Mirrors the numeric EEventType convention already parsed by the InfraOps subscriber (Created=1, Updated=2, Deleted=3). Duplicated in the payload so the event survives header loss on republish.\",\"name\":\"CatalogEventType\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}},{\"doc\":\"AgentEvironment.genaiKey (uniqueidentifier, UNIQUE) - cross-context correlation id, ResourceRequest.externalRef and LiteLLM key_alias. Stable across config versions.\",\"name\":\"genaiKey\",\"type\":\"string\"},{\"doc\":\"AgentEvironment.id\",\"name\":\"agentEnvironmentId\",\"type\":\"long\"},{\"doc\":\"AgentEvironment.agentId -\\u003e AgentIA.id. Message key.\",\"name\":\"agentId\",\"type\":\"long\"},{\"doc\":\"AgentIA.code\",\"name\":\"agentCode\",\"type\":\"string\"},{\"doc\":\"AgentConfig.id of the current version (isLatest = 1)\",\"name\":\"configId\",\"type\":\"long\"},{\"doc\":\"AgentConfig.version\",\"name\":\"version\",\"type\":\"string\"},{\"doc\":\"AgentConfig.isLatest\",\"name\":\"isLatest\",\"type\":\"boolean\"},{\"doc\":\"AgentConfig.isActive - false until the gateway registration completes\",\"name\":\"isActive\",\"type\":\"boolean\"},{\"doc\":\"AgentConfig.isDeprecated\",\"name\":\"isDeprecated\",\"type\":\"boolean\"},{\"doc\":\"AgentIA.isPrivate\",\"name\":\"isPrivate\",\"type\":\"boolean\"},{\"default\":\"genai-agent\",\"doc\":\"Resource catalog discriminator for InfraOps; must match a ResourceFlavor.code.\",\"name\":\"resourceKind\",\"type\":\"string\"},{\"default\":0,\"doc\":\"AgentEvironment.resourceId. NOT NULL in the database: 0 is the sentinel for 'no InfraOps resource assigned yet', and is also the publisher's polling predicate.\",\"name\":\"resourceId\",\"type\":\"long\"},{\"default\":null,\"doc\":\"AgentEvironment.connectionUrl - the agent's own endpoint, when it exposes one\",\"name\":\"connectionUrl\",\"type\":[\"null\",\"string\"]},{\"doc\":\"AgentConfig.exposeViaA2A\",\"name\":\"exposeViaA2A\",\"type\":\"boolean\"},{\"name\":\"project\",\"type\":{\"doc\":\"Source: [dbo_genai].[Project].\",\"fields\":[{\"doc\":\"Project.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Project.name\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Project.acronym\",\"name\":\"acronym\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.ownerMail\",\"name\":\"ownerMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.productId - FK to dbo.Product in the Wizard schema.\",\"name\":\"productId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ProjectRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"application\",\"type\":{\"doc\":\"Source: [dbo_genai].[Application]. Since v1.23.4 this table mirrors the Wizard application (it gained templateId, pipelineId, statusId, isMigration, jsonData), so its id is expected to match [dbo].[Application].id - CONFIRM WITH DATA before relying on it. Until confirmed, consumers should still resolve the Wizard application by 'name'.\",\"fields\":[{\"doc\":\"Application.id. Desde v1.23.4 [dbo_genai].[Application] replica la del Wizard (templateId, pipelineId, statusId, isMigration, jsonData), por lo que este id deberia coincidir con [dbo].[Application].id - pendiente de confirmar con datos.\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Application.name - the resolution key towards the Wizard application\",\"name\":\"name\",\"type\":\"string\"},{\"doc\":\"Application.ownerMail\",\"name\":\"ownerMail\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Reserved. Populate once GenAI stores the Wizard application id; null means the consumer must resolve by name.\",\"name\":\"wizardApplicationId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ApplicationRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"environment\",\"type\":{\"doc\":\"Source: [dbo_genai].[Environment]. Seeded values: 1=Development, 2=Test, 3=QA, 4=Production, 5=unknown-environment. Consumers must match InfraOps by NAME ([dbo_infraops].[EnvironmentType].name), never by id - the two id spaces are unrelated.\",\"fields\":[{\"doc\":\"Environment.id (GenAI-local)\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Environment.name\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"EnvironmentRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"tier\",\"type\":{\"doc\":\"Source: [dbo_genai].[Tier]. The governed tier decides which models the virtual key may reach; the gateway consumer must derive allowed models from configKey, never from what the agent self-reports.\",\"fields\":[{\"doc\":\"Tier.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Tier.name\",\"name\":\"name\",\"type\":\"string\"},{\"doc\":\"Tier.configKey - gateway routing alias, e.g. 'starter-tier', 'development-tier', 'premium-tier'\",\"name\":\"configKey\",\"type\":\"string\"}],\"name\":\"TierRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"model\",\"type\":{\"doc\":\"Source: [dbo_genai].[Model], reached through Tier.modelId.\",\"fields\":[{\"doc\":\"Model.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Model.name - e.g. 'claude-haiku-4-5'\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Model.namePattern - deployment name on the gateway, e.g. 'ai-claude-haiku-4-5-prod'\",\"name\":\"namePattern\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Model.secretKey - the NAME of a configuration key, never a secret value.\",\"name\":\"secretKey\",\"type\":[\"null\",\"string\"]}],\"name\":\"ModelRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"provider\",\"type\":{\"doc\":\"Source: [dbo_genai].[Provider], reached through Model.providerId.\",\"fields\":[{\"doc\":\"Provider.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Provider.name - e.g. 'azure-openai', 'Anthropic'\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Provider.environmentKey - the NAME of a configuration key, never a secret value.\",\"name\":\"environmentKey\",\"type\":[\"null\",\"string\"]}],\"name\":\"ProviderRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"doc\":\"Audit of the current AgentConfig: AgentEvironment itself carries no audit columns.\",\"name\":\"audit\",\"type\":{\"doc\":\"Audit columns of the source configuration row. Timestamps are ISO 8601 UTC strings.\",\"fields\":[{\"doc\":\"ISO 8601 UTC\",\"name\":\"createdAt\",\"type\":\"string\"},{\"name\":\"createdBy\",\"type\":\"string\"},{\"default\":null,\"doc\":\"ISO 8601 UTC\",\"name\":\"updatedAt\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"updatedBy\",\"type\":[\"null\",\"string\"]}],\"name\":\"AuditRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.GenAiCatalog.Events.Record.AgentConfigEvent\",\"type\":\"record\"}"
+	return "{\"doc\":\"An agent environment requires downstream provisioning. Emitted from [dbo_genai].[AgentEvironment] joined to AgentIA/Application/Project/Environment and to its current AgentConfig (isLatest). Message key = agentId. Idempotency key and LiteLLM key_alias = genaiKey.\",\"fields\":[{\"default\":\"CREATED\",\"name\":\"eventType\",\"type\":{\"doc\":\"Mirrors the numeric EEventType convention already parsed by the InfraOps subscriber (Created=1, Updated=2, Deleted=3). Duplicated in the payload so the event survives header loss on republish.\",\"name\":\"CatalogEventType\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}},{\"doc\":\"AgentEvironment.genaiKey (uniqueidentifier, UNIQUE) - cross-context correlation id, ResourceRequest.externalRef and LiteLLM key_alias. Stable across config versions.\",\"name\":\"genaiKey\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Branding.Name\",\"name\":\"name\",\"type\":[\"null\",\"string\"]},{\"doc\":\"AgentEvironment.id\",\"name\":\"agentEnvironmentId\",\"type\":\"long\"},{\"doc\":\"AgentEvironment.agentId -\\u003e AgentIA.id. Message key.\",\"name\":\"agentId\",\"type\":\"long\"},{\"doc\":\"AgentIA.code\",\"name\":\"agentCode\",\"type\":\"string\"},{\"doc\":\"AgentConfig.id of the current version (isLatest = 1)\",\"name\":\"configId\",\"type\":\"long\"},{\"doc\":\"AgentConfig.version\",\"name\":\"version\",\"type\":\"string\"},{\"doc\":\"AgentConfig.isLatest\",\"name\":\"isLatest\",\"type\":\"boolean\"},{\"doc\":\"AgentConfig.isActive - false until the gateway registration completes\",\"name\":\"isActive\",\"type\":\"boolean\"},{\"doc\":\"AgentConfig.isDeprecated\",\"name\":\"isDeprecated\",\"type\":\"boolean\"},{\"doc\":\"AgentIA.isPrivate\",\"name\":\"isPrivate\",\"type\":\"boolean\"},{\"default\":\"genai-agent\",\"doc\":\"Resource catalog discriminator for InfraOps; must match a ResourceFlavor.code.\",\"name\":\"resourceKind\",\"type\":\"string\"},{\"default\":0,\"doc\":\"AgentEvironment.resourceId. NOT NULL in the database: 0 is the sentinel for 'no InfraOps resource assigned yet', and is also the publisher's polling predicate.\",\"name\":\"resourceId\",\"type\":\"long\"},{\"default\":null,\"doc\":\"AgentEvironment.connectionUrl - the agent's own endpoint, when it exposes one\",\"name\":\"connectionUrl\",\"type\":[\"null\",\"string\"]},{\"doc\":\"AgentConfig.exposeViaA2A\",\"name\":\"exposeViaA2A\",\"type\":\"boolean\"},{\"name\":\"project\",\"type\":{\"doc\":\"Source: [dbo_genai].[Project].\",\"fields\":[{\"doc\":\"Project.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Project.name\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Project.acronym\",\"name\":\"acronym\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.ownerMail\",\"name\":\"ownerMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.productId - FK to dbo.Product in the Wizard schema.\",\"name\":\"productId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ProjectRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"application\",\"type\":{\"doc\":\"Source: [dbo_genai].[Application]. Since v1.23.4 this table mirrors the Wizard application (it gained templateId, pipelineId, statusId, isMigration, jsonData), so its id is expected to match [dbo].[Application].id - CONFIRM WITH DATA before relying on it. Until confirmed, consumers should still resolve the Wizard application by 'name'.\",\"fields\":[{\"doc\":\"Application.id. Desde v1.23.4 [dbo_genai].[Application] replica la del Wizard (templateId, pipelineId, statusId, isMigration, jsonData), por lo que este id deberia coincidir con [dbo].[Application].id - pendiente de confirmar con datos.\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Application.name - the resolution key towards the Wizard application\",\"name\":\"name\",\"type\":\"string\"},{\"doc\":\"Application.ownerMail\",\"name\":\"ownerMail\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Reserved. Populate once GenAI stores the Wizard application id; null means the consumer must resolve by name.\",\"name\":\"wizardApplicationId\",\"type\":[\"null\",\"int\"]}],\"name\":\"ApplicationRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"environment\",\"type\":{\"doc\":\"Source: [dbo_genai].[Environment]. Seeded values: 1=Development, 2=Test, 3=QA, 4=Production, 5=unknown-environment. Consumers must match InfraOps by NAME ([dbo_infraops].[EnvironmentType].name), never by id - the two id spaces are unrelated.\",\"fields\":[{\"doc\":\"Environment.id (GenAI-local)\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Environment.name\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"EnvironmentRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"tier\",\"type\":{\"doc\":\"Source: [dbo_genai].[Tier]. The governed tier decides which models the virtual key may reach; the gateway consumer must derive allowed models from configKey, never from what the agent self-reports.\",\"fields\":[{\"doc\":\"Tier.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Tier.name\",\"name\":\"name\",\"type\":\"string\"},{\"doc\":\"Tier.configKey - gateway routing alias, e.g. 'starter-tier', 'development-tier', 'premium-tier'\",\"name\":\"configKey\",\"type\":\"string\"}],\"name\":\"TierRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"model\",\"type\":{\"doc\":\"Source: [dbo_genai].[Model], reached through Tier.modelId.\",\"fields\":[{\"doc\":\"Model.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Model.name - e.g. 'claude-haiku-4-5'\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Model.namePattern - deployment name on the gateway, e.g. 'ai-claude-haiku-4-5-prod'\",\"name\":\"namePattern\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Model.secretKey - the NAME of a configuration key, never a secret value.\",\"name\":\"secretKey\",\"type\":[\"null\",\"string\"]}],\"name\":\"ModelRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"name\":\"provider\",\"type\":{\"doc\":\"Source: [dbo_genai].[Provider], reached through Model.providerId.\",\"fields\":[{\"doc\":\"Provider.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Provider.name - e.g. 'azure-openai', 'Anthropic'\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Provider.environmentKey - the NAME of a configuration key, never a secret value.\",\"name\":\"environmentKey\",\"type\":[\"null\",\"string\"]}],\"name\":\"ProviderRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}},{\"doc\":\"Audit of the current AgentConfig: AgentEvironment itself carries no audit columns.\",\"name\":\"audit\",\"type\":{\"doc\":\"Audit columns of the source configuration row. Timestamps are ISO 8601 UTC strings.\",\"fields\":[{\"doc\":\"ISO 8601 UTC\",\"name\":\"createdAt\",\"type\":\"string\"},{\"name\":\"createdBy\",\"type\":\"string\"},{\"default\":null,\"doc\":\"ISO 8601 UTC\",\"name\":\"updatedAt\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"updatedBy\",\"type\":[\"null\",\"string\"]}],\"name\":\"AuditRef\",\"namespace\":\"Andreani.GenAiCatalog.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.GenAiCatalog.Events.Record.AgentConfigEvent\",\"type\":\"record\"}"
 }
 
 func (r AgentConfigEvent) SchemaName() string {
@@ -239,112 +246,116 @@ func (r *AgentConfigEvent) Get(i int) types.Field {
 		return w
 
 	case 2:
+		r.Name = NewUnionNullString()
+
+		return r.Name
+	case 3:
 		w := types.Long{Target: &r.AgentEnvironmentId}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.Long{Target: &r.AgentId}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.AgentCode}
 
 		return w
 
-	case 5:
+	case 6:
 		w := types.Long{Target: &r.ConfigId}
 
 		return w
 
-	case 6:
+	case 7:
 		w := types.String{Target: &r.Version}
 
 		return w
 
-	case 7:
+	case 8:
 		w := types.Boolean{Target: &r.IsLatest}
 
 		return w
 
-	case 8:
+	case 9:
 		w := types.Boolean{Target: &r.IsActive}
 
 		return w
 
-	case 9:
+	case 10:
 		w := types.Boolean{Target: &r.IsDeprecated}
 
 		return w
 
-	case 10:
+	case 11:
 		w := types.Boolean{Target: &r.IsPrivate}
 
 		return w
 
-	case 11:
+	case 12:
 		w := types.String{Target: &r.ResourceKind}
 
 		return w
 
-	case 12:
+	case 13:
 		w := types.Long{Target: &r.ResourceId}
 
 		return w
 
-	case 13:
+	case 14:
 		r.ConnectionUrl = NewUnionNullString()
 
 		return r.ConnectionUrl
-	case 14:
+	case 15:
 		w := types.Boolean{Target: &r.ExposeViaA2A}
 
 		return w
 
-	case 15:
+	case 16:
 		r.Project = NewProjectRef()
 
 		w := types.Record{Target: &r.Project}
 
 		return w
 
-	case 16:
+	case 17:
 		r.Application = NewApplicationRef()
 
 		w := types.Record{Target: &r.Application}
 
 		return w
 
-	case 17:
+	case 18:
 		r.Environment = NewEnvironmentRef()
 
 		w := types.Record{Target: &r.Environment}
 
 		return w
 
-	case 18:
+	case 19:
 		r.Tier = NewTierRef()
 
 		w := types.Record{Target: &r.Tier}
 
 		return w
 
-	case 19:
+	case 20:
 		r.Model = NewModelRef()
 
 		w := types.Record{Target: &r.Model}
 
 		return w
 
-	case 20:
+	case 21:
 		r.Provider = NewProviderRef()
 
 		w := types.Record{Target: &r.Provider}
 
 		return w
 
-	case 21:
+	case 22:
 		r.Audit = NewAuditRef()
 
 		w := types.Record{Target: &r.Audit}
@@ -360,13 +371,16 @@ func (r *AgentConfigEvent) SetDefault(i int) {
 	case 0:
 		r.EventType = CatalogEventTypeCREATED
 		return
-	case 11:
-		r.ResourceKind = "genai-agent"
+	case 2:
+		r.Name = nil
 		return
 	case 12:
-		r.ResourceId = 0
+		r.ResourceKind = "genai-agent"
 		return
 	case 13:
+		r.ResourceId = 0
+		return
+	case 14:
 		r.ConnectionUrl = nil
 		return
 	}
@@ -375,7 +389,10 @@ func (r *AgentConfigEvent) SetDefault(i int) {
 
 func (r *AgentConfigEvent) NullField(i int) {
 	switch i {
-	case 13:
+	case 2:
+		r.Name = nil
+		return
+	case 14:
 		r.ConnectionUrl = nil
 		return
 	}
@@ -399,6 +416,10 @@ func (r AgentConfigEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["genaiKey"], err = json.Marshal(r.GenaiKey)
+	if err != nil {
+		return nil, err
+	}
+	output["name"], err = json.Marshal(r.Name)
 	if err != nil {
 		return nil, err
 	}
@@ -519,6 +540,22 @@ func (r *AgentConfigEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for genaiKey")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["name"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Name); err != nil {
+			return err
+		}
+	} else {
+		r.Name = NewUnionNullString()
+
+		r.Name = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["agentEnvironmentId"]; ok {
