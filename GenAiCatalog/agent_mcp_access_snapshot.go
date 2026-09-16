@@ -23,7 +23,7 @@ type AgentMcpAccessSnapshot struct {
 	Servers []McpServerAccessRef `json:"servers"`
 }
 
-const AgentMcpAccessSnapshotAvroCRC64Fingerprint = "ڞ\xbeBSZ\x15\xdd"
+const AgentMcpAccessSnapshotAvroCRC64Fingerprint = "\xb9P\x8cH\xc8\xf6#\x82"
 
 func NewAgentMcpAccessSnapshot() AgentMcpAccessSnapshot {
 	r := AgentMcpAccessSnapshot{}
@@ -71,7 +71,7 @@ func (r AgentMcpAccessSnapshot) Serialize(w io.Writer) error {
 }
 
 func (r AgentMcpAccessSnapshot) Schema() string {
-	return "{\"doc\":\"Source: [dbo_genai].[MCPEnvironment] and [dbo_genai].[ToolAccess]. The complete desired MCP authorization for one agent environment; an empty servers array revokes every MCP grant.\",\"fields\":[{\"default\":[],\"doc\":\"MCPEnvironment rows and ToolAccess grants authorized for the agent environment.\",\"name\":\"servers\",\"type\":{\"items\":{\"doc\":\"Source: [dbo_genai].[MCPEnvironment] joined to [dbo_genai].[Tools] through [dbo_genai].[ToolAccess]. One MCP server an agent environment is authorized to reach.\",\"fields\":[{\"doc\":\"MCPEnvironment.id\",\"name\":\"mcpEnvironmentId\",\"type\":\"long\"},{\"doc\":\"MCPEnvironment.serverId - LiteLLM server_id authorized by the gateway.\",\"name\":\"serverId\",\"type\":\"string\"},{\"default\":[],\"doc\":\"Tools.name granted through ToolAccess; an empty array allows every tool of this server.\",\"name\":\"toolNames\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"McpServerAccessRef\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.GenAiCatalog.Events.Common.AgentMcpAccessSnapshot\",\"type\":\"record\"}"
+	return "{\"doc\":\"Source: [dbo_genai].[MCPEnvironment] and [dbo_genai].[ToolAccess]. The complete desired MCP authorization for one agent environment; an empty servers array revokes every MCP grant.\",\"fields\":[{\"default\":[],\"doc\":\"MCPEnvironment rows and ToolAccess grants authorized for the agent environment.\",\"name\":\"servers\",\"type\":{\"items\":{\"doc\":\"Source: [dbo_genai].[MCPEnvironment] joined to [dbo_genai].[Tools] through [dbo_genai].[ToolAccess]. One MCP server an agent environment is authorized to reach.\",\"fields\":[{\"doc\":\"MCPEnvironment.id\",\"name\":\"mcpEnvironmentId\",\"type\":\"long\"},{\"doc\":\"MCPEnvironment.serverId - LiteLLM server_id authorized by the gateway.\",\"name\":\"serverId\",\"type\":\"string\"},{\"default\":[],\"doc\":\"Tools.name granted through ToolAccess; an empty array allows every tool of this server.\",\"name\":\"toolNames\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"doc\":\"InfraOps resource id associated with the MCP server, when provisioned.\",\"name\":\"resourceId\",\"type\":[\"null\",\"long\"]}],\"name\":\"McpServerAccessRef\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.GenAiCatalog.Events.Common.AgentMcpAccessSnapshot\",\"type\":\"record\"}"
 }
 
 func (r AgentMcpAccessSnapshot) SchemaName() string {

@@ -25,9 +25,11 @@ type McpServerAccessRef struct {
 	ServerId string `json:"serverId"`
 	// Tools.name granted through ToolAccess; an empty array allows every tool of this server.
 	ToolNames []string `json:"toolNames"`
+	// InfraOps resource id associated with the MCP server, when provisioned.
+	ResourceId *UnionNullLong `json:"resourceId"`
 }
 
-const McpServerAccessRefAvroCRC64Fingerprint = "Kl\xbfٓ\xfbcR"
+const McpServerAccessRefAvroCRC64Fingerprint = "1&\xb5\xfe\xbe3\xfe\b"
 
 func NewMcpServerAccessRef() McpServerAccessRef {
 	r := McpServerAccessRef{}
@@ -35,6 +37,7 @@ func NewMcpServerAccessRef() McpServerAccessRef {
 
 	r.ToolNames = make([]string, 0)
 
+	r.ResourceId = nil
 	return r
 }
 
@@ -75,6 +78,10 @@ func writeMcpServerAccessRef(r McpServerAccessRef, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullLong(r.ResourceId, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -83,7 +90,7 @@ func (r McpServerAccessRef) Serialize(w io.Writer) error {
 }
 
 func (r McpServerAccessRef) Schema() string {
-	return "{\"doc\":\"Source: [dbo_genai].[MCPEnvironment] joined to [dbo_genai].[Tools] through [dbo_genai].[ToolAccess]. One MCP server an agent environment is authorized to reach.\",\"fields\":[{\"doc\":\"MCPEnvironment.id\",\"name\":\"mcpEnvironmentId\",\"type\":\"long\"},{\"doc\":\"MCPEnvironment.serverId - LiteLLM server_id authorized by the gateway.\",\"name\":\"serverId\",\"type\":\"string\"},{\"default\":[],\"doc\":\"Tools.name granted through ToolAccess; an empty array allows every tool of this server.\",\"name\":\"toolNames\",\"type\":{\"items\":\"string\",\"type\":\"array\"}}],\"name\":\"Andreani.GenAiCatalog.Events.Common.McpServerAccessRef\",\"type\":\"record\"}"
+	return "{\"doc\":\"Source: [dbo_genai].[MCPEnvironment] joined to [dbo_genai].[Tools] through [dbo_genai].[ToolAccess]. One MCP server an agent environment is authorized to reach.\",\"fields\":[{\"doc\":\"MCPEnvironment.id\",\"name\":\"mcpEnvironmentId\",\"type\":\"long\"},{\"doc\":\"MCPEnvironment.serverId - LiteLLM server_id authorized by the gateway.\",\"name\":\"serverId\",\"type\":\"string\"},{\"default\":[],\"doc\":\"Tools.name granted through ToolAccess; an empty array allows every tool of this server.\",\"name\":\"toolNames\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"default\":null,\"doc\":\"InfraOps resource id associated with the MCP server, when provisioned.\",\"name\":\"resourceId\",\"type\":[\"null\",\"long\"]}],\"name\":\"Andreani.GenAiCatalog.Events.Common.McpServerAccessRef\",\"type\":\"record\"}"
 }
 
 func (r McpServerAccessRef) SchemaName() string {
@@ -118,6 +125,10 @@ func (r *McpServerAccessRef) Get(i int) types.Field {
 
 		return w
 
+	case 3:
+		r.ResourceId = NewUnionNullLong()
+
+		return r.ResourceId
 	}
 	panic("Unknown field index")
 }
@@ -128,12 +139,18 @@ func (r *McpServerAccessRef) SetDefault(i int) {
 		r.ToolNames = make([]string, 0)
 
 		return
+	case 3:
+		r.ResourceId = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *McpServerAccessRef) NullField(i int) {
 	switch i {
+	case 3:
+		r.ResourceId = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -159,6 +176,10 @@ func (r McpServerAccessRef) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["toolNames"], err = json.Marshal(r.ToolNames)
+	if err != nil {
+		return nil, err
+	}
+	output["resourceId"], err = json.Marshal(r.ResourceId)
 	if err != nil {
 		return nil, err
 	}
@@ -216,6 +237,22 @@ func (r *McpServerAccessRef) UnmarshalJSON(data []byte) error {
 
 		r.ToolNames = make([]string, 0)
 
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["resourceId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ResourceId); err != nil {
+			return err
+		}
+	} else {
+		r.ResourceId = NewUnionNullLong()
+
+		r.ResourceId = nil
 	}
 	return nil
 }
