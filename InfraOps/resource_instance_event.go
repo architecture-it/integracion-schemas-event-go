@@ -38,11 +38,13 @@ type ResourceInstanceEvent struct {
 	Status *UnionNullString `json:"status"`
 	// ResourceInstance.ownerUserId.
 	OwnerUserId *UnionNullString `json:"ownerUserId"`
+	// ResourceInstance.environmentName.
+	EnvironmentName *UnionNullString `json:"environmentName"`
 	// Template identified by templateId and templateVersion.
 	Template ResourceTemplate `json:"template"`
 }
 
-const ResourceInstanceEventAvroCRC64Fingerprint = "\xfb~J-r\x91\x16\xc7"
+const ResourceInstanceEventAvroCRC64Fingerprint = "\x82\xacuNϏt$"
 
 func NewResourceInstanceEvent() ResourceInstanceEvent {
 	r := ResourceInstanceEvent{}
@@ -51,6 +53,7 @@ func NewResourceInstanceEvent() ResourceInstanceEvent {
 	r.Properties = nil
 	r.Status = nil
 	r.OwnerUserId = nil
+	r.EnvironmentName = nil
 	r.Template = NewResourceTemplate()
 
 	return r
@@ -121,6 +124,10 @@ func writeResourceInstanceEvent(r ResourceInstanceEvent, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.EnvironmentName, w)
+	if err != nil {
+		return err
+	}
 	err = writeResourceTemplate(r.Template, w)
 	if err != nil {
 		return err
@@ -133,7 +140,7 @@ func (r ResourceInstanceEvent) Serialize(w io.Writer) error {
 }
 
 func (r ResourceInstanceEvent) Schema() string {
-	return "{\"doc\":\"Published when a resource instance is created or updated. Set eventType to CREATED for creation and UPDATED for updates. Message key = id\",\"fields\":[{\"default\":\"CREATED\",\"name\":\"eventType\",\"type\":{\"doc\":\"Lifecycle operation performed on the resource instance.\",\"name\":\"ResourceEventType\",\"namespace\":\"Andreani.InfraOps.Events.Common\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}},{\"doc\":\"ResourceInstance.id.\",\"name\":\"id\",\"type\":\"long\"},{\"doc\":\"ResourceInstance.templateId.\",\"name\":\"templateId\",\"type\":\"long\"},{\"doc\":\"ResourceInstance.templateVersion.\",\"name\":\"templateVersion\",\"type\":\"int\"},{\"doc\":\"Application.id associated with the resource instance.\",\"name\":\"applicationId\",\"type\":\"int\"},{\"default\":null,\"doc\":\"ResourceInstance.externalId.\",\"name\":\"externalId\",\"type\":[\"null\",\"string\"]},{\"doc\":\"ResourceInstance.name.\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"ResourceInstance.properties.\",\"name\":\"properties\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceInstance.status.\",\"name\":\"status\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceInstance.ownerUserId.\",\"name\":\"ownerUserId\",\"type\":[\"null\",\"string\"]},{\"doc\":\"Template identified by templateId and templateVersion.\",\"name\":\"template\",\"type\":{\"doc\":\"Resource template embedded in a ResourceInstanceEvent.\",\"fields\":[{\"doc\":\"ResourceTemplate.id.\",\"name\":\"id\",\"type\":\"long\"},{\"doc\":\"ResourceTemplate.resourceFlavorId.\",\"name\":\"resourceFlavorId\",\"type\":\"int\"},{\"doc\":\"ResourceTemplate.version.\",\"name\":\"version\",\"type\":\"int\"},{\"doc\":\"ResourceTemplate.name.\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"ResourceTemplate.description.\",\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceTemplate.propertiesSchema.\",\"name\":\"propertiesSchema\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceTemplate.defaultValues.\",\"name\":\"defaultValues\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceTemplate.provisioningHint.\",\"name\":\"provisioningHint\",\"type\":[\"null\",\"string\"]},{\"doc\":\"ResourceTemplate.isActive.\",\"name\":\"isActive\",\"type\":\"boolean\"}],\"name\":\"ResourceTemplate\",\"namespace\":\"Andreani.InfraOps.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.InfraOps.Events.Record.ResourceInstanceEvent\",\"type\":\"record\"}"
+	return "{\"doc\":\"Published when a resource instance is created or updated. Set eventType to CREATED for creation and UPDATED for updates. Message key = id\",\"fields\":[{\"default\":\"CREATED\",\"name\":\"eventType\",\"type\":{\"doc\":\"Lifecycle operation performed on the resource instance.\",\"name\":\"ResourceEventType\",\"namespace\":\"Andreani.InfraOps.Events.Common\",\"symbols\":[\"CREATED\",\"UPDATED\",\"DELETED\"],\"type\":\"enum\"}},{\"doc\":\"ResourceInstance.id.\",\"name\":\"id\",\"type\":\"long\"},{\"doc\":\"ResourceInstance.templateId.\",\"name\":\"templateId\",\"type\":\"long\"},{\"doc\":\"ResourceInstance.templateVersion.\",\"name\":\"templateVersion\",\"type\":\"int\"},{\"doc\":\"Application.id associated with the resource instance.\",\"name\":\"applicationId\",\"type\":\"int\"},{\"default\":null,\"doc\":\"ResourceInstance.externalId.\",\"name\":\"externalId\",\"type\":[\"null\",\"string\"]},{\"doc\":\"ResourceInstance.name.\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"ResourceInstance.properties.\",\"name\":\"properties\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceInstance.status.\",\"name\":\"status\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceInstance.ownerUserId.\",\"name\":\"ownerUserId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceInstance.environmentName.\",\"name\":\"environmentName\",\"type\":[\"null\",\"string\"]},{\"doc\":\"Template identified by templateId and templateVersion.\",\"name\":\"template\",\"type\":{\"doc\":\"Resource template embedded in a ResourceInstanceEvent.\",\"fields\":[{\"doc\":\"ResourceTemplate.id.\",\"name\":\"id\",\"type\":\"long\"},{\"doc\":\"ResourceTemplate.resourceFlavorId.\",\"name\":\"resourceFlavorId\",\"type\":\"int\"},{\"doc\":\"ResourceTemplate.version.\",\"name\":\"version\",\"type\":\"int\"},{\"doc\":\"ResourceTemplate.name.\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"ResourceTemplate.description.\",\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceTemplate.propertiesSchema.\",\"name\":\"propertiesSchema\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceTemplate.defaultValues.\",\"name\":\"defaultValues\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"ResourceTemplate.provisioningHint.\",\"name\":\"provisioningHint\",\"type\":[\"null\",\"string\"]},{\"doc\":\"ResourceTemplate.isActive.\",\"name\":\"isActive\",\"type\":\"boolean\"}],\"name\":\"ResourceTemplate\",\"namespace\":\"Andreani.InfraOps.Events.Common\",\"type\":\"record\"}}],\"name\":\"Andreani.InfraOps.Events.Record.ResourceInstanceEvent\",\"type\":\"record\"}"
 }
 
 func (r ResourceInstanceEvent) SchemaName() string {
@@ -198,6 +205,10 @@ func (r *ResourceInstanceEvent) Get(i int) types.Field {
 
 		return r.OwnerUserId
 	case 10:
+		r.EnvironmentName = NewUnionNullString()
+
+		return r.EnvironmentName
+	case 11:
 		r.Template = NewResourceTemplate()
 
 		w := types.Record{Target: &r.Template}
@@ -225,6 +236,9 @@ func (r *ResourceInstanceEvent) SetDefault(i int) {
 	case 9:
 		r.OwnerUserId = nil
 		return
+	case 10:
+		r.EnvironmentName = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -242,6 +256,9 @@ func (r *ResourceInstanceEvent) NullField(i int) {
 		return
 	case 9:
 		r.OwnerUserId = nil
+		return
+	case 10:
+		r.EnvironmentName = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -296,6 +313,10 @@ func (r ResourceInstanceEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ownerUserId"], err = json.Marshal(r.OwnerUserId)
+	if err != nil {
+		return nil, err
+	}
+	output["environmentName"], err = json.Marshal(r.EnvironmentName)
 	if err != nil {
 		return nil, err
 	}
@@ -460,6 +481,22 @@ func (r *ResourceInstanceEvent) UnmarshalJSON(data []byte) error {
 		r.OwnerUserId = NewUnionNullString()
 
 		r.OwnerUserId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["environmentName"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EnvironmentName); err != nil {
+			return err
+		}
+	} else {
+		r.EnvironmentName = NewUnionNullString()
+
+		r.EnvironmentName = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["template"]; ok {
