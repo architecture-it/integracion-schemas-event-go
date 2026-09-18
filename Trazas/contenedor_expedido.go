@@ -25,9 +25,11 @@ type ContenedorExpedido struct {
 	Destino DatosSucursal `json:"destino"`
 
 	Viaje Viaje `json:"viaje"`
+
+	Contenedores *UnionNullArrayContenedor `json:"contenedores"`
 }
 
-const ContenedorExpedidoAvroCRC64Fingerprint = "\xc6\xef|'\b&\x8e\x8a"
+const ContenedorExpedidoAvroCRC64Fingerprint = "\xb7b\x8cǄ\xbe\xa7\xef"
 
 func NewContenedorExpedido() ContenedorExpedido {
 	r := ContenedorExpedido{}
@@ -39,6 +41,7 @@ func NewContenedorExpedido() ContenedorExpedido {
 
 	r.Viaje = NewViaje()
 
+	r.Contenedores = nil
 	return r
 }
 
@@ -83,6 +86,10 @@ func writeContenedorExpedido(r ContenedorExpedido, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayContenedor(r.Contenedores, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -91,7 +98,7 @@ func (r ContenedorExpedido) Serialize(w io.Writer) error {
 }
 
 func (r ContenedorExpedido) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"name\":\"origen\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"destino\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"viaje\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Viaje\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorExpedido\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContenedor\",\"type\":[\"null\",{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"referenciasExternas\",\"type\":{\"type\":\"map\",\"values\":\"int\"}}],\"name\":\"TipoContenedor\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"name\":\"origen\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"destino\",\"type\":\"Integracion.Esquemas.Referencias.DatosSucursal\"},{\"name\":\"viaje\",\"type\":{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"choferDni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"patenteVehiculo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Viaje\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}},{\"default\":null,\"name\":\"contenedores\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"tipoContenedor\",\"type\":[\"null\",\"Integracion.Esquemas.Contenedor.Referencias.TipoContenedor\"]},{\"default\":null,\"name\":\"esMixto\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorExpedido\",\"type\":\"record\"}"
 }
 
 func (r ContenedorExpedido) SchemaName() string {
@@ -137,18 +144,28 @@ func (r *ContenedorExpedido) Get(i int) types.Field {
 
 		return w
 
+	case 4:
+		r.Contenedores = NewUnionNullArrayContenedor()
+
+		return r.Contenedores
 	}
 	panic("Unknown field index")
 }
 
 func (r *ContenedorExpedido) SetDefault(i int) {
 	switch i {
+	case 4:
+		r.Contenedores = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ContenedorExpedido) NullField(i int) {
 	switch i {
+	case 4:
+		r.Contenedores = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -178,6 +195,10 @@ func (r ContenedorExpedido) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["viaje"], err = json.Marshal(r.Viaje)
+	if err != nil {
+		return nil, err
+	}
+	output["contenedores"], err = json.Marshal(r.Contenedores)
 	if err != nil {
 		return nil, err
 	}
@@ -246,6 +267,22 @@ func (r *ContenedorExpedido) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for viaje")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["contenedores"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Contenedores); err != nil {
+			return err
+		}
+	} else {
+		r.Contenedores = NewUnionNullArrayContenedor()
+
+		r.Contenedores = nil
 	}
 	return nil
 }

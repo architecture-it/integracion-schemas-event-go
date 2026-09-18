@@ -84,7 +84,7 @@ func DeserializeUnionNullArrayContenedorFromSchema(r io.Reader, schema string) (
 }
 
 func (r *UnionNullArrayContenedor) Schema() string {
-	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]"
+	return "[\"null\",{\"items\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"tipoContenedor\",\"type\":[\"null\",{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"referenciasExternas\",\"type\":{\"type\":\"map\",\"values\":\"int\"}}],\"name\":\"TipoContenedor\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"esMixto\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Contenedor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"},\"type\":\"array\"}]"
 }
 
 func (_ *UnionNullArrayContenedor) SetBoolean(v bool)   { panic("Unsupported operation") }

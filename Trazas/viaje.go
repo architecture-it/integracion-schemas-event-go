@@ -19,12 +19,18 @@ var _ = fmt.Printf
 
 type Viaje struct {
 	Codigo string `json:"codigo"`
+
+	ChoferDni *UnionNullString `json:"choferDni"`
+
+	PatenteVehiculo *UnionNullString `json:"patenteVehiculo"`
 }
 
-const ViajeAvroCRC64Fingerprint = "\xdd\xdeY\x86\x8c\x15\x1c\x12"
+const ViajeAvroCRC64Fingerprint = "\xc9=\xaa>1\xb8\x1a\xe9"
 
 func NewViaje() Viaje {
 	r := Viaje{}
+	r.ChoferDni = nil
+	r.PatenteVehiculo = nil
 	return r
 }
 
@@ -57,6 +63,14 @@ func writeViaje(r Viaje, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ChoferDni, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.PatenteVehiculo, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -65,7 +79,7 @@ func (r Viaje) Serialize(w io.Writer) error {
 }
 
 func (r Viaje) Schema() string {
-	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"}],\"name\":\"Integracion.Esquemas.Contenedor.Referencias.Viaje\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"choferDni\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"patenteVehiculo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Integracion.Esquemas.Contenedor.Referencias.Viaje\",\"type\":\"record\"}"
 }
 
 func (r Viaje) SchemaName() string {
@@ -88,18 +102,38 @@ func (r *Viaje) Get(i int) types.Field {
 
 		return w
 
+	case 1:
+		r.ChoferDni = NewUnionNullString()
+
+		return r.ChoferDni
+	case 2:
+		r.PatenteVehiculo = NewUnionNullString()
+
+		return r.PatenteVehiculo
 	}
 	panic("Unknown field index")
 }
 
 func (r *Viaje) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.ChoferDni = nil
+		return
+	case 2:
+		r.PatenteVehiculo = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Viaje) NullField(i int) {
 	switch i {
+	case 1:
+		r.ChoferDni = nil
+		return
+	case 2:
+		r.PatenteVehiculo = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -117,6 +151,14 @@ func (r Viaje) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["codigo"], err = json.Marshal(r.Codigo)
+	if err != nil {
+		return nil, err
+	}
+	output["choferDni"], err = json.Marshal(r.ChoferDni)
+	if err != nil {
+		return nil, err
+	}
+	output["patenteVehiculo"], err = json.Marshal(r.PatenteVehiculo)
 	if err != nil {
 		return nil, err
 	}
@@ -143,6 +185,38 @@ func (r *Viaje) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for codigo")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["choferDni"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ChoferDni); err != nil {
+			return err
+		}
+	} else {
+		r.ChoferDni = NewUnionNullString()
+
+		r.ChoferDni = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["patenteVehiculo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PatenteVehiculo); err != nil {
+			return err
+		}
+	} else {
+		r.PatenteVehiculo = NewUnionNullString()
+
+		r.PatenteVehiculo = nil
 	}
 	return nil
 }

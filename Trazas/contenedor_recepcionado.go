@@ -21,7 +21,7 @@ type ContenedorRecepcionado struct {
 	Traza TrazaContendor `json:"traza"`
 }
 
-const ContenedorRecepcionadoAvroCRC64Fingerprint = "\x95\xb1W+\xa4\x12\xf3\xd7"
+const ContenedorRecepcionadoAvroCRC64Fingerprint = "A\x8d\xbbYg\x8d\xa0p"
 
 func NewContenedorRecepcionado() ContenedorRecepcionado {
 	r := ContenedorRecepcionado{}
@@ -67,7 +67,7 @@ func (r ContenedorRecepcionado) Serialize(w io.Writer) error {
 }
 
 func (r ContenedorRecepcionado) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoIntegra\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorRecepcionado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"ciclo\",\"type\":\"string\"},{\"name\":\"estado\",\"type\":\"string\"},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"prefijo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"tipoContenedor\",\"type\":[\"null\",{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"referenciasExternas\",\"type\":{\"type\":\"map\",\"values\":\"int\"}}],\"name\":\"TipoContenedor\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"TrazaContendor\",\"namespace\":\"Integracion.Esquemas.Contenedor.Referencias\",\"type\":\"record\"}}],\"name\":\"Integracion.Esquemas.Contenedor.Trazas.ContenedorRecepcionado\",\"type\":\"record\"}"
 }
 
 func (r ContenedorRecepcionado) SchemaName() string {

@@ -19,12 +19,18 @@ var _ = fmt.Printf
 
 type Contenedor struct {
 	Numero string `json:"numero"`
+
+	TipoContenedor *UnionNullTipoContenedor `json:"tipoContenedor"`
+
+	EsMixto *UnionNullBool `json:"esMixto"`
 }
 
-const ContenedorAvroCRC64Fingerprint = "\x9a\xed\x88\x03\x86\x1cDQ"
+const ContenedorAvroCRC64Fingerprint = "^S5V\x183\x84\xfb"
 
 func NewContenedor() Contenedor {
 	r := Contenedor{}
+	r.TipoContenedor = nil
+	r.EsMixto = nil
 	return r
 }
 
@@ -57,6 +63,14 @@ func writeContenedor(r Contenedor, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullTipoContenedor(r.TipoContenedor, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullBool(r.EsMixto, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -65,7 +79,7 @@ func (r Contenedor) Serialize(w io.Writer) error {
 }
 
 func (r Contenedor) Schema() string {
-	return "{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"}],\"name\":\"Integracion.Esquemas.Contenedor.Referencias.Contenedor\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"numero\",\"type\":\"string\"},{\"default\":null,\"name\":\"tipoContenedor\",\"type\":[\"null\",{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"referenciasExternas\",\"type\":{\"type\":\"map\",\"values\":\"int\"}}],\"name\":\"TipoContenedor\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"esMixto\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Integracion.Esquemas.Contenedor.Referencias.Contenedor\",\"type\":\"record\"}"
 }
 
 func (r Contenedor) SchemaName() string {
@@ -88,18 +102,38 @@ func (r *Contenedor) Get(i int) types.Field {
 
 		return w
 
+	case 1:
+		r.TipoContenedor = NewUnionNullTipoContenedor()
+
+		return r.TipoContenedor
+	case 2:
+		r.EsMixto = NewUnionNullBool()
+
+		return r.EsMixto
 	}
 	panic("Unknown field index")
 }
 
 func (r *Contenedor) SetDefault(i int) {
 	switch i {
+	case 1:
+		r.TipoContenedor = nil
+		return
+	case 2:
+		r.EsMixto = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *Contenedor) NullField(i int) {
 	switch i {
+	case 1:
+		r.TipoContenedor = nil
+		return
+	case 2:
+		r.EsMixto = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -117,6 +151,14 @@ func (r Contenedor) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
 	output["numero"], err = json.Marshal(r.Numero)
+	if err != nil {
+		return nil, err
+	}
+	output["tipoContenedor"], err = json.Marshal(r.TipoContenedor)
+	if err != nil {
+		return nil, err
+	}
+	output["esMixto"], err = json.Marshal(r.EsMixto)
 	if err != nil {
 		return nil, err
 	}
@@ -143,6 +185,38 @@ func (r *Contenedor) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for numero")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["tipoContenedor"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.TipoContenedor); err != nil {
+			return err
+		}
+	} else {
+		r.TipoContenedor = NewUnionNullTipoContenedor()
+
+		r.TipoContenedor = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["esMixto"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.EsMixto); err != nil {
+			return err
+		}
+	} else {
+		r.EsMixto = NewUnionNullBool()
+
+		r.EsMixto = nil
 	}
 	return nil
 }
