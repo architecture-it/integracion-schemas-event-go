@@ -36,15 +36,22 @@ type EnvioAforado struct {
 
 	KeyBulto string `json:"keyBulto"`
 
+	Imagenes *UnionNullArrayString `json:"imagenes"`
+
+	Urls *UnionNullArrayString `json:"urls"`
+
 	Jerarquia *UnionNullInt `json:"jerarquia"`
 }
 
-const EnvioAforadoAvroCRC64Fingerprint = "\x9c\xd7\xfe\xac\x7fOH8"
+const EnvioAforadoAvroCRC64Fingerprint = "\xe90\xdd\xf0R\xe3\xa0>"
 
 func NewEnvioAforado() EnvioAforado {
 	r := EnvioAforado{}
 	r.Traza = NewTraza()
 
+	r.Imagenes = nil
+	r.Urls = nil
+	r.Jerarquia = nil
 	return r
 }
 
@@ -109,6 +116,14 @@ func writeEnvioAforado(r EnvioAforado, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayString(r.Imagenes, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullArrayString(r.Urls, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullInt(r.Jerarquia, w)
 	if err != nil {
 		return err
@@ -121,7 +136,7 @@ func (r EnvioAforado) Serialize(w io.Writer) error {
 }
 
 func (r EnvioAforado) Schema() string {
-	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"pesoEnGramos\",\"type\":\"double\"},{\"name\":\"volumenEnCm3\",\"type\":\"double\"},{\"name\":\"altoEnCm\",\"type\":\"double\"},{\"name\":\"largoEnCm\",\"type\":\"double\"},{\"name\":\"anchoEnCm\",\"type\":\"double\"},{\"name\":\"fechaProcesamiento\",\"type\":\"string\"},{\"name\":\"keyBulto\",\"type\":\"string\"},{\"name\":\"jerarquia\",\"type\":[\"null\",\"int\"]}],\"name\":\"Integracion.Esquemas.Trazas.EnvioAforado\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"traza\",\"type\":{\"fields\":[{\"name\":\"codigoDeEnvio\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"cuando\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"codigoDeContratoInterno\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDeLaRendicion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"comentario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"name\":\"codigo\",\"type\":\"string\"},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"name\":\"id\",\"type\":\"string\"}],\"name\":\"DatosSucursal\",\"namespace\":\"Integracion.Esquemas.Referencias\",\"type\":\"record\"}]}],\"name\":\"Traza\",\"namespace\":\"Integracion.Esquemas\",\"type\":\"record\"}},{\"name\":\"numeroDeEnvio\",\"type\":\"string\"},{\"name\":\"pesoEnGramos\",\"type\":\"double\"},{\"name\":\"volumenEnCm3\",\"type\":\"double\"},{\"name\":\"altoEnCm\",\"type\":\"double\"},{\"name\":\"largoEnCm\",\"type\":\"double\"},{\"name\":\"anchoEnCm\",\"type\":\"double\"},{\"name\":\"fechaProcesamiento\",\"type\":\"string\"},{\"name\":\"keyBulto\",\"type\":\"string\"},{\"default\":null,\"name\":\"imagenes\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"urls\",\"type\":[\"null\",{\"items\":\"string\",\"type\":\"array\"}]},{\"default\":null,\"name\":\"jerarquia\",\"type\":[\"null\",\"int\"]}],\"name\":\"Integracion.Esquemas.Trazas.EnvioAforado\",\"type\":\"record\"}"
 }
 
 func (r EnvioAforado) SchemaName() string {
@@ -187,6 +202,14 @@ func (r *EnvioAforado) Get(i int) types.Field {
 		return w
 
 	case 9:
+		r.Imagenes = NewUnionNullArrayString()
+
+		return r.Imagenes
+	case 10:
+		r.Urls = NewUnionNullArrayString()
+
+		return r.Urls
+	case 11:
 		r.Jerarquia = NewUnionNullInt()
 
 		return r.Jerarquia
@@ -196,6 +219,15 @@ func (r *EnvioAforado) Get(i int) types.Field {
 
 func (r *EnvioAforado) SetDefault(i int) {
 	switch i {
+	case 9:
+		r.Imagenes = nil
+		return
+	case 10:
+		r.Urls = nil
+		return
+	case 11:
+		r.Jerarquia = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -203,6 +235,12 @@ func (r *EnvioAforado) SetDefault(i int) {
 func (r *EnvioAforado) NullField(i int) {
 	switch i {
 	case 9:
+		r.Imagenes = nil
+		return
+	case 10:
+		r.Urls = nil
+		return
+	case 11:
 		r.Jerarquia = nil
 		return
 	}
@@ -254,6 +292,14 @@ func (r EnvioAforado) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["keyBulto"], err = json.Marshal(r.KeyBulto)
+	if err != nil {
+		return nil, err
+	}
+	output["imagenes"], err = json.Marshal(r.Imagenes)
+	if err != nil {
+		return nil, err
+	}
+	output["urls"], err = json.Marshal(r.Urls)
 	if err != nil {
 		return nil, err
 	}
@@ -398,6 +444,38 @@ func (r *EnvioAforado) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for keyBulto")
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["imagenes"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Imagenes); err != nil {
+			return err
+		}
+	} else {
+		r.Imagenes = NewUnionNullArrayString()
+
+		r.Imagenes = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["urls"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Urls); err != nil {
+			return err
+		}
+	} else {
+		r.Urls = NewUnionNullArrayString()
+
+		r.Urls = nil
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["jerarquia"]; ok {
 			return v
 		}
@@ -409,7 +487,9 @@ func (r *EnvioAforado) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for jerarquia")
+		r.Jerarquia = NewUnionNullInt()
+
+		r.Jerarquia = nil
 	}
 	return nil
 }
