@@ -31,12 +31,15 @@ type ConformidadPedidoRealizadaEvent struct {
 	Apies string `json:"Apies"`
 
 	GlnId string `json:"GlnId"`
+
+	ConformidadAutomatica *UnionNullBool `json:"ConformidadAutomatica"`
 }
 
-const ConformidadPedidoRealizadaEventAvroCRC64Fingerprint = "\x1dU\x98\xcc>\x90\x97B"
+const ConformidadPedidoRealizadaEventAvroCRC64Fingerprint = "\xef\xfb]\xde\x19\a\x95\x17"
 
 func NewConformidadPedidoRealizadaEvent() ConformidadPedidoRealizadaEvent {
 	r := ConformidadPedidoRealizadaEvent{}
+	r.ConformidadAutomatica = nil
 	return r
 }
 
@@ -93,6 +96,10 @@ func writeConformidadPedidoRealizadaEvent(r ConformidadPedidoRealizadaEvent, w i
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullBool(r.ConformidadAutomatica, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -101,7 +108,7 @@ func (r ConformidadPedidoRealizadaEvent) Serialize(w io.Writer) error {
 }
 
 func (r ConformidadPedidoRealizadaEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"PedidoId\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"Apies\",\"type\":\"string\"},{\"name\":\"GlnId\",\"type\":\"string\"}],\"name\":\"Andreani.AcomPedidosWarehouse.Events.Record.ConformidadPedidoRealizadaEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PedidoId\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"Apies\",\"type\":\"string\"},{\"name\":\"GlnId\",\"type\":\"string\"},{\"default\":null,\"name\":\"ConformidadAutomatica\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.AcomPedidosWarehouse.Events.Record.ConformidadPedidoRealizadaEvent\",\"type\":\"record\"}"
 }
 
 func (r ConformidadPedidoRealizadaEvent) SchemaName() string {
@@ -154,18 +161,28 @@ func (r *ConformidadPedidoRealizadaEvent) Get(i int) types.Field {
 
 		return w
 
+	case 7:
+		r.ConformidadAutomatica = NewUnionNullBool()
+
+		return r.ConformidadAutomatica
 	}
 	panic("Unknown field index")
 }
 
 func (r *ConformidadPedidoRealizadaEvent) SetDefault(i int) {
 	switch i {
+	case 7:
+		r.ConformidadAutomatica = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ConformidadPedidoRealizadaEvent) NullField(i int) {
 	switch i {
+	case 7:
+		r.ConformidadAutomatica = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -209,6 +226,10 @@ func (r ConformidadPedidoRealizadaEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["GlnId"], err = json.Marshal(r.GlnId)
+	if err != nil {
+		return nil, err
+	}
+	output["ConformidadAutomatica"], err = json.Marshal(r.ConformidadAutomatica)
 	if err != nil {
 		return nil, err
 	}
@@ -319,6 +340,22 @@ func (r *ConformidadPedidoRealizadaEvent) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for GlnId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["ConformidadAutomatica"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ConformidadAutomatica); err != nil {
+			return err
+		}
+	} else {
+		r.ConformidadAutomatica = NewUnionNullBool()
+
+		r.ConformidadAutomatica = nil
 	}
 	return nil
 }
