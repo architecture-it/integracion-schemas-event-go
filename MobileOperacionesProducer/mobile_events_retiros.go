@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type MobileEventsRetiros struct {
+	NumeroRetiro *UnionNullString `json:"numeroRetiro"`
+
 	NombreCliente string `json:"nombreCliente"`
 
 	ApellidoCliente string `json:"apellidoCliente"`
@@ -32,15 +34,16 @@ type MobileEventsRetiros struct {
 
 	FechaGeneracion *UnionNullString `json:"fechaGeneracion"`
 
-	Linking *UnionNullArrayMetadato `json:"linking"`
-
 	CodigoSucursal string `json:"codigoSucursal"`
+
+	Linking *UnionNullArrayMetadato `json:"linking"`
 }
 
-const MobileEventsRetirosAvroCRC64Fingerprint = "\xcbM\x8d\xe7BZ|\xfb"
+const MobileEventsRetirosAvroCRC64Fingerprint = "F\x00\xe1v\xa8\xc3\xe7n"
 
 func NewMobileEventsRetiros() MobileEventsRetiros {
 	r := MobileEventsRetiros{}
+	r.NumeroRetiro = nil
 	r.EmailsCliente = make([]string, 0)
 
 	r.EnviosRetirados = make([]string, 0)
@@ -77,6 +80,10 @@ func DeserializeMobileEventsRetirosFromSchema(r io.Reader, schema string) (Mobil
 
 func writeMobileEventsRetiros(r MobileEventsRetiros, w io.Writer) error {
 	var err error
+	err = writeUnionNullString(r.NumeroRetiro, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.NombreCliente, w)
 	if err != nil {
 		return err
@@ -105,11 +112,11 @@ func writeMobileEventsRetiros(r MobileEventsRetiros, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = writeUnionNullArrayMetadato(r.Linking, w)
+	err = vm.WriteString(r.CodigoSucursal, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.CodigoSucursal, w)
+	err = writeUnionNullArrayMetadato(r.Linking, w)
 	if err != nil {
 		return err
 	}
@@ -121,7 +128,7 @@ func (r MobileEventsRetiros) Serialize(w io.Writer) error {
 }
 
 func (r MobileEventsRetiros) Schema() string {
-	return "{\"fields\":[{\"name\":\"nombreCliente\",\"type\":\"string\"},{\"name\":\"apellidoCliente\",\"type\":\"string\"},{\"name\":\"emailsCliente\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"enviosRetirados\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"sucursal\",\"type\":\"string\"},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"}],\"name\":\"UsuarioAdmisionEvent\",\"type\":\"record\"}},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]},{\"name\":\"codigoSucursal\",\"type\":\"string\"}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.MobileEventsRetiros\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"numeroRetiro\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombreCliente\",\"type\":\"string\"},{\"name\":\"apellidoCliente\",\"type\":\"string\"},{\"name\":\"emailsCliente\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"enviosRetirados\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"sucursal\",\"type\":\"string\"},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"}],\"name\":\"UsuarioAdmisionEvent\",\"type\":\"record\"}},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoSucursal\",\"type\":\"string\"},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.MobileEventsRetiros\",\"type\":\"record\"}"
 }
 
 func (r MobileEventsRetiros) SchemaName() string {
@@ -140,64 +147,71 @@ func (_ MobileEventsRetiros) SetUnionElem(v int64) { panic("Unsupported operatio
 func (r *MobileEventsRetiros) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.NumeroRetiro = NewUnionNullString()
+
+		return r.NumeroRetiro
+	case 1:
 		w := types.String{Target: &r.NombreCliente}
 
 		return w
 
-	case 1:
+	case 2:
 		w := types.String{Target: &r.ApellidoCliente}
 
 		return w
 
-	case 2:
+	case 3:
 		r.EmailsCliente = make([]string, 0)
 
 		w := ArrayStringWrapper{Target: &r.EmailsCliente}
 
 		return w
 
-	case 3:
+	case 4:
 		r.EnviosRetirados = make([]string, 0)
 
 		w := ArrayStringWrapper{Target: &r.EnviosRetirados}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.Sucursal}
 
 		return w
 
-	case 5:
+	case 6:
 		r.Usuario = NewUsuarioAdmisionEvent()
 
 		w := types.Record{Target: &r.Usuario}
 
 		return w
 
-	case 6:
+	case 7:
 		r.FechaGeneracion = NewUnionNullString()
 
 		return r.FechaGeneracion
-	case 7:
-		r.Linking = NewUnionNullArrayMetadato()
-
-		return r.Linking
 	case 8:
 		w := types.String{Target: &r.CodigoSucursal}
 
 		return w
 
+	case 9:
+		r.Linking = NewUnionNullArrayMetadato()
+
+		return r.Linking
 	}
 	panic("Unknown field index")
 }
 
 func (r *MobileEventsRetiros) SetDefault(i int) {
 	switch i {
-	case 6:
-		r.FechaGeneracion = nil
+	case 0:
+		r.NumeroRetiro = nil
 		return
 	case 7:
+		r.FechaGeneracion = nil
+		return
+	case 9:
 		r.Linking = nil
 		return
 	}
@@ -206,10 +220,13 @@ func (r *MobileEventsRetiros) SetDefault(i int) {
 
 func (r *MobileEventsRetiros) NullField(i int) {
 	switch i {
-	case 6:
-		r.FechaGeneracion = nil
+	case 0:
+		r.NumeroRetiro = nil
 		return
 	case 7:
+		r.FechaGeneracion = nil
+		return
+	case 9:
 		r.Linking = nil
 		return
 	}
@@ -228,6 +245,10 @@ func (_ MobileEventsRetiros) AvroCRC64Fingerprint() []byte {
 func (r MobileEventsRetiros) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["numeroRetiro"], err = json.Marshal(r.NumeroRetiro)
+	if err != nil {
+		return nil, err
+	}
 	output["nombreCliente"], err = json.Marshal(r.NombreCliente)
 	if err != nil {
 		return nil, err
@@ -256,11 +277,11 @@ func (r MobileEventsRetiros) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["linking"], err = json.Marshal(r.Linking)
+	output["codigoSucursal"], err = json.Marshal(r.CodigoSucursal)
 	if err != nil {
 		return nil, err
 	}
-	output["codigoSucursal"], err = json.Marshal(r.CodigoSucursal)
+	output["linking"], err = json.Marshal(r.Linking)
 	if err != nil {
 		return nil, err
 	}
@@ -274,6 +295,22 @@ func (r *MobileEventsRetiros) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["numeroRetiro"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.NumeroRetiro); err != nil {
+			return err
+		}
+	} else {
+		r.NumeroRetiro = NewUnionNullString()
+
+		r.NumeroRetiro = nil
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["nombreCliente"]; ok {
 			return v
@@ -375,6 +412,20 @@ func (r *MobileEventsRetiros) UnmarshalJSON(data []byte) error {
 		r.FechaGeneracion = nil
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["codigoSucursal"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CodigoSucursal); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for codigoSucursal")
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["linking"]; ok {
 			return v
 		}
@@ -389,20 +440,6 @@ func (r *MobileEventsRetiros) UnmarshalJSON(data []byte) error {
 		r.Linking = NewUnionNullArrayMetadato()
 
 		r.Linking = nil
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["codigoSucursal"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.CodigoSucursal); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for codigoSucursal")
 	}
 	return nil
 }
