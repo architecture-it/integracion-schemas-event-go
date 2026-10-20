@@ -36,10 +36,12 @@ type MobileEventsRetiros struct {
 
 	CodigoSucursal string `json:"codigoSucursal"`
 
+	CargasRetiradas *UnionNullArrayCargasRetiradas `json:"cargasRetiradas"`
+
 	Linking *UnionNullArrayMetadato `json:"linking"`
 }
 
-const MobileEventsRetirosAvroCRC64Fingerprint = "F\x00\xe1v\xa8\xc3\xe7n"
+const MobileEventsRetirosAvroCRC64Fingerprint = "\xb6\x9dހqµ\xcc"
 
 func NewMobileEventsRetiros() MobileEventsRetiros {
 	r := MobileEventsRetiros{}
@@ -51,6 +53,7 @@ func NewMobileEventsRetiros() MobileEventsRetiros {
 	r.Usuario = NewUsuarioAdmisionEvent()
 
 	r.FechaGeneracion = nil
+	r.CargasRetiradas = nil
 	r.Linking = nil
 	return r
 }
@@ -116,6 +119,10 @@ func writeMobileEventsRetiros(r MobileEventsRetiros, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullArrayCargasRetiradas(r.CargasRetiradas, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullArrayMetadato(r.Linking, w)
 	if err != nil {
 		return err
@@ -128,7 +135,7 @@ func (r MobileEventsRetiros) Serialize(w io.Writer) error {
 }
 
 func (r MobileEventsRetiros) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"numeroRetiro\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombreCliente\",\"type\":\"string\"},{\"name\":\"apellidoCliente\",\"type\":\"string\"},{\"name\":\"emailsCliente\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"enviosRetirados\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"sucursal\",\"type\":\"string\"},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"}],\"name\":\"UsuarioAdmisionEvent\",\"type\":\"record\"}},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoSucursal\",\"type\":\"string\"},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.MobileEventsRetiros\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"numeroRetiro\",\"type\":[\"null\",\"string\"]},{\"name\":\"nombreCliente\",\"type\":\"string\"},{\"name\":\"apellidoCliente\",\"type\":\"string\"},{\"name\":\"emailsCliente\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"enviosRetirados\",\"type\":{\"items\":\"string\",\"type\":\"array\"}},{\"name\":\"sucursal\",\"type\":\"string\"},{\"name\":\"usuario\",\"type\":{\"fields\":[{\"name\":\"nombre\",\"type\":\"string\"},{\"name\":\"apellido\",\"type\":\"string\"},{\"name\":\"email\",\"type\":\"string\"},{\"name\":\"dni\",\"type\":\"string\"}],\"name\":\"UsuarioAdmisionEvent\",\"type\":\"record\"}},{\"default\":null,\"name\":\"fechaGeneracion\",\"type\":[\"null\",\"string\"]},{\"name\":\"codigoSucursal\",\"type\":\"string\"},{\"default\":null,\"name\":\"cargasRetiradas\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"default\":null,\"name\":\"idCargaDeclarada\",\"type\":[\"null\",\"string\"]},{\"name\":\"tipo\",\"type\":\"string\"},{\"default\":null,\"name\":\"codigoTipo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descripcion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cantidadDeclarada\",\"type\":[\"null\",\"int\"]},{\"name\":\"cantidadRetirada\",\"type\":\"int\"},{\"default\":null,\"name\":\"pesoUnitarioKg\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"altoCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"anchoCm\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"profundidadCm\",\"type\":[\"null\",\"double\"]},{\"default\":false,\"name\":\"medidasRelevadas\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"observacion\",\"type\":[\"null\",\"string\"]}],\"name\":\"CargasRetiradas\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"meta\",\"type\":\"string\"},{\"default\":null,\"name\":\"contenido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Metadato\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.MobileOperacionesProducer.Events.Record.MobileEventsRetiros\",\"type\":\"record\"}"
 }
 
 func (r MobileEventsRetiros) SchemaName() string {
@@ -196,6 +203,10 @@ func (r *MobileEventsRetiros) Get(i int) types.Field {
 		return w
 
 	case 9:
+		r.CargasRetiradas = NewUnionNullArrayCargasRetiradas()
+
+		return r.CargasRetiradas
+	case 10:
 		r.Linking = NewUnionNullArrayMetadato()
 
 		return r.Linking
@@ -212,6 +223,9 @@ func (r *MobileEventsRetiros) SetDefault(i int) {
 		r.FechaGeneracion = nil
 		return
 	case 9:
+		r.CargasRetiradas = nil
+		return
+	case 10:
 		r.Linking = nil
 		return
 	}
@@ -227,6 +241,9 @@ func (r *MobileEventsRetiros) NullField(i int) {
 		r.FechaGeneracion = nil
 		return
 	case 9:
+		r.CargasRetiradas = nil
+		return
+	case 10:
 		r.Linking = nil
 		return
 	}
@@ -278,6 +295,10 @@ func (r MobileEventsRetiros) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["codigoSucursal"], err = json.Marshal(r.CodigoSucursal)
+	if err != nil {
+		return nil, err
+	}
+	output["cargasRetiradas"], err = json.Marshal(r.CargasRetiradas)
 	if err != nil {
 		return nil, err
 	}
@@ -424,6 +445,22 @@ func (r *MobileEventsRetiros) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for codigoSucursal")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["cargasRetiradas"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.CargasRetiradas); err != nil {
+			return err
+		}
+	} else {
+		r.CargasRetiradas = NewUnionNullArrayCargasRetiradas()
+
+		r.CargasRetiradas = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["linking"]; ok {
