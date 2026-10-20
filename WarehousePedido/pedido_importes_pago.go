@@ -31,12 +31,16 @@ type PedidoImportesPago struct {
 
 	ImporteAlmacenamientoSinIva *UnionNullString `json:"importeAlmacenamientoSinIva"`
 
+	ImporteCostoPreparacionIva *UnionNullString `json:"importeCostoPreparacionIva"`
+
+	ImporteCostoPreparacionSinIva *UnionNullString `json:"importeCostoPreparacionSinIva"`
+
 	ImporteFinal *UnionNullString `json:"importeFinal"`
 
 	DescuentoTotal *UnionNullString `json:"descuentoTotal"`
 }
 
-const PedidoImportesPagoAvroCRC64Fingerprint = "\xb0ps!\xbc$\xd3\xee"
+const PedidoImportesPagoAvroCRC64Fingerprint = "@Ȑ\x84M\x7f?P"
 
 func NewPedidoImportesPago() PedidoImportesPago {
 	r := PedidoImportesPago{}
@@ -45,6 +49,8 @@ func NewPedidoImportesPago() PedidoImportesPago {
 	r.ImporteIva = nil
 	r.ImporteAlmacenamientoIva = nil
 	r.ImporteAlmacenamientoSinIva = nil
+	r.ImporteCostoPreparacionIva = nil
+	r.ImporteCostoPreparacionSinIva = nil
 	r.ImporteFinal = nil
 	r.DescuentoTotal = nil
 	return r
@@ -99,6 +105,14 @@ func writePedidoImportesPago(r PedidoImportesPago, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ImporteCostoPreparacionIva, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.ImporteCostoPreparacionSinIva, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullString(r.ImporteFinal, w)
 	if err != nil {
 		return err
@@ -115,7 +129,7 @@ func (r PedidoImportesPago) Serialize(w io.Writer) error {
 }
 
 func (r PedidoImportesPago) Schema() string {
-	return "{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"default\":null,\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeAlmacenamientoIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeAlmacenamientoSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoImportesPago\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"doc\":\"Identificador del pedido (transacción)\",\"name\":\"idTransaccion\",\"type\":\"string\"},{\"default\":null,\"name\":\"importeDelSeguro\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeEnvioSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeAlmacenamientoIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeAlmacenamientoSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeCostoPreparacionIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeCostoPreparacionSinIva\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"importeFinal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"descuentoTotal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.WarehousePedido.Events.Record.PedidoImportesPago\",\"type\":\"record\"}"
 }
 
 func (r PedidoImportesPago) SchemaName() string {
@@ -159,10 +173,18 @@ func (r *PedidoImportesPago) Get(i int) types.Field {
 
 		return r.ImporteAlmacenamientoSinIva
 	case 6:
+		r.ImporteCostoPreparacionIva = NewUnionNullString()
+
+		return r.ImporteCostoPreparacionIva
+	case 7:
+		r.ImporteCostoPreparacionSinIva = NewUnionNullString()
+
+		return r.ImporteCostoPreparacionSinIva
+	case 8:
 		r.ImporteFinal = NewUnionNullString()
 
 		return r.ImporteFinal
-	case 7:
+	case 9:
 		r.DescuentoTotal = NewUnionNullString()
 
 		return r.DescuentoTotal
@@ -188,9 +210,15 @@ func (r *PedidoImportesPago) SetDefault(i int) {
 		r.ImporteAlmacenamientoSinIva = nil
 		return
 	case 6:
-		r.ImporteFinal = nil
+		r.ImporteCostoPreparacionIva = nil
 		return
 	case 7:
+		r.ImporteCostoPreparacionSinIva = nil
+		return
+	case 8:
+		r.ImporteFinal = nil
+		return
+	case 9:
 		r.DescuentoTotal = nil
 		return
 	}
@@ -215,9 +243,15 @@ func (r *PedidoImportesPago) NullField(i int) {
 		r.ImporteAlmacenamientoSinIva = nil
 		return
 	case 6:
-		r.ImporteFinal = nil
+		r.ImporteCostoPreparacionIva = nil
 		return
 	case 7:
+		r.ImporteCostoPreparacionSinIva = nil
+		return
+	case 8:
+		r.ImporteFinal = nil
+		return
+	case 9:
 		r.DescuentoTotal = nil
 		return
 	}
@@ -257,6 +291,14 @@ func (r PedidoImportesPago) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["importeAlmacenamientoSinIva"], err = json.Marshal(r.ImporteAlmacenamientoSinIva)
+	if err != nil {
+		return nil, err
+	}
+	output["importeCostoPreparacionIva"], err = json.Marshal(r.ImporteCostoPreparacionIva)
+	if err != nil {
+		return nil, err
+	}
+	output["importeCostoPreparacionSinIva"], err = json.Marshal(r.ImporteCostoPreparacionSinIva)
 	if err != nil {
 		return nil, err
 	}
@@ -371,6 +413,38 @@ func (r *PedidoImportesPago) UnmarshalJSON(data []byte) error {
 		r.ImporteAlmacenamientoSinIva = NewUnionNullString()
 
 		r.ImporteAlmacenamientoSinIva = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["importeCostoPreparacionIva"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ImporteCostoPreparacionIva); err != nil {
+			return err
+		}
+	} else {
+		r.ImporteCostoPreparacionIva = NewUnionNullString()
+
+		r.ImporteCostoPreparacionIva = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["importeCostoPreparacionSinIva"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ImporteCostoPreparacionSinIva); err != nil {
+			return err
+		}
+	} else {
+		r.ImporteCostoPreparacionSinIva = NewUnionNullString()
+
+		r.ImporteCostoPreparacionSinIva = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["importeFinal"]; ok {
