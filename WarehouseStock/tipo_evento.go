@@ -21,8 +21,9 @@ type TipoEvento int32
 const (
 	TipoEventoPedido           TipoEvento = 0
 	TipoEventoAbastecimiento   TipoEvento = 1
-	TipoEventoAjusteInventario TipoEvento = 2
+	TipoEventoAjuste           TipoEvento = 2
 	TipoEventoSincronizacion   TipoEvento = 3
+	TipoEventoAjusteInventario TipoEvento = 4
 )
 
 func (e TipoEvento) String() string {
@@ -31,10 +32,12 @@ func (e TipoEvento) String() string {
 		return "Pedido"
 	case TipoEventoAbastecimiento:
 		return "Abastecimiento"
-	case TipoEventoAjusteInventario:
-		return "AjusteInventario"
+	case TipoEventoAjuste:
+		return "Ajuste"
 	case TipoEventoSincronizacion:
 		return "Sincronizacion"
+	case TipoEventoAjusteInventario:
+		return "AjusteInventario"
 	}
 	return "unknown"
 }
@@ -49,10 +52,12 @@ func NewTipoEventoValue(raw string) (r TipoEvento, err error) {
 		return TipoEventoPedido, nil
 	case "Abastecimiento":
 		return TipoEventoAbastecimiento, nil
-	case "AjusteInventario":
-		return TipoEventoAjusteInventario, nil
+	case "Ajuste":
+		return TipoEventoAjuste, nil
 	case "Sincronizacion":
 		return TipoEventoSincronizacion, nil
+	case "AjusteInventario":
+		return TipoEventoAjusteInventario, nil
 	}
 
 	return -1, fmt.Errorf("invalid value for TipoEvento: '%s'", raw)
