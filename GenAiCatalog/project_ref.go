@@ -19,7 +19,7 @@ var _ = fmt.Printf
 
 // Source: [dbo_genai].[Project].
 type ProjectRef struct {
-	// Project.id
+	// Project.projectGitopsId: the Wizard project id (the publisher drops projects without it)
 	Id int32 `json:"id"`
 	// Project.name
 	Name string `json:"name"`
@@ -94,7 +94,7 @@ func (r ProjectRef) Serialize(w io.Writer) error {
 }
 
 func (r ProjectRef) Schema() string {
-	return "{\"doc\":\"Source: [dbo_genai].[Project].\",\"fields\":[{\"doc\":\"Project.id\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Project.name\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Project.acronym\",\"name\":\"acronym\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.ownerMail\",\"name\":\"ownerMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.productId - FK to dbo.Product in the Wizard schema.\",\"name\":\"productId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.GenAiCatalog.Events.Common.ProjectRef\",\"type\":\"record\"}"
+	return "{\"doc\":\"Source: [dbo_genai].[Project].\",\"fields\":[{\"doc\":\"Project.projectGitopsId: the Wizard project id (the publisher drops projects without it)\",\"name\":\"id\",\"type\":\"int\"},{\"doc\":\"Project.name\",\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Project.acronym\",\"name\":\"acronym\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.ownerMail\",\"name\":\"ownerMail\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"Project.productId - FK to dbo.Product in the Wizard schema.\",\"name\":\"productId\",\"type\":[\"null\",\"int\"]}],\"name\":\"Andreani.GenAiCatalog.Events.Common.ProjectRef\",\"type\":\"record\"}"
 }
 
 func (r ProjectRef) SchemaName() string {
