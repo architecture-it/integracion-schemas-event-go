@@ -27,7 +27,7 @@ type Usuario struct {
 	Apellido *UnionNullString `json:"Apellido"`
 }
 
-const UsuarioAvroCRC64Fingerprint = "\xaa\x8bp\xe1\xa67o\xd2"
+const UsuarioAvroCRC64Fingerprint = "s\xaa;\x02\xe8z\xa6\xb1"
 
 func NewUsuario() Usuario {
 	r := Usuario{}
@@ -87,11 +87,11 @@ func (r Usuario) Serialize(w io.Writer) error {
 }
 
 func (r Usuario) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Acom.Events.Record.Usuario\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Aecom.Events.Record.Usuario\",\"type\":\"record\"}"
 }
 
 func (r Usuario) SchemaName() string {
-	return "Andreani.Acom.Events.Record.Usuario"
+	return "Andreani.Aecom.Events.Record.Usuario"
 }
 
 func (_ Usuario) SetBoolean(v bool)    { panic("Unsupported operation") }

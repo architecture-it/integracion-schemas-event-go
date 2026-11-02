@@ -45,7 +45,7 @@ type Auditoria struct {
 	Usuario Usuario `json:"Usuario"`
 }
 
-const AuditoriaAvroCRC64Fingerprint = "a\x1c\x95\xa8\tS\x7f["
+const AuditoriaAvroCRC64Fingerprint = "\x00\x86Mκs)\xf4"
 
 func NewAuditoria() Auditoria {
 	r := Auditoria{}
@@ -142,11 +142,11 @@ func (r Auditoria) Serialize(w io.Writer) error {
 }
 
 func (r Auditoria) Schema() string {
-	return "{\"fields\":[{\"name\":\"EventoId\",\"type\":\"string\"},{\"name\":\"FechaHora\",\"type\":\"string\"},{\"name\":\"Servicio\",\"type\":\"string\"},{\"name\":\"Accion\",\"type\":\"string\"},{\"name\":\"Entidad\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntidadId\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClienteId\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Cuit\",\"type\":\"string\"},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Usuario\",\"type\":\"record\"}}],\"name\":\"Andreani.Acom.Events.Record.Auditoria\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"EventoId\",\"type\":\"string\"},{\"name\":\"FechaHora\",\"type\":\"string\"},{\"name\":\"Servicio\",\"type\":\"string\"},{\"name\":\"Accion\",\"type\":\"string\"},{\"name\":\"Entidad\",\"type\":\"string\"},{\"default\":null,\"name\":\"EntidadId\",\"type\":[\"null\",\"string\"]},{\"name\":\"ClienteId\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Cuit\",\"type\":\"string\"},{\"default\":null,\"name\":\"Instancia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Almacen\",\"type\":[\"null\",\"string\"]},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Usuario\",\"type\":{\"fields\":[{\"default\":null,\"name\":\"UsuarioId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Email\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Apellido\",\"type\":[\"null\",\"string\"]}],\"name\":\"Usuario\",\"type\":\"record\"}}],\"name\":\"Andreani.Aecom.Events.Record.Auditoria\",\"type\":\"record\"}"
 }
 
 func (r Auditoria) SchemaName() string {
-	return "Andreani.Acom.Events.Record.Auditoria"
+	return "Andreani.Aecom.Events.Record.Auditoria"
 }
 
 func (_ Auditoria) SetBoolean(v bool)    { panic("Unsupported operation") }
