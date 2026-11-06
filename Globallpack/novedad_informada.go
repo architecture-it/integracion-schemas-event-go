@@ -25,7 +25,7 @@ type NovedadInformada struct {
 	Novedades []NovedadTracking `json:"Novedades"`
 }
 
-const NovedadInformadaAvroCRC64Fingerprint = "9\x95y\xa7\xa4h\xdd\xfc"
+const NovedadInformadaAvroCRC64Fingerprint = "\x93\t\x8f\xc0ꩧ\x15"
 
 func NewNovedadInformada() NovedadInformada {
 	r := NovedadInformada{}
@@ -80,7 +80,7 @@ func (r NovedadInformada) Serialize(w io.Writer) error {
 }
 
 func (r NovedadInformada) Schema() string {
-	return "{\"fields\":[{\"name\":\"Sistema\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoSistema\",\"type\":[\"null\",\"string\"]},{\"name\":\"Novedades\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvioGloballpack\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Sucursal\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadTracking\",\"namespace\":\"Andreani.Globallpack.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Globallpack.Events.Record.NovedadInformada\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"Sistema\",\"type\":\"string\"},{\"default\":null,\"name\":\"TipoSistema\",\"type\":[\"null\",\"string\"]},{\"name\":\"Novedades\",\"type\":{\"items\":{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvioGloballpack\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Sucursal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ciclo\",\"type\":[\"null\",\"string\"]}],\"name\":\"NovedadTracking\",\"namespace\":\"Andreani.Globallpack.Events.Common\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Globallpack.Events.Record.NovedadInformada\",\"type\":\"record\"}"
 }
 
 func (r NovedadInformada) SchemaName() string {

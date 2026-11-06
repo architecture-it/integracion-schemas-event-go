@@ -45,9 +45,11 @@ type NovedadTracking struct {
 	Destinatario *UnionNullString `json:"Destinatario"`
 
 	Sucursal *UnionNullString `json:"Sucursal"`
+
+	Ciclo *UnionNullString `json:"Ciclo"`
 }
 
-const NovedadTrackingAvroCRC64Fingerprint = "^\xff\xfc\xffU\x93\x11r"
+const NovedadTrackingAvroCRC64Fingerprint = "\xf8\x7fީG\x9b\fH"
 
 func NewNovedadTracking() NovedadTracking {
 	r := NovedadTracking{}
@@ -62,6 +64,7 @@ func NewNovedadTracking() NovedadTracking {
 	r.Remitente = nil
 	r.Destinatario = nil
 	r.Sucursal = nil
+	r.Ciclo = nil
 	return r
 }
 
@@ -146,6 +149,10 @@ func writeNovedadTracking(r NovedadTracking, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.Ciclo, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -154,7 +161,7 @@ func (r NovedadTracking) Serialize(w io.Writer) error {
 }
 
 func (r NovedadTracking) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvioGloballpack\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Sucursal\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Globallpack.Events.Common.NovedadTracking\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"NroEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"NroEnvioGloballpack\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaTracking\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"FechaRecibido\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Estado\",\"type\":\"string\"},{\"default\":null,\"name\":\"Observacion\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Guia\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"GuiaHija\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SubMotivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"DireccionDestino\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Remitente\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Destinatario\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Sucursal\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Ciclo\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Globallpack.Events.Common.NovedadTracking\",\"type\":\"record\"}"
 }
 
 func (r NovedadTracking) SchemaName() string {
@@ -231,6 +238,10 @@ func (r *NovedadTracking) Get(i int) types.Field {
 		r.Sucursal = NewUnionNullString()
 
 		return r.Sucursal
+	case 14:
+		r.Ciclo = NewUnionNullString()
+
+		return r.Ciclo
 	}
 	panic("Unknown field index")
 }
@@ -270,6 +281,9 @@ func (r *NovedadTracking) SetDefault(i int) {
 	case 13:
 		r.Sucursal = nil
 		return
+	case 14:
+		r.Ciclo = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -308,6 +322,9 @@ func (r *NovedadTracking) NullField(i int) {
 		return
 	case 13:
 		r.Sucursal = nil
+		return
+	case 14:
+		r.Ciclo = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -378,6 +395,10 @@ func (r NovedadTracking) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["Sucursal"], err = json.Marshal(r.Sucursal)
+	if err != nil {
+		return nil, err
+	}
+	output["Ciclo"], err = json.Marshal(r.Ciclo)
 	if err != nil {
 		return nil, err
 	}
@@ -608,6 +629,22 @@ func (r *NovedadTracking) UnmarshalJSON(data []byte) error {
 		r.Sucursal = NewUnionNullString()
 
 		r.Sucursal = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["Ciclo"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Ciclo); err != nil {
+			return err
+		}
+	} else {
+		r.Ciclo = NewUnionNullString()
+
+		r.Ciclo = nil
 	}
 	return nil
 }
