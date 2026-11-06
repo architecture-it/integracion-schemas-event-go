@@ -26,9 +26,9 @@ type CambioDeStock struct {
 
 	TransaccionIdArticulo *UnionNullString `json:"TransaccionIdArticulo"`
 
-	FechaHoraEventoNegocio int64 `json:"FechaHoraEventoNegocio"`
+	SistemaOrigen *UnionNullString `json:"SistemaOrigen"`
 
-	SistemaOrigen string `json:"SistemaOrigen"`
+	FechaHoraEventoNegocio int64 `json:"FechaHoraEventoNegocio"`
 
 	Propietario string `json:"Propietario"`
 
@@ -49,12 +49,13 @@ type CambioDeStock struct {
 	Sincronizacion *UnionNullSincronizacion `json:"Sincronizacion"`
 }
 
-const CambioDeStockAvroCRC64Fingerprint = "\xc9\xe3\b\x15\x9a\xee:\x95"
+const CambioDeStockAvroCRC64Fingerprint = "\xdcQ\xb4\x93`b\x18\xdf"
 
 func NewCambioDeStock() CambioDeStock {
 	r := CambioDeStock{}
 	r.TipoEvento = nil
 	r.TransaccionIdArticulo = nil
+	r.SistemaOrigen = nil
 	r.Pedido = nil
 	r.Abastecimiento = nil
 	r.Ajuste = nil
@@ -103,11 +104,11 @@ func writeCambioDeStock(r CambioDeStock, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteLong(r.FechaHoraEventoNegocio, w)
+	err = writeUnionNullString(r.SistemaOrigen, w)
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.SistemaOrigen, w)
+	err = vm.WriteLong(r.FechaHoraEventoNegocio, w)
 	if err != nil {
 		return err
 	}
@@ -155,7 +156,7 @@ func (r CambioDeStock) Serialize(w io.Writer) error {
 }
 
 func (r CambioDeStock) Schema() string {
-	return "{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdEvento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEvento\",\"type\":[\"null\",{\"name\":\"TipoEvento\",\"symbols\":[\"Pedido\",\"Abastecimiento\",\"Ajuste\",\"Sincronizacion\",\"AjusteInventario\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"TransaccionIdArticulo\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaHoraEventoNegocio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"SistemaOrigen\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"float\"},{\"default\":null,\"name\":\"Pedido\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"PedidoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PedidoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Creado\",\"Confirmado\",\"Expedido\",\"Liberado\",\"Procesado\"],\"type\":\"enum\"}]}],\"name\":\"Pedido\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Abastecimiento\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"AbastecimientoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AbastecimientoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"Andreani.WarehouseStock.Events.StockCommon.CambioDeStockEstado\"]}],\"name\":\"Abastecimiento\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Ajuste\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockEnTransito\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAnteriorAjuste\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LineaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"Andreani.WarehouseStock.Events.StockCommon.CambioDeStockEstado\"]}],\"name\":\"Ajuste\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Sincronizacion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockNoDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAsignado\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockPickeado\",\"type\":[\"null\",\"float\"]}],\"name\":\"Sincronizacion\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]}],\"name\":\"Andreani.WarehouseStock.Events.Record.CambioDeStock\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"IdTransaccion\",\"type\":[\"null\",\"string\"]},{\"name\":\"IdEvento\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"TipoEvento\",\"type\":[\"null\",{\"name\":\"TipoEvento\",\"symbols\":[\"Pedido\",\"Abastecimiento\",\"Ajuste\",\"Sincronizacion\",\"AjusteInventario\"],\"type\":\"enum\"}]},{\"default\":null,\"name\":\"TransaccionIdArticulo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"SistemaOrigen\",\"type\":[\"null\",\"string\"]},{\"name\":\"FechaHoraEventoNegocio\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"SKU\",\"type\":\"string\"},{\"name\":\"Cantidad\",\"type\":\"float\"},{\"default\":null,\"name\":\"Pedido\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"PedidoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"PedidoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",{\"name\":\"CambioDeStockEstado\",\"symbols\":[\"Solicitado\",\"Aceptado\",\"Rechazado\",\"Cancelado\",\"Creado\",\"Confirmado\",\"Expedido\",\"Liberado\",\"Procesado\"],\"type\":\"enum\"}]}],\"name\":\"Pedido\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Abastecimiento\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"AbastecimientoId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"AbastecimientoLineaId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"Andreani.WarehouseStock.Events.StockCommon.CambioDeStockEstado\"]}],\"name\":\"Abastecimiento\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Ajuste\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockEnTransito\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAnteriorAjuste\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"Motivo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"CodigoOrigen\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"LineaInterna\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"Estado\",\"type\":[\"null\",\"Andreani.WarehouseStock.Events.StockCommon.CambioDeStockEstado\"]}],\"name\":\"Ajuste\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]},{\"default\":null,\"name\":\"Sincronizacion\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"StockTotal\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockNoDisponible\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockAsignado\",\"type\":[\"null\",\"float\"]},{\"default\":null,\"name\":\"StockPickeado\",\"type\":[\"null\",\"float\"]}],\"name\":\"Sincronizacion\",\"namespace\":\"Andreani.WarehouseStock.Events.StockCommon\",\"type\":\"record\"}]}],\"name\":\"Andreani.WarehouseStock.Events.Record.CambioDeStock\",\"type\":\"record\"}"
 }
 
 func (r CambioDeStock) SchemaName() string {
@@ -190,12 +191,11 @@ func (r *CambioDeStock) Get(i int) types.Field {
 
 		return r.TransaccionIdArticulo
 	case 4:
-		w := types.Long{Target: &r.FechaHoraEventoNegocio}
+		r.SistemaOrigen = NewUnionNullString()
 
-		return w
-
+		return r.SistemaOrigen
 	case 5:
-		w := types.String{Target: &r.SistemaOrigen}
+		w := types.Long{Target: &r.FechaHoraEventoNegocio}
 
 		return w
 
@@ -252,6 +252,9 @@ func (r *CambioDeStock) SetDefault(i int) {
 	case 3:
 		r.TransaccionIdArticulo = nil
 		return
+	case 4:
+		r.SistemaOrigen = nil
+		return
 	case 11:
 		r.Pedido = nil
 		return
@@ -281,6 +284,9 @@ func (r *CambioDeStock) NullField(i int) {
 		return
 	case 3:
 		r.TransaccionIdArticulo = nil
+		return
+	case 4:
+		r.SistemaOrigen = nil
 		return
 	case 11:
 		r.Pedido = nil
@@ -326,11 +332,11 @@ func (r CambioDeStock) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["FechaHoraEventoNegocio"], err = json.Marshal(r.FechaHoraEventoNegocio)
+	output["SistemaOrigen"], err = json.Marshal(r.SistemaOrigen)
 	if err != nil {
 		return nil, err
 	}
-	output["SistemaOrigen"], err = json.Marshal(r.SistemaOrigen)
+	output["FechaHoraEventoNegocio"], err = json.Marshal(r.FechaHoraEventoNegocio)
 	if err != nil {
 		return nil, err
 	}
@@ -441,6 +447,22 @@ func (r *CambioDeStock) UnmarshalJSON(data []byte) error {
 		r.TransaccionIdArticulo = nil
 	}
 	val = func() json.RawMessage {
+		if v, ok := fields["SistemaOrigen"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.SistemaOrigen); err != nil {
+			return err
+		}
+	} else {
+		r.SistemaOrigen = NewUnionNullString()
+
+		r.SistemaOrigen = nil
+	}
+	val = func() json.RawMessage {
 		if v, ok := fields["FechaHoraEventoNegocio"]; ok {
 			return v
 		}
@@ -453,20 +475,6 @@ func (r *CambioDeStock) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for FechaHoraEventoNegocio")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["SistemaOrigen"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.SistemaOrigen); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for SistemaOrigen")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["Propietario"]; ok {
