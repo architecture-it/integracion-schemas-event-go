@@ -26,8 +26,6 @@ type SyncTaskInstance struct {
 
 	FormId string `json:"formId"`
 
-	ExecutionMode string `json:"executionMode"`
-
 	EstablishmentId string `json:"establishmentId"`
 
 	PollingTableId *UnionNullString `json:"pollingTableId"`
@@ -41,7 +39,7 @@ type SyncTaskInstance struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-const SyncTaskInstanceAvroCRC64Fingerprint = "?E\x941\"\x85\xcb;"
+const SyncTaskInstanceAvroCRC64Fingerprint = "\x8bų&|6\n\xa6"
 
 func NewSyncTaskInstance() SyncTaskInstance {
 	r := SyncTaskInstance{}
@@ -91,10 +89,6 @@ func writeSyncTaskInstance(r SyncTaskInstance, w io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.ExecutionMode, w)
-	if err != nil {
-		return err
-	}
 	err = vm.WriteString(r.EstablishmentId, w)
 	if err != nil {
 		return err
@@ -127,7 +121,7 @@ func (r SyncTaskInstance) Serialize(w io.Writer) error {
 }
 
 func (r SyncTaskInstance) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"executionMode\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"isBlocked\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"fieldConstraints\",\"type\":[\"null\",\"string\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncTaskInstance\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"isBlocked\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"fieldConstraints\",\"type\":[\"null\",\"string\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncTaskInstance\",\"type\":\"record\"}"
 }
 
 func (r SyncTaskInstance) SchemaName() string {
@@ -166,34 +160,29 @@ func (r *SyncTaskInstance) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.String{Target: &r.ExecutionMode}
-
-		return w
-
-	case 5:
 		w := types.String{Target: &r.EstablishmentId}
 
 		return w
 
-	case 6:
+	case 5:
 		r.PollingTableId = NewUnionNullString()
 
 		return r.PollingTableId
-	case 7:
+	case 6:
 		w := types.String{Target: &r.Status}
 
 		return w
 
-	case 8:
+	case 7:
 		w := types.Boolean{Target: &r.IsBlocked}
 
 		return w
 
-	case 9:
+	case 8:
 		r.FieldConstraints = NewUnionNullString()
 
 		return r.FieldConstraints
-	case 10:
+	case 9:
 		w := types.String{Target: &r.UpdatedAt}
 
 		return w
@@ -204,10 +193,10 @@ func (r *SyncTaskInstance) Get(i int) types.Field {
 
 func (r *SyncTaskInstance) SetDefault(i int) {
 	switch i {
-	case 6:
+	case 5:
 		r.PollingTableId = nil
 		return
-	case 9:
+	case 8:
 		r.FieldConstraints = nil
 		return
 	}
@@ -216,10 +205,10 @@ func (r *SyncTaskInstance) SetDefault(i int) {
 
 func (r *SyncTaskInstance) NullField(i int) {
 	switch i {
-	case 6:
+	case 5:
 		r.PollingTableId = nil
 		return
-	case 9:
+	case 8:
 		r.FieldConstraints = nil
 		return
 	}
@@ -251,10 +240,6 @@ func (r SyncTaskInstance) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["formId"], err = json.Marshal(r.FormId)
-	if err != nil {
-		return nil, err
-	}
-	output["executionMode"], err = json.Marshal(r.ExecutionMode)
 	if err != nil {
 		return nil, err
 	}
@@ -347,20 +332,6 @@ func (r *SyncTaskInstance) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for formId")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["executionMode"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.ExecutionMode); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for executionMode")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["establishmentId"]; ok {

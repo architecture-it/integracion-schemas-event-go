@@ -32,12 +32,14 @@ type SyncForm struct {
 
 	AvailabilityUntil *UnionNullString `json:"availabilityUntil"`
 
+	ExecutionMode string `json:"executionMode"`
+
 	FormJson string `json:"formJson"`
 
 	UpdatedAt string `json:"updatedAt"`
 }
 
-const SyncFormAvroCRC64Fingerprint = "\xef]\xf0\xbch\xc2/\xbb"
+const SyncFormAvroCRC64Fingerprint = "\x8fUg\xa9\xc9l\xa2\xaa"
 
 func NewSyncForm() SyncForm {
 	r := SyncForm{}
@@ -100,6 +102,10 @@ func writeSyncForm(r SyncForm, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.ExecutionMode, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.FormJson, w)
 	if err != nil {
 		return err
@@ -116,7 +122,7 @@ func (r SyncForm) Serialize(w io.Writer) error {
 }
 
 func (r SyncForm) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityFrom\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityUntil\",\"type\":[\"null\",\"string\"]},{\"name\":\"formJson\",\"type\":\"string\"},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncForm\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityFrom\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityUntil\",\"type\":[\"null\",\"string\"]},{\"name\":\"executionMode\",\"type\":\"string\"},{\"name\":\"formJson\",\"type\":\"string\"},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncForm\",\"type\":\"record\"}"
 }
 
 func (r SyncForm) SchemaName() string {
@@ -167,11 +173,16 @@ func (r *SyncForm) Get(i int) types.Field {
 
 		return r.AvailabilityUntil
 	case 7:
-		w := types.String{Target: &r.FormJson}
+		w := types.String{Target: &r.ExecutionMode}
 
 		return w
 
 	case 8:
+		w := types.String{Target: &r.FormJson}
+
+		return w
+
+	case 9:
 		w := types.String{Target: &r.UpdatedAt}
 
 		return w
@@ -247,6 +258,10 @@ func (r SyncForm) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["availabilityUntil"], err = json.Marshal(r.AvailabilityUntil)
+	if err != nil {
+		return nil, err
+	}
+	output["executionMode"], err = json.Marshal(r.ExecutionMode)
 	if err != nil {
 		return nil, err
 	}
@@ -371,6 +386,20 @@ func (r *SyncForm) UnmarshalJSON(data []byte) error {
 		r.AvailabilityUntil = NewUnionNullString()
 
 		r.AvailabilityUntil = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["executionMode"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExecutionMode); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for executionMode")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["formJson"]; ok {
