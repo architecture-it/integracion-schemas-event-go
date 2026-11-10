@@ -38,10 +38,12 @@ type ElectionTaskCompleted struct {
 
 	Attachments *UnionNullArrayAttachment `json:"attachments"`
 
+	ExecutionId *UnionNullString `json:"executionId"`
+
 	Linking *UnionNullArrayLink `json:"linking"`
 }
 
-const ElectionTaskCompletedAvroCRC64Fingerprint = "\x18=U\x88\xfd\xb7;\xa4"
+const ElectionTaskCompletedAvroCRC64Fingerprint = "q\xe0\xb9u\xba\x82e\x9e"
 
 func NewElectionTaskCompleted() ElectionTaskCompleted {
 	r := ElectionTaskCompleted{}
@@ -49,6 +51,7 @@ func NewElectionTaskCompleted() ElectionTaskCompleted {
 	r.Answers = make([]Answer, 0)
 
 	r.Attachments = nil
+	r.ExecutionId = nil
 	r.Linking = nil
 	return r
 }
@@ -118,6 +121,10 @@ func writeElectionTaskCompleted(r ElectionTaskCompleted, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.ExecutionId, w)
+	if err != nil {
+		return err
+	}
 	err = writeUnionNullArrayLink(r.Linking, w)
 	if err != nil {
 		return err
@@ -130,7 +137,7 @@ func (r ElectionTaskCompleted) Serialize(w io.Writer) error {
 }
 
 func (r ElectionTaskCompleted) Schema() string {
-	return "{\"fields\":[{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"name\":\"taskType\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"completedBy\",\"type\":\"string\"},{\"name\":\"completedAt\",\"type\":\"string\"},{\"name\":\"answers\",\"type\":{\"items\":{\"fields\":[{\"name\":\"fieldId\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Answer\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"attachments\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"fieldId\",\"type\":\"string\"},{\"name\":\"objectKey\",\"type\":\"string\"}],\"name\":\"Attachment\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"key\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Link\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EleccionesGla.Events.Record.ElectionTaskCompleted\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"name\":\"taskType\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"completedBy\",\"type\":\"string\"},{\"name\":\"completedAt\",\"type\":\"string\"},{\"name\":\"answers\",\"type\":{\"items\":{\"fields\":[{\"name\":\"fieldId\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Answer\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"attachments\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"fieldId\",\"type\":\"string\"},{\"name\":\"objectKey\",\"type\":\"string\"}],\"name\":\"Attachment\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"executionId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"key\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Link\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EleccionesGla.Events.Record.ElectionTaskCompleted\",\"type\":\"record\"}"
 }
 
 func (r ElectionTaskCompleted) SchemaName() string {
@@ -199,6 +206,10 @@ func (r *ElectionTaskCompleted) Get(i int) types.Field {
 
 		return r.Attachments
 	case 10:
+		r.ExecutionId = NewUnionNullString()
+
+		return r.ExecutionId
+	case 11:
 		r.Linking = NewUnionNullArrayLink()
 
 		return r.Linking
@@ -215,6 +226,9 @@ func (r *ElectionTaskCompleted) SetDefault(i int) {
 		r.Attachments = nil
 		return
 	case 10:
+		r.ExecutionId = nil
+		return
+	case 11:
 		r.Linking = nil
 		return
 	}
@@ -230,6 +244,9 @@ func (r *ElectionTaskCompleted) NullField(i int) {
 		r.Attachments = nil
 		return
 	case 10:
+		r.ExecutionId = nil
+		return
+	case 11:
 		r.Linking = nil
 		return
 	}
@@ -285,6 +302,10 @@ func (r ElectionTaskCompleted) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["attachments"], err = json.Marshal(r.Attachments)
+	if err != nil {
+		return nil, err
+	}
+	output["executionId"], err = json.Marshal(r.ExecutionId)
 	if err != nil {
 		return nil, err
 	}
@@ -445,6 +466,22 @@ func (r *ElectionTaskCompleted) UnmarshalJSON(data []byte) error {
 		r.Attachments = NewUnionNullArrayAttachment()
 
 		r.Attachments = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["executionId"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.ExecutionId); err != nil {
+			return err
+		}
+	} else {
+		r.ExecutionId = NewUnionNullString()
+
+		r.ExecutionId = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["linking"]; ok {
