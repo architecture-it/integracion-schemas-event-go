@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type ElectionTaskClaimed struct {
+	Metadata *UnionNullEventMetadata `json:"metadata"`
+
 	TaskId string `json:"taskId"`
 
 	ClaimId string `json:"claimId"`
@@ -29,10 +31,11 @@ type ElectionTaskClaimed struct {
 	ClaimedAt string `json:"claimedAt"`
 }
 
-const ElectionTaskClaimedAvroCRC64Fingerprint = "\x0e\xa4T-z\x1e\x8d{"
+const ElectionTaskClaimedAvroCRC64Fingerprint = "\xa1\xf1@F\x97~\xf95"
 
 func NewElectionTaskClaimed() ElectionTaskClaimed {
 	r := ElectionTaskClaimed{}
+	r.Metadata = nil
 	return r
 }
 
@@ -61,6 +64,10 @@ func DeserializeElectionTaskClaimedFromSchema(r io.Reader, schema string) (Elect
 
 func writeElectionTaskClaimed(r ElectionTaskClaimed, w io.Writer) error {
 	var err error
+	err = writeUnionNullEventMetadata(r.Metadata, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.TaskId, w)
 	if err != nil {
 		return err
@@ -89,7 +96,7 @@ func (r ElectionTaskClaimed) Serialize(w io.Writer) error {
 }
 
 func (r ElectionTaskClaimed) Schema() string {
-	return "{\"fields\":[{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"claimId\",\"type\":\"string\"},{\"name\":\"claimedBy\",\"type\":\"string\"},{\"name\":\"claimedByName\",\"type\":\"string\"},{\"name\":\"claimedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.ElectionTaskClaimed\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"claimId\",\"type\":\"string\"},{\"name\":\"claimedBy\",\"type\":\"string\"},{\"name\":\"claimedByName\",\"type\":\"string\"},{\"name\":\"claimedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.ElectionTaskClaimed\",\"type\":\"record\"}"
 }
 
 func (r ElectionTaskClaimed) SchemaName() string {
@@ -108,26 +115,30 @@ func (_ ElectionTaskClaimed) SetUnionElem(v int64) { panic("Unsupported operatio
 func (r *ElectionTaskClaimed) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.Metadata = NewUnionNullEventMetadata()
+
+		return r.Metadata
+	case 1:
 		w := types.String{Target: &r.TaskId}
 
 		return w
 
-	case 1:
+	case 2:
 		w := types.String{Target: &r.ClaimId}
 
 		return w
 
-	case 2:
+	case 3:
 		w := types.String{Target: &r.ClaimedBy}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.String{Target: &r.ClaimedByName}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.ClaimedAt}
 
 		return w
@@ -138,12 +149,18 @@ func (r *ElectionTaskClaimed) Get(i int) types.Field {
 
 func (r *ElectionTaskClaimed) SetDefault(i int) {
 	switch i {
+	case 0:
+		r.Metadata = nil
+		return
 	}
 	panic("Unknown field index")
 }
 
 func (r *ElectionTaskClaimed) NullField(i int) {
 	switch i {
+	case 0:
+		r.Metadata = nil
+		return
 	}
 	panic("Not a nullable field index")
 }
@@ -160,6 +177,10 @@ func (_ ElectionTaskClaimed) AvroCRC64Fingerprint() []byte {
 func (r ElectionTaskClaimed) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["metadata"], err = json.Marshal(r.Metadata)
+	if err != nil {
+		return nil, err
+	}
 	output["taskId"], err = json.Marshal(r.TaskId)
 	if err != nil {
 		return nil, err
@@ -190,6 +211,22 @@ func (r *ElectionTaskClaimed) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["metadata"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Metadata); err != nil {
+			return err
+		}
+	} else {
+		r.Metadata = NewUnionNullEventMetadata()
+
+		r.Metadata = nil
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["taskId"]; ok {
 			return v

@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type ElectionTaskCompleted struct {
+	Metadata *UnionNullEventMetadata `json:"metadata"`
+
 	TaskId string `json:"taskId"`
 
 	ElectionId string `json:"electionId"`
@@ -43,10 +45,11 @@ type ElectionTaskCompleted struct {
 	Linking *UnionNullArrayLink `json:"linking"`
 }
 
-const ElectionTaskCompletedAvroCRC64Fingerprint = "q\xe0\xb9u\xba\x82e\x9e"
+const ElectionTaskCompletedAvroCRC64Fingerprint = "\xd1UU\xd2\xff\xf3\xea\xcc"
 
 func NewElectionTaskCompleted() ElectionTaskCompleted {
 	r := ElectionTaskCompleted{}
+	r.Metadata = nil
 	r.PollingTableId = nil
 	r.Answers = make([]Answer, 0)
 
@@ -81,6 +84,10 @@ func DeserializeElectionTaskCompletedFromSchema(r io.Reader, schema string) (Ele
 
 func writeElectionTaskCompleted(r ElectionTaskCompleted, w io.Writer) error {
 	var err error
+	err = writeUnionNullEventMetadata(r.Metadata, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.TaskId, w)
 	if err != nil {
 		return err
@@ -137,7 +144,7 @@ func (r ElectionTaskCompleted) Serialize(w io.Writer) error {
 }
 
 func (r ElectionTaskCompleted) Schema() string {
-	return "{\"fields\":[{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"name\":\"taskType\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"completedBy\",\"type\":\"string\"},{\"name\":\"completedAt\",\"type\":\"string\"},{\"name\":\"answers\",\"type\":{\"items\":{\"fields\":[{\"name\":\"fieldId\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Answer\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"attachments\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"fieldId\",\"type\":\"string\"},{\"name\":\"objectKey\",\"type\":\"string\"}],\"name\":\"Attachment\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"executionId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"key\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Link\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EleccionesGla.Events.Record.ElectionTaskCompleted\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"name\":\"taskType\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"completedBy\",\"type\":\"string\"},{\"name\":\"completedAt\",\"type\":\"string\"},{\"name\":\"answers\",\"type\":{\"items\":{\"fields\":[{\"name\":\"fieldId\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Answer\",\"type\":\"record\"},\"type\":\"array\"}},{\"default\":null,\"name\":\"attachments\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"fieldId\",\"type\":\"string\"},{\"name\":\"objectKey\",\"type\":\"string\"}],\"name\":\"Attachment\",\"type\":\"record\"},\"type\":\"array\"}]},{\"default\":null,\"name\":\"executionId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"linking\",\"type\":[\"null\",{\"items\":{\"fields\":[{\"name\":\"key\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Link\",\"type\":\"record\"},\"type\":\"array\"}]}],\"name\":\"Andreani.EleccionesGla.Events.Record.ElectionTaskCompleted\",\"type\":\"record\"}"
 }
 
 func (r ElectionTaskCompleted) SchemaName() string {
@@ -156,60 +163,64 @@ func (_ ElectionTaskCompleted) SetUnionElem(v int64) { panic("Unsupported operat
 func (r *ElectionTaskCompleted) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.Metadata = NewUnionNullEventMetadata()
+
+		return r.Metadata
+	case 1:
 		w := types.String{Target: &r.TaskId}
 
 		return w
 
-	case 1:
+	case 2:
 		w := types.String{Target: &r.ElectionId}
 
 		return w
 
-	case 2:
+	case 3:
 		w := types.String{Target: &r.EstablishmentId}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.String{Target: &r.TaskType}
 
 		return w
 
-	case 4:
+	case 5:
 		r.PollingTableId = NewUnionNullString()
 
 		return r.PollingTableId
-	case 5:
+	case 6:
 		w := types.String{Target: &r.FormId}
 
 		return w
 
-	case 6:
+	case 7:
 		w := types.String{Target: &r.CompletedBy}
 
 		return w
 
-	case 7:
+	case 8:
 		w := types.String{Target: &r.CompletedAt}
 
 		return w
 
-	case 8:
+	case 9:
 		r.Answers = make([]Answer, 0)
 
 		w := ArrayAnswerWrapper{Target: &r.Answers}
 
 		return w
 
-	case 9:
+	case 10:
 		r.Attachments = NewUnionNullArrayAttachment()
 
 		return r.Attachments
-	case 10:
+	case 11:
 		r.ExecutionId = NewUnionNullString()
 
 		return r.ExecutionId
-	case 11:
+	case 12:
 		r.Linking = NewUnionNullArrayLink()
 
 		return r.Linking
@@ -219,16 +230,19 @@ func (r *ElectionTaskCompleted) Get(i int) types.Field {
 
 func (r *ElectionTaskCompleted) SetDefault(i int) {
 	switch i {
-	case 4:
+	case 0:
+		r.Metadata = nil
+		return
+	case 5:
 		r.PollingTableId = nil
 		return
-	case 9:
+	case 10:
 		r.Attachments = nil
 		return
-	case 10:
+	case 11:
 		r.ExecutionId = nil
 		return
-	case 11:
+	case 12:
 		r.Linking = nil
 		return
 	}
@@ -237,16 +251,19 @@ func (r *ElectionTaskCompleted) SetDefault(i int) {
 
 func (r *ElectionTaskCompleted) NullField(i int) {
 	switch i {
-	case 4:
+	case 0:
+		r.Metadata = nil
+		return
+	case 5:
 		r.PollingTableId = nil
 		return
-	case 9:
+	case 10:
 		r.Attachments = nil
 		return
-	case 10:
+	case 11:
 		r.ExecutionId = nil
 		return
-	case 11:
+	case 12:
 		r.Linking = nil
 		return
 	}
@@ -265,6 +282,10 @@ func (_ ElectionTaskCompleted) AvroCRC64Fingerprint() []byte {
 func (r ElectionTaskCompleted) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["metadata"], err = json.Marshal(r.Metadata)
+	if err != nil {
+		return nil, err
+	}
 	output["taskId"], err = json.Marshal(r.TaskId)
 	if err != nil {
 		return nil, err
@@ -323,6 +344,22 @@ func (r *ElectionTaskCompleted) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["metadata"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Metadata); err != nil {
+			return err
+		}
+	} else {
+		r.Metadata = NewUnionNullEventMetadata()
+
+		r.Metadata = nil
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["taskId"]; ok {
 			return v

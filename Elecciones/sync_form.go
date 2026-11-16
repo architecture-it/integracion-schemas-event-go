@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type SyncForm struct {
+	Metadata *UnionNullEventMetadata `json:"metadata"`
+
 	Id string `json:"id"`
 
 	FormId string `json:"formId"`
@@ -39,10 +41,11 @@ type SyncForm struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-const SyncFormAvroCRC64Fingerprint = "\x8fUg\xa9\xc9l\xa2\xaa"
+const SyncFormAvroCRC64Fingerprint = "\xc78\xb2\xf4\xfd\xf0\x05\xa4"
 
 func NewSyncForm() SyncForm {
 	r := SyncForm{}
+	r.Metadata = nil
 	r.Description = nil
 	r.AvailabilityFrom = nil
 	r.AvailabilityUntil = nil
@@ -74,6 +77,10 @@ func DeserializeSyncFormFromSchema(r io.Reader, schema string) (SyncForm, error)
 
 func writeSyncForm(r SyncForm, w io.Writer) error {
 	var err error
+	err = writeUnionNullEventMetadata(r.Metadata, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Id, w)
 	if err != nil {
 		return err
@@ -122,7 +129,7 @@ func (r SyncForm) Serialize(w io.Writer) error {
 }
 
 func (r SyncForm) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityFrom\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityUntil\",\"type\":[\"null\",\"string\"]},{\"name\":\"executionMode\",\"type\":\"string\"},{\"name\":\"formJson\",\"type\":\"string\"},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncForm\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityFrom\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityUntil\",\"type\":[\"null\",\"string\"]},{\"name\":\"executionMode\",\"type\":\"string\"},{\"name\":\"formJson\",\"type\":\"string\"},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncForm\",\"type\":\"record\"}"
 }
 
 func (r SyncForm) SchemaName() string {
@@ -141,48 +148,52 @@ func (_ SyncForm) SetUnionElem(v int64) { panic("Unsupported operation") }
 func (r *SyncForm) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.Metadata = NewUnionNullEventMetadata()
+
+		return r.Metadata
+	case 1:
 		w := types.String{Target: &r.Id}
 
 		return w
 
-	case 1:
+	case 2:
 		w := types.String{Target: &r.FormId}
 
 		return w
 
-	case 2:
+	case 3:
 		w := types.String{Target: &r.ElectionId}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.String{Target: &r.Name}
 
 		return w
 
-	case 4:
+	case 5:
 		r.Description = NewUnionNullString()
 
 		return r.Description
-	case 5:
+	case 6:
 		r.AvailabilityFrom = NewUnionNullString()
 
 		return r.AvailabilityFrom
-	case 6:
+	case 7:
 		r.AvailabilityUntil = NewUnionNullString()
 
 		return r.AvailabilityUntil
-	case 7:
+	case 8:
 		w := types.String{Target: &r.ExecutionMode}
 
 		return w
 
-	case 8:
+	case 9:
 		w := types.String{Target: &r.FormJson}
 
 		return w
 
-	case 9:
+	case 10:
 		w := types.String{Target: &r.UpdatedAt}
 
 		return w
@@ -193,13 +204,16 @@ func (r *SyncForm) Get(i int) types.Field {
 
 func (r *SyncForm) SetDefault(i int) {
 	switch i {
-	case 4:
-		r.Description = nil
+	case 0:
+		r.Metadata = nil
 		return
 	case 5:
-		r.AvailabilityFrom = nil
+		r.Description = nil
 		return
 	case 6:
+		r.AvailabilityFrom = nil
+		return
+	case 7:
 		r.AvailabilityUntil = nil
 		return
 	}
@@ -208,13 +222,16 @@ func (r *SyncForm) SetDefault(i int) {
 
 func (r *SyncForm) NullField(i int) {
 	switch i {
-	case 4:
-		r.Description = nil
+	case 0:
+		r.Metadata = nil
 		return
 	case 5:
-		r.AvailabilityFrom = nil
+		r.Description = nil
 		return
 	case 6:
+		r.AvailabilityFrom = nil
+		return
+	case 7:
 		r.AvailabilityUntil = nil
 		return
 	}
@@ -233,6 +250,10 @@ func (_ SyncForm) AvroCRC64Fingerprint() []byte {
 func (r SyncForm) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["metadata"], err = json.Marshal(r.Metadata)
+	if err != nil {
+		return nil, err
+	}
 	output["id"], err = json.Marshal(r.Id)
 	if err != nil {
 		return nil, err
@@ -283,6 +304,22 @@ func (r *SyncForm) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["metadata"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Metadata); err != nil {
+			return err
+		}
+	} else {
+		r.Metadata = NewUnionNullEventMetadata()
+
+		r.Metadata = nil
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["id"]; ok {
 			return v

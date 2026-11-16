@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type SyncTaskInstance struct {
+	Metadata *UnionNullEventMetadata `json:"metadata"`
+
 	Id string `json:"id"`
 
 	TaskId string `json:"taskId"`
@@ -39,10 +41,11 @@ type SyncTaskInstance struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-const SyncTaskInstanceAvroCRC64Fingerprint = "\x8bų&|6\n\xa6"
+const SyncTaskInstanceAvroCRC64Fingerprint = "\xe9\xfaÉ$r.G"
 
 func NewSyncTaskInstance() SyncTaskInstance {
 	r := SyncTaskInstance{}
+	r.Metadata = nil
 	r.PollingTableId = nil
 	r.FieldConstraints = nil
 	return r
@@ -73,6 +76,10 @@ func DeserializeSyncTaskInstanceFromSchema(r io.Reader, schema string) (SyncTask
 
 func writeSyncTaskInstance(r SyncTaskInstance, w io.Writer) error {
 	var err error
+	err = writeUnionNullEventMetadata(r.Metadata, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Id, w)
 	if err != nil {
 		return err
@@ -121,7 +128,7 @@ func (r SyncTaskInstance) Serialize(w io.Writer) error {
 }
 
 func (r SyncTaskInstance) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"isBlocked\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"fieldConstraints\",\"type\":[\"null\",\"string\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncTaskInstance\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"isBlocked\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"fieldConstraints\",\"type\":[\"null\",\"string\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncTaskInstance\",\"type\":\"record\"}"
 }
 
 func (r SyncTaskInstance) SchemaName() string {
@@ -140,49 +147,53 @@ func (_ SyncTaskInstance) SetUnionElem(v int64) { panic("Unsupported operation")
 func (r *SyncTaskInstance) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.Metadata = NewUnionNullEventMetadata()
+
+		return r.Metadata
+	case 1:
 		w := types.String{Target: &r.Id}
 
 		return w
 
-	case 1:
+	case 2:
 		w := types.String{Target: &r.TaskId}
 
 		return w
 
-	case 2:
+	case 3:
 		w := types.String{Target: &r.ElectionId}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.String{Target: &r.FormId}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.EstablishmentId}
 
 		return w
 
-	case 5:
+	case 6:
 		r.PollingTableId = NewUnionNullString()
 
 		return r.PollingTableId
-	case 6:
+	case 7:
 		w := types.String{Target: &r.Status}
 
 		return w
 
-	case 7:
+	case 8:
 		w := types.Boolean{Target: &r.IsBlocked}
 
 		return w
 
-	case 8:
+	case 9:
 		r.FieldConstraints = NewUnionNullString()
 
 		return r.FieldConstraints
-	case 9:
+	case 10:
 		w := types.String{Target: &r.UpdatedAt}
 
 		return w
@@ -193,10 +204,13 @@ func (r *SyncTaskInstance) Get(i int) types.Field {
 
 func (r *SyncTaskInstance) SetDefault(i int) {
 	switch i {
-	case 5:
+	case 0:
+		r.Metadata = nil
+		return
+	case 6:
 		r.PollingTableId = nil
 		return
-	case 8:
+	case 9:
 		r.FieldConstraints = nil
 		return
 	}
@@ -205,10 +219,13 @@ func (r *SyncTaskInstance) SetDefault(i int) {
 
 func (r *SyncTaskInstance) NullField(i int) {
 	switch i {
-	case 5:
+	case 0:
+		r.Metadata = nil
+		return
+	case 6:
 		r.PollingTableId = nil
 		return
-	case 8:
+	case 9:
 		r.FieldConstraints = nil
 		return
 	}
@@ -227,6 +244,10 @@ func (_ SyncTaskInstance) AvroCRC64Fingerprint() []byte {
 func (r SyncTaskInstance) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["metadata"], err = json.Marshal(r.Metadata)
+	if err != nil {
+		return nil, err
+	}
 	output["id"], err = json.Marshal(r.Id)
 	if err != nil {
 		return nil, err
@@ -277,6 +298,22 @@ func (r *SyncTaskInstance) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["metadata"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Metadata); err != nil {
+			return err
+		}
+	} else {
+		r.Metadata = NewUnionNullEventMetadata()
+
+		r.Metadata = nil
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["id"]; ok {
 			return v

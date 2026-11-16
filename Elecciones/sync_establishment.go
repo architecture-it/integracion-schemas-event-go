@@ -18,6 +18,8 @@ import (
 var _ = fmt.Printf
 
 type SyncEstablishment struct {
+	Metadata *UnionNullEventMetadata `json:"metadata"`
+
 	Id string `json:"id"`
 
 	ElectionId string `json:"electionId"`
@@ -37,10 +39,11 @@ type SyncEstablishment struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-const SyncEstablishmentAvroCRC64Fingerprint = "\x16p^v\x8f\xc6\xd9<"
+const SyncEstablishmentAvroCRC64Fingerprint = "[\x89g\x87\xfdivB"
 
 func NewSyncEstablishment() SyncEstablishment {
 	r := SyncEstablishment{}
+	r.Metadata = nil
 	r.Address = nil
 	r.Latitude = nil
 	r.Longitude = nil
@@ -72,6 +75,10 @@ func DeserializeSyncEstablishmentFromSchema(r io.Reader, schema string) (SyncEst
 
 func writeSyncEstablishment(r SyncEstablishment, w io.Writer) error {
 	var err error
+	err = writeUnionNullEventMetadata(r.Metadata, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Id, w)
 	if err != nil {
 		return err
@@ -116,7 +123,7 @@ func (r SyncEstablishment) Serialize(w io.Writer) error {
 }
 
 func (r SyncEstablishment) Schema() string {
-	return "{\"fields\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"name\":\"userId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitude\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitude\",\"type\":[\"null\",\"double\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncEstablishment\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"name\":\"userId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitude\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitude\",\"type\":[\"null\",\"double\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncEstablishment\",\"type\":\"record\"}"
 }
 
 func (r SyncEstablishment) SchemaName() string {
@@ -135,43 +142,47 @@ func (_ SyncEstablishment) SetUnionElem(v int64) { panic("Unsupported operation"
 func (r *SyncEstablishment) Get(i int) types.Field {
 	switch i {
 	case 0:
+		r.Metadata = NewUnionNullEventMetadata()
+
+		return r.Metadata
+	case 1:
 		w := types.String{Target: &r.Id}
 
 		return w
 
-	case 1:
+	case 2:
 		w := types.String{Target: &r.ElectionId}
 
 		return w
 
-	case 2:
+	case 3:
 		w := types.String{Target: &r.EstablishmentId}
 
 		return w
 
-	case 3:
+	case 4:
 		w := types.String{Target: &r.UserId}
 
 		return w
 
-	case 4:
+	case 5:
 		w := types.String{Target: &r.Name}
 
 		return w
 
-	case 5:
+	case 6:
 		r.Address = NewUnionNullString()
 
 		return r.Address
-	case 6:
+	case 7:
 		r.Latitude = NewUnionNullDouble()
 
 		return r.Latitude
-	case 7:
+	case 8:
 		r.Longitude = NewUnionNullDouble()
 
 		return r.Longitude
-	case 8:
+	case 9:
 		w := types.String{Target: &r.UpdatedAt}
 
 		return w
@@ -182,13 +193,16 @@ func (r *SyncEstablishment) Get(i int) types.Field {
 
 func (r *SyncEstablishment) SetDefault(i int) {
 	switch i {
-	case 5:
-		r.Address = nil
+	case 0:
+		r.Metadata = nil
 		return
 	case 6:
-		r.Latitude = nil
+		r.Address = nil
 		return
 	case 7:
+		r.Latitude = nil
+		return
+	case 8:
 		r.Longitude = nil
 		return
 	}
@@ -197,13 +211,16 @@ func (r *SyncEstablishment) SetDefault(i int) {
 
 func (r *SyncEstablishment) NullField(i int) {
 	switch i {
-	case 5:
-		r.Address = nil
+	case 0:
+		r.Metadata = nil
 		return
 	case 6:
-		r.Latitude = nil
+		r.Address = nil
 		return
 	case 7:
+		r.Latitude = nil
+		return
+	case 8:
 		r.Longitude = nil
 		return
 	}
@@ -222,6 +239,10 @@ func (_ SyncEstablishment) AvroCRC64Fingerprint() []byte {
 func (r SyncEstablishment) MarshalJSON() ([]byte, error) {
 	var err error
 	output := make(map[string]json.RawMessage)
+	output["metadata"], err = json.Marshal(r.Metadata)
+	if err != nil {
+		return nil, err
+	}
 	output["id"], err = json.Marshal(r.Id)
 	if err != nil {
 		return nil, err
@@ -268,6 +289,22 @@ func (r *SyncEstablishment) UnmarshalJSON(data []byte) error {
 	}
 
 	var val json.RawMessage
+	val = func() json.RawMessage {
+		if v, ok := fields["metadata"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Metadata); err != nil {
+			return err
+		}
+	} else {
+		r.Metadata = NewUnionNullEventMetadata()
+
+		r.Metadata = nil
+	}
 	val = func() json.RawMessage {
 		if v, ok := fields["id"]; ok {
 			return v
