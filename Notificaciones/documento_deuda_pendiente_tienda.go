@@ -24,6 +24,8 @@ type DocumentoDeudaPendienteTienda struct {
 
 	DebitoCredito string `json:"debitoCredito"`
 
+	Moneda string `json:"moneda"`
+
 	ImporteOriginal float64 `json:"importeOriginal"`
 
 	ImportePendiente float64 `json:"importePendiente"`
@@ -33,7 +35,7 @@ type DocumentoDeudaPendienteTienda struct {
 	FechaVencimiento *UnionNullString `json:"fechaVencimiento"`
 }
 
-const DocumentoDeudaPendienteTiendaAvroCRC64Fingerprint = "\xf3\xe6\xf7o\x9a_\x862"
+const DocumentoDeudaPendienteTiendaAvroCRC64Fingerprint = "\xaa\xedYۂ\x03\f\x00"
 
 func NewDocumentoDeudaPendienteTienda() DocumentoDeudaPendienteTienda {
 	r := DocumentoDeudaPendienteTienda{}
@@ -78,6 +80,10 @@ func writeDocumentoDeudaPendienteTienda(r DocumentoDeudaPendienteTienda, w io.Wr
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.Moneda, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteDouble(r.ImporteOriginal, w)
 	if err != nil {
 		return err
@@ -102,7 +108,7 @@ func (r DocumentoDeudaPendienteTienda) Serialize(w io.Writer) error {
 }
 
 func (r DocumentoDeudaPendienteTienda) Schema() string {
-	return "{\"fields\":[{\"name\":\"identificador\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"debitoCredito\",\"type\":\"string\"},{\"name\":\"importeOriginal\",\"type\":\"double\"},{\"name\":\"importePendiente\",\"type\":\"double\"},{\"name\":\"fechaOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.DocumentoDeudaPendienteTienda\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"identificador\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"debitoCredito\",\"type\":\"string\"},{\"name\":\"moneda\",\"type\":\"string\"},{\"name\":\"importeOriginal\",\"type\":\"double\"},{\"name\":\"importePendiente\",\"type\":\"double\"},{\"name\":\"fechaOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.Notificaciones.Events.Records.DocumentoDeudaPendienteTienda\",\"type\":\"record\"}"
 }
 
 func (r DocumentoDeudaPendienteTienda) SchemaName() string {
@@ -136,21 +142,26 @@ func (r *DocumentoDeudaPendienteTienda) Get(i int) types.Field {
 		return w
 
 	case 3:
-		w := types.Double{Target: &r.ImporteOriginal}
+		w := types.String{Target: &r.Moneda}
 
 		return w
 
 	case 4:
-		w := types.Double{Target: &r.ImportePendiente}
+		w := types.Double{Target: &r.ImporteOriginal}
 
 		return w
 
 	case 5:
-		w := types.String{Target: &r.FechaOrigen}
+		w := types.Double{Target: &r.ImportePendiente}
 
 		return w
 
 	case 6:
+		w := types.String{Target: &r.FechaOrigen}
+
+		return w
+
+	case 7:
 		r.FechaVencimiento = NewUnionNullString()
 
 		return r.FechaVencimiento
@@ -160,7 +171,7 @@ func (r *DocumentoDeudaPendienteTienda) Get(i int) types.Field {
 
 func (r *DocumentoDeudaPendienteTienda) SetDefault(i int) {
 	switch i {
-	case 6:
+	case 7:
 		r.FechaVencimiento = nil
 		return
 	}
@@ -169,7 +180,7 @@ func (r *DocumentoDeudaPendienteTienda) SetDefault(i int) {
 
 func (r *DocumentoDeudaPendienteTienda) NullField(i int) {
 	switch i {
-	case 6:
+	case 7:
 		r.FechaVencimiento = nil
 		return
 	}
@@ -199,6 +210,10 @@ func (r DocumentoDeudaPendienteTienda) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["debitoCredito"], err = json.Marshal(r.DebitoCredito)
+	if err != nil {
+		return nil, err
+	}
+	output["moneda"], err = json.Marshal(r.Moneda)
 	if err != nil {
 		return nil, err
 	}
@@ -269,6 +284,20 @@ func (r *DocumentoDeudaPendienteTienda) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for debitoCredito")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["moneda"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Moneda); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for moneda")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["importeOriginal"]; ok {

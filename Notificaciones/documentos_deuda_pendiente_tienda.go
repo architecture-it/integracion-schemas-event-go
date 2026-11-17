@@ -26,17 +26,17 @@ type DocumentosDeudaPendienteTienda struct {
 
 	FechaRecepcion int64 `json:"fechaRecepcion"`
 
-	Moneda string `json:"moneda"`
-
-	Saldo float64 `json:"saldo"`
+	SaldosPorMoneda []SaldoPorMonedaTienda `json:"saldosPorMoneda"`
 
 	Documentos []DocumentoDeudaPendienteTienda `json:"documentos"`
 }
 
-const DocumentosDeudaPendienteTiendaAvroCRC64Fingerprint = "\n\xeax\xee\x94p\xe1?"
+const DocumentosDeudaPendienteTiendaAvroCRC64Fingerprint = "\x9a\x13\xfb\u0a53\xaf\xc5"
 
 func NewDocumentosDeudaPendienteTienda() DocumentosDeudaPendienteTienda {
 	r := DocumentosDeudaPendienteTienda{}
+	r.SaldosPorMoneda = make([]SaldoPorMonedaTienda, 0)
+
 	r.Documentos = make([]DocumentoDeudaPendienteTienda, 0)
 
 	return r
@@ -83,11 +83,7 @@ func writeDocumentosDeudaPendienteTienda(r DocumentosDeudaPendienteTienda, w io.
 	if err != nil {
 		return err
 	}
-	err = vm.WriteString(r.Moneda, w)
-	if err != nil {
-		return err
-	}
-	err = vm.WriteDouble(r.Saldo, w)
+	err = writeArraySaldoPorMonedaTienda(r.SaldosPorMoneda, w)
 	if err != nil {
 		return err
 	}
@@ -103,7 +99,7 @@ func (r DocumentosDeudaPendienteTienda) Serialize(w io.Writer) error {
 }
 
 func (r DocumentosDeudaPendienteTienda) Schema() string {
-	return "{\"fields\":[{\"name\":\"idTienda\",\"type\":\"string\"},{\"name\":\"origenTienda\",\"type\":\"int\"},{\"name\":\"origenTiendaDescripcion\",\"type\":\"string\"},{\"name\":\"fechaRecepcion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"moneda\",\"type\":\"string\"},{\"name\":\"saldo\",\"type\":\"double\"},{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"identificador\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"debitoCredito\",\"type\":\"string\"},{\"name\":\"importeOriginal\",\"type\":\"double\"},{\"name\":\"importePendiente\",\"type\":\"double\"},{\"name\":\"fechaOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"DocumentoDeudaPendienteTienda\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.DocumentosDeudaPendienteTienda\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"idTienda\",\"type\":\"string\"},{\"name\":\"origenTienda\",\"type\":\"int\"},{\"name\":\"origenTiendaDescripcion\",\"type\":\"string\"},{\"name\":\"fechaRecepcion\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"name\":\"saldosPorMoneda\",\"type\":{\"items\":{\"fields\":[{\"name\":\"moneda\",\"type\":\"string\"},{\"name\":\"saldo\",\"type\":\"double\"}],\"name\":\"SaldoPorMonedaTienda\",\"type\":\"record\"},\"type\":\"array\"}},{\"name\":\"documentos\",\"type\":{\"items\":{\"fields\":[{\"name\":\"identificador\",\"type\":\"string\"},{\"name\":\"tipo\",\"type\":\"string\"},{\"name\":\"debitoCredito\",\"type\":\"string\"},{\"name\":\"moneda\",\"type\":\"string\"},{\"name\":\"importeOriginal\",\"type\":\"double\"},{\"name\":\"importePendiente\",\"type\":\"double\"},{\"name\":\"fechaOrigen\",\"type\":\"string\"},{\"default\":null,\"name\":\"fechaVencimiento\",\"type\":[\"null\",\"string\"]}],\"name\":\"DocumentoDeudaPendienteTienda\",\"type\":\"record\"},\"type\":\"array\"}}],\"name\":\"Andreani.Notificaciones.Events.Records.DocumentosDeudaPendienteTienda\",\"type\":\"record\"}"
 }
 
 func (r DocumentosDeudaPendienteTienda) SchemaName() string {
@@ -142,16 +138,13 @@ func (r *DocumentosDeudaPendienteTienda) Get(i int) types.Field {
 		return w
 
 	case 4:
-		w := types.String{Target: &r.Moneda}
+		r.SaldosPorMoneda = make([]SaldoPorMonedaTienda, 0)
+
+		w := ArraySaldoPorMonedaTiendaWrapper{Target: &r.SaldosPorMoneda}
 
 		return w
 
 	case 5:
-		w := types.Double{Target: &r.Saldo}
-
-		return w
-
-	case 6:
 		r.Documentos = make([]DocumentoDeudaPendienteTienda, 0)
 
 		w := ArrayDocumentoDeudaPendienteTiendaWrapper{Target: &r.Documentos}
@@ -204,11 +197,7 @@ func (r DocumentosDeudaPendienteTienda) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	output["moneda"], err = json.Marshal(r.Moneda)
-	if err != nil {
-		return nil, err
-	}
-	output["saldo"], err = json.Marshal(r.Saldo)
+	output["saldosPorMoneda"], err = json.Marshal(r.SaldosPorMoneda)
 	if err != nil {
 		return nil, err
 	}
@@ -283,32 +272,18 @@ func (r *DocumentosDeudaPendienteTienda) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("no value specified for fechaRecepcion")
 	}
 	val = func() json.RawMessage {
-		if v, ok := fields["moneda"]; ok {
+		if v, ok := fields["saldosPorMoneda"]; ok {
 			return v
 		}
 		return nil
 	}()
 
 	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Moneda); err != nil {
+		if err := json.Unmarshal([]byte(val), &r.SaldosPorMoneda); err != nil {
 			return err
 		}
 	} else {
-		return fmt.Errorf("no value specified for moneda")
-	}
-	val = func() json.RawMessage {
-		if v, ok := fields["saldo"]; ok {
-			return v
-		}
-		return nil
-	}()
-
-	if val != nil {
-		if err := json.Unmarshal([]byte(val), &r.Saldo); err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("no value specified for saldo")
+		return fmt.Errorf("no value specified for saldosPorMoneda")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["documentos"]; ok {
