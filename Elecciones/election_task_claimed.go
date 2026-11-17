@@ -31,7 +31,7 @@ type ElectionTaskClaimed struct {
 	ClaimedAt string `json:"claimedAt"`
 }
 
-const ElectionTaskClaimedAvroCRC64Fingerprint = "\xa1\xf1@F\x97~\xf95"
+const ElectionTaskClaimedAvroCRC64Fingerprint = "\xfe~\xaa\x04\xc1\xf1A\x13"
 
 func NewElectionTaskClaimed() ElectionTaskClaimed {
 	r := ElectionTaskClaimed{}
@@ -96,7 +96,7 @@ func (r ElectionTaskClaimed) Serialize(w io.Writer) error {
 }
 
 func (r ElectionTaskClaimed) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"claimId\",\"type\":\"string\"},{\"name\":\"claimedBy\",\"type\":\"string\"},{\"name\":\"claimedByName\",\"type\":\"string\"},{\"name\":\"claimedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.ElectionTaskClaimed\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"environmentId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"epoch\",\"type\":[\"null\",\"int\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"claimId\",\"type\":\"string\"},{\"name\":\"claimedBy\",\"type\":\"string\"},{\"name\":\"claimedByName\",\"type\":\"string\"},{\"name\":\"claimedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.ElectionTaskClaimed\",\"type\":\"record\"}"
 }
 
 func (r ElectionTaskClaimed) SchemaName() string {

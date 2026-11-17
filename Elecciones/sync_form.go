@@ -41,7 +41,7 @@ type SyncForm struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-const SyncFormAvroCRC64Fingerprint = "\xc78\xb2\xf4\xfd\xf0\x05\xa4"
+const SyncFormAvroCRC64Fingerprint = "\xe5ܶ2\xc4\x0e\xa0;"
 
 func NewSyncForm() SyncForm {
 	r := SyncForm{}
@@ -129,7 +129,7 @@ func (r SyncForm) Serialize(w io.Writer) error {
 }
 
 func (r SyncForm) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityFrom\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityUntil\",\"type\":[\"null\",\"string\"]},{\"name\":\"executionMode\",\"type\":\"string\"},{\"name\":\"formJson\",\"type\":\"string\"},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncForm\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"environmentId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"epoch\",\"type\":[\"null\",\"int\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityFrom\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"availabilityUntil\",\"type\":[\"null\",\"string\"]},{\"name\":\"executionMode\",\"type\":\"string\"},{\"name\":\"formJson\",\"type\":\"string\"},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncForm\",\"type\":\"record\"}"
 }
 
 func (r SyncForm) SchemaName() string {

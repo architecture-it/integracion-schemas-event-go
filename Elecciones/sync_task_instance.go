@@ -41,7 +41,7 @@ type SyncTaskInstance struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-const SyncTaskInstanceAvroCRC64Fingerprint = "\xe9\xfaÉ$r.G"
+const SyncTaskInstanceAvroCRC64Fingerprint = "\a\xb4\xcb\"/\xb4\xe2\x8e"
 
 func NewSyncTaskInstance() SyncTaskInstance {
 	r := SyncTaskInstance{}
@@ -128,7 +128,7 @@ func (r SyncTaskInstance) Serialize(w io.Writer) error {
 }
 
 func (r SyncTaskInstance) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"isBlocked\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"fieldConstraints\",\"type\":[\"null\",\"string\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncTaskInstance\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"environmentId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"epoch\",\"type\":[\"null\",\"int\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"isBlocked\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"fieldConstraints\",\"type\":[\"null\",\"string\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncTaskInstance\",\"type\":\"record\"}"
 }
 
 func (r SyncTaskInstance) SchemaName() string {

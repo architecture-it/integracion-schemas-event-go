@@ -47,7 +47,7 @@ type NodeUpserted struct {
 	IsActive bool `json:"isActive"`
 }
 
-const NodeUpsertedAvroCRC64Fingerprint = "\xfd\x19\x8ePSG\x9e\xac"
+const NodeUpsertedAvroCRC64Fingerprint = "Ɩ\x1bB\xf8\x95Q\xb4"
 
 func NewNodeUpserted() NodeUpserted {
 	r := NodeUpserted{}
@@ -150,7 +150,7 @@ func (r NodeUpserted) Serialize(w io.Writer) error {
 }
 
 func (r NodeUpserted) Schema() string {
-	return "{\"fields\":[{\"name\":\"metadata\",\"type\":{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}},{\"name\":\"nodeId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"default\":null,\"name\":\"polygonGeoJson\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"color\",\"type\":[\"null\",\"string\"]},{\"name\":\"pollingTableCount\",\"type\":\"int\"},{\"default\":null,\"name\":\"coverageRadiusKm\",\"type\":[\"null\",\"double\"]},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"isActive\",\"type\":\"boolean\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.NodeUpserted\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"metadata\",\"type\":{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"environmentId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"epoch\",\"type\":[\"null\",\"int\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}},{\"name\":\"nodeId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"description\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"name\":\"latitude\",\"type\":\"double\"},{\"name\":\"longitude\",\"type\":\"double\"},{\"default\":null,\"name\":\"polygonGeoJson\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"color\",\"type\":[\"null\",\"string\"]},{\"name\":\"pollingTableCount\",\"type\":\"int\"},{\"default\":null,\"name\":\"coverageRadiusKm\",\"type\":[\"null\",\"double\"]},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"isActive\",\"type\":\"boolean\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.NodeUpserted\",\"type\":\"record\"}"
 }
 
 func (r NodeUpserted) SchemaName() string {

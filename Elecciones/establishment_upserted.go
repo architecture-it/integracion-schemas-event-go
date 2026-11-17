@@ -47,7 +47,7 @@ type EstablishmentUpserted struct {
 	NodeOutsidePolygon bool `json:"nodeOutsidePolygon"`
 }
 
-const EstablishmentUpsertedAvroCRC64Fingerprint = "Y\x92W\xe1\x9ducR"
+const EstablishmentUpsertedAvroCRC64Fingerprint = "9\xad\xe9-\xb8\xd9T/"
 
 func NewEstablishmentUpserted() EstablishmentUpserted {
 	r := EstablishmentUpserted{}
@@ -152,7 +152,7 @@ func (r EstablishmentUpserted) Serialize(w io.Writer) error {
 }
 
 func (r EstablishmentUpserted) Schema() string {
-	return "{\"fields\":[{\"name\":\"metadata\",\"type\":{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"externalCode\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitude\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitude\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"districtId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"circuitId\",\"type\":[\"null\",\"string\"]},{\"name\":\"totalVoters\",\"type\":\"int\"},{\"name\":\"requiredStaff\",\"type\":\"int\"},{\"default\":null,\"name\":\"nodeId\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"nodeOutsidePolygon\",\"type\":\"boolean\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.EstablishmentUpserted\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"metadata\",\"type\":{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"environmentId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"epoch\",\"type\":[\"null\",\"int\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"externalCode\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitude\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitude\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"districtId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"circuitId\",\"type\":[\"null\",\"string\"]},{\"name\":\"totalVoters\",\"type\":\"int\"},{\"name\":\"requiredStaff\",\"type\":\"int\"},{\"default\":null,\"name\":\"nodeId\",\"type\":[\"null\",\"string\"]},{\"default\":false,\"name\":\"nodeOutsidePolygon\",\"type\":\"boolean\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.EstablishmentUpserted\",\"type\":\"record\"}"
 }
 
 func (r EstablishmentUpserted) SchemaName() string {

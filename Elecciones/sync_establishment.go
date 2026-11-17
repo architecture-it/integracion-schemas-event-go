@@ -39,7 +39,7 @@ type SyncEstablishment struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-const SyncEstablishmentAvroCRC64Fingerprint = "[\x89g\x87\xfdivB"
+const SyncEstablishmentAvroCRC64Fingerprint = "G4M\x00\x83Rɹ"
 
 func NewSyncEstablishment() SyncEstablishment {
 	r := SyncEstablishment{}
@@ -123,7 +123,7 @@ func (r SyncEstablishment) Serialize(w io.Writer) error {
 }
 
 func (r SyncEstablishment) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"name\":\"userId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitude\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitude\",\"type\":[\"null\",\"double\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncEstablishment\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"environmentId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"epoch\",\"type\":[\"null\",\"int\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"name\":\"userId\",\"type\":\"string\"},{\"name\":\"name\",\"type\":\"string\"},{\"default\":null,\"name\":\"address\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"latitude\",\"type\":[\"null\",\"double\"]},{\"default\":null,\"name\":\"longitude\",\"type\":[\"null\",\"double\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncEstablishment\",\"type\":\"record\"}"
 }
 
 func (r SyncEstablishment) SchemaName() string {
