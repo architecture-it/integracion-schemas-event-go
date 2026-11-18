@@ -31,13 +31,22 @@ type SellerVtexVinculado_FullCommerce struct {
 	Activo bool `json:"Activo"`
 	// Momento del cambio en UTC, como timestamp-millis (misma convencion que el `cuando` de las trazas). Permite descartar un mensaje viejo reinyectado por un reproceso
 	FechaCambioUtc int64 `json:"FechaCambioUtc"`
+	// URL de la tienda VTEX del seller (cuenta propia, por ejemplo un nodo de Cetrogar). Opcional: solo viaja si el seller cargo sus credenciales
+	VtexUrl *UnionNullString `json:"VtexUrl"`
+	// AppKey de VTEX del seller. Opcional, viaja junto con VtexUrl y VtexAppToken
+	VtexAppKey *UnionNullString `json:"VtexAppKey"`
+	// AppToken de VTEX del seller. Opcional, viaja junto con VtexUrl y VtexAppKey. No se loguea
+	VtexAppToken *UnionNullString `json:"VtexAppToken"`
 }
 
-const SellerVtexVinculado_FullCommerceAvroCRC64Fingerprint = "A\xf5Q\xbd\xaf\xef\x8al"
+const SellerVtexVinculado_FullCommerceAvroCRC64Fingerprint = "M\xc4-C\xe6zf\x88"
 
 func NewSellerVtexVinculado_FullCommerce() SellerVtexVinculado_FullCommerce {
 	r := SellerVtexVinculado_FullCommerce{}
 	r.AndreaniEmail = nil
+	r.VtexUrl = nil
+	r.VtexAppKey = nil
+	r.VtexAppToken = nil
 	return r
 }
 
@@ -90,6 +99,18 @@ func writeSellerVtexVinculado_FullCommerce(r SellerVtexVinculado_FullCommerce, w
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.VtexUrl, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.VtexAppKey, w)
+	if err != nil {
+		return err
+	}
+	err = writeUnionNullString(r.VtexAppToken, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -98,7 +119,7 @@ func (r SellerVtexVinculado_FullCommerce) Serialize(w io.Writer) error {
 }
 
 func (r SellerVtexVinculado_FullCommerce) Schema() string {
-	return "{\"doc\":\"* Evento del topico Acom_Integraciones_FullCommerce_SellerVtex.\\n     * FullCommerce lo publica cada vez que cambia la vinculacion de un seller con su id de\\n     * VTEX; acom-integraciones-vtex-api lo consume y mantiene una copia local para resolver\\n     * el mail del seller al armar el alta, sin pegarle a FullCommerce en el camino critico.\\n     *\\n     * Estado completo, no delta: cada mensaje describe como queda el seller, asi reprocesar\\n     * es idempotente y republicar el padron alcanza para poblar un consumidor nuevo.\\n     * Una baja es este mismo record con Activo en false, no un evento aparte.\\n     * Se particiona por VtexSellerId para que dos cambios del mismo seller lleguen en orden.\",\"fields\":[{\"doc\":\"Id del seller en VTEX, tal como el seller lo declaro en el modulo de integracion. Clave de particion\",\"name\":\"VtexSellerId\",\"type\":\"string\"},{\"doc\":\"Mail que el seller usa en ese marketplace. Es el que viaja como referencia mailseller en el alta\",\"name\":\"MarketplaceEmail\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Mail de la cuenta Andreani del seller. Opcional: el alta no matchea por aca\",\"name\":\"AndreaniEmail\",\"type\":[\"null\",\"string\"]},{\"doc\":\"Cuenta del marketplace a la que pertenece la vinculacion\",\"name\":\"MarketplaceAccount\",\"type\":\"string\"},{\"doc\":\"Si la vinculacion esta vigente. Una baja llega con este campo en false\",\"name\":\"Activo\",\"type\":\"boolean\"},{\"doc\":\"Momento del cambio en UTC, como timestamp-millis (misma convencion que el `cuando` de las trazas). Permite descartar un mensaje viejo reinyectado por un reproceso\",\"name\":\"FechaCambioUtc\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}}],\"name\":\"Andreani.FullCommerce.Events.Record.SellerVtexVinculado_FullCommerce\",\"type\":\"record\"}"
+	return "{\"doc\":\"* Evento del topico Acom_Integraciones_FullCommerce_SellerVtex.\\n     * FullCommerce lo publica cada vez que cambia la vinculacion de un seller con su id de\\n     * VTEX; acom-integraciones-vtex-api lo consume y mantiene una copia local para resolver\\n     * el mail del seller al armar el alta, sin pegarle a FullCommerce en el camino critico.\\n     *\\n     * Estado completo, no delta: cada mensaje describe como queda el seller, asi reprocesar\\n     * es idempotente y republicar el padron alcanza para poblar un consumidor nuevo.\\n     * Una baja es este mismo record con Activo en false, no un evento aparte.\\n     * Se particiona por VtexSellerId para que dos cambios del mismo seller lleguen en orden.\",\"fields\":[{\"doc\":\"Id del seller en VTEX, tal como el seller lo declaro en el modulo de integracion. Clave de particion\",\"name\":\"VtexSellerId\",\"type\":\"string\"},{\"doc\":\"Mail que el seller usa en ese marketplace. Es el que viaja como referencia mailseller en el alta\",\"name\":\"MarketplaceEmail\",\"type\":\"string\"},{\"default\":null,\"doc\":\"Mail de la cuenta Andreani del seller. Opcional: el alta no matchea por aca\",\"name\":\"AndreaniEmail\",\"type\":[\"null\",\"string\"]},{\"doc\":\"Cuenta del marketplace a la que pertenece la vinculacion\",\"name\":\"MarketplaceAccount\",\"type\":\"string\"},{\"doc\":\"Si la vinculacion esta vigente. Una baja llega con este campo en false\",\"name\":\"Activo\",\"type\":\"boolean\"},{\"doc\":\"Momento del cambio en UTC, como timestamp-millis (misma convencion que el `cuando` de las trazas). Permite descartar un mensaje viejo reinyectado por un reproceso\",\"name\":\"FechaCambioUtc\",\"type\":{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}},{\"default\":null,\"doc\":\"URL de la tienda VTEX del seller (cuenta propia, por ejemplo un nodo de Cetrogar). Opcional: solo viaja si el seller cargo sus credenciales\",\"name\":\"VtexUrl\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"AppKey de VTEX del seller. Opcional, viaja junto con VtexUrl y VtexAppToken\",\"name\":\"VtexAppKey\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"doc\":\"AppToken de VTEX del seller. Opcional, viaja junto con VtexUrl y VtexAppKey. No se loguea\",\"name\":\"VtexAppToken\",\"type\":[\"null\",\"string\"]}],\"name\":\"Andreani.FullCommerce.Events.Record.SellerVtexVinculado_FullCommerce\",\"type\":\"record\"}"
 }
 
 func (r SellerVtexVinculado_FullCommerce) SchemaName() string {
@@ -145,6 +166,18 @@ func (r *SellerVtexVinculado_FullCommerce) Get(i int) types.Field {
 
 		return w
 
+	case 6:
+		r.VtexUrl = NewUnionNullString()
+
+		return r.VtexUrl
+	case 7:
+		r.VtexAppKey = NewUnionNullString()
+
+		return r.VtexAppKey
+	case 8:
+		r.VtexAppToken = NewUnionNullString()
+
+		return r.VtexAppToken
 	}
 	panic("Unknown field index")
 }
@@ -154,6 +187,15 @@ func (r *SellerVtexVinculado_FullCommerce) SetDefault(i int) {
 	case 2:
 		r.AndreaniEmail = nil
 		return
+	case 6:
+		r.VtexUrl = nil
+		return
+	case 7:
+		r.VtexAppKey = nil
+		return
+	case 8:
+		r.VtexAppToken = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -162,6 +204,15 @@ func (r *SellerVtexVinculado_FullCommerce) NullField(i int) {
 	switch i {
 	case 2:
 		r.AndreaniEmail = nil
+		return
+	case 6:
+		r.VtexUrl = nil
+		return
+	case 7:
+		r.VtexAppKey = nil
+		return
+	case 8:
+		r.VtexAppToken = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -202,6 +253,18 @@ func (r SellerVtexVinculado_FullCommerce) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["FechaCambioUtc"], err = json.Marshal(r.FechaCambioUtc)
+	if err != nil {
+		return nil, err
+	}
+	output["VtexUrl"], err = json.Marshal(r.VtexUrl)
+	if err != nil {
+		return nil, err
+	}
+	output["VtexAppKey"], err = json.Marshal(r.VtexAppKey)
+	if err != nil {
+		return nil, err
+	}
+	output["VtexAppToken"], err = json.Marshal(r.VtexAppToken)
 	if err != nil {
 		return nil, err
 	}
@@ -300,6 +363,54 @@ func (r *SellerVtexVinculado_FullCommerce) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for FechaCambioUtc")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["VtexUrl"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.VtexUrl); err != nil {
+			return err
+		}
+	} else {
+		r.VtexUrl = NewUnionNullString()
+
+		r.VtexUrl = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["VtexAppKey"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.VtexAppKey); err != nil {
+			return err
+		}
+	} else {
+		r.VtexAppKey = NewUnionNullString()
+
+		r.VtexAppKey = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["VtexAppToken"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.VtexAppToken); err != nil {
+			return err
+		}
+	} else {
+		r.VtexAppToken = NewUnionNullString()
+
+		r.VtexAppToken = nil
 	}
 	return nil
 }
