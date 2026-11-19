@@ -32,6 +32,8 @@ type SyncTaskInstance struct {
 
 	PollingTableId *UnionNullString `json:"pollingTableId"`
 
+	PollingTableNumber *UnionNullString `json:"pollingTableNumber"`
+
 	Status string `json:"status"`
 
 	IsBlocked bool `json:"isBlocked"`
@@ -41,12 +43,13 @@ type SyncTaskInstance struct {
 	UpdatedAt string `json:"updatedAt"`
 }
 
-const SyncTaskInstanceAvroCRC64Fingerprint = "\a\xb4\xcb\"/\xb4\xe2\x8e"
+const SyncTaskInstanceAvroCRC64Fingerprint = "Q\x11K\xfa\xd2\x1d~3"
 
 func NewSyncTaskInstance() SyncTaskInstance {
 	r := SyncTaskInstance{}
 	r.Metadata = nil
 	r.PollingTableId = nil
+	r.PollingTableNumber = nil
 	r.FieldConstraints = nil
 	return r
 }
@@ -104,6 +107,10 @@ func writeSyncTaskInstance(r SyncTaskInstance, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullString(r.PollingTableNumber, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Status, w)
 	if err != nil {
 		return err
@@ -128,7 +135,7 @@ func (r SyncTaskInstance) Serialize(w io.Writer) error {
 }
 
 func (r SyncTaskInstance) Schema() string {
-	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"environmentId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"epoch\",\"type\":[\"null\",\"int\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"isBlocked\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"fieldConstraints\",\"type\":[\"null\",\"string\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncTaskInstance\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"default\":null,\"name\":\"metadata\",\"type\":[\"null\",{\"fields\":[{\"name\":\"eventId\",\"type\":\"string\"},{\"name\":\"eventType\",\"type\":\"string\"},{\"name\":\"eventVersion\",\"type\":\"int\"},{\"name\":\"occurredAtUtc\",\"type\":\"string\"},{\"name\":\"sourceService\",\"type\":\"string\"},{\"default\":null,\"name\":\"sourceVersion\",\"type\":[\"null\",\"long\"]},{\"default\":null,\"name\":\"isDeleted\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"correlationId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"environmentId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"epoch\",\"type\":[\"null\",\"int\"]}],\"name\":\"EventMetadata\",\"type\":\"record\"}]},{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"taskId\",\"type\":\"string\"},{\"name\":\"electionId\",\"type\":\"string\"},{\"name\":\"formId\",\"type\":\"string\"},{\"name\":\"establishmentId\",\"type\":\"string\"},{\"default\":null,\"name\":\"pollingTableId\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"pollingTableNumber\",\"type\":[\"null\",\"string\"]},{\"name\":\"status\",\"type\":\"string\"},{\"name\":\"isBlocked\",\"type\":\"boolean\"},{\"default\":null,\"name\":\"fieldConstraints\",\"type\":[\"null\",\"string\"]},{\"name\":\"updatedAt\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.SyncTaskInstance\",\"type\":\"record\"}"
 }
 
 func (r SyncTaskInstance) SchemaName() string {
@@ -180,20 +187,24 @@ func (r *SyncTaskInstance) Get(i int) types.Field {
 
 		return r.PollingTableId
 	case 7:
+		r.PollingTableNumber = NewUnionNullString()
+
+		return r.PollingTableNumber
+	case 8:
 		w := types.String{Target: &r.Status}
 
 		return w
 
-	case 8:
+	case 9:
 		w := types.Boolean{Target: &r.IsBlocked}
 
 		return w
 
-	case 9:
+	case 10:
 		r.FieldConstraints = NewUnionNullString()
 
 		return r.FieldConstraints
-	case 10:
+	case 11:
 		w := types.String{Target: &r.UpdatedAt}
 
 		return w
@@ -210,7 +221,10 @@ func (r *SyncTaskInstance) SetDefault(i int) {
 	case 6:
 		r.PollingTableId = nil
 		return
-	case 9:
+	case 7:
+		r.PollingTableNumber = nil
+		return
+	case 10:
 		r.FieldConstraints = nil
 		return
 	}
@@ -225,7 +239,10 @@ func (r *SyncTaskInstance) NullField(i int) {
 	case 6:
 		r.PollingTableId = nil
 		return
-	case 9:
+	case 7:
+		r.PollingTableNumber = nil
+		return
+	case 10:
 		r.FieldConstraints = nil
 		return
 	}
@@ -269,6 +286,10 @@ func (r SyncTaskInstance) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["pollingTableId"], err = json.Marshal(r.PollingTableId)
+	if err != nil {
+		return nil, err
+	}
+	output["pollingTableNumber"], err = json.Marshal(r.PollingTableNumber)
 	if err != nil {
 		return nil, err
 	}
@@ -399,6 +420,22 @@ func (r *SyncTaskInstance) UnmarshalJSON(data []byte) error {
 		r.PollingTableId = NewUnionNullString()
 
 		r.PollingTableId = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["pollingTableNumber"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.PollingTableNumber); err != nil {
+			return err
+		}
+	} else {
+		r.PollingTableNumber = NewUnionNullString()
+
+		r.PollingTableNumber = nil
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["status"]; ok {
