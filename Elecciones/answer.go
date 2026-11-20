@@ -20,10 +20,12 @@ var _ = fmt.Printf
 type Answer struct {
 	FieldId string `json:"fieldId"`
 
+	FieldType string `json:"fieldType"`
+
 	Value string `json:"value"`
 }
 
-const AnswerAvroCRC64Fingerprint = "\xbe6\xd6\xed҃\a\xb1"
+const AnswerAvroCRC64Fingerprint = "ە\x92\xfb\x02\xdaȑ"
 
 func NewAnswer() Answer {
 	r := Answer{}
@@ -59,6 +61,10 @@ func writeAnswer(r Answer, w io.Writer) error {
 	if err != nil {
 		return err
 	}
+	err = vm.WriteString(r.FieldType, w)
+	if err != nil {
+		return err
+	}
 	err = vm.WriteString(r.Value, w)
 	if err != nil {
 		return err
@@ -71,7 +77,7 @@ func (r Answer) Serialize(w io.Writer) error {
 }
 
 func (r Answer) Schema() string {
-	return "{\"fields\":[{\"name\":\"fieldId\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.Answer\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"fieldId\",\"type\":\"string\"},{\"name\":\"fieldType\",\"type\":\"string\"},{\"name\":\"value\",\"type\":\"string\"}],\"name\":\"Andreani.EleccionesGla.Events.Record.Answer\",\"type\":\"record\"}"
 }
 
 func (r Answer) SchemaName() string {
@@ -95,6 +101,11 @@ func (r *Answer) Get(i int) types.Field {
 		return w
 
 	case 1:
+		w := types.String{Target: &r.FieldType}
+
+		return w
+
+	case 2:
 		w := types.String{Target: &r.Value}
 
 		return w
@@ -131,6 +142,10 @@ func (r Answer) MarshalJSON() ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
+	output["fieldType"], err = json.Marshal(r.FieldType)
+	if err != nil {
+		return nil, err
+	}
 	output["value"], err = json.Marshal(r.Value)
 	if err != nil {
 		return nil, err
@@ -158,6 +173,20 @@ func (r *Answer) UnmarshalJSON(data []byte) error {
 		}
 	} else {
 		return fmt.Errorf("no value specified for fieldId")
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["fieldType"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.FieldType); err != nil {
+			return err
+		}
+	} else {
+		return fmt.Errorf("no value specified for fieldType")
 	}
 	val = func() json.RawMessage {
 		if v, ok := fields["value"]; ok {
