@@ -33,13 +33,16 @@ type ConformidadPedidoRealizadaEvent struct {
 	GlnId string `json:"GlnId"`
 
 	ConformidadAutomatica *UnionNullBool `json:"ConformidadAutomatica"`
+
+	Traza *UnionNullTrazaDto `json:"traza"`
 }
 
-const ConformidadPedidoRealizadaEventAvroCRC64Fingerprint = "\xef\xfb]\xde\x19\a\x95\x17"
+const ConformidadPedidoRealizadaEventAvroCRC64Fingerprint = "\x1f\xc8\xc17rl*k"
 
 func NewConformidadPedidoRealizadaEvent() ConformidadPedidoRealizadaEvent {
 	r := ConformidadPedidoRealizadaEvent{}
 	r.ConformidadAutomatica = nil
+	r.Traza = nil
 	return r
 }
 
@@ -100,6 +103,10 @@ func writeConformidadPedidoRealizadaEvent(r ConformidadPedidoRealizadaEvent, w i
 	if err != nil {
 		return err
 	}
+	err = writeUnionNullTrazaDto(r.Traza, w)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -108,7 +115,7 @@ func (r ConformidadPedidoRealizadaEvent) Serialize(w io.Writer) error {
 }
 
 func (r ConformidadPedidoRealizadaEvent) Schema() string {
-	return "{\"fields\":[{\"name\":\"PedidoId\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"Apies\",\"type\":\"string\"},{\"name\":\"GlnId\",\"type\":\"string\"},{\"default\":null,\"name\":\"ConformidadAutomatica\",\"type\":[\"null\",\"boolean\"]}],\"name\":\"Andreani.AcomPedidosWarehouse.Events.Record.ConformidadPedidoRealizadaEvent\",\"type\":\"record\"}"
+	return "{\"fields\":[{\"name\":\"PedidoId\",\"type\":\"string\"},{\"name\":\"Propietario\",\"type\":\"string\"},{\"name\":\"Instancia\",\"type\":\"string\"},{\"name\":\"Almacen\",\"type\":\"string\"},{\"name\":\"OrdenWh\",\"type\":\"string\"},{\"name\":\"Apies\",\"type\":\"string\"},{\"name\":\"GlnId\",\"type\":\"string\"},{\"default\":null,\"name\":\"ConformidadAutomatica\",\"type\":[\"null\",\"boolean\"]},{\"default\":null,\"name\":\"traza\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"codigoDeEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cuando\",\"type\":[\"null\",{\"logicalType\":\"timestamp-millis\",\"type\":\"long\"}]},{\"default\":null,\"name\":\"codigoDeContratoInterno\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"codigoDeContrato\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"estadoDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"cicloDelEnvio\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"operador\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"sucursalAsociadaAlEvento\",\"type\":[\"null\",{\"fields\":[{\"default\":null,\"name\":\"codigo\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"nombre\",\"type\":[\"null\",\"string\"]},{\"default\":null,\"name\":\"id\",\"type\":[\"null\",\"string\"]}],\"name\":\"DatosSucursal\",\"type\":\"record\"}]}],\"name\":\"TrazaDto\",\"type\":\"record\"}]}],\"name\":\"Andreani.AcomPedidosWarehouse.Events.Record.ConformidadPedidoRealizadaEvent\",\"type\":\"record\"}"
 }
 
 func (r ConformidadPedidoRealizadaEvent) SchemaName() string {
@@ -165,6 +172,10 @@ func (r *ConformidadPedidoRealizadaEvent) Get(i int) types.Field {
 		r.ConformidadAutomatica = NewUnionNullBool()
 
 		return r.ConformidadAutomatica
+	case 8:
+		r.Traza = NewUnionNullTrazaDto()
+
+		return r.Traza
 	}
 	panic("Unknown field index")
 }
@@ -174,6 +185,9 @@ func (r *ConformidadPedidoRealizadaEvent) SetDefault(i int) {
 	case 7:
 		r.ConformidadAutomatica = nil
 		return
+	case 8:
+		r.Traza = nil
+		return
 	}
 	panic("Unknown field index")
 }
@@ -182,6 +196,9 @@ func (r *ConformidadPedidoRealizadaEvent) NullField(i int) {
 	switch i {
 	case 7:
 		r.ConformidadAutomatica = nil
+		return
+	case 8:
+		r.Traza = nil
 		return
 	}
 	panic("Not a nullable field index")
@@ -230,6 +247,10 @@ func (r ConformidadPedidoRealizadaEvent) MarshalJSON() ([]byte, error) {
 		return nil, err
 	}
 	output["ConformidadAutomatica"], err = json.Marshal(r.ConformidadAutomatica)
+	if err != nil {
+		return nil, err
+	}
+	output["traza"], err = json.Marshal(r.Traza)
 	if err != nil {
 		return nil, err
 	}
@@ -356,6 +377,22 @@ func (r *ConformidadPedidoRealizadaEvent) UnmarshalJSON(data []byte) error {
 		r.ConformidadAutomatica = NewUnionNullBool()
 
 		r.ConformidadAutomatica = nil
+	}
+	val = func() json.RawMessage {
+		if v, ok := fields["traza"]; ok {
+			return v
+		}
+		return nil
+	}()
+
+	if val != nil {
+		if err := json.Unmarshal([]byte(val), &r.Traza); err != nil {
+			return err
+		}
+	} else {
+		r.Traza = NewUnionNullTrazaDto()
+
+		r.Traza = nil
 	}
 	return nil
 }
